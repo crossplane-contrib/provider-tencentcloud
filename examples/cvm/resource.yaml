@@ -1,0 +1,13 @@
+apiVersion: cvm.tencentcloud.jet.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  name: example-cvm
+spec:
+  forProvider:
+    instanceName: "test-cvm"
+    availabilityZone: "ap-guangzhou-3"
+    imageId: "img-9qrfy1xt"
+    instanceType: "S3.MEDIUM2"
+    vpcId: "vpc-eorr0tjj"
+    subnetId: "subnet-ilxz4g1e"
+    systemDiskType: "CLOUD_PREMIUM"

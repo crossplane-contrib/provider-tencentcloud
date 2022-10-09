@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: resources.null.template.jet.crossplane.io
+  name: vpcs.vpc.tencentcloud.jet.crossplane.io
 spec:
-  group: null.template.jet.crossplane.io
+  group: vpc.tencentcloud.jet.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - templatejet
-    kind: Resource
-    listKind: ResourceList
-    plural: resources
-    singular: resource
+    - tencentcloudjet
+    kind: VPC
+    listKind: VPCList
+    plural: vpcs
+    singular: vpc
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Resource is the Schema for the Resources API
+        description: VPC is the Schema for the VPCs API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ResourceSpec defines the desired state of Resource
+            description: VPCSpec defines the desired state of VPC
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,13 +63,37 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  triggers:
+                  assistantCidrs:
+                    description: List of Assistant CIDR.
+                    items:
+                      type: string
+                    type: array
+                  cidrBlock:
+                    description: A network address block which should be a subnet
+                      of the three internal network segments (10.0.0.0/16, 172.16.0.0/12
+                      and 192.168.0.0/16).
+                    type: string
+                  dnsServers:
+                    description: The DNS server list of the VPC. And you can specify
+                      0 to 5 servers to this list.
+                    items:
+                      type: string
+                    type: array
+                  isMulticast:
+                    description: Indicates whether VPC multicast is enabled. The default
+                      value is 'true'.
+                    type: boolean
+                  name:
+                    description: The name of the VPC.
+                    type: string
+                  tags:
                     additionalProperties:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
+                    description: Tags of the VPC.
                     type: object
+                required:
+                - cidrBlock
+                - name
                 type: object
               providerConfigRef:
                 default:
@@ -168,12 +192,18 @@ spec:
             - forProvider
             type: object
           status:
-            description: ResourceStatus defines the observed state of Resource.
+            description: VPCStatus defines the observed state of VPC.
             properties:
               atProvider:
                 properties:
+                  createTime:
+                    type: string
+                  defaultRouteTableId:
+                    type: string
                   id:
                     type: string
+                  isDefault:
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.

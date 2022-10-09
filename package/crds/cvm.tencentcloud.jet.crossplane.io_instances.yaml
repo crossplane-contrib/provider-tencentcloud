@@ -1,0 +1,477 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: instances.cvm.tencentcloud.jet.crossplane.io
+spec:
+  group: cvm.tencentcloud.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: Instance
+    listKind: InstanceList
+    plural: instances
+    singular: instance
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Instance is the Schema for the Instances API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InstanceSpec defines the desired state of Instance
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  allocatePublicIp:
+                    description: Associate a public IP address with an instance in
+                      a VPC or Classic. Boolean value, Default is false.
+                    type: boolean
+                  availabilityZone:
+                    description: The available zone for the CVM instance.
+                    type: string
+                  bandwidthPackageId:
+                    description: bandwidth package id. if user is standard user, then
+                      the bandwidth_package_id is needed, or default has bandwidth_package_id.
+                    type: string
+                  camRoleName:
+                    description: CAM role name authorized to access.
+                    type: string
+                  cdhHostId:
+                    description: 'Id of cdh instance. Note: it only works when instance_charge_type
+                      is set to `CDHPAID`.'
+                    type: string
+                  cdhInstanceType:
+                    description: 'Type of instance created on cdh, the value of this
+                      parameter is in the format of CDH_XCXG based on the number of
+                      CPU cores and memory capacity. Note: it only works when instance_charge_type
+                      is set to `CDHPAID`.'
+                    type: string
+                  dataDisks:
+                    description: Settings for data disks.
+                    items:
+                      properties:
+                        dataDiskId:
+                          description: Data disk ID used to initialize the data disk.
+                            When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
+                            disk id is not supported.
+                          type: string
+                        dataDiskSize:
+                          description: Size of the data disk, and unit is GB. If disk
+                            type is `CLOUD_SSD`, the size range is [100, 16000], and
+                            the others are [10-16000].
+                          type: number
+                        dataDiskSnapshotId:
+                          description: Snapshot ID of the data disk. The selected
+                            data disk snapshot size must be smaller than the data
+                            disk size.
+                          type: string
+                        dataDiskType:
+                          description: 'Data disk type. For more information about
+                            limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
+                            Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`:
+                            local SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage,
+                            `CLOUD_SSD`: SSD, `CLOUD_HSSD`: Enhanced SSD. NOTE: `CLOUD_BASIC`,
+                            `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.'
+                          type: string
+                        deleteWithInstance:
+                          description: Decides whether the disk is deleted with instance(only
+                            applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM`
+                            disk with `POSTPAID_BY_HOUR` instance), default is true.
+                          type: boolean
+                        encrypt:
+                          description: Decides whether the disk is encrypted. Default
+                            is `false`.
+                          type: boolean
+                        throughputPerformance:
+                          description: Add extra performance to the data disk. Only
+                            works when disk type is `CLOUD_TSSD` or `CLOUD_HSSD`.
+                          type: number
+                      required:
+                      - dataDiskSize
+                      - dataDiskType
+                      type: object
+                    type: array
+                  disableMonitorService:
+                    description: Disable enhance service for monitor, it is enabled
+                      by default. When this options is set, monitor agent won't be
+                      installed. Modifying will cause the instance reset.
+                    type: boolean
+                  disableSecurityService:
+                    description: Disable enhance service for security, it is enabled
+                      by default. When this options is set, security agent won't be
+                      installed. Modifying will cause the instance reset.
+                    type: boolean
+                  forceDelete:
+                    description: 'Indicate whether to force delete the instance. Default
+                      is `false`. If set true, the instance will be permanently deleted
+                      instead of being moved into the recycle bin. Note: only works
+                      for `PREPAID` instance.'
+                    type: boolean
+                  hostname:
+                    description: 'The hostname of the instance. Windows instance:
+                      The name should be a combination of 2 to 15 characters comprised
+                      of letters (case insensitive), numbers, and hyphens (-). Period
+                      (.) is not supported, and the name cannot be a string of pure
+                      numbers. Other types (such as Linux) of instances: The name
+                      should be a combination of 2 to 60 characters, supporting multiple
+                      periods (.). The piece between two periods is composed of letters
+                      (case insensitive), numbers, and hyphens (-). Modifying will
+                      cause the instance reset.'
+                    type: string
+                  imageId:
+                    description: The image to use for the instance. Changing `image_id`
+                      will cause the instance reset.
+                    type: string
+                  instanceChargeType:
+                    description: 'The charge type of instance. Valid values are `PREPAID`,
+                      `POSTPAID_BY_HOUR`, `SPOTPAID` and `CDHPAID`. The default is
+                      `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports
+                      `POSTPAID_BY_HOUR` and `CDHPAID`. `PREPAID` instance may not
+                      allow to delete before expired. `SPOTPAID` instance must set
+                      `spot_instance_type` and `spot_max_price` at the same time.
+                      `CDHPAID` instance must set `cdh_instance_type` and `cdh_host_id`.'
+                    type: string
+                  instanceChargeTypePrepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance, NOTE: it only works when instance_charge_type is set
+                      to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`,
+                      `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
+                    type: number
+                  instanceChargeTypePrepaidRenewFlag:
+                    description: 'Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`:
+                      notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                      notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
+                      neither notify upon expiration nor renew automatically. Default
+                      value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
+                      as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically
+                      renewed on a monthly basis if the account balance is sufficient.
+                      NOTE: it only works when instance_charge_type is set to `PREPAID`.'
+                    type: string
+                  instanceCount:
+                    description: 'The number of instances to be purchased. Value range:[1,100];
+                      default value: 1.'
+                    type: number
+                  instanceName:
+                    description: The name of the instance. The max length of instance_name
+                      is 60, and default value is `Terraform-CVM-Instance`.
+                    type: string
+                  instanceType:
+                    description: The type of the instance.
+                    type: string
+                  internetChargeType:
+                    description: Internet charge type of the instance, Valid values
+                      are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
+                      and `BANDWIDTH_PACKAGE`. This value does not need to be set
+                      when `allocate_public_ip` is false.
+                    type: string
+                  internetMaxBandwidthOut:
+                    description: Maximum outgoing bandwidth to the public network,
+                      measured in Mbps (Mega bits per second). This value does not
+                      need to be set when `allocate_public_ip` is false.
+                    type: number
+                  keepImageLogin:
+                    description: Whether to keep image login or not, default is `false`.
+                      When the image type is private or shared or imported, this parameter
+                      can be set `true`. Modifying will cause the instance reset.
+                    type: boolean
+                  keyName:
+                    description: The key pair to use for the instance, it looks like
+                      `skey-16jig7tx`. Modifying will cause the instance reset.
+                    type: string
+                  passwordSecretRef:
+                    description: Password for the instance. In order for the new password
+                      to take effect, the instance will be restarted after the password
+                      change. Modifying will cause the instance reset.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  placementGroupId:
+                    description: The ID of a placement group.
+                    type: string
+                  privateIp:
+                    description: The private IP to be assigned to this instance, must
+                      be in the provided subnet and available.
+                    type: string
+                  projectId:
+                    description: The project the instance belongs to, default to 0.
+                    type: number
+                  runningFlag:
+                    description: Set instance to running or stop. Default value is
+                      true, the instance will shutdown when this flag is false.
+                    type: boolean
+                  securityGroups:
+                    description: A list of security group IDs to associate with.
+                    items:
+                      type: string
+                    type: array
+                  spotInstanceType:
+                    description: 'Type of spot instance, only support `ONE-TIME` now.
+                      Note: it only works when instance_charge_type is set to `SPOTPAID`.'
+                    type: string
+                  spotMaxPrice:
+                    description: 'Max price of a spot instance, is the format of decimal
+                      string, for example "0.50". Note: it only works when instance_charge_type
+                      is set to `SPOTPAID`.'
+                    type: string
+                  stoppedMode:
+                    description: 'Billing method of a pay-as-you-go instance after
+                      shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`.
+                      Default `KEEP_CHARGING`.'
+                    type: string
+                  subnetId:
+                    description: The ID of a VPC subnet. If you want to create instances
+                      in a VPC network, this parameter must be set.
+                    type: string
+                  systemDiskId:
+                    description: System disk snapshot ID used to initialize the system
+                      disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
+                      disk id is not supported.
+                    type: string
+                  systemDiskSize:
+                    description: 'Size of the system disk. Valid value ranges: (50~1000).
+                      and unit is GB. Default is 50GB. If modified, the instance may
+                      force stop.'
+                    type: number
+                  systemDiskType:
+                    description: 'System disk type. For more information on limits
+                      of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
+                      Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local
+                      SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage.
+                      NOTE: 1. `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated;
+                      2. If modified, the instance may force stop.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A mapping of tags to assign to the resource. For
+                      tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                    type: object
+                  userData:
+                    description: The user data to be injected into this instance.
+                      Must be base64 encoded and up to 16 KB.
+                    type: string
+                  userDataRaw:
+                    description: The user data to be injected into this instance,
+                      in plain text. Conflicts with `user_data`. Up to 16 KB after
+                      base64 encoded.
+                    type: string
+                  vpcId:
+                    description: The ID of a VPC network. If you want to create instances
+                      in a VPC network, this parameter must be set.
+                    type: string
+                required:
+                - availabilityZone
+                - imageId
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: InstanceStatus defines the observed state of Instance.
+            properties:
+              atProvider:
+                properties:
+                  createTime:
+                    type: string
+                  expiredTime:
+                    type: string
+                  id:
+                    type: string
+                  instanceStatus:
+                    type: string
+                  publicIp:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

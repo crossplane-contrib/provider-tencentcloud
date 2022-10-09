@@ -14,8 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package v1alpha1 contains the core resources of the tencentcloud jet provider.
-// +kubebuilder:object:generate=true
-// +groupName=tencentcloud.jet.crossplane.io
-// +versionName=v1alpha1
-package v1alpha1
+package vpc
+
+import (
+	tjconfig "github.com/crossplane/terrajet/pkg/config"
+)
+
+// Configure configures the null group
+func Configure(p *tjconfig.Provider) {
+	p.AddResourceConfigurator("tencentcloud_vpc", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = "vpc"
+	})
+}

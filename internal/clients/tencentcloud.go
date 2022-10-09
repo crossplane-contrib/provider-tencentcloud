@@ -27,7 +27,7 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/terraform"
 
-	"github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-jet-tencentcloud/apis/v1alpha1"
 )
 
 const (
@@ -36,7 +36,10 @@ const (
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errUnmarshalCredentials = "cannot unmarshal tencentcloud credentials as JSON"
+	keySecretID             = "secret_id"
+	keySecretKey            = "secret_key"
+	keyRegion               = "region"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -69,8 +72,8 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		templateCreds := map[string]string{}
-		if err := json.Unmarshal(data, &templateCreds); err != nil {
+		tencentcloudCreds := map[string]string{}
+		if err := json.Unmarshal(data, &tencentcloudCreds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
@@ -79,14 +82,20 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		// credentials via the environment variables. You should specify
 		// credentials via the Terraform main.tf.json instead.
 		/*ps.Env = []string{
-			fmt.Sprintf("%s=%s", "HASHICUPS_USERNAME", templateCreds["username"]),
-			fmt.Sprintf("%s=%s", "HASHICUPS_PASSWORD", templateCreds["password"]),
+			fmt.Sprintf("%s=%s", envSecretId, tencentcloudCreds[keySecretId]),
+			fmt.Sprintf("%s=%s", envSecretKey, tencentcloudCreds[keySecretKey]),
 		}*/
 		// set credentials in Terraform provider configuration
-		/*ps.Configuration = map[string]interface{}{
-			"username": templateCreds["username"],
-			"password": templateCreds["password"],
-		}*/
+		ps.Configuration = map[string]interface{}{}
+		if v, ok := tencentcloudCreds[keySecretID]; ok {
+			ps.Configuration[keySecretID] = v
+		}
+		if v, ok := tencentcloudCreds[keySecretKey]; ok {
+			ps.Configuration[keySecretKey] = v
+		}
+		if v, ok := tencentcloudCreds[keyRegion]; ok {
+			ps.Configuration[keyRegion] = v
+		}
 		return ps, nil
 	}
 }
