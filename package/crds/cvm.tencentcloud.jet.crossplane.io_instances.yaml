@@ -275,6 +275,29 @@ spec:
                     description: The ID of a VPC subnet. If you want to create instances
                       in a VPC network, this parameter must be set.
                     type: string
+                  subnetIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   systemDiskId:
                     description: System disk snapshot ID used to initialize the system
                       disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
@@ -312,6 +335,29 @@ spec:
                     description: The ID of a VPC network. If you want to create instances
                       in a VPC network, this parameter must be set.
                     type: string
+                  vpcidRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  vpcidSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                 required:
                 - availabilityZone
                 - imageId

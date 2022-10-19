@@ -198,8 +198,15 @@ type InstanceParameters struct {
 	StoppedMode *string `json:"stoppedMode,omitempty" tf:"stopped_mode,omitempty"`
 
 	// The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
 	// +kubebuilder:validation:Optional
@@ -226,8 +233,15 @@ type InstanceParameters struct {
 	UserDataRaw *string `json:"userDataRaw,omitempty" tf:"user_data_raw,omitempty"`
 
 	// The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1.VPC
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcidRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
 }
 
 // InstanceSpec defines the desired state of Instance

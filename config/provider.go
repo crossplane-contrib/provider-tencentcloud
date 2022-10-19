@@ -24,7 +24,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/crossplane-contrib/provider-jet-tencentcloud/config/cvm"
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/config/null"
 	"github.com/crossplane-contrib/provider-jet-tencentcloud/config/vpc"
 )
 
@@ -39,6 +38,7 @@ var providerSchema string
 // IncludedResources include resource
 var IncludedResources = []string{
 	"tencentcloud_vpc$",
+	"tencentcloud_subnet$",
 	"tencentcloud_instance$",
 }
 
@@ -62,7 +62,6 @@ func GetProvider() *tjconfig.Provider {
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
-		null.Configure,
 		vpc.Configure,
 		cvm.Configure,
 	} {
