@@ -21,10 +21,10 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/controller"
 
-	instance "github.com/crossplane-contrib/provider-jet-tencentcloud/internal/controller/cvm/instance"
-	providerconfig "github.com/crossplane-contrib/provider-jet-tencentcloud/internal/controller/providerconfig"
-	subnet "github.com/crossplane-contrib/provider-jet-tencentcloud/internal/controller/vpc/subnet"
-	vpc "github.com/crossplane-contrib/provider-jet-tencentcloud/internal/controller/vpc/vpc"
+	instance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cvm/instance"
+	providerconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/providerconfig"
+	subnet "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/subnet"
+	vpc "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/vpc"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

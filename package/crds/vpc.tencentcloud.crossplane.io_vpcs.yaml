@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: subnets.vpc.tencentcloud.jet.crossplane.io
+  name: vpcs.vpc.tencentcloud.crossplane.io
 spec:
-  group: vpc.tencentcloud.jet.crossplane.io
+  group: vpc.tencentcloud.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - tencentcloudjet
-    kind: Subnet
-    listKind: SubnetList
-    plural: subnets
-    singular: subnet
+    kind: VPC
+    listKind: VPCList
+    plural: vpcs
+    singular: vpc
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Subnet is the Schema for the Subnets API
+        description: VPC is the Schema for the VPCs API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: SubnetSpec defines the desired state of Subnet
+            description: VPCSpec defines the desired state of VPC
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,57 +63,35 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  availabilityZone:
-                    description: The availability zone within which the subnet should
-                      be created.
-                    type: string
+                  assistantCidrs:
+                    description: List of Assistant CIDR.
+                    items:
+                      type: string
+                    type: array
                   cidrBlock:
-                    description: A network address block of the subnet.
+                    description: A network address block which should be a subnet
+                      of the three internal network segments (10.0.0.0/16, 172.16.0.0/12
+                      and 192.168.0.0/16).
                     type: string
+                  dnsServers:
+                    description: The DNS server list of the VPC. And you can specify
+                      0 to 5 servers to this list.
+                    items:
+                      type: string
+                    type: array
                   isMulticast:
-                    description: Indicates whether multicast is enabled. The default
+                    description: Indicates whether VPC multicast is enabled. The default
                       value is 'true'.
                     type: boolean
                   name:
-                    description: The name of subnet to be created.
-                    type: string
-                  routeTableId:
-                    description: ID of a routing table to which the subnet should
-                      be associated.
+                    description: The name of the VPC.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tags of the subnet.
-                    type: object
-                  vpcId:
-                    description: ID of the VPC to be associated.
-                    type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
+                    description: Tags of the VPC.
                     type: object
                 required:
-                - availabilityZone
                 - cidrBlock
                 - name
                 type: object
@@ -214,13 +192,13 @@ spec:
             - forProvider
             type: object
           status:
-            description: SubnetStatus defines the observed state of Subnet.
+            description: VPCStatus defines the observed state of VPC.
             properties:
               atProvider:
                 properties:
-                  availableIpCount:
-                    type: number
                   createTime:
+                    type: string
+                  defaultRouteTableId:
                     type: string
                   id:
                     type: string

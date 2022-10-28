@@ -1,7 +1,7 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := provider-jet-tencentcloud
+PROJECT_NAME := provider-tencentcloud
 PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.1.6
@@ -52,7 +52,7 @@ GO111MODULE = on
 # Setup Images
 
 DOCKER_REGISTRY ?= crossplane
-IMAGES = provider-jet-tencentcloud provider-jet-tencentcloud-controller
+IMAGES = provider-tencentcloud provider-tencentcloud-controller
 -include build/makelib/image.mk
 
 # ====================================================================================

@@ -1,7 +1,7 @@
 apiVersion: meta.pkg.crossplane.io/v1alpha1
 kind: Provider
 metadata:
-  name: provider-jet-tencentcloud
+  name: provider-tencentcloud
 spec:
   controller:
-    image: DOCKER_REGISTRY/provider-jet-tencentcloud-controller:VERSION
+    image: DOCKER_REGISTRY/provider-tencentcloud-controller:VERSION

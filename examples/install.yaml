@@ -4,16 +4,16 @@ kind: ControllerConfig
 metadata:
   name: jet-tencentcloud-config
   labels:
-    app: crossplane-provider-jet-tencentcloud
+    app: crossplane-provider-tencentcloud
 spec:
-  image: crossplane/provider-jet-tencentcloud-controller:v0.1.0
+  image: crossplane/provider-tencentcloud-controller:v0.1.0
   args: ["-d"]
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: crossplane-provider-jet-tencentcloud
+  name: crossplane-provider-tencentcloud
 spec:
-  package: crossplane/provider-jet-tencentcloud:v0.1.0
+  package: crossplane/provider-tencentcloud:v0.1.0
   controllerConfigRef:
     name: jet-tencentcloud-config

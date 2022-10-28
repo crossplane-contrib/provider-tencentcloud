@@ -30,7 +30,7 @@ import (
 	"github.com/crossplane/terrajet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-jet-tencentcloud/apis/cvm/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1"
 )
 
 // Setup adds a controller that reconciles Instance managed resources.
