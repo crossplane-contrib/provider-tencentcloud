@@ -1,4 +1,4 @@
-module github.com/crossplane-contrib/provider-jet-tencentcloud
+module github.com/crossplane-contrib/provider-tencentcloud
 
 go 1.17
 

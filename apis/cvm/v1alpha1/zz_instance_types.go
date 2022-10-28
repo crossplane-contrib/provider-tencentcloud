@@ -198,7 +198,7 @@ type InstanceParameters struct {
 	StoppedMode *string `json:"stoppedMode,omitempty" tf:"stopped_mode,omitempty"`
 
 	// The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -233,7 +233,7 @@ type InstanceParameters struct {
 	UserDataRaw *string `json:"userDataRaw,omitempty" tf:"user_data_raw,omitempty"`
 
 	// The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1.VPC
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 

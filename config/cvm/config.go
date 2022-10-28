@@ -26,10 +26,10 @@ func Configure(p *tjconfig.Provider) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = "cvm"
 		r.References["vpc_id"] = tjconfig.Reference{
-			Type: "github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1.VPC",
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
 		r.References["subnet_id"] = tjconfig.Reference{
-			Type: "github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1.Subnet",
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 }

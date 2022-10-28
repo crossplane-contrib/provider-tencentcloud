@@ -6,7 +6,7 @@ include ../../../build/makelib/common.mk
 
 # ====================================================================================
 #  Options
-IMAGE = $(BUILD_REGISTRY)/provider-jet-tencentcloud-controller-$(ARCH)
+IMAGE = $(BUILD_REGISTRY)/provider-tencentcloud-controller-$(ARCH)
 include ../../../build/makelib/image.mk
 
 # ====================================================================================

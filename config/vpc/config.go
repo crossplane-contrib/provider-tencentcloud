@@ -33,4 +33,5 @@ func Configure(p *tjconfig.Provider) {
 			Type: "VPC",
 		}
 	})
+	p.RootGroup = ""
 }

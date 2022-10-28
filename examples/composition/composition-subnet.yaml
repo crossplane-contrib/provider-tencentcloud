@@ -1,0 +1,41 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: composition-subnet
+spec:
+  compositeTypeRef:
+    apiVersion: crd.tencentcloud.crossplane.io/v1alpha1
+    kind: XSubnet
+  resources:
+    - name: vpc
+      base:
+        apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+        kind: VPC
+        spec:
+          forProvider:
+            cidrBlock: "10.1.0.0/16"
+      patches:
+        - fromFieldPath: spec.vpcName
+          toFieldPath: spec.forProvider.name
+        - type: ToCompositeFieldPath
+          fromFieldPath: status.atProvider.id
+          toFieldPath: status.share.vpcId
+  
+    - name: subnet
+      base:
+        apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+        kind: Subnet
+        spec:
+          forProvider:
+            availabilityZone: "ap-guangzhou-1"
+            cidrBlock: "10.1.2.0/24"
+            # name: "test-crossplane-subnet"
+
+      patches:
+        - fromFieldPath: status.share.vpcId
+          toFieldPath: spec.forProvider.vpcId
+        - fromFieldPath: spec.subnetName
+          toFieldPath: spec.forProvider.name
+        - type: ToCompositeFieldPath
+          fromFieldPath: status.atProvider.id
+          toFieldPath: status.share.subnetId

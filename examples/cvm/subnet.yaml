@@ -1,4 +1,4 @@
-apiVersion: vpc.tencentcloud.jet.crossplane.io/v1alpha1
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
 kind: Subnet
 metadata:
   name: example-cvm-subnet

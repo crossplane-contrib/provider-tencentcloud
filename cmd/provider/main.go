@@ -36,12 +36,12 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/apis"
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/apis/v1alpha1"
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/config"
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/internal/clients"
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/internal/controller"
-	"github.com/crossplane-contrib/provider-jet-tencentcloud/internal/features"
+	"github.com/crossplane-contrib/provider-tencentcloud/apis"
+	"github.com/crossplane-contrib/provider-tencentcloud/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-tencentcloud/config"
+	"github.com/crossplane-contrib/provider-tencentcloud/internal/clients"
+	"github.com/crossplane-contrib/provider-tencentcloud/internal/controller"
+	"github.com/crossplane-contrib/provider-tencentcloud/internal/features"
 )
 
 func main() {
@@ -61,7 +61,7 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
-	log := logging.NewLogrLogger(zl.WithName("provider-jet-tencentcloud"))
+	log := logging.NewLogrLogger(zl.WithName("provider-tencentcloud"))
 	if *debug {
 		// The controller-runtime runs with a no-op logger by default. It is
 		// *very* verbose even at info level, so we only provide it a real
@@ -76,7 +76,7 @@ func main() {
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:             *leaderElection,
-		LeaderElectionID:           "crossplane-leader-election-provider-jet-tencentcloud",
+		LeaderElectionID:           "crossplane-leader-election-provider-tencentcloud",
 		SyncPeriod:                 syncPeriod,
 		LeaderElectionResourceLock: resourcelock.LeasesResourceLock,
 		LeaseDuration:              func() *time.Duration { d := 60 * time.Second; return &d }(),

@@ -22,9 +22,9 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-jet-tencentcloud/apis/cvm/v1alpha1"
-	v1alpha1apis "github.com/crossplane-contrib/provider-jet-tencentcloud/apis/v1alpha1"
-	v1alpha1vpc "github.com/crossplane-contrib/provider-jet-tencentcloud/apis/vpc/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1"
+	v1alpha1apis "github.com/crossplane-contrib/provider-tencentcloud/apis/v1alpha1"
+	v1alpha1vpc "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1"
 )
 
 func init() {
