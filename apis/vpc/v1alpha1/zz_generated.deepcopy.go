@@ -171,7 +171,7 @@ func (in *SubnetParameters) DeepCopyInto(out *SubnetParameters) {
 	if in.VPCIDRef != nil {
 		in, out := &in.VPCIDRef, &out.VPCIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VPCIDSelector != nil {
 		in, out := &in.VPCIDSelector, &out.VPCIDSelector
