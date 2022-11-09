@@ -97,9 +97,7 @@ spec:
                             disk id is not supported.
                           type: string
                         dataDiskSize:
-                          description: Size of the data disk, and unit is GB. If disk
-                            type is `CLOUD_SSD`, the size range is [100, 16000], and
-                            the others are [10-16000].
+                          description: Size of the data disk, and unit is GB.
                           type: number
                         dataDiskSnapshotId:
                           description: Snapshot ID of the data disk. The selected
@@ -109,10 +107,13 @@ spec:
                         dataDiskType:
                           description: 'Data disk type. For more information about
                             limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                            Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`:
-                            local SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage,
-                            `CLOUD_SSD`: SSD, `CLOUD_HSSD`: Enhanced SSD. NOTE: `CLOUD_BASIC`,
-                            `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.'
+                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
+                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
+                            InstanceType, LOCAL_PRO: local HDD disk, specified in
+                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
+                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
+                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
+                            SSD.'
                           type: string
                         deleteWithInstance:
                           description: Decides whether the disk is deleted with instance(only
@@ -202,8 +203,8 @@ spec:
                   internetChargeType:
                     description: Internet charge type of the instance, Valid values
                       are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`. This value does not need to be set
-                      when `allocate_public_ip` is false.
+                      and `BANDWIDTH_PACKAGE`. This value takes NO Effect when changing
+                      and does not need to be set when `allocate_public_ip` is false.
                     type: string
                   internetMaxBandwidthOut:
                     description: Maximum outgoing bandwidth to the public network,
@@ -215,6 +216,12 @@ spec:
                       When the image type is private or shared or imported, this parameter
                       can be set `true`. Modifying will cause the instance reset.
                     type: boolean
+                  keyIds:
+                    description: The key pair to use for the instance, it looks like
+                      `skey-16jig7tx`. Modifying will cause the instance reset.
+                    items:
+                      type: string
+                    type: array
                   keyName:
                     description: The key pair to use for the instance, it looks like
                       `skey-16jig7tx`. Modifying will cause the instance reset.
@@ -354,17 +361,16 @@ spec:
                       disk id is not supported.
                     type: string
                   systemDiskSize:
-                    description: 'Size of the system disk. Valid value ranges: (50~1000).
-                      and unit is GB. Default is 50GB. If modified, the instance may
-                      force stop.'
+                    description: Size of the system disk. unit is GB, Default is 50GB.
+                      If modified, the instance may force stop.
                     type: number
                   systemDiskType:
                     description: 'System disk type. For more information on limits
                       of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
                       Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local
-                      SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage.
-                      NOTE: 1. `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated;
-                      2. If modified, the instance may force stop.'
+                      SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage,
+                      `CLOUD_BSSD`: Basic SSD. NOTE: If modified, the instance may
+                      force stop.'
                     type: string
                   tags:
                     additionalProperties:

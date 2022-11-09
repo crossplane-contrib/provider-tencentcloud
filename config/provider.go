@@ -38,9 +38,46 @@ var providerSchema string
 
 // IncludedResources include resource
 var IncludedResources = []string{
+	// VPC
 	"tencentcloud_vpc$",
+	"tencentcloud_vpc_acl$",
+	"tencentcloud_vpc_acl_attachment$",
 	"tencentcloud_subnet$",
+	"tencentcloud_eip$",
+	"tencentcloud_eip_association$",
+	"tencentcloud_eni$",
+	"tencentcloud_eni_attachment$",
+	"tencentcloud_ha_vip$",
+	"tencentcloud_security_group$",
+	"tencentcloud_security_group_rule$",
+	"tencentcloud_security_group_lite_rule$",
+	"tencentcloud_address_template$",
+	"tencentcloud_address_template_group$",
+	"tencentcloud_protocol_template$",
+	"tencentcloud_protocol_template_group$",
+	"tencentcloud_route_table$",
+	"tencentcloud_route_table_entry$",
+	"tencentcloud_route_entry$",
+	"tencentcloud_nat_gateway$",
+	"tencentcloud_nat_gateway_snat$",
+	"tencentcloud_dnat$",
+	"tencentcloud_vpc_bandwidth_package$",
+	"tencentcloud_vpc_bandwidth_package_attachment$",
+	// VPN
+	"tencentcloud_vpn_gateway$",
+	"tencentcloud_vpn_ssl_client$",
+	"tencentcloud_vpn_customer_gateway$",
+	"tencentcloud_vpn_connection$",
+	"tencentcloud_vpn_gateway_route$",
+	"tencentcloud_vpn_ssl_server$",
+
+	// cvm
 	"tencentcloud_instance$",
+	"tencentcloud_instance_set$",
+	"tencentcloud_key_pair$",
+	"tencentcloud_placement_group$",
+	"tencentcloud_reserved_instance$",
+	"tencentcloud_image$",
 }
 
 // skipList

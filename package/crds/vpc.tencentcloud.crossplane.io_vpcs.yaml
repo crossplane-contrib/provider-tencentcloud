@@ -64,7 +64,8 @@ spec:
               forProvider:
                 properties:
                   assistantCidrs:
-                    description: List of Assistant CIDR.
+                    description: 'List of Assistant CIDR, NOTE: Only `NORMAL` typed
+                      CIDRs included, check the Docker CIDR by readonly `assistant_docker_cidrs`.'
                     items:
                       type: string
                     type: array
@@ -275,6 +276,10 @@ spec:
                     type: string
                   defaultRouteTableId:
                     type: string
+                  dockerAssistantCidrs:
+                    items:
+                      type: string
+                    type: array
                   id:
                     type: string
                   isDefault:

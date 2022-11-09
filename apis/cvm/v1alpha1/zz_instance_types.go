@@ -34,7 +34,7 @@ type DataDisksParameters struct {
 	// +kubebuilder:validation:Optional
 	DataDiskID *string `json:"dataDiskId,omitempty" tf:"data_disk_id,omitempty"`
 
-	// Size of the data disk, and unit is GB. If disk type is `CLOUD_SSD`, the size range is [100, 16000], and the others are [10-16000].
+	// Size of the data disk, and unit is GB.
 	// +kubebuilder:validation:Required
 	DataDiskSize *float64 `json:"dataDiskSize" tf:"data_disk_size,omitempty"`
 
@@ -42,7 +42,7 @@ type DataDisksParameters struct {
 	// +kubebuilder:validation:Optional
 	DataDiskSnapshotID *string `json:"dataDiskSnapshotId,omitempty" tf:"data_disk_snapshot_id,omitempty"`
 
-	// Data disk type. For more information about limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_SSD`: SSD, `CLOUD_HSSD`: Enhanced SSD. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
+	// Data disk type. For more information about limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
 	// +kubebuilder:validation:Required
 	DataDiskType *string `json:"dataDiskType" tf:"data_disk_type,omitempty"`
 
@@ -145,7 +145,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. This value does not need to be set when `allocate_public_ip` is false.
+	// Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. This value takes NO Effect when changing and does not need to be set when `allocate_public_ip` is false.
 	// +kubebuilder:validation:Optional
 	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
 
@@ -156,6 +156,10 @@ type InstanceParameters struct {
 	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
 	// +kubebuilder:validation:Optional
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
+
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// +kubebuilder:validation:Optional
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
 	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
 	// +kubebuilder:validation:Optional
@@ -212,11 +216,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	SystemDiskID *string `json:"systemDiskId,omitempty" tf:"system_disk_id,omitempty"`
 
-	// Size of the system disk. Valid value ranges: (50~1000). and unit is GB. Default is 50GB. If modified, the instance may force stop.
+	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	// +kubebuilder:validation:Optional
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
 
-	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: 1. `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated; 2. If modified, the instance may force stop.
+	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`: Basic SSD. NOTE: If modified, the instance may force stop.
 	// +kubebuilder:validation:Optional
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
