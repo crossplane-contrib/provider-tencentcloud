@@ -36,7 +36,7 @@ type ProtocolTemplateGroupParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Service template ID list.
-	// +crossplane:generate:reference:type=ProtocolTemplateList
+	// +crossplane:generate:reference:type=ProtocolTemplate
 	// +kubebuilder:validation:Optional
 	TemplateIds []*string `json:"templateIds,omitempty" tf:"template_ids,omitempty"`
 

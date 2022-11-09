@@ -20,10 +20,12 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupAudit = "audit"
+
 // Configure configures the audit group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_audit", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "audit"
+		r.ShortGroup = shortGroupAudit
 	})
 }

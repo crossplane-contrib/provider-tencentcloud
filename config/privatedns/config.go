@@ -20,16 +20,18 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupPrivateDNS = "privatedns"
+
 // Configure configures the privatedns group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_private_dns_record", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "privatedns"
+		r.ShortGroup = shortGroupPrivateDNS
 		r.Kind = "Record"
 	})
 	p.AddResourceConfigurator("tencentcloud_private_dns_zone", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "privatedns"
+		r.ShortGroup = shortGroupPrivateDNS
 		r.Kind = "Zone"
 	})
 }

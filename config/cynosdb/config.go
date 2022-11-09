@@ -20,11 +20,13 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupCynosdb = "cynosdb"
+
 // Configure configures the cynosdb group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_cynosdb_cluster", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cynosdb"
+		r.ShortGroup = shortGroupCynosdb
 		r.Kind = "Cluster"
 		r.References["vpc_id"] = tjconfig.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
@@ -36,7 +38,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_cynosdb_readonly_instance", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cynosdb"
+		r.ShortGroup = shortGroupCynosdb
 		r.Kind = "ReadonlyInstance"
 		r.References["cluster_id"] = tjconfig.Reference{
 			Type: "Cluster",

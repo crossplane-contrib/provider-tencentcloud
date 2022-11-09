@@ -70,8 +70,8 @@ import (
 	targetgroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/clb/targetgroup"
 	targetgroupattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/clb/targetgroupattachment"
 	targetgroupinstanceattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/clb/targetgroupinstanceattachment"
-	cluster "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/container/cluster"
-	clusterinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/container/clusterinstance"
+	containercluster "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/containercluster/containercluster"
+	containerclusterinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/containercluster/containerclusterinstance"
 	bucket "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cos/bucket"
 	bucketdomaincertificateattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cos/bucketdomaincertificateattachment"
 	bucketobject "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cos/bucketobject"
@@ -82,8 +82,10 @@ import (
 	keypair "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cvm/keypair"
 	placementgroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cvm/placementgroup"
 	reservedinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cvm/reservedinstance"
-	clustercynosdb "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cynosdb/cluster"
+	cluster "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cynosdb/cluster"
 	readonlyinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cynosdb/readonlyinstance"
+	eni "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/eni/eni"
+	eniattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/eni/eniattachment"
 	record "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/record"
 	zone "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/zone"
 	providerconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/providerconfig"
@@ -106,8 +108,6 @@ import (
 	dnat "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/dnat"
 	eip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eip"
 	eipassociation "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eipassociation"
-	eni "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eni"
-	eniattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eniattachment"
 	havip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/havip"
 	natgateway "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/natgateway"
 	natgatewaysnat "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/natgatewaysnat"
@@ -186,8 +186,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		targetgroup.Setup,
 		targetgroupattachment.Setup,
 		targetgroupinstanceattachment.Setup,
-		cluster.Setup,
-		clusterinstance.Setup,
+		containercluster.Setup,
+		containerclusterinstance.Setup,
 		bucket.Setup,
 		bucketdomaincertificateattachment.Setup,
 		bucketobject.Setup,
@@ -198,8 +198,10 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		keypair.Setup,
 		placementgroup.Setup,
 		reservedinstance.Setup,
-		clustercynosdb.Setup,
+		cluster.Setup,
 		readonlyinstance.Setup,
+		eni.Setup,
+		eniattachment.Setup,
 		record.Setup,
 		zone.Setup,
 		providerconfig.Setup,
@@ -222,8 +224,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		dnat.Setup,
 		eip.Setup,
 		eipassociation.Setup,
-		eni.Setup,
-		eniattachment.Setup,
 		havip.Setup,
 		natgateway.Setup,
 		natgatewaysnat.Setup,

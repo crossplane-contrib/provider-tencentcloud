@@ -20,21 +20,23 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupSsl = "ssl"
+
 // Configure configures the ssl group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_ssl_certificate", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "ssl"
+		r.ShortGroup = shortGroupSsl
 		r.Kind = "Certificate"
 	})
 	p.AddResourceConfigurator("tencentcloud_ssl_free_certificate", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "ssl"
+		r.ShortGroup = shortGroupSsl
 		r.Kind = "FreeCertificate"
 	})
 	p.AddResourceConfigurator("tencentcloud_ssl_pay_certificate", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "ssl"
+		r.ShortGroup = shortGroupSsl
 		r.Kind = "PayCertificate"
 	})
 }

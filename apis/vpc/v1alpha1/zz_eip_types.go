@@ -25,7 +25,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type EIPObservation struct {
+type EipObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	PublicIP *string `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
@@ -33,7 +33,7 @@ type EIPObservation struct {
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
-type EIPParameters struct {
+type EipParameters struct {
 
 	// The zone of anycast. Valid value: `ANYCAST_ZONE_GLOBAL` and `ANYCAST_ZONE_OVERSEAS`.
 	// +kubebuilder:validation:Optional
@@ -68,51 +68,51 @@ type EIPParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-// EIPSpec defines the desired state of EIP
-type EIPSpec struct {
+// EipSpec defines the desired state of Eip
+type EipSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     EIPParameters `json:"forProvider"`
+	ForProvider     EipParameters `json:"forProvider"`
 }
 
-// EIPStatus defines the observed state of EIP.
-type EIPStatus struct {
+// EipStatus defines the observed state of Eip.
+type EipStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        EIPObservation `json:"atProvider,omitempty"`
+	AtProvider        EipObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// EIP is the Schema for the EIPs API
+// Eip is the Schema for the Eips API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloudjet}
-type EIP struct {
+type Eip struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              EIPSpec   `json:"spec"`
-	Status            EIPStatus `json:"status,omitempty"`
+	Spec              EipSpec   `json:"spec"`
+	Status            EipStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// EIPList contains a list of EIPs
-type EIPList struct {
+// EipList contains a list of Eips
+type EipList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []EIP `json:"items"`
+	Items           []Eip `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	EIP_Kind             = "EIP"
-	EIP_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: EIP_Kind}.String()
-	EIP_KindAPIVersion   = EIP_Kind + "." + CRDGroupVersion.String()
-	EIP_GroupVersionKind = CRDGroupVersion.WithKind(EIP_Kind)
+	Eip_Kind             = "Eip"
+	Eip_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Eip_Kind}.String()
+	Eip_KindAPIVersion   = Eip_Kind + "." + CRDGroupVersion.String()
+	Eip_GroupVersionKind = CRDGroupVersion.WithKind(Eip_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&EIP{}, &EIPList{})
+	SchemeBuilder.Register(&Eip{}, &EipList{})
 }

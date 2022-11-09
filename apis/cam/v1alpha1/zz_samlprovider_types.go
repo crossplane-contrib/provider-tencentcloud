@@ -25,7 +25,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type SamlProviderObservation struct {
+type SAMLProviderObservation struct {
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -35,7 +35,7 @@ type SamlProviderObservation struct {
 	UpdateTime *string `json:"updateTime,omitempty" tf:"update_time,omitempty"`
 }
 
-type SamlProviderParameters struct {
+type SAMLProviderParameters struct {
 
 	// The description of the CAM SAML provider.
 	// +kubebuilder:validation:Required
@@ -44,57 +44,53 @@ type SamlProviderParameters struct {
 	// The meta data document of the CAM SAML provider.
 	// +kubebuilder:validation:Required
 	MetaData *string `json:"metaData" tf:"meta_data,omitempty"`
-
-	// Name of CAM SAML provider.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
 }
 
-// SamlProviderSpec defines the desired state of SamlProvider
-type SamlProviderSpec struct {
+// SAMLProviderSpec defines the desired state of SAMLProvider
+type SAMLProviderSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     SamlProviderParameters `json:"forProvider"`
+	ForProvider     SAMLProviderParameters `json:"forProvider"`
 }
 
-// SamlProviderStatus defines the observed state of SamlProvider.
-type SamlProviderStatus struct {
+// SAMLProviderStatus defines the observed state of SAMLProvider.
+type SAMLProviderStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        SamlProviderObservation `json:"atProvider,omitempty"`
+	AtProvider        SAMLProviderObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// SamlProvider is the Schema for the SamlProviders API
+// SAMLProvider is the Schema for the SAMLProviders API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloudjet}
-type SamlProvider struct {
+type SAMLProvider struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              SamlProviderSpec   `json:"spec"`
-	Status            SamlProviderStatus `json:"status,omitempty"`
+	Spec              SAMLProviderSpec   `json:"spec"`
+	Status            SAMLProviderStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// SamlProviderList contains a list of SamlProviders
-type SamlProviderList struct {
+// SAMLProviderList contains a list of SAMLProviders
+type SAMLProviderList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []SamlProvider `json:"items"`
+	Items           []SAMLProvider `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	SamlProvider_Kind             = "SamlProvider"
-	SamlProvider_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: SamlProvider_Kind}.String()
-	SamlProvider_KindAPIVersion   = SamlProvider_Kind + "." + CRDGroupVersion.String()
-	SamlProvider_GroupVersionKind = CRDGroupVersion.WithKind(SamlProvider_Kind)
+	SAMLProvider_Kind             = "SAMLProvider"
+	SAMLProvider_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: SAMLProvider_Kind}.String()
+	SAMLProvider_KindAPIVersion   = SAMLProvider_Kind + "." + CRDGroupVersion.String()
+	SAMLProvider_GroupVersionKind = CRDGroupVersion.WithKind(SAMLProvider_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&SamlProvider{}, &SamlProviderList{})
+	SchemeBuilder.Register(&SAMLProvider{}, &SAMLProviderList{})
 }

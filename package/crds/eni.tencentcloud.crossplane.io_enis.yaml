@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: enis.vpc.tencentcloud.crossplane.io
+  name: enis.eni.tencentcloud.crossplane.io
 spec:
-  group: vpc.tencentcloud.crossplane.io
+  group: eni.tencentcloud.crossplane.io
   names:
     categories:
     - crossplane

@@ -20,17 +20,19 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupCos = "cos"
+
 // Configure configures the cos group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_cos_bucket", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cos"
+		r.ShortGroup = shortGroupCos
 		r.Kind = "Bucket"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_cos_bucket_policy", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cos"
+		r.ShortGroup = shortGroupCos
 		r.Kind = "BucketPolicy"
 		r.References["bucket"] = tjconfig.Reference{
 			Type: "Bucket",
@@ -39,7 +41,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_cos_bucket_object", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cos"
+		r.ShortGroup = shortGroupCos
 		r.Kind = "BucketObject"
 		r.References["bucket"] = tjconfig.Reference{
 			Type: "Bucket",
@@ -48,7 +50,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_cos_bucket_domain_certificate_attachment", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cos"
+		r.ShortGroup = shortGroupCos
 		r.Kind = "BucketDomainCertificateAttachment"
 		r.References["bucket"] = tjconfig.Reference{
 			Type: "Bucket",

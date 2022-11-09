@@ -46,15 +46,6 @@ func (l *DnatList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this EIPList.
-func (l *EIPList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
 // GetItems of this EipAssociationList.
 func (l *EipAssociationList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -64,17 +55,8 @@ func (l *EipAssociationList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this EniAttachmentList.
-func (l *EniAttachmentList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
-// GetItems of this EniList.
-func (l *EniList) GetItems() []resource.Managed {
+// GetItems of this EipList.
+func (l *EipList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

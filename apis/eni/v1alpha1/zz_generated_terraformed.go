@@ -25,18 +25,18 @@ import (
 	"github.com/crossplane/terrajet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this Cluster
-func (mg *Cluster) GetTerraformResourceType() string {
-	return "tencentcloud_container_cluster"
+// GetTerraformResourceType returns Terraform resource type for this Eni
+func (mg *Eni) GetTerraformResourceType() string {
+	return "tencentcloud_eni"
 }
 
-// GetConnectionDetailsMapping for this Cluster
-func (tr *Cluster) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this Eni
+func (tr *Eni) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this Cluster
-func (tr *Cluster) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this Eni
+func (tr *Eni) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (tr *Cluster) GetObservation() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this Cluster
-func (tr *Cluster) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this Eni
+func (tr *Eni) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -54,16 +54,16 @@ func (tr *Cluster) SetObservation(obs map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this Cluster
-func (tr *Cluster) GetID() string {
+// GetID returns ID of underlying Terraform resource of this Eni
+func (tr *Eni) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this Cluster
-func (tr *Cluster) GetParameters() (map[string]interface{}, error) {
+// GetParameters of this Eni
+func (tr *Eni) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -72,8 +72,8 @@ func (tr *Cluster) GetParameters() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this Cluster
-func (tr *Cluster) SetParameters(params map[string]interface{}) error {
+// SetParameters for this Eni
+func (tr *Eni) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -81,10 +81,10 @@ func (tr *Cluster) SetParameters(params map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this Cluster using its observed tfState.
+// LateInitialize this Eni using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *Cluster) LateInitialize(attrs []byte) (bool, error) {
-	params := &ClusterParameters{}
+func (tr *Eni) LateInitialize(attrs []byte) (bool, error) {
+	params := &EniParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -95,22 +95,22 @@ func (tr *Cluster) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *Cluster) GetTerraformSchemaVersion() int {
+func (tr *Eni) GetTerraformSchemaVersion() int {
 	return 0
 }
 
-// GetTerraformResourceType returns Terraform resource type for this ClusterInstance
-func (mg *ClusterInstance) GetTerraformResourceType() string {
-	return "tencentcloud_container_cluster_instance"
+// GetTerraformResourceType returns Terraform resource type for this EniAttachment
+func (mg *EniAttachment) GetTerraformResourceType() string {
+	return "tencentcloud_eni_attachment"
 }
 
-// GetConnectionDetailsMapping for this ClusterInstance
-func (tr *ClusterInstance) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this EniAttachment
+func (tr *EniAttachment) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this ClusterInstance
-func (tr *ClusterInstance) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this EniAttachment
+func (tr *EniAttachment) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -119,8 +119,8 @@ func (tr *ClusterInstance) GetObservation() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this ClusterInstance
-func (tr *ClusterInstance) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this EniAttachment
+func (tr *EniAttachment) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -128,16 +128,16 @@ func (tr *ClusterInstance) SetObservation(obs map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this ClusterInstance
-func (tr *ClusterInstance) GetID() string {
+// GetID returns ID of underlying Terraform resource of this EniAttachment
+func (tr *EniAttachment) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this ClusterInstance
-func (tr *ClusterInstance) GetParameters() (map[string]interface{}, error) {
+// GetParameters of this EniAttachment
+func (tr *EniAttachment) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -146,8 +146,8 @@ func (tr *ClusterInstance) GetParameters() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this ClusterInstance
-func (tr *ClusterInstance) SetParameters(params map[string]interface{}) error {
+// SetParameters for this EniAttachment
+func (tr *EniAttachment) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -155,10 +155,10 @@ func (tr *ClusterInstance) SetParameters(params map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this ClusterInstance using its observed tfState.
+// LateInitialize this EniAttachment using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *ClusterInstance) LateInitialize(attrs []byte) (bool, error) {
-	params := &ClusterInstanceParameters{}
+func (tr *EniAttachment) LateInitialize(attrs []byte) (bool, error) {
+	params := &EniAttachmentParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -169,6 +169,6 @@ func (tr *ClusterInstance) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *ClusterInstance) GetTerraformSchemaVersion() int {
+func (tr *EniAttachment) GetTerraformSchemaVersion() int {
 	return 0
 }

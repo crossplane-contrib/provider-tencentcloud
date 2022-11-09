@@ -20,23 +20,25 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupCbs = "cbs"
+
 // Configure configures the audit group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_cbs_storage", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cbs"
+		r.ShortGroup = shortGroupCbs
 		r.Kind = "Storage"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_cbs_storage_set", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cbs"
+		r.ShortGroup = shortGroupCbs
 		r.Kind = "StorageSet"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_cbs_storage_attachment", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cbs"
+		r.ShortGroup = shortGroupCbs
 		r.Kind = "StorageAttachment"
 		r.References["storage_id"] = tjconfig.Reference{
 			Type: "Storage",
@@ -48,7 +50,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_cbs_snapshot", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cbs"
+		r.ShortGroup = shortGroupCbs
 		r.Kind = "Snapshot"
 		r.References["storage_id"] = tjconfig.Reference{
 			Type: "Storage",
@@ -57,13 +59,13 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_cbs_snapshot_policy", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cbs"
+		r.ShortGroup = shortGroupCbs
 		r.Kind = "SnapshotPolicy"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_cbs_snapshot_policy_attachment", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cbs"
+		r.ShortGroup = shortGroupCbs
 		r.Kind = "SnapshotPolicyAttachment"
 		r.References["storage_id"] = tjconfig.Reference{
 			Type: "Storage",
