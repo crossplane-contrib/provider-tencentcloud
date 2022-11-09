@@ -1,0 +1,638 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: clusters.cynosdb.tencentcloud.crossplane.io
+spec:
+  group: cynosdb.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    singular: cluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Cluster is the Schema for the Clusters API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ClusterSpec defines the desired state of Cluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  autoRenewFlag:
+                    description: Auto renew flag. Valid values are `0`(MANUAL_RENEW),
+                      `1`(AUTO_RENEW). Default value is `0`. Only works for PREPAID
+                      cluster.
+                    type: number
+                  availableZone:
+                    description: The available zone of the CynosDB Cluster.
+                    type: string
+                  chargeType:
+                    description: The charge type of instance. Valid values are `PREPAID`
+                      and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`.
+                    type: string
+                  clusterName:
+                    description: Name of CynosDB cluster.
+                    type: string
+                  dbType:
+                    description: Type of CynosDB, and available values include `MYSQL`.
+                    type: string
+                  dbVersion:
+                    description: Version of CynosDB, which is related to `db_type`.
+                      For `MYSQL`, available value is `5.7`.
+                    type: string
+                  forceDelete:
+                    description: 'Indicate whether to delete cluster instance directly
+                      or not. Default is false. If set true, the cluster and its `All
+                      RELATED INSTANCES` will be deleted instead of staying recycle
+                      bin. Note: works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.'
+                    type: boolean
+                  instanceCpuCore:
+                    description: 'The number of CPU cores of read-write type instance
+                      in the CynosDB cluster. Note: modification of this field will
+                      take effect immediately, if want to upgrade on maintenance window,
+                      please upgrade from console.'
+                    type: number
+                  instanceMaintainDuration:
+                    description: Duration time for maintenance, unit in second. `3600`
+                      by default.
+                    type: number
+                  instanceMaintainStartTime:
+                    description: Offset time from 00:00, unit in second. For example,
+                      03:00am should be `10800`. `10800` by default.
+                    type: number
+                  instanceMaintainWeekdays:
+                    description: Weekdays for maintenance. `["Mon", "Tue", "Wed",
+                      "Thu", "Fri", "Sat", "Sun"]` by default.
+                    items:
+                      type: string
+                    type: array
+                  instanceMemorySize:
+                    description: 'Memory capacity of read-write type instance, unit
+                      in GB. Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console.'
+                    type: number
+                  paramItems:
+                    description: Specify parameter list of database. It is valid when
+                      prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params`
+                      to query available parameter details.
+                    items:
+                      properties:
+                        currentValue:
+                          description: Param expected value to set.
+                          type: string
+                        name:
+                          description: Name of param, e.g. `character_set_server`.
+                          type: string
+                        oldValue:
+                          description: Param old value, indicates the value which
+                            already set, this value is required when modifying current_value.
+                          type: string
+                      required:
+                      - currentValue
+                      - name
+                      type: object
+                    type: array
+                  passwordSecretRef:
+                    description: Password of `root` account.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  port:
+                    description: Port of CynosDB cluster.
+                    type: number
+                  prarmTemplateId:
+                    description: The ID of the parameter template.
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`,
+                      `8`, `9`, `10`, `11`, `12`, `24`, `36`. NOTE: it only works
+                      when charge_type is set to `PREPAID`.'
+                    type: number
+                  projectId:
+                    description: ID of the project. `0` by default.
+                    type: number
+                  roGroupSg:
+                    description: IDs of security group for `ro_group`.
+                    items:
+                      type: string
+                    type: array
+                  rwGroupSg:
+                    description: IDs of security group for `rw_group`.
+                    items:
+                      type: string
+                    type: array
+                  storageLimit:
+                    description: 'Storage limit of CynosDB cluster instance, unit
+                      in GB. The maximum storage of a non-serverless instance in GB.
+                      NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the
+                      value cannot exceed the maximum storage corresponding to the
+                      CPU and memory specifications, when charge_type is `POSTPAID_BY_HOUR`,
+                      this argument is unnecessary.'
+                    type: number
+                  subnetId:
+                    description: ID of the subnet within this VPC.
+                    type: string
+                  subnetIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the CynosDB cluster.
+                    type: object
+                  vpcId:
+                    description: ID of the VPC.
+                    type: string
+                  vpcidRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vpcidSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                required:
+                - availableZone
+                - clusterName
+                - dbType
+                - dbVersion
+                - instanceCpuCore
+                - instanceMemorySize
+                - passwordSecretRef
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ClusterStatus defines the observed state of Cluster.
+            properties:
+              atProvider:
+                properties:
+                  charset:
+                    type: string
+                  clusterStatus:
+                    type: string
+                  createTime:
+                    type: string
+                  id:
+                    type: string
+                  instanceId:
+                    type: string
+                  instanceName:
+                    type: string
+                  instanceStatus:
+                    type: string
+                  instanceStorageSize:
+                    type: number
+                  roGroupAddr:
+                    items:
+                      properties:
+                        ip:
+                          type: string
+                        port:
+                          type: number
+                      type: object
+                    type: array
+                  roGroupId:
+                    type: string
+                  roGroupInstances:
+                    items:
+                      properties:
+                        instanceId:
+                          type: string
+                        instanceName:
+                          type: string
+                      type: object
+                    type: array
+                  rwGroupAddr:
+                    items:
+                      properties:
+                        ip:
+                          type: string
+                        port:
+                          type: number
+                      type: object
+                    type: array
+                  rwGroupId:
+                    type: string
+                  rwGroupInstances:
+                    items:
+                      properties:
+                        instanceId:
+                          type: string
+                        instanceName:
+                          type: string
+                      type: object
+                    type: array
+                  storageUsed:
+                    type: number
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

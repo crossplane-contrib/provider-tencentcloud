@@ -1,0 +1,590 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: buckets.cos.tencentcloud.crossplane.io
+spec:
+  group: cos.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: Bucket
+    listKind: BucketList
+    plural: buckets
+    singular: bucket
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Bucket is the Schema for the Buckets API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BucketSpec defines the desired state of Bucket
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  acl:
+                    description: 'The canned ACL to apply. Valid values: private,
+                      public-read, and public-read-write. Defaults to private.'
+                    type: string
+                  aclBody:
+                    description: 'ACL XML body for multiple grant info. NOTE: this
+                      argument will overwrite `acl`. Check https://intl.cloud.tencent.com/document/product/436/7737
+                      for more detail.'
+                    type: string
+                  bucket:
+                    description: The name of a bucket to be created. Bucket format
+                      should be [custom name]-[appid], for example `mycos-1258798060`.
+                    type: string
+                  corsRules:
+                    description: A rule of Cross-Origin Resource Sharing (documented
+                      below).
+                    items:
+                      properties:
+                        allowedHeaders:
+                          description: Specifies which headers are allowed.
+                          items:
+                            type: string
+                          type: array
+                        allowedMethods:
+                          description: Specifies which methods are allowed. Can be
+                            `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
+                          items:
+                            type: string
+                          type: array
+                        allowedOrigins:
+                          description: Specifies which origins are allowed.
+                          items:
+                            type: string
+                          type: array
+                        exposeHeaders:
+                          description: Specifies expose header in the response.
+                          items:
+                            type: string
+                          type: array
+                        maxAgeSeconds:
+                          description: Specifies time in seconds that browser can
+                            cache the response for a preflight request.
+                          type: number
+                      required:
+                      - allowedHeaders
+                      - allowedMethods
+                      - allowedOrigins
+                      type: object
+                    type: array
+                  encryptionAlgorithm:
+                    description: The server-side encryption algorithm to use. Valid
+                      value is `AES256`.
+                    type: string
+                  forceClean:
+                    description: Force cleanup all objects before delete bucket.
+                    type: boolean
+                  lifecycleRules:
+                    description: A configuration of object lifecycle management (documented
+                      below).
+                    items:
+                      properties:
+                        expiration:
+                          description: Specifies a period in the object's expire (documented
+                            below).
+                          items:
+                            properties:
+                              date:
+                                description: Specifies the date after which you want
+                                  the corresponding action to take effect.
+                                type: string
+                              days:
+                                description: Specifies the number of days after object
+                                  creation when the specific rule action takes effect.
+                                type: number
+                              deleteMarker:
+                                description: Indicates whether the delete marker of
+                                  an expired object will be removed.
+                                type: boolean
+                            type: object
+                          type: array
+                        filterPrefix:
+                          description: Object key prefix identifying one or more objects
+                            to which the rule applies.
+                          type: string
+                        id:
+                          description: A unique identifier for the rule. It can be
+                            up to 255 characters.
+                          type: string
+                        nonCurrentExpiration:
+                          description: Specifies when non current object versions
+                            shall expire.
+                          items:
+                            properties:
+                              nonCurrentDays:
+                                description: Number of days after non current object
+                                  creation when the specific rule action takes effect.
+                                  The maximum value is 3650.
+                                type: number
+                            type: object
+                          type: array
+                        nonCurrentTransition:
+                          description: Specifies a period in the non current object's
+                            transitions.
+                          items:
+                            properties:
+                              nonCurrentDays:
+                                description: Number of days after non current object
+                                  creation when the specific rule action takes effect.
+                                type: number
+                              storageClass:
+                                description: Specifies the storage class to which
+                                  you want the non current object to transition. Available
+                                  values include `STANDARD`, `STANDARD_IA` and `ARCHIVE`.
+                                type: string
+                            required:
+                            - storageClass
+                            type: object
+                          type: array
+                        transition:
+                          description: Specifies a period in the object's transitions
+                            (documented below).
+                          items:
+                            properties:
+                              date:
+                                description: Specifies the date after which you want
+                                  the corresponding action to take effect.
+                                type: string
+                              days:
+                                description: Specifies the number of days after object
+                                  creation when the specific rule action takes effect.
+                                type: number
+                              storageClass:
+                                description: Specifies the storage class to which
+                                  you want the object to transition. Available values
+                                  include `STANDARD`, `STANDARD_IA` and `ARCHIVE`.
+                                type: string
+                            required:
+                            - storageClass
+                            type: object
+                          type: array
+                      required:
+                      - filterPrefix
+                      type: object
+                    type: array
+                  logEnable:
+                    description: Indicate the access log of this bucket to be saved
+                      or not. Default is `false`. If set `true`, the access log will
+                      be saved with `log_target_bucket`. To enable log, the full access
+                      of log service must be granted. [Full Access Role Policy](https://intl.cloud.tencent.com/document/product/436/16920).
+                    type: boolean
+                  logPrefix:
+                    description: The prefix log name which saves the access log of
+                      this bucket per 5 minutes. Eg. `MyLogPrefix/`. The log access
+                      file format is `log_target_bucket`/`log_prefix`{YYYY}/{MM}/{DD}/{time}_{random}_{index}.gz.
+                      Only valid when `log_enable` is `true`.
+                    type: string
+                  logTargetBucket:
+                    description: The target bucket name which saves the access log
+                      of this bucket per 5 minutes. The log access file format is
+                      `log_target_bucket`/`log_prefix`{YYYY}/{MM}/{DD}/{time}_{random}_{index}.gz.
+                      Only valid when `log_enable` is `true`. User must have full
+                      access on this bucket.
+                    type: string
+                  multiAz:
+                    description: 'Indicates whether to create a bucket of multi available
+                      zone. NOTE: If set to true, the versioning must enable.'
+                    type: boolean
+                  originDomainRules:
+                    description: Bucket Origin Domain settings.
+                    items:
+                      properties:
+                        domain:
+                          description: Specify domain host.
+                          type: string
+                        status:
+                          description: 'Domain status, default: `ENABLED`.'
+                          type: string
+                        type:
+                          description: 'Specify origin domain type, available values:
+                            `REST`, `WEBSITE`, `ACCELERATE`, default: `REST`.'
+                          type: string
+                      required:
+                      - domain
+                      type: object
+                    type: array
+                  originPullRules:
+                    description: Bucket Origin-Pull settings.
+                    items:
+                      properties:
+                        customHttpHeaders:
+                          additionalProperties:
+                            type: string
+                          description: Specifies the custom headers that you can add
+                            for COS to access your origin server.
+                          type: object
+                        followHttpHeaders:
+                          description: Specifies the pass through headers when accessing
+                            the origin server.
+                          items:
+                            type: string
+                          type: array
+                        followQueryString:
+                          description: Specifies whether to pass through COS request
+                            query string when accessing the origin server.
+                          type: boolean
+                        followRedirection:
+                          description: Specifies whether to follow 3XX redirect to
+                            another origin server to pull data from.
+                          type: boolean
+                        host:
+                          description: Allows only a domain name or IP address. You
+                            can optionally append a port number to the address.
+                          type: string
+                        prefix:
+                          description: Triggers the origin-pull rule when the requested
+                            file name matches this prefix.
+                          type: string
+                        priority:
+                          description: Priority of origin-pull rules, do not set the
+                            same value for multiple rules.
+                          type: number
+                        protocol:
+                          description: the protocol used for COS to access the specified
+                            origin server. The available value include `HTTP`, `HTTPS`
+                            and `FOLLOW`.
+                          type: string
+                        syncBackToSource:
+                          description: 'If `true`, COS will not return 3XX status
+                            code when pulling data from an origin server. Current
+                            available zone: ap-beijing, ap-shanghai, ap-singapore,
+                            ap-mumbai.'
+                          type: boolean
+                      required:
+                      - host
+                      - priority
+                      type: object
+                    type: array
+                  replicaRole:
+                    description: 'Request initiator identifier, format: `qcs::cam::uin/<owneruin>:uin/<subuin>`.
+                      NOTE: only `versioning_enable` is true can configure this argument.'
+                    type: string
+                  replicaRules:
+                    description: 'List of replica rule. NOTE: only `versioning_enable`
+                      is true and `replica_role` set can configure this argument.'
+                    items:
+                      properties:
+                        destinationBucket:
+                          description: 'Destination bucket identifier, format: `qcs::cos:<region>::<bucketname-appid>`.
+                            NOTE: destination bucket must enable versioning.'
+                          type: string
+                        destinationStorageClass:
+                          description: 'Storage class of destination, available values:
+                            `STANDARD`, `INTELLIGENT_TIERING`, `STANDARD_IA`. default
+                            is following current class of destination.'
+                          type: string
+                        id:
+                          description: Name of a specific rule.
+                          type: string
+                        prefix:
+                          description: Prefix matching policy. Policies cannot overlap;
+                            otherwise, an error will be returned. To match the root
+                            directory, leave this parameter empty.
+                          type: string
+                        status:
+                          description: 'Status identifier, available values: `Enabled`,
+                            `Disabled`.'
+                          type: string
+                      required:
+                      - destinationBucket
+                      - status
+                      type: object
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of a bucket.
+                    type: object
+                  versioningEnable:
+                    description: Enable bucket versioning.
+                    type: boolean
+                  website:
+                    description: A website object(documented below).
+                    items:
+                      properties:
+                        errorDocument:
+                          description: An absolute path to the document to return
+                            in case of a 4XX error.
+                          type: string
+                        indexDocument:
+                          description: COS returns this index document when requests
+                            are made to the root domain or any of the subfolders.
+                          type: string
+                      type: object
+                    type: array
+                required:
+                - bucket
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: BucketStatus defines the observed state of Bucket.
+            properties:
+              atProvider:
+                properties:
+                  cosBucketUrl:
+                    type: string
+                  id:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
