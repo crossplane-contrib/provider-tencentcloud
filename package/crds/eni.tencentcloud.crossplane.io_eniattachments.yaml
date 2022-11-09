@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: clusterinstances.container.tencentcloud.crossplane.io
+  name: eniattachments.eni.tencentcloud.crossplane.io
 spec:
-  group: container.tencentcloud.crossplane.io
+  group: eni.tencentcloud.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - tencentcloudjet
-    kind: ClusterInstance
-    listKind: ClusterInstanceList
-    plural: clusterinstances
-    singular: clusterinstance
+    kind: EniAttachment
+    listKind: EniAttachmentList
+    plural: eniattachments
+    singular: eniattachment
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ClusterInstance is the Schema for the ClusterInstances API
+        description: EniAttachment is the Schema for the EniAttachments API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ClusterInstanceSpec defines the desired state of ClusterInstance
+            description: EniAttachmentSpec defines the desired state of EniAttachment
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,90 +63,158 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  bandwidth:
-                    description: The network bandwidth of the node.
-                    type: number
-                  bandwidthType:
-                    description: The network type of the node.
+                  eniId:
+                    description: ID of the ENI.
                     type: string
-                  clusterId:
-                    description: The id of the cluster.
+                  eniIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  eniIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  instanceId:
+                    description: ID of the instance which bind the ENI.
                     type: string
-                  cpu:
-                    description: The cpu of the node.
-                    type: number
-                  cvmType:
-                    description: The type of node needed by cvm.
-                    type: string
-                  dockerGraphPath:
-                    description: The docker graph path is going to mounted.
-                    type: string
-                  instanceName:
-                    description: The name ot node.
-                    type: string
-                  instanceType:
-                    description: The instance type of the node needed by cvm.
-                    type: string
-                  isVpcGateway:
-                    description: Describe whether the node enable the gateway capability.
-                    type: number
-                  keyId:
-                    description: The key_id of each node(if using key pair to access).
-                    type: string
-                  mem:
-                    description: The memory of the node.
-                    type: number
-                  mountTarget:
-                    description: The path which volume is going to be mounted.
-                    type: string
-                  password:
-                    description: The password of each node.
-                    type: string
-                  period:
-                    description: The puchase duration of the node needed by cvm.
-                    type: number
-                  requireWanIp:
-                    description: Indicate whether wan ip is needed.
-                    type: number
-                  rootSize:
-                    description: The size of the root volume.
-                    type: number
-                  rootType:
-                    description: The type of the root volume. see more from CVM.
-                    type: string
-                  sgId:
-                    description: The security group id.
-                    type: string
-                  storageSize:
-                    description: The size of the data volume.
-                    type: number
-                  storageType:
-                    description: The type of the data volume. see more from CVM.
-                    type: string
-                  subnetId:
-                    description: The subnet id which the node stays in.
-                    type: string
-                  unschedulable:
-                    description: Determine whether the node will be schedulable. 0
-                      is the default meaning node will be schedulable. 1 for unschedulable.
-                    type: number
-                  userScript:
-                    description: User defined script in a base64-format. The script
-                      runs after the kubernetes component is ready on node. see more
-                      from CCS api documents.
-                    type: string
-                  zoneId:
-                    description: The zone which the node stays in.
-                    type: string
-                required:
-                - bandwidth
-                - bandwidthType
-                - clusterId
-                - isVpcGateway
-                - rootSize
-                - storageSize
-                - subnetId
-                - zoneId
+                  instanceIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  instanceIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                 type: object
               providerConfigRef:
                 default:
@@ -320,21 +388,11 @@ spec:
             - forProvider
             type: object
           status:
-            description: ClusterInstanceStatus defines the observed state of ClusterInstance.
+            description: EniAttachmentStatus defines the observed state of EniAttachment.
             properties:
               atProvider:
                 properties:
-                  abnormalReason:
-                    type: string
                   id:
-                    type: string
-                  instanceId:
-                    type: string
-                  isNormal:
-                    type: number
-                  lanIp:
-                    type: string
-                  wanIp:
                     type: string
                 type: object
               conditions:

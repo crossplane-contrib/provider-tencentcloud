@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: clusters.container.tencentcloud.crossplane.io
+  name: containerclusters.containercluster.tencentcloud.crossplane.io
 spec:
-  group: container.tencentcloud.crossplane.io
+  group: containercluster.tencentcloud.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - tencentcloudjet
-    kind: Cluster
-    listKind: ClusterList
-    plural: clusters
-    singular: cluster
+    kind: ContainerCluster
+    listKind: ContainerClusterList
+    plural: containerclusters
+    singular: containercluster
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cluster is the Schema for the Clusters API
+        description: ContainerCluster is the Schema for the ContainerClusters API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ClusterSpec defines the desired state of Cluster
+            description: ContainerClusterSpec defines the desired state of ContainerCluster
             properties:
               deletionPolicy:
                 default: Delete
@@ -343,7 +343,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: ClusterStatus defines the observed state of Cluster.
+            description: ContainerClusterStatus defines the observed state of ContainerCluster.
             properties:
               atProvider:
                 properties:

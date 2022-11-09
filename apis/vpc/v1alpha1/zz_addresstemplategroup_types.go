@@ -36,7 +36,7 @@ type AddressTemplateGroupParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Template ID list.
-	// +crossplane:generate:reference:type=AddressTemplateList
+	// +crossplane:generate:reference:type=AddressTemplate
 	// +kubebuilder:validation:Optional
 	TemplateIds []*string `json:"templateIds,omitempty" tf:"template_ids,omitempty"`
 

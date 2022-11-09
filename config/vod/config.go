@@ -20,36 +20,38 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupVod = "vod"
+
 // Configure configures the vod group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_vod_adaptive_dynamic_streaming_template", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "vod"
+		r.ShortGroup = shortGroupVod
 		r.Kind = "AdaptiveDynamicStreamingTemplate"
 	})
 	p.AddResourceConfigurator("tencentcloud_vod_procedure_template", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "vod"
+		r.ShortGroup = shortGroupVod
 		r.Kind = "ProcedureTemplate"
 	})
 	p.AddResourceConfigurator("tencentcloud_vod_snapshot_by_time_offset_template", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "vod"
+		r.ShortGroup = shortGroupVod
 		r.Kind = "SnapshotByTimeOffsetTemplate"
 	})
 	p.AddResourceConfigurator("tencentcloud_vod_image_sprite_template", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "vod"
+		r.ShortGroup = shortGroupVod
 		r.Kind = "ImageSpriteTemplate"
 	})
 	p.AddResourceConfigurator("tencentcloud_vod_super_player_config", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "vod"
+		r.ShortGroup = shortGroupVod
 		r.Kind = "SuperPlayerConfig"
 	})
 	p.AddResourceConfigurator("tencentcloud_vod_sub_application", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "vod"
+		r.ShortGroup = shortGroupVod
 		r.Kind = "SubApplication"
 	})
 

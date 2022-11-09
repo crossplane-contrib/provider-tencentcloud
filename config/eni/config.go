@@ -14,44 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package cfs
+package eni
 
 import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
-const shortGroupCfs = "cfs"
+const shortGroupEni = "eni"
 
-// Configure configures the cfs group
+// Configure configures the eni group
 func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cfs_file_system", func(r *tjconfig.Resource) {
+	p.AddResourceConfigurator("tencentcloud_eni", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupCfs
-		r.Kind = "FileSystem"
+		r.ShortGroup = shortGroupEni
+		r.Kind = "Eni"
 		r.References["vpc_id"] = tjconfig.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
 		r.References["subnet_id"] = tjconfig.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
-		r.References["access_group_id"] = tjconfig.Reference{
-			Type: "AccessGroup",
+	})
+
+	p.AddResourceConfigurator("tencentcloud_eni_attachment", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = shortGroupEni
+		r.Kind = "EniAttachment"
+		r.References["eni_id"] = tjconfig.Reference{
+			Type: "Eni",
+		}
+		r.References["instance_id"] = tjconfig.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance",
 		}
 	})
-
-	p.AddResourceConfigurator("tencentcloud_cfs_access_group", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupCfs
-		r.Kind = "AccessGroup"
-	})
-
-	p.AddResourceConfigurator("tencentcloud_cfs_access_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupCfs
-		r.Kind = "AccessRule"
-		r.References["access_group_id"] = tjconfig.Reference{
-			Type: "AccessGroup",
-		}
-	})
-
 }

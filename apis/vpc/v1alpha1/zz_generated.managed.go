@@ -217,69 +217,69 @@ func (mg *Dnat) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this EIP.
-func (mg *EIP) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this Eip.
+func (mg *Eip) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this EIP.
-func (mg *EIP) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this Eip.
+func (mg *Eip) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this EIP.
-func (mg *EIP) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this Eip.
+func (mg *Eip) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this EIP.
+GetProviderReference of this Eip.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *EIP) GetProviderReference() *xpv1.Reference {
+func (mg *Eip) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetPublishConnectionDetailsTo of this EIP.
-func (mg *EIP) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this Eip.
+func (mg *Eip) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this EIP.
-func (mg *EIP) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this Eip.
+func (mg *Eip) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this EIP.
-func (mg *EIP) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this Eip.
+func (mg *Eip) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this EIP.
-func (mg *EIP) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this Eip.
+func (mg *Eip) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this EIP.
-func (mg *EIP) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this Eip.
+func (mg *Eip) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this EIP.
+SetProviderReference of this Eip.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *EIP) SetProviderReference(r *xpv1.Reference) {
+func (mg *Eip) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetPublishConnectionDetailsTo of this EIP.
-func (mg *EIP) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this Eip.
+func (mg *Eip) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this EIP.
-func (mg *EIP) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this Eip.
+func (mg *Eip) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
@@ -346,138 +346,6 @@ func (mg *EipAssociation) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectio
 
 // SetWriteConnectionSecretToReference of this EipAssociation.
 func (mg *EipAssociation) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
-// GetCondition of this Eni.
-func (mg *Eni) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this Eni.
-func (mg *Eni) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetProviderConfigReference of this Eni.
-func (mg *Eni) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this Eni.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *Eni) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
-// GetPublishConnectionDetailsTo of this Eni.
-func (mg *Eni) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
-// GetWriteConnectionSecretToReference of this Eni.
-func (mg *Eni) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this Eni.
-func (mg *Eni) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this Eni.
-func (mg *Eni) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetProviderConfigReference of this Eni.
-func (mg *Eni) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this Eni.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *Eni) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Eni.
-func (mg *Eni) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
-// SetWriteConnectionSecretToReference of this Eni.
-func (mg *Eni) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
-// GetCondition of this EniAttachment.
-func (mg *EniAttachment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this EniAttachment.
-func (mg *EniAttachment) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetProviderConfigReference of this EniAttachment.
-func (mg *EniAttachment) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this EniAttachment.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *EniAttachment) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
-// GetPublishConnectionDetailsTo of this EniAttachment.
-func (mg *EniAttachment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
-// GetWriteConnectionSecretToReference of this EniAttachment.
-func (mg *EniAttachment) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this EniAttachment.
-func (mg *EniAttachment) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this EniAttachment.
-func (mg *EniAttachment) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetProviderConfigReference of this EniAttachment.
-func (mg *EniAttachment) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this EniAttachment.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *EniAttachment) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
-}
-
-// SetPublishConnectionDetailsTo of this EniAttachment.
-func (mg *EniAttachment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
-// SetWriteConnectionSecretToReference of this EniAttachment.
-func (mg *EniAttachment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

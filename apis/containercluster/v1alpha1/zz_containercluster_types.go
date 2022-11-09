@@ -25,7 +25,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ClusterObservation struct {
+type ContainerClusterObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	KubernetesVersion *string `json:"kubernetesVersion,omitempty" tf:"kubernetes_version,omitempty"`
@@ -39,7 +39,7 @@ type ClusterObservation struct {
 	TotalMem *float64 `json:"totalMem,omitempty" tf:"total_mem,omitempty"`
 }
 
-type ClusterParameters struct {
+type ContainerClusterParameters struct {
 
 	// The network bandwidth of the node.
 	// +kubebuilder:validation:Required
@@ -162,51 +162,51 @@ type ClusterParameters struct {
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
 }
 
-// ClusterSpec defines the desired state of Cluster
-type ClusterSpec struct {
+// ContainerClusterSpec defines the desired state of ContainerCluster
+type ContainerClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClusterParameters `json:"forProvider"`
+	ForProvider     ContainerClusterParameters `json:"forProvider"`
 }
 
-// ClusterStatus defines the observed state of Cluster.
-type ClusterStatus struct {
+// ContainerClusterStatus defines the observed state of ContainerCluster.
+type ContainerClusterStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClusterObservation `json:"atProvider,omitempty"`
+	AtProvider        ContainerClusterObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// Cluster is the Schema for the Clusters API
+// ContainerCluster is the Schema for the ContainerClusters API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloudjet}
-type Cluster struct {
+type ContainerCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ClusterSpec   `json:"spec"`
-	Status            ClusterStatus `json:"status,omitempty"`
+	Spec              ContainerClusterSpec   `json:"spec"`
+	Status            ContainerClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ClusterList contains a list of Clusters
-type ClusterList struct {
+// ContainerClusterList contains a list of ContainerClusters
+type ContainerClusterList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Cluster `json:"items"`
+	Items           []ContainerCluster `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Cluster_Kind             = "Cluster"
-	Cluster_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Cluster_Kind}.String()
-	Cluster_KindAPIVersion   = Cluster_Kind + "." + CRDGroupVersion.String()
-	Cluster_GroupVersionKind = CRDGroupVersion.WithKind(Cluster_Kind)
+	ContainerCluster_Kind             = "ContainerCluster"
+	ContainerCluster_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ContainerCluster_Kind}.String()
+	ContainerCluster_KindAPIVersion   = ContainerCluster_Kind + "." + CRDGroupVersion.String()
+	ContainerCluster_GroupVersionKind = CRDGroupVersion.WithKind(ContainerCluster_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Cluster{}, &ClusterList{})
+	SchemeBuilder.Register(&ContainerCluster{}, &ContainerClusterList{})
 }

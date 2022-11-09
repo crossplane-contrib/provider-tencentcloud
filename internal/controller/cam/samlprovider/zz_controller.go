@@ -33,16 +33,17 @@ import (
 	v1alpha1 "github.com/crossplane-contrib/provider-tencentcloud/apis/cam/v1alpha1"
 )
 
-// Setup adds a controller that reconciles SamlProvider managed resources.
+// Setup adds a controller that reconciles SAMLProvider managed resources.
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
-	name := managed.ControllerName(v1alpha1.SamlProvider_GroupVersionKind.String())
+	name := managed.ControllerName(v1alpha1.SAMLProvider_GroupVersionKind.String())
 	var initializers managed.InitializerChain
+	initializers = append(initializers, managed.NewNameAsExternalName(mgr.GetClient()))
 	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
 	if o.SecretStoreConfigGVK != nil {
 		cps = append(cps, connection.NewDetailsManager(mgr.GetClient(), *o.SecretStoreConfigGVK))
 	}
 	r := managed.NewReconciler(mgr,
-		xpresource.ManagedKind(v1alpha1.SamlProvider_GroupVersionKind),
+		xpresource.ManagedKind(v1alpha1.SAMLProvider_GroupVersionKind),
 		managed.WithExternalConnecter(tjcontroller.NewConnector(mgr.GetClient(), o.WorkspaceStore, o.SetupFn, o.Provider.Resources["tencentcloud_cam_saml_provider"])),
 		managed.WithLogger(o.Logger.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
@@ -55,6 +56,6 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		Named(name).
 		WithOptions(o.ForControllerRuntime()).
-		For(&v1alpha1.SamlProvider{}).
+		For(&v1alpha1.SAMLProvider{}).
 		Complete(ratelimiter.NewReconciler(name, r, o.GlobalRateLimiter))
 }

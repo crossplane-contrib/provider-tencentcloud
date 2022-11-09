@@ -20,23 +20,25 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupCcn = "ccn"
+
 // Configure configures the ccn group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_ccn", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "ccn"
+		r.ShortGroup = shortGroupCcn
 		r.Kind = "CCN"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_ccn_attachment", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "ccn"
+		r.ShortGroup = shortGroupCcn
 		r.Kind = "Attachment"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_ccn_bandwidth_limit", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "ccn"
+		r.ShortGroup = shortGroupCcn
 		r.Kind = "BandwidthLimit"
 		r.References["ccn_id"] = tjconfig.Reference{
 			Type: "CCN",

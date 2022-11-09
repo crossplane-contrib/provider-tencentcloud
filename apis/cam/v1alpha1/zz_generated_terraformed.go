@@ -617,18 +617,18 @@ func (tr *RoleSSO) GetTerraformSchemaVersion() int {
 	return 0
 }
 
-// GetTerraformResourceType returns Terraform resource type for this SamlProvider
-func (mg *SamlProvider) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this SAMLProvider
+func (mg *SAMLProvider) GetTerraformResourceType() string {
 	return "tencentcloud_cam_saml_provider"
 }
 
-// GetConnectionDetailsMapping for this SamlProvider
-func (tr *SamlProvider) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this SAMLProvider
+func (tr *SAMLProvider) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this SamlProvider
-func (tr *SamlProvider) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this SAMLProvider
+func (tr *SAMLProvider) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -637,8 +637,8 @@ func (tr *SamlProvider) GetObservation() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this SamlProvider
-func (tr *SamlProvider) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this SAMLProvider
+func (tr *SAMLProvider) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -646,16 +646,16 @@ func (tr *SamlProvider) SetObservation(obs map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this SamlProvider
-func (tr *SamlProvider) GetID() string {
+// GetID returns ID of underlying Terraform resource of this SAMLProvider
+func (tr *SAMLProvider) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this SamlProvider
-func (tr *SamlProvider) GetParameters() (map[string]interface{}, error) {
+// GetParameters of this SAMLProvider
+func (tr *SAMLProvider) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -664,8 +664,8 @@ func (tr *SamlProvider) GetParameters() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this SamlProvider
-func (tr *SamlProvider) SetParameters(params map[string]interface{}) error {
+// SetParameters for this SAMLProvider
+func (tr *SAMLProvider) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -673,10 +673,10 @@ func (tr *SamlProvider) SetParameters(params map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this SamlProvider using its observed tfState.
+// LateInitialize this SAMLProvider using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *SamlProvider) LateInitialize(attrs []byte) (bool, error) {
-	params := &SamlProviderParameters{}
+func (tr *SAMLProvider) LateInitialize(attrs []byte) (bool, error) {
+	params := &SAMLProviderParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -687,7 +687,7 @@ func (tr *SamlProvider) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *SamlProvider) GetTerraformSchemaVersion() int {
+func (tr *SAMLProvider) GetTerraformSchemaVersion() int {
 	return 0
 }
 

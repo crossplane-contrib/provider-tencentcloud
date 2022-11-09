@@ -20,17 +20,19 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupAs = "as"
+
 // Configure configures the as group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_as_scaling_config", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "ScalingConfig"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_as_scaling_group", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "ScalingGroup"
 		r.References["configuration_id"] = tjconfig.Reference{
 			Type: "ScalingConfig",
@@ -39,7 +41,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_as_attachment", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "Attachment"
 		r.References["scaling_group_id"] = tjconfig.Reference{
 			Type: "ScalingGroup",
@@ -48,7 +50,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_as_scaling_policy", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "ScalingPolicy"
 		r.References["scaling_group_id"] = tjconfig.Reference{
 			Type: "ScalingGroup",
@@ -57,7 +59,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_as_schedule", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "Schedule"
 		r.References["scaling_group_id"] = tjconfig.Reference{
 			Type: "ScalingGroup",
@@ -66,7 +68,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_as_lifecycle_hook", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "LifecycleHook"
 		r.References["scaling_group_id"] = tjconfig.Reference{
 			Type: "ScalingGroup",
@@ -75,7 +77,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_as_notification", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "as"
+		r.ShortGroup = shortGroupAs
 		r.Kind = "Notification"
 		r.References["scaling_group_id"] = tjconfig.Reference{
 			Type: "ScalingGroup",

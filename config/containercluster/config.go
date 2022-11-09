@@ -14,23 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package container_cluster
+package containercluster
 
 import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupContainerCluster = "containercluster"
+
 // Configure configures the container_cluster group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_container_cluster", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "containercluster"
+		r.ShortGroup = shortGroupContainerCluster
 		r.Kind = "ContainerCluster"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_container_cluster_instance", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "containercluster"
+		r.ShortGroup = shortGroupContainerCluster
 		r.Kind = "ContainerClusterInstance"
 		r.References["cluster_id"] = tjconfig.Reference{
 			Type: "ContainerCluster",

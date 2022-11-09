@@ -20,23 +20,25 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupTcr = "tcr"
+
 // Configure configures the tcr group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_tcr_instance", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "tcr"
+		r.ShortGroup = shortGroupTcr
 		r.Kind = "Instance"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_tcr_namespace", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "tcr"
+		r.ShortGroup = shortGroupTcr
 		r.Kind = "Namespace"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_tcr_repository", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "tcr"
+		r.ShortGroup = shortGroupTcr
 		r.Kind = "Repository"
 		r.References["instance_id"] = tjconfig.Reference{
 			Type: "Instance",
@@ -45,7 +47,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_tcr_token", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "tcr"
+		r.ShortGroup = shortGroupTcr
 		r.Kind = "Token"
 		r.References["instance_id"] = tjconfig.Reference{
 			Type: "Instance",
@@ -54,7 +56,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_tcr_vpc_attachment", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "tcr"
+		r.ShortGroup = shortGroupTcr
 		r.Kind = "VpcAttachment"
 		r.References["instance_id"] = tjconfig.Reference{
 			Type: "Instance",

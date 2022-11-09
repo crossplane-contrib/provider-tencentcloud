@@ -547,69 +547,69 @@ func (mg *RoleSSO) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) 
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this SamlProvider.
-func (mg *SamlProvider) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this SAMLProvider.
+func (mg *SAMLProvider) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this SamlProvider.
-func (mg *SamlProvider) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this SAMLProvider.
+func (mg *SAMLProvider) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this SamlProvider.
-func (mg *SamlProvider) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this SAMLProvider.
+func (mg *SAMLProvider) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this SamlProvider.
+GetProviderReference of this SAMLProvider.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *SamlProvider) GetProviderReference() *xpv1.Reference {
+func (mg *SAMLProvider) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetPublishConnectionDetailsTo of this SamlProvider.
-func (mg *SamlProvider) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this SAMLProvider.
+func (mg *SAMLProvider) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this SamlProvider.
-func (mg *SamlProvider) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this SAMLProvider.
+func (mg *SAMLProvider) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this SamlProvider.
-func (mg *SamlProvider) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this SAMLProvider.
+func (mg *SAMLProvider) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this SamlProvider.
-func (mg *SamlProvider) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this SAMLProvider.
+func (mg *SAMLProvider) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this SamlProvider.
-func (mg *SamlProvider) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this SAMLProvider.
+func (mg *SAMLProvider) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this SamlProvider.
+SetProviderReference of this SAMLProvider.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *SamlProvider) SetProviderReference(r *xpv1.Reference) {
+func (mg *SAMLProvider) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetPublishConnectionDetailsTo of this SamlProvider.
-func (mg *SamlProvider) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this SAMLProvider.
+func (mg *SAMLProvider) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this SamlProvider.
-func (mg *SamlProvider) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this SAMLProvider.
+func (mg *SAMLProvider) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

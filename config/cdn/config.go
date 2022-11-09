@@ -20,23 +20,25 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupCdn = "cdn"
+
 // Configure configures the cdn group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_cdn_domain", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cdn"
+		r.ShortGroup = shortGroupCdn
 		r.Kind = "Domain"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_cdn_url_purge", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cdn"
+		r.ShortGroup = shortGroupCdn
 		r.Kind = "UrlPurge"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_cdn_url_push", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cdn"
+		r.ShortGroup = shortGroupCdn
 		r.Kind = "UrlPush"
 	})
 }

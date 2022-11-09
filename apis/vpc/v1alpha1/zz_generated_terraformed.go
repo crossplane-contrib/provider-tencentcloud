@@ -247,18 +247,18 @@ func (tr *Dnat) GetTerraformSchemaVersion() int {
 	return 0
 }
 
-// GetTerraformResourceType returns Terraform resource type for this EIP
-func (mg *EIP) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this Eip
+func (mg *Eip) GetTerraformResourceType() string {
 	return "tencentcloud_eip"
 }
 
-// GetConnectionDetailsMapping for this EIP
-func (tr *EIP) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this Eip
+func (tr *Eip) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this EIP
-func (tr *EIP) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this Eip
+func (tr *Eip) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -267,8 +267,8 @@ func (tr *EIP) GetObservation() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this EIP
-func (tr *EIP) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this Eip
+func (tr *Eip) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -276,16 +276,16 @@ func (tr *EIP) SetObservation(obs map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this EIP
-func (tr *EIP) GetID() string {
+// GetID returns ID of underlying Terraform resource of this Eip
+func (tr *Eip) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this EIP
-func (tr *EIP) GetParameters() (map[string]interface{}, error) {
+// GetParameters of this Eip
+func (tr *Eip) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -294,8 +294,8 @@ func (tr *EIP) GetParameters() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this EIP
-func (tr *EIP) SetParameters(params map[string]interface{}) error {
+// SetParameters for this Eip
+func (tr *Eip) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -303,10 +303,10 @@ func (tr *EIP) SetParameters(params map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this EIP using its observed tfState.
+// LateInitialize this Eip using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *EIP) LateInitialize(attrs []byte) (bool, error) {
-	params := &EIPParameters{}
+func (tr *Eip) LateInitialize(attrs []byte) (bool, error) {
+	params := &EipParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -317,7 +317,7 @@ func (tr *EIP) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *EIP) GetTerraformSchemaVersion() int {
+func (tr *Eip) GetTerraformSchemaVersion() int {
 	return 0
 }
 
@@ -392,154 +392,6 @@ func (tr *EipAssociation) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *EipAssociation) GetTerraformSchemaVersion() int {
-	return 0
-}
-
-// GetTerraformResourceType returns Terraform resource type for this Eni
-func (mg *Eni) GetTerraformResourceType() string {
-	return "tencentcloud_eni"
-}
-
-// GetConnectionDetailsMapping for this Eni
-func (tr *Eni) GetConnectionDetailsMapping() map[string]string {
-	return nil
-}
-
-// GetObservation of this Eni
-func (tr *Eni) GetObservation() (map[string]interface{}, error) {
-	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]interface{}{}
-	return base, json.TFParser.Unmarshal(o, &base)
-}
-
-// SetObservation for this Eni
-func (tr *Eni) SetObservation(obs map[string]interface{}) error {
-	p, err := json.TFParser.Marshal(obs)
-	if err != nil {
-		return err
-	}
-	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
-}
-
-// GetID returns ID of underlying Terraform resource of this Eni
-func (tr *Eni) GetID() string {
-	if tr.Status.AtProvider.ID == nil {
-		return ""
-	}
-	return *tr.Status.AtProvider.ID
-}
-
-// GetParameters of this Eni
-func (tr *Eni) GetParameters() (map[string]interface{}, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]interface{}{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
-// SetParameters for this Eni
-func (tr *Eni) SetParameters(params map[string]interface{}) error {
-	p, err := json.TFParser.Marshal(params)
-	if err != nil {
-		return err
-	}
-	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// LateInitialize this Eni using its observed tfState.
-// returns True if there are any spec changes for the resource.
-func (tr *Eni) LateInitialize(attrs []byte) (bool, error) {
-	params := &EniParameters{}
-	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
-		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
-	}
-	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
-
-	li := resource.NewGenericLateInitializer(opts...)
-	return li.LateInitialize(&tr.Spec.ForProvider, params)
-}
-
-// GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *Eni) GetTerraformSchemaVersion() int {
-	return 0
-}
-
-// GetTerraformResourceType returns Terraform resource type for this EniAttachment
-func (mg *EniAttachment) GetTerraformResourceType() string {
-	return "tencentcloud_eni_attachment"
-}
-
-// GetConnectionDetailsMapping for this EniAttachment
-func (tr *EniAttachment) GetConnectionDetailsMapping() map[string]string {
-	return nil
-}
-
-// GetObservation of this EniAttachment
-func (tr *EniAttachment) GetObservation() (map[string]interface{}, error) {
-	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]interface{}{}
-	return base, json.TFParser.Unmarshal(o, &base)
-}
-
-// SetObservation for this EniAttachment
-func (tr *EniAttachment) SetObservation(obs map[string]interface{}) error {
-	p, err := json.TFParser.Marshal(obs)
-	if err != nil {
-		return err
-	}
-	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
-}
-
-// GetID returns ID of underlying Terraform resource of this EniAttachment
-func (tr *EniAttachment) GetID() string {
-	if tr.Status.AtProvider.ID == nil {
-		return ""
-	}
-	return *tr.Status.AtProvider.ID
-}
-
-// GetParameters of this EniAttachment
-func (tr *EniAttachment) GetParameters() (map[string]interface{}, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]interface{}{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
-// SetParameters for this EniAttachment
-func (tr *EniAttachment) SetParameters(params map[string]interface{}) error {
-	p, err := json.TFParser.Marshal(params)
-	if err != nil {
-		return err
-	}
-	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// LateInitialize this EniAttachment using its observed tfState.
-// returns True if there are any spec changes for the resource.
-func (tr *EniAttachment) LateInitialize(attrs []byte) (bool, error) {
-	params := &EniAttachmentParameters{}
-	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
-		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
-	}
-	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
-
-	li := resource.NewGenericLateInitializer(opts...)
-	return li.LateInitialize(&tr.Spec.ForProvider, params)
-}
-
-// GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *EniAttachment) GetTerraformSchemaVersion() int {
 	return 0
 }
 

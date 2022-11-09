@@ -20,11 +20,13 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 )
 
+const shortGroupCvm = "cvm"
+
 // Configure configures the cvm group
 func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_instance", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cvm"
+		r.ShortGroup = shortGroupCvm
 		r.References["vpc_id"] = tjconfig.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
@@ -35,7 +37,7 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_instance_set", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cvm"
+		r.ShortGroup = shortGroupCvm
 		r.Kind = "InstanceSet"
 		r.References["vpc_id"] = tjconfig.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
@@ -47,24 +49,24 @@ func Configure(p *tjconfig.Provider) {
 
 	p.AddResourceConfigurator("tencentcloud_key_pair", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cvm"
+		r.ShortGroup = shortGroupCvm
 		r.Kind = "KeyPair"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_placement_group", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cvm"
+		r.ShortGroup = shortGroupCvm
 		r.Kind = "PlacementGroup"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_reserved_instance", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cvm"
+		r.ShortGroup = shortGroupCvm
 		r.Kind = "ReservedInstance"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_image", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = "cvm"
+		r.ShortGroup = shortGroupCvm
 	})
 }

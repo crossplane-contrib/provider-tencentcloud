@@ -31,10 +31,11 @@ import (
 	v1alpha1cdn "github.com/crossplane-contrib/provider-tencentcloud/apis/cdn/v1alpha1"
 	v1alpha1cfs "github.com/crossplane-contrib/provider-tencentcloud/apis/cfs/v1alpha1"
 	v1alpha1clb "github.com/crossplane-contrib/provider-tencentcloud/apis/clb/v1alpha1"
-	v1alpha1container "github.com/crossplane-contrib/provider-tencentcloud/apis/container/v1alpha1"
+	v1alpha1containercluster "github.com/crossplane-contrib/provider-tencentcloud/apis/containercluster/v1alpha1"
 	v1alpha1cos "github.com/crossplane-contrib/provider-tencentcloud/apis/cos/v1alpha1"
 	v1alpha1cvm "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1"
 	v1alpha1cynosdb "github.com/crossplane-contrib/provider-tencentcloud/apis/cynosdb/v1alpha1"
+	v1alpha1eni "github.com/crossplane-contrib/provider-tencentcloud/apis/eni/v1alpha1"
 	v1alpha1privatedns "github.com/crossplane-contrib/provider-tencentcloud/apis/privatedns/v1alpha1"
 	v1alpha1ssl "github.com/crossplane-contrib/provider-tencentcloud/apis/ssl/v1alpha1"
 	v1alpha1tcr "github.com/crossplane-contrib/provider-tencentcloud/apis/tcr/v1alpha1"
@@ -55,10 +56,11 @@ func init() {
 		v1alpha1cdn.SchemeBuilder.AddToScheme,
 		v1alpha1cfs.SchemeBuilder.AddToScheme,
 		v1alpha1clb.SchemeBuilder.AddToScheme,
-		v1alpha1container.SchemeBuilder.AddToScheme,
+		v1alpha1containercluster.SchemeBuilder.AddToScheme,
 		v1alpha1cos.SchemeBuilder.AddToScheme,
 		v1alpha1cvm.SchemeBuilder.AddToScheme,
 		v1alpha1cynosdb.SchemeBuilder.AddToScheme,
+		v1alpha1eni.SchemeBuilder.AddToScheme,
 		v1alpha1privatedns.SchemeBuilder.AddToScheme,
 		v1alpha1ssl.SchemeBuilder.AddToScheme,
 		v1alpha1tcr.SchemeBuilder.AddToScheme,

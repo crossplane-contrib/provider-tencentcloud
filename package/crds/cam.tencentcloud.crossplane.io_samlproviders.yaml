@@ -13,8 +13,8 @@ spec:
     - crossplane
     - managed
     - tencentcloudjet
-    kind: SamlProvider
-    listKind: SamlProviderList
+    kind: SAMLProvider
+    listKind: SAMLProviderList
     plural: samlproviders
     singular: samlprovider
   scope: Cluster
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SamlProvider is the Schema for the SamlProviders API
+        description: SAMLProvider is the Schema for the SAMLProviders API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: SamlProviderSpec defines the desired state of SamlProvider
+            description: SAMLProviderSpec defines the desired state of SAMLProvider
             properties:
               deletionPolicy:
                 default: Delete
@@ -69,13 +69,9 @@ spec:
                   metaData:
                     description: The meta data document of the CAM SAML provider.
                     type: string
-                  name:
-                    description: Name of CAM SAML provider.
-                    type: string
                 required:
                 - description
                 - metaData
-                - name
                 type: object
               providerConfigRef:
                 default:
@@ -249,7 +245,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: SamlProviderStatus defines the observed state of SamlProvider.
+            description: SAMLProviderStatus defines the observed state of SAMLProvider.
             properties:
               atProvider:
                 properties:

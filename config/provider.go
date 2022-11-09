@@ -32,9 +32,11 @@ import (
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cdn"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cfs"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/clb"
+	"github.com/crossplane-contrib/provider-tencentcloud/config/containercluster"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cos"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cvm"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cynosdb"
+	"github.com/crossplane-contrib/provider-tencentcloud/config/eni"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/privatedns"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/ssl"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tcr"
@@ -60,8 +62,6 @@ var IncludedResources = []string{
 	"tencentcloud_subnet$",
 	"tencentcloud_eip$",
 	"tencentcloud_eip_association$",
-	"tencentcloud_eni$",
-	"tencentcloud_eni_attachment$",
 	"tencentcloud_ha_vip$",
 	"tencentcloud_security_group$",
 	"tencentcloud_security_group_rule$",
@@ -78,6 +78,7 @@ var IncludedResources = []string{
 	"tencentcloud_dnat$",
 	"tencentcloud_vpc_bandwidth_package$",
 	"tencentcloud_vpc_bandwidth_package_attachment$",
+
 	// VPN
 	"tencentcloud_vpn_gateway$",
 	"tencentcloud_vpn_ssl_client$",
@@ -94,10 +95,10 @@ var IncludedResources = []string{
 	"tencentcloud_reserved_instance$",
 	"tencentcloud_image$",
 
-	//audit
+	// audit
 	"tencentcloud_audit$",
 
-	//as
+	// as
 	"tencentcloud_as_scaling_config$",
 	"tencentcloud_as_scaling_group$",
 	"tencentcloud_as_attachment$",
@@ -106,12 +107,12 @@ var IncludedResources = []string{
 	"tencentcloud_as_lifecycle_hook$",
 	"tencentcloud_as_notification$",
 
-	//cdn
+	// cdn
 	"tencentcloud_cdn_domain$",
 	"tencentcloud_cdn_url_purge$",
 	"tencentcloud_cdn_url_push$",
 
-	//cam
+	// cam
 	"tencentcloud_cam_role$",
 	"tencentcloud_cam_role_sso$",
 	"tencentcloud_cam_policy$",
@@ -124,7 +125,7 @@ var IncludedResources = []string{
 	"tencentcloud_cam_user_policy_attachment$",
 	"tencentcloud_cam_saml_provider$",
 
-	//cbs
+	// cbs
 	"tencentcloud_cbs_storage$",
 	"tencentcloud_cbs_storage_set$",
 	"tencentcloud_cbs_storage_attachment$",
@@ -132,24 +133,24 @@ var IncludedResources = []string{
 	"tencentcloud_cbs_snapshot_policy$",
 	"tencentcloud_cbs_snapshot_policy_attachment$",
 
-	//ccn
+	// ccn
 	"tencentcloud_ccn$",
 	"tencentcloud_ccn_attachment$",
 	"tencentcloud_ccn_bandwidth_limit$",
 
-	//cdh
+	// cdh
 	"tencentcloud_cdh_instance$",
 
-	//cfs
+	// cfs
 	"tencentcloud_cfs_file_system$",
 	"tencentcloud_cfs_access_group$",
 	"tencentcloud_cfs_access_rule$",
 
-	//container_cluster
+	// container_cluster
 	"tencentcloud_container_cluster$",
 	"tencentcloud_container_cluster_instance$",
 
-	//clb
+	// clb
 	"tencentcloud_clb_instance$",
 	"tencentcloud_clb_listener$",
 	"tencentcloud_clb_listener_rule$",
@@ -165,29 +166,29 @@ var IncludedResources = []string{
 	"tencentcloud_lb$",
 	"tencentcloud_alb_server_attachment$",
 
-	//cos
+	// cos
 	"tencentcloud_cos_bucket$",
 	"tencentcloud_cos_bucket_policy$",
 	"tencentcloud_cos_bucket_object$",
 	"tencentcloud_cos_bucket_domain_certificate_attachment$",
 
-	//cynosdb
+	// cynosdb
 	"tencentcloud_cynosdb_cluster$",
 	"tencentcloud_cynosdb_readonly_instance$",
 
-	//ssl
+	// ssl
 	"tencentcloud_ssl_certificate$",
 	"tencentcloud_ssl_free_certificate$",
 	"tencentcloud_ssl_pay_certificate$",
 
-	//tcr
+	// tcr
 	"tencentcloud_tcr_instance$",
 	"tencentcloud_tcr_namespace$",
 	"tencentcloud_tcr_repository$",
 	"tencentcloud_tcr_token$",
 	"tencentcloud_tcr_vpc_attachment$",
 
-	//vod
+	// vod
 	"tencentcloud_vod_adaptive_dynamic_streaming_template$",
 	"tencentcloud_vod_procedure_template$",
 	"tencentcloud_vod_snapshot_by_time_offset_template$",
@@ -195,9 +196,13 @@ var IncludedResources = []string{
 	"tencentcloud_vod_super_player_config$",
 	"tencentcloud_vod_sub_application$",
 
-	//private dns
+	// private dns
 	"tencentcloud_private_dns_record$",
 	"tencentcloud_private_dns_zone$",
+
+	// eni
+	"tencentcloud_eni$",
+	"tencentcloud_eni_attachment$",
 }
 
 // skipList
@@ -238,6 +243,8 @@ func GetProvider() *tjconfig.Provider {
 		tcr.Configure,
 		vod.Configure,
 		privatedns.Configure,
+		containercluster.Configure,
+		eni.Configure,
 	} {
 		configure(pc)
 	}
