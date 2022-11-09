@@ -22,8 +22,24 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-tencentcloud/apis/as/v1alpha1"
+	v1alpha1audit "github.com/crossplane-contrib/provider-tencentcloud/apis/audit/v1alpha1"
+	v1alpha1cam "github.com/crossplane-contrib/provider-tencentcloud/apis/cam/v1alpha1"
+	v1alpha1cbs "github.com/crossplane-contrib/provider-tencentcloud/apis/cbs/v1alpha1"
+	v1alpha1ccn "github.com/crossplane-contrib/provider-tencentcloud/apis/ccn/v1alpha1"
+	v1alpha1cdh "github.com/crossplane-contrib/provider-tencentcloud/apis/cdh/v1alpha1"
+	v1alpha1cdn "github.com/crossplane-contrib/provider-tencentcloud/apis/cdn/v1alpha1"
+	v1alpha1cfs "github.com/crossplane-contrib/provider-tencentcloud/apis/cfs/v1alpha1"
+	v1alpha1clb "github.com/crossplane-contrib/provider-tencentcloud/apis/clb/v1alpha1"
+	v1alpha1container "github.com/crossplane-contrib/provider-tencentcloud/apis/container/v1alpha1"
+	v1alpha1cos "github.com/crossplane-contrib/provider-tencentcloud/apis/cos/v1alpha1"
+	v1alpha1cvm "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1"
+	v1alpha1cynosdb "github.com/crossplane-contrib/provider-tencentcloud/apis/cynosdb/v1alpha1"
+	v1alpha1privatedns "github.com/crossplane-contrib/provider-tencentcloud/apis/privatedns/v1alpha1"
+	v1alpha1ssl "github.com/crossplane-contrib/provider-tencentcloud/apis/ssl/v1alpha1"
+	v1alpha1tcr "github.com/crossplane-contrib/provider-tencentcloud/apis/tcr/v1alpha1"
 	v1alpha1apis "github.com/crossplane-contrib/provider-tencentcloud/apis/v1alpha1"
+	v1alpha1vod "github.com/crossplane-contrib/provider-tencentcloud/apis/vod/v1alpha1"
 	v1alpha1vpc "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1"
 )
 
@@ -31,7 +47,23 @@ func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1audit.SchemeBuilder.AddToScheme,
+		v1alpha1cam.SchemeBuilder.AddToScheme,
+		v1alpha1cbs.SchemeBuilder.AddToScheme,
+		v1alpha1ccn.SchemeBuilder.AddToScheme,
+		v1alpha1cdh.SchemeBuilder.AddToScheme,
+		v1alpha1cdn.SchemeBuilder.AddToScheme,
+		v1alpha1cfs.SchemeBuilder.AddToScheme,
+		v1alpha1clb.SchemeBuilder.AddToScheme,
+		v1alpha1container.SchemeBuilder.AddToScheme,
+		v1alpha1cos.SchemeBuilder.AddToScheme,
+		v1alpha1cvm.SchemeBuilder.AddToScheme,
+		v1alpha1cynosdb.SchemeBuilder.AddToScheme,
+		v1alpha1privatedns.SchemeBuilder.AddToScheme,
+		v1alpha1ssl.SchemeBuilder.AddToScheme,
+		v1alpha1tcr.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
+		v1alpha1vod.SchemeBuilder.AddToScheme,
 		v1alpha1vpc.SchemeBuilder.AddToScheme,
 	)
 }

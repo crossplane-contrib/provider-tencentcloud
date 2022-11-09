@@ -1,0 +1,466 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: paycertificates.ssl.tencentcloud.crossplane.io
+spec:
+  group: ssl.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: PayCertificate
+    listKind: PayCertificateList
+    plural: paycertificates
+    singular: paycertificate
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PayCertificate is the Schema for the PayCertificates API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PayCertificateSpec defines the desired state of PayCertificate
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  alias:
+                    description: Remark name.
+                    type: string
+                  domainNum:
+                    description: Number of domain names included in the certificate.
+                    type: number
+                  information:
+                    description: Certificate information.
+                    items:
+                      properties:
+                        adminEmail:
+                          description: The administrator's email address.
+                          type: string
+                        adminFirstName:
+                          description: The first name of the administrator.
+                          type: string
+                        adminLastName:
+                          description: The last name of the administrator.
+                          type: string
+                        adminPhoneNum:
+                          description: Manager mobile phone number.
+                          type: string
+                        adminPosition:
+                          description: Manager position.
+                          type: string
+                        certificateDomain:
+                          description: Domain name for binding certificate.
+                          type: string
+                        contactEmail:
+                          description: Contact email address.
+                          type: string
+                        contactFirstName:
+                          description: Contact first name.
+                          type: string
+                        contactLastName:
+                          description: Contact last name.
+                          type: string
+                        contactNumber:
+                          description: Contact phone number.
+                          type: string
+                        contactPosition:
+                          description: Contact position.
+                          type: string
+                        csrContent:
+                          description: CSR content uploaded.
+                          type: string
+                        csrType:
+                          description: 'CSR generation method. Valid values: `online`,
+                            `parse`. `online` means online generation, `parse` means
+                            manual upload.'
+                          type: string
+                        domainList:
+                          description: Array of uploaded domain names, multi-domain
+                            certificates can be uploaded.
+                          items:
+                            type: string
+                          type: array
+                        keyPassword:
+                          description: Private key password.
+                          type: string
+                        organizationAddress:
+                          description: Company address.
+                          type: string
+                        organizationCity:
+                          description: Company city.
+                          type: string
+                        organizationCountry:
+                          description: 'Country name, such as China: CN.'
+                          type: string
+                        organizationDivision:
+                          description: Department name.
+                          type: string
+                        organizationName:
+                          description: Company name.
+                          type: string
+                        organizationRegion:
+                          description: The province where the company is located.
+                          type: string
+                        phoneAreaCode:
+                          description: Company landline area code.
+                          type: string
+                        phoneNumber:
+                          description: Company landline number.
+                          type: string
+                        postalCode:
+                          description: Company postal code.
+                          type: string
+                        verifyType:
+                          description: 'Certificate verification method. Valid values:
+                            `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic
+                            DNS verification, this verification type is only supported
+                            for domain names resolved by Tencent Cloud and the resolution
+                            status is normal, `DNS` means manual DNS verification,
+                            `FILE` means file verification.'
+                          type: string
+                      required:
+                      - adminEmail
+                      - adminFirstName
+                      - adminLastName
+                      - adminPhoneNum
+                      - adminPosition
+                      - certificateDomain
+                      - contactEmail
+                      - contactFirstName
+                      - contactLastName
+                      - contactNumber
+                      - contactPosition
+                      - organizationAddress
+                      - organizationCity
+                      - organizationCountry
+                      - organizationDivision
+                      - organizationName
+                      - organizationRegion
+                      - phoneAreaCode
+                      - phoneNumber
+                      - postalCode
+                      - verifyType
+                      type: object
+                    type: array
+                  productId:
+                    description: 'Certificate commodity ID. Valid value ranges: (3~42).
+                      `3` means SecureSite Enhanced Enterprise Edition (EV Pro), `4`
+                      means SecureSite Enhanced (EV), `5` means SecureSite Enterprise
+                      Professional Edition (OV Pro), `6` means SecureSite Enterprise
+                      (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8`
+                      means Geotrust enhanced (EV), `9` means Geotrust enterprise
+                      (OV), `10` means Geotrust enterprise (OV) wildcard, `11` means
+                      TrustAsia domain type multi-domain SSL certificate, `12` means
+                      TrustAsia domain type ( DV) wildcard, `13` means TrustAsia enterprise
+                      wildcard (OV) SSL certificate (D3), `14` means TrustAsia enterprise
+                      (OV) SSL certificate (D3), `15` means TrustAsia enterprise multi-domain
+                      (OV) SSL certificate (D3), `16` means TrustAsia Enhanced (EV)
+                      SSL Certificate (D3), `17` means TrustAsia Enhanced Multiple
+                      Domain (EV) SSL Certificate (D3), `18` means GlobalSign Enterprise
+                      (OV) SSL Certificate, `19` means GlobalSign Enterprise Wildcard
+                      (OV) SSL Certificate, `20` means GlobalSign Enhanced (EV) SSL
+                      Certificate, `21` means TrustAsia Enterprise Wildcard Multiple
+                      Domain (OV) SSL Certificate (D3), `22` means GlobalSign Enterprise
+                      Multiple Domain (OV) SSL Certificate, `23` means GlobalSign
+                      Enterprise Multiple Wildcard Domain name (OV) SSL certificate,
+                      `24` means GlobalSign enhanced multi-domain (EV) SSL certificate,
+                      `25` means Wotrus domain type certificate, `26` means Wotrus
+                      domain type multi-domain certificate, `27` means Wotrus domain
+                      type wildcard certificate, `28` means Wotrus enterprise type
+                      certificate, `29` means Wotrus enterprise multi-domain certificate,
+                      `30` means Wotrus enterprise wildcard certificate, `31` means
+                      Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain
+                      certificate, `33` means DNSPod national secret domain name certificate,
+                      `34` means DNSPod national secret domain name certificate Multi-domain
+                      certificate, `35` means DNSPod national secret domain name wildcard
+                      certificate, `37` means DNSPod national secret enterprise certificate,
+                      `38` means DNSPod national secret enterprise multi-domain certificate,
+                      `39` means DNSPod national secret enterprise wildcard certificate,
+                      `40` means DNSPod national secret increase Strong certificate,
+                      `41` means DNSPod national secret enhanced multi-domain certificate,
+                      `42` means TrustAsia domain-type wildcard multi-domain certificate.'
+                    type: number
+                  projectId:
+                    description: The ID of project.
+                    type: number
+                  timeSpan:
+                    description: Certificate period, currently only supports 1 year
+                      certificate purchase.
+                    type: number
+                required:
+                - domainNum
+                - information
+                - productId
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: PayCertificateStatus defines the observed state of PayCertificate.
+            properties:
+              atProvider:
+                properties:
+                  certificateId:
+                    type: string
+                  id:
+                    type: string
+                  orderId:
+                    type: string
+                  status:
+                    type: number
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

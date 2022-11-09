@@ -32,4 +32,39 @@ func Configure(p *tjconfig.Provider) {
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
+
+	p.AddResourceConfigurator("tencentcloud_instance_set", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = "cvm"
+		r.Kind = "InstanceSet"
+		r.References["vpc_id"] = tjconfig.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
+		}
+		r.References["subnet_id"] = tjconfig.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_key_pair", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = "cvm"
+		r.Kind = "KeyPair"
+	})
+
+	p.AddResourceConfigurator("tencentcloud_placement_group", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = "cvm"
+		r.Kind = "PlacementGroup"
+	})
+
+	p.AddResourceConfigurator("tencentcloud_reserved_instance", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = "cvm"
+		r.Kind = "ReservedInstance"
+	})
+
+	p.AddResourceConfigurator("tencentcloud_image", func(r *tjconfig.Resource) {
+		r.ExternalName = tjconfig.IdentifierFromProvider
+		r.ShortGroup = "cvm"
+	})
 }

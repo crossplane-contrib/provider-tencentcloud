@@ -30,6 +30,8 @@ type VPCObservation struct {
 
 	DefaultRouteTableID *string `json:"defaultRouteTableId,omitempty" tf:"default_route_table_id,omitempty"`
 
+	DockerAssistantCidrs []*string `json:"dockerAssistantCidrs,omitempty" tf:"docker_assistant_cidrs,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	IsDefault *bool `json:"isDefault,omitempty" tf:"is_default,omitempty"`
@@ -37,7 +39,7 @@ type VPCObservation struct {
 
 type VPCParameters struct {
 
-	// List of Assistant CIDR.
+	// List of Assistant CIDR, NOTE: Only `NORMAL` typed CIDRs included, check the Docker CIDR by readonly `assistant_docker_cidrs`.
 	// +kubebuilder:validation:Optional
 	AssistantCidrs []*string `json:"assistantCidrs,omitempty" tf:"assistant_cidrs,omitempty"`
 

@@ -10,7 +10,7 @@ TencentCloud API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://github.com/crossplane-contrib/provider-tencentcloud/releases):
 ```
-kubectl crossplane install provider crossplane/provider-tencentcloud:v0.1.0
+kubectl crossplane install provider crossplanecontrib/provider-tencentcloud:v0.2.0
 ```
 
 Alternatively, you can use declarative installation:

@@ -1,0 +1,456 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: adaptivedynamicstreamingtemplates.vod.tencentcloud.crossplane.io
+spec:
+  group: vod.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: AdaptiveDynamicStreamingTemplate
+    listKind: AdaptiveDynamicStreamingTemplateList
+    plural: adaptivedynamicstreamingtemplates
+    singular: adaptivedynamicstreamingtemplate
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AdaptiveDynamicStreamingTemplate is the Schema for the AdaptiveDynamicStreamingTemplates
+          API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AdaptiveDynamicStreamingTemplateSpec defines the desired
+              state of AdaptiveDynamicStreamingTemplate
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  comment:
+                    description: 'Template description. Length limit: 256 characters.'
+                    type: string
+                  disableHigherVideoBitrate:
+                    description: 'Whether to prohibit transcoding video from low bitrate
+                      to high bitrate. Valid values: `false`,`true`. `false`: no,
+                      `true`: yes. Default value: `false`.'
+                    type: boolean
+                  disableHigherVideoResolution:
+                    description: 'Whether to prohibit transcoding from low resolution
+                      to high resolution. Valid values: `false`,`true`. `false`: no,
+                      `true`: yes. Default value: `false`.'
+                    type: boolean
+                  drmType:
+                    description: 'DRM scheme type. Valid values: `SimpleAES`. If this
+                      field is an empty string, DRM will not be performed on the video.'
+                    type: string
+                  format:
+                    description: 'Adaptive bitstream format. Valid values: `HLS`.'
+                    type: string
+                  name:
+                    description: 'Template name. Length limit: 64 characters.'
+                    type: string
+                  streamInfo:
+                    description: 'List of AdaptiveStreamTemplate parameter information
+                      of output substream for adaptive bitrate streaming. Up to 10
+                      substreams can be output. Note: the frame rate of all substreams
+                      must be the same; otherwise, the frame rate of the first substream
+                      will be used as the output frame rate.'
+                    items:
+                      properties:
+                        audio:
+                          description: Audio parameter information.
+                          items:
+                            properties:
+                              audioChannel:
+                                description: 'Audio channel system. Valid values:
+                                  mono, dual, stereo. Default value: dual.'
+                                type: string
+                              bitrate:
+                                description: 'Audio stream bitrate in Kbps. Value
+                                  range: `0` and `[26, 256]`. If the value is `0`,
+                                  the bitrate of the audio stream will be the same
+                                  as that of the original audio.'
+                                type: number
+                              codec:
+                                description: 'Audio stream encoder. Valid value are:
+                                  `libfdk_aac` and `libmp3lame`. while `libfdk_aac`
+                                  is recommended.'
+                                type: string
+                              sampleRate:
+                                description: 'Audio stream sample rate. Valid values:
+                                  `32000`, `44100`, `48000`Hz.'
+                                type: number
+                            required:
+                            - bitrate
+                            - codec
+                            - sampleRate
+                            type: object
+                          type: array
+                        removeAudio:
+                          description: 'Whether to remove audio stream. Valid values:
+                            `false`: no, `true`: yes. `false` by default.'
+                          type: boolean
+                        video:
+                          description: Video parameter information.
+                          items:
+                            properties:
+                              bitrate:
+                                description: 'Bitrate of video stream in Kbps. Value
+                                  range: `0` and `[128, 35000]`. If the value is `0`,
+                                  the bitrate of the video will be the same as that
+                                  of the source video.'
+                                type: number
+                              codec:
+                                description: 'Video stream encoder. Valid values:
+                                  `libx264`,`libx265`,`av1`. `libx264`: H.264, `libx265`:
+                                  H.265, `av1`: AOMedia Video 1. Currently, a resolution
+                                  within 640x480 must be specified for `H.265`. and
+                                  the `av1` container only supports mp4.'
+                                type: string
+                              fillType:
+                                description: 'Fill type. Fill refers to the way of
+                                  processing a screenshot when its aspect ratio is
+                                  different from that of the source video. The following
+                                  fill types are supported: `stretch`: stretch. The
+                                  screenshot will be stretched frame by frame to match
+                                  the aspect ratio of the source video, which may
+                                  make the screenshot shorter or longer; `black`:
+                                  fill with black. This option retains the aspect
+                                  ratio of the source video for the screenshot and
+                                  fills the unmatched area with black color blocks.
+                                  Default value: black. Note: this field may return
+                                  null, indicating that no valid values can be obtained.'
+                                type: string
+                              fps:
+                                description: 'Video frame rate in Hz. Value range:
+                                  `[0, 60]`. If the value is `0`, the frame rate will
+                                  be the same as that of the source video.'
+                                type: number
+                              height:
+                                description: 'Maximum value of the height (or short
+                                  side) of a video stream in px. Value range: `0`
+                                  and `[128, 4096]`. If both `width` and `height`
+                                  are `0`, the resolution will be the same as that
+                                  of the source video; If `width` is `0`, but `height`
+                                  is not `0`, `width` will be proportionally scaled;
+                                  If `width` is not `0`, but `height` is `0`, `height`
+                                  will be proportionally scaled; If both `width` and
+                                  `height` are not `0`, the custom resolution will
+                                  be used. Default value: `0`. Note: this field may
+                                  return null, indicating that no valid values can
+                                  be obtained.'
+                                type: number
+                              resolutionAdaptive:
+                                description: 'Resolution adaption. Valid values: `true`,`false`.
+                                  `true`: enabled. In this case, `width` represents
+                                  the long side of a video, while `height` the short
+                                  side; `false`: disabled. In this case, `width` represents
+                                  the width of a video, while `height` the height.
+                                  Default value: `true`. Note: this field may return
+                                  null, indicating that no valid values can be obtained.'
+                                type: boolean
+                              width:
+                                description: 'Maximum value of the width (or long
+                                  side) of a video stream in px. Value range: `0`
+                                  and `[128, 4096]`. If both `width` and `height`
+                                  are `0`, the resolution will be the same as that
+                                  of the source video; If `width` is `0`, but `height`
+                                  is not `0`, `width` will be proportionally scaled;
+                                  If `width` is not `0`, but `height` is `0`, `height`
+                                  will be proportionally scaled; If both `width` and
+                                  `height` are not `0`, the custom resolution will
+                                  be used. Default value: `0`. Note: this field may
+                                  return null, indicating that no valid values can
+                                  be obtained.'
+                                type: number
+                            required:
+                            - bitrate
+                            - codec
+                            - fps
+                            type: object
+                          type: array
+                      required:
+                      - audio
+                      - video
+                      type: object
+                    type: array
+                  subAppId:
+                    description: Subapplication ID in VOD. If you need to access a
+                      resource in a subapplication, enter the subapplication ID in
+                      this field; otherwise, leave it empty.
+                    type: number
+                required:
+                - format
+                - name
+                - streamInfo
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: AdaptiveDynamicStreamingTemplateStatus defines the observed
+              state of AdaptiveDynamicStreamingTemplate.
+            properties:
+              atProvider:
+                properties:
+                  createTime:
+                    type: string
+                  id:
+                    type: string
+                  updateTime:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
