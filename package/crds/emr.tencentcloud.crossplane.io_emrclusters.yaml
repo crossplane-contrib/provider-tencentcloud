@@ -1,0 +1,465 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: emrclusters.emr.tencentcloud.crossplane.io
+spec:
+  group: emr.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: EmrCluster
+    listKind: EmrClusterList
+    plural: emrclusters
+    singular: emrcluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EmrCluster is the Schema for the EmrClusters API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EmrClusterSpec defines the desired state of EmrCluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  displayStrategy:
+                    description: Display strategy of EMR instance.
+                    type: string
+                  extendFsField:
+                    description: Access the external file system.
+                    type: string
+                  instanceName:
+                    description: Name of the instance, which can contain 6 to 36 English
+                      letters, Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  loginSettings:
+                    additionalProperties:
+                      type: string
+                    description: Instance login settings.
+                    type: object
+                  needMasterWan:
+                    description: 'Whether to enable the cluster Master node public
+                      network. Value range: - NEED_MASTER_WAN: Indicates that the
+                      cluster Master node public network is enabled. - NOT_NEED_MASTER_WAN:
+                      Indicates that it is not turned on. By default, the cluster
+                      Master node internet is enabled.'
+                    type: string
+                  payMode:
+                    description: The pay mode of instance. 0 is pay on an annual basis,
+                      1 is pay on a measure basis.
+                    type: number
+                  placement:
+                    additionalProperties:
+                      type: string
+                    description: The location of the instance.
+                    type: object
+                  productId:
+                    description: The product id of EMR instance.
+                    type: number
+                  resourceSpec:
+                    description: Resource specification of EMR instance.
+                    items:
+                      properties:
+                        commonCount:
+                          description: The number of common node.
+                          type: number
+                        commonResourceSpec:
+                          items:
+                            properties:
+                              cpu:
+                                type: number
+                              diskSize:
+                                type: number
+                              diskType:
+                                type: string
+                              memSize:
+                                type: number
+                              rootSize:
+                                type: number
+                              spec:
+                                type: string
+                              storageType:
+                                type: number
+                            type: object
+                          type: array
+                        coreCount:
+                          description: The number of core node.
+                          type: number
+                        coreResourceSpec:
+                          items:
+                            properties:
+                              cpu:
+                                type: number
+                              diskSize:
+                                type: number
+                              diskType:
+                                type: string
+                              memSize:
+                                type: number
+                              rootSize:
+                                type: number
+                              spec:
+                                type: string
+                              storageType:
+                                type: number
+                            type: object
+                          type: array
+                        masterCount:
+                          description: The number of master node.
+                          type: number
+                        masterResourceSpec:
+                          items:
+                            properties:
+                              cpu:
+                                type: number
+                              diskSize:
+                                type: number
+                              diskType:
+                                type: string
+                              memSize:
+                                type: number
+                              rootSize:
+                                type: number
+                              spec:
+                                type: string
+                              storageType:
+                                type: number
+                            type: object
+                          type: array
+                        taskCount:
+                          description: The number of core node.
+                          type: number
+                        taskResourceSpec:
+                          items:
+                            properties:
+                              cpu:
+                                type: number
+                              diskSize:
+                                type: number
+                              diskType:
+                                type: string
+                              memSize:
+                                type: number
+                              rootSize:
+                                type: number
+                              spec:
+                                type: string
+                              storageType:
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  sgId:
+                    description: The ID of the security group to which the instance
+                      belongs, in the form of sg-xxxxxxxx.
+                    type: string
+                  softwares:
+                    description: The softwares of a EMR instance.
+                    items:
+                      type: string
+                    type: array
+                  supportHa:
+                    description: The flag whether the instance support high availability.(0=>not
+                      support, 1=>support).
+                    type: number
+                  timeSpan:
+                    description: The length of time the instance was purchased. Use
+                      with TimeUnit.When TimeUnit is s, the parameter can only be
+                      filled in at 3600, representing a metered instance. When TimeUnit
+                      is m, the number filled in by this parameter indicates the length
+                      of purchase of the monthly instance of the package year, such
+                      as 1 for one month of purchase.
+                    type: number
+                  timeUnit:
+                    description: The unit of time in which the instance was purchased.
+                      When PayMode is 0, TimeUnit can only take values of s(second).
+                      When PayMode is 1, TimeUnit can only take the value m(month).
+                    type: string
+                  vpcSettings:
+                    additionalProperties:
+                      type: string
+                    description: The private net config of EMR instance.
+                    type: object
+                required:
+                - displayStrategy
+                - instanceName
+                - loginSettings
+                - payMode
+                - placement
+                - productId
+                - softwares
+                - supportHa
+                - timeSpan
+                - timeUnit
+                - vpcSettings
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: EmrClusterStatus defines the observed state of EmrCluster.
+            properties:
+              atProvider:
+                properties:
+                  id:
+                    type: string
+                  instanceId:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

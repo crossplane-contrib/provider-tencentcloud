@@ -1,0 +1,630 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: ddospolicyv2s.dayu.tencentcloud.crossplane.io
+spec:
+  group: dayu.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: DdosPolicyV2
+    listKind: DdosPolicyV2List
+    plural: ddospolicyv2s
+    singular: ddospolicyv2
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DdosPolicyV2 is the Schema for the DdosPolicyV2s API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DdosPolicyV2Spec defines the desired state of DdosPolicyV2
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  acls:
+                    description: Port ACL policy for DDoS protection.
+                    items:
+                      properties:
+                        action:
+                          description: 'Action, optional values: drop, transmit, forward.'
+                          type: string
+                        dPortEnd:
+                          description: The destination port ends, and the value range
+                            is 0~65535.
+                          type: number
+                        dPortStart:
+                          description: The destination port starts, and the value
+                            range is 0~65535.
+                          type: number
+                        forwardProtocol:
+                          description: Protocol type, desirable values tcp, udp, all.
+                          type: string
+                        priority:
+                          description: 'Policy priority, the lower the number, the
+                            higher the level, the higher the rule matches, taking
+                            a value of 1-1000.Note: This field may return null, indicating
+                            that a valid value could not be retrieved.'
+                          type: number
+                        sPortEnd:
+                          description: The source port ends, and the acceptable value
+                            ranges from 0 to 65535.
+                          type: number
+                        sPortStart:
+                          description: The source port starts, and the value range
+                            is 0~65535.
+                          type: number
+                      required:
+                      - action
+                      - dPortEnd
+                      - dPortStart
+                      - forwardProtocol
+                      - priority
+                      - sPortEnd
+                      - sPortStart
+                      type: object
+                    type: array
+                  blackWhiteIps:
+                    description: DDoS-protected IP blacklist and whitelist.
+                    items:
+                      properties:
+                        ip:
+                          description: Ip of resource instance.
+                          type: string
+                        ipType:
+                          description: IP type, value [`black`(blacklist IP), `white`
+                            (whitelist IP)].
+                          type: string
+                      required:
+                      - ip
+                      - ipType
+                      type: object
+                    type: array
+                  business:
+                    description: Business of resource instance. bgpip indicates anti-anti-ip
+                      ip; bgp means exclusive package; bgp-multip means shared packet;
+                      net indicates anti-anti-ip pro version.
+                    type: string
+                  ddosAi:
+                    description: AI protection switch, take the value [`on`, `off`].
+                    type: string
+                  ddosConnectLimit:
+                    description: DDoS connection suppression options.
+                    items:
+                      properties:
+                        badConnThreshold:
+                          description: Based on connection suppression trigger threshold,
+                            value range [0,4294967295].
+                          type: number
+                        connTimeout:
+                          description: Abnormal connection detection condition, connection
+                            timeout, value range [0,65535].
+                          type: number
+                        dstConnLimit:
+                          description: Concurrent connection control based on destination
+                            IP+ destination port.
+                          type: number
+                        dstNewLimit:
+                          description: Limit on the number of news per second based
+                            on the destination IP.
+                          type: number
+                        nullConnEnable:
+                          description: Abnormal connection detection conditions, empty
+                            connection guard switch, value range[0,1].
+                          type: number
+                        sdConnLimit:
+                          description: Concurrent connection control based on source
+                            IP + destination IP.
+                          type: number
+                        sdNewLimit:
+                          description: The limit on the number of news per second
+                            based on source IP + destination IP.
+                          type: number
+                        synLimit:
+                          description: Anomaly connection detection condition, syn
+                            threshold, value range [0,100].
+                          type: number
+                        synRate:
+                          description: Anomalous connection detection condition, percentage
+                            of syn ack, value range [0,100].
+                          type: number
+                      required:
+                      - badConnThreshold
+                      - connTimeout
+                      - dstConnLimit
+                      - dstNewLimit
+                      - nullConnEnable
+                      - sdConnLimit
+                      - sdNewLimit
+                      - synLimit
+                      - synRate
+                      type: object
+                    type: array
+                  ddosGeoIpBlockConfig:
+                    description: DDoS-protected area block configuration.
+                    items:
+                      properties:
+                        action:
+                          description: Block action, take the value [`drop`, `trans`].
+                          type: string
+                        areaList:
+                          description: When the RegionType is customized, the AreaList
+                            must be filled in, and a maximum of 128 must be filled
+                            in.
+                          items:
+                            type: number
+                          type: array
+                        regionType:
+                          description: Zone type, value [oversea (overseas),china
+                            (domestic),customized (custom region)].
+                          type: string
+                      required:
+                      - action
+                      - areaList
+                      - regionType
+                      type: object
+                    type: array
+                  ddosLevel:
+                    description: Protection class, value [`low`, `middle`, `high`].
+                    type: string
+                  ddosSpeedLimitConfig:
+                    description: Access speed limit configuration for DDoS protection.
+                    items:
+                      properties:
+                        bandwidth:
+                          description: Bandwidth bps.
+                          type: number
+                        dstPortList:
+                          description: List of port ranges, up to 8, multiple; Separated,
+                            the range is represented with -; this port range must
+                            be filled in; fill in the style 1:0-65535, style 2:80;
+                            443; 1000-2000.
+                          type: string
+                        mode:
+                          description: Speed limit mode, take the value [1 (speed
+                            limit based on source IP),2 (speed limit based on destination
+                            port)].
+                          type: number
+                        packetRate:
+                          description: Packet rate pps.
+                          type: number
+                        protocolList:
+                          description: IP protocol numbers, take the value[ ALL (all
+                            protocols),TCP (tcp protocol),UDP (udp protocol),SMP (smp
+                            protocol),1; 2-100 (custom protocol number range, up to
+                            8)].
+                          type: string
+                      required:
+                      - bandwidth
+                      - dstPortList
+                      - mode
+                      - packetRate
+                      - protocolList
+                      type: object
+                    type: array
+                  ddosThreshold:
+                    description: DDoS cleaning threshold, value[0, 60, 80, 100, 150,
+                      200, 250, 300, 400, 500, 700, 1000]; When the value is set to
+                      0, it means that the default value is adopted.
+                    type: number
+                  packetFilters:
+                    description: Feature filtering rules for DDoS protection.
+                    items:
+                      properties:
+                        action:
+                          description: Action, take the value [drop,transmit,drop_black
+                            (discard and black out),drop_rst (Interception),drop_black_rst
+                            (intercept and block),forward].
+                          type: string
+                        dPortEnd:
+                          description: The end destination port, take the value 1~65535,
+                            which must be greater than or equal to the starting destination
+                            port.
+                          type: number
+                        dPortStart:
+                          description: From the destination port, take the value 0~65535.
+                          type: number
+                        depth:
+                          description: Detection depth from the detection position,
+                            value [0,1500].
+                          type: number
+                        depth2:
+                          description: Second detection depth starting from the second
+                            detection position, value [0,1500].
+                          type: number
+                        isNot:
+                          description: Whether to include the detected value, take
+                            the value [0 (included),1 (not included)].
+                          type: number
+                        isNot2:
+                          description: Whether the second detection contains the detected
+                            value, the value [0 (included),1 (not included)].
+                          type: number
+                        matchBegin:
+                          description: Detect position, take the value [begin_l3 (IP
+                            header),begin_l4 (TCP/UDP header),begin_l5 (T load), no_match
+                            (mismatch)].
+                          type: string
+                        matchBegin2:
+                          description: The second detection position. take the value
+                            [begin_l3 (IP header),begin_l4 (TCP/UDP header),begin_l5
+                            (T load), no_match (mismatch)].
+                          type: string
+                        matchLogic:
+                          description: When there is a second detection condition,
+                            the and/or relationship with the first detection condition,
+                            takes the value [And (and relationship),none (fill in
+                            this value when there is no second detection condition)].
+                          type: string
+                        matchType:
+                          description: Detection type, value [sunday (keyword),pcre
+                            (regular expression)].
+                          type: string
+                        matchType2:
+                          description: The second type of detection, takes the value
+                            [sunday (keyword),pcre (regular expression)].
+                          type: string
+                        offset:
+                          description: Offset from detection position, value range
+                            [0, Depth].
+                          type: number
+                        offset2:
+                          description: Offset from the second detection position,
+                            value range [0,Depth2].
+                          type: number
+                        pktlenMax:
+                          description: The maximum message length, taken from 1 to
+                            1500, must be greater than or equal to the minimum message
+                            length.
+                          type: number
+                        pktlenMin:
+                          description: Minimum message length, 1-1500.
+                          type: number
+                        protocol:
+                          description: Protocol, value [tcp udp icmp all].
+                          type: string
+                        sPortEnd:
+                          description: End source port, take the value 1~65535, must
+                            be greater than or equal to the starting source port.
+                          type: number
+                        sPortStart:
+                          description: Start the source port, take the value 0~65535.
+                          type: number
+                        str:
+                          description: Detect values, key strings or regular expressions,
+                            take the value [When the detection type is sunday, please
+                            fill in the string or hexadecimal bytecode, for example
+                            13233 corresponds to the hexadecimal bytecode of the string
+                            `123`;When the detection type is pcre, please fill in
+                            the regular expression string;].
+                          type: string
+                        str2:
+                          description: The second detection value, the key string
+                            or regular expression, takes the value [When the detection
+                            type is sunday, please fill in the string or hexadecimal
+                            bytecode, for example 13233 corresponds to the hexadecimal
+                            bytecode of the string `123`;When the detection type is
+                            pcre, please fill in the regular expression string;].
+                          type: string
+                      required:
+                      - action
+                      - dPortEnd
+                      - dPortStart
+                      - depth
+                      - depth2
+                      - isNot
+                      - isNot2
+                      - matchBegin
+                      - matchBegin2
+                      - matchLogic
+                      - matchType
+                      - matchType2
+                      - offset
+                      - offset2
+                      - pktlenMax
+                      - pktlenMin
+                      - protocol
+                      - sPortEnd
+                      - sPortStart
+                      - str
+                      - str2
+                      type: object
+                    type: array
+                  protocolBlockConfig:
+                    description: Protocol block configuration for DDoS protection.
+                    items:
+                      properties:
+                        dropIcmp:
+                          description: ICMP block, value [0 (block off), 1 (block
+                            on)].
+                          type: number
+                        dropOther:
+                          description: Other block, value [0 (block off), 1 (block
+                            on)].
+                          type: number
+                        dropTcp:
+                          description: TCP block, value [0 (block off), 1 (block on)].
+                          type: number
+                        dropUdp:
+                          description: UDP block, value [0 (block off), 1 (block on)].
+                          type: number
+                      required:
+                      - dropIcmp
+                      - dropOther
+                      - dropTcp
+                      - dropUdp
+                      type: object
+                    type: array
+                  resourceId:
+                    description: The ID of the resource instance.
+                    type: string
+                required:
+                - resourceId
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: DdosPolicyV2Status defines the observed state of DdosPolicyV2.
+            properties:
+              atProvider:
+                properties:
+                  id:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

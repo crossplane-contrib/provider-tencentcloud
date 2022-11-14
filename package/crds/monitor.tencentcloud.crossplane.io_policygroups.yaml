@@ -1,0 +1,453 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: policygroups.monitor.tencentcloud.crossplane.io
+spec:
+  group: monitor.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: PolicyGroup
+    listKind: PolicyGroupList
+    plural: policygroups
+    singular: policygroup
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PolicyGroup is the Schema for the PolicyGroups API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PolicyGroupSpec defines the desired state of PolicyGroup
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  conditions:
+                    description: 'A list of threshold rules. Each element contains
+                      the following attributes:'
+                    items:
+                      properties:
+                        alarmNotifyPeriod:
+                          description: Alarm sending cycle per second. <0 does not
+                            fire, `0` only fires once, and >0 fires every triggerTime
+                            second.
+                          type: number
+                        alarmNotifyType:
+                          description: Alarm sending convergence type. `0` continuous
+                            alarm, `1` index alarm.
+                          type: number
+                        calcPeriod:
+                          description: Data aggregation cycle (unit of second), if
+                            the metric has a default value can not be filled, refer
+                            to `data.tencentcloud_monitor_policy_conditions(period_keys)`.
+                          type: number
+                        calcType:
+                          description: 'Compare type. Valid value ranges: [1~12].
+                            `1` means more than, `2` means greater than or equal,
+                            `3` means less than, `4` means less than or equal to,
+                            `5` means equal, `6` means not equal, `7` means days rose,
+                            `8` means days fell, `9` means weeks rose, `10` means
+                            weeks fell, `11` means period rise, `12` means period
+                            fell, refer to `data.tencentcloud_monitor_policy_conditions(calc_type_keys)`.'
+                          type: number
+                        calcValue:
+                          description: Threshold value, refer to `data.tencentcloud_monitor_policy_conditions(calc_value_*)`.
+                          type: number
+                        continuePeriod:
+                          description: The rule triggers an alert that lasts for several
+                            detection cycles, refer to `data.tencentcloud_monitor_policy_conditions(period_num_keys)`.
+                          type: number
+                        metricId:
+                          description: Id of the metric, refer to `data.tencentcloud_monitor_policy_conditions(metric_id)`.
+                          type: number
+                      required:
+                      - alarmNotifyPeriod
+                      - alarmNotifyType
+                      - metricId
+                      type: object
+                    type: array
+                  eventConditions:
+                    description: 'A list of event rules. Each element contains the
+                      following attributes:'
+                    items:
+                      properties:
+                        alarmNotifyPeriod:
+                          description: Alarm sending cycle per second. <0 does not
+                            fire, `0` only fires once, and >0 fires every triggerTime
+                            second.
+                          type: number
+                        alarmNotifyType:
+                          description: Alarm sending convergence type. `0` continuous
+                            alarm, `1` index alarm.
+                          type: number
+                        eventId:
+                          description: The ID of this event metric, refer to `data.tencentcloud_monitor_policy_conditions(event_id).
+                          type: number
+                      required:
+                      - alarmNotifyPeriod
+                      - alarmNotifyType
+                      - eventId
+                      type: object
+                    type: array
+                  groupName:
+                    description: Policy group name, length should between 1 and 20.
+                    type: string
+                  isUnionRule:
+                    description: 'The and or relation of indicator alarm rule. Valid
+                      values: `0`, `1`. `0` represents or rule (if any rule is met,
+                      the alarm will be raised), `1` represents and rule (if all rules
+                      are met, the alarm will be raised).The default is 0.'
+                    type: number
+                  policyViewName:
+                    description: Policy view name, eg:`cvm_device`,`BANDWIDTHPACKAGE`,
+                      refer to `data.tencentcloud_monitor_policy_conditions(policy_view_name)`.
+                    type: string
+                  projectId:
+                    description: The project id to which the policy group belongs,
+                      default is `0`.
+                    type: number
+                  remark:
+                    description: Policy group's remark information.
+                    type: string
+                required:
+                - groupName
+                - policyViewName
+                - remark
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: PolicyGroupStatus defines the observed state of PolicyGroup.
+            properties:
+              atProvider:
+                properties:
+                  bindingObjects:
+                    items:
+                      properties:
+                        dimensionsJson:
+                          type: string
+                        isShielded:
+                          type: number
+                        region:
+                          type: string
+                        uniqueId:
+                          type: string
+                      type: object
+                    type: array
+                  dimensionGroup:
+                    items:
+                      type: string
+                    type: array
+                  id:
+                    type: string
+                  lastEditUin:
+                    type: string
+                  receivers:
+                    items:
+                      properties:
+                        endTime:
+                          type: number
+                        needSendNotice:
+                          type: number
+                        notifyWay:
+                          items:
+                            type: string
+                          type: array
+                        personInterval:
+                          type: number
+                        receiveLanguage:
+                          type: string
+                        receiverGroupList:
+                          items:
+                            type: number
+                          type: array
+                        receiverType:
+                          type: string
+                        receiverUserList:
+                          items:
+                            type: number
+                          type: array
+                        recoverNotify:
+                          items:
+                            type: string
+                          type: array
+                        roundInterval:
+                          type: number
+                        roundNumber:
+                          type: number
+                        sendFor:
+                          items:
+                            type: string
+                          type: array
+                        startTime:
+                          type: number
+                        uidList:
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  supportRegions:
+                    items:
+                      type: string
+                    type: array
+                  updateTime:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

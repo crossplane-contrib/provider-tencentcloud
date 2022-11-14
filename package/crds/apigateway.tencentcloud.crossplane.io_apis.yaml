@@ -1,0 +1,524 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: apis.apigateway.tencentcloud.crossplane.io
+spec:
+  group: apigateway.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: Api
+    listKind: ApiList
+    plural: apis
+    singular: api
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Api is the Schema for the Apis API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ApiSpec defines the desired state of Api
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  apiDesc:
+                    description: Custom API description.
+                    type: string
+                  apiName:
+                    description: Custom API name.
+                    type: string
+                  authType:
+                    description: 'API authentication type. Valid values: `SECRET`
+                      (key pair authentication),`NONE` (no authentication). Default
+                      value: `NONE`.'
+                    type: string
+                  enableCors:
+                    description: 'Whether to enable CORS. Default value: `true`.'
+                    type: boolean
+                  preLimit:
+                    description: API QPS value. Enter a positive number to limit the
+                      API query rate per second `QPS`.
+                    type: number
+                  protocol:
+                    description: 'API frontend request type. Valid values: `HTTP`,
+                      `WEBSOCKET`. Default value: `HTTP`.'
+                    type: string
+                  releaseLimit:
+                    description: API QPS value. Enter a positive number to limit the
+                      API query rate per second `QPS`.
+                    type: number
+                  requestConfigMethod:
+                    description: 'Request frontend method configuration. Valid values:
+                      `GET`,`POST`,`PUT`,`DELETE`,`HEAD`,`ANY`. Default value: `GET`.'
+                    type: string
+                  requestConfigPath:
+                    description: Request frontend path configuration. Like `/user/getinfo`.
+                    type: string
+                  requestParameters:
+                    description: Frontend request parameters.
+                    items:
+                      properties:
+                        defaultValue:
+                          description: Parameter default value.
+                          type: string
+                        desc:
+                          description: Parameter description.
+                          type: string
+                        name:
+                          description: Parameter name.
+                          type: string
+                        position:
+                          description: Parameter location.
+                          type: string
+                        required:
+                          description: 'If this parameter required. Default value:
+                            `false`.'
+                          type: boolean
+                        type:
+                          description: Parameter type.
+                          type: string
+                      required:
+                      - name
+                      - position
+                      - type
+                      type: object
+                    type: array
+                  responseErrorCodes:
+                    description: Custom error code configuration. Must keep at least
+                      one after set.
+                    items:
+                      properties:
+                        code:
+                          description: Custom response configuration error code.
+                          type: number
+                        convertedCode:
+                          description: Custom error code conversion.
+                          type: number
+                        desc:
+                          description: Parameter description.
+                          type: string
+                        msg:
+                          description: Custom response configuration error message.
+                          type: string
+                        needConvert:
+                          description: 'Whether to enable error code conversion. Default
+                            value: `false`.'
+                          type: boolean
+                      required:
+                      - code
+                      - msg
+                      type: object
+                    type: array
+                  responseFailExample:
+                    description: Response failure sample of custom response configuration.
+                    type: string
+                  responseSuccessExample:
+                    description: Successful response sample of custom response configuration.
+                    type: string
+                  responseType:
+                    description: 'Return type. Valid values: `HTML`, `JSON`, `TEXT`,
+                      `BINARY`, `XML`. Default value: `HTML`.'
+                    type: string
+                  serviceConfigMethod:
+                    description: API backend service request method, such as `GET`.
+                      If `service_config_type` is `HTTP`, this parameter will be required.
+                      The frontend `request_config_method` and backend method `service_config_method`
+                      can be different.
+                    type: string
+                  serviceConfigMockReturnMessage:
+                    description: Returned information of API backend mocking. This
+                      parameter is required when `service_config_type` is `MOCK`.
+                    type: string
+                  serviceConfigPath:
+                    description: API backend service path, such as /path. If `service_config_type`
+                      is `HTTP`, this parameter will be required. The frontend `request_config_path`
+                      and backend path `service_config_path` can be different.
+                    type: string
+                  serviceConfigProduct:
+                    description: Backend type. This parameter takes effect when VPC
+                      is enabled. Currently, only `clb` is supported.
+                    type: string
+                  serviceConfigScfFunctionName:
+                    description: SCF function name. This parameter takes effect when
+                      `service_config_type` is `SCF`.
+                    type: string
+                  serviceConfigScfFunctionNamespace:
+                    description: SCF function namespace. This parameter takes effect
+                      when `service_config_type` is `SCF`.
+                    type: string
+                  serviceConfigScfFunctionQualifier:
+                    description: SCF function version. This parameter takes effect
+                      when `service_config_type` is `SCF`.
+                    type: string
+                  serviceConfigTimeout:
+                    description: 'API backend service timeout period in seconds. Default
+                      value: `5`.'
+                    type: number
+                  serviceConfigType:
+                    description: 'API backend service type. Valid values: `WEBSOCKET`,
+                      `HTTP`, `SCF`, `MOCK`. Default value: `HTTP`.'
+                    type: string
+                  serviceConfigUrl:
+                    description: API backend service url. This parameter is required
+                      when `service_config_type` is `HTTP`.
+                    type: string
+                  serviceConfigVpcId:
+                    description: Unique VPC ID.
+                    type: string
+                  serviceId:
+                    description: Which service this API belongs. Refer to resource
+                      `tencentcloud_api_gateway_service`.
+                    type: string
+                  serviceIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  serviceIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  testLimit:
+                    description: API QPS value. Enter a positive number to limit the
+                      API query rate per second `QPS`.
+                    type: number
+                required:
+                - apiName
+                - requestConfigPath
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ApiStatus defines the observed state of Api.
+            properties:
+              atProvider:
+                properties:
+                  createTime:
+                    type: string
+                  id:
+                    type: string
+                  updateTime:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

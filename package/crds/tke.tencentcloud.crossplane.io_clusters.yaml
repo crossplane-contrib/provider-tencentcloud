@@ -1,0 +1,1149 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: clusters.tke.tencentcloud.crossplane.io
+spec:
+  group: tke.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    singular: cluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Cluster is the Schema for the Clusters API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ClusterSpec defines the desired state of Cluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  acquireClusterAdminRole:
+                    description: 'If set to true, it will acquire the ClusterRole
+                      tke:admin. NOTE: this arguments cannot revoke to `false` after
+                      acquired.'
+                    type: boolean
+                  authOptions:
+                    description: Specify cluster authentication configuration. Only
+                      available for managed cluster and `cluster_version` >= 1.20.
+                    items:
+                      properties:
+                        autoCreateDiscoveryAnonymousAuth:
+                          description: If set to `true`, the rbac rule will be created
+                            automatically which allow anonymous user to access '/.well-known/openid-configuration'
+                            and '/openid/v1/jwks'.
+                          type: boolean
+                        issuer:
+                          description: Specify service-account-issuer.
+                          type: string
+                        jwksUri:
+                          description: Specify service-account-jwks-uri.
+                          type: string
+                      type: object
+                    type: array
+                  autoUpgradeClusterLevel:
+                    description: Whether the cluster level auto upgraded, valid for
+                      managed cluster.
+                    type: boolean
+                  basePodNum:
+                    description: The number of basic pods. valid when enable_customized_pod_cidr=true.
+                    type: number
+                  claimExpiredSeconds:
+                    description: Claim expired seconds to recycle ENI. This field
+                      can only set when field `network_type` is 'VPC-CNI'. `claim_expired_seconds`
+                      must greater or equal than 300 and less than 15768000.
+                    type: number
+                  clusterAsEnabled:
+                    description: Indicates whether to enable cluster node auto scaling.
+                      Default is false.
+                    type: boolean
+                  clusterAudit:
+                    description: 'Specify Cluster Audit config. NOTE: Please make
+                      sure your TKE CamRole have permission to access CLS service.'
+                    items:
+                      properties:
+                        enabled:
+                          description: 'Specify weather the Cluster Audit enabled.
+                            NOTE: Enable Cluster Audit will also auto install Log
+                            Agent.'
+                          type: boolean
+                        logSetId:
+                          description: Specify id of existing CLS log set, or auto
+                            create a new set by leave it empty.
+                          type: string
+                        topicId:
+                          description: Specify id of existing CLS log topic, or auto
+                            create a new topic by leave it empty.
+                          type: string
+                      required:
+                      - enabled
+                      type: object
+                    type: array
+                  clusterCidr:
+                    description: A network address block of the cluster. Different
+                      from vpc cidr and cidr of other clusters within this vpc. Must
+                      be in  10./192.168/172.[16-31] segments.
+                    type: string
+                  clusterDeployType:
+                    description: 'Deployment type of the cluster, the available values
+                      include: ''MANAGED_CLUSTER'' and ''INDEPENDENT_CLUSTER''. Default
+                      is ''MANAGED_CLUSTER''.'
+                    type: string
+                  clusterDesc:
+                    description: Description of the cluster.
+                    type: string
+                  clusterExtraArgs:
+                    description: Customized parameters for master component,such as
+                      kube-apiserver, kube-controller-manager, kube-scheduler.
+                    items:
+                      properties:
+                        kubeApiserver:
+                          description: The customized parameters for kube-apiserver.
+                          items:
+                            type: string
+                          type: array
+                        kubeControllerManager:
+                          description: The customized parameters for kube-controller-manager.
+                          items:
+                            type: string
+                          type: array
+                        kubeScheduler:
+                          description: The customized parameters for kube-scheduler.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  clusterInternet:
+                    description: Open internet access or not. If this field is set
+                      'true', the field below `worker_config` must be set. Because
+                      only cluster with node is allowed enable access endpoint.
+                    type: boolean
+                  clusterInternetSecurityGroup:
+                    description: 'Specify security group, NOTE: This argument must
+                      not be empty if cluster internet enabled.'
+                    type: string
+                  clusterIntranet:
+                    description: Open intranet access or not. If this field is set
+                      'true', the field below `worker_config` must be set. Because
+                      only cluster with node is allowed enable access endpoint.
+                    type: boolean
+                  clusterIntranetSubnetId:
+                    description: Subnet id who can access this independent cluster,
+                      this field must and can only set  when `cluster_intranet` is
+                      true. `cluster_intranet_subnet_id` can not modify once be set.
+                    type: string
+                  clusterIpvs:
+                    description: Indicates whether `ipvs` is enabled. Default is true.
+                      False means `iptables` is enabled.
+                    type: boolean
+                  clusterLevel:
+                    description: Specify cluster level, valid for managed cluster,
+                      use data source `tencentcloud_kubernetes_cluster_levels` to
+                      query available levels. Available value examples `L5`, `L20`,
+                      `L50`, `L100`, etc.
+                    type: string
+                  clusterMaxPodNum:
+                    description: The maximum number of Pods per node in the cluster.
+                      Default is 256. The minimum value is 4. When its power unequal
+                      to 2, it will round upward to the closest power of 2.
+                    type: number
+                  clusterMaxServiceNum:
+                    description: The maximum number of services in the cluster. Default
+                      is 256. The range is from 32 to 32768. When its power unequal
+                      to 2, it will round upward to the closest power of 2.
+                    type: number
+                  clusterName:
+                    description: Name of the cluster.
+                    type: string
+                  clusterOs:
+                    description: 'Operating system of the cluster, the available values
+                      include: ''centos7.6.0_x64'',''ubuntu18.04.1x86_64'',''tlinux2.4x86_64''.
+                      Default is ''tlinux2.4x86_64''.'
+                    type: string
+                  clusterOsType:
+                    description: 'Image type of the cluster os, the available values
+                      include: ''GENERAL''. Default is ''GENERAL''.'
+                    type: string
+                  clusterVersion:
+                    description: Version of the cluster, Default is '1.10.5'.
+                    type: string
+                  containerRuntime:
+                    description: 'Runtime type of the cluster, the available values
+                      include: ''docker'' and ''containerd''. Default is ''docker''.'
+                    type: string
+                  deletionProtection:
+                    description: Indicates whether cluster deletion protection is
+                      enabled. Default is false.
+                    type: boolean
+                  dockerGraphPath:
+                    description: Docker graph path. Default is `/var/lib/docker`.
+                    type: string
+                  enableCustomizedPodCidr:
+                    description: Whether to enable the custom mode of node podCIDR
+                      size. Default is false.
+                    type: boolean
+                  eniSubnetIds:
+                    description: Subnet Ids for cluster with VPC-CNI network mode.
+                      This field can only set when field `network_type` is 'VPC-CNI'.
+                      `eni_subnet_ids` can not empty once be set.
+                    items:
+                      type: string
+                    type: array
+                  eventPersistence:
+                    description: 'Specify cluster Event Persistence config. NOTE:
+                      Please make sure your TKE CamRole have permission to access
+                      CLS service.'
+                    items:
+                      properties:
+                        enabled:
+                          description: Specify weather the Event Persistence enabled.
+                          type: boolean
+                        logSetId:
+                          description: Specify id of existing CLS log set, or auto
+                            create a new set by leave it empty.
+                          type: string
+                        topicId:
+                          description: Specify id of existing CLS log topic, or auto
+                            create a new topic by leave it empty.
+                          type: string
+                      required:
+                      - enabled
+                      type: object
+                    type: array
+                  existInstance:
+                    description: create tke cluster by existed instances.
+                    items:
+                      properties:
+                        desiredPodNumbers:
+                          description: Custom mode cluster, you can specify the number
+                            of pods for each node. corresponding to the existed_instances_para.instance_ids
+                            parameter.
+                          items:
+                            type: number
+                          type: array
+                        instancesPara:
+                          description: Reinstallation parameters of an existing instance.
+                          items:
+                            properties:
+                              instanceIds:
+                                description: Cluster IDs.
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                            - instanceIds
+                            type: object
+                          type: array
+                        nodeRole:
+                          description: Role of existed node. value:MASTER_ETCD or
+                            WORKER.
+                          type: string
+                      type: object
+                    type: array
+                  extensionAddon:
+                    description: Information of the add-on to be installed.
+                    items:
+                      properties:
+                        name:
+                          description: Add-on name.
+                          type: string
+                        param:
+                          description: Description of the add-on resource object in
+                            JSON string format.
+                          type: string
+                      required:
+                      - name
+                      - param
+                      type: object
+                    type: array
+                  extraArgs:
+                    description: Custom parameter information related to the node.
+                    items:
+                      type: string
+                    type: array
+                  globeDesiredPodNum:
+                    description: Indicate to set desired pod number in node. valid
+                      when enable_customized_pod_cidr=true, and it takes effect for
+                      all nodes.
+                    type: number
+                  ignoreClusterCidrConflict:
+                    description: Indicates whether to ignore the cluster cidr conflict
+                      error. Default is false.
+                    type: boolean
+                  isNonStaticIpMode:
+                    description: Indicates whether non-static ip mode is enabled.
+                      Default is false.
+                    type: boolean
+                  kubeProxyMode:
+                    description: 'Cluster kube-proxy mode, the available values include:
+                      ''kube-proxy-bpf''. Default is not set.When set to kube-proxy-bpf,
+                      cluster version greater than 1.14 and with Tencent Linux 2.4
+                      is required.'
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: Labels of tke cluster nodes.
+                    type: object
+                  logAgent:
+                    description: Specify cluster log agent config.
+                    items:
+                      properties:
+                        enabled:
+                          description: Whether the log agent enabled.
+                          type: boolean
+                        kubeletRootDir:
+                          description: Kubelet root directory as the literal.
+                          type: string
+                      required:
+                      - enabled
+                      type: object
+                    type: array
+                  managedClusterInternetSecurityPolicies:
+                    description: Security policies for managed cluster internet, like:'192.168.1.0/24'
+                      or '113.116.51.27', '0.0.0.0/0' means all. This field can only
+                      set when field `cluster_deploy_type` is 'MANAGED_CLUSTER' and
+                      `cluster_internet` is true. `managed_cluster_internet_security_policies`
+                      can not delete or empty once be set.
+                    items:
+                      type: string
+                    type: array
+                  masterConfig:
+                    description: Deploy the machine configuration information of the
+                      'MASTER_ETCD' service, and create <=7 units for common users.
+                    items:
+                      properties:
+                        availabilityZone:
+                          description: Indicates which availability zone will be used.
+                          type: string
+                        bandwidthPackageId:
+                          description: bandwidth package id. if user is standard user,
+                            then the bandwidth_package_id is needed, or default has
+                            bandwidth_package_id.
+                          type: string
+                        camRoleName:
+                          description: CAM role name authorized to access.
+                          type: string
+                        count:
+                          description: Number of cvm.
+                          type: number
+                        dataDisk:
+                          description: Configurations of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: The name of the device or partition to
+                                  mount.
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk, available values: `CLOUD_PREMIUM`
+                                  and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.'
+                                type: string
+                              encrypt:
+                                description: Indicates whether to encrypt data disk,
+                                  default `false`.
+                                type: boolean
+                              fileSystem:
+                                description: File system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              kmsKeyId:
+                                description: ID of the custom CMK in the format of
+                                  UUID or `kms-abcd1234`. This parameter is used to
+                                  encrypt cloud disks.
+                                type: string
+                              mountTarget:
+                                description: Mount target.
+                                type: string
+                              snapshotId:
+                                description: Data disk snapshot ID.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when enable_customized_pod_cidr=true, and it override
+                            `[globe_]desired_pod_num` for current node. Either all
+                            the fields `desired_pod_num` or none.
+                          type: number
+                        disasterRecoverGroupIds:
+                          description: Disaster recover groups to which a CVM instance
+                            belongs. Only support maximum 1.
+                          items:
+                            type: string
+                          type: array
+                        enhancedMonitorService:
+                          description: To specify whether to enable cloud monitor
+                            service. Default is TRUE.
+                          type: boolean
+                        enhancedSecurityService:
+                          description: To specify whether to enable cloud security
+                            service. Default is TRUE.
+                          type: boolean
+                        hostname:
+                          description: 'The host name of the attached instance. Dot
+                            (.) and dash (-) cannot be used as the first and last
+                            characters of HostName and cannot be used consecutively.
+                            Windows example: The length of the name character is [2,
+                            15], letters (capitalization is not restricted), numbers
+                            and dashes (-) are allowed, dots (.) are not supported,
+                            and not all numbers are allowed. Examples of other types
+                            (Linux, etc.): The character length is [2, 60], and multiple
+                            dots are allowed. There is a segment between the dots.
+                            Each segment allows letters (with no limitation on capitalization),
+                            numbers and dashes (-).'
+                          type: string
+                        imgId:
+                          description: The valid image id, format of img-xxx.
+                          type: string
+                        instanceChargeType:
+                          description: 'The charge type of instance. Valid values
+                            are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                            Note: TencentCloud International only supports `POSTPAID_BY_HOUR`,
+                            `PREPAID` instance will not terminated after cluster deleted,
+                            and may not allow to delete before expired.'
+                          type: string
+                        instanceChargeTypePrepaidPeriod:
+                          description: 'The tenancy (time unit is month) of the prepaid
+                            instance. NOTE: it only works when instance_charge_type
+                            is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`,
+                            `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
+                          type: number
+                        instanceChargeTypePrepaidRenewFlag:
+                          description: 'Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`:
+                            notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                            notify upon expiration but do not renew automatically,
+                            `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon
+                            expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`.
+                            If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to `PREPAID`.'
+                          type: string
+                        instanceName:
+                          description: Name of the CVMs.
+                          type: string
+                        instanceType:
+                          description: Specified types of CVM instance.
+                          type: string
+                        internetChargeType:
+                          description: Charge types for network traffic. Available
+                            values include `TRAFFIC_POSTPAID_BY_HOUR`.
+                          type: string
+                        internetMaxBandwidthOut:
+                          description: Max bandwidth of Internet access in Mbps. Default
+                            is 0.
+                          type: number
+                        keyIds:
+                          description: ID list of keys, should be set if `password`
+                            not set.
+                          items:
+                            type: string
+                          type: array
+                        passwordSecretRef:
+                          description: Password to access, should be set if `key_ids`
+                            not set.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        publicIpAssigned:
+                          description: Specify whether to assign an Internet IP address.
+                          type: boolean
+                        securityGroupIds:
+                          description: Security groups to which a CVM instance belongs.
+                          items:
+                            type: string
+                          type: array
+                        subnetId:
+                          description: Private network ID.
+                          type: string
+                        systemDiskSize:
+                          description: Volume of system disk in GB. Default is `50`.
+                          type: number
+                        systemDiskType:
+                          description: 'System disk type. For more information on
+                            limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
+                            Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`:
+                            local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium
+                            Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and
+                            `LOCAL_SSD` are deprecated.'
+                          type: string
+                        userData:
+                          description: ase64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      required:
+                      - instanceType
+                      - subnetId
+                      type: object
+                    type: array
+                  mountTarget:
+                    description: Mount target. Default is not mounting.
+                    type: string
+                  networkType:
+                    description: Cluster network type, GR or VPC-CNI. Default is GR.
+                    type: string
+                  nodeNameType:
+                    description: 'Node name type of Cluster, the available values
+                      include: ''lan-ip'' and ''hostname'', Default is ''lan-ip''.'
+                    type: string
+                  nodePoolGlobalConfig:
+                    description: Global config effective for all node pools.
+                    items:
+                      properties:
+                        expander:
+                          description: 'Indicates which scale-out method will be used
+                            when there are multiple scaling groups. Valid values:
+                            `random` - select a random scaling group, `most-pods`
+                            - select the scaling group that can schedule the most
+                            pods, `least-waste` - select the scaling group that can
+                            ensure the fewest remaining resources after Pod scheduling.'
+                          type: string
+                        ignoreDaemonSetsUtilization:
+                          description: Whether to ignore DaemonSet pods by default
+                            when calculating resource usage.
+                          type: boolean
+                        isScaleInEnabled:
+                          description: Indicates whether to enable scale-in.
+                          type: boolean
+                        maxConcurrentScaleIn:
+                          description: Max concurrent scale-in volume.
+                          type: number
+                        scaleInDelay:
+                          description: Number of minutes after cluster scale-out when
+                            the system starts judging whether to perform scale-in.
+                          type: number
+                        scaleInUnneededTime:
+                          description: Number of consecutive minutes of idleness after
+                            which the node is subject to scale-in.
+                          type: number
+                        scaleInUtilizationThreshold:
+                          description: Percentage of node resource usage below which
+                            the node is considered to be idle.
+                          type: number
+                        skipNodesWithLocalStorage:
+                          description: During scale-in, ignore nodes with local storage
+                            pods.
+                          type: boolean
+                        skipNodesWithSystemPods:
+                          description: During scale-in, ignore nodes with pods in
+                            the kube-system namespace that are not managed by DaemonSet.
+                          type: boolean
+                      type: object
+                    type: array
+                  projectId:
+                    description: Project ID, default value is 0.
+                    type: number
+                  runtimeVersion:
+                    description: Container Runtime version.
+                    type: string
+                  serviceCidr:
+                    description: A network address block of the service. Different
+                      from vpc cidr and cidr of other clusters within this vpc. Must
+                      be in  10./192.168/172.[16-31] segments.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the cluster.
+                    type: object
+                  unschedulable:
+                    description: Sets whether the joining node participates in the
+                      schedule. Default is '0'. Participate in scheduling.
+                    type: number
+                  upgradeInstancesFollowCluster:
+                    description: Indicates whether upgrade all instances when cluster_version
+                      change. Default is false.
+                    type: boolean
+                  vpcId:
+                    description: Vpc Id of the cluster.
+                    type: string
+                  vpcidRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vpcidSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  workerConfig:
+                    description: Deploy the machine configuration information of the
+                      'WORKER' service, and create <=20 units for common users. The
+                      other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+                    items:
+                      properties:
+                        availabilityZone:
+                          description: Indicates which availability zone will be used.
+                          type: string
+                        bandwidthPackageId:
+                          description: bandwidth package id. if user is standard user,
+                            then the bandwidth_package_id is needed, or default has
+                            bandwidth_package_id.
+                          type: string
+                        camRoleName:
+                          description: CAM role name authorized to access.
+                          type: string
+                        count:
+                          description: Number of cvm.
+                          type: number
+                        dataDisk:
+                          description: Configurations of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: The name of the device or partition to
+                                  mount.
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk, available values: `CLOUD_PREMIUM`
+                                  and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.'
+                                type: string
+                              encrypt:
+                                description: Indicates whether to encrypt data disk,
+                                  default `false`.
+                                type: boolean
+                              fileSystem:
+                                description: File system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              kmsKeyId:
+                                description: ID of the custom CMK in the format of
+                                  UUID or `kms-abcd1234`. This parameter is used to
+                                  encrypt cloud disks.
+                                type: string
+                              mountTarget:
+                                description: Mount target.
+                                type: string
+                              snapshotId:
+                                description: Data disk snapshot ID.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when enable_customized_pod_cidr=true, and it override
+                            `[globe_]desired_pod_num` for current node. Either all
+                            the fields `desired_pod_num` or none.
+                          type: number
+                        disasterRecoverGroupIds:
+                          description: Disaster recover groups to which a CVM instance
+                            belongs. Only support maximum 1.
+                          items:
+                            type: string
+                          type: array
+                        enhancedMonitorService:
+                          description: To specify whether to enable cloud monitor
+                            service. Default is TRUE.
+                          type: boolean
+                        enhancedSecurityService:
+                          description: To specify whether to enable cloud security
+                            service. Default is TRUE.
+                          type: boolean
+                        hostname:
+                          description: 'The host name of the attached instance. Dot
+                            (.) and dash (-) cannot be used as the first and last
+                            characters of HostName and cannot be used consecutively.
+                            Windows example: The length of the name character is [2,
+                            15], letters (capitalization is not restricted), numbers
+                            and dashes (-) are allowed, dots (.) are not supported,
+                            and not all numbers are allowed. Examples of other types
+                            (Linux, etc.): The character length is [2, 60], and multiple
+                            dots are allowed. There is a segment between the dots.
+                            Each segment allows letters (with no limitation on capitalization),
+                            numbers and dashes (-).'
+                          type: string
+                        imgId:
+                          description: The valid image id, format of img-xxx.
+                          type: string
+                        instanceChargeType:
+                          description: 'The charge type of instance. Valid values
+                            are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                            Note: TencentCloud International only supports `POSTPAID_BY_HOUR`,
+                            `PREPAID` instance will not terminated after cluster deleted,
+                            and may not allow to delete before expired.'
+                          type: string
+                        instanceChargeTypePrepaidPeriod:
+                          description: 'The tenancy (time unit is month) of the prepaid
+                            instance. NOTE: it only works when instance_charge_type
+                            is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`,
+                            `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
+                          type: number
+                        instanceChargeTypePrepaidRenewFlag:
+                          description: 'Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`:
+                            notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                            notify upon expiration but do not renew automatically,
+                            `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon
+                            expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`.
+                            If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to `PREPAID`.'
+                          type: string
+                        instanceName:
+                          description: Name of the CVMs.
+                          type: string
+                        instanceType:
+                          description: Specified types of CVM instance.
+                          type: string
+                        internetChargeType:
+                          description: Charge types for network traffic. Available
+                            values include `TRAFFIC_POSTPAID_BY_HOUR`.
+                          type: string
+                        internetMaxBandwidthOut:
+                          description: Max bandwidth of Internet access in Mbps. Default
+                            is 0.
+                          type: number
+                        keyIds:
+                          description: ID list of keys, should be set if `password`
+                            not set.
+                          items:
+                            type: string
+                          type: array
+                        passwordSecretRef:
+                          description: Password to access, should be set if `key_ids`
+                            not set.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        publicIpAssigned:
+                          description: Specify whether to assign an Internet IP address.
+                          type: boolean
+                        securityGroupIds:
+                          description: Security groups to which a CVM instance belongs.
+                          items:
+                            type: string
+                          type: array
+                        subnetId:
+                          description: Private network ID.
+                          type: string
+                        systemDiskSize:
+                          description: Volume of system disk in GB. Default is `50`.
+                          type: number
+                        systemDiskType:
+                          description: 'System disk type. For more information on
+                            limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
+                            Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`:
+                            local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium
+                            Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and
+                            `LOCAL_SSD` are deprecated.'
+                          type: string
+                        userData:
+                          description: ase64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      required:
+                      - instanceType
+                      - subnetId
+                      type: object
+                    type: array
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ClusterStatus defines the observed state of Cluster.
+            properties:
+              atProvider:
+                properties:
+                  certificationAuthority:
+                    type: string
+                  clusterExternalEndpoint:
+                    type: string
+                  clusterNodeNum:
+                    type: number
+                  domain:
+                    type: string
+                  id:
+                    type: string
+                  kubeConfig:
+                    type: string
+                  kubeConfigIntranet:
+                    type: string
+                  password:
+                    type: string
+                  pgwEndpoint:
+                    type: string
+                  securityPolicy:
+                    items:
+                      type: string
+                    type: array
+                  userName:
+                    type: string
+                  workerInstancesList:
+                    items:
+                      properties:
+                        failedReason:
+                          type: string
+                        instanceId:
+                          type: string
+                        instanceRole:
+                          type: string
+                        instanceState:
+                          type: string
+                        lanIp:
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
