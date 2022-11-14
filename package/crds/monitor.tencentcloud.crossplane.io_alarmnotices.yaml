@@ -1,0 +1,433 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: alarmnotices.monitor.tencentcloud.crossplane.io
+spec:
+  group: monitor.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: AlarmNotice
+    listKind: AlarmNoticeList
+    plural: alarmnotices
+    singular: alarmnotice
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AlarmNotice is the Schema for the AlarmNotices API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AlarmNoticeSpec defines the desired state of AlarmNotice
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  clsNotices:
+                    description: A maximum of one alarm notification can be pushed
+                      to the CLS service.
+                    items:
+                      properties:
+                        enable:
+                          description: Start-stop status, can not be transmitted,
+                            default enabled. 0= Disabled, 1= enabled.
+                          type: number
+                        logSetId:
+                          description: Log collection Id.
+                          type: string
+                        region:
+                          description: Regional.
+                          type: string
+                        topicId:
+                          description: Theme Id.
+                          type: string
+                      required:
+                      - logSetId
+                      - region
+                      - topicId
+                      type: object
+                    type: array
+                  name:
+                    description: Notification template name within 60.
+                    type: string
+                  noticeLanguage:
+                    description: Notification language zh-CN=Chinese en-US=English.
+                    type: string
+                  noticeType:
+                    description: Alarm notification type ALARM=Notification not restored
+                      OK=Notification restored ALL.
+                    type: string
+                  urlNotices:
+                    description: The maximum number of callback notifications is 3.
+                    items:
+                      properties:
+                        endTime:
+                          description: Notification End Time Seconds at the start
+                            of a day.
+                          type: number
+                        startTime:
+                          description: Notification Start Time Number of seconds at
+                            the start of a day.
+                          type: number
+                        url:
+                          description: Callback URL (limited to 256 characters).
+                          type: string
+                        weekday:
+                          description: Notification period 1-7 indicates Monday to
+                            Sunday.
+                          items:
+                            type: number
+                          type: array
+                      required:
+                      - url
+                      type: object
+                    type: array
+                  userNotices:
+                    description: Alarm notification template list.(At most five).
+                    items:
+                      properties:
+                        endTime:
+                          description: The number of seconds since the notification
+                            end time 00:00:00 (value range 0-86399).
+                          type: number
+                        groupIds:
+                          description: User group ID list.
+                          items:
+                            type: number
+                          type: array
+                        needPhoneArriveNotice:
+                          description: Contact notification required 0= No 1= Yes.
+                          type: number
+                        noticeWay:
+                          description: Notification Channel List EMAIL=Mail SMS=SMS
+                            CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
+                          items:
+                            type: string
+                          type: array
+                        phoneCallType:
+                          description: Call type SYNC= Simultaneous call CIRCLE= Round
+                            call If this parameter is not specified, the default value
+                            is round call.
+                          type: string
+                        phoneCircleInterval:
+                          description: 'Number of seconds between polls (value range:
+                            60-900).'
+                          type: number
+                        phoneCircleTimes:
+                          description: 'Number of telephone polls (value range: 1-5).'
+                          type: number
+                        phoneInnerInterval:
+                          description: 'Number of seconds between calls in a polling
+                            session (value range: 60-900).'
+                          type: number
+                        phoneOrder:
+                          description: Telephone polling list.
+                          items:
+                            type: number
+                          type: array
+                        receiverType:
+                          description: Recipient Type USER=User GROUP=User Group.
+                          type: string
+                        startTime:
+                          description: The number of seconds since the notification
+                            start time 00:00:00 (value range 0-86399).
+                          type: number
+                        userIds:
+                          description: User UID List.
+                          items:
+                            type: number
+                          type: array
+                        weekday:
+                          description: Notification period 1-7 indicates Monday to
+                            Sunday.
+                          items:
+                            type: number
+                          type: array
+                      required:
+                      - endTime
+                      - noticeWay
+                      - receiverType
+                      - startTime
+                      type: object
+                    type: array
+                required:
+                - name
+                - noticeLanguage
+                - noticeType
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: AlarmNoticeStatus defines the observed state of AlarmNotice.
+            properties:
+              atProvider:
+                properties:
+                  id:
+                    type: string
+                  isPreset:
+                    type: number
+                  policyIds:
+                    items:
+                      type: string
+                    type: array
+                  updatedAt:
+                    type: string
+                  updatedBy:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

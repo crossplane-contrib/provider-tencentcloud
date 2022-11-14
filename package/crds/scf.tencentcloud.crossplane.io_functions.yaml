@@ -1,0 +1,553 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: functions.scf.tencentcloud.crossplane.io
+spec:
+  group: scf.tencentcloud.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - tencentcloudjet
+    kind: Function
+    listKind: FunctionList
+    plural: functions
+    singular: function
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Function is the Schema for the Functions API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FunctionSpec defines the desired state of Function
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  cfsConfig:
+                    description: List of CFS configurations.
+                    items:
+                      properties:
+                        cfsId:
+                          description: File system instance ID.
+                          type: string
+                        localMountDir:
+                          description: Local mount directory.
+                          type: string
+                        mountInsId:
+                          description: File system mount instance ID.
+                          type: string
+                        remoteMountDir:
+                          description: Remote mount directory.
+                          type: string
+                        userGroupId:
+                          description: ID of user group.
+                          type: string
+                        userId:
+                          description: ID of user.
+                          type: string
+                      required:
+                      - cfsId
+                      - localMountDir
+                      - mountInsId
+                      - remoteMountDir
+                      - userGroupId
+                      - userId
+                      type: object
+                    type: array
+                  clsLogsetId:
+                    description: cls logset id of the SCF function.
+                    type: string
+                  clsTopicId:
+                    description: cls topic id of the SCF function.
+                    type: string
+                  cosBucketName:
+                    description: Cos bucket name of the SCF function, such as `cos-1234567890`,
+                      conflict with `zip_file`.
+                    type: string
+                  cosBucketRegion:
+                    description: Cos bucket region of the SCF function, conflict with
+                      `zip_file`.
+                    type: string
+                  cosObjectName:
+                    description: Cos object name of the SCF function, should have
+                      suffix `.zip` or `.jar`, conflict with `zip_file`.
+                    type: string
+                  description:
+                    description: Description of the SCF function. Description supports
+                      English letters, numbers, spaces, commas, newlines, periods
+                      and Chinese, the maximum length is 1000.
+                    type: string
+                  enableEipConfig:
+                    description: Indicates whether EIP config set to `ENABLE` when
+                      `enable_public_net` was true.
+                    type: boolean
+                  enablePublicNet:
+                    description: 'Indicates whether public net config enabled. NOTE:
+                      only `vpc_id` specified can disable public net config.'
+                    type: boolean
+                  environment:
+                    additionalProperties:
+                      type: string
+                    description: Environment of the SCF function.
+                    type: object
+                  handler:
+                    description: Handler of the SCF function. The format of name is
+                      `<filename>.<method_name>`, and it supports 26 English letters,
+                      numbers, connectors, and underscores, it should start with a
+                      letter. The last character cannot be `-` or `_`. Available length
+                      is 2-60.
+                    type: string
+                  imageConfig:
+                    description: Image of the SCF function, conflict with ``.
+                    items:
+                      properties:
+                        args:
+                          description: the parameters of command.
+                          type: string
+                        command:
+                          description: The command of entrypoint.
+                          type: string
+                        entryPoint:
+                          description: The entrypoint of app.
+                          type: string
+                        imageType:
+                          description: The image type. personal or enterprise.
+                          type: string
+                        imageUri:
+                          description: The uri of image.
+                          type: string
+                        registryId:
+                          description: The registry id of TCR. When image type is
+                            enterprise, it must be set.
+                          type: string
+                      required:
+                      - imageType
+                      - imageUri
+                      type: object
+                    type: array
+                  l5Enable:
+                    description: Enable L5 for SCF function, default is `false`.
+                    type: boolean
+                  layers:
+                    description: The list of association layers.
+                    items:
+                      properties:
+                        layerName:
+                          description: The name of Layer.
+                          type: string
+                        layerVersion:
+                          description: The version of layer.
+                          type: number
+                      required:
+                      - layerName
+                      - layerVersion
+                      type: object
+                    type: array
+                  memSize:
+                    description: Memory size of the SCF function, unit is MB. The
+                      default is `128`MB. The ladder is 128M.
+                    type: number
+                  name:
+                    description: Name of the SCF function. Name supports 26 English
+                      letters, numbers, connectors, and underscores, it should start
+                      with a letter. The last character cannot be `-` or `_`. Available
+                      length is 2-60.
+                    type: string
+                  namespace:
+                    description: Namespace of the SCF function, default is `default`.
+                    type: string
+                  role:
+                    description: Role of the SCF function.
+                    type: string
+                  runtime:
+                    description: Runtime of the SCF function, only supports `Python2.7`,
+                      `Python3.6`, `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `PHP5`,
+                      `PHP7`, `Golang1`, and `Java8`.
+                    type: string
+                  subnetId:
+                    description: Subnet ID of the SCF function.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tags of the SCF function.
+                    type: object
+                  timeout:
+                    description: Timeout of the SCF function, unit is second. Default
+                      `3`. Available value is 1-900.
+                    type: number
+                  triggers:
+                    description: 'Trigger list of the SCF function, note that if you
+                      modify the trigger list, all existing triggers will be deleted,
+                      and then create triggers in the new list. Each element contains
+                      the following attributes:'
+                    items:
+                      properties:
+                        cosRegion:
+                          description: Region of cos bucket. if `type` is `cos`, `cos_region`
+                            is required.
+                          type: string
+                        name:
+                          description: Name of the SCF function trigger, if `type`
+                            is `ckafka`, the format of name must be `<ckafkaInstanceId>-<topicId>`;
+                            if `type` is `cos`, the name is cos bucket id, other In
+                            any case, it can be combined arbitrarily. It can only
+                            contain English letters, numbers, connectors and underscores.
+                            The maximum length is 100.
+                          type: string
+                        triggerDesc:
+                          description: TriggerDesc of the SCF function trigger, parameter
+                            format of `timer` is linux cron expression; parameter
+                            of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`,
+                            where `bucketUrl` is cos bucket (optional), `event` is
+                            the cos event trigger, `Prefix` is the corresponding file
+                            prefix filter condition, `Suffix` is the suffix filter
+                            condition, if not need filter condition can not pass;
+                            `cmq` type does not pass this parameter; `ckafka` type
+                            parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`;
+                            `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
+                          type: string
+                        type:
+                          description: Type of the SCF function trigger, support `cos`,
+                            `cmq`, `timer`, `ckafka`, `apigw`.
+                          type: string
+                      required:
+                      - name
+                      - triggerDesc
+                      - type
+                      type: object
+                    type: array
+                  vpcId:
+                    description: VPC ID of the SCF function.
+                    type: string
+                  zipFile:
+                    description: Zip file of the SCF function, conflict with `cos_bucket_name`,
+                      `cos_object_name`, `cos_bucket_region`.
+                    type: string
+                required:
+                - handler
+                - name
+                - runtime
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: FunctionStatus defines the observed state of Function.
+            properties:
+              atProvider:
+                properties:
+                  cfsConfig:
+                    items:
+                      properties:
+                        ipAddress:
+                          type: string
+                        mountSubnetId:
+                          type: string
+                        mountVpcId:
+                          type: string
+                      type: object
+                    type: array
+                  codeError:
+                    type: string
+                  codeResult:
+                    type: string
+                  codeSize:
+                    type: number
+                  eipFixed:
+                    type: boolean
+                  eips:
+                    items:
+                      type: string
+                    type: array
+                  errNo:
+                    type: number
+                  host:
+                    type: string
+                  id:
+                    type: string
+                  installDependency:
+                    type: boolean
+                  modifyTime:
+                    type: string
+                  status:
+                    type: string
+                  statusDesc:
+                    type: string
+                  triggerInfo:
+                    items:
+                      properties:
+                        createTime:
+                          type: string
+                        customArgument:
+                          type: string
+                        enable:
+                          type: boolean
+                        modifyTime:
+                          type: string
+                        name:
+                          type: string
+                        triggerDesc:
+                          type: string
+                        type:
+                          type: string
+                      type: object
+                    type: array
+                  vip:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
