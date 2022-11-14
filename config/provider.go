@@ -437,7 +437,7 @@ var IncludedResources = []string{
 	"tencentcloud_api_gateway_service_release$",
 	"tencentcloud_api_gateway_strategy_attachment$",
 
-	// gaap
+	// dayu
 	"tencentcloud_dayu_eip$",
 	"tencentcloud_dayu_l4_rule$",
 	"tencentcloud_dayu_l4_rule_v2$",
