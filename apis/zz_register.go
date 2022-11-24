@@ -26,6 +26,7 @@ import (
 	v1alpha1as "github.com/crossplane-contrib/provider-tencentcloud/apis/as/v1alpha1"
 	v1alpha1audit "github.com/crossplane-contrib/provider-tencentcloud/apis/audit/v1alpha1"
 	v1alpha1cam "github.com/crossplane-contrib/provider-tencentcloud/apis/cam/v1alpha1"
+	v1alpha1cat "github.com/crossplane-contrib/provider-tencentcloud/apis/cat/v1alpha1"
 	v1alpha1cbs "github.com/crossplane-contrib/provider-tencentcloud/apis/cbs/v1alpha1"
 	v1alpha1ccn "github.com/crossplane-contrib/provider-tencentcloud/apis/ccn/v1alpha1"
 	v1alpha1cdh "github.com/crossplane-contrib/provider-tencentcloud/apis/cdh/v1alpha1"
@@ -48,6 +49,7 @@ import (
 	v1alpha1kafka "github.com/crossplane-contrib/provider-tencentcloud/apis/kafka/v1alpha1"
 	v1alpha1kms "github.com/crossplane-contrib/provider-tencentcloud/apis/kms/v1alpha1"
 	v1alpha1lighthouse "github.com/crossplane-contrib/provider-tencentcloud/apis/lighthouse/v1alpha1"
+	v1alpha1mariadb "github.com/crossplane-contrib/provider-tencentcloud/apis/mariadb/v1alpha1"
 	v1alpha1mongodb "github.com/crossplane-contrib/provider-tencentcloud/apis/mongodb/v1alpha1"
 	v1alpha1monitor "github.com/crossplane-contrib/provider-tencentcloud/apis/monitor/v1alpha1"
 	v1alpha1mysql "github.com/crossplane-contrib/provider-tencentcloud/apis/mysql/v1alpha1"
@@ -79,6 +81,7 @@ func init() {
 		v1alpha1as.SchemeBuilder.AddToScheme,
 		v1alpha1audit.SchemeBuilder.AddToScheme,
 		v1alpha1cam.SchemeBuilder.AddToScheme,
+		v1alpha1cat.SchemeBuilder.AddToScheme,
 		v1alpha1cbs.SchemeBuilder.AddToScheme,
 		v1alpha1ccn.SchemeBuilder.AddToScheme,
 		v1alpha1cdh.SchemeBuilder.AddToScheme,
@@ -101,6 +104,7 @@ func init() {
 		v1alpha1kafka.SchemeBuilder.AddToScheme,
 		v1alpha1kms.SchemeBuilder.AddToScheme,
 		v1alpha1lighthouse.SchemeBuilder.AddToScheme,
+		v1alpha1mariadb.SchemeBuilder.AddToScheme,
 		v1alpha1mongodb.SchemeBuilder.AddToScheme,
 		v1alpha1monitor.SchemeBuilder.AddToScheme,
 		v1alpha1mysql.SchemeBuilder.AddToScheme,

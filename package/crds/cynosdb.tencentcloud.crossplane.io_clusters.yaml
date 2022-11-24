@@ -63,6 +63,14 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  autoPause:
+                    description: 'Specify whether the cluster can auto-pause while
+                      `db_mode` is `SERVERLESS`. Values: `yes` (default), `no`.'
+                    type: string
+                  autoPauseDelay:
+                    description: 'Specify auto-pause delay in second while `db_mode`
+                      is `SERVERLESS`. Value range: `[600, 691200]`. Default: `600`.'
+                    type: number
                   autoRenewFlag:
                     description: Auto renew flag. Valid values are `0`(MANUAL_RENEW),
                       `1`(AUTO_RENEW). Default value is `0`. Only works for PREPAID
@@ -77,6 +85,10 @@ spec:
                     type: string
                   clusterName:
                     description: Name of CynosDB cluster.
+                    type: string
+                  dbMode:
+                    description: 'Specify DB mode, only available when `db_type` is
+                      `MYSQL`. Values: `NORMAL` (Default), `SERVERLESS`.'
                     type: string
                   dbType:
                     description: Type of CynosDB, and available values include `MYSQL`.
@@ -93,9 +105,10 @@ spec:
                     type: boolean
                   instanceCpuCore:
                     description: 'The number of CPU cores of read-write type instance
-                      in the CynosDB cluster. Note: modification of this field will
-                      take effect immediately, if want to upgrade on maintenance window,
-                      please upgrade from console.'
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console.'
                     type: number
                   instanceMaintainDuration:
                     description: Duration time for maintenance, unit in second. `3600`
@@ -113,9 +126,19 @@ spec:
                     type: array
                   instanceMemorySize:
                     description: 'Memory capacity of read-write type instance, unit
-                      in GB. Note: modification of this field will take effect immediately,
-                      if want to upgrade on maintenance window, please upgrade from
-                      console.'
+                      in GB. Required while creating normal cluster. Note: modification
+                      of this field will take effect immediately, if want to upgrade
+                      on maintenance window, please upgrade from console.'
+                    type: number
+                  maxCpu:
+                    description: Maximum CPU core count, required while `db_mode`
+                      is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
+                      more reference.
+                    type: number
+                  minCpu:
+                    description: Minimum CPU core count, required while `db_mode`
+                      is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
+                      more reference.
                     type: number
                   paramItems:
                     description: Specify parameter list of database. It is valid when
@@ -350,8 +373,6 @@ spec:
                 - clusterName
                 - dbType
                 - dbVersion
-                - instanceCpuCore
-                - instanceMemorySize
                 - passwordSecretRef
                 type: object
               providerConfigRef:

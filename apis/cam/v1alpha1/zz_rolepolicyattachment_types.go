@@ -32,34 +32,32 @@ type RolePolicyAttachmentObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
-
 	PolicyType *string `json:"policyType,omitempty" tf:"policy_type,omitempty"`
 }
 
 type RolePolicyAttachmentParameters struct {
 
-	// ID of the policy.
+	// Name of the policy.
 	// +crossplane:generate:reference:type=Policy
 	// +kubebuilder:validation:Optional
-	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
+	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	PolicyIDRef *v1.Reference `json:"policyIdRef,omitempty" tf:"-"`
+	PolicyNameRef *v1.Reference `json:"policyNameRef,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	PolicyIDSelector *v1.Selector `json:"policyIdSelector,omitempty" tf:"-"`
+	PolicyNameSelector *v1.Selector `json:"policyNameSelector,omitempty" tf:"-"`
 
-	// ID of the attached CAM role.
+	// Name of the attached CAM role.
 	// +crossplane:generate:reference:type=Role
 	// +kubebuilder:validation:Optional
-	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
+	RoleName *string `json:"roleName,omitempty" tf:"role_name,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	RoleIDRef *v1.Reference `json:"roleIdRef,omitempty" tf:"-"`
+	RoleNameRef *v1.Reference `json:"roleNameRef,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
+	RoleNameSelector *v1.Selector `json:"roleNameSelector,omitempty" tf:"-"`
 }
 
 // RolePolicyAttachmentSpec defines the desired state of RolePolicyAttachment

@@ -1,0 +1,8 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: RolePolicyAttachment
+metadata:
+  name: crossplane-cam-role-policy-attachment
+spec:
+  forProvider:
+    roleName: "keep-cam-role"
+    policyName: "keep-cam-policy"

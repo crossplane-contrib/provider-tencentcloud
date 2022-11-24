@@ -59,6 +59,14 @@ type ClusterObservation struct {
 
 type ClusterParameters struct {
 
+	// Specify whether the cluster can auto-pause while `db_mode` is `SERVERLESS`. Values: `yes` (default), `no`.
+	// +kubebuilder:validation:Optional
+	AutoPause *string `json:"autoPause,omitempty" tf:"auto_pause,omitempty"`
+
+	// Specify auto-pause delay in second while `db_mode` is `SERVERLESS`. Value range: `[600, 691200]`. Default: `600`.
+	// +kubebuilder:validation:Optional
+	AutoPauseDelay *float64 `json:"autoPauseDelay,omitempty" tf:"auto_pause_delay,omitempty"`
+
 	// Auto renew flag. Valid values are `0`(MANUAL_RENEW), `1`(AUTO_RENEW). Default value is `0`. Only works for PREPAID cluster.
 	// +kubebuilder:validation:Optional
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
@@ -75,6 +83,10 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Required
 	ClusterName *string `json:"clusterName" tf:"cluster_name,omitempty"`
 
+	// Specify DB mode, only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default), `SERVERLESS`.
+	// +kubebuilder:validation:Optional
+	DBMode *string `json:"dbMode,omitempty" tf:"db_mode,omitempty"`
+
 	// Type of CynosDB, and available values include `MYSQL`.
 	// +kubebuilder:validation:Required
 	DBType *string `json:"dbType" tf:"db_type,omitempty"`
@@ -87,9 +99,9 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
-	// The number of CPU cores of read-write type instance in the CynosDB cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
-	// +kubebuilder:validation:Required
-	InstanceCPUCore *float64 `json:"instanceCpuCore" tf:"instance_cpu_core,omitempty"`
+	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
+	// +kubebuilder:validation:Optional
+	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
 
 	// Duration time for maintenance, unit in second. `3600` by default.
 	// +kubebuilder:validation:Optional
@@ -103,9 +115,17 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceMaintainWeekdays []*string `json:"instanceMaintainWeekdays,omitempty" tf:"instance_maintain_weekdays,omitempty"`
 
-	// Memory capacity of read-write type instance, unit in GB. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
-	// +kubebuilder:validation:Required
-	InstanceMemorySize *float64 `json:"instanceMemorySize" tf:"instance_memory_size,omitempty"`
+	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
+	// +kubebuilder:validation:Optional
+	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
+
+	// Maximum CPU core count, required while `db_mode` is `SERVERLESS`, request DescribeServerlessInstanceSpecs for more reference.
+	// +kubebuilder:validation:Optional
+	MaxCPU *float64 `json:"maxCpu,omitempty" tf:"max_cpu,omitempty"`
+
+	// Minimum CPU core count, required while `db_mode` is `SERVERLESS`, request DescribeServerlessInstanceSpecs for more reference.
+	// +kubebuilder:validation:Optional
+	MinCPU *float64 `json:"minCpu,omitempty" tf:"min_cpu,omitempty"`
 
 	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
 	// +kubebuilder:validation:Optional

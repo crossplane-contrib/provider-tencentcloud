@@ -1,0 +1,24 @@
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
+metadata:
+  name: debug-config
+spec:
+  args:
+    - --debug
+  env:
+    -
+      name: TF_LOG
+      value: TRACE
+    -
+      name: TF_LOG_PATH
+      value: /tmp/terraform-trace.log
+  
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: crossplanecontrib-provider-tencentcloud
+spec:
+  package: crossplanecontrib/provider-tencentcloud:v0.3.1
+  controllerConfigRef:
+    name: debug-config

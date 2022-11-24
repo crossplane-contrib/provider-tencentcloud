@@ -1,0 +1,8 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: Policy
+metadata:
+  name: crossplane-cam-policy
+spec:
+  forProvider:
+    document: "{\"version\":\"2.0\",\"statement\":[{\"action\":[\"name/sts:AssumeRole\"],\"resource\":[\"*\"],\"effect\":\"allow\"}]}"
+    description: "crossplane-test"

@@ -44,10 +44,6 @@ type PolicyParameters struct {
 	// Document of the CAM policy. The syntax refers to [CAM POLICY](https://intl.cloud.tencent.com/document/product/598/10604). There are some notes when using this para in terraform: 1. The elements in JSON claimed supporting two types as `string` and `array` only support type `array`; 2. Terraform does not support the `root` syntax, when it appears, it must be replaced with the uin it stands for.
 	// +kubebuilder:validation:Required
 	Document *string `json:"document" tf:"document,omitempty"`
-
-	// Name of CAM policy.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 // PolicySpec defines the desired state of Policy

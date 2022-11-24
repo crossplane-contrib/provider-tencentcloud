@@ -147,9 +147,10 @@ spec:
                     type: boolean
                   instanceCpuCore:
                     description: 'The number of CPU cores of read-write type instance
-                      in the CynosDB cluster. Note: modification of this field will
-                      take effect immediately, if want to upgrade on maintenance window,
-                      please upgrade from console.'
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console.'
                     type: number
                   instanceMaintainDuration:
                     description: Duration time for maintenance, unit in second. `3600`
@@ -167,16 +168,14 @@ spec:
                     type: array
                   instanceMemorySize:
                     description: 'Memory capacity of read-write type instance, unit
-                      in GB. Note: modification of this field will take effect immediately,
-                      if want to upgrade on maintenance window, please upgrade from
-                      console.'
+                      in GB. Required while creating normal cluster. Note: modification
+                      of this field will take effect immediately, if want to upgrade
+                      on maintenance window, please upgrade from console.'
                     type: number
                   instanceName:
                     description: Name of instance.
                     type: string
                 required:
-                - instanceCpuCore
-                - instanceMemorySize
                 - instanceName
                 type: object
               providerConfigRef:

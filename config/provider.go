@@ -142,10 +142,10 @@ var IncludedResources = []string{
 	"tencentcloud_cdn_url_push$",
 
 	// cam
-	"tencentcloud_cam_role$",
+	"tencentcloud_cam_role_by_name$",
 	"tencentcloud_cam_role_sso$",
-	"tencentcloud_cam_policy$",
-	"tencentcloud_cam_role_policy_attachment$",
+	"tencentcloud_cam_policy_by_name$",
+	"tencentcloud_cam_role_policy_attachment_by_name$",
 	"tencentcloud_cam_oidc_sso$",
 	"tencentcloud_cam_group$",
 	"tencentcloud_cam_user$",

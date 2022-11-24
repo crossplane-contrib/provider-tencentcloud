@@ -73,7 +73,7 @@ type ProxyParameters struct {
 	// +kubebuilder:validation:Required
 	RealserverRegion *string `json:"realserverRegion" tf:"realserver_region,omitempty"`
 
-	// Tags of the GAAP proxy.
+	// Tags of the GAAP proxy. Tags that do not exist are not created automatically.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
