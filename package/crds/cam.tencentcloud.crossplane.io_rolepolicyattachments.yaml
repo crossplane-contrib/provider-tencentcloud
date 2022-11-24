@@ -64,10 +64,10 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  policyId:
-                    description: ID of the policy.
+                  policyName:
+                    description: Name of the policy.
                     type: string
-                  policyIdRef:
+                  policyNameRef:
                     description: A Reference to a named object.
                     properties:
                       name:
@@ -101,7 +101,7 @@ spec:
                     required:
                     - name
                     type: object
-                  policyIdSelector:
+                  policyNameSelector:
                     description: A Selector selects an object.
                     properties:
                       matchControllerRef:
@@ -140,10 +140,10 @@ spec:
                             type: string
                         type: object
                     type: object
-                  roleId:
-                    description: ID of the attached CAM role.
+                  roleName:
+                    description: Name of the attached CAM role.
                     type: string
-                  roleIdRef:
+                  roleNameRef:
                     description: A Reference to a named object.
                     properties:
                       name:
@@ -177,7 +177,7 @@ spec:
                     required:
                     - name
                     type: object
-                  roleIdSelector:
+                  roleNameSelector:
                     description: A Selector selects an object.
                     properties:
                       matchControllerRef:
@@ -399,8 +399,6 @@ spec:
                   createTime:
                     type: string
                   id:
-                    type: string
-                  policyName:
                     type: string
                   policyType:
                     type: string

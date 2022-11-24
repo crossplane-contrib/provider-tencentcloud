@@ -531,6 +531,10 @@ spec:
                           description: Configuration of forced HTTP or HTTPS redirects.
                           items:
                             properties:
+                              carryHeaders:
+                                description: 'Whether to return the newly added header
+                                  during force redirection. Values: `on`, `off`.'
+                                type: string
                               redirectStatusCode:
                                 description: Forced redirect status code. Valid values
                                   are `301` and `302`. When `switch` setting `off`,

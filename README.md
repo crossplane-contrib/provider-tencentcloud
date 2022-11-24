@@ -3,7 +3,7 @@
 `provider-tencentcloud` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Terrajet](https://github.com/crossplane/terrajet) code
 generation tools and exposes XRM-conformant managed resources for the
-TencentCloud API.
+[TencentCloud](https://cloud.tencent.com/).
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ kubectl apply -f examples/install.yaml
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
-You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-tencentcloud).
+You can see the API reference [here](https://marketplace.upbound.io/providers/crossplane-contrib/provider-tencentcloud/).
 
 ## Developing
 

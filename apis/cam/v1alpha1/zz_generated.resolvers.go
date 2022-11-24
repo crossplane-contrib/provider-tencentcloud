@@ -100,36 +100,36 @@ func (mg *RolePolicyAttachment) ResolveReferences(ctx context.Context, c client.
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PolicyID),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PolicyName),
 		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.PolicyIDRef,
-		Selector:     mg.Spec.ForProvider.PolicyIDSelector,
+		Reference:    mg.Spec.ForProvider.PolicyNameRef,
+		Selector:     mg.Spec.ForProvider.PolicyNameSelector,
 		To: reference.To{
 			List:    &PolicyList{},
 			Managed: &Policy{},
 		},
 	})
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.PolicyID")
+		return errors.Wrap(err, "mg.Spec.ForProvider.PolicyName")
 	}
-	mg.Spec.ForProvider.PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.PolicyIDRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.PolicyName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PolicyNameRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleID),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleName),
 		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.RoleIDRef,
-		Selector:     mg.Spec.ForProvider.RoleIDSelector,
+		Reference:    mg.Spec.ForProvider.RoleNameRef,
+		Selector:     mg.Spec.ForProvider.RoleNameSelector,
 		To: reference.To{
 			List:    &RoleList{},
 			Managed: &Role{},
 		},
 	})
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.RoleID")
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoleName")
 	}
-	mg.Spec.ForProvider.RoleID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.RoleIDRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.RoleName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RoleNameRef = rsp.ResolvedReference
 
 	return nil
 }

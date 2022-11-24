@@ -25,6 +25,17 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type DvAuthsObservation struct {
+	DvAuthKey *string `json:"dvAuthKey,omitempty" tf:"dv_auth_key,omitempty"`
+
+	DvAuthValue *string `json:"dvAuthValue,omitempty" tf:"dv_auth_value,omitempty"`
+
+	DvAuthVerifyType *string `json:"dvAuthVerifyType,omitempty" tf:"dv_auth_verify_type,omitempty"`
+}
+
+type DvAuthsParameters struct {
+}
+
 type FreeCertificateObservation struct {
 	CertBeginTime *string `json:"certBeginTime,omitempty" tf:"cert_begin_time,omitempty"`
 
@@ -35,6 +46,8 @@ type FreeCertificateObservation struct {
 	CertificatePublicKey *string `json:"certificatePublicKey,omitempty" tf:"certificate_public_key,omitempty"`
 
 	Deployable *bool `json:"deployable,omitempty" tf:"deployable,omitempty"`
+
+	DvAuths []DvAuthsObservation `json:"dvAuths,omitempty" tf:"dv_auths,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 

@@ -78,9 +78,6 @@ spec:
                       the `root` syntax, when appears, it must be replaced with the
                       uin it stands for.'
                     type: string
-                  name:
-                    description: Name of CAM role.
-                    type: string
                   tags:
                     additionalProperties:
                       type: string
@@ -88,7 +85,6 @@ spec:
                     type: object
                 required:
                 - document
-                - name
                 type: object
               providerConfigRef:
                 default:

@@ -441,6 +441,10 @@ type ForceRedirectObservation struct {
 
 type ForceRedirectParameters struct {
 
+	// Whether to return the newly added header during force redirection. Values: `on`, `off`.
+	// +kubebuilder:validation:Optional
+	CarryHeaders *string `json:"carryHeaders,omitempty" tf:"carry_headers,omitempty"`
+
 	// Forced redirect status code. Valid values are `301` and `302`. When `switch` setting `off`, this property does not need to be set or set to `302`. Default value is `302`.
 	// +kubebuilder:validation:Optional
 	RedirectStatusCode *float64 `json:"redirectStatusCode,omitempty" tf:"redirect_status_code,omitempty"`

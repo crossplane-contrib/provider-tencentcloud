@@ -323,7 +323,7 @@ func (tr *OidcSSO) GetTerraformSchemaVersion() int {
 
 // GetTerraformResourceType returns Terraform resource type for this Policy
 func (mg *Policy) GetTerraformResourceType() string {
-	return "tencentcloud_cam_policy"
+	return "tencentcloud_cam_policy_by_name"
 }
 
 // GetConnectionDetailsMapping for this Policy
@@ -397,7 +397,7 @@ func (tr *Policy) GetTerraformSchemaVersion() int {
 
 // GetTerraformResourceType returns Terraform resource type for this Role
 func (mg *Role) GetTerraformResourceType() string {
-	return "tencentcloud_cam_role"
+	return "tencentcloud_cam_role_by_name"
 }
 
 // GetConnectionDetailsMapping for this Role
@@ -471,7 +471,7 @@ func (tr *Role) GetTerraformSchemaVersion() int {
 
 // GetTerraformResourceType returns Terraform resource type for this RolePolicyAttachment
 func (mg *RolePolicyAttachment) GetTerraformResourceType() string {
-	return "tencentcloud_cam_role_policy_attachment"
+	return "tencentcloud_cam_role_policy_attachment_by_name"
 }
 
 // GetConnectionDetailsMapping for this RolePolicyAttachment

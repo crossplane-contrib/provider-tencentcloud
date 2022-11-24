@@ -50,6 +50,7 @@ import (
 	samlprovider "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cam/samlprovider"
 	user "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cam/user"
 	userpolicyattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cam/userpolicyattachment"
+	taskset "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cat/taskset"
 	snapshot "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cbs/snapshot"
 	snapshotpolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cbs/snapshotpolicy"
 	snapshotpolicyattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cbs/snapshotpolicyattachment"
@@ -142,6 +143,12 @@ import (
 	externalkey "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/kms/externalkey"
 	key "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/kms/key"
 	instancelighthouse "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/lighthouse/instance"
+	dedicatedclusterdbinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mariadb/dedicatedclusterdbinstance"
+	hourdbinstancemariadb "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mariadb/hourdbinstance"
+	logfileretentionperiod "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mariadb/logfileretentionperiod"
+	mariadbaccount "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mariadb/mariadbaccount"
+	parameters "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mariadb/parameters"
+	securitygroups "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mariadb/securitygroups"
 	instancemongodb "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mongodb/instance"
 	shardinginstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mongodb/shardinginstance"
 	standbyinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mongodb/standbyinstance"
@@ -315,6 +322,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		samlprovider.Setup,
 		user.Setup,
 		userpolicyattachment.Setup,
+		taskset.Setup,
 		snapshot.Setup,
 		snapshotpolicy.Setup,
 		snapshotpolicyattachment.Setup,
@@ -407,6 +415,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		externalkey.Setup,
 		key.Setup,
 		instancelighthouse.Setup,
+		dedicatedclusterdbinstance.Setup,
+		hourdbinstancemariadb.Setup,
+		logfileretentionperiod.Setup,
+		mariadbaccount.Setup,
+		parameters.Setup,
+		securitygroups.Setup,
 		instancemongodb.Setup,
 		shardinginstance.Setup,
 		standbyinstance.Setup,

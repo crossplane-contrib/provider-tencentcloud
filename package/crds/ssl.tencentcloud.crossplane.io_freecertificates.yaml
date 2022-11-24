@@ -309,6 +309,17 @@ spec:
                     type: string
                   deployable:
                     type: boolean
+                  dvAuths:
+                    items:
+                      properties:
+                        dvAuthKey:
+                          type: string
+                        dvAuthValue:
+                          type: string
+                        dvAuthVerifyType:
+                          type: string
+                      type: object
+                    type: array
                   id:
                     type: string
                   insertTime:

@@ -50,9 +50,9 @@ type ReadonlyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
-	// The number of CPU cores of read-write type instance in the CynosDB cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
-	// +kubebuilder:validation:Required
-	InstanceCPUCore *float64 `json:"instanceCpuCore" tf:"instance_cpu_core,omitempty"`
+	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
+	// +kubebuilder:validation:Optional
+	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
 
 	// Duration time for maintenance, unit in second. `3600` by default.
 	// +kubebuilder:validation:Optional
@@ -66,9 +66,9 @@ type ReadonlyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceMaintainWeekdays []*string `json:"instanceMaintainWeekdays,omitempty" tf:"instance_maintain_weekdays,omitempty"`
 
-	// Memory capacity of read-write type instance, unit in GB. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
-	// +kubebuilder:validation:Required
-	InstanceMemorySize *float64 `json:"instanceMemorySize" tf:"instance_memory_size,omitempty"`
+	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
+	// +kubebuilder:validation:Optional
+	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
 
 	// Name of instance.
 	// +kubebuilder:validation:Required

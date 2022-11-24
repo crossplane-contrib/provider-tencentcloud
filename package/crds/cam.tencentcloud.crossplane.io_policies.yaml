@@ -75,12 +75,8 @@ spec:
                       the `root` syntax, when it appears, it must be replaced with
                       the uin it stands for.'
                     type: string
-                  name:
-                    description: Name of CAM policy.
-                    type: string
                 required:
                 - document
-                - name
                 type: object
               providerConfigRef:
                 default:

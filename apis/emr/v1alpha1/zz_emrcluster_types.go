@@ -110,7 +110,7 @@ type EmrClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NeedMasterWan *string `json:"needMasterWan,omitempty" tf:"need_master_wan,omitempty"`
 
-	// The pay mode of instance. 0 is pay on an annual basis, 1 is pay on a measure basis.
+	// The pay mode of instance. 0 represent POSTPAID_BY_HOUR, 1 represent PREPAID.
 	// +kubebuilder:validation:Required
 	PayMode *float64 `json:"payMode" tf:"pay_mode,omitempty"`
 
