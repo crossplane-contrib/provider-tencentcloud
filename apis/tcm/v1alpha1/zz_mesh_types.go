@@ -25,6 +25,24 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ApmObservation struct {
+}
+
+type ApmParameters struct {
+
+	// Whether enable APM.
+	// +kubebuilder:validation:Optional
+	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
+
+	// Instance id of the APM.
+	// +kubebuilder:validation:Optional
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Region.
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
 type ConfigObservation struct {
 }
 
@@ -33,6 +51,44 @@ type ConfigParameters struct {
 	// Istio configuration.
 	// +kubebuilder:validation:Optional
 	Istio []IstioParameters `json:"istio,omitempty" tf:"istio,omitempty"`
+
+	// Prometheus configuration.
+	// +kubebuilder:validation:Optional
+	Prometheus []PrometheusParameters `json:"prometheus,omitempty" tf:"prometheus,omitempty"`
+
+	// Tracing config.
+	// +kubebuilder:validation:Optional
+	Tracing []TracingParameters `json:"tracing,omitempty" tf:"tracing,omitempty"`
+}
+
+type CustomPromObservation struct {
+}
+
+type CustomPromParameters struct {
+
+	// Authentication type of the prometheus.
+	// +kubebuilder:validation:Required
+	AuthType *string `json:"authType" tf:"auth_type,omitempty"`
+
+	// Whether it is public address, default false.
+	// +kubebuilder:validation:Optional
+	IsPublicAddr *bool `json:"isPublicAddr,omitempty" tf:"is_public_addr,omitempty"`
+
+	// Password of the prometheus, used in basic authentication type.
+	// +kubebuilder:validation:Optional
+	Password *string `json:"password,omitempty" tf:"password,omitempty"`
+
+	// Url of the prometheus.
+	// +kubebuilder:validation:Required
+	URL *string `json:"url" tf:"url,omitempty"`
+
+	// Username of the prometheus, used in basic authentication type.
+	// +kubebuilder:validation:Optional
+	Username *string `json:"username,omitempty" tf:"username,omitempty"`
+
+	// Vpc id.
+	// +kubebuilder:validation:Optional
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
 type IstioObservation struct {
@@ -92,6 +148,32 @@ type MeshParameters struct {
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
+type PrometheusObservation struct {
+}
+
+type PrometheusParameters struct {
+
+	// Custom prometheus.
+	// +kubebuilder:validation:Optional
+	CustomProm []CustomPromParameters `json:"customProm,omitempty" tf:"custom_prom,omitempty"`
+
+	// Instance id.
+	// +kubebuilder:validation:Optional
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Region.
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Subnet id.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Vpc id.
+	// +kubebuilder:validation:Optional
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+}
+
 type SmartDNSObservation struct {
 }
 
@@ -122,6 +204,38 @@ type TagListParameters struct {
 	// Tag value.
 	// +kubebuilder:validation:Required
 	Value *string `json:"value" tf:"value,omitempty"`
+}
+
+type TracingObservation struct {
+}
+
+type TracingParameters struct {
+
+	// APM config.
+	// +kubebuilder:validation:Optional
+	Apm []ApmParameters `json:"apm,omitempty" tf:"apm,omitempty"`
+
+	// Whether enable tracing.
+	// +kubebuilder:validation:Optional
+	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
+
+	// Tracing sampling, 0.0-1.0.
+	// +kubebuilder:validation:Optional
+	Sampling *float64 `json:"sampling,omitempty" tf:"sampling,omitempty"`
+
+	// Third party zipkin config.
+	// +kubebuilder:validation:Optional
+	Zipkin []ZipkinParameters `json:"zipkin,omitempty" tf:"zipkin,omitempty"`
+}
+
+type ZipkinObservation struct {
+}
+
+type ZipkinParameters struct {
+
+	// Zipkin address.
+	// +kubebuilder:validation:Required
+	Address *string `json:"address" tf:"address,omitempty"`
 }
 
 // MeshSpec defines the desired state of Mesh

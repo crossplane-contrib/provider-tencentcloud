@@ -54,6 +54,8 @@ type ClusterObservation struct {
 
 	RwGroupInstances []RwGroupInstancesObservation `json:"rwGroupInstances,omitempty" tf:"rw_group_instances,omitempty"`
 
+	ServerlessStatus *string `json:"serverlessStatus,omitempty" tf:"serverless_status,omitempty"`
+
 	StorageUsed *float64 `json:"storageUsed,omitempty" tf:"storage_used,omitempty"`
 }
 
@@ -158,6 +160,10 @@ type ClusterParameters struct {
 	// IDs of security group for `rw_group`.
 	// +kubebuilder:validation:Optional
 	RwGroupSg []*string `json:"rwGroupSg,omitempty" tf:"rw_group_sg,omitempty"`
+
+	// Specify whether to pause or resume serverless cluster. values: `resume`, `pause`.
+	// +kubebuilder:validation:Optional
+	ServerlessStatusFlag *string `json:"serverlessStatusFlag,omitempty" tf:"serverless_status_flag,omitempty"`
 
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, when charge_type is `POSTPAID_BY_HOUR`, this argument is unnecessary.
 	// +kubebuilder:validation:Optional

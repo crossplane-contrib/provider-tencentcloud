@@ -33,6 +33,17 @@ func Configure(p *tjconfig.Provider) {
 		r.References["subnet_id"] = tjconfig.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
+		if s, ok := r.TerraformResource.Schema["system_disk_id"]; ok {
+			s.Optional = false
+			s.Computed = true
+		}
+		r.LateInitializer = tjconfig.LateInitializer{
+			IgnoredFields: []string{
+				"security_groups",
+				"key_ids",
+			},
+		}
+
 	})
 
 	p.AddResourceConfigurator("tencentcloud_instance_set", func(r *tjconfig.Resource) {

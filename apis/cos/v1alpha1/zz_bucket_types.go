@@ -199,7 +199,7 @@ type NonCurrentTransitionParameters struct {
 	// +kubebuilder:validation:Optional
 	NonCurrentDays *float64 `json:"nonCurrentDays,omitempty" tf:"non_current_days,omitempty"`
 
-	// Specifies the storage class to which you want the non current object to transition. Available values include `STANDARD`, `STANDARD_IA` and `ARCHIVE`.
+	// Specifies the storage class to which you want the non current object to transition. Available values include `STANDARD_IA`, `MAZ_STANDARD_IA`, `INTELLIGENT_TIERING`, `MAZ_INTELLIGENT_TIERING`, `ARCHIVE`, `DEEP_ARCHIVE`. For more information, please refer to: https://cloud.tencent.com/document/product/436/33417.
 	// +kubebuilder:validation:Required
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
@@ -303,7 +303,7 @@ type TransitionParameters struct {
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// Specifies the storage class to which you want the object to transition. Available values include `STANDARD`, `STANDARD_IA` and `ARCHIVE`.
+	// Specifies the storage class to which you want the object to transition. Available values include `STANDARD_IA`, `MAZ_STANDARD_IA`, `INTELLIGENT_TIERING`, `MAZ_INTELLIGENT_TIERING`, `ARCHIVE`, `DEEP_ARCHIVE`. For more information, please refer to: https://cloud.tencent.com/document/product/436/33417.
 	// +kubebuilder:validation:Required
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
