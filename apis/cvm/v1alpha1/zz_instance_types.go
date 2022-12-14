@@ -69,6 +69,8 @@ type InstanceObservation struct {
 	InstanceStatus *string `json:"instanceStatus,omitempty" tf:"instance_status,omitempty"`
 
 	PublicIP *string `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
+
+	SystemDiskID *string `json:"systemDiskId,omitempty" tf:"system_disk_id,omitempty"`
 }
 
 type InstanceParameters struct {
@@ -165,6 +167,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
+	// A list of orderly security group IDs to associate with.
+	// +kubebuilder:validation:Optional
+	OrderlySecurityGroups []*string `json:"orderlySecurityGroups,omitempty" tf:"orderly_security_groups,omitempty"`
+
 	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
@@ -211,10 +217,6 @@ type InstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
-
-	// System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
-	// +kubebuilder:validation:Optional
-	SystemDiskID *string `json:"systemDiskId,omitempty" tf:"system_disk_id,omitempty"`
 
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	// +kubebuilder:validation:Optional

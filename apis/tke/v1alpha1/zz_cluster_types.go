@@ -48,6 +48,10 @@ type ClusterAuditObservation struct {
 
 type ClusterAuditParameters struct {
 
+	// when you want to close the cluster audit log or delete the cluster, you can use this parameter to determine whether the audit log set and topic created by default will be deleted.
+	// +kubebuilder:validation:Optional
+	DeleteAuditLogAndTopic *bool `json:"deleteAuditLogAndTopic,omitempty" tf:"delete_audit_log_and_topic,omitempty"`
+
 	// Specify weather the Cluster Audit enabled. NOTE: Enable Cluster Audit will also auto install Log Agent.
 	// +kubebuilder:validation:Required
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
@@ -369,6 +373,10 @@ type EventPersistenceObservation struct {
 }
 
 type EventPersistenceParameters struct {
+
+	// when you want to close the cluster event persistence or delete the cluster, you can use this parameter to determine whether the event persistence log set and topic created by default will be deleted.
+	// +kubebuilder:validation:Optional
+	DeleteEventLogAndTopic *bool `json:"deleteEventLogAndTopic,omitempty" tf:"delete_event_log_and_topic,omitempty"`
 
 	// Specify weather the Event Persistence enabled.
 	// +kubebuilder:validation:Required

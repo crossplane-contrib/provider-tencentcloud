@@ -226,6 +226,12 @@ spec:
                     description: The key pair to use for the instance, it looks like
                       `skey-16jig7tx`. Modifying will cause the instance reset.
                     type: string
+                  orderlySecurityGroups:
+                    description: A list of orderly security group IDs to associate
+                      with.
+                    items:
+                      type: string
+                    type: array
                   passwordSecretRef:
                     description: Password for the instance. In order for the new password
                       to take effect, the instance will be restarted after the password
@@ -355,11 +361,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  systemDiskId:
-                    description: System disk snapshot ID used to initialize the system
-                      disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
-                      disk id is not supported.
-                    type: string
                   systemDiskSize:
                     description: Size of the system disk. unit is GB, Default is 50GB.
                       If modified, the instance may force stop.
@@ -653,6 +654,8 @@ spec:
                   instanceStatus:
                     type: string
                   publicIp:
+                    type: string
+                  systemDiskId:
                     type: string
                 type: object
               conditions:

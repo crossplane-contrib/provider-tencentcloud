@@ -99,6 +99,92 @@ spec:
                             - outboundTrafficPolicy
                             type: object
                           type: array
+                        prometheus:
+                          description: Prometheus configuration.
+                          items:
+                            properties:
+                              customProm:
+                                description: Custom prometheus.
+                                items:
+                                  properties:
+                                    authType:
+                                      description: Authentication type of the prometheus.
+                                      type: string
+                                    isPublicAddr:
+                                      description: Whether it is public address, default
+                                        false.
+                                      type: boolean
+                                    password:
+                                      description: Password of the prometheus, used
+                                        in basic authentication type.
+                                      type: string
+                                    url:
+                                      description: Url of the prometheus.
+                                      type: string
+                                    username:
+                                      description: Username of the prometheus, used
+                                        in basic authentication type.
+                                      type: string
+                                    vpcId:
+                                      description: Vpc id.
+                                      type: string
+                                  required:
+                                  - authType
+                                  - url
+                                  type: object
+                                type: array
+                              instanceId:
+                                description: Instance id.
+                                type: string
+                              region:
+                                description: Region.
+                                type: string
+                              subnetId:
+                                description: Subnet id.
+                                type: string
+                              vpcId:
+                                description: Vpc id.
+                                type: string
+                            type: object
+                          type: array
+                        tracing:
+                          description: Tracing config.
+                          items:
+                            properties:
+                              apm:
+                                description: APM config.
+                                items:
+                                  properties:
+                                    enable:
+                                      description: Whether enable APM.
+                                      type: boolean
+                                    instanceId:
+                                      description: Instance id of the APM.
+                                      type: string
+                                    region:
+                                      description: Region.
+                                      type: string
+                                  type: object
+                                type: array
+                              enable:
+                                description: Whether enable tracing.
+                                type: boolean
+                              sampling:
+                                description: Tracing sampling, 0.0-1.0.
+                                type: number
+                              zipkin:
+                                description: Third party zipkin config.
+                                items:
+                                  properties:
+                                    address:
+                                      description: Zipkin address.
+                                      type: string
+                                  required:
+                                  - address
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                       type: object
                     type: array
                   displayName:

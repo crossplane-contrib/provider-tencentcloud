@@ -166,6 +166,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ServerlessStatus != nil {
+		in, out := &in.ServerlessStatus, &out.ServerlessStatus
+		*out = new(string)
+		**out = **in
+	}
 	if in.StorageUsed != nil {
 		in, out := &in.StorageUsed, &out.StorageUsed
 		*out = new(float64)
@@ -326,6 +331,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.ServerlessStatusFlag != nil {
+		in, out := &in.ServerlessStatusFlag, &out.ServerlessStatusFlag
+		*out = new(string)
+		**out = **in
 	}
 	if in.StorageLimit != nil {
 		in, out := &in.StorageLimit, &out.StorageLimit

@@ -131,6 +131,12 @@ spec:
                             case), numbers and dashes (-). Pure numbers are not allowed.
                             For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.'
                           type: string
+                        hostNameStyle:
+                          description: The style of the host name of the cloud server,
+                            the value range includes ORIGINAL and UNIQUE, and the
+                            default is ORIGINAL. For usage, refer to `HostNameSettings`
+                            in https://www.tencentcloud.com/document/product/377/31001.
+                          type: string
                         instanceChargeType:
                           description: 'Charge type of instance. Valid values are
                             `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default

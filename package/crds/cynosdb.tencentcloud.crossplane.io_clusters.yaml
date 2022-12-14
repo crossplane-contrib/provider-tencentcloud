@@ -203,6 +203,10 @@ spec:
                     items:
                       type: string
                     type: array
+                  serverlessStatusFlag:
+                    description: 'Specify whether to pause or resume serverless cluster.
+                      values: `resume`, `pause`.'
+                    type: string
                   storageLimit:
                     description: 'Storage limit of CynosDB cluster instance, unit
                       in GB. The maximum storage of a non-serverless instance in GB.
@@ -607,6 +611,8 @@ spec:
                           type: string
                       type: object
                     type: array
+                  serverlessStatus:
+                    type: string
                   storageUsed:
                     type: number
                 type: object
