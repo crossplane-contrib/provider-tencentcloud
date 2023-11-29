@@ -235,7 +235,6 @@ import (
 	workload "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/workload"
 	applicationproxy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/applicationproxy"
 	applicationproxyrule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/applicationproxyrule"
-	customerrorpageolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/customerrorpageolicy"
 	ddospolicyteo "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/ddospolicy"
 	dnsrecord "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/dnsrecord"
 	dnssec "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/dnssec"
@@ -507,7 +506,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		workload.Setup,
 		applicationproxy.Setup,
 		applicationproxyrule.Setup,
-		customerrorpageolicy.Setup,
 		ddospolicyteo.Setup,
 		dnsrecord.Setup,
 		dnssec.Setup,
