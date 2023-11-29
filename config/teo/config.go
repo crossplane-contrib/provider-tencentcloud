@@ -111,15 +111,6 @@ func Configure(p *tjconfig.Provider) {
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_custom_error_page", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "CustomErrorPageolicy"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
 	p.AddResourceConfigurator("tencentcloud_teo_application_proxy", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
