@@ -67,7 +67,6 @@ import (
 	v1alpha1tcr "github.com/crossplane-contrib/provider-tencentcloud/apis/tcr/v1alpha1"
 	v1alpha1tdmq "github.com/crossplane-contrib/provider-tencentcloud/apis/tdmq/v1alpha1"
 	v1alpha1tem "github.com/crossplane-contrib/provider-tencentcloud/apis/tem/v1alpha1"
-	v1alpha1teo "github.com/crossplane-contrib/provider-tencentcloud/apis/teo/v1alpha1"
 	v1alpha1tke "github.com/crossplane-contrib/provider-tencentcloud/apis/tke/v1alpha1"
 	v1alpha1apis "github.com/crossplane-contrib/provider-tencentcloud/apis/v1alpha1"
 	v1alpha1vod "github.com/crossplane-contrib/provider-tencentcloud/apis/vod/v1alpha1"
@@ -122,7 +121,6 @@ func init() {
 		v1alpha1tcr.SchemeBuilder.AddToScheme,
 		v1alpha1tdmq.SchemeBuilder.AddToScheme,
 		v1alpha1tem.SchemeBuilder.AddToScheme,
-		v1alpha1teo.SchemeBuilder.AddToScheme,
 		v1alpha1tke.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1alpha1vod.SchemeBuilder.AddToScheme,

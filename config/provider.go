@@ -67,7 +67,6 @@ import (
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tcr"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tdmq"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tem"
-	"github.com/crossplane-contrib/provider-tencentcloud/config/teo"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tke"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/vod"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/vpc"
@@ -261,21 +260,6 @@ var IncludedResources = []string{
 	// tcm
 	"tencentcloud_tcm_mesh$",
 	"tencentcloud_tcm_cluster_attachment$",
-
-	// teo
-	"tencentcloud_teo_zone$",
-	"tencentcloud_teo_zone_setting$",
-	"tencentcloud_teo_security_policy$",
-	"tencentcloud_teo_rule_engine$",
-	"tencentcloud_teo_rule_engine_priority$",
-	"tencentcloud_teo_origin_group$",
-	"tencentcloud_teo_load_balancing$",
-	"tencentcloud_teo_dns_sec$",
-	"tencentcloud_teo_dns_record$",
-	"tencentcloud_teo_ddos_policy$",
-	"tencentcloud_teo_custom_error_page$",
-	"tencentcloud_teo_application_proxy$",
-	"tencentcloud_teo_application_proxy_rule$",
 
 	// tem
 	"tencentcloud_tem_environment$",
@@ -498,7 +482,6 @@ func GetProvider() *tjconfig.Provider {
 		dcdb.Configure,
 		ses.Configure,
 		tcm.Configure,
-		teo.Configure,
 		tem.Configure,
 		lighthouse.Configure,
 		cls.Configure,
