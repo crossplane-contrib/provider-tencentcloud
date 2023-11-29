@@ -8,10 +8,10 @@ GOLANGCILINT_VERSION ?= 1.48.0
 export TERRAFORM_VERSION := 1.1.6
 
 export TERRAFORM_PROVIDER_SOURCE := tencentcloudstack/tencentcloud
-export TERRAFORM_PROVIDER_VERSION := 1.79.1
+export TERRAFORM_PROVIDER_VERSION := 1.81.51
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-tencentcloud
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/tencentcloudstack/terraform-provider-tencentcloud/releases/download/v1.79.1
-export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-tencentcloud_v1.79.1
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/tencentcloudstack/terraform-provider-tencentcloud/releases/download/v1.81.51
+export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-tencentcloud_v1.81.51
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
