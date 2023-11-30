@@ -373,6 +373,93 @@ spec:
                       - switch
                       type: object
                     type: array
+                  cacheKey:
+                    description: 'Cache key configuration (Ignore Query String configuration).
+                      NOTE: All of `full_url_cache` default value is `on`.'
+                    items:
+                      properties:
+                        fullUrlCache:
+                          description: Whether to enable full-path cache, values `on`
+                            (DEFAULT ON), `off`.
+                          type: string
+                        ignoreCase:
+                          description: Specifies whether the cache key is case sensitive.
+                          type: string
+                        keyRules:
+                          description: Path-specific cache key configuration.
+                          items:
+                            properties:
+                              fullUrlCache:
+                                description: Whether to enable full-path cache, values
+                                  `on` (DEFAULT ON), `off`.
+                                type: string
+                              ignoreCase:
+                                description: Whether caches are case insensitive.
+                                type: string
+                              queryString:
+                                description: Request parameter contained in CacheKey.
+                                items:
+                                  properties:
+                                    action:
+                                      description: 'Specify key rule QS action, values:
+                                        `includeCustom`, `excludeCustom`.'
+                                      type: string
+                                    switch:
+                                      description: Whether to use QueryString as part
+                                        of CacheKey, values `on`, `off` (Default).
+                                      type: string
+                                    value:
+                                      description: Array of included/excluded query
+                                        strings (separated by `;`).
+                                      type: string
+                                  type: object
+                                type: array
+                              rulePaths:
+                                description: 'List of rule paths for each `key_rules`:
+                                  `/` for `index`, file ext like `jpg` for `file`,
+                                  `/dir/like/` for `directory` and `/path/index.html`
+                                  for `path`.'
+                                items:
+                                  type: string
+                                type: array
+                              ruleTag:
+                                description: Specify rule tag, default value is `user`.
+                                type: string
+                              ruleType:
+                                description: 'Rule type, available: `file`, `directory`,
+                                  `path`, `index`.'
+                                type: string
+                            required:
+                            - queryString
+                            - rulePaths
+                            - ruleType
+                            type: object
+                          type: array
+                        queryString:
+                          description: Request parameter contained in CacheKey.
+                          items:
+                            properties:
+                              action:
+                                description: 'Include/exclude query parameters. Values:
+                                  `includeAll` (Default), `excludeAll`, `includeCustom`,
+                                  `excludeCustom`.'
+                                type: string
+                              reorder:
+                                description: Whether to sort again, values `on`, `off`
+                                  (Default).
+                                type: string
+                              switch:
+                                description: Whether to use QueryString as part of
+                                  CacheKey, values `on`, `off` (Default).
+                                type: string
+                              value:
+                                description: Array of included/excluded query strings
+                                  (separated by `;`).
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   compression:
                     description: Smart compression configurations.
                     items:
@@ -768,8 +855,7 @@ spec:
                                   all documents take effect, `file`: the specified
                                   file suffix takes effect, `directory`: the specified
                                   path takes effect, `path`: specify the absolute
-                                  path to take effect, `index`: home page, `default`:
-                                  effective when the source site has no max-age.'
+                                  path to take effect, `index`: home page.'
                                 type: string
                             required:
                             - maxAgeContents
@@ -1164,6 +1250,16 @@ spec:
                           description: Follow the source station configuration switch.
                             Valid values are `on` and `off`.
                           type: string
+                        heuristicCacheSwitch:
+                          description: 'Specify whether to enable heuristic cache,
+                            only available while `follow_origin_switch` enabled, values:
+                            `on`, `off` (Default).'
+                          type: string
+                        heuristicCacheTime:
+                          description: Specify heuristic cache time in second, only
+                            available while `follow_origin_switch` and `heuristic_cache_switch`
+                            enabled.
+                          type: number
                         ignoreCacheControl:
                           description: Force caching. After opening, the no-store
                             and no-cache resources returned by the origin site will
@@ -1188,8 +1284,7 @@ spec:
                             of CacheType: `all`: fill *, `file`: fill in the suffix
                             name, such as jpg, txt, `directory`: fill in the path,
                             such as /xxx/test, `path`: fill in the absolute path,
-                            such as /xxx/test.html, `index`: fill /, `default`: Fill
-                            `no max-age`.'
+                            such as /xxx/test.html, `index`: fill /.'
                           items:
                             type: string
                           type: array
@@ -1198,8 +1293,7 @@ spec:
                             `all`: all documents take effect, `file`: the specified
                             file suffix takes effect, `directory`: the specified path
                             takes effect, `path`: specify the absolute path to take
-                            effect, `index`: home page, `default`: effective when
-                            the source site has no max-age.'
+                            effect, `index`: home page.'
                           type: string
                         switch:
                           description: Cache configuration switch. Valid values are
@@ -1215,7 +1309,8 @@ spec:
                   serviceType:
                     description: 'Acceleration domain name service type. `web`: static
                       acceleration, `download`: download acceleration, `media`: streaming
-                      media VOD acceleration.'
+                      media VOD acceleration, `hybrid`: hybrid acceleration, `dynamic`:
+                      dynamic acceleration.'
                     type: string
                   specificConfigMainland:
                     description: 'Specific configuration for mainland, NOTE: Both

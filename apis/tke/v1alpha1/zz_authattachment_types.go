@@ -27,13 +27,29 @@ import (
 
 type AuthAttachmentObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	TkeDefaultIssuer *string `json:"tkeDefaultIssuer,omitempty" tf:"tke_default_issuer,omitempty"`
+
+	TkeDefaultJwksURI *string `json:"tkeDefaultJwksUri,omitempty" tf:"tke_default_jwks_uri,omitempty"`
 }
 
 type AuthAttachmentParameters struct {
 
+	// Creating ClientId of the identity provider.
+	// +kubebuilder:validation:Optional
+	AutoCreateClientID []*string `json:"autoCreateClientId,omitempty" tf:"auto_create_client_id,omitempty"`
+
 	// If set to `true`, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
 	// +kubebuilder:validation:Optional
 	AutoCreateDiscoveryAnonymousAuth *bool `json:"autoCreateDiscoveryAnonymousAuth,omitempty" tf:"auto_create_discovery_anonymous_auth,omitempty"`
+
+	// Creating an identity provider.
+	// +kubebuilder:validation:Optional
+	AutoCreateOidcConfig *bool `json:"autoCreateOidcConfig,omitempty" tf:"auto_create_oidc_config,omitempty"`
+
+	// Creating the PodIdentityWebhook component. if `auto_create_oidc_config` is true, this field must set true.
+	// +kubebuilder:validation:Optional
+	AutoInstallPodIdentityWebhookAddon *bool `json:"autoInstallPodIdentityWebhookAddon,omitempty" tf:"auto_install_pod_identity_webhook_addon,omitempty"`
 
 	// ID of clusters.
 	// +crossplane:generate:reference:type=Cluster
@@ -46,13 +62,17 @@ type AuthAttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Specify service-account-issuer.
-	// +kubebuilder:validation:Required
-	Issuer *string `json:"issuer" tf:"issuer,omitempty"`
+	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field.
+	// +kubebuilder:validation:Optional
+	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// Specify service-account-jwks-uri.
+	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field.
 	// +kubebuilder:validation:Optional
 	JwksURI *string `json:"jwksUri,omitempty" tf:"jwks_uri,omitempty"`
+
+	// If set to `true`, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
+	// +kubebuilder:validation:Optional
+	UseTkeDefault *bool `json:"useTkeDefault,omitempty" tf:"use_tke_default,omitempty"`
 }
 
 // AuthAttachmentSpec defines the desired state of AuthAttachment

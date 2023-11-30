@@ -69,6 +69,11 @@ spec:
                   host:
                     description: Account host, default is `%`.
                     type: string
+                  maxUserConnections:
+                    description: The maximum number of available connections for a
+                      new account, the default value is 10240, and the maximum value
+                      that can be set is 10240.
+                    type: number
                   mySqlidRef:
                     description: A Reference to a named object.
                     properties:

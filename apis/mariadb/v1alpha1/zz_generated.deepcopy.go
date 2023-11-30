@@ -133,6 +133,11 @@ func (in *DedicatedclusterDBInstanceParameters) DeepCopyInto(out *Dedicatedclust
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Storage != nil {
 		in, out := &in.Storage, &out.Storage
 		*out = new(float64)
@@ -182,6 +187,11 @@ func (in *DedicatedclusterDBInstanceParameters) DeepCopyInto(out *Dedicatedclust
 		in, out := &in.VPCIDSelector, &out.VPCIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Vip != nil {
+		in, out := &in.Vip, &out.Vip
+		*out = new(string)
+		**out = **in
 	}
 }
 
@@ -331,6 +341,11 @@ func (in *HourDBInstanceParameters) DeepCopyInto(out *HourDBInstanceParameters) 
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Storage != nil {
 		in, out := &in.Storage, &out.Storage
 		*out = new(float64)
@@ -380,6 +395,11 @@ func (in *HourDBInstanceParameters) DeepCopyInto(out *HourDBInstanceParameters) 
 		in, out := &in.VPCIDSelector, &out.VPCIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Vip != nil {
+		in, out := &in.Vip, &out.Vip
+		*out = new(string)
+		**out = **in
 	}
 	if in.Zones != nil {
 		in, out := &in.Zones, &out.Zones

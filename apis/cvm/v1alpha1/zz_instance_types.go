@@ -103,6 +103,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DataDisks []DataDisksParameters `json:"dataDisks,omitempty" tf:"data_disks,omitempty"`
 
+	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
+	// +kubebuilder:validation:Optional
+	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
+
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
 	// +kubebuilder:validation:Optional
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
@@ -147,7 +151,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
 
-	// Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. This value takes NO Effect when changing and does not need to be set when `allocate_public_ip` is false.
+	// Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when `allocate_public_ip` is false.
 	// +kubebuilder:validation:Optional
 	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
 
@@ -222,7 +226,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
 
-	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`: Basic SSD. NOTE: If modified, the instance may force stop.
+	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`: Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous SSD. NOTE: If modified, the instance may force stop.
 	// +kubebuilder:validation:Optional
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 

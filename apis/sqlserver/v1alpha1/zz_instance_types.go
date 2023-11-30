@@ -134,6 +134,10 @@ type InstanceParameters struct {
 	// An array of voucher IDs, currently only one can be used for a single order.
 	// +kubebuilder:validation:Optional
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
+	// +kubebuilder:validation:Optional
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 }
 
 // InstanceSpec defines the desired state of Instance

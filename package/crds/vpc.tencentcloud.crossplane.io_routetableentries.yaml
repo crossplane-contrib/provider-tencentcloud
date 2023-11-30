@@ -78,7 +78,7 @@ spec:
                     type: string
                   nextType:
                     description: 'Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`,
-                      `PEERCONNECTION`, `SSLVPN`, `NAT`, `NORMAL_CVM`, `EIP` and `CCN`.'
+                      `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.'
                     type: string
                   routeTableId:
                     description: ID of routing table to which this entry belongs.

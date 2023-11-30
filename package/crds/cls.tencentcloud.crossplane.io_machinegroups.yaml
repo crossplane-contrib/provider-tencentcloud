@@ -108,7 +108,7 @@ spec:
                       during off-peak hours.
                     type: string
                   updateStartTime:
-                    description: pdate start time. We recommend you update LogListener
+                    description: Update start time. We recommend you update LogListener
                       during off-peak hours.
                     type: string
                 required:

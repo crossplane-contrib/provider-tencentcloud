@@ -59,6 +59,10 @@ type TopicParameters struct {
 	// +kubebuilder:validation:Required
 	Partitions *float64 `json:"partitions" tf:"partitions,omitempty"`
 
+	// Pulsar Topic Type 0: Non-persistent non-partitioned 1: Non-persistent partitioned 2: Persistent non-partitioned 3: Persistent partitioned.
+	// +kubebuilder:validation:Optional
+	PulsarTopicType *float64 `json:"pulsarTopicType,omitempty" tf:"pulsar_topic_type,omitempty"`
+
 	// Description of the namespace.
 	// +kubebuilder:validation:Optional
 	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
@@ -68,8 +72,8 @@ type TopicParameters struct {
 	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
 
 	// The type of topic.
-	// +kubebuilder:validation:Required
-	TopicType *float64 `json:"topicType" tf:"topic_type,omitempty"`
+	// +kubebuilder:validation:Optional
+	TopicType *float64 `json:"topicType,omitempty" tf:"topic_type,omitempty"`
 }
 
 // TopicSpec defines the desired state of Topic

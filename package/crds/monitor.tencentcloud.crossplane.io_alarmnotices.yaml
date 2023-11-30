@@ -105,12 +105,19 @@ spec:
                           description: Notification End Time Seconds at the start
                             of a day.
                           type: number
+                        isValid:
+                          description: If passed verification `0` is no, `1` is yes.
+                            Default `0`.
+                          type: number
                         startTime:
                           description: Notification Start Time Number of seconds at
                             the start of a day.
                           type: number
                         url:
                           description: Callback URL (limited to 256 characters).
+                          type: string
+                        validationCode:
+                          description: Verification code.
                           type: string
                         weekday:
                           description: Notification period 1-7 indicates Monday to
@@ -371,6 +378,8 @@ spec:
             properties:
               atProvider:
                 properties:
+                  ampConsumerId:
+                    type: string
                   id:
                     type: string
                   isPreset:

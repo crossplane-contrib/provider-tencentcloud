@@ -30,15 +30,15 @@ type CacheCacheObservation struct {
 
 type CacheCacheParameters struct {
 
-	// Cache expiration time settings.Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	CacheTime *float64 `json:"cacheTime,omitempty" tf:"cache_time,omitempty"`
 
-	// Specifies whether to enable force cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	IgnoreCacheControl *string `json:"ignoreCacheControl,omitempty" tf:"ignore_cache_control,omitempty"`
 
-	// Cache configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
@@ -189,12 +189,22 @@ type HstsParameters struct {
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
+type IPv6Observation struct {
+}
+
+type IPv6Parameters struct {
+
+	// - `on`: Enable.- `off`: Disable.
+	// +kubebuilder:validation:Required
+	Switch *string `json:"switch" tf:"switch,omitempty"`
+}
+
 type MaxAgeObservation struct {
 }
 
 type MaxAgeParameters struct {
 
-	// Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If it&#39;s on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	FollowOrigin *string `json:"followOrigin,omitempty" tf:"follow_origin,omitempty"`
 
@@ -208,7 +218,7 @@ type NoCacheObservation struct {
 
 type NoCacheParameters struct {
 
-	// Whether to cache the configuration.- `on`: Do not cache.- `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+	// Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
@@ -312,23 +322,13 @@ type WebSocketObservation struct {
 
 type WebSocketParameters struct {
 
-	// Whether to enable custom WebSocket timeout setting. When it&#39;s off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+	// Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
 	// +kubebuilder:validation:Required
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 
 	// Sets timeout period in seconds. Maximum value: 120.
 	// +kubebuilder:validation:Optional
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
-}
-
-type ZoneSettingIPv6Observation struct {
-}
-
-type ZoneSettingIPv6Parameters struct {
-
-	// - `on`: Enable.- `off`: Disable.
-	// +kubebuilder:validation:Required
-	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type ZoneSettingObservation struct {
@@ -369,7 +369,7 @@ type ZoneSettingParameters struct {
 
 	// IPv6 access configuration.
 	// +kubebuilder:validation:Optional
-	IPv6 []ZoneSettingIPv6Parameters `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
+	IPv6 []IPv6Parameters `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
 	// Browser cache configuration.
 	// +kubebuilder:validation:Optional

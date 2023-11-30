@@ -175,6 +175,12 @@ spec:
                   instanceName:
                     description: Name of instance.
                     type: string
+                  subnetId:
+                    description: ID of the subnet within this VPC.
+                    type: string
+                  vpcId:
+                    description: ID of the VPC.
+                    type: string
                 required:
                 - instanceName
                 type: object

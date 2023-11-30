@@ -33,7 +33,7 @@ type ApplicationProxyRuleObservation struct {
 
 type ApplicationProxyRuleParameters struct {
 
-	// Passes the client IP. Default value is OFF.When Proto is TCP, valid values:- `TOA`: Pass the client IP via TOA.- `PPV1`: Pass the client IP via Proxy Protocol V1.- `PPV2`: Pass the client IP via Proxy Protocol V2.- `OFF`: Do not pass the client IP.When Proto=UDP, valid values:- `PPV2`: Pass the client IP via Proxy Protocol V2.- `OFF`: Do not pass the client IP.
+	// Passes the client IP. Default value is `OFF`. When Proto is TCP, valid values: `TOA`: Pass the client IP via TOA; `PPV1`: Pass the client IP via Proxy Protocol V1; `PPV2`: Pass the client IP via Proxy Protocol V2; `OFF`: Do not pass the client IP. When Proto=UDP, valid values: `PPV2`: Pass the client IP via Proxy Protocol V2; `OFF`: Do not pass the client IP.
 	// +kubebuilder:validation:Optional
 	ForwardClientIP *string `json:"forwardClientIp,omitempty" tf:"forward_client_ip,omitempty"`
 
@@ -41,15 +41,15 @@ type ApplicationProxyRuleParameters struct {
 	// +kubebuilder:validation:Required
 	OriginPort *string `json:"originPort" tf:"origin_port,omitempty"`
 
-	// Origin server type.- `custom`: Specified origins.- `origins`: An origin group.
+	// Origin server type. Valid values: `custom`: Specified origins; `origins`: An origin group.
 	// +kubebuilder:validation:Required
 	OriginType *string `json:"originType" tf:"origin_type,omitempty"`
 
-	// Origin server information.When `OriginType` is custom, this field value indicates multiple origin servers in either of the following formats:- `IP`:Port- Domain name:Port.When `OriginType` is origins, it indicates the origin group ID.
+	// Origin site information: When `OriginType` is `custom`, it indicates one or more origin sites, such as `['8.8.8.8', '9.9.9.9']` or `OriginValue=['test.com']`; When `OriginType` is `origins`, there is required to be one and only one element, representing the origin site group ID, such as `['origin-537f5b41-162a-11ed-abaa-525400c5da15']`.
 	// +kubebuilder:validation:Required
 	OriginValue []*string `json:"originValue" tf:"origin_value,omitempty"`
 
-	// Valid values:- port number: `80` means port 80.- port range: `81-90` means port range 81-90.
+	// Valid values: `80` means port 80; `81-90` means port range 81-90.
 	// +kubebuilder:validation:Required
 	Port []*string `json:"port" tf:"port,omitempty"`
 
@@ -65,7 +65,7 @@ type ApplicationProxyRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	SessionPersist *bool `json:"sessionPersist,omitempty" tf:"session_persist,omitempty"`
 
-	// Status of this application proxy rule. Valid values to set is `online` and `offline`.- `online`: Enable.- `offline`: Disable.- `progress`: Deploying.- `stopping`: Disabling.- `fail`: Deployment/Disabling failed.
+	// Status, the values are: `online`: enabled; `offline`: deactivated; `progress`: being deployed; `stopping`: being deactivated; `fail`: deployment failure/deactivation failure.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 

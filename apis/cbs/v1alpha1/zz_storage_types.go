@@ -43,6 +43,10 @@ type StorageParameters struct {
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
+	// The quota of backup points of cloud disk.
+	// +kubebuilder:validation:Optional
+	DiskBackupQuota *float64 `json:"diskBackupQuota,omitempty" tf:"disk_backup_quota,omitempty"`
+
 	// Indicates whether CBS is encrypted.
 	// +kubebuilder:validation:Optional
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`

@@ -85,12 +85,18 @@ spec:
                     description: 'repo type, 0: tcr personal, 1: tcr enterprise, 2:
                       public repository, 3: tcr hosted by tem, 4: demo image.'
                     type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: application tag list.
+                    type: object
                   useDefaultImageService:
                     description: create image repo or not.
                     type: number
                 required:
                 - applicationName
                 - codingLanguage
+                - description
                 type: object
               providerConfigRef:
                 default:

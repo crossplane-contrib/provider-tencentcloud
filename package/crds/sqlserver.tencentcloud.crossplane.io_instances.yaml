@@ -296,6 +296,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitSwitch:
+                    description: 'The way to execute the allocation. Supported values
+                      include: 0 - execute immediately, 1 - execute in maintenance
+                      window.'
+                    type: number
                 required:
                 - memory
                 - name

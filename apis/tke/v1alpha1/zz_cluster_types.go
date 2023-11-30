@@ -34,13 +34,17 @@ type AuthOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoCreateDiscoveryAnonymousAuth *bool `json:"autoCreateDiscoveryAnonymousAuth,omitempty" tf:"auto_create_discovery_anonymous_auth,omitempty"`
 
-	// Specify service-account-issuer.
+	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
 	// +kubebuilder:validation:Optional
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// Specify service-account-jwks-uri.
+	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
 	// +kubebuilder:validation:Optional
 	JwksURI *string `json:"jwksUri,omitempty" tf:"jwks_uri,omitempty"`
+
+	// If set to `true`, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri, and they will be ignored.
+	// +kubebuilder:validation:Optional
+	UseTkeDefault *bool `json:"useTkeDefault,omitempty" tf:"use_tke_default,omitempty"`
 }
 
 type ClusterAuditObservation struct {
@@ -155,17 +159,25 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterExtraArgs []ClusterExtraArgsParameters `json:"clusterExtraArgs,omitempty" tf:"cluster_extra_args,omitempty"`
 
-	// Open internet access or not. If this field is set 'true', the field below `worker_config` must be set. Because only cluster with node is allowed enable access endpoint.
+	// Open internet access or not. If this field is set 'true', the field below `worker_config` must be set. Because only cluster with node is allowed enable access endpoint. You may open it through `tencentcloud_kubernetes_cluster_endpoint`.
 	// +kubebuilder:validation:Optional
 	ClusterInternet *bool `json:"clusterInternet,omitempty" tf:"cluster_internet,omitempty"`
+
+	// Domain name for cluster Kube-apiserver internet access. Be careful if you modify value of this parameter, the cluster_external_endpoint value may be changed automatically too.
+	// +kubebuilder:validation:Optional
+	ClusterInternetDomain *string `json:"clusterInternetDomain,omitempty" tf:"cluster_internet_domain,omitempty"`
 
 	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
 	// +kubebuilder:validation:Optional
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
 
-	// Open intranet access or not. If this field is set 'true', the field below `worker_config` must be set. Because only cluster with node is allowed enable access endpoint.
+	// Open intranet access or not. If this field is set 'true', the field below `worker_config` must be set. Because only cluster with node is allowed enable access endpoint. You may open it through `tencentcloud_kubernetes_cluster_endpoint`.
 	// +kubebuilder:validation:Optional
 	ClusterIntranet *bool `json:"clusterIntranet,omitempty" tf:"cluster_intranet,omitempty"`
+
+	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetDomain *string `json:"clusterIntranetDomain,omitempty" tf:"cluster_intranet_domain,omitempty"`
 
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
 	// +kubebuilder:validation:Optional
@@ -199,11 +211,15 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterOsType *string `json:"clusterOsType,omitempty" tf:"cluster_os_type,omitempty"`
 
-	// Version of the cluster, Default is '1.10.5'.
+	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+	// +kubebuilder:validation:Optional
+	ClusterSubnetID *string `json:"clusterSubnetId,omitempty" tf:"cluster_subnet_id,omitempty"`
+
+	// Version of the cluster. Use `tencentcloud_kubernetes_available_cluster_versions` to get the upgradable cluster version.
 	// +kubebuilder:validation:Optional
 	ClusterVersion *string `json:"clusterVersion,omitempty" tf:"cluster_version,omitempty"`
 
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'. Default is 'docker'.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
 	// +kubebuilder:validation:Optional
 	ContainerRuntime *string `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
@@ -275,7 +291,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Cluster network type, GR or VPC-CNI. Default is GR.
+	// Cluster network type, the available values include: 'GR' and 'VPC-CNI' and 'CiliumOverlay'. Default is GR.
 	// +kubebuilder:validation:Optional
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
@@ -418,7 +434,7 @@ type ExtensionAddonParameters struct {
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Description of the add-on resource object in JSON string format.
+	// Parameter of the add-on resource object in JSON string format, please check the example at the top of page for reference.
 	// +kubebuilder:validation:Required
 	Param *string `json:"param" tf:"param,omitempty"`
 }
@@ -491,6 +507,10 @@ type MasterConfigParameters struct {
 	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// Id of cvm hpc cluster.
+	// +kubebuilder:validation:Optional
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
 	// The valid image id, format of img-xxx.
 	// +kubebuilder:validation:Optional
@@ -685,6 +705,10 @@ type WorkerConfigParameters struct {
 	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// Id of cvm hpc cluster.
+	// +kubebuilder:validation:Optional
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
 	// The valid image id, format of img-xxx.
 	// +kubebuilder:validation:Optional

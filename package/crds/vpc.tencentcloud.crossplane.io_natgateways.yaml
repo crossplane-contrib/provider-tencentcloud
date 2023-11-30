@@ -82,6 +82,13 @@ spec:
                   name:
                     description: Name of the NAT gateway.
                     type: string
+                  natProductVersion:
+                    description: '1: traditional NAT, 2: standard NAT, default value
+                      is 1.'
+                    type: number
+                  subnetId:
+                    description: Subnet of NAT.
+                    type: string
                   tags:
                     additionalProperties:
                       type: string
@@ -163,6 +170,9 @@ spec:
                             type: string
                         type: object
                     type: object
+                  zone:
+                    description: The availability zone, such as `ap-guangzhou-3`.
+                    type: string
                 required:
                 - assignedEipSet
                 - name

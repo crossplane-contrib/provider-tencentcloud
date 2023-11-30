@@ -31,8 +31,8 @@ type ApmObservation struct {
 type ApmParameters struct {
 
 	// Whether enable APM.
-	// +kubebuilder:validation:Optional
-	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
+	// +kubebuilder:validation:Required
+	Enable *bool `json:"enable" tf:"enable,omitempty"`
 
 	// Instance id of the APM.
 	// +kubebuilder:validation:Optional
@@ -48,6 +48,10 @@ type ConfigObservation struct {
 
 type ConfigParameters struct {
 
+	// Sidecar inject configuration.
+	// +kubebuilder:validation:Optional
+	Inject []InjectParameters `json:"inject,omitempty" tf:"inject,omitempty"`
+
 	// Istio configuration.
 	// +kubebuilder:validation:Optional
 	Istio []IstioParameters `json:"istio,omitempty" tf:"istio,omitempty"`
@@ -56,9 +60,35 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Prometheus []PrometheusParameters `json:"prometheus,omitempty" tf:"prometheus,omitempty"`
 
+	// Default sidecar requests and limits.
+	// +kubebuilder:validation:Optional
+	SidecarResources []SidecarResourcesParameters `json:"sidecarResources,omitempty" tf:"sidecar_resources,omitempty"`
+
 	// Tracing config.
 	// +kubebuilder:validation:Optional
-	Tracing []TracingParameters `json:"tracing,omitempty" tf:"tracing,omitempty"`
+	Tracing []ConfigTracingParameters `json:"tracing,omitempty" tf:"tracing,omitempty"`
+}
+
+type ConfigTracingObservation struct {
+}
+
+type ConfigTracingParameters struct {
+
+	// APM config.
+	// +kubebuilder:validation:Optional
+	Apm []TracingApmParameters `json:"apm,omitempty" tf:"apm,omitempty"`
+
+	// Whether enable tracing.
+	// +kubebuilder:validation:Optional
+	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
+
+	// Tracing sampling, 0.0-1.0.
+	// +kubebuilder:validation:Optional
+	Sampling *float64 `json:"sampling,omitempty" tf:"sampling,omitempty"`
+
+	// Third party zipkin config.
+	// +kubebuilder:validation:Optional
+	Zipkin []TracingZipkinParameters `json:"zipkin,omitempty" tf:"zipkin,omitempty"`
 }
 
 type CustomPromObservation struct {
@@ -91,6 +121,24 @@ type CustomPromParameters struct {
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
+type InjectObservation struct {
+}
+
+type InjectParameters struct {
+
+	// IP ranges that should not be proxied.
+	// +kubebuilder:validation:Optional
+	ExcludeIPRanges []*string `json:"excludeIpRanges,omitempty" tf:"exclude_ip_ranges,omitempty"`
+
+	// Let istio-proxy(sidecar) start first, before app container.
+	// +kubebuilder:validation:Optional
+	HoldApplicationUntilProxyStarts *bool `json:"holdApplicationUntilProxyStarts,omitempty" tf:"hold_application_until_proxy_starts,omitempty"`
+
+	// Let istio-proxy(sidecar) stop last, after app container.
+	// +kubebuilder:validation:Optional
+	HoldProxyUntilApplicationEnds *bool `json:"holdProxyUntilApplicationEnds,omitempty" tf:"hold_proxy_until_application_ends,omitempty"`
+}
+
 type IstioObservation struct {
 }
 
@@ -108,13 +156,31 @@ type IstioParameters struct {
 	// +kubebuilder:validation:Optional
 	EnablePilotHTTP *bool `json:"enablePilotHttp,omitempty" tf:"enable_pilot_http,omitempty"`
 
-	// Outbound traffic policy.
+	// Outbound traffic policy, REGISTRY_ONLY or ALLOW_ANY, see https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/#MeshConfig-OutboundTrafficPolicy-Mode.
 	// +kubebuilder:validation:Required
 	OutboundTrafficPolicy *string `json:"outboundTrafficPolicy" tf:"outbound_traffic_policy,omitempty"`
 
 	// SmartDNS configuration.
 	// +kubebuilder:validation:Optional
 	SmartDNS []SmartDNSParameters `json:"smartDns,omitempty" tf:"smart_dns,omitempty"`
+
+	// Tracing config(Deprecated, please use MeshConfig.Tracing for configuration).
+	// +kubebuilder:validation:Optional
+	Tracing []TracingParameters `json:"tracing,omitempty" tf:"tracing,omitempty"`
+}
+
+type LimitsObservation struct {
+}
+
+type LimitsParameters struct {
+
+	// Resource type name, `cpu/memory`.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Resource quantity, example: cpu-`100m`, memory-`1Gi`.
+	// +kubebuilder:validation:Optional
+	Quantity *string `json:"quantity,omitempty" tf:"quantity,omitempty"`
 }
 
 type MeshObservation struct {
@@ -174,6 +240,34 @@ type PrometheusParameters struct {
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
+type RequestsObservation struct {
+}
+
+type RequestsParameters struct {
+
+	// Resource type name, `cpu/memory`.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Resource quantity, example: cpu-`100m`, memory-`1Gi`.
+	// +kubebuilder:validation:Optional
+	Quantity *string `json:"quantity,omitempty" tf:"quantity,omitempty"`
+}
+
+type SidecarResourcesObservation struct {
+}
+
+type SidecarResourcesParameters struct {
+
+	// Sidecar limits.
+	// +kubebuilder:validation:Optional
+	Limits []LimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+
+	// Sidecar requests.
+	// +kubebuilder:validation:Optional
+	Requests []RequestsParameters `json:"requests,omitempty" tf:"requests,omitempty"`
+}
+
 type SmartDNSObservation struct {
 }
 
@@ -206,6 +300,24 @@ type TagListParameters struct {
 	Value *string `json:"value" tf:"value,omitempty"`
 }
 
+type TracingApmObservation struct {
+}
+
+type TracingApmParameters struct {
+
+	// Whether enable APM.
+	// +kubebuilder:validation:Optional
+	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
+
+	// Instance id of the APM.
+	// +kubebuilder:validation:Optional
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Region.
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
 type TracingObservation struct {
 }
 
@@ -226,6 +338,16 @@ type TracingParameters struct {
 	// Third party zipkin config.
 	// +kubebuilder:validation:Optional
 	Zipkin []ZipkinParameters `json:"zipkin,omitempty" tf:"zipkin,omitempty"`
+}
+
+type TracingZipkinObservation struct {
+}
+
+type TracingZipkinParameters struct {
+
+	// Zipkin address.
+	// +kubebuilder:validation:Required
+	Address *string `json:"address" tf:"address,omitempty"`
 }
 
 type ZipkinObservation struct {

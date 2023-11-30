@@ -73,21 +73,22 @@ spec:
                           items:
                             properties:
                               cacheTime:
-                                description: 'Cache expiration time settings.Unit:
+                                description: 'Cache expiration time settings, Unit:
                                   second. The maximum value is 365 days. Note: This
                                   field may return null, indicating that no valid
                                   value can be obtained.'
                                 type: number
                               ignoreCacheControl:
-                                description: 'Specifies whether to enable force cache.-
-                                  `on`: Enable.- `off`: Disable. Note: This field
-                                  may return null, indicating that no valid value
-                                  can be obtained.'
+                                description: 'Specifies whether to enable force cache.
+                                  Valid values: `on`: Enable; `off`: Disable. Note:
+                                  This field may return null, indicating that no valid
+                                  value can be obtained.'
                                 type: string
                               switch:
-                                description: 'Cache configuration switch.- `on`: Enable.-
-                                  `off`: Disable. Note: This field may return null,
-                                  indicating that no valid value can be obtained.'
+                                description: 'Cache configuration switch. Valid values:
+                                  `on`: Enable; `off`: Disable. Note: This field may
+                                  return null, indicating that no valid value can
+                                  be obtained.'
                                 type: string
                             type: object
                           type: array
@@ -111,10 +112,10 @@ spec:
                           items:
                             properties:
                               switch:
-                                description: 'Whether to cache the configuration.-
-                                  `on`: Do not cache.- `off`: Cache. Note: This field
-                                  may return null, indicating that no valid value
-                                  can be obtained.'
+                                description: 'Whether to cache the configuration.
+                                  Valid values: `on`: Do not cache; `off`: Cache.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
                                 type: string
                             type: object
                           type: array
@@ -307,8 +308,8 @@ spec:
                         followOrigin:
                           description: 'Specifies whether to follow the max cache
                             age of the origin server.- `on`: Enable.- `off`: Disable.If
-                            it&#39;s on, MaxAgeTime is ignored. Note: This field may
-                            return null, indicating that no valid value can be obtained.'
+                            is on, MaxAgeTime is ignored. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
                           type: string
                         maxAgeTime:
                           description: 'Specifies the max age of the cache (in seconds).
@@ -424,9 +425,9 @@ spec:
                       properties:
                         switch:
                           description: 'Whether to enable custom WebSocket timeout
-                            setting. When it&#39;s off: it means to keep the default
-                            WebSocket connection timeout period, which is 15 seconds.
-                            To change the timeout period, please set it to on.'
+                            setting. When is off: it means to keep the default WebSocket
+                            connection timeout period, which is 15 seconds. To change
+                            the timeout period, please set it to on.'
                           type: string
                         timeout:
                           description: 'Sets timeout period in seconds. Maximum value:

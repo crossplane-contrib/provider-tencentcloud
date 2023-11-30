@@ -65,7 +65,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
 
-	// The version number of the database engine to use. Supported versions include 5.5/5.6/5.7/8.0, and default is 5.7.
+	// The version number of the database engine to use. Supported versions include 5.5/5.6/5.7/8.0, and default is 5.7. Upgrade the instance engine version to support 5.6/5.7 and switch immediately.
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
@@ -92,6 +92,10 @@ type InstanceParameters struct {
 	// Public access port. Valid value ranges: [1024~65535]. The default value is `3306`.
 	// +kubebuilder:validation:Optional
 	IntranetPort *float64 `json:"intranetPort,omitempty" tf:"intranet_port,omitempty"`
+
+	// Latency threshold. Value range 1~10. Only need to fill in when upgrading kernel subversion and engine version.
+	// +kubebuilder:validation:Optional
+	MaxDeayTime *float64 `json:"maxDeayTime,omitempty" tf:"max_deay_time,omitempty"`
 
 	// Memory size (in MB).
 	// +kubebuilder:validation:Required
@@ -155,6 +159,10 @@ type InstanceParameters struct {
 	// Instance tags.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Whether it is a kernel subversion upgrade, supported values: 1 - upgrade the kernel subversion; 0 - upgrade the database engine version. Only need to fill in when upgrading kernel subversion and engine version.
+	// +kubebuilder:validation:Optional
+	UpgradeSubversion *float64 `json:"upgradeSubversion,omitempty" tf:"upgrade_subversion,omitempty"`
 
 	// ID of VPC, which can be modified once every 24 hours and can't be removed.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC

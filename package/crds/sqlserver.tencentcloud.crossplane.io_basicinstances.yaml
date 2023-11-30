@@ -92,7 +92,9 @@ spec:
                   machineType:
                     description: The host type of the purchased instance, `CLOUD_PREMIUM`
                       for virtual machine high-performance cloud disk, `CLOUD_SSD`
-                      for virtual machine SSD cloud disk.
+                      for virtual machine SSD cloud disk, `CLOUD_HSSD` for virtual
+                      machine enhanced cloud disk, `CLOUD_BSSD` for virtual machine
+                      general purpose SSD cloud disk.
                     type: string
                   maintenanceStartTime:
                     description: Start time of the maintenance in one day, format

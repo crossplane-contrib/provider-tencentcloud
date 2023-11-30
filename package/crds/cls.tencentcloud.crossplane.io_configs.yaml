@@ -80,6 +80,10 @@ spec:
                       be set.
                     items:
                       properties:
+                        address:
+                          description: syslog system log collection specifies the
+                            address and port that the collector listens to.
+                          type: string
                         backtracking:
                           description: 'Size of the data to be rewound in incremental
                             collection mode. Default value: -1 (full collection).'
@@ -105,6 +109,12 @@ spec:
                                 type: string
                             type: object
                           type: array
+                        isGbk:
+                          description: GBK encoding. Default 0.
+                          type: number
+                        jsonStandard:
+                          description: standard json. Default 0.
+                          type: number
                         keys:
                           description: Key name of each extracted field. An empty
                             key indicates to discard the field. This parameter is
@@ -116,6 +126,30 @@ spec:
                         logRegex:
                           description: Full log matching rule, which is valid only
                             if log_type is fullregex_log.
+                          type: string
+                        metaTags:
+                          description: metadata tags.
+                          items:
+                            properties:
+                              key:
+                                description: tag key.
+                                type: string
+                              value:
+                                description: tag value.
+                                type: string
+                            type: object
+                          type: array
+                        metadataType:
+                          description: metadata type.
+                          type: number
+                        parseProtocol:
+                          description: parse protocol.
+                          type: string
+                        pathRegex:
+                          description: metadata path regex.
+                          type: string
+                        protocol:
+                          description: syslog protocol, tcp or udp.
                           type: string
                         timeFormat:
                           description: Time field format. For more information, please

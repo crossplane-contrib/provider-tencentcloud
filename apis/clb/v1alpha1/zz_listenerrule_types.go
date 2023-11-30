@@ -60,7 +60,7 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Required
 	Domain *string `json:"domain" tf:"domain,omitempty"`
 
-	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`.
+	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
 	// +kubebuilder:validation:Optional
 	ForwardType *string `json:"forwardType,omitempty" tf:"forward_type,omitempty"`
 
@@ -84,13 +84,21 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	HealthCheckHealthNum *float64 `json:"healthCheckHealthNum,omitempty" tf:"health_check_health_num,omitempty"`
 
-	// Interval time of health check. Valid value ranges: (5~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Interval time of health check. Valid value ranges: (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	// +kubebuilder:validation:Optional
 	HealthCheckIntervalTime *float64 `json:"healthCheckIntervalTime,omitempty" tf:"health_check_interval_time,omitempty"`
 
 	// Indicates whether health check is enabled.
 	// +kubebuilder:validation:Optional
 	HealthCheckSwitch *bool `json:"healthCheckSwitch,omitempty" tf:"health_check_switch,omitempty"`
+
+	// Time out of health check. The value range is [2-60](SEC).
+	// +kubebuilder:validation:Optional
+	HealthCheckTimeOut *float64 `json:"healthCheckTimeOut,omitempty" tf:"health_check_time_out,omitempty"`
+
+	// Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+	// +kubebuilder:validation:Optional
+	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
 
 	// Unhealthy threshold of health check, and the default is `3`. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	// +kubebuilder:validation:Optional

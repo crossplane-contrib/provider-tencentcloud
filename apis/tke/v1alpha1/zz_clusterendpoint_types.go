@@ -58,6 +58,10 @@ type ClusterEndpointParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterInternet *bool `json:"clusterInternet,omitempty" tf:"cluster_internet,omitempty"`
 
+	// Domain name for cluster Kube-apiserver internet access.  Be careful if you modify value of this parameter, the cluster_external_endpoint value may be changed automatically too.
+	// +kubebuilder:validation:Optional
+	ClusterInternetDomain *string `json:"clusterInternetDomain,omitempty" tf:"cluster_internet_domain,omitempty"`
+
 	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
 	// +kubebuilder:validation:Optional
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
@@ -65,6 +69,10 @@ type ClusterEndpointParameters struct {
 	// Open intranet access or not.
 	// +kubebuilder:validation:Optional
 	ClusterIntranet *bool `json:"clusterIntranet,omitempty" tf:"cluster_intranet,omitempty"`
+
+	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetDomain *string `json:"clusterIntranetDomain,omitempty" tf:"cluster_intranet_domain,omitempty"`
 
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
@@ -76,6 +84,10 @@ type ClusterEndpointParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ClusterIntranetSubnetIDSelector *v1.Selector `json:"clusterIntranetSubnetIdSelector,omitempty" tf:"-"`
+
+	// The LB parameter. Only used for public network access.
+	// +kubebuilder:validation:Optional
+	ExtensiveParameters *string `json:"extensiveParameters,omitempty" tf:"extensive_parameters,omitempty"`
 
 	// Security policies for managed cluster internet, like:'192.168.1.0/24' or '113.116.51.27', '0.0.0.0/0' means all. This field can only set when field `cluster_deploy_type` is 'MANAGED_CLUSTER' and `cluster_internet` is true. `managed_cluster_internet_security_policies` can not delete or empty once be set.
 	// +kubebuilder:validation:Optional

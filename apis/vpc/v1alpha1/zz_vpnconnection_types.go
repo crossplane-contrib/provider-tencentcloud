@@ -118,7 +118,7 @@ type VPNConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	IkeProtoAuthenAlgorithm *string `json:"ikeProtoAuthenAlgorithm,omitempty" tf:"ike_proto_authen_algorithm,omitempty"`
 
-	// Proto encrypt algorithm of the IKE operation specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-128`, `AES-CBC-256`, `DES-CBC`. Default value is `3DES-CBC`.
+	// Proto encrypt algorithm of the IKE operation specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`, `DES-CBC`, `SM4`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`,`AES128GCM128`, `AES192GCM128`, `AES256GCM128`. Default value is `3DES-CBC`.
 	// +kubebuilder:validation:Optional
 	IkeProtoEncryAlgorithm *string `json:"ikeProtoEncryAlgorithm,omitempty" tf:"ike_proto_encry_algorithm,omitempty"`
 
@@ -138,11 +138,11 @@ type VPNConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	IkeSaLifetimeSeconds *float64 `json:"ikeSaLifetimeSeconds,omitempty" tf:"ike_sa_lifetime_seconds,omitempty"`
 
-	// Version of the IKE operation specification. Default value is `IKEV1`.
+	// Version of the IKE operation specification, values: `IKEV1`, `IKEV2`. Default value is `IKEV1`.
 	// +kubebuilder:validation:Optional
 	IkeVersion *string `json:"ikeVersion,omitempty" tf:"ike_version,omitempty"`
 
-	// Encrypt algorithm of the IPSEC operation specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-128`, `AES-CBC-256`, `DES-CBC`. Default value is `3DES-CBC`.
+	// Encrypt algorithm of the IPSEC operation specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`, `DES-CBC`, `SM4`, `NULL`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`. Default value is `3DES-CBC`.
 	// +kubebuilder:validation:Optional
 	IpsecEncryptAlgorithm *string `json:"ipsecEncryptAlgorithm,omitempty" tf:"ipsec_encrypt_algorithm,omitempty"`
 

@@ -70,6 +70,10 @@ spec:
                         addressIpVersion:
                           description: ip version, support IPV4.
                           type: string
+                        clbId:
+                          description: related CLB ID, support binding existing clb,
+                            does not support modification.
+                          type: string
                         environmentId:
                           description: environment ID.
                           type: string
@@ -144,7 +148,8 @@ spec:
                                   type: string
                                 type: array
                               secretName:
-                                description: secret name.
+                                description: secret name, if you use a certificate,
+                                  you don't need to fill in this field.
                                 type: string
                             required:
                             - certificateId
@@ -341,8 +346,6 @@ spec:
                   ingress:
                     items:
                       properties:
-                        clbId:
-                          type: string
                         createTime:
                           type: string
                         vip:

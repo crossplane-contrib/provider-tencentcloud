@@ -79,6 +79,11 @@ spec:
                     description: ID of the DC to be queried, application deployment
                       offline.
                     type: string
+                  dcOwnerAccount:
+                    description: Connection owner, who is the current customer by
+                      default. The developer account ID should be entered for shared
+                      connections.
+                    type: string
                   dcgId:
                     description: ID of the DC Gateway. Currently only new in the console.
                     type: string
@@ -115,7 +120,6 @@ spec:
                 - dcId
                 - dcgId
                 - name
-                - vpcId
                 type: object
               providerConfigRef:
                 default:

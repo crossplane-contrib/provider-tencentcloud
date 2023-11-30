@@ -142,6 +142,11 @@ spec:
                   clusterInternet:
                     description: Open internet access or not.
                     type: boolean
+                  clusterInternetDomain:
+                    description: Domain name for cluster Kube-apiserver internet access.  Be
+                      careful if you modify value of this parameter, the cluster_external_endpoint
+                      value may be changed automatically too.
+                    type: string
                   clusterInternetSecurityGroup:
                     description: 'Specify security group, NOTE: This argument must
                       not be empty if cluster internet enabled.'
@@ -149,6 +154,11 @@ spec:
                   clusterIntranet:
                     description: Open intranet access or not.
                     type: boolean
+                  clusterIntranetDomain:
+                    description: Domain name for cluster Kube-apiserver intranet access.
+                      Be careful if you modify value of this parameter, the pgw_endpoint
+                      value may be changed automatically too.
+                    type: string
                   clusterIntranetSubnetId:
                     description: Subnet id who can access this independent cluster,
                       this field must and can only set  when `cluster_intranet` is
@@ -227,6 +237,9 @@ spec:
                             type: string
                         type: object
                     type: object
+                  extensiveParameters:
+                    description: The LB parameter. Only used for public network access.
+                    type: string
                   managedClusterInternetSecurityPolicies:
                     description: Security policies for managed cluster internet, like:'192.168.1.0/24'
                       or '113.116.51.27', '0.0.0.0/0' means all. This field can only

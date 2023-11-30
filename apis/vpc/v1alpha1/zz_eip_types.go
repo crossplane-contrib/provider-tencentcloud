@@ -35,6 +35,10 @@ type EipObservation struct {
 
 type EipParameters struct {
 
+	// ID of anti DDos package, it must set when `type` is `AntiDDoSEIP`.
+	// +kubebuilder:validation:Optional
+	AntiDdosPackageID *string `json:"antiDdosPackageId,omitempty" tf:"anti_ddos_package_id,omitempty"`
+
 	// The zone of anycast. Valid value: `ANYCAST_ZONE_GLOBAL` and `ANYCAST_ZONE_OVERSEAS`.
 	// +kubebuilder:validation:Optional
 	AnycastZone *string `json:"anycastZone,omitempty" tf:"anycast_zone,omitempty"`
@@ -43,7 +47,19 @@ type EipParameters struct {
 	// +kubebuilder:validation:Optional
 	ApplicableForClb *bool `json:"applicableForClb,omitempty" tf:"applicable_for_clb,omitempty"`
 
-	// The charge type of eip. Valid value: `BANDWIDTH_PACKAGE`, `BANDWIDTH_POSTPAID_BY_HOUR` and `TRAFFIC_POSTPAID_BY_HOUR`.
+	// Auto renew flag.  0 - default state (manual renew); 1 - automatic renew; 2 - explicit no automatic renew. NOTES: Only supported prepaid EIP.
+	// +kubebuilder:validation:Optional
+	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
+
+	// ID of bandwidth package, it will set when `internet_charge_type` is `BANDWIDTH_PACKAGE`.
+	// +kubebuilder:validation:Optional
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// Network egress. It defaults to `center_egress1`. If you want to try the egress feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
+	// +kubebuilder:validation:Optional
+	Egress *string `json:"egress,omitempty" tf:"egress,omitempty"`
+
+	// The charge type of eip. Valid values: `BANDWIDTH_PACKAGE`, `BANDWIDTH_POSTPAID_BY_HOUR`, `BANDWIDTH_PREPAID_BY_MONTH` and `TRAFFIC_POSTPAID_BY_HOUR`.
 	// +kubebuilder:validation:Optional
 	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
 
@@ -59,11 +75,15 @@ type EipParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Period of instance. Default value: `1`. Valid value: `1`, `2`, `3`, `4`, `6`, `7`, `8`, `9`, `12`, `24`, `36`. NOTES: must set when `internet_charge_type` is `BANDWIDTH_PREPAID_BY_MONTH`.
+	// +kubebuilder:validation:Optional
+	PrepaidPeriod *float64 `json:"prepaidPeriod,omitempty" tf:"prepaid_period,omitempty"`
+
 	// The tags of eip.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP`. Default is `EIP`.
+	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }

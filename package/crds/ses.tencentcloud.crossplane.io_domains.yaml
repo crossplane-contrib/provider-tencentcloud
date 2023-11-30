@@ -246,6 +246,17 @@ spec:
             properties:
               atProvider:
                 properties:
+                  attributes:
+                    items:
+                      properties:
+                        expectedValue:
+                          type: string
+                        sendDomain:
+                          type: string
+                        type:
+                          type: string
+                      type: object
+                    type: array
                   id:
                     type: string
                 type: object

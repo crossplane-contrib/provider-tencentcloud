@@ -275,6 +275,9 @@ spec:
                       - logPath
                       type: object
                     type: array
+                  logFormat:
+                    description: Log format.
+                    type: string
                   logType:
                     description: 'Type of the log to be collected. Valid values: json_log:
                       log in JSON format; delimiter_log: log in delimited format;

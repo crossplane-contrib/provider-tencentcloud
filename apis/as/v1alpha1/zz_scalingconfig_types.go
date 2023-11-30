@@ -30,7 +30,7 @@ type DataDiskObservation struct {
 
 type DataDiskParameters struct {
 
-	// Indicates whether the disk remove after instance terminated.
+	// Indicates whether the disk remove after instance terminated. Default is `false`.
 	// +kubebuilder:validation:Optional
 	DeleteWithInstance *bool `json:"deleteWithInstance,omitempty" tf:"delete_with_instance,omitempty"`
 
@@ -45,6 +45,20 @@ type DataDiskParameters struct {
 	// Data disk snapshot ID.
 	// +kubebuilder:validation:Optional
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
+}
+
+type HostNameSettingsObservation struct {
+}
+
+type HostNameSettingsParameters struct {
+
+	// The host name of the cloud server; dots (.) and dashes (-) cannot be used as the first and last characters of HostName, and cannot be used consecutively; Windows instances are not supported; other types (Linux, etc.) instances: the character length is [2, 40], it is allowed to support multiple dots, and there is a paragraph between the dots, and each paragraph is allowed to consist of letters (no uppercase and lowercase restrictions), numbers and dashes (-). Pure numbers are not allowed.
+	// +kubebuilder:validation:Required
+	HostName *string `json:"hostName" tf:"host_name,omitempty"`
+
+	// The style of the host name of the cloud server, the value range includes `ORIGINAL` and `UNIQUE`, the default is `ORIGINAL`; `ORIGINAL`, the AS directly passes the HostName filled in the input parameter to the CVM, and the CVM may append a sequence to the HostName number, the HostName of the instance in the scaling group will conflict; `UNIQUE`, the HostName filled in as a parameter is equivalent to the host name prefix, AS and CVM will expand it, and the HostName of the instance in the scaling group can be guaranteed to be unique.
+	// +kubebuilder:validation:Optional
+	HostNameStyle *string `json:"hostNameStyle,omitempty" tf:"host_name_style,omitempty"`
 }
 
 type InstanceNameSettingsObservation struct {
@@ -95,6 +109,10 @@ type ScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
 
+	// Related settings of the cloud server hostname (HostName).
+	// +kubebuilder:validation:Optional
+	HostNameSettings []HostNameSettingsParameters `json:"hostNameSettings,omitempty" tf:"host_name_settings,omitempty"`
+
 	// An available image ID for a cvm instance.
 	// +kubebuilder:validation:Required
 	ImageID *string `json:"imageId" tf:"image_id,omitempty"`
@@ -123,7 +141,7 @@ type ScalingConfigParameters struct {
 	// +kubebuilder:validation:Required
 	InstanceTypes []*string `json:"instanceTypes" tf:"instance_types,omitempty"`
 
-	// Charge types for network traffic. Valid values: `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
+	// Charge types for network traffic. Valid values: `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
 	// +kubebuilder:validation:Optional
 	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
 

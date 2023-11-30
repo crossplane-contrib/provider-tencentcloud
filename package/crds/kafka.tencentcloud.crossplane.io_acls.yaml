@@ -64,8 +64,8 @@ spec:
               forProvider:
                 properties:
                   host:
-                    description: IP address allowed to access. The default value is
-                      `*`, which means that any host can access.
+                    description: The default is *, which means that any host can access
+                      it. Support filling in IP or network segment, and support `;`separation.
                     type: string
                   instanceId:
                     description: ID of the ckafka instance.
@@ -155,9 +155,10 @@ spec:
                       used for future ACLs compatible with open-source Kafka.'
                     type: string
                   principal:
-                    description: User list. The default value is `*`, which means
+                    description: 'User list. The default value is `*`, which means
                       that any user can access. The current user can only be one included
-                      in the user list.
+                      in the user list. For example: `root` meaning user root can
+                      access.'
                     type: string
                   resourceName:
                     description: ACL resource name, which is related to `resource_type`.

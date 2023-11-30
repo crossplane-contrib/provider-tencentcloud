@@ -25,6 +25,48 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ActionsCodeActionObservation struct {
+}
+
+type ActionsCodeActionParameters struct {
+
+	// Action name.
+	// +kubebuilder:validation:Required
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// Action parameters.
+	// +kubebuilder:validation:Required
+	Parameters []CodeActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
+}
+
+type ActionsNormalActionObservation struct {
+}
+
+type ActionsNormalActionParameters struct {
+
+	// Action name.
+	// +kubebuilder:validation:Required
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// Action parameters.
+	// +kubebuilder:validation:Required
+	Parameters []ActionsNormalActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
+}
+
+type ActionsNormalActionParametersObservation struct {
+}
+
+type ActionsNormalActionParametersParameters struct {
+
+	// Parameter Name.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Parameter Values.
+	// +kubebuilder:validation:Required
+	Values []*string `json:"values" tf:"values,omitempty"`
+}
+
 type ActionsObservation struct {
 }
 
@@ -43,10 +85,50 @@ type ActionsParameters struct {
 	RewriteAction []RewriteActionParameters `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
+type ActionsRewriteActionObservation struct {
+}
+
+type ActionsRewriteActionParameters struct {
+
+	// Action name.
+	// +kubebuilder:validation:Required
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// Action parameters.
+	// +kubebuilder:validation:Required
+	Parameters []ActionsRewriteActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
+}
+
+type ActionsRewriteActionParametersObservation struct {
+}
+
+type ActionsRewriteActionParametersParameters struct {
+
+	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// +kubebuilder:validation:Required
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// Target HEADER name.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Parameter Value.
+	// +kubebuilder:validation:Required
+	Values []*string `json:"values" tf:"values,omitempty"`
+}
+
 type AndObservation struct {
 }
 
 type AndParameters struct {
+
+	// Whether to ignore the case of the parameter value, the default value is false.
+	// +kubebuilder:validation:Optional
+	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
+
+	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Condition operator. Valid values are `equal`, `notequal`.
 	// +kubebuilder:validation:Required
@@ -75,6 +157,24 @@ type CodeActionParameters struct {
 	Parameters []ParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
+type CodeActionParametersObservation struct {
+}
+
+type CodeActionParametersParameters struct {
+
+	// Parameter Name.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// HTTP status code to use.
+	// +kubebuilder:validation:Required
+	StatusCode *float64 `json:"statusCode" tf:"status_code,omitempty"`
+
+	// Parameter Values.
+	// +kubebuilder:validation:Required
+	Values []*string `json:"values" tf:"values,omitempty"`
+}
+
 type NormalActionObservation struct {
 }
 
@@ -99,6 +199,32 @@ type NormalActionParametersParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Parameter Values.
+	// +kubebuilder:validation:Required
+	Values []*string `json:"values" tf:"values,omitempty"`
+}
+
+type OrAndObservation struct {
+}
+
+type OrAndParameters struct {
+
+	// Whether to ignore the case of the parameter value, the default value is false.
+	// +kubebuilder:validation:Optional
+	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
+
+	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Condition operator. Valid values are `equal`, `notequal`.
+	// +kubebuilder:validation:Required
+	Operator *string `json:"operator" tf:"operator,omitempty"`
+
+	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// +kubebuilder:validation:Required
+	Target *string `json:"target" tf:"target,omitempty"`
+
+	// Condition Value.
 	// +kubebuilder:validation:Required
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
@@ -171,7 +297,7 @@ type RuleEngineObservation struct {
 
 type RuleEngineParameters struct {
 
-	// Rule name.
+	// The rule name (1 to 255 characters).
 	// +kubebuilder:validation:Required
 	RuleName *string `json:"ruleName" tf:"rule_name,omitempty"`
 
@@ -179,11 +305,15 @@ type RuleEngineParameters struct {
 	// +kubebuilder:validation:Required
 	Rules []RulesParameters `json:"rules" tf:"rules,omitempty"`
 
-	// Status of the rule, valid value can be `enable` or `disable`.
+	// Rule status. Values: `enable`: Enabled; `disable`: Disabled.
 	// +kubebuilder:validation:Required
 	Status *string `json:"status" tf:"status,omitempty"`
 
-	// Site ID.
+	// rule tag list.
+	// +kubebuilder:validation:Optional
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of the site.
 	// +crossplane:generate:reference:type=Zone
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -195,7 +325,35 @@ type RuleEngineParameters struct {
 	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
+type RulesActionsObservation struct {
+}
+
+type RulesActionsParameters struct {
+
+	// Define a code action.
+	// +kubebuilder:validation:Optional
+	CodeAction []ActionsCodeActionParameters `json:"codeAction,omitempty" tf:"code_action,omitempty"`
+
+	// Define a normal action.
+	// +kubebuilder:validation:Optional
+	NormalAction []ActionsNormalActionParameters `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
+
+	// Define a rewrite action.
+	// +kubebuilder:validation:Optional
+	RewriteAction []ActionsRewriteActionParameters `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
+}
+
 type RulesObservation struct {
+}
+
+type RulesOrObservation struct {
+}
+
+type RulesOrParameters struct {
+
+	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+	// +kubebuilder:validation:Required
+	And []OrAndParameters `json:"and" tf:"and,omitempty"`
 }
 
 type RulesParameters struct {
@@ -207,6 +365,38 @@ type RulesParameters struct {
 	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
 	// +kubebuilder:validation:Required
 	Or []OrParameters `json:"or" tf:"or,omitempty"`
+
+	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// +kubebuilder:validation:Optional
+	SubRules []SubRulesParameters `json:"subRules,omitempty" tf:"sub_rules,omitempty"`
+}
+
+type SubRulesObservation struct {
+}
+
+type SubRulesParameters struct {
+
+	// Rule items list.
+	// +kubebuilder:validation:Required
+	Rules []SubRulesRulesParameters `json:"rules" tf:"rules,omitempty"`
+
+	// rule tag list.
+	// +kubebuilder:validation:Optional
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
+type SubRulesRulesObservation struct {
+}
+
+type SubRulesRulesParameters struct {
+
+	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// +kubebuilder:validation:Required
+	Actions []RulesActionsParameters `json:"actions" tf:"actions,omitempty"`
+
+	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// +kubebuilder:validation:Required
+	Or []RulesOrParameters `json:"or" tf:"or,omitempty"`
 }
 
 // RuleEngineSpec defines the desired state of RuleEngine

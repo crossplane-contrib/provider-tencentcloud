@@ -240,9 +240,24 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.FirewallTemplateID != nil {
+		in, out := &in.FirewallTemplateID, &out.FirewallTemplateID
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
+		**out = **in
+	}
+	if in.IsUpdateBundleIDAutoVoucher != nil {
+		in, out := &in.IsUpdateBundleIDAutoVoucher, &out.IsUpdateBundleIDAutoVoucher
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsolateDataDisk != nil {
+		in, out := &in.IsolateDataDisk, &out.IsolateDataDisk
+		*out = new(bool)
 		**out = **in
 	}
 	if in.LoginConfiguration != nil {
@@ -255,6 +270,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.Period != nil {
 		in, out := &in.Period, &out.Period
 		*out = new(float64)
+		**out = **in
+	}
+	if in.PermitDefaultKeyPairLogin != nil {
+		in, out := &in.PermitDefaultKeyPairLogin, &out.PermitDefaultKeyPairLogin
+		*out = new(string)
 		**out = **in
 	}
 	if in.RenewFlag != nil {

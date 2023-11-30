@@ -67,6 +67,15 @@ spec:
                     description: Indicate to delete the COS bucket which is auto-created
                       with the instance or not.
                     type: boolean
+                  instanceChargeTypePrepaidPeriod:
+                    description: Length of time to purchase an instance (in month).
+                      Must set when registry_charge_type is prepaid.
+                    type: number
+                  instanceChargeTypePrepaidRenewFlag:
+                    description: 'Auto renewal flag. 1: manual renewal, 2: automatic
+                      renewal, 3: no renewal and no notification. Must set when registry_charge_type
+                      is prepaid.'
+                    type: number
                   instanceType:
                     description: 'TCR types. Valid values are: `standard`, `basic`,
                       `premium`.'
@@ -77,6 +86,10 @@ spec:
                   openPublicOperation:
                     description: Control public network access.
                     type: boolean
+                  registryChargeType:
+                    description: 'Charge type of instance. 1: postpaid; 2: prepaid.
+                      Default is postpaid.'
+                    type: number
                   replications:
                     description: Specify List of instance Replications, premium only.
                       The available [source region list](https://www.tencentcloud.com/document/api/1051/41101)
@@ -293,6 +306,8 @@ spec:
             properties:
               atProvider:
                 properties:
+                  expiredAt:
+                    type: string
                   id:
                     type: string
                   internalEndPoint:

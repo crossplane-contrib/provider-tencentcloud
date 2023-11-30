@@ -63,6 +63,10 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  antiDdosPackageId:
+                    description: ID of anti DDos package, it must set when `type`
+                      is `AntiDDoSEIP`.
+                    type: string
                   anycastZone:
                     description: 'The zone of anycast. Valid value: `ANYCAST_ZONE_GLOBAL`
                       and `ANYCAST_ZONE_OVERSEAS`.'
@@ -71,9 +75,23 @@ spec:
                     description: Indicates whether the anycast eip can be associated
                       to a CLB.
                     type: boolean
+                  autoRenewFlag:
+                    description: 'Auto renew flag.  0 - default state (manual renew);
+                      1 - automatic renew; 2 - explicit no automatic renew. NOTES:
+                      Only supported prepaid EIP.'
+                    type: number
+                  bandwidthPackageId:
+                    description: ID of bandwidth package, it will set when `internet_charge_type`
+                      is `BANDWIDTH_PACKAGE`.
+                    type: string
+                  egress:
+                    description: Network egress. It defaults to `center_egress1`.
+                      If you want to try the egress feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
+                    type: string
                   internetChargeType:
-                    description: 'The charge type of eip. Valid value: `BANDWIDTH_PACKAGE`,
-                      `BANDWIDTH_POSTPAID_BY_HOUR` and `TRAFFIC_POSTPAID_BY_HOUR`.'
+                    description: 'The charge type of eip. Valid values: `BANDWIDTH_PACKAGE`,
+                      `BANDWIDTH_POSTPAID_BY_HOUR`, `BANDWIDTH_PREPAID_BY_MONTH` and
+                      `TRAFFIC_POSTPAID_BY_HOUR`.'
                     type: string
                   internetMaxBandwidthOut:
                     description: The bandwidth limit of EIP, unit is Mbps.
@@ -85,6 +103,11 @@ spec:
                   name:
                     description: The name of eip.
                     type: string
+                  prepaidPeriod:
+                    description: 'Period of instance. Default value: `1`. Valid value:
+                      `1`, `2`, `3`, `4`, `6`, `7`, `8`, `9`, `12`, `24`, `36`. NOTES:
+                      must set when `internet_charge_type` is `BANDWIDTH_PREPAID_BY_MONTH`.'
+                    type: number
                   tags:
                     additionalProperties:
                       type: string
@@ -92,7 +115,7 @@ spec:
                     type: object
                   type:
                     description: 'The type of eip. Valid value:  `EIP` and `AnycastEIP`
-                      and `HighQualityEIP`. Default is `EIP`.'
+                      and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.'
                     type: string
                 type: object
               providerConfigRef:

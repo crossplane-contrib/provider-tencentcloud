@@ -63,20 +63,131 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  apiBusinessType:
+                    description: 'When `auth_type` is OAUTH, this field is valid,
+                      NORMAL: Business API, OAUTH: Authorization API.'
+                    type: string
                   apiDesc:
                     description: Custom API description.
                     type: string
                   apiName:
                     description: Custom API name.
                     type: string
+                  apiType:
+                    description: API type, supports NORMAL (regular API) and TSF (microservice
+                      API), defaults to NORMAL.
+                    type: string
+                  authRelationApiId:
+                    description: The unique ID of the associated authorization API
+                      takes effect when AuthType is OAUTH and ApiBusinessType is NORMAL.
+                      The unique ID of the oauth2.0 authorized API that identifies
+                      the business API binding.
+                    type: string
                   authType:
-                    description: 'API authentication type. Valid values: `SECRET`
-                      (key pair authentication),`NONE` (no authentication). Default
-                      value: `NONE`.'
+                    description: API authentication type. Support SECRET (Key Pair
+                      Authentication), NONE (Authentication Exemption), OAUTH, APP
+                      (Application Authentication). The default is NONE.
+                    type: string
+                  constantParameters:
+                    description: Constant parameter.
+                    items:
+                      properties:
+                        defaultValue:
+                          description: 'Default value for constant parameters. This
+                            parameter is only used when ServiceType is HTTP.Note:
+                            This field may return null, indicating that a valid value
+                            cannot be obtained.'
+                          type: string
+                        desc:
+                          description: 'Constant parameter description. This parameter
+                            is only used when ServiceType is HTTP.Note: This field
+                            may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: string
+                        name:
+                          description: 'Constant parameter name. This parameter is
+                            only used when ServiceType is HTTP.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: string
+                        position:
+                          description: 'Constant parameter position. This parameter
+                            is only used when ServiceType is HTTP.Note: This field
+                            may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: string
+                      type: object
+                    type: array
+                  eiamAppId:
+                    description: EIAM application ID.
+                    type: string
+                  eiamAppType:
+                    description: EIAM application type.
+                    type: string
+                  eiamAuthType:
+                    description: The EIAM application authentication type supports
+                      AuthenticationOnly, Authentication, and Authorization.
                     type: string
                   enableCors:
                     description: 'Whether to enable CORS. Default value: `true`.'
                     type: boolean
+                  eventBusId:
+                    description: Event bus ID.
+                    type: string
+                  isBase64Encoded:
+                    description: Whether to enable Base64 encoding will only take
+                      effect when the backend is scf.
+                    type: boolean
+                  isDebugAfterCharge:
+                    description: Charge after starting debugging. (Cloud Market Reserved
+                      Fields).
+                    type: boolean
+                  isDeleteResponseErrorCodes:
+                    description: Do you want to delete the custom response configuration
+                      error code? If it is not passed or False is passed, it will
+                      not be deleted. If True is passed, all custom response configuration
+                      error codes for this API will be deleted.
+                    type: boolean
+                  microServices:
+                    description: API bound microservice list.
+                    items:
+                      properties:
+                        clusterId:
+                          description: Micro service cluster.
+                          type: string
+                        microServiceName:
+                          description: Microservice name.
+                          type: string
+                        namespaceId:
+                          description: Microservice namespace.
+                          type: string
+                      required:
+                      - clusterId
+                      - microServiceName
+                      - namespaceId
+                      type: object
+                    type: array
+                  oauthConfig:
+                    description: OAuth configuration. Effective when AuthType is OAUTH.
+                    items:
+                      properties:
+                        loginRedirectUrl:
+                          description: Redirect address, used to guide users in login
+                            operations.
+                          type: string
+                        publicKey:
+                          description: Public key, used to verify user tokens.
+                          type: string
+                        tokenLocation:
+                          description: Token passes the position.
+                          type: string
+                      required:
+                      - publicKey
+                      - tokenLocation
+                      type: object
+                    type: array
+                  owner:
+                    description: Owner of resources.
+                    type: string
                   preLimit:
                     description: API QPS value. Enter a positive number to limit the
                       API query rate per second `QPS`.
@@ -161,6 +272,43 @@ spec:
                     description: 'Return type. Valid values: `HTML`, `JSON`, `TEXT`,
                       `BINARY`, `XML`. Default value: `HTML`.'
                     type: string
+                  serviceConfigCosConfig:
+                    description: 'API backend COS configuration. If ServiceType is
+                      COS, then this parameter must be passed.Note: This field may
+                      return null, indicating that a valid value cannot be obtained.'
+                    items:
+                      properties:
+                        action:
+                          description: 'The API calls the backend COS method, and
+                            the optional values for the front-end request method and
+                            Action are:GET: GetObjectPUT: PutObjectPOST: PostObject,
+                            AppendObjectHEAD: HeadObjectDELETE: DeleteObject.Note:
+                            This field may return null, indicating that a valid value
+                            cannot be obtained.'
+                          type: string
+                        authorization:
+                          description: 'The API calls the signature switch of the
+                            backend COS, which defaults to false.Note: This field
+                            may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: boolean
+                        bucketName:
+                          description: 'The bucket name of the API backend COS.Note:
+                            This field may return null, indicating that a valid value
+                            cannot be obtained.'
+                          type: string
+                        pathMatchMode:
+                          description: 'Path matching mode for API backend COS, optional
+                            values:BackEndPath: Backend path matchingFullPath: Full
+                            Path MatchingThe default value is: BackEndPathNote: This
+                            field may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: string
+                      required:
+                      - action
+                      - bucketName
+                      type: object
+                    type: array
                   serviceConfigMethod:
                     description: API backend service request method, such as `GET`.
                       If `service_config_type` is `HTTP`, this parameter will be required.
@@ -177,8 +325,8 @@ spec:
                       and backend path `service_config_path` can be different.
                     type: string
                   serviceConfigProduct:
-                    description: Backend type. This parameter takes effect when VPC
-                      is enabled. Currently, only `clb` is supported.
+                    description: Backend type. Effective when enabling vpc, currently
+                      supported types are clb, cvm, and upstream.
                     type: string
                   serviceConfigScfFunctionName:
                     description: SCF function name. This parameter takes effect when
@@ -192,24 +340,83 @@ spec:
                     description: SCF function version. This parameter takes effect
                       when `service_config_type` is `SCF`.
                     type: string
+                  serviceConfigScfFunctionType:
+                    description: Scf function type. Effective when the backend type
+                      is SCF. Support Event Triggering (EVENT) and HTTP Direct Cloud
+                      Function (HTTP).
+                    type: string
+                  serviceConfigScfIsIntegratedResponse:
+                    description: Whether to enable response integration. Effective
+                      when the backend type is SCF.
+                    type: boolean
                   serviceConfigTimeout:
                     description: 'API backend service timeout period in seconds. Default
                       value: `5`.'
                     type: number
                   serviceConfigType:
-                    description: 'API backend service type. Valid values: `WEBSOCKET`,
-                      `HTTP`, `SCF`, `MOCK`. Default value: `HTTP`.'
+                    description: The backend service type of the API. Supports HTTP,
+                      MOCK, TSF, SCF, WEBSOCKET, COS, TARGET (internal testing).
+                    type: string
+                  serviceConfigUpstreamId:
+                    description: 'Only required when binding to VPC channelsNote:
+                      This field may return null, indicating that a valid value cannot
+                      be obtained.'
                     type: string
                   serviceConfigUrl:
-                    description: API backend service url. This parameter is required
-                      when `service_config_type` is `HTTP`.
+                    description: The backend service URL of the API. If the ServiceType
+                      is HTTP, this parameter must be passed.
                     type: string
                   serviceConfigVpcId:
                     description: Unique VPC ID.
                     type: string
+                  serviceConfigWebsocketCleanupFunctionName:
+                    description: Scf websocket cleaning function. It takes effect
+                      when the current end type is WEBSOCKET and the backend type
+                      is SCF.
+                    type: string
+                  serviceConfigWebsocketCleanupFunctionNamespace:
+                    description: Scf websocket cleans up the function namespace. It
+                      takes effect when the current end type is WEBSOCKET and the
+                      backend type is SCF.
+                    type: string
+                  serviceConfigWebsocketCleanupFunctionQualifier:
+                    description: Scf websocket cleaning function version. It takes
+                      effect when the current end type is WEBSOCKET and the backend
+                      type is SCF.
+                    type: string
+                  serviceConfigWebsocketRegisterFunctionName:
+                    description: Scf websocket registration function. It takes effect
+                      when the current end type is WEBSOCKET and the backend type
+                      is SCF.
+                    type: string
+                  serviceConfigWebsocketRegisterFunctionNamespace:
+                    description: Scf websocket registers function namespaces. It takes
+                      effect when the current end type is WEBSOCKET and the backend
+                      type is SCF.
+                    type: string
+                  serviceConfigWebsocketRegisterFunctionQualifier:
+                    description: Scf websocket transfer function version. It takes
+                      effect when the current end type is WEBSOCKET and the backend
+                      type is SCF.
+                    type: string
+                  serviceConfigWebsocketTransportFunctionName:
+                    description: Scf websocket transfer function. It takes effect
+                      when the current end type is WEBSOCKET and the backend type
+                      is SCF.
+                    type: string
+                  serviceConfigWebsocketTransportFunctionNamespace:
+                    description: Scf websocket transfer function namespace. It takes
+                      effect when the current end type is WEBSOCKET and the backend
+                      type is SCF.
+                    type: string
+                  serviceConfigWebsocketTransportFunctionQualifier:
+                    description: Scf websocket transfer function version. It takes
+                      effect when the current end type is WEBSOCKET and the backend
+                      type is SCF.
+                    type: string
                   serviceId:
-                    description: Which service this API belongs. Refer to resource
-                      `tencentcloud_api_gateway_service`.
+                    description: The unique ID of the service where the API is located.
+                      Refer to resource `tencentcloud_api_gateway_service`.
                     type: string
                   serviceIdRef:
                     description: A Reference to a named object.
@@ -284,10 +491,175 @@ spec:
                             type: string
                         type: object
                     type: object
+                  serviceParameters:
+                    description: The backend service parameters of the API.
+                    items:
+                      properties:
+                        defaultValue:
+                          description: 'The default value for the backend service
+                            parameters of the API. This parameter is only used when
+                            ServiceType is HTTP.Note: This field may return null,
+                            indicating that a valid value cannot be obtained.'
+                          type: string
+                        name:
+                          description: 'The backend service parameter name of the
+                            API. This parameter is only used when ServiceType is HTTP.
+                            The front and rear parameter names can be different.Note:
+                            This field may return null, indicating that a valid value
+                            cannot be obtained.'
+                          type: string
+                        position:
+                          description: 'The backend service parameter location of
+                            the API, such as head. This parameter is only used when
+                            ServiceType is HTTP. The parameter positions at the front
+                            and rear ends can be configured differently.Note: This
+                            field may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: string
+                        relevantRequestParameterDesc:
+                          description: 'Remarks on the backend service parameters
+                            of the API. This parameter is only used when ServiceType
+                            is HTTP.Note: This field may return null, indicating that
+                            a valid value cannot be obtained.'
+                          type: string
+                        relevantRequestParameterName:
+                          description: 'The name of the front-end parameter corresponding
+                            to the backend service parameter of the API. This parameter
+                            is only used when ServiceType is HTTP.Note: This field
+                            may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: string
+                        relevantRequestParameterPosition:
+                          description: 'The location of the front-end parameters corresponding
+                            to the backend service parameters of the API, such as
+                            head. This parameter is only used when ServiceType is
+                            HTTP.Note: This field may return null, indicating that
+                            a valid value cannot be obtained.'
+                          type: string
+                        relevantRequestParameterType:
+                          description: 'The backend service parameter type of the
+                            API. This parameter is only used when ServiceType is HTTP.Note:
+                            This field may return null, indicating that a valid value
+                            cannot be obtained.'
+                          type: string
+                      type: object
+                    type: array
+                  serviceTsfHealthCheckConf:
+                    description: Health check configuration for microservices.
+                    items:
+                      properties:
+                        errorThresholdPercentage:
+                          description: 'Threshold percentage.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: number
+                        isHealthCheck:
+                          description: 'Whether to initiate a health check.Note: This
+                            field may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: boolean
+                        requestVolumeThreshold:
+                          description: 'Health check threshold.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: number
+                        sleepWindowInMilliseconds:
+                          description: 'Window size.Note: This field may return null,
+                            indicating that a valid value cannot be obtained.'
+                          type: number
+                      type: object
+                    type: array
+                  serviceTsfLoadBalanceConf:
+                    description: Load balancing configuration for microservices.
+                    items:
+                      properties:
+                        isLoadBalance:
+                          description: 'Is load balancing enabled.Note: This field
+                            may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: boolean
+                        method:
+                          description: 'Load balancing method.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: string
+                        sessionStickRequired:
+                          description: 'Whether to enable session persistence.Note:
+                            This field may return null, indicating that a valid value
+                            cannot be obtained.'
+                          type: boolean
+                        sessionStickTimeout:
+                          description: 'Session hold timeout.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: number
+                      type: object
+                    type: array
+                  targetNamespaceId:
+                    description: Tsf serverless namespace ID. (In internal testing).
+                    type: string
+                  targetServices:
+                    description: Target type backend resource information. (Internal
+                      testing stage).
+                    items:
+                      properties:
+                        dockerIp:
+                          description: docker ip.
+                          type: string
+                        hostIp:
+                          description: Host IP of the CVM.
+                          type: string
+                        vmIp:
+                          description: vm ip.
+                          type: string
+                        vmPort:
+                          description: vm port.
+                          type: number
+                        vpcId:
+                          description: vpc id.
+                          type: string
+                      required:
+                      - hostIp
+                      - vmIp
+                      - vmPort
+                      - vpcId
+                      type: object
+                    type: array
+                  targetServicesHealthCheckConf:
+                    description: Target health check configuration. (Internal testing
+                      stage).
+                    items:
+                      properties:
+                        errorThresholdPercentage:
+                          description: 'Threshold percentage.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: number
+                        isHealthCheck:
+                          description: 'Whether to initiate a health check.Note: This
+                            field may return null, indicating that a valid value cannot
+                            be obtained.'
+                          type: boolean
+                        requestVolumeThreshold:
+                          description: 'Health check threshold.Note: This field may
+                            return null, indicating that a valid value cannot be obtained.'
+                          type: number
+                        sleepWindowInMilliseconds:
+                          description: 'Window size.Note: This field may return null,
+                            indicating that a valid value cannot be obtained.'
+                          type: number
+                      type: object
+                    type: array
+                  targetServicesLoadBalanceConf:
+                    description: Target type load balancing configuration. (Internal
+                      testing stage).
+                    type: number
                   testLimit:
                     description: API QPS value. Enter a positive number to limit the
                       API query rate per second `QPS`.
                     type: number
+                  tokenTimeout:
+                    description: The effective time of the EIAM application token,
+                      measured in seconds, defaults to 7200 seconds.
+                    type: number
+                  userType:
+                    description: User type.
+                    type: string
                 required:
                 - apiName
                 - requestConfigPath

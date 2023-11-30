@@ -95,9 +95,21 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DryRun *bool `json:"dryRun,omitempty" tf:"dry_run,omitempty"`
 
+	// Firewall template ID. If this parameter is not specified, the default firewall policy is used.
+	// +kubebuilder:validation:Optional
+	FirewallTemplateID *string `json:"firewallTemplateId,omitempty" tf:"firewall_template_id,omitempty"`
+
 	// The display name of the Lighthouse instance.
 	// +kubebuilder:validation:Required
 	InstanceName *string `json:"instanceName" tf:"instance_name,omitempty"`
+
+	// Whether the voucher is deducted automatically when update bundle id. Value range: `true`: indicates automatic deduction of vouchers, `false`: does not automatically deduct vouchers. Default value: `false`.
+	// +kubebuilder:validation:Optional
+	IsUpdateBundleIDAutoVoucher *bool `json:"isUpdateBundleIdAutoVoucher,omitempty" tf:"is_update_bundle_id_auto_voucher,omitempty"`
+
+	// Whether to return the mounted data disk. `true`: returns both the instance and the mounted data disk; `false`: returns the instance and no longer returns its mounted data disk. Default: `true`.
+	// +kubebuilder:validation:Optional
+	IsolateDataDisk *bool `json:"isolateDataDisk,omitempty" tf:"isolate_data_disk,omitempty"`
 
 	// Login password of the instance. It is only available for Windows instances. If it is not specified, it means that the user choose to set the login password after the instance creation.
 	// +kubebuilder:validation:Optional
@@ -106,6 +118,10 @@ type InstanceParameters struct {
 	// Subscription period in months. Valid values: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60.
 	// +kubebuilder:validation:Required
 	Period *float64 `json:"period" tf:"period,omitempty"`
+
+	// Whether to allow login using the default key pair. `YES`: allow login; `NO`: disable login. Default: `YES`.
+	// +kubebuilder:validation:Optional
+	PermitDefaultKeyPairLogin *string `json:"permitDefaultKeyPairLogin,omitempty" tf:"permit_default_key_pair_login,omitempty"`
 
 	// Auto-Renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically; NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically. You need to manually renew DISABLE_NOTIFY_AND_AUTO_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW.
 	// +kubebuilder:validation:Required

@@ -26,6 +26,8 @@ import (
 )
 
 type AlarmNoticeObservation struct {
+	AmpConsumerID *string `json:"ampConsumerId,omitempty" tf:"amp_consumer_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	IsPreset *float64 `json:"isPreset,omitempty" tf:"is_preset,omitempty"`
@@ -95,6 +97,10 @@ type URLNoticesParameters struct {
 	// +kubebuilder:validation:Optional
 	EndTime *float64 `json:"endTime,omitempty" tf:"end_time,omitempty"`
 
+	// If passed verification `0` is no, `1` is yes. Default `0`.
+	// +kubebuilder:validation:Optional
+	IsValid *float64 `json:"isValid,omitempty" tf:"is_valid,omitempty"`
+
 	// Notification Start Time Number of seconds at the start of a day.
 	// +kubebuilder:validation:Optional
 	StartTime *float64 `json:"startTime,omitempty" tf:"start_time,omitempty"`
@@ -102,6 +108,10 @@ type URLNoticesParameters struct {
 	// Callback URL (limited to 256 characters).
 	// +kubebuilder:validation:Required
 	URL *string `json:"url" tf:"url,omitempty"`
+
+	// Verification code.
+	// +kubebuilder:validation:Optional
+	ValidationCode *string `json:"validationCode,omitempty" tf:"validation_code,omitempty"`
 
 	// Notification period 1-7 indicates Monday to Sunday.
 	// +kubebuilder:validation:Optional

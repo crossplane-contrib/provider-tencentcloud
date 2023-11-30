@@ -131,8 +131,21 @@ type InformationParameters struct {
 	VerifyType *string `json:"verifyType" tf:"verify_type,omitempty"`
 }
 
+type PayCertificateDvAuthsObservation struct {
+	DvAuthKey *string `json:"dvAuthKey,omitempty" tf:"dv_auth_key,omitempty"`
+
+	DvAuthValue *string `json:"dvAuthValue,omitempty" tf:"dv_auth_value,omitempty"`
+
+	DvAuthVerifyType *string `json:"dvAuthVerifyType,omitempty" tf:"dv_auth_verify_type,omitempty"`
+}
+
+type PayCertificateDvAuthsParameters struct {
+}
+
 type PayCertificateObservation struct {
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	DvAuths []PayCertificateDvAuthsObservation `json:"dvAuths,omitempty" tf:"dv_auths,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -147,15 +160,23 @@ type PayCertificateParameters struct {
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
+	// The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
+	// +kubebuilder:validation:Optional
+	ConfirmLetter *string `json:"confirmLetter,omitempty" tf:"confirm_letter,omitempty"`
+
 	// Number of domain names included in the certificate.
 	// +kubebuilder:validation:Required
 	DomainNum *float64 `json:"domainNum" tf:"domain_num,omitempty"`
+
+	// DV certification information.
+	// +kubebuilder:validation:Optional
+	DvAuths []PayCertificateDvAuthsParameters `json:"dvAuths,omitempty" tf:"dv_auths,omitempty"`
 
 	// Certificate information.
 	// +kubebuilder:validation:Required
 	Information []InformationParameters `json:"information" tf:"information,omitempty"`
 
-	// Certificate commodity ID. Valid value ranges: (3~42). `3` means SecureSite Enhanced Enterprise Edition (EV Pro), `4` means SecureSite Enhanced (EV), `5` means SecureSite Enterprise Professional Edition (OV Pro), `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means Geotrust enterprise (OV), `10` means Geotrust enterprise (OV) wildcard, `11` means TrustAsia domain type multi-domain SSL certificate, `12` means TrustAsia domain type ( DV) wildcard, `13` means TrustAsia enterprise wildcard (OV) SSL certificate (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3), `15` means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3), `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate, `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate, `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), `22` means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, `24` means GlobalSign enhanced multi-domain (EV) SSL certificate, `25` means Wotrus domain type certificate, `26` means Wotrus domain type multi-domain certificate, `27` means Wotrus domain type wildcard certificate, `28` means Wotrus enterprise type certificate, `29` means Wotrus enterprise multi-domain certificate, `30` means Wotrus enterprise wildcard certificate, `31` means Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain certificate, `33` means DNSPod national secret domain name certificate, `34` means DNSPod national secret domain name certificate Multi-domain certificate, `35` means DNSPod national secret domain name wildcard certificate, `37` means DNSPod national secret enterprise certificate, `38` means DNSPod national secret enterprise multi-domain certificate, `39` means DNSPod national secret enterprise wildcard certificate, `40` means DNSPod national secret increase Strong certificate, `41` means DNSPod national secret enhanced multi-domain certificate, `42` means TrustAsia domain-type wildcard multi-domain certificate.
+	// Certificate commodity ID. Valid value ranges: (3~42). `3` means SecureSite enhanced Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV), `5` means SecureSite Enterprise Professional Edition (OV Pro), `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means Geotrust enterprise (OV), `10` means Geotrust enterprise (OV) wildcard, `11` means TrustAsia domain type multi-domain SSL certificate, `12` means TrustAsia domain type ( DV) wildcard, `13` means TrustAsia enterprise wildcard (OV) SSL certificate (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3), `15` means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3), `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate, `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate, `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), `22` means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, `24` means GlobalSign enhanced multi-domain (EV) SSL certificate, `25` means Wotrus domain type certificate, `26` means Wotrus domain type multi-domain certificate, `27` means Wotrus domain type wildcard certificate, `28` means Wotrus enterprise type certificate, `29` means Wotrus enterprise multi-domain certificate, `30` means Wotrus enterprise wildcard certificate, `31` means Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain certificate, `33` means WoTrus National Secret Domain name Certificate, `34` means WoTrus National Secret Domain name Certificate (multiple domain names), `35` WoTrus National Secret Domain name Certificate (wildcard), `37` means WoTrus State Secret Enterprise Certificate, `38` means WoTrus State Secret Enterprise Certificate (multiple domain names), `39` means WoTrus State Secret Enterprise Certificate (wildcard), `40` means WoTrus National secret enhanced certificate, `41` means WoTrus National Secret enhanced Certificate (multiple domain names), `42` means TrustAsia- Domain name Certificate (wildcard multiple domain names), `43` means DNSPod Enterprise (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate, `47` means DNSPod enhanced (EV) multi-domain name SSL certificate, `48` means DNSPod Domain name Type (DV) SSL Certificate, `49` means DNSPod Domain name Type (DV) wildcard SSL certificate, `50` means DNSPod domain name type (DV) multi-domain name SSL certificate, `51` means DNSPod (State Secret) Enterprise (OV) SSL certificate, `52` DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, `53` means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod (National Secret) Domain Name (DV) SSL certificate, `55` means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, `56` means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
 	// +kubebuilder:validation:Required
 	ProductID *float64 `json:"productId" tf:"product_id,omitempty"`
 

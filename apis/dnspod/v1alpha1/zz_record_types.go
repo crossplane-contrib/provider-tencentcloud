@@ -49,6 +49,10 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Required
 	RecordType *string `json:"recordType" tf:"record_type,omitempty"`
 
+	// The Remark of record.
+	// +kubebuilder:validation:Optional
+	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
+
 	// Records the initial state, with values ranging from ENABLE and DISABLE. The default is ENABLE, and if DISABLE is passed in, resolution will not take effect and the limits of load balancing will not be verified.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`

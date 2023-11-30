@@ -40,8 +40,8 @@ type KeyPairParameters struct {
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
 	// You can import an existing public key and using TencentCloud key pair to manage it.
-	// +kubebuilder:validation:Required
-	PublicKey *string `json:"publicKey" tf:"public_key,omitempty"`
+	// +kubebuilder:validation:Optional
+	PublicKey *string `json:"publicKey,omitempty" tf:"public_key,omitempty"`
 
 	// Tags of the key pair.
 	// +kubebuilder:validation:Optional

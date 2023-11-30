@@ -425,6 +425,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.DisableAPITermination != nil {
+		in, out := &in.DisableAPITermination, &out.DisableAPITermination
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DisableMonitorService != nil {
 		in, out := &in.DisableMonitorService, &out.DisableMonitorService
 		*out = new(bool)

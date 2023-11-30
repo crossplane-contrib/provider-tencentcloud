@@ -87,7 +87,7 @@ spec:
                             properties:
                               deleteWithInstance:
                                 description: Indicates whether the disk remove after
-                                  instance terminated.
+                                  instance terminated. Default is `false`.
                                 type: boolean
                               diskSize:
                                 description: Volume of disk in GB. Default is `0`.
@@ -170,8 +170,7 @@ spec:
                           type: string
                         internetChargeType:
                           description: 'Charge types for network traffic. Valid value:
-                            `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `TRAFFIC_POSTPAID_BY_HOUR`
-                            and `BANDWIDTH_PACKAGE`.'
+                            `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.'
                           type: string
                         internetMaxBandwidthOut:
                           description: Max bandwidth of Internet access in Mbps. Default
@@ -179,6 +178,12 @@ spec:
                           type: number
                         keyIds:
                           description: ID list of keys.
+                          items:
+                            type: string
+                          type: array
+                        orderlySecurityGroupIds:
+                          description: Ordered security groups to which a CVM instance
+                            belongs.
                           items:
                             type: string
                           type: array
@@ -203,7 +208,9 @@ spec:
                           description: Specify whether to assign an Internet IP address.
                           type: boolean
                         securityGroupIds:
-                          description: Security groups to which a CVM instance belongs.
+                          description: (**Deprecated**) The order of elements in this
+                            field cannot be guaranteed. Use `orderly_security_group_ids`
+                            instead. Security groups to which a CVM instance belongs.
                           items:
                             type: string
                           type: array
@@ -239,8 +246,12 @@ spec:
                     description: Indicate to keep the CVM instance when delete the
                       node pool. Default is `true`.
                     type: boolean
+                  deletionProtection:
+                    description: Indicates whether the node pool deletion protection
+                      is enabled.
+                    type: boolean
                   desiredCapacity:
-                    description: Desired capacity ot the node. If `enable_auto_scale`
+                    description: Desired capacity of the node. If `enable_auto_scale`
                       is set `true`, this will be a computed parameter.
                     type: number
                   enableAutoScale:
@@ -314,6 +325,45 @@ spec:
                           items:
                             type: string
                           type: array
+                        gpuArgs:
+                          description: GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: `{ version:
+                                  String, name: String }`. `version`: Version of GPU
+                                  driver or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: `{address:
+                                  String}`. `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: `{
+                                  version: String, name: String }`. `version`: Version
+                                  of GPU driver or CUDA; `name`: Name of GPU driver
+                                  or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG.
+                                type: boolean
+                            type: object
+                          type: array
                         isSchedule:
                           description: Indicate to schedule the adding node or not.
                             Default is true.
@@ -328,11 +378,10 @@ spec:
                       type: object
                     type: array
                   nodeOs:
-                    description: 'Operating system of the cluster, the available values
-                      include: `tlinux2.4x86_64`, `ubuntu18.04.1x86_64`, `ubuntu16.04.1
-                      LTSx86_64`, `centos7.6.0_x64` and `centos7.2x86_64`. Default
-                      is ''tlinux2.4x86_64''. This parameter will only affect new
-                      nodes, not including the existing nodes.'
+                    description: Operating system of the cluster. Please refer to
+                      [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke)
+                      for available values. Default is 'tlinux2.4x86_64'. This parameter
+                      will only affect new nodes, not including the existing nodes.
                     type: string
                   nodeOsType:
                     description: The image version of the node. Valida values are

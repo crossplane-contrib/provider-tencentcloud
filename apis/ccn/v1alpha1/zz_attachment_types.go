@@ -32,6 +32,8 @@ type AttachmentObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	RouteIds []*string `json:"routeIds,omitempty" tf:"route_ids,omitempty"`
+
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 
@@ -44,6 +46,10 @@ type AttachmentParameters struct {
 	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
 	// +kubebuilder:validation:Optional
 	CcnUin *string `json:"ccnUin,omitempty" tf:"ccn_uin,omitempty"`
+
+	// Remark of attachment.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// ID of instance is attached.
 	// +kubebuilder:validation:Required

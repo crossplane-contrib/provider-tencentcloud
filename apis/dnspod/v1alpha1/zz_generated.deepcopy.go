@@ -290,6 +290,11 @@ func (in *RecordParameters) DeepCopyInto(out *RecordParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Remark != nil {
+		in, out := &in.Remark, &out.Remark
+		*out = new(string)
+		**out = **in
+	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status
 		*out = new(string)

@@ -391,6 +391,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ChargeType != nil {
+		in, out := &in.ChargeType, &out.ChargeType
+		*out = new(string)
+		**out = **in
+	}
 	if in.Config != nil {
 		in, out := &in.Config, &out.Config
 		*out = make([]ConfigParameters, len(*in))
@@ -420,9 +425,19 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceType != nil {
+		in, out := &in.InstanceType, &out.InstanceType
+		*out = new(float64)
+		**out = **in
+	}
 	if in.KafkaVersion != nil {
 		in, out := &in.KafkaVersion, &out.KafkaVersion
 		*out = new(string)
+		**out = **in
+	}
+	if in.MaxMessageByte != nil {
+		in, out := &in.MaxMessageByte, &out.MaxMessageByte
+		*out = new(float64)
 		**out = **in
 	}
 	if in.MsgRetentionTime != nil {
@@ -458,6 +473,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.RenewFlag != nil {
 		in, out := &in.RenewFlag, &out.RenewFlag
 		*out = new(float64)
+		**out = **in
+	}
+	if in.SpecificationsType != nil {
+		in, out := &in.SpecificationsType, &out.SpecificationsType
+		*out = new(string)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -496,6 +516,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.UpgradeStrategy != nil {
+		in, out := &in.UpgradeStrategy, &out.UpgradeStrategy
+		*out = new(float64)
+		**out = **in
 	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID

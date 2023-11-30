@@ -43,6 +43,10 @@ type EnvironmentParameters struct {
 	// +kubebuilder:validation:Required
 	SubnetIds []*string `json:"subnetIds" tf:"subnet_ids,omitempty"`
 
+	// environment tag list.
+	// +kubebuilder:validation:Optional
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// vpc ID.
 	// +kubebuilder:validation:Required
 	VPC *string `json:"vpc" tf:"vpc,omitempty"`

@@ -26,8 +26,6 @@ import (
 )
 
 type ApiKeyObservation struct {
-	AccessKeySecret *string `json:"accessKeySecret,omitempty" tf:"access_key_secret,omitempty"`
-
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -36,6 +34,18 @@ type ApiKeyObservation struct {
 }
 
 type ApiKeyParameters struct {
+
+	// User defined key ID, required when access_key_type is manual. The length is 5-50 characters, consisting of letters, numbers, and English underscores.
+	// +kubebuilder:validation:Optional
+	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
+
+	// The user-defined key must be passed when the access_key_type is manual. The length is 10-50 characters, consisting of letters, numbers, and English underscores.
+	// +kubebuilder:validation:Optional
+	AccessKeySecret *string `json:"accessKeySecret,omitempty" tf:"access_key_secret,omitempty"`
+
+	// Key type, supports both auto and manual (custom keys), defaults to auto.
+	// +kubebuilder:validation:Optional
+	AccessKeyType *string `json:"accessKeyType,omitempty" tf:"access_key_type,omitempty"`
 
 	// Custom key name.
 	// +kubebuilder:validation:Required

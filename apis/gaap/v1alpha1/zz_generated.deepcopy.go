@@ -1187,6 +1187,11 @@ func (in *ProxyParameters) DeepCopyInto(out *ProxyParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkType != nil {
+		in, out := &in.NetworkType, &out.NetworkType
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
 		*out = new(float64)

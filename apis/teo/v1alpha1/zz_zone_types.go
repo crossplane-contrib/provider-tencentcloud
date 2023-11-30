@@ -25,114 +25,61 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ResourcesObservation struct {
-	Area *string `json:"area,omitempty" tf:"area,omitempty"`
+type DNSVerificationObservation struct {
+	RecordType *string `json:"recordType,omitempty" tf:"record_type,omitempty"`
 
-	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
+	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
 
-	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
-
-	EnableTime *string `json:"enableTime,omitempty" tf:"enable_time,omitempty"`
-
-	ExpireTime *string `json:"expireTime,omitempty" tf:"expire_time,omitempty"`
-
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	PayMode *float64 `json:"payMode,omitempty" tf:"pay_mode,omitempty"`
-
-	PlanID *string `json:"planId,omitempty" tf:"plan_id,omitempty"`
-
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-
-	Sv []SvObservation `json:"sv,omitempty" tf:"sv,omitempty"`
+	Subdomain *string `json:"subdomain,omitempty" tf:"subdomain,omitempty"`
 }
 
-type ResourcesParameters struct {
+type DNSVerificationParameters struct {
 }
 
-type SvObservation struct {
-	Key *string `json:"key,omitempty" tf:"key,omitempty"`
-
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+type OwnershipVerificationObservation struct {
+	DNSVerification []DNSVerificationObservation `json:"dnsVerification,omitempty" tf:"dns_verification,omitempty"`
 }
 
-type SvParameters struct {
-}
-
-type VanityNameServersIpsObservation struct {
-	IPv4 *string `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
-
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
-type VanityNameServersIpsParameters struct {
-}
-
-type VanityNameServersObservation struct {
-}
-
-type VanityNameServersParameters struct {
-
-	// List of custom name servers.
-	// +kubebuilder:validation:Optional
-	Servers []*string `json:"servers,omitempty" tf:"servers,omitempty"`
-
-	// Whether to enable the custom name server.- `on`: Enable.- `off`: Disable.
-	// +kubebuilder:validation:Required
-	Switch *string `json:"switch" tf:"switch,omitempty"`
+type OwnershipVerificationParameters struct {
 }
 
 type ZoneObservation struct {
-	Area *string `json:"area,omitempty" tf:"area,omitempty"`
-
-	CnameStatus *string `json:"cnameStatus,omitempty" tf:"cname_status,omitempty"`
-
-	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
-
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
 
 	NameServers []*string `json:"nameServers,omitempty" tf:"name_servers,omitempty"`
 
-	OriginalNameServers []*string `json:"originalNameServers,omitempty" tf:"original_name_servers,omitempty"`
-
-	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+	OwnershipVerification []OwnershipVerificationObservation `json:"ownershipVerification,omitempty" tf:"ownership_verification,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-
-	VanityNameServersIps []VanityNameServersIpsObservation `json:"vanityNameServersIps,omitempty" tf:"vanity_name_servers_ips,omitempty"`
-
-	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ZoneParameters struct {
 
-	// Specifies whether CNAME acceleration is enabled. Valid values: `enabled`, `disabled`.
+	// Alias site identifier. Limit the input to a combination of numbers, English, - and _, within 20 characters. For details, refer to the alias site identifier. If there is no such usage scenario, leave this field empty.
 	// +kubebuilder:validation:Optional
-	CnameSpeedUp *string `json:"cnameSpeedUp,omitempty" tf:"cname_speed_up,omitempty"`
+	AliasZoneName *string `json:"aliasZoneName,omitempty" tf:"alias_zone_name,omitempty"`
+
+	// When the `type` value is `partial` or `full`, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is `overseas` if not filled in. When the `type` value is `noDomainAccess`, please leave this value empty. Valid values: `global`: Global availability zone; `mainland`: Chinese mainland availability zone; `overseas`: Global availability zone (excluding Chinese mainland).
+	// +kubebuilder:validation:Required
+	Area *string `json:"area" tf:"area,omitempty"`
 
 	// Indicates whether the site is disabled.
 	// +kubebuilder:validation:Optional
 	Paused *bool `json:"paused,omitempty" tf:"paused,omitempty"`
 
-	// Plan type of the zone. See details in data source `zone_available_plans`.
+	// The target Plan ID to be bound. When you have an existing Plan in your account, you can fill in this parameter to directly bind the site to the Plan. If you do not have a Plan that can be bound at the moment, please go to the console to purchase a Plan to complete the site creation.
 	// +kubebuilder:validation:Required
-	PlanType *string `json:"planType" tf:"plan_type,omitempty"`
+	PlanID *string `json:"planId" tf:"plan_id,omitempty"`
 
 	// Tag description list.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Specifies how the site is connected to EdgeOne.- `full`: The site is connected via NS.- `partial`: The site is connected via CNAME.
-	// +kubebuilder:validation:Optional
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+	// Site access type. The value of this parameter is as follows, and the default is `partial` if not filled in. Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`: No domain access.
+	// +kubebuilder:validation:Required
+	Type *string `json:"type" tf:"type,omitempty"`
 
-	// User-defined name server information. Note: This field may return null, indicating that no valid value can be obtained.
-	// +kubebuilder:validation:Optional
-	VanityNameServers []VanityNameServersParameters `json:"vanityNameServers,omitempty" tf:"vanity_name_servers,omitempty"`
-
-	// Site name.
+	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
 	// +kubebuilder:validation:Required
 	ZoneName *string `json:"zoneName" tf:"zone_name,omitempty"`
 }

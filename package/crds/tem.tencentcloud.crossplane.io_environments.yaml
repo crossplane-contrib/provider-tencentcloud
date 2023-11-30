@@ -74,6 +74,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: environment tag list.
+                    type: object
                   vpc:
                     description: vpc ID.
                     type: string

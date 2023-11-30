@@ -30,8 +30,6 @@ type InstanceObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	IP *string `json:"ip,omitempty" tf:"ip,omitempty"`
-
 	NodeInfo []NodeInfoObservation `json:"nodeInfo,omitempty" tf:"node_info,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -55,6 +53,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
+	// IP address of an instance. When the `operation_network` is `changeVip`, this parameter needs to be configured.
+	// +kubebuilder:validation:Optional
+	IP *string `json:"ip,omitempty" tf:"ip,omitempty"`
+
 	// The memory volume of an available instance(in MB), please refer to `tencentcloud_redis_zone_config.list[zone].shard_memories`. When redis is standard type, it represents total memory size of the instance; when Redis is cluster type, it represents memory size of per sharding.
 	// +kubebuilder:validation:Required
 	MemSize *float64 `json:"memSize" tf:"mem_size,omitempty"`
@@ -67,6 +69,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	NoAuth *bool `json:"noAuth,omitempty" tf:"no_auth,omitempty"`
 
+	// Refers to the category of the pre-modified network, including: `changeVip`: refers to switching the private network, including its intranet IPv4 address and port; `changeVpc`: refers to switching the subnet to which the private network belongs; `changeBaseToVpc`: refers to switching the basic network to a private network; `changeVPort`: refers to only modifying the instance network port.
+	// +kubebuilder:validation:Optional
+	OperationNetwork *string `json:"operationNetwork,omitempty" tf:"operation_network,omitempty"`
+
 	// Specify params template id. If not set, will use default template.
 	// +kubebuilder:validation:Optional
 	ParamsTemplateID *string `json:"paramsTemplateId,omitempty" tf:"params_template_id,omitempty"`
@@ -75,7 +81,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// The port used to access a redis instance. The default value is 6379. And this value can't be changed after creation, or the Redis instance will be recreated.
+	// The port used to access a redis instance. The default value is 6379. When the `operation_network` is `changeVPort` or `changeVip`, this parameter needs to be configured.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
@@ -87,11 +93,15 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of `replica_zone_ids`.
+	// Original intranet IPv4 address retention time: unit: day, value range: `0`, `1`, `2`, `3`, `7`, `15`.
+	// +kubebuilder:validation:Optional
+	Recycle *float64 `json:"recycle,omitempty" tf:"recycle,omitempty"`
+
+	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of `replica_zone_ids`, Non-multi-AZ does not require `replica_zone_ids`; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.
 	// +kubebuilder:validation:Optional
 	RedisReplicasNum *float64 `json:"redisReplicasNum,omitempty" tf:"redis_replicas_num,omitempty"`
 
-	// The number of instance shard, default is 1. This is not required for standalone and master slave versions.
+	// The number of instance shards; this parameter does not need to be configured for standard version instances; for cluster version instances, the number of shards ranges from: [`1`, `3`, `5`, `8`, `12`, `16`, `24 `, `32`, `40`, `48`, `64`, `80`, `96`, `128`].
 	// +kubebuilder:validation:Optional
 	RedisShardNum *float64 `json:"redisShardNum,omitempty" tf:"redis_shard_num,omitempty"`
 
@@ -107,7 +117,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
-	// Specifies which subnet the instance should belong to.
+	// Specifies which subnet the instance should belong to. When the `operation_network` is `changeVpc` or `changeBaseToVpc`, this parameter needs to be configured.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -119,11 +129,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069).
+	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.
 	// +kubebuilder:validation:Optional
 	TypeID *float64 `json:"typeId,omitempty" tf:"type_id,omitempty"`
 
-	// ID of the vpc with which the instance is to be associated.
+	// ID of the vpc with which the instance is to be associated. When the `operation_network` is `changeVpc` or `changeBaseToVpc`, this parameter needs to be configured.
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }

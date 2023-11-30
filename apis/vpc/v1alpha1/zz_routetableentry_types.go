@@ -47,7 +47,7 @@ type RouteTableEntryParameters struct {
 	// +kubebuilder:validation:Required
 	NextHub *string `json:"nextHub" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `SSLVPN`, `NAT`, `NORMAL_CVM`, `EIP` and `CCN`.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
 	// +kubebuilder:validation:Required
 	NextType *string `json:"nextType" tf:"next_type,omitempty"`
 

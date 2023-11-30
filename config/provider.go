@@ -265,16 +265,8 @@ var IncludedResources = []string{
 	// teo
 	"tencentcloud_teo_zone$",
 	"tencentcloud_teo_zone_setting$",
-	"tencentcloud_teo_security_policy$",
 	"tencentcloud_teo_rule_engine$",
-	"tencentcloud_teo_rule_engine_priority$",
 	"tencentcloud_teo_origin_group$",
-	"tencentcloud_teo_load_balancing$",
-	"tencentcloud_teo_dns_sec$",
-	"tencentcloud_teo_dns_record$",
-	"tencentcloud_teo_ddos_policy$",
-	"tencentcloud_teo_custom_error_page$",
-	"tencentcloud_teo_application_proxy$",
 	"tencentcloud_teo_application_proxy_rule$",
 
 	// tem

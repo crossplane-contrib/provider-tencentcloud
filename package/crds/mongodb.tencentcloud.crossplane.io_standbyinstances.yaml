@@ -175,9 +175,7 @@ spec:
                     description: ID of the project which the instance belongs.
                     type: number
                   securityGroups:
-                    description: 'ID of the security group. NOTE: for instance which
-                      `engine_version` is `MONGO_40_WT`, `security_groups` is not
-                      supported.'
+                    description: ID of the security group.
                     items:
                       type: string
                     type: array

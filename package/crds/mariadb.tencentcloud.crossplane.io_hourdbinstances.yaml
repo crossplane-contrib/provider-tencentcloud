@@ -75,6 +75,9 @@ spec:
                   nodeCount:
                     description: number of node for instance.
                     type: number
+                  projectId:
+                    description: project id.
+                    type: number
                   storage:
                     description: instance disk storage.
                     type: number
@@ -159,6 +162,9 @@ spec:
                       type: string
                     description: Tag description list.
                     type: object
+                  vip:
+                    description: vip.
+                    type: string
                   vpcId:
                     description: vpc id.
                     type: string

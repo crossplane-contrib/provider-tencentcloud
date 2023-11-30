@@ -79,7 +79,15 @@ type InstanceObservation struct {
 
 type InstanceParameters struct {
 
-	// Availability zone. NOTE: If value modified but included in `db_node_set`, the diff will be suppressed.
+	// Auto renew flag, `1` for enabled. NOTES: Only support prepaid instance.
+	// +kubebuilder:validation:Optional
+	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
+
+	// Whether to use voucher, `1` for enabled.
+	// +kubebuilder:validation:Optional
+	AutoVoucher *float64 `json:"autoVoucher,omitempty" tf:"auto_voucher,omitempty"`
+
+	// Availability zone. NOTE: This field could not be modified, please use `db_node_set` instead of modification. The changes on this field will be suppressed when using the `db_node_set`.
 	// +kubebuilder:validation:Required
 	AvailabilityZone *string `json:"availabilityZone" tf:"availability_zone,omitempty"`
 
@@ -87,7 +95,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	BackupPlan []BackupPlanParameters `json:"backupPlan,omitempty" tf:"backup_plan,omitempty"`
 
-	// Pay type of the postgresql instance. For now, only `POSTPAID_BY_HOUR` is valid.
+	// Pay type of the postgresql instance. Values `POSTPAID_BY_HOUR` (Default), `PREPAID`. It only support to update the type from `POSTPAID_BY_HOUR` to `PREPAID`.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
@@ -95,7 +103,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Charset *string `json:"charset,omitempty" tf:"charset,omitempty"`
 
-	// PostgreSQL kernel version number. If it is specified, an instance running kernel DBKernelVersion will be created.
+	// PostgreSQL kernel version number. If it is specified, an instance running kernel DBKernelVersion will be created. It supports updating the minor kernel version immediately.
 	// +kubebuilder:validation:Optional
 	DBKernelVersion *string `json:"dbKernelVersion,omitempty" tf:"db_kernel_version,omitempty"`
 
@@ -142,6 +150,10 @@ type InstanceParameters struct {
 	// Whether to support data transparent encryption, 1: yes, 0: no (default).
 	// +kubebuilder:validation:Optional
 	NeedSupportTde *float64 `json:"needSupportTde,omitempty" tf:"need_support_tde,omitempty"`
+
+	// Specify Prepaid period in month. Default `1`. Values: `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`. This field is valid only when creating a `PREPAID` type instance, or updating the charge type from `POSTPAID_BY_HOUR` to `PREPAID`.
+	// +kubebuilder:validation:Optional
+	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
 
 	// Project id, default value is `0`.
 	// +kubebuilder:validation:Optional
@@ -192,6 +204,10 @@ type InstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
+	// +kubebuilder:validation:Optional
+	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
 }
 
 // InstanceSpec defines the desired state of Instance

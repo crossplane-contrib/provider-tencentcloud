@@ -84,9 +84,25 @@ type ReadonlyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ReadonlyGroupID *string `json:"readonlyGroupId,omitempty" tf:"readonly_group_id,omitempty"`
 
+	// Required when `readonly_group_type`=2, the name of the newly created read-only group.
+	// +kubebuilder:validation:Optional
+	ReadonlyGroupName *string `json:"readonlyGroupName,omitempty" tf:"readonly_group_name,omitempty"`
+
 	// Type of readonly group. Valid values: `1`, `3`. `1` for one auto-assigned readonly instance per one readonly group, `2` for creating new readonly group, `3` for all exist readonly instances stay in the exist readonly group. For now, only `1` and `3` are supported.
 	// +kubebuilder:validation:Required
 	ReadonlyGroupType *float64 `json:"readonlyGroupType" tf:"readonly_group_type,omitempty"`
+
+	// Required when `readonly_group_type`=2, whether the newly created read-only group has delay elimination enabled, 1-enabled, 0-disabled. When the delay between the read-only copy and the primary instance exceeds the threshold, it is automatically removed.
+	// +kubebuilder:validation:Optional
+	ReadonlyGroupsIsOfflineDelay *float64 `json:"readonlyGroupsIsOfflineDelay,omitempty" tf:"readonly_groups_is_offline_delay,omitempty"`
+
+	// Required when `readonly_group_type`=2 and `readonly_groups_is_offline_delay`=1, the threshold for delayed elimination of newly created read-only groups.
+	// +kubebuilder:validation:Optional
+	ReadonlyGroupsMaxDelayTime *float64 `json:"readonlyGroupsMaxDelayTime,omitempty" tf:"readonly_groups_max_delay_time,omitempty"`
+
+	// When `readonly_group_type`=2 and `readonly_groups_is_offline_delay`=1, it is required. After the newly created read-only group is delayed and removed, at least the number of read-only copies should be retained.
+	// +kubebuilder:validation:Optional
+	ReadonlyGroupsMinInGroup *float64 `json:"readonlyGroupsMinInGroup,omitempty" tf:"readonly_groups_min_in_group,omitempty"`
 
 	// Security group bound to the instance.
 	// +kubebuilder:validation:Optional
@@ -125,6 +141,10 @@ type ReadonlyInstanceParameters struct {
 	// An array of voucher IDs, currently only one can be used for a single order.
 	// +kubebuilder:validation:Optional
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
+	// +kubebuilder:validation:Optional
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 }
 
 // ReadonlyInstanceSpec defines the desired state of ReadonlyInstance

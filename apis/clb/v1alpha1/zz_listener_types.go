@@ -56,11 +56,15 @@ type ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
+	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
+	// +kubebuilder:validation:Optional
+	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
+
 	// Health check protocol. When the value of `health_check_type` of the health check protocol is `CUSTOM`, this field is required, which represents the input format of the health check. Valid values: `HEX`, `TEXT`.
 	// +kubebuilder:validation:Optional
 	HealthCheckContextType *string `json:"healthCheckContextType,omitempty" tf:"health_check_context_type,omitempty"`
 
-	// HTTP health check code of TCP listener. When the value of `health_check_type` of the health check protocol is `HTTP`, this field is required. Valid values: `1`, `2`, `4`, `8`, `16`. `1` means http_1xx, `2` means http_2xx, `4` means http_3xx, `8` means http_4xx, `16` means http_5xx.
+	// HTTP health check code of TCP listener, Valid value ranges: [1~31]. When the value of `health_check_type` of the health check protocol is `HTTP`, this field is required. Valid values: `1`, `2`, `4`, `8`, `16`. `1` means http_1xx, `2` means http_2xx, `4` means http_3xx, `8` means http_4xx, `16` means http_5xx.If you want multiple return codes to indicate health, need to add the corresponding values.
 	// +kubebuilder:validation:Optional
 	HealthCheckHTTPCode *float64 `json:"healthCheckHttpCode,omitempty" tf:"health_check_http_code,omitempty"`
 
@@ -84,7 +88,7 @@ type ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	HealthCheckHealthNum *float64 `json:"healthCheckHealthNum,omitempty" tf:"health_check_health_num,omitempty"`
 
-	// Interval time of health check. Valid value ranges: [5~300] sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Interval time of health check. Valid value ranges: [2~300] sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	// +kubebuilder:validation:Optional
 	HealthCheckIntervalTime *float64 `json:"healthCheckIntervalTime,omitempty" tf:"health_check_interval_time,omitempty"`
 
@@ -124,7 +128,7 @@ type ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Type of protocol within the listener. Valid values: `TCP`, `UDP`, `HTTP`, `HTTPS` and `TCP_SSL`.
+	// Type of protocol within the listener. Valid values: `TCP`, `UDP`, `HTTP`, `HTTPS`, `TCP_SSL` and `QUIC`.
 	// +kubebuilder:validation:Required
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 

@@ -140,6 +140,17 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.AvailabilityZoneList != nil {
+		in, out := &in.AvailabilityZoneList, &out.AvailabilityZoneList
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.AvailableZone != nil {
 		in, out := &in.AvailableZone, &out.AvailableZone
 		*out = new(string)
@@ -155,6 +166,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.HiddenZone != nil {
+		in, out := &in.HiddenZone, &out.HiddenZone
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -167,6 +183,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.Memory != nil {
 		in, out := &in.Memory, &out.Memory
+		*out = new(float64)
+		**out = **in
+	}
+	if in.NodeNum != nil {
+		in, out := &in.NodeNum, &out.NodeNum
 		*out = new(float64)
 		**out = **in
 	}
@@ -399,6 +420,17 @@ func (in *ShardingInstanceParameters) DeepCopyInto(out *ShardingInstanceParamete
 		*out = new(float64)
 		**out = **in
 	}
+	if in.AvailabilityZoneList != nil {
+		in, out := &in.AvailabilityZoneList, &out.AvailabilityZoneList
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.AvailableZone != nil {
 		in, out := &in.AvailableZone, &out.AvailableZone
 		*out = new(string)
@@ -414,6 +446,11 @@ func (in *ShardingInstanceParameters) DeepCopyInto(out *ShardingInstanceParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.HiddenZone != nil {
+		in, out := &in.HiddenZone, &out.HiddenZone
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -426,6 +463,21 @@ func (in *ShardingInstanceParameters) DeepCopyInto(out *ShardingInstanceParamete
 	}
 	if in.Memory != nil {
 		in, out := &in.Memory, &out.Memory
+		*out = new(float64)
+		**out = **in
+	}
+	if in.MongosCPU != nil {
+		in, out := &in.MongosCPU, &out.MongosCPU
+		*out = new(float64)
+		**out = **in
+	}
+	if in.MongosMemory != nil {
+		in, out := &in.MongosMemory, &out.MongosMemory
+		*out = new(float64)
+		**out = **in
+	}
+	if in.MongosNodeNum != nil {
+		in, out := &in.MongosNodeNum, &out.MongosNodeNum
 		*out = new(float64)
 		**out = **in
 	}

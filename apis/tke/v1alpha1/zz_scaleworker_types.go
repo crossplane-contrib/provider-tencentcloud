@@ -51,6 +51,32 @@ type ScaleWorkerDataDiskParameters struct {
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 }
 
+type ScaleWorkerGpuArgsObservation struct {
+}
+
+type ScaleWorkerGpuArgsParameters struct {
+
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +kubebuilder:validation:Optional
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +kubebuilder:validation:Optional
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// +kubebuilder:validation:Optional
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
+}
+
 type ScaleWorkerObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -85,6 +111,10 @@ type ScaleWorkerParameters struct {
 	// Custom parameter information related to the node.
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
+
+	// GPU driver parameters.
+	// +kubebuilder:validation:Optional
+	GpuArgs []ScaleWorkerGpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
 	// Labels of kubernetes scale worker created nodes.
 	// +kubebuilder:validation:Optional
@@ -189,6 +219,10 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// Id of cvm hpc cluster.
+	// +kubebuilder:validation:Optional
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
 	// The valid image id, format of img-xxx.
 	// +kubebuilder:validation:Optional

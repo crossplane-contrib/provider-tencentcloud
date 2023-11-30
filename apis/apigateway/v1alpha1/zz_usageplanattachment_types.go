@@ -42,6 +42,10 @@ type UsagePlanAttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	APIIDSelector *v1.Selector `json:"apiidSelector,omitempty" tf:"-"`
 
+	// Array of key IDs to be bound.
+	// +kubebuilder:validation:Optional
+	AccessKeyIds []*string `json:"accessKeyIds,omitempty" tf:"access_key_ids,omitempty"`
+
 	// Binding type. Valid values: `API`, `SERVICE`. Default value is `SERVICE`.
 	// +kubebuilder:validation:Optional
 	BindType *string `json:"bindType,omitempty" tf:"bind_type,omitempty"`

@@ -109,6 +109,17 @@ func (in *AttachmentObservation) DeepCopyInto(out *AttachmentObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteIds != nil {
+		in, out := &in.RouteIds, &out.RouteIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.State != nil {
 		in, out := &in.State, &out.State
 		*out = new(string)
@@ -136,6 +147,11 @@ func (in *AttachmentParameters) DeepCopyInto(out *AttachmentParameters) {
 	}
 	if in.CcnUin != nil {
 		in, out := &in.CcnUin, &out.CcnUin
+		*out = new(string)
+		**out = **in
+	}
+	if in.Description != nil {
+		in, out := &in.Description, &out.Description
 		*out = new(string)
 		**out = **in
 	}

@@ -282,6 +282,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.OldIPReserveHours != nil {
+		in, out := &in.OldIPReserveHours, &out.OldIPReserveHours
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ParamItems != nil {
 		in, out := &in.ParamItems, &out.ParamItems
 		*out = make([]ParamItemsParameters, len(*in))
@@ -339,6 +344,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	}
 	if in.StorageLimit != nil {
 		in, out := &in.StorageLimit, &out.StorageLimit
+		*out = new(float64)
+		**out = **in
+	}
+	if in.StoragePayMode != nil {
+		in, out := &in.StoragePayMode, &out.StoragePayMode
 		*out = new(float64)
 		**out = **in
 	}
@@ -623,6 +633,16 @@ func (in *ReadonlyInstanceParameters) DeepCopyInto(out *ReadonlyInstanceParamete
 	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCID != nil {
+		in, out := &in.VPCID, &out.VPCID
 		*out = new(string)
 		**out = **in
 	}

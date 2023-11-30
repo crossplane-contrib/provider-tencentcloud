@@ -43,6 +43,14 @@ type ShardingInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
+	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
+	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
+	// - Version 4.2 and above are not supported.
+	// - Read-only disaster recovery instances are not supported.
+	// - Basic network cannot be selected.
+	// +kubebuilder:validation:Optional
+	AvailabilityZoneList []*string `json:"availabilityZoneList,omitempty" tf:"availability_zone_list,omitempty"`
+
 	// The available zone of the Mongodb.
 	// +kubebuilder:validation:Required
 	AvailableZone *string `json:"availableZone" tf:"available_zone,omitempty"`
@@ -55,6 +63,10 @@ type ShardingInstanceParameters struct {
 	// +kubebuilder:validation:Required
 	EngineVersion *string `json:"engineVersion" tf:"engine_version,omitempty"`
 
+	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
+	// +kubebuilder:validation:Optional
+	HiddenZone *string `json:"hiddenZone,omitempty" tf:"hidden_zone,omitempty"`
+
 	// Name of the Mongodb instance.
 	// +kubebuilder:validation:Required
 	InstanceName *string `json:"instanceName" tf:"instance_name,omitempty"`
@@ -66,6 +78,18 @@ type ShardingInstanceParameters struct {
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// +kubebuilder:validation:Required
 	Memory *float64 `json:"memory" tf:"memory,omitempty"`
+
+	// Number of mongos cpu.
+	// +kubebuilder:validation:Optional
+	MongosCPU *float64 `json:"mongosCpu,omitempty" tf:"mongos_cpu,omitempty"`
+
+	// Mongos memory size in GB.
+	// +kubebuilder:validation:Optional
+	MongosMemory *float64 `json:"mongosMemory,omitempty" tf:"mongos_memory,omitempty"`
+
+	// Number of mongos.
+	// +kubebuilder:validation:Optional
+	MongosNodeNum *float64 `json:"mongosNodeNum,omitempty" tf:"mongos_node_num,omitempty"`
 
 	// Number of nodes per shard, at least 3(one master and two slaves).
 	// +kubebuilder:validation:Required
@@ -83,7 +107,7 @@ type ShardingInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// ID of the security group. NOTE: for instance which `engine_version` is `MONGO_40_WT`, `security_groups` is not supported.
+	// ID of the security group.
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 

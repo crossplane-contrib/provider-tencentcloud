@@ -233,17 +233,9 @@ import (
 	logconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/logconfig"
 	scalerule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/scalerule"
 	workload "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/workload"
-	applicationproxy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/applicationproxy"
 	applicationproxyrule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/applicationproxyrule"
-	customerrorpageolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/customerrorpageolicy"
-	ddospolicyteo "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/ddospolicy"
-	dnsrecord "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/dnsrecord"
-	dnssec "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/dnssec"
 	origingroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/origingroup"
-	origingrouprity "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/origingrouprity"
 	ruleengine "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/ruleengine"
-	ruleenginepriority "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/ruleenginepriority"
-	securitypolicyteo "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/securitypolicy"
 	zoneteo "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/zone"
 	zonesetting "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/zonesetting"
 	addonattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/addonattachment"
@@ -505,17 +497,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		logconfig.Setup,
 		scalerule.Setup,
 		workload.Setup,
-		applicationproxy.Setup,
 		applicationproxyrule.Setup,
-		customerrorpageolicy.Setup,
-		ddospolicyteo.Setup,
-		dnsrecord.Setup,
-		dnssec.Setup,
 		origingroup.Setup,
-		origingrouprity.Setup,
 		ruleengine.Setup,
-		ruleenginepriority.Setup,
-		securitypolicyteo.Setup,
 		zoneteo.Setup,
 		zonesetting.Setup,
 		addonattachment.Setup,

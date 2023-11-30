@@ -37,7 +37,7 @@ type OriginGroupObservation struct {
 
 type OriginGroupParameters struct {
 
-	// Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values:- `area`: select an origin by using Geo info of the client IP and `Area` field in Records.- `weight`: weighted select an origin by using `Weight` field in Records.- `proto`: config by HTTP protocol.
+	// Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
 	// +kubebuilder:validation:Required
 	ConfigurationType *string `json:"configurationType" tf:"configuration_type,omitempty"`
 
@@ -49,7 +49,7 @@ type OriginGroupParameters struct {
 	// +kubebuilder:validation:Required
 	OriginRecords []OriginRecordsParameters `json:"originRecords" tf:"origin_records,omitempty"`
 
-	// Type of the origin site. Valid values:- `self`: self-build website.- `cos`: tencent cos.- `third_party`: third party cos.
+	// Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
 	// +kubebuilder:validation:Required
 	OriginType *string `json:"originType" tf:"origin_type,omitempty"`
 
@@ -71,7 +71,7 @@ type OriginRecordsObservation struct {
 
 type OriginRecordsParameters struct {
 
-	// Indicating origin site&#39;s area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.- 2 characters ISO 3166 area code.
+	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
 	// +kubebuilder:validation:Optional
 	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
 
@@ -91,7 +91,7 @@ type OriginRecordsParameters struct {
 	// +kubebuilder:validation:Required
 	Record *string `json:"record" tf:"record,omitempty"`
 
-	// Indicating origin site&#39;s weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
+	// Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
@@ -101,7 +101,7 @@ type PrivateParameterObservation struct {
 
 type PrivateParameterParameters struct {
 
-	// Parameter Name. Valid values:- AccessKeyId:Access Key ID.- SecretAccessKey:Secret Access Key.
+	// Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 

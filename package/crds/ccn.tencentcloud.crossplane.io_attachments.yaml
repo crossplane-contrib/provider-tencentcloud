@@ -72,6 +72,9 @@ spec:
                       attaching ccn of other account to the instance of this account.
                       For now only support instance type `VPC`.
                     type: string
+                  description:
+                    description: Remark of attachment.
+                    type: string
                   instanceId:
                     description: ID of instance is attached.
                     type: string
@@ -273,6 +276,10 @@ spec:
                     type: array
                   id:
                     type: string
+                  routeIds:
+                    items:
+                      type: string
+                    type: array
                   state:
                     type: string
                 type: object

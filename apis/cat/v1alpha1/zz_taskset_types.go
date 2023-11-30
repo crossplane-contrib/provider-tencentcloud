@@ -65,6 +65,10 @@ type TaskSetParameters struct {
 	// +kubebuilder:validation:Required
 	Nodes []*string `json:"nodes" tf:"nodes,omitempty"`
 
+	// The input is valid when the parameter is modified, `suspend`/`resume`, used to suspend/resume the dial test task.
+	// +kubebuilder:validation:Optional
+	Operate *string `json:"operate,omitempty" tf:"operate,omitempty"`
+
 	// tasks parameters.
 	// +kubebuilder:validation:Required
 	Parameters *string `json:"parameters" tf:"parameters,omitempty"`

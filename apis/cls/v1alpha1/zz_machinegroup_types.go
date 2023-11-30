@@ -55,7 +55,7 @@ type MachineGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	UpdateEndTime *string `json:"updateEndTime,omitempty" tf:"update_end_time,omitempty"`
 
-	// pdate start time. We recommend you update LogListener during off-peak hours.
+	// Update start time. We recommend you update LogListener during off-peak hours.
 	// +kubebuilder:validation:Optional
 	UpdateStartTime *string `json:"updateStartTime,omitempty" tf:"update_start_time,omitempty"`
 }

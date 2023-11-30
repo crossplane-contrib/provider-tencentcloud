@@ -63,6 +63,9 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  accelerationEnable:
+                    description: Enable bucket acceleration.
+                    type: boolean
                   acl:
                     description: 'The canned ACL to apply. Valid values: private,
                       public-read, and public-read-write. Defaults to private.'
@@ -112,6 +115,11 @@ spec:
                       - allowedOrigins
                       type: object
                     type: array
+                  enableIntelligentTiering:
+                    description: 'Enable intelligent tiering. NOTE: When intelligent
+                      tiering configuration is enabled, it cannot be turned off or
+                      modified.'
+                    type: boolean
                   encryptionAlgorithm:
                     description: The server-side encryption algorithm to use. Valid
                       value is `AES256`.
@@ -119,6 +127,21 @@ spec:
                   forceClean:
                     description: Force cleanup all objects before delete bucket.
                     type: boolean
+                  intelligentTieringDays:
+                    description: Specifies the limit of days for standard-tier data
+                      to low-frequency data in an intelligent tiered storage configuration,
+                      with optional days of 30, 60, 90. Default value is 30.
+                    type: number
+                  intelligentTieringRequestFrequent:
+                    description: Specify the access limit for converting standard
+                      layer data into low-frequency layer data in the configuration.
+                      The default value is once, which can be used in combination
+                      with the number of days to achieve the conversion effect. For
+                      example, if the parameter is set to 1 and the number of access
+                      days is 30, it means that objects with less than one visit in
+                      30 consecutive days will be reduced from the standard layer
+                      to the low frequency layer.
+                    type: number
                   lifecycleRules:
                     description: A configuration of object lifecycle management (documented
                       below).
@@ -232,8 +255,8 @@ spec:
                       access on this bucket.
                     type: string
                   multiAz:
-                    description: 'Indicates whether to create a bucket of multi available
-                      zone. NOTE: If set to true, the versioning must enable.'
+                    description: Indicates whether to create a bucket of multi available
+                      zone.
                     type: boolean
                   originDomainRules:
                     description: Bucket Origin Domain settings.
@@ -346,7 +369,8 @@ spec:
                     description: The tags of a bucket.
                     type: object
                   versioningEnable:
-                    description: Enable bucket versioning.
+                    description: 'Enable bucket versioning. NOTE: The `multi_az` feature
+                      is true for the current bucket, cannot disable version control.'
                     type: boolean
                   website:
                     description: A website object(documented below).
@@ -545,6 +569,13 @@ spec:
                     type: string
                   id:
                     type: string
+                  website:
+                    items:
+                      properties:
+                        endpoint:
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

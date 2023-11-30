@@ -86,7 +86,7 @@ type StandbyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// ID of the security group. NOTE: for instance which `engine_version` is `MONGO_40_WT`, `security_groups` is not supported.
+	// ID of the security group.
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 

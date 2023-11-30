@@ -79,6 +79,10 @@ type ExtractRuleObservation struct {
 
 type ExtractRuleParameters struct {
 
+	// syslog system log collection specifies the address and port that the collector listens to.
+	// +kubebuilder:validation:Optional
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
 	// Size of the data to be rewound in incremental collection mode. Default value: -1 (full collection).
 	// +kubebuilder:validation:Optional
 	Backtracking *float64 `json:"backtracking,omitempty" tf:"backtracking,omitempty"`
@@ -95,6 +99,14 @@ type ExtractRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	FilterKeyRegex []FilterKeyRegexParameters `json:"filterKeyRegex,omitempty" tf:"filter_key_regex,omitempty"`
 
+	// GBK encoding. Default 0.
+	// +kubebuilder:validation:Optional
+	IsGbk *float64 `json:"isGbk,omitempty" tf:"is_gbk,omitempty"`
+
+	// standard json. Default 0.
+	// +kubebuilder:validation:Optional
+	JSONStandard *float64 `json:"jsonStandard,omitempty" tf:"json_standard,omitempty"`
+
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
 	// +kubebuilder:validation:Optional
 	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
@@ -102,6 +114,26 @@ type ExtractRuleParameters struct {
 	// Full log matching rule, which is valid only if log_type is fullregex_log.
 	// +kubebuilder:validation:Optional
 	LogRegex *string `json:"logRegex,omitempty" tf:"log_regex,omitempty"`
+
+	// metadata tags.
+	// +kubebuilder:validation:Optional
+	MetaTags []MetaTagsParameters `json:"metaTags,omitempty" tf:"meta_tags,omitempty"`
+
+	// metadata type.
+	// +kubebuilder:validation:Optional
+	MetadataType *float64 `json:"metadataType,omitempty" tf:"metadata_type,omitempty"`
+
+	// parse protocol.
+	// +kubebuilder:validation:Optional
+	ParseProtocol *string `json:"parseProtocol,omitempty" tf:"parse_protocol,omitempty"`
+
+	// metadata path regex.
+	// +kubebuilder:validation:Optional
+	PathRegex *string `json:"pathRegex,omitempty" tf:"path_regex,omitempty"`
+
+	// syslog protocol, tcp or udp.
+	// +kubebuilder:validation:Optional
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// Time field format. For more information, please see the output parameters of the time format description of the strftime function in C language.
 	// +kubebuilder:validation:Optional
@@ -132,6 +164,20 @@ type FilterKeyRegexParameters struct {
 	// Filter rule regex corresponding to key.
 	// +kubebuilder:validation:Optional
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
+type MetaTagsObservation struct {
+}
+
+type MetaTagsParameters struct {
+
+	// tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 // ConfigSpec defines the desired state of Config

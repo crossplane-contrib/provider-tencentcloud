@@ -64,7 +64,7 @@ spec:
               forProvider:
                 properties:
                   bandwidthLimit:
-                    description: Limitation of bandwidth.
+                    description: Limitation of bandwidth. Default is `0`.
                     type: number
                   ccnId:
                     description: ID of the CCN.

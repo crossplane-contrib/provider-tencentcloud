@@ -399,6 +399,11 @@ func (in *FileSystemObservation) DeepCopyInto(out *FileSystemObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.FsID != nil {
+		in, out := &in.FsID, &out.FsID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -439,6 +444,21 @@ func (in *FileSystemParameters) DeepCopyInto(out *FileSystemParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Capacity != nil {
+		in, out := &in.Capacity, &out.Capacity
+		*out = new(float64)
+		**out = **in
+	}
+	if in.CcnID != nil {
+		in, out := &in.CcnID, &out.CcnID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CidrBlock != nil {
+		in, out := &in.CidrBlock, &out.CidrBlock
+		*out = new(string)
+		**out = **in
+	}
 	if in.MountIP != nil {
 		in, out := &in.MountIP, &out.MountIP
 		*out = new(string)
@@ -446,6 +466,11 @@ func (in *FileSystemParameters) DeepCopyInto(out *FileSystemParameters) {
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+	if in.NetInterface != nil {
+		in, out := &in.NetInterface, &out.NetInterface
 		*out = new(string)
 		**out = **in
 	}

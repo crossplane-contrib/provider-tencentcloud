@@ -31,7 +31,7 @@ type BandwidthLimitObservation struct {
 
 type BandwidthLimitParameters struct {
 
-	// Limitation of bandwidth.
+	// Limitation of bandwidth. Default is `0`.
 	// +kubebuilder:validation:Optional
 	BandwidthLimit *float64 `json:"bandwidthLimit,omitempty" tf:"bandwidth_limit,omitempty"`
 

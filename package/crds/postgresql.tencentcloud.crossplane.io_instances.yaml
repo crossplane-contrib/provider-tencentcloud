@@ -63,9 +63,18 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  autoRenewFlag:
+                    description: 'Auto renew flag, `1` for enabled. NOTES: Only support
+                      prepaid instance.'
+                    type: number
+                  autoVoucher:
+                    description: Whether to use voucher, `1` for enabled.
+                    type: number
                   availabilityZone:
-                    description: 'Availability zone. NOTE: If value modified but included
-                      in `db_node_set`, the diff will be suppressed.'
+                    description: 'Availability zone. NOTE: This field could not be
+                      modified, please use `db_node_set` instead of modification.
+                      The changes on this field will be suppressed when using the
+                      `db_node_set`.'
                     type: string
                   backupPlan:
                     description: Specify DB backup plan.
@@ -92,8 +101,9 @@ spec:
                       type: object
                     type: array
                   chargeType:
-                    description: Pay type of the postgresql instance. For now, only
-                      `POSTPAID_BY_HOUR` is valid.
+                    description: Pay type of the postgresql instance. Values `POSTPAID_BY_HOUR`
+                      (Default), `PREPAID`. It only support to update the type from
+                      `POSTPAID_BY_HOUR` to `PREPAID`.
                     type: string
                   charset:
                     description: Charset of the root account. Valid values are `UTF8`,`LATIN1`.
@@ -101,6 +111,7 @@ spec:
                   dbKernelVersion:
                     description: PostgreSQL kernel version number. If it is specified,
                       an instance running kernel DBKernelVersion will be created.
+                      It supports updating the minor kernel version immediately.
                     type: string
                   dbMajorVersion:
                     description: 'PostgreSQL major version number. Valid values: 10,
@@ -158,6 +169,13 @@ spec:
                   needSupportTde:
                     description: 'Whether to support data transparent encryption,
                       1: yes, 0: no (default).'
+                    type: number
+                  period:
+                    description: 'Specify Prepaid period in month. Default `1`. Values:
+                      `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`,
+                      `24`, `36`. This field is valid only when creating a `PREPAID`
+                      type instance, or updating the charge type from `POSTPAID_BY_HOUR`
+                      to `PREPAID`.'
                     type: number
                   projectId:
                     description: Project id, default value is `0`.
@@ -282,6 +300,12 @@ spec:
                       type: string
                     description: The available tags within this postgresql.
                     type: object
+                  voucherIds:
+                    description: Specify Voucher Ids if `auto_voucher` was `1`, only
+                      support using 1 vouchers for now.
+                    items:
+                      type: string
+                    type: array
                   vpcId:
                     description: ID of VPC.
                     type: string

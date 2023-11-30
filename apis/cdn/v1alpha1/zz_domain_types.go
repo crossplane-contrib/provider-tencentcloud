@@ -114,6 +114,50 @@ type BandWidthAlertParameters struct {
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
+type CacheKeyObservation struct {
+}
+
+type CacheKeyParameters struct {
+
+	// Whether to enable full-path cache, values `on` (DEFAULT ON), `off`.
+	// +kubebuilder:validation:Optional
+	FullURLCache *string `json:"fullUrlCache,omitempty" tf:"full_url_cache,omitempty"`
+
+	// Specifies whether the cache key is case sensitive.
+	// +kubebuilder:validation:Optional
+	IgnoreCase *string `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
+
+	// Path-specific cache key configuration.
+	// +kubebuilder:validation:Optional
+	KeyRules []KeyRulesParameters `json:"keyRules,omitempty" tf:"key_rules,omitempty"`
+
+	// Request parameter contained in CacheKey.
+	// +kubebuilder:validation:Optional
+	QueryString []CacheKeyQueryStringParameters `json:"queryString,omitempty" tf:"query_string,omitempty"`
+}
+
+type CacheKeyQueryStringObservation struct {
+}
+
+type CacheKeyQueryStringParameters struct {
+
+	// Include/exclude query parameters. Values: `includeAll` (Default), `excludeAll`, `includeCustom`, `excludeCustom`.
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// Whether to sort again, values `on`, `off` (Default).
+	// +kubebuilder:validation:Optional
+	Reorder *string `json:"reorder,omitempty" tf:"reorder,omitempty"`
+
+	// Whether to use QueryString as part of CacheKey, values `on`, `off` (Default).
+	// +kubebuilder:validation:Optional
+	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
+
+	// Array of included/excluded query strings (separated by `;`).
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
 type CacheRulesObservation struct {
 }
 
@@ -245,6 +289,10 @@ type DomainParameters struct {
 	// +kubebuilder:validation:Optional
 	BandWidthAlert []BandWidthAlertParameters `json:"bandWidthAlert,omitempty" tf:"band_width_alert,omitempty"`
 
+	// Cache key configuration (Ignore Query String configuration). NOTE: All of `full_url_cache` default value is `on`.
+	// +kubebuilder:validation:Optional
+	CacheKey []CacheKeyParameters `json:"cacheKey,omitempty" tf:"cache_key,omitempty"`
+
 	// Smart compression configurations.
 	// +kubebuilder:validation:Optional
 	Compression []CompressionParameters `json:"compression,omitempty" tf:"compression,omitempty"`
@@ -361,7 +409,7 @@ type DomainParameters struct {
 	// +kubebuilder:validation:Optional
 	SeoSwitch *string `json:"seoSwitch,omitempty" tf:"seo_switch,omitempty"`
 
-	// Acceleration domain name service type. `web`: static acceleration, `download`: download acceleration, `media`: streaming media VOD acceleration.
+	// Acceleration domain name service type. `web`: static acceleration, `download`: download acceleration, `media`: streaming media VOD acceleration, `hybrid`: hybrid acceleration, `dynamic`: dynamic acceleration.
 	// +kubebuilder:validation:Required
 	ServiceType *string `json:"serviceType" tf:"service_type,omitempty"`
 
@@ -591,6 +639,36 @@ type IPFreqLimitParameters struct {
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
+type KeyRulesObservation struct {
+}
+
+type KeyRulesParameters struct {
+
+	// Whether to enable full-path cache, values `on` (DEFAULT ON), `off`.
+	// +kubebuilder:validation:Optional
+	FullURLCache *string `json:"fullUrlCache,omitempty" tf:"full_url_cache,omitempty"`
+
+	// Whether caches are case insensitive.
+	// +kubebuilder:validation:Optional
+	IgnoreCase *string `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
+
+	// Request parameter contained in CacheKey.
+	// +kubebuilder:validation:Required
+	QueryString []QueryStringParameters `json:"queryString" tf:"query_string,omitempty"`
+
+	// List of rule paths for each `key_rules`: `/` for `index`, file ext like `jpg` for `file`, `/dir/like/` for `directory` and `/path/index.html` for `path`.
+	// +kubebuilder:validation:Required
+	RulePaths []*string `json:"rulePaths" tf:"rule_paths,omitempty"`
+
+	// Specify rule tag, default value is `user`.
+	// +kubebuilder:validation:Optional
+	RuleTag *string `json:"ruleTag,omitempty" tf:"rule_tag,omitempty"`
+
+	// Rule type, available: `file`, `directory`, `path`, `index`.
+	// +kubebuilder:validation:Required
+	RuleType *string `json:"ruleType" tf:"rule_type,omitempty"`
+}
+
 type MaxAgeObservation struct {
 }
 
@@ -622,7 +700,7 @@ type MaxAgeRulesParameters struct {
 	// +kubebuilder:validation:Required
 	MaxAgeTime *float64 `json:"maxAgeTime" tf:"max_age_time,omitempty"`
 
-	// The following types are supported: `all`: all documents take effect, `file`: the specified file suffix takes effect, `directory`: the specified path takes effect, `path`: specify the absolute path to take effect, `index`: home page, `default`: effective when the source site has no max-age.
+	// The following types are supported: `all`: all documents take effect, `file`: the specified file suffix takes effect, `directory`: the specified path takes effect, `path`: specify the absolute path to take effect, `index`: home page.
 	// +kubebuilder:validation:Required
 	MaxAgeType *string `json:"maxAgeType" tf:"max_age_type,omitempty"`
 }
@@ -769,6 +847,24 @@ type QnPrivateAccessParameters struct {
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
+type QueryStringObservation struct {
+}
+
+type QueryStringParameters struct {
+
+	// Specify key rule QS action, values: `includeCustom`, `excludeCustom`.
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// Whether to use QueryString as part of CacheKey, values `on`, `off` (Default).
+	// +kubebuilder:validation:Optional
+	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
+
+	// Array of included/excluded query strings (separated by `;`).
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
 type RefererObservation struct {
 }
 
@@ -880,6 +976,14 @@ type RuleCacheParameters struct {
 	// +kubebuilder:validation:Optional
 	FollowOriginSwitch *string `json:"followOriginSwitch,omitempty" tf:"follow_origin_switch,omitempty"`
 
+	// Specify whether to enable heuristic cache, only available while `follow_origin_switch` enabled, values: `on`, `off` (Default).
+	// +kubebuilder:validation:Optional
+	HeuristicCacheSwitch *string `json:"heuristicCacheSwitch,omitempty" tf:"heuristic_cache_switch,omitempty"`
+
+	// Specify heuristic cache time in second, only available while `follow_origin_switch` and `heuristic_cache_switch` enabled.
+	// +kubebuilder:validation:Optional
+	HeuristicCacheTime *float64 `json:"heuristicCacheTime,omitempty" tf:"heuristic_cache_time,omitempty"`
+
 	// Force caching. After opening, the no-store and no-cache resources returned by the origin site will also be cached in accordance with the CacheRules rules. Valid values are `on` and `off`. Default value is `off`.
 	// +kubebuilder:validation:Optional
 	IgnoreCacheControl *string `json:"ignoreCacheControl,omitempty" tf:"ignore_cache_control,omitempty"`
@@ -896,11 +1000,11 @@ type RuleCacheParameters struct {
 	// +kubebuilder:validation:Optional
 	ReValidate *string `json:"reValidate,omitempty" tf:"re_validate,omitempty"`
 
-	// Matching content under the corresponding type of CacheType: `all`: fill *, `file`: fill in the suffix name, such as jpg, txt, `directory`: fill in the path, such as /xxx/test, `path`: fill in the absolute path, such as /xxx/test.html, `index`: fill /, `default`: Fill `no max-age`.
+	// Matching content under the corresponding type of CacheType: `all`: fill *, `file`: fill in the suffix name, such as jpg, txt, `directory`: fill in the path, such as /xxx/test, `path`: fill in the absolute path, such as /xxx/test.html, `index`: fill /.
 	// +kubebuilder:validation:Optional
 	RulePaths []*string `json:"rulePaths,omitempty" tf:"rule_paths,omitempty"`
 
-	// Rule type. The following types are supported: `all`: all documents take effect, `file`: the specified file suffix takes effect, `directory`: the specified path takes effect, `path`: specify the absolute path to take effect, `index`: home page, `default`: effective when the source site has no max-age.
+	// Rule type. The following types are supported: `all`: all documents take effect, `file`: the specified file suffix takes effect, `directory`: the specified path takes effect, `path`: specify the absolute path to take effect, `index`: home page.
 	// +kubebuilder:validation:Optional
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 

@@ -71,6 +71,9 @@ spec:
                     description: The charge type of CBS instance. Valid values are
                       `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
                     type: string
+                  diskBackupQuota:
+                    description: The quota of backup points of cloud disk.
+                    type: number
                   encrypt:
                     description: Indicates whether CBS is encrypted.
                     type: boolean

@@ -25,7 +25,20 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AttributesObservation struct {
+	ExpectedValue *string `json:"expectedValue,omitempty" tf:"expected_value,omitempty"`
+
+	SendDomain *string `json:"sendDomain,omitempty" tf:"send_domain,omitempty"`
+
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type AttributesParameters struct {
+}
+
 type DomainObservation struct {
+	Attributes []AttributesObservation `json:"attributes,omitempty" tf:"attributes,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
