@@ -85,6 +85,10 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountVPCSet []AccountVPCSetParameters `json:"accountVpcSet,omitempty" tf:"account_vpc_set,omitempty"`
 
+	// CNAME acceleration: ENABLED, DISABLED, Default value is ENABLED.
+	// +kubebuilder:validation:Optional
+	CnameSpeedupStatus *string `json:"cnameSpeedupStatus,omitempty" tf:"cname_speedup_status,omitempty"`
+
 	// Whether to enable subdomain recursive DNS. Valid values: ENABLED, DISABLED. Default value: DISABLED.
 	// +kubebuilder:validation:Optional
 	DNSForwardStatus *string `json:"dnsForwardStatus,omitempty" tf:"dns_forward_status,omitempty"`

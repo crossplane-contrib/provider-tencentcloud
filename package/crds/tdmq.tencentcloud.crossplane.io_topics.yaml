@@ -218,6 +218,11 @@ spec:
                   partitions:
                     description: The partitions of topic.
                     type: number
+                  pulsarTopicType:
+                    description: 'Pulsar Topic Type 0: Non-persistent non-partitioned
+                      1: Non-persistent partitioned 2: Persistent non-partitioned
+                      3: Persistent partitioned.'
+                    type: number
                   remark:
                     description: Description of the namespace.
                     type: string
@@ -230,7 +235,6 @@ spec:
                 required:
                 - partitions
                 - topicName
-                - topicType
                 type: object
               providerConfigRef:
                 default:

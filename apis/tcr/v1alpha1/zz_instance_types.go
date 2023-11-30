@@ -26,6 +26,8 @@ import (
 )
 
 type InstanceObservation struct {
+	ExpiredAt *string `json:"expiredAt,omitempty" tf:"expired_at,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	InternalEndPoint *string `json:"internalEndPoint,omitempty" tf:"internal_end_point,omitempty"`
@@ -47,6 +49,14 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DeleteBucket *bool `json:"deleteBucket,omitempty" tf:"delete_bucket,omitempty"`
 
+	// Length of time to purchase an instance (in month). Must set when registry_charge_type is prepaid.
+	// +kubebuilder:validation:Optional
+	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
+
+	// Auto renewal flag. 1: manual renewal, 2: automatic renewal, 3: no renewal and no notification. Must set when registry_charge_type is prepaid.
+	// +kubebuilder:validation:Optional
+	InstanceChargeTypePrepaidRenewFlag *float64 `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
+
 	// TCR types. Valid values are: `standard`, `basic`, `premium`.
 	// +kubebuilder:validation:Required
 	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
@@ -58,6 +68,10 @@ type InstanceParameters struct {
 	// Control public network access.
 	// +kubebuilder:validation:Optional
 	OpenPublicOperation *bool `json:"openPublicOperation,omitempty" tf:"open_public_operation,omitempty"`
+
+	// Charge type of instance. 1: postpaid; 2: prepaid. Default is postpaid.
+	// +kubebuilder:validation:Optional
+	RegistryChargeType *float64 `json:"registryChargeType,omitempty" tf:"registry_charge_type,omitempty"`
 
 	// Specify List of instance Replications, premium only. The available [source region list](https://www.tencentcloud.com/document/api/1051/41101) is here.
 	// +kubebuilder:validation:Optional

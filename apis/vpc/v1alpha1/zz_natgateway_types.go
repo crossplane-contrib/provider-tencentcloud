@@ -45,9 +45,17 @@ type NatGatewayParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxConcurrent *float64 `json:"maxConcurrent,omitempty" tf:"max_concurrent,omitempty"`
 
+	// 1: traditional NAT, 2: standard NAT, default value is 1.
+	// +kubebuilder:validation:Optional
+	NATProductVersion *float64 `json:"natProductVersion,omitempty" tf:"nat_product_version,omitempty"`
+
 	// Name of the NAT gateway.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Subnet of NAT.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// The available tags within this NAT gateway.
 	// +kubebuilder:validation:Optional
@@ -63,6 +71,10 @@ type NatGatewayParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// The availability zone, such as `ap-guangzhou-3`.
+	// +kubebuilder:validation:Optional
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 // NatGatewaySpec defines the desired state of NatGateway

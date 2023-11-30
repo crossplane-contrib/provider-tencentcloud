@@ -65,12 +65,13 @@ spec:
                 properties:
                   availabilityZone:
                     description: Availability zone. When create multi-az es, this
-                      parameter must be omitted.
+                      parameter must be omitted or `-`.
                     type: string
                   basicSecurityType:
-                    description: Whether to enable X-Pack security authentication
+                    description: 'Whether to enable X-Pack security authentication
                       in Basic Edition 6.8 and above. Valid values are `1` and `2`.
-                      `1` is disabled, `2` is enabled, and default value is `1`.
+                      `1` is disabled, `2` is enabled, and default value is `1`. Notice:
+                      this parameter is only take effect on `basic` license.'
                     type: number
                   chargePeriod:
                     description: 'The tenancy of the prepaid instance, and uint is
@@ -138,7 +139,8 @@ spec:
                           type: number
                         diskType:
                           description: Node disk type. Valid values are `CLOUD_SSD`
-                            and `CLOUD_PREMIUM`. The default value is `CLOUD_SSD`.
+                            and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is
+                            `CLOUD_SSD`.
                           type: string
                         encrypt:
                           description: Decides to encrypt this disk or not.
@@ -160,7 +162,9 @@ spec:
                       type: object
                     type: array
                   passwordSecretRef:
-                    description: Password to an instance.
+                    description: Password to an instance, the password needs to be
+                      8 to 16 characters, including at least two items ([a-z,A-Z],
+                      [0-9] and [-!@#$%&^*+=_:;,.?] special symbols.
                     properties:
                       key:
                         description: The key to select.
@@ -184,7 +188,7 @@ spec:
                     type: string
                   subnetId:
                     description: The ID of a VPC subnetwork. When create multi-az
-                      es, this parameter must be omitted.
+                      es, this parameter must be omitted or `-`.
                     type: string
                   subnetIdRef:
                     description: A Reference to a named object.
@@ -267,7 +271,7 @@ spec:
                     type: object
                   version:
                     description: Version of the instance. Valid values are `5.6.4`,
-                      `6.4.3`, `6.8.2` and `7.5.1`.
+                      `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
                     type: string
                   vpcId:
                     description: The ID of a VPC network.

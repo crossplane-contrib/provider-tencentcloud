@@ -76,6 +76,12 @@ spec:
                       value is `true`. When it is `false`, it means custom path mapping.
                       In this case, the `path_mappings` attribute is required.
                     type: boolean
+                  isForcedHttps:
+                    description: Whether to force HTTP requests to jump to HTTPS,
+                      default to false. When the parameter is true, the API gateway
+                      will redirect all HTTP protocol requests using the custom domain
+                      name to the HTTPS protocol for forwarding.
+                    type: boolean
                   netType:
                     description: 'Network type. Valid values: `OUTER`, `INNER`.'
                     type: string

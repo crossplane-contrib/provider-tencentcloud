@@ -39,15 +39,6 @@ func Configure(p *tjconfig.Provider) {
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_security_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "SecurityPolicy"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
 	p.AddResourceConfigurator("tencentcloud_teo_rule_engine", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
@@ -57,73 +48,10 @@ func Configure(p *tjconfig.Provider) {
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_rule_engine_priority", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "RuleEnginePriority"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
 	p.AddResourceConfigurator("tencentcloud_teo_origin_group", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
 		r.Kind = "OriginGroup"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
-	p.AddResourceConfigurator("tencentcloud_teo_load_balancing", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "OriginGrouprity"
-		r.References["origin_group_id"] = tjconfig.Reference{
-			Type: "OriginGroup",
-		}
-	})
-
-	p.AddResourceConfigurator("tencentcloud_teo_dns_sec", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "DnsSec"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
-	p.AddResourceConfigurator("tencentcloud_teo_dns_record", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "DnsRecord"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
-	p.AddResourceConfigurator("tencentcloud_teo_ddos_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "DDosPolicy"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
-	p.AddResourceConfigurator("tencentcloud_teo_custom_error_page", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "CustomErrorPageolicy"
-		r.References["zone_id"] = tjconfig.Reference{
-			Type: "Zone",
-		}
-	})
-
-	p.AddResourceConfigurator("tencentcloud_teo_application_proxy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupTeo
-		r.Kind = "ApplicationProxy"
 		r.References["zone_id"] = tjconfig.Reference{
 			Type: "Zone",
 		}

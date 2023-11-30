@@ -79,11 +79,20 @@ spec:
                             and '/openid/v1/jwks'.
                           type: boolean
                         issuer:
-                          description: Specify service-account-issuer.
+                          description: Specify service-account-issuer. If use_tke_default
+                            is set to `true`, please do not set this field, it will
+                            be ignored anyway.
                           type: string
                         jwksUri:
-                          description: Specify service-account-jwks-uri.
+                          description: Specify service-account-jwks-uri. If use_tke_default
+                            is set to `true`, please do not set this field, it will
+                            be ignored anyway.
                           type: string
+                        useTkeDefault:
+                          description: If set to `true`, the issuer and jwks_uri will
+                            be generated automatically by tke, please do not set issuer
+                            and jwks_uri, and they will be ignored.
+                          type: boolean
                       type: object
                     type: array
                   autoUpgradeClusterLevel:
@@ -168,8 +177,14 @@ spec:
                   clusterInternet:
                     description: Open internet access or not. If this field is set
                       'true', the field below `worker_config` must be set. Because
-                      only cluster with node is allowed enable access endpoint.
+                      only cluster with node is allowed enable access endpoint. You
+                      may open it through `tencentcloud_kubernetes_cluster_endpoint`.
                     type: boolean
+                  clusterInternetDomain:
+                    description: Domain name for cluster Kube-apiserver internet access.
+                      Be careful if you modify value of this parameter, the cluster_external_endpoint
+                      value may be changed automatically too.
+                    type: string
                   clusterInternetSecurityGroup:
                     description: 'Specify security group, NOTE: This argument must
                       not be empty if cluster internet enabled.'
@@ -177,8 +192,14 @@ spec:
                   clusterIntranet:
                     description: Open intranet access or not. If this field is set
                       'true', the field below `worker_config` must be set. Because
-                      only cluster with node is allowed enable access endpoint.
+                      only cluster with node is allowed enable access endpoint. You
+                      may open it through `tencentcloud_kubernetes_cluster_endpoint`.
                     type: boolean
+                  clusterIntranetDomain:
+                    description: Domain name for cluster Kube-apiserver intranet access.
+                      Be careful if you modify value of this parameter, the pgw_endpoint
+                      value may be changed automatically too.
+                    type: string
                   clusterIntranetSubnetId:
                     description: Subnet id who can access this independent cluster,
                       this field must and can only set  when `cluster_intranet` is
@@ -216,12 +237,18 @@ spec:
                     description: 'Image type of the cluster os, the available values
                       include: ''GENERAL''. Default is ''GENERAL''.'
                     type: string
+                  clusterSubnetId:
+                    description: 'Subnet ID of the cluster, such as: subnet-b3p7d7q5.'
+                    type: string
                   clusterVersion:
-                    description: Version of the cluster, Default is '1.10.5'.
+                    description: Version of the cluster. Use `tencentcloud_kubernetes_available_cluster_versions`
+                      to get the upgradable cluster version.
                     type: string
                   containerRuntime:
                     description: 'Runtime type of the cluster, the available values
-                      include: ''docker'' and ''containerd''. Default is ''docker''.'
+                      include: ''docker'' and ''containerd''.The Kubernetes v1.24
+                      has removed dockershim, so please use containerd in v1.24 or
+                      higher.Default is ''docker''.'
                     type: string
                   deletionProtection:
                     description: Indicates whether cluster deletion protection is
@@ -306,8 +333,9 @@ spec:
                           description: Add-on name.
                           type: string
                         param:
-                          description: Description of the add-on resource object in
-                            JSON string format.
+                          description: Parameter of the add-on resource object in
+                            JSON string format, please check the example at the top
+                            of page for reference.
                           type: string
                       required:
                       - name
@@ -457,6 +485,9 @@ spec:
                             Each segment allows letters (with no limitation on capitalization),
                             numbers and dashes (-).'
                           type: string
+                        hpcClusterId:
+                          description: Id of cvm hpc cluster.
+                          type: string
                         imgId:
                           description: The valid image id, format of img-xxx.
                           type: string
@@ -557,7 +588,8 @@ spec:
                     description: Mount target. Default is not mounting.
                     type: string
                   networkType:
-                    description: Cluster network type, GR or VPC-CNI. Default is GR.
+                    description: 'Cluster network type, the available values include:
+                      ''GR'' and ''VPC-CNI'' and ''CiliumOverlay''. Default is GR.'
                     type: string
                   nodeNameType:
                     description: 'Node name type of Cluster, the available values
@@ -798,6 +830,9 @@ spec:
                             dots are allowed. There is a segment between the dots.
                             Each segment allows letters (with no limitation on capitalization),
                             numbers and dashes (-).'
+                          type: string
+                        hpcClusterId:
+                          description: Id of cvm hpc cluster.
                           type: string
                         imgId:
                           description: The valid image id, format of img-xxx.

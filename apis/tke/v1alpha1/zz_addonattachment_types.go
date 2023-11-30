@@ -50,6 +50,14 @@ type AddonAttachmentParameters struct {
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Raw Values. Conflict with `request_body`. Required with `raw_values_type`.
+	// +kubebuilder:validation:Optional
+	RawValues *string `json:"rawValues,omitempty" tf:"raw_values,omitempty"`
+
+	// The type of raw Values. Required with `raw_values`.
+	// +kubebuilder:validation:Optional
+	RawValuesType *string `json:"rawValuesType,omitempty" tf:"raw_values_type,omitempty"`
+
 	// Serialized json string as request body of addon spec. If set, will ignore `version` and `values`.
 	// +kubebuilder:validation:Optional
 	RequestBody *string `json:"requestBody,omitempty" tf:"request_body,omitempty"`

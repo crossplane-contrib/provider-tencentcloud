@@ -40,8 +40,8 @@ type ApplicationParameters struct {
 	CodingLanguage *string `json:"codingLanguage" tf:"coding_language,omitempty"`
 
 	// application description.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+	// +kubebuilder:validation:Required
+	Description *string `json:"description" tf:"description,omitempty"`
 
 	// tcr instance id.
 	// +kubebuilder:validation:Optional
@@ -58,6 +58,10 @@ type ApplicationParameters struct {
 	// repo type, 0: tcr personal, 1: tcr enterprise, 2: public repository, 3: tcr hosted by tem, 4: demo image.
 	// +kubebuilder:validation:Optional
 	RepoType *float64 `json:"repoType,omitempty" tf:"repo_type,omitempty"`
+
+	// application tag list.
+	// +kubebuilder:validation:Optional
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// create image repo or not.
 	// +kubebuilder:validation:Optional

@@ -63,10 +63,22 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  autoCreateClientId:
+                    description: Creating ClientId of the identity provider.
+                    items:
+                      type: string
+                    type: array
                   autoCreateDiscoveryAnonymousAuth:
                     description: If set to `true`, the rbac rule will be created automatically
                       which allow anonymous user to access '/.well-known/openid-configuration'
                       and '/openid/v1/jwks'.
+                    type: boolean
+                  autoCreateOidcConfig:
+                    description: Creating an identity provider.
+                    type: boolean
+                  autoInstallPodIdentityWebhookAddon:
+                    description: Creating the PodIdentityWebhook component. if `auto_create_oidc_config`
+                      is true, this field must set true.
                     type: boolean
                   clusterId:
                     description: ID of clusters.
@@ -145,13 +157,18 @@ spec:
                         type: object
                     type: object
                   issuer:
-                    description: Specify service-account-issuer.
+                    description: Specify service-account-issuer. If use_tke_default
+                      is set to `true`, please do not set this field.
                     type: string
                   jwksUri:
-                    description: Specify service-account-jwks-uri.
+                    description: Specify service-account-jwks-uri. If use_tke_default
+                      is set to `true`, please do not set this field.
                     type: string
-                required:
-                - issuer
+                  useTkeDefault:
+                    description: If set to `true`, the issuer and jwks_uri will be
+                      generated automatically by tke, please do not set issuer and
+                      jwks_uri.
+                    type: boolean
                 type: object
               providerConfigRef:
                 default:
@@ -330,6 +347,10 @@ spec:
               atProvider:
                 properties:
                   id:
+                    type: string
+                  tkeDefaultIssuer:
+                    type: string
+                  tkeDefaultJwksUri:
                     type: string
                 type: object
               conditions:

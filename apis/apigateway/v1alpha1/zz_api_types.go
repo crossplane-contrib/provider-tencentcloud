@@ -35,6 +35,10 @@ type ApiObservation struct {
 
 type ApiParameters struct {
 
+	// When `auth_type` is OAUTH, this field is valid, NORMAL: Business API, OAUTH: Authorization API.
+	// +kubebuilder:validation:Optional
+	APIBusinessType *string `json:"apiBusinessType,omitempty" tf:"api_business_type,omitempty"`
+
 	// Custom API description.
 	// +kubebuilder:validation:Optional
 	APIDesc *string `json:"apiDesc,omitempty" tf:"api_desc,omitempty"`
@@ -43,13 +47,65 @@ type ApiParameters struct {
 	// +kubebuilder:validation:Required
 	APIName *string `json:"apiName" tf:"api_name,omitempty"`
 
-	// API authentication type. Valid values: `SECRET` (key pair authentication),`NONE` (no authentication). Default value: `NONE`.
+	// API type, supports NORMAL (regular API) and TSF (microservice API), defaults to NORMAL.
+	// +kubebuilder:validation:Optional
+	APIType *string `json:"apiType,omitempty" tf:"api_type,omitempty"`
+
+	// The unique ID of the associated authorization API takes effect when AuthType is OAUTH and ApiBusinessType is NORMAL. The unique ID of the oauth2.0 authorized API that identifies the business API binding.
+	// +kubebuilder:validation:Optional
+	AuthRelationAPIID *string `json:"authRelationApiId,omitempty" tf:"auth_relation_api_id,omitempty"`
+
+	// API authentication type. Support SECRET (Key Pair Authentication), NONE (Authentication Exemption), OAUTH, APP (Application Authentication). The default is NONE.
 	// +kubebuilder:validation:Optional
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
+
+	// Constant parameter.
+	// +kubebuilder:validation:Optional
+	ConstantParameters []ConstantParametersParameters `json:"constantParameters,omitempty" tf:"constant_parameters,omitempty"`
+
+	// EIAM application ID.
+	// +kubebuilder:validation:Optional
+	EiamAppID *string `json:"eiamAppId,omitempty" tf:"eiam_app_id,omitempty"`
+
+	// EIAM application type.
+	// +kubebuilder:validation:Optional
+	EiamAppType *string `json:"eiamAppType,omitempty" tf:"eiam_app_type,omitempty"`
+
+	// The EIAM application authentication type supports AuthenticationOnly, Authentication, and Authorization.
+	// +kubebuilder:validation:Optional
+	EiamAuthType *string `json:"eiamAuthType,omitempty" tf:"eiam_auth_type,omitempty"`
 
 	// Whether to enable CORS. Default value: `true`.
 	// +kubebuilder:validation:Optional
 	EnableCors *bool `json:"enableCors,omitempty" tf:"enable_cors,omitempty"`
+
+	// Event bus ID.
+	// +kubebuilder:validation:Optional
+	EventBusID *string `json:"eventBusId,omitempty" tf:"event_bus_id,omitempty"`
+
+	// Whether to enable Base64 encoding will only take effect when the backend is scf.
+	// +kubebuilder:validation:Optional
+	IsBase64Encoded *bool `json:"isBase64Encoded,omitempty" tf:"is_base64_encoded,omitempty"`
+
+	// Charge after starting debugging. (Cloud Market Reserved Fields).
+	// +kubebuilder:validation:Optional
+	IsDebugAfterCharge *bool `json:"isDebugAfterCharge,omitempty" tf:"is_debug_after_charge,omitempty"`
+
+	// Do you want to delete the custom response configuration error code? If it is not passed or False is passed, it will not be deleted. If True is passed, all custom response configuration error codes for this API will be deleted.
+	// +kubebuilder:validation:Optional
+	IsDeleteResponseErrorCodes *bool `json:"isDeleteResponseErrorCodes,omitempty" tf:"is_delete_response_error_codes,omitempty"`
+
+	// API bound microservice list.
+	// +kubebuilder:validation:Optional
+	MicroServices []MicroServicesParameters `json:"microServices,omitempty" tf:"micro_services,omitempty"`
+
+	// OAuth configuration. Effective when AuthType is OAUTH.
+	// +kubebuilder:validation:Optional
+	OauthConfig []OauthConfigParameters `json:"oauthConfig,omitempty" tf:"oauth_config,omitempty"`
+
+	// Owner of resources.
+	// +kubebuilder:validation:Optional
+	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
 	// API QPS value. Enter a positive number to limit the API query rate per second `QPS`.
 	// +kubebuilder:validation:Optional
@@ -91,6 +147,10 @@ type ApiParameters struct {
 	// +kubebuilder:validation:Optional
 	ResponseType *string `json:"responseType,omitempty" tf:"response_type,omitempty"`
 
+	// API backend COS configuration. If ServiceType is COS, then this parameter must be passed.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	ServiceConfigCosConfig []ServiceConfigCosConfigParameters `json:"serviceConfigCosConfig,omitempty" tf:"service_config_cos_config,omitempty"`
+
 	// API backend service request method, such as `GET`. If `service_config_type` is `HTTP`, this parameter will be required. The frontend `request_config_method` and backend method `service_config_method` can be different.
 	// +kubebuilder:validation:Optional
 	ServiceConfigMethod *string `json:"serviceConfigMethod,omitempty" tf:"service_config_method,omitempty"`
@@ -103,7 +163,7 @@ type ApiParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceConfigPath *string `json:"serviceConfigPath,omitempty" tf:"service_config_path,omitempty"`
 
-	// Backend type. This parameter takes effect when VPC is enabled. Currently, only `clb` is supported.
+	// Backend type. Effective when enabling vpc, currently supported types are clb, cvm, and upstream.
 	// +kubebuilder:validation:Optional
 	ServiceConfigProduct *string `json:"serviceConfigProduct,omitempty" tf:"service_config_product,omitempty"`
 
@@ -119,23 +179,71 @@ type ApiParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceConfigScfFunctionQualifier *string `json:"serviceConfigScfFunctionQualifier,omitempty" tf:"service_config_scf_function_qualifier,omitempty"`
 
+	// Scf function type. Effective when the backend type is SCF. Support Event Triggering (EVENT) and HTTP Direct Cloud Function (HTTP).
+	// +kubebuilder:validation:Optional
+	ServiceConfigScfFunctionType *string `json:"serviceConfigScfFunctionType,omitempty" tf:"service_config_scf_function_type,omitempty"`
+
+	// Whether to enable response integration. Effective when the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigScfIsIntegratedResponse *bool `json:"serviceConfigScfIsIntegratedResponse,omitempty" tf:"service_config_scf_is_integrated_response,omitempty"`
+
 	// API backend service timeout period in seconds. Default value: `5`.
 	// +kubebuilder:validation:Optional
 	ServiceConfigTimeout *float64 `json:"serviceConfigTimeout,omitempty" tf:"service_config_timeout,omitempty"`
 
-	// API backend service type. Valid values: `WEBSOCKET`, `HTTP`, `SCF`, `MOCK`. Default value: `HTTP`.
+	// The backend service type of the API. Supports HTTP, MOCK, TSF, SCF, WEBSOCKET, COS, TARGET (internal testing).
 	// +kubebuilder:validation:Optional
 	ServiceConfigType *string `json:"serviceConfigType,omitempty" tf:"service_config_type,omitempty"`
 
-	// API backend service url. This parameter is required when `service_config_type` is `HTTP`.
+	// The backend service URL of the API. If the ServiceType is HTTP, this parameter must be passed.
 	// +kubebuilder:validation:Optional
 	ServiceConfigURL *string `json:"serviceConfigUrl,omitempty" tf:"service_config_url,omitempty"`
+
+	// Only required when binding to VPC channelsNote: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	ServiceConfigUpstreamID *string `json:"serviceConfigUpstreamId,omitempty" tf:"service_config_upstream_id,omitempty"`
 
 	// Unique VPC ID.
 	// +kubebuilder:validation:Optional
 	ServiceConfigVPCID *string `json:"serviceConfigVpcId,omitempty" tf:"service_config_vpc_id,omitempty"`
 
-	// Which service this API belongs. Refer to resource `tencentcloud_api_gateway_service`.
+	// Scf websocket cleaning function. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketCleanupFunctionName *string `json:"serviceConfigWebsocketCleanupFunctionName,omitempty" tf:"service_config_websocket_cleanup_function_name,omitempty"`
+
+	// Scf websocket cleans up the function namespace. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketCleanupFunctionNamespace *string `json:"serviceConfigWebsocketCleanupFunctionNamespace,omitempty" tf:"service_config_websocket_cleanup_function_namespace,omitempty"`
+
+	// Scf websocket cleaning function version. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketCleanupFunctionQualifier *string `json:"serviceConfigWebsocketCleanupFunctionQualifier,omitempty" tf:"service_config_websocket_cleanup_function_qualifier,omitempty"`
+
+	// Scf websocket registration function. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketRegisterFunctionName *string `json:"serviceConfigWebsocketRegisterFunctionName,omitempty" tf:"service_config_websocket_register_function_name,omitempty"`
+
+	// Scf websocket registers function namespaces. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketRegisterFunctionNamespace *string `json:"serviceConfigWebsocketRegisterFunctionNamespace,omitempty" tf:"service_config_websocket_register_function_namespace,omitempty"`
+
+	// Scf websocket transfer function version. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketRegisterFunctionQualifier *string `json:"serviceConfigWebsocketRegisterFunctionQualifier,omitempty" tf:"service_config_websocket_register_function_qualifier,omitempty"`
+
+	// Scf websocket transfer function. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketTransportFunctionName *string `json:"serviceConfigWebsocketTransportFunctionName,omitempty" tf:"service_config_websocket_transport_function_name,omitempty"`
+
+	// Scf websocket transfer function namespace. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketTransportFunctionNamespace *string `json:"serviceConfigWebsocketTransportFunctionNamespace,omitempty" tf:"service_config_websocket_transport_function_namespace,omitempty"`
+
+	// Scf websocket transfer function version. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
+	// +kubebuilder:validation:Optional
+	ServiceConfigWebsocketTransportFunctionQualifier *string `json:"serviceConfigWebsocketTransportFunctionQualifier,omitempty" tf:"service_config_websocket_transport_function_qualifier,omitempty"`
+
+	// The unique ID of the service where the API is located. Refer to resource `tencentcloud_api_gateway_service`.
 	// +crossplane:generate:reference:type=Service
 	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
@@ -146,9 +254,103 @@ type ApiParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
 
+	// The backend service parameters of the API.
+	// +kubebuilder:validation:Optional
+	ServiceParameters []ServiceParametersParameters `json:"serviceParameters,omitempty" tf:"service_parameters,omitempty"`
+
+	// Health check configuration for microservices.
+	// +kubebuilder:validation:Optional
+	ServiceTsfHealthCheckConf []ServiceTsfHealthCheckConfParameters `json:"serviceTsfHealthCheckConf,omitempty" tf:"service_tsf_health_check_conf,omitempty"`
+
+	// Load balancing configuration for microservices.
+	// +kubebuilder:validation:Optional
+	ServiceTsfLoadBalanceConf []ServiceTsfLoadBalanceConfParameters `json:"serviceTsfLoadBalanceConf,omitempty" tf:"service_tsf_load_balance_conf,omitempty"`
+
+	// Tsf serverless namespace ID. (In internal testing).
+	// +kubebuilder:validation:Optional
+	TargetNamespaceID *string `json:"targetNamespaceId,omitempty" tf:"target_namespace_id,omitempty"`
+
+	// Target type backend resource information. (Internal testing stage).
+	// +kubebuilder:validation:Optional
+	TargetServices []TargetServicesParameters `json:"targetServices,omitempty" tf:"target_services,omitempty"`
+
+	// Target health check configuration. (Internal testing stage).
+	// +kubebuilder:validation:Optional
+	TargetServicesHealthCheckConf []TargetServicesHealthCheckConfParameters `json:"targetServicesHealthCheckConf,omitempty" tf:"target_services_health_check_conf,omitempty"`
+
+	// Target type load balancing configuration. (Internal testing stage).
+	// +kubebuilder:validation:Optional
+	TargetServicesLoadBalanceConf *float64 `json:"targetServicesLoadBalanceConf,omitempty" tf:"target_services_load_balance_conf,omitempty"`
+
 	// API QPS value. Enter a positive number to limit the API query rate per second `QPS`.
 	// +kubebuilder:validation:Optional
 	TestLimit *float64 `json:"testLimit,omitempty" tf:"test_limit,omitempty"`
+
+	// The effective time of the EIAM application token, measured in seconds, defaults to 7200 seconds.
+	// +kubebuilder:validation:Optional
+	TokenTimeout *float64 `json:"tokenTimeout,omitempty" tf:"token_timeout,omitempty"`
+
+	// User type.
+	// +kubebuilder:validation:Optional
+	UserType *string `json:"userType,omitempty" tf:"user_type,omitempty"`
+}
+
+type ConstantParametersObservation struct {
+}
+
+type ConstantParametersParameters struct {
+
+	// Default value for constant parameters. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	DefaultValue *string `json:"defaultValue,omitempty" tf:"default_value,omitempty"`
+
+	// Constant parameter description. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Desc *string `json:"desc,omitempty" tf:"desc,omitempty"`
+
+	// Constant parameter name. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Constant parameter position. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Position *string `json:"position,omitempty" tf:"position,omitempty"`
+}
+
+type MicroServicesObservation struct {
+}
+
+type MicroServicesParameters struct {
+
+	// Micro service cluster.
+	// +kubebuilder:validation:Required
+	ClusterID *string `json:"clusterId" tf:"cluster_id,omitempty"`
+
+	// Microservice name.
+	// +kubebuilder:validation:Required
+	MicroServiceName *string `json:"microServiceName" tf:"micro_service_name,omitempty"`
+
+	// Microservice namespace.
+	// +kubebuilder:validation:Required
+	NamespaceID *string `json:"namespaceId" tf:"namespace_id,omitempty"`
+}
+
+type OauthConfigObservation struct {
+}
+
+type OauthConfigParameters struct {
+
+	// Redirect address, used to guide users in login operations.
+	// +kubebuilder:validation:Optional
+	LoginRedirectURL *string `json:"loginRedirectUrl,omitempty" tf:"login_redirect_url,omitempty"`
+
+	// Public key, used to verify user tokens.
+	// +kubebuilder:validation:Required
+	PublicKey *string `json:"publicKey" tf:"public_key,omitempty"`
+
+	// Token passes the position.
+	// +kubebuilder:validation:Required
+	TokenLocation *string `json:"tokenLocation" tf:"token_location,omitempty"`
 }
 
 type RequestParametersObservation struct {
@@ -205,6 +407,154 @@ type ResponseErrorCodesParameters struct {
 	// Whether to enable error code conversion. Default value: `false`.
 	// +kubebuilder:validation:Optional
 	NeedConvert *bool `json:"needConvert,omitempty" tf:"need_convert,omitempty"`
+}
+
+type ServiceConfigCosConfigObservation struct {
+}
+
+type ServiceConfigCosConfigParameters struct {
+
+	// The API calls the backend COS method, and the optional values for the front-end request method and Action are:GET: GetObjectPUT: PutObjectPOST: PostObject, AppendObjectHEAD: HeadObjectDELETE: DeleteObject.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Required
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// The API calls the signature switch of the backend COS, which defaults to false.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Authorization *bool `json:"authorization,omitempty" tf:"authorization,omitempty"`
+
+	// The bucket name of the API backend COS.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Required
+	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
+
+	// Path matching mode for API backend COS, optional values:BackEndPath: Backend path matchingFullPath: Full Path MatchingThe default value is: BackEndPathNote: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	PathMatchMode *string `json:"pathMatchMode,omitempty" tf:"path_match_mode,omitempty"`
+}
+
+type ServiceParametersObservation struct {
+}
+
+type ServiceParametersParameters struct {
+
+	// The default value for the backend service parameters of the API. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	DefaultValue *string `json:"defaultValue,omitempty" tf:"default_value,omitempty"`
+
+	// The backend service parameter name of the API. This parameter is only used when ServiceType is HTTP. The front and rear parameter names can be different.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The backend service parameter location of the API, such as head. This parameter is only used when ServiceType is HTTP. The parameter positions at the front and rear ends can be configured differently.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Position *string `json:"position,omitempty" tf:"position,omitempty"`
+
+	// Remarks on the backend service parameters of the API. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	RelevantRequestParameterDesc *string `json:"relevantRequestParameterDesc,omitempty" tf:"relevant_request_parameter_desc,omitempty"`
+
+	// The name of the front-end parameter corresponding to the backend service parameter of the API. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	RelevantRequestParameterName *string `json:"relevantRequestParameterName,omitempty" tf:"relevant_request_parameter_name,omitempty"`
+
+	// The location of the front-end parameters corresponding to the backend service parameters of the API, such as head. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	RelevantRequestParameterPosition *string `json:"relevantRequestParameterPosition,omitempty" tf:"relevant_request_parameter_position,omitempty"`
+
+	// The backend service parameter type of the API. This parameter is only used when ServiceType is HTTP.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	RelevantRequestParameterType *string `json:"relevantRequestParameterType,omitempty" tf:"relevant_request_parameter_type,omitempty"`
+}
+
+type ServiceTsfHealthCheckConfObservation struct {
+}
+
+type ServiceTsfHealthCheckConfParameters struct {
+
+	// Threshold percentage.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	ErrorThresholdPercentage *float64 `json:"errorThresholdPercentage,omitempty" tf:"error_threshold_percentage,omitempty"`
+
+	// Whether to initiate a health check.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	IsHealthCheck *bool `json:"isHealthCheck,omitempty" tf:"is_health_check,omitempty"`
+
+	// Health check threshold.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	RequestVolumeThreshold *float64 `json:"requestVolumeThreshold,omitempty" tf:"request_volume_threshold,omitempty"`
+
+	// Window size.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	SleepWindowInMilliseconds *float64 `json:"sleepWindowInMilliseconds,omitempty" tf:"sleep_window_in_milliseconds,omitempty"`
+}
+
+type ServiceTsfLoadBalanceConfObservation struct {
+}
+
+type ServiceTsfLoadBalanceConfParameters struct {
+
+	// Is load balancing enabled.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	IsLoadBalance *bool `json:"isLoadBalance,omitempty" tf:"is_load_balance,omitempty"`
+
+	// Load balancing method.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	Method *string `json:"method,omitempty" tf:"method,omitempty"`
+
+	// Whether to enable session persistence.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	SessionStickRequired *bool `json:"sessionStickRequired,omitempty" tf:"session_stick_required,omitempty"`
+
+	// Session hold timeout.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	SessionStickTimeout *float64 `json:"sessionStickTimeout,omitempty" tf:"session_stick_timeout,omitempty"`
+}
+
+type TargetServicesHealthCheckConfObservation struct {
+}
+
+type TargetServicesHealthCheckConfParameters struct {
+
+	// Threshold percentage.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	ErrorThresholdPercentage *float64 `json:"errorThresholdPercentage,omitempty" tf:"error_threshold_percentage,omitempty"`
+
+	// Whether to initiate a health check.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	IsHealthCheck *bool `json:"isHealthCheck,omitempty" tf:"is_health_check,omitempty"`
+
+	// Health check threshold.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	RequestVolumeThreshold *float64 `json:"requestVolumeThreshold,omitempty" tf:"request_volume_threshold,omitempty"`
+
+	// Window size.Note: This field may return null, indicating that a valid value cannot be obtained.
+	// +kubebuilder:validation:Optional
+	SleepWindowInMilliseconds *float64 `json:"sleepWindowInMilliseconds,omitempty" tf:"sleep_window_in_milliseconds,omitempty"`
+}
+
+type TargetServicesObservation struct {
+}
+
+type TargetServicesParameters struct {
+
+	// docker ip.
+	// +kubebuilder:validation:Optional
+	DockerIP *string `json:"dockerIp,omitempty" tf:"docker_ip,omitempty"`
+
+	// Host IP of the CVM.
+	// +kubebuilder:validation:Required
+	HostIP *string `json:"hostIp" tf:"host_ip,omitempty"`
+
+	// vm ip.
+	// +kubebuilder:validation:Required
+	VMIP *string `json:"vmIp" tf:"vm_ip,omitempty"`
+
+	// vm port.
+	// +kubebuilder:validation:Required
+	VMPort *float64 `json:"vmPort" tf:"vm_port,omitempty"`
+
+	// vpc id.
+	// +kubebuilder:validation:Required
+	VPCID *string `json:"vpcId" tf:"vpc_id,omitempty"`
 }
 
 // ApiSpec defines the desired state of Api

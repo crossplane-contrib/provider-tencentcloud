@@ -28,6 +28,8 @@ import (
 type FileSystemObservation struct {
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	FsID *string `json:"fsId,omitempty" tf:"fs_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -48,6 +50,18 @@ type FileSystemParameters struct {
 	// +kubebuilder:validation:Required
 	AvailabilityZone *string `json:"availabilityZone" tf:"availability_zone,omitempty"`
 
+	// File system capacity, in GiB (required for the Turbo series). For Standard Turbo, the minimum purchase required is 40,960 GiB (40 TiB) and the expansion increment is 20,480 GiB (20 TiB). For High-Performance Turbo, the minimum purchase required is 20,480 GiB (20 TiB) and the expansion increment is 10,240 GiB (10 TiB).
+	// +kubebuilder:validation:Optional
+	Capacity *float64 `json:"capacity,omitempty" tf:"capacity,omitempty"`
+
+	// CCN instance ID (required if the network type is CCN).
+	// +kubebuilder:validation:Optional
+	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
+
+	// CCN IP range used by the CFS (required if the network type is CCN), which cannot conflict with other IP ranges bound in CCN.
+	// +kubebuilder:validation:Optional
+	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+
 	// IP of mount point.
 	// +kubebuilder:validation:Optional
 	MountIP *string `json:"mountIp,omitempty" tf:"mount_ip,omitempty"`
@@ -56,11 +70,15 @@ type FileSystemParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// File service protocol. Valid values are `NFS` and `CIFS`. and the default is `NFS`.
+	// Network type, Default `VPC`. Valid values: `VPC` and `CCN`. Select `VPC` for a Standard or High-Performance file system, and `CCN` for a Standard Turbo or High-Performance Turbo one.
+	// +kubebuilder:validation:Optional
+	NetInterface *string `json:"netInterface,omitempty" tf:"net_interface,omitempty"`
+
+	// File system protocol. Valid values: `NFS`, `CIFS`, `TURBO`. If this parameter is left empty, `NFS` is used by default. For the Turbo series, you must set this parameter to `TURBO`.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// File service StorageType. Valid values are `SD` and `HP`. and the default is `SD`.
+	// Storage type of the file system. Valid values: `SD` (Standard), `HP` (High-Performance), `TB` (Standard Turbo), and `TP` (High-Performance Turbo). Default value: `SD`.
 	// +kubebuilder:validation:Optional
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 

@@ -87,6 +87,10 @@ spec:
                       - vpcName
                       type: object
                     type: array
+                  cnameSpeedupStatus:
+                    description: 'CNAME acceleration: ENABLED, DISABLED, Default value
+                      is ENABLED.'
+                    type: string
                   dnsForwardStatus:
                     description: 'Whether to enable subdomain recursive DNS. Valid
                       values: ENABLED, DISABLED. Default value: DISABLED.'

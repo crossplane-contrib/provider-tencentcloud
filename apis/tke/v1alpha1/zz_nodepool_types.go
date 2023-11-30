@@ -30,7 +30,7 @@ type AutoScalingConfigDataDiskObservation struct {
 
 type AutoScalingConfigDataDiskParameters struct {
 
-	// Indicates whether the disk remove after instance terminated.
+	// Indicates whether the disk remove after instance terminated. Default is `false`.
 	// +kubebuilder:validation:Optional
 	DeleteWithInstance *bool `json:"deleteWithInstance,omitempty" tf:"delete_with_instance,omitempty"`
 
@@ -112,7 +112,7 @@ type AutoScalingConfigParameters struct {
 	// +kubebuilder:validation:Required
 	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
 
-	// Charge types for network traffic. Valid value: `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
+	// Charge types for network traffic. Valid value: `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
 	// +kubebuilder:validation:Optional
 	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
 
@@ -124,6 +124,10 @@ type AutoScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
+	// Ordered security groups to which a CVM instance belongs.
+	// +kubebuilder:validation:Optional
+	OrderlySecurityGroupIds []*string `json:"orderlySecurityGroupIds,omitempty" tf:"orderly_security_group_ids,omitempty"`
+
 	// Password to access.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
@@ -132,7 +136,7 @@ type AutoScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
 
-	// Security groups to which a CVM instance belongs.
+	// (**Deprecated**) The order of elements in this field cannot be guaranteed. Use `orderly_security_group_ids` instead. Security groups to which a CVM instance belongs.
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -183,6 +187,32 @@ type NodeConfigDataDiskParameters struct {
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 }
 
+type NodeConfigGpuArgsObservation struct {
+}
+
+type NodeConfigGpuArgsParameters struct {
+
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +kubebuilder:validation:Optional
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +kubebuilder:validation:Optional
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// +kubebuilder:validation:Optional
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
+}
+
 type NodeConfigObservation struct {
 }
 
@@ -203,6 +233,10 @@ type NodeConfigParameters struct {
 	// Custom parameter information related to the node. This is a white-list parameter.
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
+
+	// GPU driver parameters.
+	// +kubebuilder:validation:Optional
+	GpuArgs []NodeConfigGpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
 	// Indicate to schedule the adding node or not. Default is true.
 	// +kubebuilder:validation:Optional
@@ -251,7 +285,11 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	DeleteKeepInstance *bool `json:"deleteKeepInstance,omitempty" tf:"delete_keep_instance,omitempty"`
 
-	// Desired capacity ot the node. If `enable_auto_scale` is set `true`, this will be a computed parameter.
+	// Indicates whether the node pool deletion protection is enabled.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Desired capacity of the node. If `enable_auto_scale` is set `true`, this will be a computed parameter.
 	// +kubebuilder:validation:Optional
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
@@ -283,7 +321,7 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeConfig []NodeConfigParameters `json:"nodeConfig,omitempty" tf:"node_config,omitempty"`
 
-	// Operating system of the cluster, the available values include: `tlinux2.4x86_64`, `ubuntu18.04.1x86_64`, `ubuntu16.04.1 LTSx86_64`, `centos7.6.0_x64` and `centos7.2x86_64`. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
 	// +kubebuilder:validation:Optional
 	NodeOs *string `json:"nodeOs,omitempty" tf:"node_os,omitempty"`
 

@@ -129,6 +129,10 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	MinCPU *float64 `json:"minCpu,omitempty" tf:"min_cpu,omitempty"`
 
+	// Recycling time of the old address, must be filled in when modifying the vpcRecycling time of the old address, must be filled in when modifying the vpc.
+	// +kubebuilder:validation:Optional
+	OldIPReserveHours *float64 `json:"oldIpReserveHours,omitempty" tf:"old_ip_reserve_hours,omitempty"`
+
 	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
 	// +kubebuilder:validation:Optional
 	ParamItems []ParamItemsParameters `json:"paramItems,omitempty" tf:"param_items,omitempty"`
@@ -165,9 +169,13 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ServerlessStatusFlag *string `json:"serverlessStatusFlag,omitempty" tf:"serverless_status_flag,omitempty"`
 
-	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, when charge_type is `POSTPAID_BY_HOUR`, this argument is unnecessary.
+	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is `order and pay`. when charge_type is `POSTPAID_BY_HOUR`, this argument is unnecessary.
 	// +kubebuilder:validation:Optional
 	StorageLimit *float64 `json:"storageLimit,omitempty" tf:"storage_limit,omitempty"`
+
+	// Cluster storage billing mode, pay-as-you-go: `0`-yearly/monthly: `1`-The default is pay-as-you-go. When the DbType is MYSQL, when the cluster computing billing mode is post-paid (including DbMode is SERVERLESS), the storage billing mode can only be billing by volume; rollback and cloning do not support yearly subscriptions monthly storage.
+	// +kubebuilder:validation:Optional
+	StoragePayMode *float64 `json:"storagePayMode,omitempty" tf:"storage_pay_mode,omitempty"`
 
 	// ID of the subnet within this VPC.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet

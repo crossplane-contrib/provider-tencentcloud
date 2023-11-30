@@ -143,6 +143,11 @@ func (in *DcxParameters) DeepCopyInto(out *DcxParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DcOwnerAccount != nil {
+		in, out := &in.DcOwnerAccount, &out.DcOwnerAccount
+		*out = new(string)
+		**out = **in
+	}
 	if in.DcgID != nil {
 		in, out := &in.DcgID, &out.DcgID
 		*out = new(string)

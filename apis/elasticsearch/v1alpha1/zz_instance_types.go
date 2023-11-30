@@ -55,11 +55,11 @@ type InstanceObservation struct {
 
 type InstanceParameters struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted.
+	// Availability zone. When create multi-az es, this parameter must be omitted or `-`.
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`.
+	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
 	// +kubebuilder:validation:Optional
 	BasicSecurityType *float64 `json:"basicSecurityType,omitempty" tf:"basic_security_type,omitempty"`
 
@@ -95,7 +95,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Required
 	NodeInfoList []NodeInfoListParameters `json:"nodeInfoList" tf:"node_info_list,omitempty"`
 
-	// Password to an instance.
+	// Password to an instance, the password needs to be 8 to 16 characters, including at least two items ([a-z,A-Z], [0-9] and [-!@#$%&^*+=_:;,.?] special symbols.
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
@@ -103,7 +103,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	RenewFlag *string `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -129,7 +129,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
 
-	// Version of the instance. Valid values are `5.6.4`, `6.4.3`, `6.8.2` and `7.5.1`.
+	// Version of the instance. Valid values are `5.6.4`, `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
 	// +kubebuilder:validation:Required
 	Version *string `json:"version" tf:"version,omitempty"`
 
@@ -161,7 +161,7 @@ type NodeInfoListParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 

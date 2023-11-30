@@ -26,8 +26,6 @@ import (
 )
 
 type BackupPolicyObservation struct {
-	BinlogPeriod *float64 `json:"binlogPeriod,omitempty" tf:"binlog_period,omitempty"`
-
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -41,6 +39,18 @@ type BackupPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	BackupTime *string `json:"backupTime,omitempty" tf:"backup_time,omitempty"`
 
+	// Binlog retention time, in days. The minimum value is 7 days and the maximum value is 1830 days. This value cannot be set greater than the backup file retention time.
+	// +kubebuilder:validation:Optional
+	BinlogPeriod *float64 `json:"binlogPeriod,omitempty" tf:"binlog_period,omitempty"`
+
+	// The standard starting number of days for log backup storage. The log backup will be converted when it reaches the standard starting number of days for storage. The minimum is 30 days and must not be greater than the number of days for log backup retention.
+	// +kubebuilder:validation:Optional
+	BinlogStandbyDays *float64 `json:"binlogStandbyDays,omitempty" tf:"binlog_standby_days,omitempty"`
+
+	// Whether to enable the log backup standard storage policy, `off` - close, `on` - open, the default is off.
+	// +kubebuilder:validation:Optional
+	EnableBinlogStandby *string `json:"enableBinlogStandby,omitempty" tf:"enable_binlog_standby,omitempty"`
+
 	// Instance ID to which policies will be applied.
 	// +crossplane:generate:reference:type=Instance
 	// +kubebuilder:validation:Optional
@@ -52,7 +62,7 @@ type BackupPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	MySQLIDSelector *v1.Selector `json:"mySqlidSelector,omitempty" tf:"-"`
 
-	// Instance backup retention days. Valid value ranges: [7~730]. And default value is `7`.
+	// The retention time of backup files, in days. The minimum value is 7 days and the maximum value is 1830 days. And default value is `7`.
 	// +kubebuilder:validation:Optional
 	RetentionPeriod *float64 `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 }

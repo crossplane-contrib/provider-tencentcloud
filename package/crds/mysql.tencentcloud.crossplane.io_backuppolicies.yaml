@@ -73,6 +73,22 @@ spec:
                       The following value can be supported: `02:00-06:00`, `06:00-10:00`,
                       `10:00-14:00`, `14:00-18:00`, `18:00-22:00`, and `22:00-02:00`.'
                     type: string
+                  binlogPeriod:
+                    description: Binlog retention time, in days. The minimum value
+                      is 7 days and the maximum value is 1830 days. This value cannot
+                      be set greater than the backup file retention time.
+                    type: number
+                  binlogStandbyDays:
+                    description: The standard starting number of days for log backup
+                      storage. The log backup will be converted when it reaches the
+                      standard starting number of days for storage. The minimum is
+                      30 days and must not be greater than the number of days for
+                      log backup retention.
+                    type: number
+                  enableBinlogStandby:
+                    description: Whether to enable the log backup standard storage
+                      policy, `off` - close, `on` - open, the default is off.
+                    type: string
                   mySqlidRef:
                     description: A Reference to a named object.
                     properties:
@@ -150,8 +166,9 @@ spec:
                     description: Instance ID to which policies will be applied.
                     type: string
                   retentionPeriod:
-                    description: 'Instance backup retention days. Valid value ranges:
-                      [7~730]. And default value is `7`.'
+                    description: The retention time of backup files, in days. The
+                      minimum value is 7 days and the maximum value is 1830 days.
+                      And default value is `7`.
                     type: number
                 type: object
               providerConfigRef:
@@ -330,8 +347,6 @@ spec:
             properties:
               atProvider:
                 properties:
-                  binlogPeriod:
-                    type: number
                   id:
                     type: string
                 type: object

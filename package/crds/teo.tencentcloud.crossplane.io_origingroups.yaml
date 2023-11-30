@@ -65,10 +65,10 @@ spec:
                 properties:
                   configurationType:
                     description: 'Type of the origin group, this field should be set
-                      when `OriginType` is self, otherwise leave it empty. Valid values:-
+                      when `OriginType` is self, otherwise leave it empty. Valid values:
                       `area`: select an origin by using Geo info of the client IP
-                      and `Area` field in Records.- `weight`: weighted select an origin
-                      by using `Weight` field in Records.- `proto`: config by HTTP
+                      and `Area` field in Records; `weight`: weighted select an origin
+                      by using `Weight` field in Records; `proto`: config by HTTP
                       protocol.'
                     type: string
                   originGroupName:
@@ -79,10 +79,9 @@ spec:
                     items:
                       properties:
                         area:
-                          description: Indicating origin site&#39;s area when `Type`
-                            field is `area`. An empty List indicate the default area.
-                            Valid value:- Asia, Americas, Europe, Africa or Oceania.-
-                            2 characters ISO 3166 area code.
+                          description: Indicating origin sites area when `Type` field
+                            is `area`. An empty List indicate the default area. Valid
+                            value:- Asia, Americas, Europe, Africa or Oceania.
                           items:
                             type: string
                           type: array
@@ -100,8 +99,9 @@ spec:
                           items:
                             properties:
                               name:
-                                description: Parameter Name. Valid values:- AccessKeyId:Access
-                                  Key ID.- SecretAccessKey:Secret Access Key.
+                                description: 'Parameter Name. Valid values: `AccessKeyId`:
+                                  Access Key ID; `SecretAccessKey`: Secret Access
+                                  Key.'
                                 type: string
                               value:
                                 description: Parameter value.
@@ -116,7 +116,7 @@ spec:
                             or a domain.
                           type: string
                         weight:
-                          description: 'Indicating origin site&#39;s weight when `Type`
+                          description: 'Indicating origin sites weight when `Type`
                             field is `weight`. Valid value range: 1-100. Sum of all
                             weights should be 100.'
                           type: number
@@ -126,9 +126,8 @@ spec:
                       type: object
                     type: array
                   originType:
-                    description: 'Type of the origin site. Valid values:- `self`:
-                      self-build website.- `cos`: tencent cos.- `third_party`: third
-                      party cos.'
+                    description: 'Type of the origin site. Valid values: `self`: self-build
+                      website; `cos`: tencent cos; `third_party`: third party cos.'
                     type: string
                   zoneId:
                     description: Site ID.

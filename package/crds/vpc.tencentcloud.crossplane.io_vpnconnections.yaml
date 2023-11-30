@@ -191,8 +191,9 @@ spec:
                     type: string
                   ikeProtoEncryAlgorithm:
                     description: 'Proto encrypt algorithm of the IKE operation specification.
-                      Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-128`, `AES-CBC-256`,
-                      `DES-CBC`. Default value is `3DES-CBC`.'
+                      Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
+                      `DES-CBC`, `SM4`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`,`AES128GCM128`,
+                      `AES192GCM128`, `AES256GCM128`. Default value is `3DES-CBC`.'
                     type: string
                   ikeRemoteAddress:
                     description: Remote address of IKE operation specification, valid
@@ -212,13 +213,14 @@ spec:
                       is 86400 seconds.
                     type: number
                   ikeVersion:
-                    description: Version of the IKE operation specification. Default
-                      value is `IKEV1`.
+                    description: 'Version of the IKE operation specification, values:
+                      `IKEV1`, `IKEV2`. Default value is `IKEV1`.'
                     type: string
                   ipsecEncryptAlgorithm:
                     description: 'Encrypt algorithm of the IPSEC operation specification.
-                      Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-128`, `AES-CBC-256`,
-                      `DES-CBC`. Default value is `3DES-CBC`.'
+                      Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
+                      `DES-CBC`, `SM4`, `NULL`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`.
+                      Default value is `3DES-CBC`.'
                     type: string
                   ipsecIntegrityAlgorithm:
                     description: 'Integrity algorithm of the IPSEC operation specification.

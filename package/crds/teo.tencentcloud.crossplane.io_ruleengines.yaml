@@ -64,7 +64,7 @@ spec:
               forProvider:
                 properties:
                   ruleName:
-                    description: Rule name.
+                    description: The rule name (1 to 255 characters).
                     type: string
                   rules:
                     description: Rule items list.
@@ -183,6 +183,22 @@ spec:
                                   would be triggered if all conditions are true.
                                 items:
                                   properties:
+                                    ignoreCase:
+                                      description: Whether to ignore the case of the
+                                        parameter value, the default value is false.
+                                      type: boolean
+                                    name:
+                                      description: 'The parameter name corresponding
+                                        to the matching type is valid when the Target
+                                        value is the following, and the valid value
+                                        cannot be empty: `query_string` (query string):
+                                        The parameter name of the query string in
+                                        the URL request under the current site, such
+                                        as lang and version in lang=cn&version=1;
+                                        `request_header` (HTTP request header): HTTP
+                                        request header field name, such as Accept-Language
+                                        in Accept-Language:zh-CN,zh;q=0.9.'
+                                      type: string
                                     operator:
                                       description: Condition operator. Valid values
                                         are `equal`, `notequal`.
@@ -209,17 +225,212 @@ spec:
                             - and
                             type: object
                           type: array
+                        subRules:
+                          description: Actions list of the rule. See details in data
+                            source `rule_engine_setting`.
+                          items:
+                            properties:
+                              rules:
+                                description: Rule items list.
+                                items:
+                                  properties:
+                                    actions:
+                                      description: Actions list of the rule. See details
+                                        in data source `rule_engine_setting`.
+                                      items:
+                                        properties:
+                                          codeAction:
+                                            description: Define a code action.
+                                            items:
+                                              properties:
+                                                action:
+                                                  description: Action name.
+                                                  type: string
+                                                parameters:
+                                                  description: Action parameters.
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: Parameter Name.
+                                                        type: string
+                                                      statusCode:
+                                                        description: HTTP status code
+                                                          to use.
+                                                        type: number
+                                                      values:
+                                                        description: Parameter Values.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                    required:
+                                                    - name
+                                                    - statusCode
+                                                    - values
+                                                    type: object
+                                                  type: array
+                                              required:
+                                              - action
+                                              - parameters
+                                              type: object
+                                            type: array
+                                          normalAction:
+                                            description: Define a normal action.
+                                            items:
+                                              properties:
+                                                action:
+                                                  description: Action name.
+                                                  type: string
+                                                parameters:
+                                                  description: Action parameters.
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: Parameter Name.
+                                                        type: string
+                                                      values:
+                                                        description: Parameter Values.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                    required:
+                                                    - name
+                                                    - values
+                                                    type: object
+                                                  type: array
+                                              required:
+                                              - action
+                                              - parameters
+                                              type: object
+                                            type: array
+                                          rewriteAction:
+                                            description: Define a rewrite action.
+                                            items:
+                                              properties:
+                                                action:
+                                                  description: Action name.
+                                                  type: string
+                                                parameters:
+                                                  description: Action parameters.
+                                                  items:
+                                                    properties:
+                                                      action:
+                                                        description: 'Action to take
+                                                          on the HEADER. Valid values:
+                                                          `add`, `del`, `set`.'
+                                                        type: string
+                                                      name:
+                                                        description: Target HEADER
+                                                          name.
+                                                        type: string
+                                                      values:
+                                                        description: Parameter Value.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                    required:
+                                                    - action
+                                                    - name
+                                                    - values
+                                                    type: object
+                                                  type: array
+                                              required:
+                                              - action
+                                              - parameters
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    or:
+                                      description: OR Conditions list of the rule.
+                                        Rule would be triggered if any of the condition
+                                        is true.
+                                      items:
+                                        properties:
+                                          and:
+                                            description: AND Conditions list of the
+                                              rule. Rule would be triggered if all
+                                              conditions are true.
+                                            items:
+                                              properties:
+                                                ignoreCase:
+                                                  description: Whether to ignore the
+                                                    case of the parameter value, the
+                                                    default value is false.
+                                                  type: boolean
+                                                name:
+                                                  description: 'The parameter name
+                                                    corresponding to the matching
+                                                    type is valid when the Target
+                                                    value is the following, and the
+                                                    valid value cannot be empty:-
+                                                    `query_string` (query string):
+                                                    The parameter name of the query
+                                                    string in the URL request under
+                                                    the current site, such as lang
+                                                    and version in lang=cn&version=1;
+                                                    `request_header` (HTTP request
+                                                    header): HTTP request header field
+                                                    name, such as Accept-Language
+                                                    in Accept-Language:zh-CN,zh;q=0.9.'
+                                                  type: string
+                                                operator:
+                                                  description: Condition operator.
+                                                    Valid values are `equal`, `notequal`.
+                                                  type: string
+                                                target:
+                                                  description: 'Condition target.
+                                                    Valid values:- `host`: Host of
+                                                    the URL.- `filename`: filename
+                                                    of the URL.- `extension`: file
+                                                    extension of the URL.- `full_url`:
+                                                    full url.- `url`: path of the
+                                                    URL.'
+                                                  type: string
+                                                values:
+                                                  description: Condition Value.
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                              required:
+                                              - operator
+                                              - target
+                                              - values
+                                              type: object
+                                            type: array
+                                        required:
+                                        - and
+                                        type: object
+                                      type: array
+                                  required:
+                                  - actions
+                                  - or
+                                  type: object
+                                type: array
+                              tags:
+                                description: rule tag list.
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                            - rules
+                            type: object
+                          type: array
                       required:
                       - actions
                       - or
                       type: object
                     type: array
                   status:
-                    description: Status of the rule, valid value can be `enable` or
-                      `disable`.
+                    description: 'Rule status. Values: `enable`: Enabled; `disable`:
+                      Disabled.'
                     type: string
+                  tags:
+                    description: rule tag list.
+                    items:
+                      type: string
+                    type: array
                   zoneId:
-                    description: Site ID.
+                    description: ID of the site.
                     type: string
                   zoneIdRef:
                     description: A Reference to a named object.

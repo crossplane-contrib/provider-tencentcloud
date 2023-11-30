@@ -47,6 +47,10 @@ type HourDBInstanceParameters struct {
 	// +kubebuilder:validation:Required
 	NodeCount *float64 `json:"nodeCount" tf:"node_count,omitempty"`
 
+	// project id.
+	// +kubebuilder:validation:Optional
+	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
 	// instance disk storage.
 	// +kubebuilder:validation:Required
 	Storage *float64 `json:"storage" tf:"storage,omitempty"`
@@ -76,6 +80,10 @@ type HourDBInstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// vip.
+	// +kubebuilder:validation:Optional
+	Vip *string `json:"vip,omitempty" tf:"vip,omitempty"`
 
 	// available zone of instance.
 	// +kubebuilder:validation:Required

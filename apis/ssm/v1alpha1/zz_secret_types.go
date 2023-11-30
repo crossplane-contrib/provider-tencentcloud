@@ -33,6 +33,10 @@ type SecretObservation struct {
 
 type SecretParameters struct {
 
+	// Additional config for specific secret types in JSON string format.
+	// +kubebuilder:validation:Optional
+	AdditionalConfig *string `json:"additionalConfig,omitempty" tf:"additional_config,omitempty"`
+
 	// Description of secret. The maximum is 2048 bytes.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -52,6 +56,10 @@ type SecretParameters struct {
 	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
 	// +kubebuilder:validation:Required
 	SecretName *string `json:"secretName" tf:"secret_name,omitempty"`
+
+	// Type of secret. `0`: user-defined secret. `4`: redis secret. Default is `0`.
+	// +kubebuilder:validation:Optional
+	SecretType *float64 `json:"secretType,omitempty" tf:"secret_type,omitempty"`
 
 	// Tags of secret.
 	// +kubebuilder:validation:Optional

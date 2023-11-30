@@ -33,6 +33,10 @@ type DatabaseTuplesParameters struct {
 	// Publish the database.
 	// +kubebuilder:validation:Required
 	PublishDatabase *string `json:"publishDatabase" tf:"publish_database,omitempty"`
+
+	// Subscribe the database.
+	// +kubebuilder:validation:Required
+	SubscribeDatabase *string `json:"subscribeDatabase" tf:"subscribe_database,omitempty"`
 }
 
 type PublishSubscribeObservation struct {

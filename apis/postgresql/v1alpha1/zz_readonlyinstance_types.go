@@ -29,13 +29,23 @@ type ReadonlyInstanceObservation struct {
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	PrivateAccessIP *string `json:"privateAccessIp,omitempty" tf:"private_access_ip,omitempty"`
+
+	PrivateAccessPort *float64 `json:"privateAccessPort,omitempty" tf:"private_access_port,omitempty"`
 }
 
 type ReadonlyInstanceParameters struct {
 
-	// Renewal flag. Valid values: 0 (manual renewal), 1 (auto-renewal). Default value: 0.
+	// Auto renew flag, `1` for enabled. NOTES: Only support prepaid instance.
 	// +kubebuilder:validation:Optional
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
+
+	// Whether to use voucher, `1` for enabled.
+	// +kubebuilder:validation:Optional
+	AutoVoucher *float64 `json:"autoVoucher,omitempty" tf:"auto_voucher,omitempty"`
 
 	// PostgreSQL kernel version, which must be the same as that of the primary instance.
 	// +kubebuilder:validation:Required
@@ -61,9 +71,17 @@ type ReadonlyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	NeedSupportIPv6 *float64 `json:"needSupportIpv6,omitempty" tf:"need_support_ipv6,omitempty"`
 
+	// Specify Prepaid period in month. Default `1`. Values: `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
+	// +kubebuilder:validation:Optional
+	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
 	// Project ID.
 	// +kubebuilder:validation:Required
 	ProjectID *float64 `json:"projectId" tf:"project_id,omitempty"`
+
+	// RO group ID.
+	// +kubebuilder:validation:Optional
+	ReadOnlyGroupID *string `json:"readOnlyGroupId,omitempty" tf:"read_only_group_id,omitempty"`
 
 	// ID of security group.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.SecurityGroup
@@ -101,6 +119,10 @@ type ReadonlyInstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
+	// +kubebuilder:validation:Optional
+	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
 
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
 	// +kubebuilder:validation:Required

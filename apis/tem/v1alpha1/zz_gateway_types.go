@@ -63,8 +63,6 @@ type HTTPParameters struct {
 }
 
 type IngressObservation struct {
-	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
-
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	Vip *string `json:"vip,omitempty" tf:"vip,omitempty"`
@@ -75,6 +73,10 @@ type IngressParameters struct {
 	// ip version, support IPV4.
 	// +kubebuilder:validation:Required
 	AddressIPVersion *string `json:"addressIpVersion" tf:"address_ip_version,omitempty"`
+
+	// related CLB ID, support binding existing clb, does not support modification.
+	// +kubebuilder:validation:Optional
+	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
 
 	// environment ID.
 	// +kubebuilder:validation:Required
@@ -146,7 +148,7 @@ type TLSParameters struct {
 	// +kubebuilder:validation:Required
 	Hosts []*string `json:"hosts" tf:"hosts,omitempty"`
 
-	// secret name.
+	// secret name, if you use a certificate, you don't need to fill in this field.
 	// +kubebuilder:validation:Optional
 	SecretName *string `json:"secretName,omitempty" tf:"secret_name,omitempty"`
 }

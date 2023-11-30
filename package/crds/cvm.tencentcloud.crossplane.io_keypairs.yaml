@@ -81,7 +81,6 @@ spec:
                     type: object
                 required:
                 - keyName
-                - publicKey
                 type: object
               providerConfigRef:
                 default:

@@ -185,6 +185,11 @@ func (in *TaskSetParameters) DeepCopyInto(out *TaskSetParameters) {
 			}
 		}
 	}
+	if in.Operate != nil {
+		in, out := &in.Operate, &out.Operate
+		*out = new(string)
+		**out = **in
+	}
 	if in.Parameters != nil {
 		in, out := &in.Parameters, &out.Parameters
 		*out = new(string)

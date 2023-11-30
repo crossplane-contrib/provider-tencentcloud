@@ -67,6 +67,9 @@ spec:
                     description: Self-deployed cluster name, which is used to specify
                       the self-deployed cluster where the service is to be created.
                     type: string
+                  instanceId:
+                    description: Exclusive instance ID.
+                    type: string
                   ipVersion:
                     description: 'IP version number. Valid values: `IPv4`, `IPv6`.
                       Default value: `IPv4`.'
@@ -97,10 +100,18 @@ spec:
                   serviceName:
                     description: Custom service name.
                     type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list.
+                    type: object
                   testLimit:
                     description: API QPS value. Enter a positive number to limit the
                       API query rate per second `QPS`.
                     type: number
+                  uniqVpcId:
+                    description: VPC ID.
+                    type: string
                 required:
                 - netType
                 - protocol

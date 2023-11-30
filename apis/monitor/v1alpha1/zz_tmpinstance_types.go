@@ -26,7 +26,15 @@ import (
 )
 
 type TmpInstanceObservation struct {
+	APIRootPath *string `json:"apiRootPath,omitempty" tf:"api_root_path,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	IPv4Address *string `json:"ipv4Address,omitempty" tf:"ipv4_address,omitempty"`
+
+	ProxyAddress *string `json:"proxyAddress,omitempty" tf:"proxy_address,omitempty"`
+
+	RemoteWrite *string `json:"remoteWrite,omitempty" tf:"remote_write,omitempty"`
 }
 
 type TmpInstanceParameters struct {

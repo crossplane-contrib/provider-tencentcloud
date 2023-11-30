@@ -63,16 +63,31 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  cnameSpeedUp:
-                    description: 'Specifies whether CNAME acceleration is enabled.
-                      Valid values: `enabled`, `disabled`.'
+                  aliasZoneName:
+                    description: Alias site identifier. Limit the input to a combination
+                      of numbers, English, - and _, within 20 characters. For details,
+                      refer to the alias site identifier. If there is no such usage
+                      scenario, leave this field empty.
+                    type: string
+                  area:
+                    description: 'When the `type` value is `partial` or `full`, the
+                      acceleration region of the L7 domain name. The following are
+                      the values of this parameter, and the default value is `overseas`
+                      if not filled in. When the `type` value is `noDomainAccess`,
+                      please leave this value empty. Valid values: `global`: Global
+                      availability zone; `mainland`: Chinese mainland availability
+                      zone; `overseas`: Global availability zone (excluding Chinese
+                      mainland).'
                     type: string
                   paused:
                     description: Indicates whether the site is disabled.
                     type: boolean
-                  planType:
-                    description: Plan type of the zone. See details in data source
-                      `zone_available_plans`.
+                  planId:
+                    description: The target Plan ID to be bound. When you have an
+                      existing Plan in your account, you can fill in this parameter
+                      to directly bind the site to the Plan. If you do not have a
+                      Plan that can be bound at the moment, please go to the console
+                      to purchase a Plan to complete the site creation.
                     type: string
                   tags:
                     additionalProperties:
@@ -80,34 +95,20 @@ spec:
                     description: Tag description list.
                     type: object
                   type:
-                    description: 'Specifies how the site is connected to EdgeOne.-
-                      `full`: The site is connected via NS.- `partial`: The site is
-                      connected via CNAME.'
+                    description: 'Site access type. The value of this parameter is
+                      as follows, and the default is `partial` if not filled in. Valid
+                      values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`:
+                      No domain access.'
                     type: string
-                  vanityNameServers:
-                    description: 'User-defined name server information. Note: This
-                      field may return null, indicating that no valid value can be
-                      obtained.'
-                    items:
-                      properties:
-                        servers:
-                          description: List of custom name servers.
-                          items:
-                            type: string
-                          type: array
-                        switch:
-                          description: 'Whether to enable the custom name server.-
-                            `on`: Enable.- `off`: Disable.'
-                          type: string
-                      required:
-                      - switch
-                      type: object
-                    type: array
                   zoneName:
-                    description: Site name.
+                    description: Site name. When accessing CNAME/NS, please pass the
+                      second-level domain (example.com) as the site name; when accessing
+                      without a domain name, please leave this value empty.
                     type: string
                 required:
-                - planType
+                - area
+                - planId
+                - type
                 - zoneName
                 type: object
               providerConfigRef:
@@ -286,68 +287,29 @@ spec:
             properties:
               atProvider:
                 properties:
-                  area:
-                    type: string
-                  cnameStatus:
-                    type: string
-                  createdOn:
-                    type: string
                   id:
-                    type: string
-                  modifiedOn:
                     type: string
                   nameServers:
                     items:
                       type: string
                     type: array
-                  originalNameServers:
-                    items:
-                      type: string
-                    type: array
-                  resources:
+                  ownershipVerification:
                     items:
                       properties:
-                        area:
-                          type: string
-                        autoRenewFlag:
-                          type: number
-                        createTime:
-                          type: string
-                        enableTime:
-                          type: string
-                        expireTime:
-                          type: string
-                        id:
-                          type: string
-                        payMode:
-                          type: number
-                        planId:
-                          type: string
-                        status:
-                          type: string
-                        sv:
+                        dnsVerification:
                           items:
                             properties:
-                              key:
+                              recordType:
                                 type: string
-                              value:
+                              recordValue:
+                                type: string
+                              subdomain:
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   status:
-                    type: string
-                  vanityNameServersIps:
-                    items:
-                      properties:
-                        ipv4:
-                          type: string
-                        name:
-                          type: string
-                      type: object
-                    type: array
-                  zoneId:
                     type: string
                 type: object
               conditions:

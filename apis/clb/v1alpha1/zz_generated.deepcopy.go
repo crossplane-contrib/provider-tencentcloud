@@ -643,13 +643,13 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 			}
 		}
 	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
 		*out = new(string)
 		**out = **in
 	}
-	if in.VipIsp != nil {
-		in, out := &in.VipIsp, &out.VipIsp
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
 		*out = new(string)
 		**out = **in
 	}
@@ -681,6 +681,16 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.ClbName != nil {
 		in, out := &in.ClbName, &out.ClbName
 		*out = new(string)
+		**out = **in
+	}
+	if in.DeleteProtect != nil {
+		in, out := &in.DeleteProtect, &out.DeleteProtect
+		*out = new(bool)
+		**out = **in
+	}
+	if in.DynamicVip != nil {
+		in, out := &in.DynamicVip, &out.DynamicVip
+		*out = new(bool)
 		**out = **in
 	}
 	if in.InternetBandwidthMaxOut != nil {
@@ -721,6 +731,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
 		*out = new(float64)
+		**out = **in
+	}
+	if in.SLAType != nil {
+		in, out := &in.SLAType, &out.SLAType
+		*out = new(string)
 		**out = **in
 	}
 	if in.SecurityGroups != nil {
@@ -805,6 +820,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		in, out := &in.VPCIDSelector, &out.VPCIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.VipIsp != nil {
+		in, out := &in.VipIsp, &out.VipIsp
+		*out = new(string)
+		**out = **in
 	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
@@ -1172,6 +1192,11 @@ func (in *ListenerParameters) DeepCopyInto(out *ListenerParameters) {
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.EndPort != nil {
+		in, out := &in.EndPort, &out.EndPort
+		*out = new(float64)
+		**out = **in
+	}
 	if in.HealthCheckContextType != nil {
 		in, out := &in.HealthCheckContextType, &out.HealthCheckContextType
 		*out = new(string)
@@ -1454,6 +1479,16 @@ func (in *ListenerRuleParameters) DeepCopyInto(out *ListenerRuleParameters) {
 	if in.HealthCheckSwitch != nil {
 		in, out := &in.HealthCheckSwitch, &out.HealthCheckSwitch
 		*out = new(bool)
+		**out = **in
+	}
+	if in.HealthCheckTimeOut != nil {
+		in, out := &in.HealthCheckTimeOut, &out.HealthCheckTimeOut
+		*out = new(float64)
+		**out = **in
+	}
+	if in.HealthCheckType != nil {
+		in, out := &in.HealthCheckType, &out.HealthCheckType
+		*out = new(string)
 		**out = **in
 	}
 	if in.HealthCheckUnhealthNum != nil {

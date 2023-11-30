@@ -66,9 +66,20 @@ spec:
                   alias:
                     description: Remark name.
                     type: string
+                  confirmLetter:
+                    description: 'The base64-encoded certificate confirmation file
+                      should be in jpg, jpeg, png, pdf, and the size should be between
+                      1kb and 1.4M. Note: it only works when product_id is set to
+                      8, 9 or 10.'
+                    type: string
                   domainNum:
                     description: Number of domain names included in the certificate.
                     type: number
+                  dvAuths:
+                    description: DV certification information.
+                    items:
+                      type: object
+                    type: array
                   information:
                     description: Certificate information.
                     items:
@@ -184,8 +195,8 @@ spec:
                     type: array
                   productId:
                     description: 'Certificate commodity ID. Valid value ranges: (3~42).
-                      `3` means SecureSite Enhanced Enterprise Edition (EV Pro), `4`
-                      means SecureSite Enhanced (EV), `5` means SecureSite Enterprise
+                      `3` means SecureSite enhanced Enterprise Edition (EV Pro), `4`
+                      means SecureSite enhanced (EV), `5` means SecureSite Enterprise
                       Professional Edition (OV Pro), `6` means SecureSite Enterprise
                       (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8`
                       means Geotrust enhanced (EV), `9` means Geotrust enterprise
@@ -210,15 +221,31 @@ spec:
                       certificate, `29` means Wotrus enterprise multi-domain certificate,
                       `30` means Wotrus enterprise wildcard certificate, `31` means
                       Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain
-                      certificate, `33` means DNSPod national secret domain name certificate,
-                      `34` means DNSPod national secret domain name certificate Multi-domain
-                      certificate, `35` means DNSPod national secret domain name wildcard
-                      certificate, `37` means DNSPod national secret enterprise certificate,
-                      `38` means DNSPod national secret enterprise multi-domain certificate,
-                      `39` means DNSPod national secret enterprise wildcard certificate,
-                      `40` means DNSPod national secret increase Strong certificate,
-                      `41` means DNSPod national secret enhanced multi-domain certificate,
-                      `42` means TrustAsia domain-type wildcard multi-domain certificate.'
+                      certificate, `33` means WoTrus National Secret Domain name Certificate,
+                      `34` means WoTrus National Secret Domain name Certificate (multiple
+                      domain names), `35` WoTrus National Secret Domain name Certificate
+                      (wildcard), `37` means WoTrus State Secret Enterprise Certificate,
+                      `38` means WoTrus State Secret Enterprise Certificate (multiple
+                      domain names), `39` means WoTrus State Secret Enterprise Certificate
+                      (wildcard), `40` means WoTrus National secret enhanced certificate,
+                      `41` means WoTrus National Secret enhanced Certificate (multiple
+                      domain names), `42` means TrustAsia- Domain name Certificate
+                      (wildcard multiple domain names), `43` means DNSPod Enterprise
+                      (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard
+                      SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain
+                      name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate,
+                      `47` means DNSPod enhanced (EV) multi-domain name SSL certificate,
+                      `48` means DNSPod Domain name Type (DV) SSL Certificate, `49`
+                      means DNSPod Domain name Type (DV) wildcard SSL certificate,
+                      `50` means DNSPod domain name type (DV) multi-domain name SSL
+                      certificate, `51` means DNSPod (State Secret) Enterprise (OV)
+                      SSL certificate, `52` DNSPod (National Secret) Enterprise (OV)
+                      wildcard SSL certificate, `53` means DNSPod (National Secret)
+                      Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod
+                      (National Secret) Domain Name (DV) SSL certificate, `55` means
+                      DNSPod (National Secret) Domain Name Type (DV) wildcard SSL
+                      certificate, `56` means DNSPod (National Secret) Domain Name
+                      Type (DV) multi-domain SSL certificate.'
                     type: number
                   projectId:
                     description: The ID of project.
@@ -410,6 +437,17 @@ spec:
                 properties:
                   certificateId:
                     type: string
+                  dvAuths:
+                    items:
+                      properties:
+                        dvAuthKey:
+                          type: string
+                        dvAuthValue:
+                          type: string
+                        dvAuthVerifyType:
+                          type: string
+                      type: object
+                    type: array
                   id:
                     type: string
                   orderId:

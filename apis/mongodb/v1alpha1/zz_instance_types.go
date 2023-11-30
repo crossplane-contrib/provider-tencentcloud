@@ -45,6 +45,14 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
+	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
+	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
+	// - Version 4.2 and above are not supported.
+	// - Read-only disaster recovery instances are not supported.
+	// - Basic network cannot be selected.
+	// +kubebuilder:validation:Optional
+	AvailabilityZoneList []*string `json:"availabilityZoneList,omitempty" tf:"availability_zone_list,omitempty"`
+
 	// The available zone of the Mongodb.
 	// +kubebuilder:validation:Required
 	AvailableZone *string `json:"availableZone" tf:"available_zone,omitempty"`
@@ -56,6 +64,10 @@ type InstanceParameters struct {
 	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
 	// +kubebuilder:validation:Required
 	EngineVersion *string `json:"engineVersion" tf:"engine_version,omitempty"`
+
+	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
+	// +kubebuilder:validation:Optional
+	HiddenZone *string `json:"hiddenZone,omitempty" tf:"hidden_zone,omitempty"`
 
 	// Name of the Mongodb instance.
 	// +kubebuilder:validation:Required
@@ -69,6 +81,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Required
 	Memory *float64 `json:"memory" tf:"memory,omitempty"`
 
+	// The number of nodes in each replica set. Default value: 3.
+	// +kubebuilder:validation:Optional
+	NodeNum *float64 `json:"nodeNum,omitempty" tf:"node_num,omitempty"`
+
 	// Password of this Mongodb account.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
@@ -81,7 +97,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// ID of the security group. NOTE: for instance which `engine_version` is `MONGO_40_WT`, `security_groups` is not supported.
+	// ID of the security group.
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 

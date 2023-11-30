@@ -156,7 +156,8 @@ spec:
                     type: string
                   forwardType:
                     description: 'Forwarding protocol between the CLB instance and
-                      real server. Valid values: `HTTP`, `HTTPS`, `TRPC`.'
+                      real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default
+                      is `HTTP`.'
                     type: string
                   healthCheckHealthNum:
                     description: 'Health threshold of health check, and the default
@@ -193,13 +194,20 @@ spec:
                     type: string
                   healthCheckIntervalTime:
                     description: 'Interval time of health check. Valid value ranges:
-                      (5~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL
+                      (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL
                       listener allows direct configuration, HTTP/HTTPS listener needs
                       to be configured in `tencentcloud_clb_listener_rule`.'
                     type: number
                   healthCheckSwitch:
                     description: Indicates whether health check is enabled.
                     type: boolean
+                  healthCheckTimeOut:
+                    description: Time out of health check. The value range is [2-60](SEC).
+                    type: number
+                  healthCheckType:
+                    description: Type of health check. Valid value is `CUSTOM`, `TCP`,
+                      `HTTP`.
+                    type: string
                   healthCheckUnhealthNum:
                     description: 'Unhealthy threshold of health check, and the default
                       is `3`. If the unhealthy result is returned 3 consecutive times,

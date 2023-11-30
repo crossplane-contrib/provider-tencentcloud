@@ -66,6 +66,10 @@ spec:
                   bandWidth:
                     description: Instance bandwidth in MBps.
                     type: number
+                  chargeType:
+                    description: The charge type of instance. Valid values are `PREPAID`
+                      and `POSTPAID_BY_HOUR`. Default value is `PREPAID`.
+                    type: string
                   config:
                     description: Instance configuration.
                     items:
@@ -121,9 +125,18 @@ spec:
                   instanceName:
                     description: Instance name.
                     type: string
+                  instanceType:
+                    description: 'Description of instance type. `profession`: 1, `standard`:  1(general),
+                      2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
+                      7(specialized-3), 8(specialized-4), 9(exclusive).'
+                    type: number
                   kafkaVersion:
                     description: Kafka version (0.10.2/1.1.1/2.4.1).
                     type: string
+                  maxMessageByte:
+                    description: 'The size of a single message in bytes at the instance
+                      level. Value range: `1024 - 12*1024*1024 bytes (i.e., 1KB-12MB).'
+                    type: number
                   msgRetentionTime:
                     description: The maximum retention time of instance logs, in minutes.
                       the default is 10080 (7 days), the maximum is 30 days, and the
@@ -144,7 +157,7 @@ spec:
                     description: Prepaid purchase time, such as 1, is one month.
                     type: number
                   publicNetwork:
-                    description: Timestamp.
+                    description: Bandwidth of the public network.
                     type: number
                   rebalanceTime:
                     description: Modification of the rebalancing time after upgrade.
@@ -154,8 +167,12 @@ spec:
                       state, the initial state, 1 means automatic renewal, 2 means
                       clear no automatic renewal (user setting).
                     type: number
+                  specificationsType:
+                    description: Specifications type of instance. Allowed values are
+                      `standard`, `profession`. Default is `profession`.
+                    type: string
                   subnetId:
-                    description: Subnet id.
+                    description: Subnet id, it will be basic network if not set.
                     type: string
                   subnetIdRef:
                     description: A Reference to a named object.
@@ -251,8 +268,12 @@ spec:
                       - value
                       type: object
                     type: array
+                  upgradeStrategy:
+                    description: 'POSTPAID_BY_HOUR scale-down mode - 1: stable transformation;
+                      - 2: High-speed transformer.'
+                    type: number
                   vpcId:
-                    description: Vpc id.
+                    description: Vpc id, it will be basic network if not set.
                     type: string
                   vpcidRef:
                     description: A Reference to a named object.

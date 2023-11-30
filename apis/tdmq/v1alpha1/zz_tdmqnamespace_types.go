@@ -25,6 +25,20 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type RetentionPolicyObservation struct {
+}
+
+type RetentionPolicyParameters struct {
+
+	// the size of message to retain.
+	// +kubebuilder:validation:Optional
+	SizeInMb *float64 `json:"sizeInMb,omitempty" tf:"size_in_mb,omitempty"`
+
+	// the time of message to retain.
+	// +kubebuilder:validation:Optional
+	TimeInMinutes *float64 `json:"timeInMinutes,omitempty" tf:"time_in_minutes,omitempty"`
+}
+
 type TdmqNamespaceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
@@ -54,9 +68,9 @@ type TdmqNamespaceParameters struct {
 	// +kubebuilder:validation:Optional
 	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
 
-	// The Policy of message to retain.
+	// The Policy of message to retain. Format like: `{time_in_minutes: Int, size_in_mb: Int}`. `time_in_minutes`: the time of message to retain; `size_in_mb`: the size of message to retain.
 	// +kubebuilder:validation:Optional
-	RetentionPolicy map[string]*string `json:"retentionPolicy,omitempty" tf:"retention_policy,omitempty"`
+	RetentionPolicy []RetentionPolicyParameters `json:"retentionPolicy,omitempty" tf:"retention_policy,omitempty"`
 }
 
 // TdmqNamespaceSpec defines the desired state of TdmqNamespace

@@ -90,7 +90,7 @@ spec:
                       `2`, `3`, `4`, `6`, `7`, `8`, `9`, `12`, `24`, `36`. The unit
                       is month. Caution: when this para and renew_flag para are valid,
                       the request means to renew several months more pre-paid period.
-                      This para can only be set to take effect in create operation.'
+                      This para can only be changed on `IPSEC` vpn gateway.'
                     type: number
                   prepaidRenewFlag:
                     description: 'Flag indicates whether to renew or not. Valid value:
@@ -102,13 +102,13 @@ spec:
                     description: A list of tags used to associate different resources.
                     type: object
                   type:
-                    description: 'Type of gateway instance. Valid value: `IPSEC`,
-                      `SSL` and `CCN`. Note: CCN type is only for whitelist customer
-                      now.'
+                    description: 'Type of gateway instance, Default is `IPSEC`. Valid
+                      value: `IPSEC`, `SSL`, `CCN` and `SSL_CCN`.'
                     type: string
                   vpcId:
                     description: ID of the VPC. Required if vpn gateway is not in
-                      `CCN` type, and doesn't make sense for `CCN` vpn gateway.
+                      `CCN` or `SSL_CCN` type, and doesn't make sense for `CCN` or
+                      `SSL_CCN` vpn gateway.
                     type: string
                   vpcidRef:
                     description: A Reference to a named object.
@@ -188,7 +188,6 @@ spec:
                     type: string
                 required:
                 - name
-                - zone
                 type: object
               providerConfigRef:
                 default:

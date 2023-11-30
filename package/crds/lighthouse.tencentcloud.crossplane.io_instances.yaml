@@ -154,9 +154,25 @@ spec:
                       value): send a normal request and create instance(s) if all
                       the requirements are met.'
                     type: boolean
+                  firewallTemplateId:
+                    description: Firewall template ID. If this parameter is not specified,
+                      the default firewall policy is used.
+                    type: string
                   instanceName:
                     description: The display name of the Lighthouse instance.
                     type: string
+                  isUpdateBundleIdAutoVoucher:
+                    description: 'Whether the voucher is deducted automatically when
+                      update bundle id. Value range: `true`: indicates automatic deduction
+                      of vouchers, `false`: does not automatically deduct vouchers.
+                      Default value: `false`.'
+                    type: boolean
+                  isolateDataDisk:
+                    description: 'Whether to return the mounted data disk. `true`:
+                      returns both the instance and the mounted data disk; `false`:
+                      returns the instance and no longer returns its mounted data
+                      disk. Default: `true`.'
+                    type: boolean
                   loginConfiguration:
                     description: Login password of the instance. It is only available
                       for Windows instances. If it is not specified, it means that
@@ -179,6 +195,10 @@ spec:
                     description: 'Subscription period in months. Valid values: 1,
                       2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60.'
                     type: number
+                  permitDefaultKeyPairLogin:
+                    description: 'Whether to allow login using the default key pair.
+                      `YES`: allow login; `NO`: disable login. Default: `YES`.'
+                    type: string
                   renewFlag:
                     description: 'Auto-Renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
                       notify upon expiration and renew automatically; NOTIFY_AND_MANUAL_RENEW:

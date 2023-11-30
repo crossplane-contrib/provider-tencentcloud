@@ -792,6 +792,11 @@ func (in *StorageParameters) DeepCopyInto(out *StorageParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskBackupQuota != nil {
+		in, out := &in.DiskBackupQuota, &out.DiskBackupQuota
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Encrypt != nil {
 		in, out := &in.Encrypt, &out.Encrypt
 		*out = new(bool)

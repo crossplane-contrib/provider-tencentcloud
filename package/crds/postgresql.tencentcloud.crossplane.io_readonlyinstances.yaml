@@ -64,8 +64,11 @@ spec:
               forProvider:
                 properties:
                   autoRenewFlag:
-                    description: 'Renewal flag. Valid values: 0 (manual renewal),
-                      1 (auto-renewal). Default value: 0.'
+                    description: 'Auto renew flag, `1` for enabled. NOTES: Only support
+                      prepaid instance.'
+                    type: number
+                  autoVoucher:
+                    description: Whether to use voucher, `1` for enabled.
                     type: number
                   dbVersion:
                     description: PostgreSQL kernel version, which must be the same
@@ -91,9 +94,17 @@ spec:
                     description: 'Whether to support IPv6 address access. Valid values:
                       1 (yes), 0 (no).'
                     type: number
+                  period:
+                    description: 'Specify Prepaid period in month. Default `1`. Values:
+                      `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`,
+                      `24`, `36`.'
+                    type: number
                   projectId:
                     description: Project ID.
                     type: number
+                  readOnlyGroupId:
+                    description: RO group ID.
+                    type: string
                   securityGroupsIds:
                     description: ID of security group.
                     items:
@@ -253,6 +264,12 @@ spec:
                             type: string
                         type: object
                     type: object
+                  voucherIds:
+                    description: Specify Voucher Ids if `auto_voucher` was `1`, only
+                      support using 1 vouchers for now.
+                    items:
+                      type: string
+                    type: array
                   vpcId:
                     description: VPC ID.
                     type: string
@@ -522,6 +539,12 @@ spec:
                     type: string
                   id:
                     type: string
+                  instanceId:
+                    type: string
+                  privateAccessIp:
+                    type: string
+                  privateAccessPort:
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.

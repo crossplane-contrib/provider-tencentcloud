@@ -35,17 +35,29 @@ type VPCBandwidthPackageParameters struct {
 	// +kubebuilder:validation:Optional
 	BandwidthPackageName *string `json:"bandwidthPackageName,omitempty" tf:"bandwidth_package_name,omitempty"`
 
-	// Bandwidth package billing type, default: TOP5_POSTPAID_BY_MONTH, optional value:- `TOP5_POSTPAID_BY_MONTH`: TOP5 billed by monthly postpaid- `PERCENT95_POSTPAID_BY_MONTH`: 95 billed monthly postpaid- `FIXED_PREPAID_BY_MONTH`: Monthly prepaid billing (Type FIXED_PREPAID_BY_MONTH product API capability is under construction).
+	// Bandwidth package billing type, default: `TOP5_POSTPAID_BY_MONTH`. Optional value: `TOP5_POSTPAID_BY_MONTH`: TOP5 billed by monthly postpaid; `PERCENT95_POSTPAID_BY_MONTH`: 95 billed monthly postpaid; `FIXED_PREPAID_BY_MONTH`: Monthly prepaid billing (Type FIXED_PREPAID_BY_MONTH product API capability is under construction); `BANDWIDTH_POSTPAID_BY_DAY`: bandwidth billed by daily postpaid; `ENHANCED95_POSTPAID_BY_MONTH`: enhanced 95 billed monthly postpaid.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
-	// Bandwidth packet type, default:BGP, optional:- `BGP`: common BGP shared bandwidth package- `HIGH_QUALITY_BGP`: Quality BGP Shared Bandwidth Package.
+	// Network egress. It defaults to `center_egress1`. If you want to try the egress feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
+	// +kubebuilder:validation:Optional
+	Egress *string `json:"egress,omitempty" tf:"egress,omitempty"`
+
+	// Bandwidth packet speed limit size. Unit: Mbps, -1 means no speed limit.
+	// +kubebuilder:validation:Optional
+	InternetMaxBandwidth *float64 `json:"internetMaxBandwidth,omitempty" tf:"internet_max_bandwidth,omitempty"`
+
+	// Bandwidth packet type, default: `BGP`. Optional value: `BGP`: common BGP shared bandwidth package; `HIGH_QUALITY_BGP`: High Quality BGP Shared Bandwidth Package; `SINGLEISP_CMCC`: CMCC shared bandwidth package; `SINGLEISP_CTCC:`: CTCC shared bandwidth package; `SINGLEISP_CUCC`: CUCC shared bandwidth package.
 	// +kubebuilder:validation:Optional
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
 	// Tag description list.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// The purchase duration of the prepaid monthly bandwidth package, unit: month, value range: 1~60.
+	// +kubebuilder:validation:Optional
+	TimeSpan *float64 `json:"timeSpan,omitempty" tf:"time_span,omitempty"`
 }
 
 // VPCBandwidthPackageSpec defines the desired state of VPCBandwidthPackage

@@ -94,6 +94,10 @@ type FunctionObservation struct {
 
 type FunctionParameters struct {
 
+	// Whether SCF function asynchronous attribute is enabled. `TRUE` is open, `FALSE` is close.
+	// +kubebuilder:validation:Optional
+	AsyncRunEnable *string `json:"asyncRunEnable,omitempty" tf:"async_run_enable,omitempty"`
+
 	// List of CFS configurations.
 	// +kubebuilder:validation:Optional
 	CfsConfig []CfsConfigParameters `json:"cfsConfig,omitempty" tf:"cfs_config,omitempty"`
@@ -122,11 +126,11 @@ type FunctionParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Indicates whether EIP config set to `ENABLE` when `enable_public_net` was true.
+	// Indicates whether EIP config set to `ENABLE` when `enable_public_net` was true. Default `false`.
 	// +kubebuilder:validation:Optional
 	EnableEIPConfig *bool `json:"enableEipConfig,omitempty" tf:"enable_eip_config,omitempty"`
 
-	// Indicates whether public net config enabled. NOTE: only `vpc_id` specified can disable public net config.
+	// Indicates whether public net config enabled. Default `false`. NOTE: only `vpc_id` specified can disable public net config.
 	// +kubebuilder:validation:Optional
 	EnablePublicNet *bool `json:"enablePublicNet,omitempty" tf:"enable_public_net,omitempty"`
 
@@ -134,9 +138,13 @@ type FunctionParameters struct {
 	// +kubebuilder:validation:Optional
 	Environment map[string]*string `json:"environment,omitempty" tf:"environment,omitempty"`
 
+	// Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
+	// +kubebuilder:validation:Optional
+	FuncType *string `json:"funcType,omitempty" tf:"func_type,omitempty"`
+
 	// Handler of the SCF function. The format of name is `<filename>.<method_name>`, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
-	// +kubebuilder:validation:Required
-	Handler *string `json:"handler" tf:"handler,omitempty"`
+	// +kubebuilder:validation:Optional
+	Handler *string `json:"handler,omitempty" tf:"handler,omitempty"`
 
 	// Image of the SCF function, conflict with ``.
 	// +kubebuilder:validation:Optional
@@ -167,8 +175,8 @@ type FunctionParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// Runtime of the SCF function, only supports `Python2.7`, `Python3.6`, `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `PHP5`, `PHP7`, `Golang1`, and `Java8`.
-	// +kubebuilder:validation:Required
-	Runtime *string `json:"runtime" tf:"runtime,omitempty"`
+	// +kubebuilder:validation:Optional
+	Runtime *string `json:"runtime,omitempty" tf:"runtime,omitempty"`
 
 	// Subnet ID of the SCF function.
 	// +kubebuilder:validation:Optional

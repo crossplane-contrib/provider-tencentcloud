@@ -123,6 +123,10 @@ type ConfigExtraParameters struct {
 	// +kubebuilder:validation:Optional
 	HostFile []HostFileParameters `json:"hostFile,omitempty" tf:"host_file,omitempty"`
 
+	// Log format.
+	// +kubebuilder:validation:Optional
+	LogFormat *string `json:"logFormat,omitempty" tf:"log_format,omitempty"`
+
 	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
 	// +kubebuilder:validation:Required
 	LogType *string `json:"logType" tf:"log_type,omitempty"`

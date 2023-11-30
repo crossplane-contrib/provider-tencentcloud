@@ -28,9 +28,9 @@ import (
 type InstanceObservation struct {
 	ClbVips []*string `json:"clbVips,omitempty" tf:"clb_vips,omitempty"`
 
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
-	VipIsp *string `json:"vipIsp,omitempty" tf:"vip_isp,omitempty"`
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type InstanceParameters struct {
@@ -46,6 +46,14 @@ type InstanceParameters struct {
 	// Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
 	// +kubebuilder:validation:Required
 	ClbName *string `json:"clbName" tf:"clb_name,omitempty"`
+
+	// Whether to enable delete protection.
+	// +kubebuilder:validation:Optional
+	DeleteProtect *bool `json:"deleteProtect,omitempty" tf:"delete_protect,omitempty"`
+
+	// If create dynamic vip CLB instance, `true` or `false`.
+	// +kubebuilder:validation:Optional
+	DynamicVip *bool `json:"dynamicVip,omitempty" tf:"dynamic_vip,omitempty"`
 
 	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
 	// +kubebuilder:validation:Optional
@@ -78,6 +86,10 @@ type InstanceParameters struct {
 	// ID of the project within the CLB instance, `0` - Default Project.
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// This parameter is required to create LCU-supported instances. Values:`SLA`: Super Large 4. When you have activated Super Large models, `SLA` refers to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`: Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).
+	// +kubebuilder:validation:Optional
+	SLAType *string `json:"slaType,omitempty" tf:"sla_type,omitempty"`
 
 	// Security groups of the CLB instance. Supports both `OPEN` and `INTERNAL` CLBs.
 	// +kubebuilder:validation:Optional
@@ -128,6 +140,10 @@ type InstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// Network operator, only applicable to open CLB. Valid values are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom) and `BGP`. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+	// +kubebuilder:validation:Optional
+	VipIsp *string `json:"vipIsp,omitempty" tf:"vip_isp,omitempty"`
 
 	// Available zone id, only applicable to open CLB.
 	// +kubebuilder:validation:Optional

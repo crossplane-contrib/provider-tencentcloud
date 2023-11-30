@@ -63,6 +63,10 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  asyncRunEnable:
+                    description: Whether SCF function asynchronous attribute is enabled.
+                      `TRUE` is open, `FALSE` is close.
+                    type: string
                   cfsConfig:
                     description: List of CFS configurations.
                     items:
@@ -119,17 +123,23 @@ spec:
                     type: string
                   enableEipConfig:
                     description: Indicates whether EIP config set to `ENABLE` when
-                      `enable_public_net` was true.
+                      `enable_public_net` was true. Default `false`.
                     type: boolean
                   enablePublicNet:
-                    description: 'Indicates whether public net config enabled. NOTE:
-                      only `vpc_id` specified can disable public net config.'
+                    description: 'Indicates whether public net config enabled. Default
+                      `false`. NOTE: only `vpc_id` specified can disable public net
+                      config.'
                     type: boolean
                   environment:
                     additionalProperties:
                       type: string
                     description: Environment of the SCF function.
                     type: object
+                  funcType:
+                    description: Function type. The default value is Event. Enter
+                      Event if you need to create a trigger function. Enter HTTP if
+                      you need to create an HTTP function service.
+                    type: string
                   handler:
                     description: Handler of the SCF function. The format of name is
                       `<filename>.<method_name>`, and it supports 26 English letters,
@@ -265,9 +275,7 @@ spec:
                       `cos_object_name`, `cos_bucket_region`.
                     type: string
                 required:
-                - handler
                 - name
-                - runtime
                 type: object
               providerConfigRef:
                 default:

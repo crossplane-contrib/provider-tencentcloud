@@ -51,6 +51,10 @@ type DedicatedclusterDBInstanceParameters struct {
 	// +kubebuilder:validation:Required
 	Memory *float64 `json:"memory" tf:"memory,omitempty"`
 
+	// project id.
+	// +kubebuilder:validation:Optional
+	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
 	// instance disk storage.
 	// +kubebuilder:validation:Required
 	Storage *float64 `json:"storage" tf:"storage,omitempty"`
@@ -80,6 +84,10 @@ type DedicatedclusterDBInstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// vip.
+	// +kubebuilder:validation:Optional
+	Vip *string `json:"vip,omitempty" tf:"vip,omitempty"`
 }
 
 // DedicatedclusterDBInstanceSpec defines the desired state of DedicatedclusterDBInstance

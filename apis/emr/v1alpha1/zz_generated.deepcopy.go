@@ -330,6 +330,21 @@ func (in *EmrClusterParameters) DeepCopyInto(out *EmrClusterParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				in, out := &val, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.TimeSpan != nil {
 		in, out := &in.TimeSpan, &out.TimeSpan
 		*out = new(float64)

@@ -29,6 +29,8 @@ type BucketObservation struct {
 	CosBucketURL *string `json:"cosBucketUrl,omitempty" tf:"cos_bucket_url,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	Website []WebsiteObservation `json:"website,omitempty" tf:"website,omitempty"`
 }
 
 type BucketParameters struct {
@@ -41,6 +43,10 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	ACLBody *string `json:"aclBody,omitempty" tf:"acl_body,omitempty"`
 
+	// Enable bucket acceleration.
+	// +kubebuilder:validation:Optional
+	AccelerationEnable *bool `json:"accelerationEnable,omitempty" tf:"acceleration_enable,omitempty"`
+
 	// The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example `mycos-1258798060`.
 	// +kubebuilder:validation:Required
 	Bucket *string `json:"bucket" tf:"bucket,omitempty"`
@@ -49,6 +55,10 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	CorsRules []CorsRulesParameters `json:"corsRules,omitempty" tf:"cors_rules,omitempty"`
 
+	// Enable intelligent tiering. NOTE: When intelligent tiering configuration is enabled, it cannot be turned off or modified.
+	// +kubebuilder:validation:Optional
+	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
+
 	// The server-side encryption algorithm to use. Valid value is `AES256`.
 	// +kubebuilder:validation:Optional
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
@@ -56,6 +66,14 @@ type BucketParameters struct {
 	// Force cleanup all objects before delete bucket.
 	// +kubebuilder:validation:Optional
 	ForceClean *bool `json:"forceClean,omitempty" tf:"force_clean,omitempty"`
+
+	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
+	// +kubebuilder:validation:Optional
+	IntelligentTieringDays *float64 `json:"intelligentTieringDays,omitempty" tf:"intelligent_tiering_days,omitempty"`
+
+	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
+	// +kubebuilder:validation:Optional
+	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
 
 	// A configuration of object lifecycle management (documented below).
 	// +kubebuilder:validation:Optional
@@ -73,7 +91,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	LogTargetBucket *string `json:"logTargetBucket,omitempty" tf:"log_target_bucket,omitempty"`
 
-	// Indicates whether to create a bucket of multi available zone. NOTE: If set to true, the versioning must enable.
+	// Indicates whether to create a bucket of multi available zone.
 	// +kubebuilder:validation:Optional
 	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
 
@@ -97,7 +115,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Enable bucket versioning.
+	// Enable bucket versioning. NOTE: The `multi_az` feature is true for the current bucket, cannot disable version control.
 	// +kubebuilder:validation:Optional
 	VersioningEnable *bool `json:"versioningEnable,omitempty" tf:"versioning_enable,omitempty"`
 
@@ -309,6 +327,7 @@ type TransitionParameters struct {
 }
 
 type WebsiteObservation struct {
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 }
 
 type WebsiteParameters struct {

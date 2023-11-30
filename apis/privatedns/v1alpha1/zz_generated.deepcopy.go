@@ -407,6 +407,11 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.CnameSpeedupStatus != nil {
+		in, out := &in.CnameSpeedupStatus, &out.CnameSpeedupStatus
+		*out = new(string)
+		**out = **in
+	}
 	if in.DNSForwardStatus != nil {
 		in, out := &in.DNSForwardStatus, &out.DNSForwardStatus
 		*out = new(string)

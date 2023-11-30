@@ -67,6 +67,25 @@ spec:
                     description: Mesh configuration.
                     items:
                       properties:
+                        inject:
+                          description: Sidecar inject configuration.
+                          items:
+                            properties:
+                              excludeIpRanges:
+                                description: IP ranges that should not be proxied.
+                                items:
+                                  type: string
+                                type: array
+                              holdApplicationUntilProxyStarts:
+                                description: Let istio-proxy(sidecar) start first,
+                                  before app container.
+                                type: boolean
+                              holdProxyUntilApplicationEnds:
+                                description: Let istio-proxy(sidecar) stop last, after
+                                  app container.
+                                type: boolean
+                            type: object
+                          type: array
                         istio:
                           description: Istio configuration.
                           items:
@@ -81,7 +100,8 @@ spec:
                                 description: Enable HTTP/1.0 support.
                                 type: boolean
                               outboundTrafficPolicy:
-                                description: Outbound traffic policy.
+                                description: Outbound traffic policy, REGISTRY_ONLY
+                                  or ALLOW_ANY, see https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/#MeshConfig-OutboundTrafficPolicy-Mode.
                                 type: string
                               smartDns:
                                 description: SmartDNS configuration.
@@ -93,6 +113,47 @@ spec:
                                     istioMetaDnsCapture:
                                       description: Enable dns proxy.
                                       type: boolean
+                                  type: object
+                                type: array
+                              tracing:
+                                description: Tracing config(Deprecated, please use
+                                  MeshConfig.Tracing for configuration).
+                                items:
+                                  properties:
+                                    apm:
+                                      description: APM config.
+                                      items:
+                                        properties:
+                                          enable:
+                                            description: Whether enable APM.
+                                            type: boolean
+                                          instanceId:
+                                            description: Instance id of the APM.
+                                            type: string
+                                          region:
+                                            description: Region.
+                                            type: string
+                                        required:
+                                        - enable
+                                        type: object
+                                      type: array
+                                    enable:
+                                      description: Whether enable tracing.
+                                      type: boolean
+                                    sampling:
+                                      description: Tracing sampling, 0.0-1.0.
+                                      type: number
+                                    zipkin:
+                                      description: Third party zipkin config.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: Zipkin address.
+                                            type: string
+                                        required:
+                                        - address
+                                        type: object
+                                      type: array
                                   type: object
                                 type: array
                             required:
@@ -145,6 +206,38 @@ spec:
                               vpcId:
                                 description: Vpc id.
                                 type: string
+                            type: object
+                          type: array
+                        sidecarResources:
+                          description: Default sidecar requests and limits.
+                          items:
+                            properties:
+                              limits:
+                                description: Sidecar limits.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Resource type name, `cpu/memory`.
+                                      type: string
+                                    quantity:
+                                      description: 'Resource quantity, example: cpu-`100m`,
+                                        memory-`1Gi`.'
+                                      type: string
+                                  type: object
+                                type: array
+                              requests:
+                                description: Sidecar requests.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Resource type name, `cpu/memory`.
+                                      type: string
+                                    quantity:
+                                      description: 'Resource quantity, example: cpu-`100m`,
+                                        memory-`1Gi`.'
+                                      type: string
+                                  type: object
+                                type: array
                             type: object
                           type: array
                         tracing:

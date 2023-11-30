@@ -32,6 +32,10 @@ type GrafanaInstanceObservation struct {
 
 	InstanceStatus *float64 `json:"instanceStatus,omitempty" tf:"instance_status,omitempty"`
 
+	InternalURL *string `json:"internalUrl,omitempty" tf:"internal_url,omitempty"`
+
+	InternetURL *string `json:"internetUrl,omitempty" tf:"internet_url,omitempty"`
+
 	RootURL *string `json:"rootUrl,omitempty" tf:"root_url,omitempty"`
 }
 
@@ -48,6 +52,14 @@ type GrafanaInstanceParameters struct {
 	// Instance name.
 	// +kubebuilder:validation:Required
 	InstanceName *string `json:"instanceName" tf:"instance_name,omitempty"`
+
+	// Whether to clean up completely, the default is false.
+	// +kubebuilder:validation:Optional
+	IsDestroy *bool `json:"isDestroy,omitempty" tf:"is_destroy,omitempty"`
+
+	// Whether to clean up completely, the default is false.
+	// +kubebuilder:validation:Optional
+	IsDistroy *bool `json:"isDistroy,omitempty" tf:"is_distroy,omitempty"`
 
 	// Subnet Id array.
 	// +kubebuilder:validation:Optional

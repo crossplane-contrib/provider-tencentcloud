@@ -66,9 +66,21 @@ spec:
                   dbVersionId:
                     description: db engine version, default to Percona 5.7.17.
                     type: string
+                  dcnInstanceId:
+                    description: DCN source instance ID.
+                    type: string
+                  dcnRegion:
+                    description: DCN source region.
+                    type: string
+                  extranetAccess:
+                    description: Whether to open the extranet access.
+                    type: boolean
                   instanceName:
                     description: name of this instance.
                     type: string
+                  ipv6Flag:
+                    description: Whether to support IPv6.
+                    type: number
                   projectId:
                     description: project id.
                     type: number
@@ -106,7 +118,7 @@ spec:
                       querying api DescribeShardSpec.
                     type: number
                   subnetId:
-                    description: subnet id, it&amp;#39;s required when vpcId is set.
+                    description: subnet id, its required when vpcId is set.
                     type: string
                   subnetIdRef:
                     description: A Reference to a named object.
@@ -181,6 +193,12 @@ spec:
                             type: string
                         type: object
                     type: object
+                  vip:
+                    description: The field is required to specify VIP.
+                    type: string
+                  vipv6:
+                    description: The field is required to specify VIPv6.
+                    type: string
                   vpcId:
                     description: vpc id.
                     type: string
@@ -446,6 +464,8 @@ spec:
                 properties:
                   id:
                     type: string
+                  vport:
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.

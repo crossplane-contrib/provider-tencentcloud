@@ -73,6 +73,14 @@ type ReadonlyInstanceParameters struct {
 	// Name of instance.
 	// +kubebuilder:validation:Required
 	InstanceName *string `json:"instanceName" tf:"instance_name,omitempty"`
+
+	// ID of the subnet within this VPC.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// ID of the VPC.
+	// +kubebuilder:validation:Optional
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
 // ReadonlyInstanceSpec defines the desired state of ReadonlyInstance

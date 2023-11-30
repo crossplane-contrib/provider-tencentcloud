@@ -257,11 +257,6 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.IP != nil {
-		in, out := &in.IP, &out.IP
-		*out = new(string)
-		**out = **in
-	}
 	if in.NodeInfo != nil {
 		in, out := &in.NodeInfo, &out.NodeInfo
 		*out = make([]NodeInfoObservation, len(*in))
@@ -309,6 +304,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IP != nil {
+		in, out := &in.IP, &out.IP
+		*out = new(string)
+		**out = **in
+	}
 	if in.MemSize != nil {
 		in, out := &in.MemSize, &out.MemSize
 		*out = new(float64)
@@ -322,6 +322,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.NoAuth != nil {
 		in, out := &in.NoAuth, &out.NoAuth
 		*out = new(bool)
+		**out = **in
+	}
+	if in.OperationNetwork != nil {
+		in, out := &in.OperationNetwork, &out.OperationNetwork
+		*out = new(string)
 		**out = **in
 	}
 	if in.ParamsTemplateID != nil {
@@ -346,6 +351,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Recycle != nil {
+		in, out := &in.Recycle, &out.Recycle
 		*out = new(float64)
 		**out = **in
 	}

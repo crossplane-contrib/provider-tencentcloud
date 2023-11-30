@@ -79,6 +79,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	BandWidth *float64 `json:"bandWidth,omitempty" tf:"band_width,omitempty"`
 
+	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `PREPAID`.
+	// +kubebuilder:validation:Optional
+	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
 	// Instance configuration.
 	// +kubebuilder:validation:Optional
 	Config []ConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
@@ -99,9 +103,17 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Required
 	InstanceName *string `json:"instanceName" tf:"instance_name,omitempty"`
 
+	// Description of instance type. `profession`: 1, `standard`:  1(general), 2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2), 7(specialized-3), 8(specialized-4), 9(exclusive).
+	// +kubebuilder:validation:Optional
+	InstanceType *float64 `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
 	// Kafka version (0.10.2/1.1.1/2.4.1).
 	// +kubebuilder:validation:Optional
 	KafkaVersion *string `json:"kafkaVersion,omitempty" tf:"kafka_version,omitempty"`
+
+	// The size of a single message in bytes at the instance level. Value range: `1024 - 12*1024*1024 bytes (i.e., 1KB-12MB).
+	// +kubebuilder:validation:Optional
+	MaxMessageByte *float64 `json:"maxMessageByte,omitempty" tf:"max_message_byte,omitempty"`
 
 	// The maximum retention time of instance logs, in minutes. the default is 10080 (7 days), the maximum is 30 days, and the default 0 is not filled, which means that the log retention time recovery policy is not enabled.
 	// +kubebuilder:validation:Optional
@@ -119,7 +131,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
 
-	// Timestamp.
+	// Bandwidth of the public network.
 	// +kubebuilder:validation:Optional
 	PublicNetwork *float64 `json:"publicNetwork,omitempty" tf:"public_network,omitempty"`
 
@@ -131,7 +143,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	RenewFlag *float64 `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// Subnet id.
+	// Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+	// +kubebuilder:validation:Optional
+	SpecificationsType *string `json:"specificationsType,omitempty" tf:"specifications_type,omitempty"`
+
+	// Subnet id, it will be basic network if not set.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -150,7 +166,13 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Tags []TagsParameters `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Vpc id.
+	// POSTPAID_BY_HOUR scale-down mode
+	// - 1: stable transformation;
+	// - 2: High-speed transformer.
+	// +kubebuilder:validation:Optional
+	UpgradeStrategy *float64 `json:"upgradeStrategy,omitempty" tf:"upgrade_strategy,omitempty"`
+
+	// Vpc id, it will be basic network if not set.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`

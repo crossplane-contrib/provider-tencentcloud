@@ -39,6 +39,10 @@ type AccountParameters struct {
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
+	// The maximum number of available connections for a new account, the default value is 10240, and the maximum value that can be set is 10240.
+	// +kubebuilder:validation:Optional
+	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
+
 	// Instance ID to which the account belongs.
 	// +crossplane:generate:reference:type=Instance
 	// +kubebuilder:validation:Optional

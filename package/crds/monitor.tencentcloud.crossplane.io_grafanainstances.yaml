@@ -72,6 +72,12 @@ spec:
                   instanceName:
                     description: Instance name.
                     type: string
+                  isDestroy:
+                    description: Whether to clean up completely, the default is false.
+                    type: boolean
+                  isDistroy:
+                    description: Whether to clean up completely, the default is false.
+                    type: boolean
                   subnetIds:
                     description: Subnet Id array.
                     items:
@@ -343,6 +349,10 @@ spec:
                     type: string
                   instanceStatus:
                     type: number
+                  internalUrl:
+                    type: string
+                  internetUrl:
+                    type: string
                   rootUrl:
                     type: string
                 type: object

@@ -307,6 +307,45 @@ spec:
                           items:
                             type: string
                           type: array
+                        gpuArgs:
+                          description: GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: `{ version:
+                                  String, name: String }`. `version`: Version of GPU
+                                  driver or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: `{address:
+                                  String}`. `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: `{
+                                  version: String, name: String }`. `version`: Version
+                                  of GPU driver or CUDA; `name`: Name of GPU driver
+                                  or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG.
+                                type: boolean
+                            type: object
+                          type: array
                         isSchedule:
                           description: Indicate to schedule the adding node or not.
                             Default is true.
@@ -365,6 +404,45 @@ spec:
                             node. This is a white-list parameter.
                           items:
                             type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: `{ version:
+                                  String, name: String }`. `version`: Version of GPU
+                                  driver or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: `{address:
+                                  String}`. `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: `{
+                                  version: String, name: String }`. `version`: Version
+                                  of GPU driver or CUDA; `name`: Name of GPU driver
+                                  or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG.
+                                type: boolean
+                            type: object
                           type: array
                         isSchedule:
                           description: Indicate to schedule the adding node or not.

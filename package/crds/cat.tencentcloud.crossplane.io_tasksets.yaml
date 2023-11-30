@@ -89,6 +89,10 @@ spec:
                     items:
                       type: string
                     type: array
+                  operate:
+                    description: The input is valid when the parameter is modified,
+                      `suspend`/`resume`, used to suspend/resume the dial test task.
+                    type: string
                   parameters:
                     description: tasks parameters.
                     type: string

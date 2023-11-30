@@ -31,7 +31,7 @@ type AclObservation struct {
 
 type AclParameters struct {
 
-	// IP address allowed to access. The default value is `*`, which means that any host can access.
+	// The default is *, which means that any host can access it. Support filling in IP or network segment, and support `;`separation.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
@@ -54,7 +54,7 @@ type AclParameters struct {
 	// +kubebuilder:validation:Optional
 	PermissionType *string `json:"permissionType,omitempty" tf:"permission_type,omitempty"`
 
-	// User list. The default value is `*`, which means that any user can access. The current user can only be one included in the user list.
+	// User list. The default value is `*`, which means that any user can access. The current user can only be one included in the user list. For example: `root` meaning user root can access.
 	// +kubebuilder:validation:Optional
 	Principal *string `json:"principal,omitempty" tf:"principal,omitempty"`
 

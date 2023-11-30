@@ -63,6 +63,20 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  accessKeyId:
+                    description: User defined key ID, required when access_key_type
+                      is manual. The length is 5-50 characters, consisting of letters,
+                      numbers, and English underscores.
+                    type: string
+                  accessKeySecret:
+                    description: The user-defined key must be passed when the access_key_type
+                      is manual. The length is 10-50 characters, consisting of letters,
+                      numbers, and English underscores.
+                    type: string
+                  accessKeyType:
+                    description: Key type, supports both auto and manual (custom keys),
+                      defaults to auto.
+                    type: string
                   secretName:
                     description: Custom key name.
                     type: string
@@ -248,8 +262,6 @@ spec:
             properties:
               atProvider:
                 properties:
-                  accessKeySecret:
-                    type: string
                   createTime:
                     type: string
                   id:

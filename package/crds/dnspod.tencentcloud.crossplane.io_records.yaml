@@ -76,6 +76,9 @@ spec:
                   recordType:
                     description: The record type.
                     type: string
+                  remark:
+                    description: The Remark of record.
+                    type: string
                   status:
                     description: Records the initial state, with values ranging from
                       ENABLE and DISABLE. The default is ENABLE, and if DISABLE is

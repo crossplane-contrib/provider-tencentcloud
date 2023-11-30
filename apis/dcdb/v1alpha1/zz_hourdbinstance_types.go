@@ -27,6 +27,8 @@ import (
 
 type HourdbInstanceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	Vport *float64 `json:"vport,omitempty" tf:"vport,omitempty"`
 }
 
 type HourdbInstanceParameters struct {
@@ -34,6 +36,22 @@ type HourdbInstanceParameters struct {
 	// db engine version, default to Percona 5.7.17.
 	// +kubebuilder:validation:Optional
 	DBVersionID *string `json:"dbVersionId,omitempty" tf:"db_version_id,omitempty"`
+
+	// DCN source instance ID.
+	// +kubebuilder:validation:Optional
+	DcnInstanceID *string `json:"dcnInstanceId,omitempty" tf:"dcn_instance_id,omitempty"`
+
+	// DCN source region.
+	// +kubebuilder:validation:Optional
+	DcnRegion *string `json:"dcnRegion,omitempty" tf:"dcn_region,omitempty"`
+
+	// Whether to open the extranet access.
+	// +kubebuilder:validation:Optional
+	ExtranetAccess *bool `json:"extranetAccess,omitempty" tf:"extranet_access,omitempty"`
+
+	// Whether to support IPv6.
+	// +kubebuilder:validation:Optional
+	IPv6Flag *float64 `json:"ipv6Flag,omitempty" tf:"ipv6_flag,omitempty"`
 
 	// name of this instance.
 	// +kubebuilder:validation:Optional
@@ -67,7 +85,7 @@ type HourdbInstanceParameters struct {
 	// +kubebuilder:validation:Required
 	ShardStorage *float64 `json:"shardStorage" tf:"shard_storage,omitempty"`
 
-	// subnet id, it&amp;#39;s required when vpcId is set.
+	// subnet id, its required when vpcId is set.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -88,6 +106,14 @@ type HourdbInstanceParameters struct {
 
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcidSelector,omitempty" tf:"-"`
+
+	// The field is required to specify VIP.
+	// +kubebuilder:validation:Optional
+	Vip *string `json:"vip,omitempty" tf:"vip,omitempty"`
+
+	// The field is required to specify VIPv6.
+	// +kubebuilder:validation:Optional
+	Vipv6 *string `json:"vipv6,omitempty" tf:"vipv6,omitempty"`
 
 	// available zone.
 	// +kubebuilder:validation:Optional

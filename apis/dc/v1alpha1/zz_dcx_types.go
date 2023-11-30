@@ -55,6 +55,10 @@ type DcxParameters struct {
 	// +kubebuilder:validation:Required
 	DcID *string `json:"dcId" tf:"dc_id,omitempty"`
 
+	// Connection owner, who is the current customer by default. The developer account ID should be entered for shared connections.
+	// +kubebuilder:validation:Optional
+	DcOwnerAccount *string `json:"dcOwnerAccount,omitempty" tf:"dc_owner_account,omitempty"`
+
 	// ID of the DC Gateway. Currently only new in the console.
 	// +kubebuilder:validation:Required
 	DcgID *string `json:"dcgId" tf:"dcg_id,omitempty"`
@@ -80,8 +84,8 @@ type DcxParameters struct {
 	TencentAddress *string `json:"tencentAddress,omitempty" tf:"tencent_address,omitempty"`
 
 	// ID of the VPC or BMVPC.
-	// +kubebuilder:validation:Required
-	VPCID *string `json:"vpcId" tf:"vpc_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
 	// Vlan of the dedicated tunnels. Valid value ranges: (0~3000). `0` means that only one tunnel can be created for the physical connect.
 	// +kubebuilder:validation:Optional

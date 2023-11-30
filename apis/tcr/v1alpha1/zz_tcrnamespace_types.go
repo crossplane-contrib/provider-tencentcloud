@@ -25,15 +25,37 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CveWhitelistItemsObservation struct {
+}
+
+type CveWhitelistItemsParameters struct {
+
+	// Vulnerability Whitelist ID.
+	// +kubebuilder:validation:Optional
+	CveID *string `json:"cveId,omitempty" tf:"cve_id,omitempty"`
+}
+
 type TcrNamespaceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type TcrNamespaceParameters struct {
 
+	// Vulnerability Whitelist.
+	// +kubebuilder:validation:Optional
+	CveWhitelistItems []CveWhitelistItemsParameters `json:"cveWhitelistItems,omitempty" tf:"cve_whitelist_items,omitempty"`
+
 	// ID of the TCR instance.
 	// +kubebuilder:validation:Required
 	InstanceID *string `json:"instanceId" tf:"instance_id,omitempty"`
+
+	// Scanning level, `True` is automatic, `False` is manual. Default is `false`.
+	// +kubebuilder:validation:Optional
+	IsAutoScan *bool `json:"isAutoScan,omitempty" tf:"is_auto_scan,omitempty"`
+
+	// Blocking switch, `True` is open, `False` is closed. Default is `false`.
+	// +kubebuilder:validation:Optional
+	IsPreventVul *bool `json:"isPreventVul,omitempty" tf:"is_prevent_vul,omitempty"`
 
 	// Indicate that the namespace is public or not. Default is `false`.
 	// +kubebuilder:validation:Optional
@@ -42,6 +64,10 @@ type TcrNamespaceParameters struct {
 	// Name of the TCR namespace. Valid length is [2~30]. It can only contain lowercase letters, numbers and separators (`.`, `_`, `-`), and cannot start, end or continue with separators.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Block vulnerability level, currently only supports `low`, `medium`, `high`.
+	// +kubebuilder:validation:Optional
+	Severity *string `json:"severity,omitempty" tf:"severity,omitempty"`
 }
 
 // TcrNamespaceSpec defines the desired state of TcrNamespace

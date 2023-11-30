@@ -64,6 +64,11 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  accessKeyIds:
+                    description: Array of key IDs to be bound.
+                    items:
+                      type: string
+                    type: array
                   apiId:
                     description: ID of the API. This parameter will be required when
                       `bind_type` is `API`.

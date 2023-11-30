@@ -63,9 +63,26 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  cveWhitelistItems:
+                    description: Vulnerability Whitelist.
+                    items:
+                      properties:
+                        cveId:
+                          description: Vulnerability Whitelist ID.
+                          type: string
+                      type: object
+                    type: array
                   instanceId:
                     description: ID of the TCR instance.
                     type: string
+                  isAutoScan:
+                    description: Scanning level, `True` is automatic, `False` is manual.
+                      Default is `false`.
+                    type: boolean
+                  isPreventVul:
+                    description: Blocking switch, `True` is open, `False` is closed.
+                      Default is `false`.
+                    type: boolean
                   isPublic:
                     description: Indicate that the namespace is public or not. Default
                       is `false`.
@@ -74,6 +91,10 @@ spec:
                     description: Name of the TCR namespace. Valid length is [2~30].
                       It can only contain lowercase letters, numbers and separators
                       (`.`, `_`, `-`), and cannot start, end or continue with separators.
+                    type: string
+                  severity:
+                    description: Block vulnerability level, currently only supports
+                      `low`, `medium`, `high`.
                     type: string
                 required:
                 - instanceId

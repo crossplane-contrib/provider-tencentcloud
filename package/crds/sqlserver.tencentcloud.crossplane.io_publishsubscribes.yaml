@@ -72,8 +72,12 @@ spec:
                         publishDatabase:
                           description: Publish the database.
                           type: string
+                        subscribeDatabase:
+                          description: Subscribe the database.
+                          type: string
                       required:
                       - publishDatabase
+                      - subscribeDatabase
                       type: object
                     type: array
                   deleteSubscribeDb:

@@ -137,6 +137,10 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
+	// GPU driver parameters.
+	// +kubebuilder:validation:Optional
+	GpuArgs []GpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
+
 	// Indicate to schedule the adding node or not. Default is true.
 	// +kubebuilder:validation:Optional
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
@@ -148,6 +152,32 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// Base64-encoded User Data text, the length limit is 16KB.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+}
+
+type GpuArgsObservation struct {
+}
+
+type GpuArgsParameters struct {
+
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +kubebuilder:validation:Optional
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +kubebuilder:validation:Optional
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// +kubebuilder:validation:Optional
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
 }
 
 type WorkerConfigOverridesDataDiskObservation struct {
@@ -180,6 +210,32 @@ type WorkerConfigOverridesDataDiskParameters struct {
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 }
 
+type WorkerConfigOverridesGpuArgsObservation struct {
+}
+
+type WorkerConfigOverridesGpuArgsParameters struct {
+
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +kubebuilder:validation:Optional
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +kubebuilder:validation:Optional
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// +kubebuilder:validation:Optional
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
+}
+
 type WorkerConfigOverridesObservation struct {
 }
 
@@ -200,6 +256,10 @@ type WorkerConfigOverridesParameters struct {
 	// Custom parameter information related to the node. This is a white-list parameter.
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
+
+	// GPU driver parameters.
+	// +kubebuilder:validation:Optional
+	GpuArgs []WorkerConfigOverridesGpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
 	// Indicate to schedule the adding node or not. Default is true.
 	// +kubebuilder:validation:Optional

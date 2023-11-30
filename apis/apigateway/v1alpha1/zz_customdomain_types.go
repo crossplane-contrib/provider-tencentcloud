@@ -45,6 +45,10 @@ type CustomDomainParameters struct {
 	// +kubebuilder:validation:Optional
 	IsDefaultMapping *bool `json:"isDefaultMapping,omitempty" tf:"is_default_mapping,omitempty"`
 
+	// Whether to force HTTP requests to jump to HTTPS, default to false. When the parameter is true, the API gateway will redirect all HTTP protocol requests using the custom domain name to the HTTPS protocol for forwarding.
+	// +kubebuilder:validation:Optional
+	IsForcedHTTPS *bool `json:"isForcedHttps,omitempty" tf:"is_forced_https,omitempty"`
+
 	// Network type. Valid values: `OUTER`, `INNER`.
 	// +kubebuilder:validation:Required
 	NetType *string `json:"netType" tf:"net_type,omitempty"`

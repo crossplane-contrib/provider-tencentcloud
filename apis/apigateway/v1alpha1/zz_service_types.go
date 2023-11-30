@@ -70,6 +70,10 @@ type ServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 
+	// Exclusive instance ID.
+	// +kubebuilder:validation:Optional
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
 	// Network type list, which is used to specify the supported network types. Valid values: `INNER`, `OUTER`. `INNER` indicates access over private network, and `OUTER` indicates access over public network.
 	// +kubebuilder:validation:Required
 	NetType []*string `json:"netType" tf:"net_type,omitempty"`
@@ -94,9 +98,17 @@ type ServiceParameters struct {
 	// +kubebuilder:validation:Required
 	ServiceName *string `json:"serviceName" tf:"service_name,omitempty"`
 
+	// Tag description list.
+	// +kubebuilder:validation:Optional
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// API QPS value. Enter a positive number to limit the API query rate per second `QPS`.
 	// +kubebuilder:validation:Optional
 	TestLimit *float64 `json:"testLimit,omitempty" tf:"test_limit,omitempty"`
+
+	// VPC ID.
+	// +kubebuilder:validation:Optional
+	UniqVPCID *string `json:"uniqVpcId,omitempty" tf:"uniq_vpc_id,omitempty"`
 }
 
 type UsagePlanListObservation struct {
