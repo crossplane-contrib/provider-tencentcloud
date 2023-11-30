@@ -33,7 +33,7 @@ func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_tdmq_namespace", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = shortGroupTdmq
-		r.Kind = "Namespace"
+		r.Kind = "TdmqNamespace"
 		r.References["cluster_id"] = tjconfig.Reference{
 			Type: "Instance",
 		}
@@ -44,7 +44,7 @@ func Configure(p *tjconfig.Provider) {
 		r.ShortGroup = shortGroupTdmq
 		r.Kind = "Topic"
 		r.References["environ_id"] = tjconfig.Reference{
-			Type: "Namespace",
+			Type: "TdmqNamespace",
 		}
 		r.References["cluster_id"] = tjconfig.Reference{
 			Type: "Instance",
@@ -68,7 +68,7 @@ func Configure(p *tjconfig.Provider) {
 			Type: "Instance",
 		}
 		r.References["environ_id"] = tjconfig.Reference{
-			Type: "Namespace",
+			Type: "TdmqNamespace",
 		}
 	})
 

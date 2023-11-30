@@ -33,7 +33,7 @@ func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_tcr_namespace", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
-		r.Kind = "Namespace"
+		r.Kind = "TcrNamespace"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_tcr_repository", func(r *tjconfig.Resource) {

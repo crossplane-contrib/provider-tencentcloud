@@ -151,68 +151,68 @@ func (mg *Layer) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this Namespace.
-func (mg *Namespace) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this ScfNamespace.
+func (mg *ScfNamespace) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this Namespace.
-func (mg *Namespace) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this ScfNamespace.
+func (mg *ScfNamespace) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this Namespace.
-func (mg *Namespace) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this ScfNamespace.
+func (mg *ScfNamespace) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this Namespace.
+GetProviderReference of this ScfNamespace.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *Namespace) GetProviderReference() *xpv1.Reference {
+func (mg *ScfNamespace) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetPublishConnectionDetailsTo of this Namespace.
-func (mg *Namespace) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this ScfNamespace.
+func (mg *ScfNamespace) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this Namespace.
-func (mg *Namespace) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this ScfNamespace.
+func (mg *ScfNamespace) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this Namespace.
-func (mg *Namespace) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this ScfNamespace.
+func (mg *ScfNamespace) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this Namespace.
-func (mg *Namespace) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this ScfNamespace.
+func (mg *ScfNamespace) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this Namespace.
-func (mg *Namespace) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this ScfNamespace.
+func (mg *ScfNamespace) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this Namespace.
+SetProviderReference of this ScfNamespace.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *Namespace) SetProviderReference(r *xpv1.Reference) {
+func (mg *ScfNamespace) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetPublishConnectionDetailsTo of this Namespace.
-func (mg *Namespace) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this ScfNamespace.
+func (mg *ScfNamespace) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this Namespace.
-func (mg *Namespace) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this ScfNamespace.
+func (mg *ScfNamespace) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

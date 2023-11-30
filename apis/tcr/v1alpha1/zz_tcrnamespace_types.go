@@ -25,72 +25,70 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type NamespaceObservation struct {
-	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
-
+type TcrNamespaceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	ModifyTime *string `json:"modifyTime,omitempty" tf:"modify_time,omitempty"`
-
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type NamespaceParameters struct {
+type TcrNamespaceParameters struct {
 
-	// Description of the SCF namespace.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Name of the SCF namespace.
+	// ID of the TCR instance.
 	// +kubebuilder:validation:Required
-	Namespace *string `json:"namespace" tf:"namespace,omitempty"`
+	InstanceID *string `json:"instanceId" tf:"instance_id,omitempty"`
+
+	// Indicate that the namespace is public or not. Default is `false`.
+	// +kubebuilder:validation:Optional
+	IsPublic *bool `json:"isPublic,omitempty" tf:"is_public,omitempty"`
+
+	// Name of the TCR namespace. Valid length is [2~30]. It can only contain lowercase letters, numbers and separators (`.`, `_`, `-`), and cannot start, end or continue with separators.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
 }
 
-// NamespaceSpec defines the desired state of Namespace
-type NamespaceSpec struct {
+// TcrNamespaceSpec defines the desired state of TcrNamespace
+type TcrNamespaceSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     NamespaceParameters `json:"forProvider"`
+	ForProvider     TcrNamespaceParameters `json:"forProvider"`
 }
 
-// NamespaceStatus defines the observed state of Namespace.
-type NamespaceStatus struct {
+// TcrNamespaceStatus defines the observed state of TcrNamespace.
+type TcrNamespaceStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        NamespaceObservation `json:"atProvider,omitempty"`
+	AtProvider        TcrNamespaceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// Namespace is the Schema for the Namespaces API
+// TcrNamespace is the Schema for the TcrNamespaces API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloudjet}
-type Namespace struct {
+type TcrNamespace struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              NamespaceSpec   `json:"spec"`
-	Status            NamespaceStatus `json:"status,omitempty"`
+	Spec              TcrNamespaceSpec   `json:"spec"`
+	Status            TcrNamespaceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// NamespaceList contains a list of Namespaces
-type NamespaceList struct {
+// TcrNamespaceList contains a list of TcrNamespaces
+type TcrNamespaceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Namespace `json:"items"`
+	Items           []TcrNamespace `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Namespace_Kind             = "Namespace"
-	Namespace_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Namespace_Kind}.String()
-	Namespace_KindAPIVersion   = Namespace_Kind + "." + CRDGroupVersion.String()
-	Namespace_GroupVersionKind = CRDGroupVersion.WithKind(Namespace_Kind)
+	TcrNamespace_Kind             = "TcrNamespace"
+	TcrNamespace_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: TcrNamespace_Kind}.String()
+	TcrNamespace_KindAPIVersion   = TcrNamespace_Kind + "." + CRDGroupVersion.String()
+	TcrNamespace_GroupVersionKind = CRDGroupVersion.WithKind(TcrNamespace_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Namespace{}, &NamespaceList{})
+	SchemeBuilder.Register(&TcrNamespace{}, &TcrNamespaceList{})
 }
