@@ -192,7 +192,7 @@ import (
 	instanceredis "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/redis/instance"
 	function "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/function"
 	layer "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/layer"
-	namespace "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/namespace"
+	scfnamespace "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/scfnamespace"
 	domainses "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/domain"
 	emailaddress "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/emailaddress"
 	template "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/template"
@@ -217,14 +217,14 @@ import (
 	clusterattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcm/clusterattachment"
 	mesh "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcm/mesh"
 	instancetcr "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/instance"
-	namespacetcr "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/namespace"
 	repository "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/repository"
+	tcrnamespace "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/tcrnamespace"
 	token "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/token"
 	vpcattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/vpcattachment"
 	instancetdmq "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tdmq/instance"
-	namespacetdmq "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tdmq/namespace"
 	namespaceroleattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tdmq/namespaceroleattachment"
 	roletdmq "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tdmq/role"
+	tdmqnamespace "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tdmq/tdmqnamespace"
 	topictdmq "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tdmq/topic"
 	appconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/appconfig"
 	application "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/application"
@@ -464,7 +464,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		instanceredis.Setup,
 		function.Setup,
 		layer.Setup,
-		namespace.Setup,
+		scfnamespace.Setup,
 		domainses.Setup,
 		emailaddress.Setup,
 		template.Setup,
@@ -489,14 +489,14 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		clusterattachment.Setup,
 		mesh.Setup,
 		instancetcr.Setup,
-		namespacetcr.Setup,
 		repository.Setup,
+		tcrnamespace.Setup,
 		token.Setup,
 		vpcattachment.Setup,
 		instancetdmq.Setup,
-		namespacetdmq.Setup,
 		namespaceroleattachment.Setup,
 		roletdmq.Setup,
+		tdmqnamespace.Setup,
 		topictdmq.Setup,
 		appconfig.Setup,
 		application.Setup,

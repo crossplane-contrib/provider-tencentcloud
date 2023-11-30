@@ -5,7 +5,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: namespaces.tcr.tencentcloud.crossplane.io
+  name: tcrnamespaces.tcr.tencentcloud.crossplane.io
 spec:
   group: tcr.tencentcloud.crossplane.io
   names:
@@ -13,10 +13,10 @@ spec:
     - crossplane
     - managed
     - tencentcloudjet
-    kind: Namespace
-    listKind: NamespaceList
-    plural: namespaces
-    singular: namespace
+    kind: TcrNamespace
+    listKind: TcrNamespaceList
+    plural: tcrnamespaces
+    singular: tcrnamespace
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Namespace is the Schema for the Namespaces API
+        description: TcrNamespace is the Schema for the TcrNamespaces API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: NamespaceSpec defines the desired state of Namespace
+            description: TcrNamespaceSpec defines the desired state of TcrNamespace
             properties:
               deletionPolicy:
                 default: Delete
@@ -251,7 +251,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: NamespaceStatus defines the observed state of Namespace.
+            description: TcrNamespaceStatus defines the observed state of TcrNamespace.
             properties:
               atProvider:
                 properties:

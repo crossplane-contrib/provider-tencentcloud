@@ -45,7 +45,7 @@ type TopicParameters struct {
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// The name of tdmq namespace.
-	// +crossplane:generate:reference:type=Namespace
+	// +crossplane:generate:reference:type=TdmqNamespace
 	// +kubebuilder:validation:Optional
 	EnvironID *string `json:"environId,omitempty" tf:"environ_id,omitempty"`
 

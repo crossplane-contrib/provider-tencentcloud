@@ -25,70 +25,72 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type NamespaceObservation struct {
+type ScfNamespaceObservation struct {
+	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	ModifyTime *string `json:"modifyTime,omitempty" tf:"modify_time,omitempty"`
+
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type NamespaceParameters struct {
+type ScfNamespaceParameters struct {
 
-	// ID of the TCR instance.
-	// +kubebuilder:validation:Required
-	InstanceID *string `json:"instanceId" tf:"instance_id,omitempty"`
-
-	// Indicate that the namespace is public or not. Default is `false`.
+	// Description of the SCF namespace.
 	// +kubebuilder:validation:Optional
-	IsPublic *bool `json:"isPublic,omitempty" tf:"is_public,omitempty"`
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Name of the TCR namespace. Valid length is [2~30]. It can only contain lowercase letters, numbers and separators (`.`, `_`, `-`), and cannot start, end or continue with separators.
+	// Name of the SCF namespace.
 	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	Namespace *string `json:"namespace" tf:"namespace,omitempty"`
 }
 
-// NamespaceSpec defines the desired state of Namespace
-type NamespaceSpec struct {
+// ScfNamespaceSpec defines the desired state of ScfNamespace
+type ScfNamespaceSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     NamespaceParameters `json:"forProvider"`
+	ForProvider     ScfNamespaceParameters `json:"forProvider"`
 }
 
-// NamespaceStatus defines the observed state of Namespace.
-type NamespaceStatus struct {
+// ScfNamespaceStatus defines the observed state of ScfNamespace.
+type ScfNamespaceStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        NamespaceObservation `json:"atProvider,omitempty"`
+	AtProvider        ScfNamespaceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// Namespace is the Schema for the Namespaces API
+// ScfNamespace is the Schema for the ScfNamespaces API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloudjet}
-type Namespace struct {
+type ScfNamespace struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              NamespaceSpec   `json:"spec"`
-	Status            NamespaceStatus `json:"status,omitempty"`
+	Spec              ScfNamespaceSpec   `json:"spec"`
+	Status            ScfNamespaceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// NamespaceList contains a list of Namespaces
-type NamespaceList struct {
+// ScfNamespaceList contains a list of ScfNamespaces
+type ScfNamespaceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Namespace `json:"items"`
+	Items           []ScfNamespace `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Namespace_Kind             = "Namespace"
-	Namespace_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Namespace_Kind}.String()
-	Namespace_KindAPIVersion   = Namespace_Kind + "." + CRDGroupVersion.String()
-	Namespace_GroupVersionKind = CRDGroupVersion.WithKind(Namespace_Kind)
+	ScfNamespace_Kind             = "ScfNamespace"
+	ScfNamespace_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ScfNamespace_Kind}.String()
+	ScfNamespace_KindAPIVersion   = ScfNamespace_Kind + "." + CRDGroupVersion.String()
+	ScfNamespace_GroupVersionKind = CRDGroupVersion.WithKind(ScfNamespace_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Namespace{}, &NamespaceList{})
+	SchemeBuilder.Register(&ScfNamespace{}, &ScfNamespaceList{})
 }

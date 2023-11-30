@@ -24,32 +24,6 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// ResolveReferences of this Namespace.
-func (mg *Namespace) ResolveReferences(ctx context.Context, c client.Reader) error {
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClusterID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.ClusterIDRef,
-		Selector:     mg.Spec.ForProvider.ClusterIDSelector,
-		To: reference.To{
-			List:    &InstanceList{},
-			Managed: &Instance{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ClusterID")
-	}
-	mg.Spec.ForProvider.ClusterID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ClusterIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
 // ResolveReferences of this NamespaceRoleAttachment.
 func (mg *NamespaceRoleAttachment) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -79,8 +53,8 @@ func (mg *NamespaceRoleAttachment) ResolveReferences(ctx context.Context, c clie
 		Reference:    mg.Spec.ForProvider.EnvironIDRef,
 		Selector:     mg.Spec.ForProvider.EnvironIDSelector,
 		To: reference.To{
-			List:    &NamespaceList{},
-			Managed: &Namespace{},
+			List:    &TdmqNamespaceList{},
+			Managed: &TdmqNamespace{},
 		},
 	})
 	if err != nil {
@@ -94,6 +68,32 @@ func (mg *NamespaceRoleAttachment) ResolveReferences(ctx context.Context, c clie
 
 // ResolveReferences of this Role.
 func (mg *Role) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClusterID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ClusterIDRef,
+		Selector:     mg.Spec.ForProvider.ClusterIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ClusterID")
+	}
+	mg.Spec.ForProvider.ClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClusterIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this TdmqNamespace.
+func (mg *TdmqNamespace) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
@@ -147,8 +147,8 @@ func (mg *Topic) ResolveReferences(ctx context.Context, c client.Reader) error {
 		Reference:    mg.Spec.ForProvider.EnvironIDRef,
 		Selector:     mg.Spec.ForProvider.EnvironIDSelector,
 		To: reference.To{
-			List:    &NamespaceList{},
-			Managed: &Namespace{},
+			List:    &TdmqNamespaceList{},
+			Managed: &TdmqNamespace{},
 		},
 	})
 	if err != nil {

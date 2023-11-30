@@ -33,7 +33,7 @@ func Configure(p *tjconfig.Provider) {
 	p.AddResourceConfigurator("tencentcloud_scf_namespace", func(r *tjconfig.Resource) {
 		r.ExternalName = tjconfig.IdentifierFromProvider
 		r.ShortGroup = shortGroupScf
-		r.Kind = "Namespace"
+		r.Kind = "ScfNamespace"
 	})
 
 	p.AddResourceConfigurator("tencentcloud_scf_layer", func(r *tjconfig.Resource) {

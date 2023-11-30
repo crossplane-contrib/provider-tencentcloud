@@ -25,11 +25,11 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type NamespaceObservation struct {
+type TdmqNamespaceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type NamespaceParameters struct {
+type TdmqNamespaceParameters struct {
 
 	// The Dedicated Cluster Id.
 	// +crossplane:generate:reference:type=Instance
@@ -59,51 +59,51 @@ type NamespaceParameters struct {
 	RetentionPolicy map[string]*string `json:"retentionPolicy,omitempty" tf:"retention_policy,omitempty"`
 }
 
-// NamespaceSpec defines the desired state of Namespace
-type NamespaceSpec struct {
+// TdmqNamespaceSpec defines the desired state of TdmqNamespace
+type TdmqNamespaceSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     NamespaceParameters `json:"forProvider"`
+	ForProvider     TdmqNamespaceParameters `json:"forProvider"`
 }
 
-// NamespaceStatus defines the observed state of Namespace.
-type NamespaceStatus struct {
+// TdmqNamespaceStatus defines the observed state of TdmqNamespace.
+type TdmqNamespaceStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        NamespaceObservation `json:"atProvider,omitempty"`
+	AtProvider        TdmqNamespaceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// Namespace is the Schema for the Namespaces API
+// TdmqNamespace is the Schema for the TdmqNamespaces API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloudjet}
-type Namespace struct {
+type TdmqNamespace struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              NamespaceSpec   `json:"spec"`
-	Status            NamespaceStatus `json:"status,omitempty"`
+	Spec              TdmqNamespaceSpec   `json:"spec"`
+	Status            TdmqNamespaceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// NamespaceList contains a list of Namespaces
-type NamespaceList struct {
+// TdmqNamespaceList contains a list of TdmqNamespaces
+type TdmqNamespaceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Namespace `json:"items"`
+	Items           []TdmqNamespace `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Namespace_Kind             = "Namespace"
-	Namespace_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Namespace_Kind}.String()
-	Namespace_KindAPIVersion   = Namespace_Kind + "." + CRDGroupVersion.String()
-	Namespace_GroupVersionKind = CRDGroupVersion.WithKind(Namespace_Kind)
+	TdmqNamespace_Kind             = "TdmqNamespace"
+	TdmqNamespace_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: TdmqNamespace_Kind}.String()
+	TdmqNamespace_KindAPIVersion   = TdmqNamespace_Kind + "." + CRDGroupVersion.String()
+	TdmqNamespace_GroupVersionKind = CRDGroupVersion.WithKind(TdmqNamespace_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Namespace{}, &NamespaceList{})
+	SchemeBuilder.Register(&TdmqNamespace{}, &TdmqNamespaceList{})
 }
