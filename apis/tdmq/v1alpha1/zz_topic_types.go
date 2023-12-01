@@ -29,6 +29,8 @@ type TopicObservation struct {
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	TopicType *float64 `json:"topicType,omitempty" tf:"topic_type,omitempty"`
 }
 
 type TopicParameters struct {
@@ -70,10 +72,6 @@ type TopicParameters struct {
 	// The name of topic to be created.
 	// +kubebuilder:validation:Required
 	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
-
-	// The type of topic.
-	// +kubebuilder:validation:Optional
-	TopicType *float64 `json:"topicType,omitempty" tf:"topic_type,omitempty"`
 }
 
 // TopicSpec defines the desired state of Topic
