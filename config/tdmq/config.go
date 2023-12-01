@@ -49,6 +49,11 @@ func Configure(p *tjconfig.Provider) {
 		r.References["cluster_id"] = tjconfig.Reference{
 			Type: "Instance",
 		}
+
+		if t, ok := r.TerraformResource.Schema["topic_type"]; ok {
+			t.Optional = false
+			t.Computed = true
+		}
 	})
 
 	p.AddResourceConfigurator("tencentcloud_tdmq_role", func(r *tjconfig.Resource) {

@@ -229,9 +229,6 @@ spec:
                   topicName:
                     description: The name of topic to be created.
                     type: string
-                  topicType:
-                    description: The type of topic.
-                    type: number
                 required:
                 - partitions
                 - topicName
@@ -416,6 +413,8 @@ spec:
                     type: string
                   id:
                     type: string
+                  topicType:
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.
