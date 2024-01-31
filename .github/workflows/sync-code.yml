@@ -1,0 +1,28 @@
+# This is a sync code to tgit workflow
+
+name: sync-code
+
+on:
+  push:
+    branches:
+      - main
+    tags: v*
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: clone
+        run: |
+          if [ -d provider-tencentcloud ]; then
+            rm -rf provider-tencentcloud
+          fi
+          git clone https://github.com/crossplane-contrib/provider-tencentcloud.git
+      - name: sync
+        run: |
+          cd provider-tencentcloud
+          git fetch --all
+          git remote add tgit_origin https://${{ secrets.TGIT_USERNAME }}:${{ secrets.TGIT_PASSWORD }}@git.code.tencent.com/tencentcloudstack/provider-tencentcloud.git
+          git push -u tgit_origin -f --all
+          git push -u tgit_origin --tags
