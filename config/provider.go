@@ -7,6 +7,7 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+
 	"github.com/crossplane-contrib/provider-tencentcloud/config/apigateway"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/as"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/audit"
