@@ -1,0 +1,65 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: DdosPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/ddospolicy
+  labels:
+    testing.upbound.io/example-name: test_policy
+  name: test-policy
+spec:
+  forProvider:
+    blackIps:
+    - 1.1.1.1
+    dropOptions:
+    - badConnThreshold: 100
+      checkSyncConn: true
+      connTimeout: 500
+      dConnLimit: 100
+      dNewLimit: 100
+      dropAbroad: true
+      dropIcmp: true
+      dropOther: true
+      dropTcp: true
+      dropUdp: true
+      icmpMbpsLimit: 100
+      nullConnEnable: true
+      otherMbpsLimit: 100
+      sConnLimit: 100
+      sNewLimit: 100
+      synLimit: 100
+      synRate: 50
+      tcpMbpsLimit: 100
+      udpMbpsLimit: 100
+    name: tf_test_policy
+    packetFilters:
+    - action: drop
+      dEndPort: 1500
+      dStartPort: 1000
+      depth: 1000
+      isInclude: true
+      matchBegin: begin_l5
+      matchType: pcre
+      offset: 500
+      pktLengthMax: 1400
+      pktLengthMin: 1000
+      protocol: tcp
+      sEndPort: 2500
+      sStartPort: 2000
+    portFilters:
+    - action: drop
+      endPort: "2500"
+      kind: 1
+      protocol: all
+      startPort: "2000"
+    resourceType: bgpip
+    watermarkFilters:
+    - autoRemove: true
+      offset: 50
+      openSwitch: true
+      tcpPortList:
+      - 2000-3000
+      - 3500-4000
+      udpPortList:
+      - 5000-6000
+    whiteIps:
+    - 2.2.2.2

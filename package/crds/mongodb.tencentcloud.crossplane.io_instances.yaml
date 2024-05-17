@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: instances.mongodb.tencentcloud.crossplane.io
 spec:
   group: mongodb.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Instance
     listKind: InstanceList
     plural: instances
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API
+        description: Instance is the Schema for the Instances API. Provide a resource
+          to create a Mongodb instance.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,20 +54,52 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
                 type: string
               forProvider:
                 properties:
+                  addNodeList:
+                    description: Add node attribute list. Add node attribute list.
+                    items:
+                      properties:
+                        role:
+                          description: 'The node role that needs to be added. The
+                            node role that needs to be added. - SECONDARY: Mongod
+                            node; - READONLY: read-only node; - MONGOS: Mongos node.'
+                          type: string
+                        zone:
+                          description: 'The availability zone corresponding to the
+                            node. The availability zone corresponding to the node.
+                            - single availability zone, where all nodes are in the
+                            same availability zone; - multiple availability zones:
+                            the current standard specification is the distribution
+                            of three availability zones, and the master and slave
+                            nodes are not in the same availability zone. You should
+                            pay attention to configuring the availability zone corresponding
+                            to the new node, and the rule that the number of nodes
+                            in any two availability zones is greater than the third
+                            availability zone must be met after the addition.'
+                          type: string
+                      type: object
+                    type: array
                   autoRenewFlag:
-                    description: 'Auto renew flag. Valid values are `0`(NOTIFY_AND_MANUAL_RENEW),
-                      `1`(NOTIFY_AND_AUTO_RENEW) and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW).
-                      Default value is `0`. Note: only works for PREPAID instance.
-                      Only supports`0` and `1` for creation.'
+                    description: 'Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW),
+                      1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW).
+                      Default value is 0. Note: only works for PREPAID instance. Only
+                      supports0 and 1 for creation. Auto renew flag. Valid values
+                      are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW)
+                      and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`.
+                      Note: only works for PREPAID instance. Only supports`0` and
+                      `1` for creation.'
                     type: number
                   availabilityZoneList:
                     description: A list of nodes deployed in multiple availability
@@ -78,38 +110,62 @@ spec:
                       example, a 3-node cluster does not support the deployment of
                       2 nodes in the same zone. - Version 4.2 and above are not supported.
                       - Read-only disaster recovery instances are not supported. -
-                      Basic network cannot be selected.
+                      Basic network cannot be selected. A list of nodes deployed in
+                      multiple availability zones. For more information, please use
+                      the API DescribeSpecInfo. - Multi-availability zone deployment
+                      nodes can only be deployed in 3 different availability zones.
+                      It is not supported to deploy most nodes of the cluster in the
+                      same availability zone. For example, a 3-node cluster does not
+                      support the deployment of 2 nodes in the same zone. - Version
+                      4.2 and above are not supported. - Read-only disaster recovery
+                      instances are not supported. - Basic network cannot be selected.
                     items:
                       type: string
                     type: array
                   availableZone:
-                    description: The available zone of the Mongodb.
+                    description: The available zone of the Mongodb. The available
+                      zone of the Mongodb.
                     type: string
                   chargeType:
-                    description: 'The charge type of instance. Valid values are `PREPAID`
-                      and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`.
-                      Note: TencentCloud International only supports `POSTPAID_BY_HOUR`.
-                      Caution that update operation on this field will delete old
-                      instances and create new one with new charge type.'
+                    description: 'The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note:
+                      TencentCloud International only supports POSTPAID_BY_HOUR. Caution
+                      that update operation on this field will delete old instances
+                      and create new one with new charge type. The charge type of
+                      instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International
+                      only supports `POSTPAID_BY_HOUR`. Caution that update operation
+                      on this field will delete old instances and create new one with
+                      new charge type.'
                     type: string
                   engineVersion:
                     description: 'Version of the Mongodb, and available values include
-                      `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT`
-                      (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB
-                      4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger
-                      Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will
-                      deprecated.'
+                      MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB
+                      4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger
+                      Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition)
+                      and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
+                      Version of the Mongodb, and available values include `MONGO_36_WT`
+                      (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0
+                      WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger
+                      Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition)
+                      and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.'
                     type: string
                   hiddenZone:
                     description: The availability zone to which the Hidden node belongs.
                       This parameter must be configured to deploy instances across
-                      availability zones.
+                      availability zones. The availability zone to which the Hidden
+                      node belongs. This parameter must be configured to deploy instances
+                      across availability zones.
                     type: string
                   instanceName:
-                    description: Name of the Mongodb instance.
+                    description: Name of the Mongodb instance. Name of the Mongodb
+                      instance.
                     type: string
                   machineType:
                     description: Type of Mongodb instance, and available values include
+                      HIO(or GIO which will be deprecated, represents high IO) and
+                      HIO10G(or TGIO which will be deprecated, represents 10-gigabit
+                      high IO). Type of Mongodb instance, and available values include
                       `HIO`(or `GIO` which will be deprecated, represents high IO)
                       and `HIO10G`(or `TGIO` which will be deprecated, represents
                       10-gigabit high IO).
@@ -117,13 +173,17 @@ spec:
                   memory:
                     description: Memory size. The minimum value is 2, and unit is
                       GB. Memory and volume must be upgraded or degraded simultaneously.
+                      Memory size. The minimum value is 2, and unit is GB. Memory
+                      and volume must be upgraded or degraded simultaneously.
                     type: number
                   nodeNum:
                     description: 'The number of nodes in each replica set. Default
-                      value: 3.'
+                      value: 3. The number of nodes in each replica set. Default value:
+                      3.'
                     type: number
                   passwordSecretRef:
-                    description: Password of this Mongodb account.
+                    description: Password of this Mongodb account. Password of this
+                      Mongodb account.
                     properties:
                       key:
                         description: The key to select.
@@ -142,22 +202,60 @@ spec:
                   prepaidPeriod:
                     description: 'The tenancy (time unit is month) of the prepaid
                       instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-                      12, 24, 36. NOTE: it only works when charge_type is set to `PREPAID`.'
+                      12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy (time unit is month) of the prepaid instance. Valid
+                      values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. NOTE:
+                      it only works when charge_type is set to `PREPAID`.'
                     type: number
                   projectId:
-                    description: ID of the project which the instance belongs.
+                    description: ID of the project which the instance belongs. ID
+                      of the project which the instance belongs.
                     type: number
+                  removeNodeList:
+                    description: Add node attribute list. Add node attribute list.
+                    items:
+                      properties:
+                        nodeName:
+                          description: The node ID to delete. The shard cluster must
+                            specify the name of the node to be deleted by a group
+                            of shards, and the rest of the shards should be grouped
+                            and aligned. The node ID to delete. The shard cluster
+                            must specify the name of the node to be deleted by a group
+                            of shards, and the rest of the shards should be grouped
+                            and aligned.
+                          type: string
+                        role:
+                          description: 'The node role that needs to be added. The
+                            node role that needs to be deleted. - SECONDARY: Mongod
+                            node; - READONLY: read-only node; - MONGOS: Mongos node.'
+                          type: string
+                        zone:
+                          description: 'The availability zone corresponding to the
+                            node. The availability zone corresponding to the node.
+                            - single availability zone, where all nodes are in the
+                            same availability zone; - multiple availability zones:
+                            the current standard specification is the distribution
+                            of three availability zones, and the master and slave
+                            nodes are not in the same availability zone. You should
+                            pay attention to configuring the availability zone corresponding
+                            to the new node, and the rule that the number of nodes
+                            in any two availability zones is greater than the third
+                            availability zone must be met after the addition.'
+                          type: string
+                      type: object
+                    type: array
                   securityGroups:
-                    description: ID of the security group.
+                    description: ID of the security group. ID of the security group.
                     items:
                       type: string
                     type: array
                   subnetId:
                     description: ID of the subnet within this VPC. The value is required
-                      if `vpc_id` is set.
+                      if vpc_id is set. ID of the subnet within this VPC. The value
+                      is required if `vpc_id` is set.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -191,7 +289,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -232,18 +330,21 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: The tags of the Mongodb. Key name `project` is system
-                      reserved and can't be used.
+                    description: The tags of the Mongodb. Key name project is system
+                      reserved and can't be used. The tags of the Mongodb. Key name
+                      `project` is system reserved and can't be used.
                     type: object
                   volume:
                     description: Disk size. The minimum value is 25, and unit is GB.
                       Memory and volume must be upgraded or degraded simultaneously.
+                      Disk size. The minimum value is 25, and unit is GB. Memory and
+                      volume must be upgraded or degraded simultaneously.
                     type: number
                   vpcId:
-                    description: ID of the VPC.
+                    description: ID of the VPC. ID of the VPC.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -276,8 +377,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -315,56 +416,228 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - availableZone
-                - engineVersion
-                - instanceName
-                - machineType
-                - memory
-                - volume
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  addNodeList:
+                    description: Add node attribute list. Add node attribute list.
+                    items:
+                      properties:
+                        role:
+                          description: 'The node role that needs to be added. The
+                            node role that needs to be added. - SECONDARY: Mongod
+                            node; - READONLY: read-only node; - MONGOS: Mongos node.'
+                          type: string
+                        zone:
+                          description: 'The availability zone corresponding to the
+                            node. The availability zone corresponding to the node.
+                            - single availability zone, where all nodes are in the
+                            same availability zone; - multiple availability zones:
+                            the current standard specification is the distribution
+                            of three availability zones, and the master and slave
+                            nodes are not in the same availability zone. You should
+                            pay attention to configuring the availability zone corresponding
+                            to the new node, and the rule that the number of nodes
+                            in any two availability zones is greater than the third
+                            availability zone must be met after the addition.'
+                          type: string
+                      type: object
+                    type: array
+                  autoRenewFlag:
+                    description: 'Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW),
+                      1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW).
+                      Default value is 0. Note: only works for PREPAID instance. Only
+                      supports0 and 1 for creation. Auto renew flag. Valid values
+                      are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW)
+                      and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`.
+                      Note: only works for PREPAID instance. Only supports`0` and
+                      `1` for creation.'
+                    type: number
+                  availabilityZoneList:
+                    description: A list of nodes deployed in multiple availability
+                      zones. For more information, please use the API DescribeSpecInfo.
+                      - Multi-availability zone deployment nodes can only be deployed
+                      in 3 different availability zones. It is not supported to deploy
+                      most nodes of the cluster in the same availability zone. For
+                      example, a 3-node cluster does not support the deployment of
+                      2 nodes in the same zone. - Version 4.2 and above are not supported.
+                      - Read-only disaster recovery instances are not supported. -
+                      Basic network cannot be selected. A list of nodes deployed in
+                      multiple availability zones. For more information, please use
+                      the API DescribeSpecInfo. - Multi-availability zone deployment
+                      nodes can only be deployed in 3 different availability zones.
+                      It is not supported to deploy most nodes of the cluster in the
+                      same availability zone. For example, a 3-node cluster does not
+                      support the deployment of 2 nodes in the same zone. - Version
+                      4.2 and above are not supported. - Read-only disaster recovery
+                      instances are not supported. - Basic network cannot be selected.
+                    items:
+                      type: string
+                    type: array
+                  availableZone:
+                    description: The available zone of the Mongodb. The available
+                      zone of the Mongodb.
+                    type: string
+                  chargeType:
+                    description: 'The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note:
+                      TencentCloud International only supports POSTPAID_BY_HOUR. Caution
+                      that update operation on this field will delete old instances
+                      and create new one with new charge type. The charge type of
+                      instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International
+                      only supports `POSTPAID_BY_HOUR`. Caution that update operation
+                      on this field will delete old instances and create new one with
+                      new charge type.'
+                    type: string
+                  engineVersion:
+                    description: 'Version of the Mongodb, and available values include
+                      MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB
+                      4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger
+                      Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition)
+                      and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
+                      Version of the Mongodb, and available values include `MONGO_36_WT`
+                      (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0
+                      WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger
+                      Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition)
+                      and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.'
+                    type: string
+                  hiddenZone:
+                    description: The availability zone to which the Hidden node belongs.
+                      This parameter must be configured to deploy instances across
+                      availability zones. The availability zone to which the Hidden
+                      node belongs. This parameter must be configured to deploy instances
+                      across availability zones.
+                    type: string
+                  instanceName:
+                    description: Name of the Mongodb instance. Name of the Mongodb
+                      instance.
+                    type: string
+                  machineType:
+                    description: Type of Mongodb instance, and available values include
+                      HIO(or GIO which will be deprecated, represents high IO) and
+                      HIO10G(or TGIO which will be deprecated, represents 10-gigabit
+                      high IO). Type of Mongodb instance, and available values include
+                      `HIO`(or `GIO` which will be deprecated, represents high IO)
+                      and `HIO10G`(or `TGIO` which will be deprecated, represents
+                      10-gigabit high IO).
+                    type: string
+                  memory:
+                    description: Memory size. The minimum value is 2, and unit is
+                      GB. Memory and volume must be upgraded or degraded simultaneously.
+                      Memory size. The minimum value is 2, and unit is GB. Memory
+                      and volume must be upgraded or degraded simultaneously.
+                    type: number
+                  nodeNum:
+                    description: 'The number of nodes in each replica set. Default
+                      value: 3. The number of nodes in each replica set. Default value:
+                      3.'
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                      12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy (time unit is month) of the prepaid instance. Valid
+                      values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. NOTE:
+                      it only works when charge_type is set to `PREPAID`.'
+                    type: number
+                  projectId:
+                    description: ID of the project which the instance belongs. ID
+                      of the project which the instance belongs.
+                    type: number
+                  removeNodeList:
+                    description: Add node attribute list. Add node attribute list.
+                    items:
+                      properties:
+                        nodeName:
+                          description: The node ID to delete. The shard cluster must
+                            specify the name of the node to be deleted by a group
+                            of shards, and the rest of the shards should be grouped
+                            and aligned. The node ID to delete. The shard cluster
+                            must specify the name of the node to be deleted by a group
+                            of shards, and the rest of the shards should be grouped
+                            and aligned.
+                          type: string
+                        role:
+                          description: 'The node role that needs to be added. The
+                            node role that needs to be deleted. - SECONDARY: Mongod
+                            node; - READONLY: read-only node; - MONGOS: Mongos node.'
+                          type: string
+                        zone:
+                          description: 'The availability zone corresponding to the
+                            node. The availability zone corresponding to the node.
+                            - single availability zone, where all nodes are in the
+                            same availability zone; - multiple availability zones:
+                            the current standard specification is the distribution
+                            of three availability zones, and the master and slave
+                            nodes are not in the same availability zone. You should
+                            pay attention to configuring the availability zone corresponding
+                            to the new node, and the rule that the number of nodes
+                            in any two availability zones is greater than the third
+                            availability zone must be met after the addition.'
+                          type: string
+                      type: object
+                    type: array
+                  securityGroups:
+                    description: ID of the security group. ID of the security group.
+                    items:
+                      type: string
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the Mongodb. Key name project is system
+                      reserved and can't be used. The tags of the Mongodb. Key name
+                      `project` is system reserved and can't be used.
+                    type: object
+                  volume:
+                    description: Disk size. The minimum value is 25, and unit is GB.
+                      Memory and volume must be upgraded or degraded simultaneously.
+                      Disk size. The minimum value is 25, and unit is GB. Memory and
+                      volume must be upgraded or degraded simultaneously.
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -494,29 +767,256 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availableZone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availableZone)
+                || (has(self.initProvider) && has(self.initProvider.availableZone))'
+            - message: spec.forProvider.engineVersion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.engineVersion)
+                || (has(self.initProvider) && has(self.initProvider.engineVersion))'
+            - message: spec.forProvider.instanceName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.instanceName)
+                || (has(self.initProvider) && has(self.initProvider.instanceName))'
+            - message: spec.forProvider.machineType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.machineType)
+                || (has(self.initProvider) && has(self.initProvider.machineType))'
+            - message: spec.forProvider.memory is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.memory)
+                || (has(self.initProvider) && has(self.initProvider.memory))'
+            - message: spec.forProvider.volume is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.volume)
+                || (has(self.initProvider) && has(self.initProvider.volume))'
           status:
             description: InstanceStatus defines the observed state of Instance.
             properties:
               atProvider:
                 properties:
+                  addNodeList:
+                    description: Add node attribute list. Add node attribute list.
+                    items:
+                      properties:
+                        role:
+                          description: 'The node role that needs to be added. The
+                            node role that needs to be added. - SECONDARY: Mongod
+                            node; - READONLY: read-only node; - MONGOS: Mongos node.'
+                          type: string
+                        zone:
+                          description: 'The availability zone corresponding to the
+                            node. The availability zone corresponding to the node.
+                            - single availability zone, where all nodes are in the
+                            same availability zone; - multiple availability zones:
+                            the current standard specification is the distribution
+                            of three availability zones, and the master and slave
+                            nodes are not in the same availability zone. You should
+                            pay attention to configuring the availability zone corresponding
+                            to the new node, and the rule that the number of nodes
+                            in any two availability zones is greater than the third
+                            availability zone must be met after the addition.'
+                          type: string
+                      type: object
+                    type: array
+                  autoRenewFlag:
+                    description: 'Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW),
+                      1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW).
+                      Default value is 0. Note: only works for PREPAID instance. Only
+                      supports0 and 1 for creation. Auto renew flag. Valid values
+                      are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW)
+                      and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`.
+                      Note: only works for PREPAID instance. Only supports`0` and
+                      `1` for creation.'
+                    type: number
+                  availabilityZoneList:
+                    description: A list of nodes deployed in multiple availability
+                      zones. For more information, please use the API DescribeSpecInfo.
+                      - Multi-availability zone deployment nodes can only be deployed
+                      in 3 different availability zones. It is not supported to deploy
+                      most nodes of the cluster in the same availability zone. For
+                      example, a 3-node cluster does not support the deployment of
+                      2 nodes in the same zone. - Version 4.2 and above are not supported.
+                      - Read-only disaster recovery instances are not supported. -
+                      Basic network cannot be selected. A list of nodes deployed in
+                      multiple availability zones. For more information, please use
+                      the API DescribeSpecInfo. - Multi-availability zone deployment
+                      nodes can only be deployed in 3 different availability zones.
+                      It is not supported to deploy most nodes of the cluster in the
+                      same availability zone. For example, a 3-node cluster does not
+                      support the deployment of 2 nodes in the same zone. - Version
+                      4.2 and above are not supported. - Read-only disaster recovery
+                      instances are not supported. - Basic network cannot be selected.
+                    items:
+                      type: string
+                    type: array
+                  availableZone:
+                    description: The available zone of the Mongodb. The available
+                      zone of the Mongodb.
+                    type: string
+                  chargeType:
+                    description: 'The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note:
+                      TencentCloud International only supports POSTPAID_BY_HOUR. Caution
+                      that update operation on this field will delete old instances
+                      and create new one with new charge type. The charge type of
+                      instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International
+                      only supports `POSTPAID_BY_HOUR`. Caution that update operation
+                      on this field will delete old instances and create new one with
+                      new charge type.'
+                    type: string
                   createTime:
+                    description: Creation time of the Mongodb instance. Creation time
+                      of the Mongodb instance.
+                    type: string
+                  engineVersion:
+                    description: 'Version of the Mongodb, and available values include
+                      MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB
+                      4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger
+                      Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition)
+                      and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
+                      Version of the Mongodb, and available values include `MONGO_36_WT`
+                      (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0
+                      WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger
+                      Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition)
+                      and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.'
+                    type: string
+                  hiddenZone:
+                    description: The availability zone to which the Hidden node belongs.
+                      This parameter must be configured to deploy instances across
+                      availability zones. The availability zone to which the Hidden
+                      node belongs. This parameter must be configured to deploy instances
+                      across availability zones.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
+                  instanceName:
+                    description: Name of the Mongodb instance. Name of the Mongodb
+                      instance.
+                    type: string
+                  machineType:
+                    description: Type of Mongodb instance, and available values include
+                      HIO(or GIO which will be deprecated, represents high IO) and
+                      HIO10G(or TGIO which will be deprecated, represents 10-gigabit
+                      high IO). Type of Mongodb instance, and available values include
+                      `HIO`(or `GIO` which will be deprecated, represents high IO)
+                      and `HIO10G`(or `TGIO` which will be deprecated, represents
+                      10-gigabit high IO).
+                    type: string
+                  memory:
+                    description: Memory size. The minimum value is 2, and unit is
+                      GB. Memory and volume must be upgraded or degraded simultaneously.
+                      Memory size. The minimum value is 2, and unit is GB. Memory
+                      and volume must be upgraded or degraded simultaneously.
+                    type: number
+                  nodeNum:
+                    description: 'The number of nodes in each replica set. Default
+                      value: 3. The number of nodes in each replica set. Default value:
+                      3.'
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                      12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy (time unit is month) of the prepaid instance. Valid
+                      values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. NOTE:
+                      it only works when charge_type is set to `PREPAID`.'
+                    type: number
+                  projectId:
+                    description: ID of the project which the instance belongs. ID
+                      of the project which the instance belongs.
+                    type: number
+                  removeNodeList:
+                    description: Add node attribute list. Add node attribute list.
+                    items:
+                      properties:
+                        nodeName:
+                          description: The node ID to delete. The shard cluster must
+                            specify the name of the node to be deleted by a group
+                            of shards, and the rest of the shards should be grouped
+                            and aligned. The node ID to delete. The shard cluster
+                            must specify the name of the node to be deleted by a group
+                            of shards, and the rest of the shards should be grouped
+                            and aligned.
+                          type: string
+                        role:
+                          description: 'The node role that needs to be added. The
+                            node role that needs to be deleted. - SECONDARY: Mongod
+                            node; - READONLY: read-only node; - MONGOS: Mongos node.'
+                          type: string
+                        zone:
+                          description: 'The availability zone corresponding to the
+                            node. The availability zone corresponding to the node.
+                            - single availability zone, where all nodes are in the
+                            same availability zone; - multiple availability zones:
+                            the current standard specification is the distribution
+                            of three availability zones, and the master and slave
+                            nodes are not in the same availability zone. You should
+                            pay attention to configuring the availability zone corresponding
+                            to the new node, and the rule that the number of nodes
+                            in any two availability zones is greater than the third
+                            availability zone must be met after the addition.'
+                          type: string
+                      type: object
+                    type: array
+                  securityGroups:
+                    description: ID of the security group. ID of the security group.
+                    items:
+                      type: string
+                    type: array
                   standbyInstanceList:
+                    description: List of standby instances' info. List of standby
+                      instances' info.
                     items:
                       properties:
                         standbyInstanceId:
+                          description: Indicates the ID of standby instance.
                           type: string
                         standbyInstanceRegion:
+                          description: Indicates the region of standby instance.
                           type: string
                       type: object
                     type: array
                   status:
+                    description: Status of the Mongodb instance, and available values
+                      include pending initialization(expressed with 0),  processing(expressed
+                      with 1), running(expressed with 2) and expired(expressed with
+                      -2). Status of the Mongodb instance, and available values include
+                      pending initialization(expressed with 0),  processing(expressed
+                      with 1), running(expressed with 2) and expired(expressed with
+                      -2).
                     type: number
+                  subnetId:
+                    description: ID of the subnet within this VPC. The value is required
+                      if vpc_id is set. ID of the subnet within this VPC. The value
+                      is required if `vpc_id` is set.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the Mongodb. Key name project is system
+                      reserved and can't be used. The tags of the Mongodb. Key name
+                      `project` is system reserved and can't be used.
+                    type: object
                   vip:
+                    description: IP of the Mongodb instance. IP of the Mongodb instance.
+                    type: string
+                  volume:
+                    description: Disk size. The minimum value is 25, and unit is GB.
+                      Memory and volume must be upgraded or degraded simultaneously.
+                      Disk size. The minimum value is 25, and unit is GB. Memory and
+                      volume must be upgraded or degraded simultaneously.
+                    type: number
+                  vpcId:
+                    description: ID of the VPC. ID of the VPC.
                     type: string
                   vport:
+                    description: IP port of the Mongodb instance. IP port of the Mongodb
+                      instance.
                     type: number
                 type: object
               conditions:
@@ -552,6 +1052,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -560,9 +1063,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

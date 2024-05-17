@@ -1,0 +1,20 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: BindingReceiver
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/bindingreceiver
+  labels:
+    testing.upbound.io/example-name: receiver
+  name: receiver
+spec:
+  forProvider:
+    groupId: ${tencentcloud_monitor_policy_group.group.id}
+    receivers:
+    - endTime: 86399
+      notifyWay:
+      - SMS
+      receiveLanguage: en-US
+      receiverGroupList:
+      - ${data.tencentcloud_cam_groups.groups.group_list[0].group_id}
+      receiverType: group
+      startTime: 0

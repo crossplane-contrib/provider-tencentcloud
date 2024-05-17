@@ -1,0 +1,18 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: HaVip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/havip
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: terraform_test
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vip: 10.0.4.16
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -1,0 +1,12 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/securitygroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: sg test
+    name: tf-example-sg

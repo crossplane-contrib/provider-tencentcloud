@@ -1,0 +1,39 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroupLiteRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/securitygroupliterule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    egress:
+    - ACCEPT#192.168.0.0/16#ALL#TCP
+    - ACCEPT#10.0.0.0/8#ALL#ICMP
+    - DROP#0.0.0.0/0#ALL#ALL
+    ingress:
+    - ACCEPT#192.168.1.0/24#80#TCP
+    - DROP#8.8.8.8#80,90#UDP
+    - ACCEPT#0.0.0.0/0#80-90#TCP
+    - ACCEPT#sg-7ixn3foj#80-90#TCP
+    - ACCEPT#ipm-epjq5kn0#80-90#TCP
+    - ACCEPT#ipmg-3loavam6#80-90#TCP
+    - ACCEPT#0.0.0.0/0##ppm-xxxxxxxx
+    securityGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/securitygroupliterule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: ci-temp-test-sg

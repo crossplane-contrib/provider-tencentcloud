@@ -1,0 +1,63 @@
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: InstanceSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cvm/v1alpha1/instanceset
+  labels:
+    testing.upbound.io/example-name: my_awesome_app
+  name: my-awesome-app
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.my_favorite_zones.zones.0.name}
+    hostname: user
+    imageId: ${data.tencentcloud_images.my_favorite_image.images.0.image_id}
+    instanceCount: 10
+    instanceName: awesome_app
+    instanceType: ${data.tencentcloud_instance_types.my_favorite_instance_types.instance_types.0.instance_type}
+    projectId: 0
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: app
+    systemDiskSize: 50
+    systemDiskType: CLOUD_PREMIUM
+    timeouts:
+    - create: 5m
+      delete: 1h
+      read: 20s
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: app
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cvm/v1alpha1/instanceset
+  labels:
+    testing.upbound.io/example-name: app
+  name: app
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.my_favorite_zones.zones.0.name}
+    cidrBlock: 10.0.1.0/24
+    name: awesome_app_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: app
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cvm/v1alpha1/instanceset
+  labels:
+    testing.upbound.io/example-name: app
+  name: app
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: awesome_app_vpc

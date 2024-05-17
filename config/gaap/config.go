@@ -16,88 +16,71 @@ limitations under the License.
 
 package gaap
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupGaap = "gaap"
 
 // Configure configures the gaap group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_gaap_proxy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_gaap_proxy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "Proxy"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_certificate", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_certificate", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "Certificate"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_layer4_listener", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_layer4_listener", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "Layer4Listener"
-		r.References["proxy_id"] = tjconfig.Reference{
+		r.References["proxy_id"] = config.Reference{
 			Type: "Proxy",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_layer7_listener", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_layer7_listener", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "Layer7Listener"
-		r.References["proxy_id"] = tjconfig.Reference{
+		r.References["proxy_id"] = config.Reference{
 			Type: "Proxy",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_realserver", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_realserver", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "Realserver"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_http_domain", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_http_domain", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "HttpDomain"
-		r.References["listener_id"] = tjconfig.Reference{
+		r.References["listener_id"] = config.Reference{
 			Type: "Layer7Listener",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_http_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_http_rule", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "HttpRule"
-		r.References["listener_id"] = tjconfig.Reference{
+		r.References["listener_id"] = config.Reference{
 			Type: "Layer7Listener",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_certificate", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.ShortGroup = shortGroupGaap
-		r.Kind = "Certificate"
-	})
-
-	p.AddResourceConfigurator("tencentcloud_gaap_security_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_security_policy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "SecurityPolicy"
-		r.References["proxy_id"] = tjconfig.Reference{
+		r.References["proxy_id"] = config.Reference{
 			Type: "Proxy",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_gaap_security_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_gaap_security_rule", func(r *config.Resource) {
 		r.ShortGroup = shortGroupGaap
 		r.Kind = "SecurityRule"
-		r.References["policy_id"] = tjconfig.Reference{
+		r.References["policy_id"] = config.Reference{
 			Type: "SecurityPolicy",
 		}
 	})

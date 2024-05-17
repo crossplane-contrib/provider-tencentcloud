@@ -1,0 +1,100 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterCidr: ${var.example_cluster_cidr}
+    clusterDeployType: MANAGED_CLUSTER
+    clusterDesc: example for tke cluster
+    clusterInternet: false
+    clusterInternetSecurityGroup: ${local.sg_id}
+    clusterMaxPodNum: 32
+    clusterMaxServiceNum: 32
+    clusterName: tf_example_cluster
+    clusterVersion: 1.22.5
+    labels:
+      test1: test1
+      test2: test2
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    workerConfig:
+    - availabilityZone: ${var.availability_zone_first}
+      count: 1
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      imgId: ${local.image_id}
+      instanceType: ${var.default_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      publicIpAssigned: true
+      subnetId: ${local.first_subnet_id}
+      systemDiskSize: 60
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==
+    - availabilityZone: ${var.availability_zone_second}
+      camRoleName: CVM_QcsRole
+      count: 1
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      instanceType: ${var.default_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      keyIds:
+      - skey-11112222
+      publicIpAssigned: true
+      subnetId: ${local.second_subnet_id}
+      systemDiskSize: 60
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: sg
+  name: sg
+spec:
+  forProvider:
+    name: tf-example-sg
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroupLiteRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: sg_rule
+  name: sg-rule
+spec:
+  forProvider:
+    egress:
+    - ACCEPT#172.16.0.0/22#ALL#ALL
+    ingress:
+    - ACCEPT#10.0.0.0/16#ALL#ALL
+    - ACCEPT#172.16.0.0/22#ALL#ALL
+    - DROP#0.0.0.0/0#ALL#ALL
+    securityGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: sg

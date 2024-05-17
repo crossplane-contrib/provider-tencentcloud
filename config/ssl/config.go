@@ -16,26 +16,24 @@ limitations under the License.
 
 package ssl
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupSsl = "ssl"
 
 // Configure configures the ssl group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_ssl_certificate", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_ssl_certificate", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSsl
 		r.Kind = "Certificate"
 	})
-	p.AddResourceConfigurator("tencentcloud_ssl_free_certificate", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ssl_free_certificate", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSsl
 		r.Kind = "FreeCertificate"
 	})
-	p.AddResourceConfigurator("tencentcloud_ssl_pay_certificate", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ssl_pay_certificate", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSsl
 		r.Kind = "PayCertificate"
 	})

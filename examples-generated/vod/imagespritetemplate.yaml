@@ -1,0 +1,37 @@
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: ImageSpriteTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/imagespritetemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    columnCount: 3
+    comment: test
+    fillType: stretch
+    height: 128
+    name: tf-sprite
+    resolutionAdaptive: false
+    rowCount: 3
+    sampleInterval: 10
+    sampleType: Percent
+    subAppId: ${tonumber(split("#", tencentcloud_vod_sub_application.sub_application.id)[1])}
+    width: 128
+
+---
+
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: SubApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/imagespritetemplate
+  labels:
+    testing.upbound.io/example-name: sub_application
+  name: sub-application
+spec:
+  forProvider:
+    description: this is sub application
+    name: image-sprite-subapplication
+    status: "On"

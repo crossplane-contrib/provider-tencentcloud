@@ -1,0 +1,48 @@
+apiVersion: cynosdb.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cynosdb/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    availableZone: ap-guangzhou-4
+    clusterName: tf-cynosdb
+    dbType: MYSQL
+    dbVersion: "5.7"
+    forceDelete: false
+    instanceCpuCore: 1
+    instanceMaintainDuration: 7200
+    instanceMaintainStartTime: 10800
+    instanceMaintainWeekdays:
+    - Fri
+    - Mon
+    - Sat
+    - Sun
+    - Thu
+    - Wed
+    - Tue
+    instanceMemorySize: 2
+    param_item:
+    - current_value: utf8mb4
+      name: character_set_server
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    prarmTemplateId: "12345"
+    roGroupSg:
+    - sg-ibyjkl6r
+    rwGroupSg:
+    - sg-ibyjkl6r
+    storageLimit: 1000
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tags:
+      test: test
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

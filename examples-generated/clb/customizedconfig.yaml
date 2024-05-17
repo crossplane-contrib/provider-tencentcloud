@@ -1,0 +1,15 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: CustomizedConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/customizedconfig
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    configContent: "client_max_body_size 224M;\r\nclient_body_timeout 60s;"
+    configName: helloWorld
+    loadBalancerIds:
+    - ${tencentcloud_clb_instance.internal_clb.id}
+    - ${tencentcloud_clb_instance.internal_clb2.id}

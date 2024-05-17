@@ -16,97 +16,84 @@ limitations under the License.
 
 package cam
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCam = "cam"
 
 // Configure configures the cam group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cam_role_by_name", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.NameAsIdentifier
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_cam_role_by_name", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "Role"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_role_sso", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_role_sso", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "RoleSSO"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_policy_by_name", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.NameAsIdentifier
+	p.AddResourceConfigurator("tencentcloud_cam_policy_by_name", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "Policy"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_role_policy_attachment_by_name", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_role_policy_attachment_by_name", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "RolePolicyAttachment"
-		r.References["role_name"] = tjconfig.Reference{
+		r.References["role_name"] = config.Reference{
 			Type: "Role",
 		}
-		r.References["policy_name"] = tjconfig.Reference{
+		r.References["policy_name"] = config.Reference{
 			Type: "Policy",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_oidc_sso", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_oidc_sso", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "OidcSSO"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_group", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_group", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "Group"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_user", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_user", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "User"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_group_membership", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_group_membership", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "GroupMembership"
-		r.References["group_id"] = tjconfig.Reference{
+		r.References["group_id"] = config.Reference{
 			Type: "Group",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_group_policy_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_group_policy_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "GroupPolicyAttachment"
-		r.References["group_id"] = tjconfig.Reference{
+		r.References["group_id"] = config.Reference{
 			Type: "Group",
 		}
-		r.References["policy_id"] = tjconfig.Reference{
+		r.References["policy_id"] = config.Reference{
 			Type: "Policy",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_user_policy_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_user_policy_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "UserPolicyAttachment"
-		r.References["user_id"] = tjconfig.Reference{
+		r.References["user_id"] = config.Reference{
 			Type: "User",
 		}
-		r.References["policy_id"] = tjconfig.Reference{
+		r.References["policy_id"] = config.Reference{
 			Type: "Policy",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cam_saml_proshortGroupCamider", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cam_saml_proshortGroupCamider", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCam
 		r.Kind = "SamlProshortGroupCamider"
 	})

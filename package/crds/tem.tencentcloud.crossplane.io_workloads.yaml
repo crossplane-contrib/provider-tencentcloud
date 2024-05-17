@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: workloads.tem.tencentcloud.crossplane.io
 spec:
   group: tem.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Workload
     listKind: WorkloadList
     plural: workloads
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Workload is the Schema for the Workloads API
+        description: Workload is the Schema for the Workloads API. Provides a resource
+          to create a tem workload
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,10 +68,10 @@ spec:
               forProvider:
                 properties:
                   applicationId:
-                    description: application ID.
+                    description: application ID. application ID.
                     type: string
                   applicationIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Application to populate applicationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -101,7 +105,7 @@ spec:
                     - name
                     type: object
                   applicationIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Application to populate applicationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -140,71 +144,72 @@ spec:
                         type: object
                     type: object
                   cpuSpec:
-                    description: cpu.
+                    description: cpu. cpu.
                     type: number
                   deployMode:
-                    description: deploy mode, support IMAGE.
+                    description: deploy mode, support IMAGE. deploy mode, support
+                      IMAGE.
                     type: string
                   deployStrategyConf:
-                    description: deploy strategy.
+                    description: deploy strategy. deploy strategy.
                     items:
                       properties:
                         batchInterval:
-                          description: interval between batches.
+                          description: interval between batches. interval between
+                            batches.
                           type: number
                         betaBatchNum:
-                          description: beta batch number.
+                          description: beta batch number. beta batch number.
                           type: number
                         deployStrategyType:
                           description: strategy type, 0 means auto, 1 means manual,
-                            2 means manual with beta batch.
+                            2 means manual with beta batch. strategy type, 0 means
+                            auto, 1 means manual, 2 means manual with beta batch.
                           type: number
                         force:
-                          description: force update.
+                          description: force update. force update.
                           type: boolean
                         minAvailable:
                           description: minimal available instances duration deployment.
+                            minimal available instances duration deployment.
                           type: number
                         totalBatchCount:
-                          description: total batch number.
+                          description: total batch number. total batch number.
                           type: number
-                      required:
-                      - deployStrategyType
-                      - totalBatchCount
                       type: object
                     type: array
                   deployVersion:
-                    description: deploy version.
+                    description: deploy version. deploy version.
                     type: string
                   envConf:
-                    description: .
+                    description: . .
                     items:
                       properties:
                         config:
                           description: referenced config name when type=referenced.
+                            referenced config name when type=referenced.
                           type: string
                         key:
-                          description: env key.
+                          description: env key. env key.
                           type: string
                         secret:
                           description: referenced secret name when type=referenced.
+                            referenced secret name when type=referenced.
                           type: string
                         type:
-                          description: env type, support default, referenced.
+                          description: env type, support default, referenced. env
+                            type, support default, referenced.
                           type: string
                         value:
-                          description: env value.
+                          description: env value. env value.
                           type: string
-                      required:
-                      - key
-                      - value
                       type: object
                     type: array
                   environmentId:
-                    description: environment ID.
+                    description: environment ID. environment ID.
                     type: string
                   environmentIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Environment to populate environmentId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -238,7 +243,7 @@ spec:
                     - name
                     type: object
                   environmentIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Environment to populate environmentId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -277,218 +282,438 @@ spec:
                         type: object
                     type: object
                   imgRepo:
-                    description: repository name.
+                    description: repository name. repository name.
                     type: string
                   initPodNum:
-                    description: initial pod number.
+                    description: initial pod number. initial pod number.
                     type: number
                   liveness:
-                    description: liveness config.
+                    description: liveness config. liveness config.
                     items:
                       properties:
                         exec:
-                          description: script.
+                          description: script. script.
                           type: string
                         initialDelaySeconds:
-                          description: initial delay seconds for liveness check.
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for liveness check.
                           type: number
                         path:
-                          description: path.
+                          description: path. path.
                           type: string
                         periodSeconds:
-                          description: period seconds for liveness check.
+                          description: period seconds for liveness check. period seconds
+                            for liveness check.
                           type: number
                         port:
-                          description: liveness check port.
+                          description: liveness check port. liveness check port.
                           type: number
                         protocol:
-                          description: protocol.
+                          description: protocol. protocol.
                           type: string
                         timeoutSeconds:
-                          description: timeout seconds for liveness check.
+                          description: timeout seconds for liveness check. timeout
+                            seconds for liveness check.
                           type: number
                         type:
-                          description: check type, support HttpGet, TcpSocket and
-                            Exec.
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
                           type: string
-                      required:
-                      - type
                       type: object
                     type: array
                   memorySpec:
-                    description: mem.
+                    description: mem. mem.
                     type: number
                   postStart:
-                    description: mem.
+                    description: mem. mem.
                     type: string
                   preStop:
-                    description: mem.
+                    description: mem. mem.
                     type: string
                   readiness:
-                    description: .
+                    description: . .
                     items:
                       properties:
                         exec:
-                          description: script.
+                          description: script. script.
                           type: string
                         initialDelaySeconds:
-                          description: initial delay seconds for readiness check.
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for readiness check.
                           type: number
                         path:
-                          description: path.
+                          description: path. path.
                           type: string
                         periodSeconds:
-                          description: period seconds for readiness check.
+                          description: period seconds for liveness check. period seconds
+                            for readiness check.
                           type: number
                         port:
-                          description: readiness check port.
+                          description: liveness check port. readiness check port.
                           type: number
                         protocol:
-                          description: protocol.
+                          description: protocol. protocol.
                           type: string
                         timeoutSeconds:
-                          description: timeout seconds for readiness check.
+                          description: timeout seconds for liveness check. timeout
+                            seconds for readiness check.
                           type: number
                         type:
-                          description: check type, support HttpGet, TcpSocket and
-                            Exec.
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
                           type: string
-                      required:
-                      - type
                       type: object
                     type: array
                   repoServer:
-                    description: repo server addr when deploy by image.
+                    description: repo server addr when deploy by image. repo server
+                      addr when deploy by image.
                     type: string
                   repoType:
                     description: 'repo type when deploy: 0: tcr personal; 1: tcr enterprise;
-                      2: public repository; 3: tem host tcr; 4: demo repo.'
+                      2: public repository; 3: tem host tcr; 4: demo repo. repo type
+                      when deploy: 0: tcr personal; 1: tcr enterprise; 2: public repository;
+                      3: tem host tcr; 4: demo repo.'
                     type: number
                   securityGroupIds:
-                    description: security groups.
+                    description: security groups. security groups.
                     items:
                       type: string
                     type: array
                   startupProbe:
-                    description: .
+                    description: . .
                     items:
                       properties:
                         exec:
-                          description: script.
+                          description: script. script.
                           type: string
                         initialDelaySeconds:
-                          description: initial delay seconds for startup check.
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for startup check.
                           type: number
                         path:
-                          description: path.
+                          description: path. path.
                           type: string
                         periodSeconds:
-                          description: period seconds for startup check.
+                          description: period seconds for liveness check. period seconds
+                            for startup check.
                           type: number
                         port:
-                          description: startup check port.
+                          description: liveness check port. startup check port.
                           type: number
                         protocol:
-                          description: protocol.
+                          description: protocol. protocol.
                           type: string
                         timeoutSeconds:
-                          description: timeout seconds for startup check.
+                          description: timeout seconds for liveness check. timeout
+                            seconds for startup check.
                           type: number
                         type:
-                          description: check type, support HttpGet, TcpSocket and
-                            Exec.
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
                           type: string
-                      required:
-                      - type
                       type: object
                     type: array
                   storageConfs:
-                    description: storage configuration.
+                    description: storage configuration. storage configuration.
                     items:
                       properties:
                         storageVolIp:
-                          description: volume ip.
+                          description: volume ip. volume ip.
                           type: string
                         storageVolName:
-                          description: volume name.
+                          description: volume name. volume name.
                           type: string
                         storageVolPath:
-                          description: volume path.
+                          description: volume path. volume path.
                           type: string
-                      required:
-                      - storageVolIp
-                      - storageVolName
-                      - storageVolPath
                       type: object
                     type: array
                   storageMountConfs:
-                    description: storage mount configuration.
+                    description: storage mount configuration. storage mount configuration.
                     items:
                       properties:
                         mountPath:
-                          description: mount path.
+                          description: mount path. mount path.
                           type: string
                         volumeName:
-                          description: volume name.
+                          description: volume name. volume name.
                           type: string
-                      required:
-                      - mountPath
-                      - volumeName
                       type: object
                     type: array
                   tcrInstanceId:
-                    description: tcr instance id when deploy by image.
+                    description: tcr instance id when deploy by image. tcr instance
+                      id when deploy by image.
                     type: string
-                required:
-                - cpuSpec
-                - deployMode
-                - deployVersion
-                - imgRepo
-                - initPodNum
-                - memorySpec
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  cpuSpec:
+                    description: cpu. cpu.
+                    type: number
+                  deployMode:
+                    description: deploy mode, support IMAGE. deploy mode, support
+                      IMAGE.
+                    type: string
+                  deployStrategyConf:
+                    description: deploy strategy. deploy strategy.
+                    items:
+                      properties:
+                        batchInterval:
+                          description: interval between batches. interval between
+                            batches.
+                          type: number
+                        betaBatchNum:
+                          description: beta batch number. beta batch number.
+                          type: number
+                        deployStrategyType:
+                          description: strategy type, 0 means auto, 1 means manual,
+                            2 means manual with beta batch. strategy type, 0 means
+                            auto, 1 means manual, 2 means manual with beta batch.
+                          type: number
+                        force:
+                          description: force update. force update.
+                          type: boolean
+                        minAvailable:
+                          description: minimal available instances duration deployment.
+                            minimal available instances duration deployment.
+                          type: number
+                        totalBatchCount:
+                          description: total batch number. total batch number.
+                          type: number
+                      type: object
+                    type: array
+                  deployVersion:
+                    description: deploy version. deploy version.
+                    type: string
+                  envConf:
+                    description: . .
+                    items:
+                      properties:
+                        config:
+                          description: referenced config name when type=referenced.
+                            referenced config name when type=referenced.
+                          type: string
+                        key:
+                          description: env key. env key.
+                          type: string
+                        secret:
+                          description: referenced secret name when type=referenced.
+                            referenced secret name when type=referenced.
+                          type: string
+                        type:
+                          description: env type, support default, referenced. env
+                            type, support default, referenced.
+                          type: string
+                        value:
+                          description: env value. env value.
+                          type: string
+                      type: object
+                    type: array
+                  imgRepo:
+                    description: repository name. repository name.
+                    type: string
+                  initPodNum:
+                    description: initial pod number. initial pod number.
+                    type: number
+                  liveness:
+                    description: liveness config. liveness config.
+                    items:
+                      properties:
+                        exec:
+                          description: script. script.
+                          type: string
+                        initialDelaySeconds:
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for liveness check.
+                          type: number
+                        path:
+                          description: path. path.
+                          type: string
+                        periodSeconds:
+                          description: period seconds for liveness check. period seconds
+                            for liveness check.
+                          type: number
+                        port:
+                          description: liveness check port. liveness check port.
+                          type: number
+                        protocol:
+                          description: protocol. protocol.
+                          type: string
+                        timeoutSeconds:
+                          description: timeout seconds for liveness check. timeout
+                            seconds for liveness check.
+                          type: number
+                        type:
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
+                          type: string
+                      type: object
+                    type: array
+                  memorySpec:
+                    description: mem. mem.
+                    type: number
+                  postStart:
+                    description: mem. mem.
+                    type: string
+                  preStop:
+                    description: mem. mem.
+                    type: string
+                  readiness:
+                    description: . .
+                    items:
+                      properties:
+                        exec:
+                          description: script. script.
+                          type: string
+                        initialDelaySeconds:
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for readiness check.
+                          type: number
+                        path:
+                          description: path. path.
+                          type: string
+                        periodSeconds:
+                          description: period seconds for liveness check. period seconds
+                            for readiness check.
+                          type: number
+                        port:
+                          description: liveness check port. readiness check port.
+                          type: number
+                        protocol:
+                          description: protocol. protocol.
+                          type: string
+                        timeoutSeconds:
+                          description: timeout seconds for liveness check. timeout
+                            seconds for readiness check.
+                          type: number
+                        type:
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
+                          type: string
+                      type: object
+                    type: array
+                  repoServer:
+                    description: repo server addr when deploy by image. repo server
+                      addr when deploy by image.
+                    type: string
+                  repoType:
+                    description: 'repo type when deploy: 0: tcr personal; 1: tcr enterprise;
+                      2: public repository; 3: tem host tcr; 4: demo repo. repo type
+                      when deploy: 0: tcr personal; 1: tcr enterprise; 2: public repository;
+                      3: tem host tcr; 4: demo repo.'
+                    type: number
+                  securityGroupIds:
+                    description: security groups. security groups.
+                    items:
+                      type: string
+                    type: array
+                  startupProbe:
+                    description: . .
+                    items:
+                      properties:
+                        exec:
+                          description: script. script.
+                          type: string
+                        initialDelaySeconds:
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for startup check.
+                          type: number
+                        path:
+                          description: path. path.
+                          type: string
+                        periodSeconds:
+                          description: period seconds for liveness check. period seconds
+                            for startup check.
+                          type: number
+                        port:
+                          description: liveness check port. startup check port.
+                          type: number
+                        protocol:
+                          description: protocol. protocol.
+                          type: string
+                        timeoutSeconds:
+                          description: timeout seconds for liveness check. timeout
+                            seconds for startup check.
+                          type: number
+                        type:
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
+                          type: string
+                      type: object
+                    type: array
+                  storageConfs:
+                    description: storage configuration. storage configuration.
+                    items:
+                      properties:
+                        storageVolIp:
+                          description: volume ip. volume ip.
+                          type: string
+                        storageVolName:
+                          description: volume name. volume name.
+                          type: string
+                        storageVolPath:
+                          description: volume path. volume path.
+                          type: string
+                      type: object
+                    type: array
+                  storageMountConfs:
+                    description: storage mount configuration. storage mount configuration.
+                    items:
+                      properties:
+                        mountPath:
+                          description: mount path. mount path.
+                          type: string
+                        volumeName:
+                          description: volume name. volume name.
+                          type: string
+                      type: object
+                    type: array
+                  tcrInstanceId:
+                    description: tcr instance id when deploy by image. tcr instance
+                      id when deploy by image.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -618,12 +843,269 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.cpuSpec is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.cpuSpec)
+                || (has(self.initProvider) && has(self.initProvider.cpuSpec))'
+            - message: spec.forProvider.deployMode is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.deployMode)
+                || (has(self.initProvider) && has(self.initProvider.deployMode))'
+            - message: spec.forProvider.deployVersion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.deployVersion)
+                || (has(self.initProvider) && has(self.initProvider.deployVersion))'
+            - message: spec.forProvider.imgRepo is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.imgRepo)
+                || (has(self.initProvider) && has(self.initProvider.imgRepo))'
+            - message: spec.forProvider.initPodNum is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.initPodNum)
+                || (has(self.initProvider) && has(self.initProvider.initPodNum))'
+            - message: spec.forProvider.memorySpec is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.memorySpec)
+                || (has(self.initProvider) && has(self.initProvider.memorySpec))'
           status:
             description: WorkloadStatus defines the observed state of Workload.
             properties:
               atProvider:
                 properties:
+                  applicationId:
+                    description: application ID. application ID.
+                    type: string
+                  cpuSpec:
+                    description: cpu. cpu.
+                    type: number
+                  deployMode:
+                    description: deploy mode, support IMAGE. deploy mode, support
+                      IMAGE.
+                    type: string
+                  deployStrategyConf:
+                    description: deploy strategy. deploy strategy.
+                    items:
+                      properties:
+                        batchInterval:
+                          description: interval between batches. interval between
+                            batches.
+                          type: number
+                        betaBatchNum:
+                          description: beta batch number. beta batch number.
+                          type: number
+                        deployStrategyType:
+                          description: strategy type, 0 means auto, 1 means manual,
+                            2 means manual with beta batch. strategy type, 0 means
+                            auto, 1 means manual, 2 means manual with beta batch.
+                          type: number
+                        force:
+                          description: force update. force update.
+                          type: boolean
+                        minAvailable:
+                          description: minimal available instances duration deployment.
+                            minimal available instances duration deployment.
+                          type: number
+                        totalBatchCount:
+                          description: total batch number. total batch number.
+                          type: number
+                      type: object
+                    type: array
+                  deployVersion:
+                    description: deploy version. deploy version.
+                    type: string
+                  envConf:
+                    description: . .
+                    items:
+                      properties:
+                        config:
+                          description: referenced config name when type=referenced.
+                            referenced config name when type=referenced.
+                          type: string
+                        key:
+                          description: env key. env key.
+                          type: string
+                        secret:
+                          description: referenced secret name when type=referenced.
+                            referenced secret name when type=referenced.
+                          type: string
+                        type:
+                          description: env type, support default, referenced. env
+                            type, support default, referenced.
+                          type: string
+                        value:
+                          description: env value. env value.
+                          type: string
+                      type: object
+                    type: array
+                  environmentId:
+                    description: environment ID. environment ID.
+                    type: string
                   id:
+                    description: ID of the resource.
+                    type: string
+                  imgRepo:
+                    description: repository name. repository name.
+                    type: string
+                  initPodNum:
+                    description: initial pod number. initial pod number.
+                    type: number
+                  liveness:
+                    description: liveness config. liveness config.
+                    items:
+                      properties:
+                        exec:
+                          description: script. script.
+                          type: string
+                        initialDelaySeconds:
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for liveness check.
+                          type: number
+                        path:
+                          description: path. path.
+                          type: string
+                        periodSeconds:
+                          description: period seconds for liveness check. period seconds
+                            for liveness check.
+                          type: number
+                        port:
+                          description: liveness check port. liveness check port.
+                          type: number
+                        protocol:
+                          description: protocol. protocol.
+                          type: string
+                        timeoutSeconds:
+                          description: timeout seconds for liveness check. timeout
+                            seconds for liveness check.
+                          type: number
+                        type:
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
+                          type: string
+                      type: object
+                    type: array
+                  memorySpec:
+                    description: mem. mem.
+                    type: number
+                  postStart:
+                    description: mem. mem.
+                    type: string
+                  preStop:
+                    description: mem. mem.
+                    type: string
+                  readiness:
+                    description: . .
+                    items:
+                      properties:
+                        exec:
+                          description: script. script.
+                          type: string
+                        initialDelaySeconds:
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for readiness check.
+                          type: number
+                        path:
+                          description: path. path.
+                          type: string
+                        periodSeconds:
+                          description: period seconds for liveness check. period seconds
+                            for readiness check.
+                          type: number
+                        port:
+                          description: liveness check port. readiness check port.
+                          type: number
+                        protocol:
+                          description: protocol. protocol.
+                          type: string
+                        timeoutSeconds:
+                          description: timeout seconds for liveness check. timeout
+                            seconds for readiness check.
+                          type: number
+                        type:
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
+                          type: string
+                      type: object
+                    type: array
+                  repoServer:
+                    description: repo server addr when deploy by image. repo server
+                      addr when deploy by image.
+                    type: string
+                  repoType:
+                    description: 'repo type when deploy: 0: tcr personal; 1: tcr enterprise;
+                      2: public repository; 3: tem host tcr; 4: demo repo. repo type
+                      when deploy: 0: tcr personal; 1: tcr enterprise; 2: public repository;
+                      3: tem host tcr; 4: demo repo.'
+                    type: number
+                  securityGroupIds:
+                    description: security groups. security groups.
+                    items:
+                      type: string
+                    type: array
+                  startupProbe:
+                    description: . .
+                    items:
+                      properties:
+                        exec:
+                          description: script. script.
+                          type: string
+                        initialDelaySeconds:
+                          description: initial delay seconds for liveness check. initial
+                            delay seconds for startup check.
+                          type: number
+                        path:
+                          description: path. path.
+                          type: string
+                        periodSeconds:
+                          description: period seconds for liveness check. period seconds
+                            for startup check.
+                          type: number
+                        port:
+                          description: liveness check port. startup check port.
+                          type: number
+                        protocol:
+                          description: protocol. protocol.
+                          type: string
+                        timeoutSeconds:
+                          description: timeout seconds for liveness check. timeout
+                            seconds for startup check.
+                          type: number
+                        type:
+                          description: env type, support default, referenced. check
+                            type, support HttpGet, TcpSocket and Exec.
+                          type: string
+                      type: object
+                    type: array
+                  storageConfs:
+                    description: storage configuration. storage configuration.
+                    items:
+                      properties:
+                        storageVolIp:
+                          description: volume ip. volume ip.
+                          type: string
+                        storageVolName:
+                          description: volume name. volume name.
+                          type: string
+                        storageVolPath:
+                          description: volume path. volume path.
+                          type: string
+                      type: object
+                    type: array
+                  storageMountConfs:
+                    description: storage mount configuration. storage mount configuration.
+                    items:
+                      properties:
+                        mountPath:
+                          description: mount path. mount path.
+                          type: string
+                        volumeName:
+                          description: volume name. volume name.
+                          type: string
+                      type: object
+                    type: array
+                  tcrInstanceId:
+                    description: tcr instance id when deploy by image. tcr instance
+                      id when deploy by image.
                     type: string
                 type: object
               conditions:
@@ -659,6 +1141,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -667,9 +1152,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

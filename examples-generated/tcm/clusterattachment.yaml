@@ -1,0 +1,18 @@
+apiVersion: tcm.tencentcloud.crossplane.io/v1alpha1
+kind: ClusterAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcm/v1alpha1/clusterattachment
+  labels:
+    testing.upbound.io/example-name: cluster_attachment
+  name: cluster-attachment
+spec:
+  forProvider:
+    clusterList:
+    - clusterId: cls-rc5uy6dy
+      region: ap-guangzhou
+      role: REMOTE
+      subnetId: subnet-lkyb3ayc
+      type: TKE
+      vpcId: vpc-a1jycmbx
+    meshId: mesh-b9q6vf9l

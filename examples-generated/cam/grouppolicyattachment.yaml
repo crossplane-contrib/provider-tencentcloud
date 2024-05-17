@@ -1,0 +1,16 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: GroupPolicyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/grouppolicyattachment
+  labels:
+    testing.upbound.io/example-name: group_policy_attachment_basic
+  name: group-policy-attachment-basic
+spec:
+  forProvider:
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_cam_groups
+    policyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_cam_policies

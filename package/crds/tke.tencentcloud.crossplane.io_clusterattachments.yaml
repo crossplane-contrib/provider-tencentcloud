@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: clusterattachments.tke.tencentcloud.crossplane.io
 spec:
   group: tke.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: ClusterAttachment
     listKind: ClusterAttachmentList
     plural: clusterattachments
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ClusterAttachment is the Schema for the ClusterAttachments API
+        description: ClusterAttachment is the Schema for the ClusterAttachments API.
+          Provide a resource to attach an existing  cvm to kubernetes cluster.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,10 +68,10 @@ spec:
               forProvider:
                 properties:
                   clusterId:
-                    description: ID of the cluster.
+                    description: ID of the cluster. ID of the cluster.
                     type: string
                   clusterIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Cluster to populate clusterId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -101,7 +105,7 @@ spec:
                     - name
                     type: object
                   clusterIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Cluster to populate clusterId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -149,14 +153,24 @@ spec:
                       of other types (Linux, etc.): The character length is [2, 60],
                       and multiple dots are allowed. There is a segment between the
                       dots. Each segment allows letters (with no limitation on capitalization),
+                      numbers and dashes (-). The host name of the attached instance.
+                      Dot (.) and dash (-) cannot be used as the first and last characters
+                      of HostName and cannot be used consecutively. Windows example:
+                      The length of the name character is [2, 15], letters (capitalization
+                      is not restricted), numbers and dashes (-) are allowed, dots
+                      (.) are not supported, and not all numbers are allowed. Examples
+                      of other types (Linux, etc.): The character length is [2, 60],
+                      and multiple dots are allowed. There is a segment between the
+                      dots. Each segment allows letters (with no limitation on capitalization),
                       numbers and dashes (-).'
                     type: string
                   instanceId:
                     description: ID of the CVM instance, this cvm will reinstall the
+                      system. ID of the CVM instance, this cvm will reinstall the
                       system.
                     type: string
                   instanceIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Instance in cvm to populate instanceId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -190,7 +204,7 @@ spec:
                     - name
                     type: object
                   instanceIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Instance in cvm to populate instanceId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -230,18 +244,21 @@ spec:
                     type: object
                   keyIds:
                     description: The key pair to use for the instance, it looks like
-                      skey-16jig7tx, it should be set if `password` not set.
+                      skey-16jig7tx, it should be set if password not set. The key
+                      pair to use for the instance, it looks like skey-16jig7tx, it
+                      should be set if `password` not set.
                     items:
                       type: string
                     type: array
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels of tke attachment exits CVM.
+                    description: Labels of tke attachment exits CVM. Labels of tke
+                      attachment exits CVM.
                     type: object
                   passwordSecretRef:
-                    description: Password to access, should be set if `key_ids` not
-                      set.
+                    description: Password to access, should be set if key_ids not
+                      set. Password to access, should be set if `key_ids` not set.
                     properties:
                       key:
                         description: The key to select.
@@ -259,69 +276,95 @@ spec:
                     type: object
                   unschedulable:
                     description: Sets whether the joining node participates in the
-                      schedule. Default is '0'. Participate in scheduling.
+                      schedule. Default is '0'. Participate in scheduling. Sets whether
+                      the joining node participates in the schedule. Default is '0'.
+                      Participate in scheduling.
                     type: number
                   workerConfig:
                     description: Deploy the machine configuration information of the
-                      'WORKER', commonly used to attach existing instances.
+                      'WORKER', commonly used to attach existing instances. Deploy
+                      the machine configuration information of the 'WORKER', commonly
+                      used to attach existing instances.
                     items:
                       properties:
                         dataDisk:
-                          description: Configurations of data disk.
+                          description: Configurations of data disk. Configurations
+                            of data disk.
                           items:
                             properties:
                               autoFormatAndMount:
                                 description: Indicate whether to auto format and mount
-                                  or not. Default is `false`.
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
                                 type: boolean
                               diskPartition:
                                 description: 'The name of the device or partition
                                   to mount. NOTE: this argument doesn''t support setting
-                                  in node pool, or will leads to mount error.'
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
                                 type: string
                               diskSize:
-                                description: Volume of disk in GB. Default is `0`.
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
                                 type: number
                               diskType:
-                                description: 'Types of disk, available values: `CLOUD_PREMIUM`
-                                  and `CLOUD_SSD`.'
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
                                 type: string
                               fileSystem:
-                                description: File system, e.g. `ext3/ext4/xfs`.
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
                                 type: string
                               mountTarget:
-                                description: Mount target.
+                                description: Mount target. Mount target.
                                 type: string
                             type: object
                           type: array
                         desiredPodNum:
                           description: Indicate to set desired pod number in node.
-                            valid when the cluster is podCIDR.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
                           type: number
                         dockerGraphPath:
-                          description: Docker graph path. Default is `/var/lib/docker`.
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: Custom parameter information related to the
-                            node. This is a white-list parameter.
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
                           items:
                             type: string
                           type: array
                         gpuArgs:
-                          description: GPU driver parameters.
+                          description: GPU driver parameters. GPU driver parameters.
                           items:
                             properties:
                               cuda:
                                 additionalProperties:
                                   type: string
-                                description: 'CUDA  version. Format like: `{ version:
-                                  String, name: String }`. `version`: Version of GPU
-                                  driver or CUDA; `name`: Name of GPU driver or CUDA.'
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
                                 type: object
                               cudnn:
                                 additionalProperties:
                                   type: string
-                                description: 'cuDNN version. Format like: `{ version:
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
                                   String, name: String, doc_name: String, dev_name:
                                   String }`. `version`: cuDNN version; `name`: cuDNN
                                   name; `doc_name`: Doc name of cuDNN; `dev_name`:
@@ -330,96 +373,134 @@ spec:
                               customDriver:
                                 additionalProperties:
                                   type: string
-                                description: 'Custom GPU driver. Format like: `{address:
-                                  String}`. `address`: URL of custom GPU driver address.'
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
                                 type: object
                               driver:
                                 additionalProperties:
                                   type: string
-                                description: 'GPU driver version. Format like: `{
-                                  version: String, name: String }`. `version`: Version
-                                  of GPU driver or CUDA; `name`: Name of GPU driver
-                                  or CUDA.'
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
                                 type: object
                               migEnable:
-                                description: Whether to enable MIG.
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
                                 type: boolean
                             type: object
                           type: array
                         isSchedule:
                           description: Indicate to schedule the adding node or not.
-                            Default is true.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
                           type: boolean
                         mountTarget:
-                          description: Mount target. Default is not mounting.
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
                           type: string
                         userData:
                           description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
                             is 16KB.
                           type: string
                       type: object
                     type: array
                   workerConfigOverrides:
                     description: Override variable worker_config, commonly used to
-                      attach existing instances.
+                      attach existing instances. Override variable worker_config,
+                      commonly used to attach existing instances.
                     items:
                       properties:
                         dataDisk:
-                          description: Configurations of data disk.
+                          description: Configurations of data disk. Configurations
+                            of data disk.
                           items:
                             properties:
                               autoFormatAndMount:
                                 description: Indicate whether to auto format and mount
-                                  or not. Default is `false`.
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
                                 type: boolean
                               diskPartition:
                                 description: 'The name of the device or partition
                                   to mount. NOTE: this argument doesn''t support setting
-                                  in node pool, or will leads to mount error.'
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
                                 type: string
                               diskSize:
-                                description: Volume of disk in GB. Default is `0`.
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
                                 type: number
                               diskType:
-                                description: 'Types of disk, available values: `CLOUD_PREMIUM`
-                                  and `CLOUD_SSD`.'
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
                                 type: string
                               fileSystem:
-                                description: File system, e.g. `ext3/ext4/xfs`.
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
                                 type: string
                               mountTarget:
-                                description: Mount target.
+                                description: Mount target. Mount target.
                                 type: string
                             type: object
                           type: array
                         desiredPodNum:
                           description: Indicate to set desired pod number in node.
-                            valid when the cluster is podCIDR.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
                           type: number
                         dockerGraphPath:
-                          description: Docker graph path. Default is `/var/lib/docker`.
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: Custom parameter information related to the
-                            node. This is a white-list parameter.
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
                           items:
                             type: string
                           type: array
                         gpuArgs:
-                          description: GPU driver parameters.
+                          description: GPU driver parameters. GPU driver parameters.
                           items:
                             properties:
                               cuda:
                                 additionalProperties:
                                   type: string
-                                description: 'CUDA  version. Format like: `{ version:
-                                  String, name: String }`. `version`: Version of GPU
-                                  driver or CUDA; `name`: Name of GPU driver or CUDA.'
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
                                 type: object
                               cudnn:
                                 additionalProperties:
                                   type: string
-                                description: 'cuDNN version. Format like: `{ version:
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
                                   String, name: String, doc_name: String, dev_name:
                                   String }`. `version`: cuDNN version; `name`: cuDNN
                                   name; `doc_name`: Doc name of cuDNN; `dev_name`:
@@ -428,78 +509,409 @@ spec:
                               customDriver:
                                 additionalProperties:
                                   type: string
-                                description: 'Custom GPU driver. Format like: `{address:
-                                  String}`. `address`: URL of custom GPU driver address.'
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
                                 type: object
                               driver:
                                 additionalProperties:
                                   type: string
-                                description: 'GPU driver version. Format like: `{
-                                  version: String, name: String }`. `version`: Version
-                                  of GPU driver or CUDA; `name`: Name of GPU driver
-                                  or CUDA.'
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
                                 type: object
                               migEnable:
-                                description: Whether to enable MIG.
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
                                 type: boolean
                             type: object
                           type: array
                         isSchedule:
                           description: Indicate to schedule the adding node or not.
-                            Default is true.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
                           type: boolean
                         mountTarget:
-                          description: Mount target. Default is not mounting.
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
                           type: string
                         userData:
                           description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
                             is 16KB.
                           type: string
                       type: object
                     type: array
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  hostname:
+                    description: 'The host name of the attached instance. Dot (.)
+                      and dash (-) cannot be used as the first and last characters
+                      of HostName and cannot be used consecutively. Windows example:
+                      The length of the name character is [2, 15], letters (capitalization
+                      is not restricted), numbers and dashes (-) are allowed, dots
+                      (.) are not supported, and not all numbers are allowed. Examples
+                      of other types (Linux, etc.): The character length is [2, 60],
+                      and multiple dots are allowed. There is a segment between the
+                      dots. Each segment allows letters (with no limitation on capitalization),
+                      numbers and dashes (-). The host name of the attached instance.
+                      Dot (.) and dash (-) cannot be used as the first and last characters
+                      of HostName and cannot be used consecutively. Windows example:
+                      The length of the name character is [2, 15], letters (capitalization
+                      is not restricted), numbers and dashes (-) are allowed, dots
+                      (.) are not supported, and not all numbers are allowed. Examples
+                      of other types (Linux, etc.): The character length is [2, 60],
+                      and multiple dots are allowed. There is a segment between the
+                      dots. Each segment allows letters (with no limitation on capitalization),
+                      numbers and dashes (-).'
+                    type: string
+                  keyIds:
+                    description: The key pair to use for the instance, it looks like
+                      skey-16jig7tx, it should be set if password not set. The key
+                      pair to use for the instance, it looks like skey-16jig7tx, it
+                      should be set if `password` not set.
+                    items:
+                      type: string
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: Labels of tke attachment exits CVM. Labels of tke
+                      attachment exits CVM.
+                    type: object
+                  unschedulable:
+                    description: Sets whether the joining node participates in the
+                      schedule. Default is '0'. Participate in scheduling. Sets whether
+                      the joining node participates in the schedule. Default is '0'.
+                      Participate in scheduling.
+                    type: number
+                  workerConfig:
+                    description: Deploy the machine configuration information of the
+                      'WORKER', commonly used to attach existing instances. Deploy
+                      the machine configuration information of the 'WORKER', commonly
+                      used to attach existing instances.
+                    items:
+                      properties:
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: 'The name of the device or partition
+                                  to mount. NOTE: this argument doesn''t support setting
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              fileSystem:
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              mountTarget:
+                                description: Mount target. Mount target.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
+                          type: number
+                        dockerGraphPath:
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
+                          type: string
+                        extraArgs:
+                          description: Custom parameter information related to the
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
+                          items:
+                            type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters. GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
+                                type: boolean
+                            type: object
+                          type: array
+                        isSchedule:
+                          description: Indicate to schedule the adding node or not.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
+                          type: boolean
+                        mountTarget:
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
+                          type: string
+                        userData:
+                          description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      type: object
+                    type: array
+                  workerConfigOverrides:
+                    description: Override variable worker_config, commonly used to
+                      attach existing instances. Override variable worker_config,
+                      commonly used to attach existing instances.
+                    items:
+                      properties:
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: 'The name of the device or partition
+                                  to mount. NOTE: this argument doesn''t support setting
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              fileSystem:
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              mountTarget:
+                                description: Mount target. Mount target.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
+                          type: number
+                        dockerGraphPath:
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
+                          type: string
+                        extraArgs:
+                          description: Custom parameter information related to the
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
+                          items:
+                            type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters. GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
+                                type: boolean
+                            type: object
+                          type: array
+                        isSchedule:
+                          description: Indicate to schedule the adding node or not.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
+                          type: boolean
+                        mountTarget:
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
+                          type: string
+                        userData:
+                          description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -634,14 +1046,340 @@ spec:
             properties:
               atProvider:
                 properties:
-                  id:
+                  clusterId:
+                    description: ID of the cluster. ID of the cluster.
                     type: string
+                  hostname:
+                    description: 'The host name of the attached instance. Dot (.)
+                      and dash (-) cannot be used as the first and last characters
+                      of HostName and cannot be used consecutively. Windows example:
+                      The length of the name character is [2, 15], letters (capitalization
+                      is not restricted), numbers and dashes (-) are allowed, dots
+                      (.) are not supported, and not all numbers are allowed. Examples
+                      of other types (Linux, etc.): The character length is [2, 60],
+                      and multiple dots are allowed. There is a segment between the
+                      dots. Each segment allows letters (with no limitation on capitalization),
+                      numbers and dashes (-). The host name of the attached instance.
+                      Dot (.) and dash (-) cannot be used as the first and last characters
+                      of HostName and cannot be used consecutively. Windows example:
+                      The length of the name character is [2, 15], letters (capitalization
+                      is not restricted), numbers and dashes (-) are allowed, dots
+                      (.) are not supported, and not all numbers are allowed. Examples
+                      of other types (Linux, etc.): The character length is [2, 60],
+                      and multiple dots are allowed. There is a segment between the
+                      dots. Each segment allows letters (with no limitation on capitalization),
+                      numbers and dashes (-).'
+                    type: string
+                  id:
+                    description: ID of the resource.
+                    type: string
+                  instanceId:
+                    description: ID of the CVM instance, this cvm will reinstall the
+                      system. ID of the CVM instance, this cvm will reinstall the
+                      system.
+                    type: string
+                  keyIds:
+                    description: The key pair to use for the instance, it looks like
+                      skey-16jig7tx, it should be set if password not set. The key
+                      pair to use for the instance, it looks like skey-16jig7tx, it
+                      should be set if `password` not set.
+                    items:
+                      type: string
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: Labels of tke attachment exits CVM. Labels of tke
+                      attachment exits CVM.
+                    type: object
                   securityGroups:
+                    description: A list of security group IDs after attach to cluster.
+                      A list of security group IDs after attach to cluster.
                     items:
                       type: string
                     type: array
                   state:
+                    description: State of the node. State of the node.
                     type: string
+                  unschedulable:
+                    description: Sets whether the joining node participates in the
+                      schedule. Default is '0'. Participate in scheduling. Sets whether
+                      the joining node participates in the schedule. Default is '0'.
+                      Participate in scheduling.
+                    type: number
+                  workerConfig:
+                    description: Deploy the machine configuration information of the
+                      'WORKER', commonly used to attach existing instances. Deploy
+                      the machine configuration information of the 'WORKER', commonly
+                      used to attach existing instances.
+                    items:
+                      properties:
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: 'The name of the device or partition
+                                  to mount. NOTE: this argument doesn''t support setting
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              fileSystem:
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              mountTarget:
+                                description: Mount target. Mount target.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
+                          type: number
+                        dockerGraphPath:
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
+                          type: string
+                        extraArgs:
+                          description: Custom parameter information related to the
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
+                          items:
+                            type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters. GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
+                                type: boolean
+                            type: object
+                          type: array
+                        isSchedule:
+                          description: Indicate to schedule the adding node or not.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
+                          type: boolean
+                        mountTarget:
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
+                          type: string
+                        userData:
+                          description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      type: object
+                    type: array
+                  workerConfigOverrides:
+                    description: Override variable worker_config, commonly used to
+                      attach existing instances. Override variable worker_config,
+                      commonly used to attach existing instances.
+                    items:
+                      properties:
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: 'The name of the device or partition
+                                  to mount. NOTE: this argument doesn''t support setting
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              fileSystem:
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              mountTarget:
+                                description: Mount target. Mount target.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
+                          type: number
+                        dockerGraphPath:
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
+                          type: string
+                        extraArgs:
+                          description: Custom parameter information related to the
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
+                          items:
+                            type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters. GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
+                                type: boolean
+                            type: object
+                          type: array
+                        isSchedule:
+                          description: Indicate to schedule the adding node or not.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
+                          type: boolean
+                        mountTarget:
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
+                          type: string
+                        userData:
+                          description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -676,6 +1414,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -684,9 +1425,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

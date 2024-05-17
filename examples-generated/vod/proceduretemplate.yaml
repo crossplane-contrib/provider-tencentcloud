@@ -1,0 +1,126 @@
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: ProcedureTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/proceduretemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    comment: test
+    mediaProcessTask:
+    - adaptiveDynamicStreamingTaskList:
+      - definition: ${tonumber(split("#", tencentcloud_vod_adaptive_dynamic_streaming_template.foo.id)[1])}
+      imageSpriteTaskList:
+      - definition: ${tonumber(split("#", tencentcloud_vod_image_sprite_template.foo.id)[1])}
+      snapshotByTimeOffsetTaskList:
+      - definition: ${tonumber(split("#", tencentcloud_vod_snapshot_by_time_offset_template.foo.id)[1])}
+        extTimeOffsetList:
+        - 3.5s
+      transcodeTaskList:
+      - definition: ${tonumber(split("#", tencentcloud_vod_transcode_template.transcode_template.id)[1])}
+    name: tf-procedure0
+    subAppId: ${tonumber(split("#", tencentcloud_vod_sub_application.sub_application.id)[1])}
+
+---
+
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: AdaptiveDynamicStreamingTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/proceduretemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    comment: test
+    disableHigherVideoBitrate: false
+    disableHigherVideoResolution: false
+    drmType: SimpleAES
+    format: HLS
+    name: tf-adaptive
+    streamInfo:
+    - audio:
+      - bitrate: 128
+        codec: libfdk_aac
+        sampleRate: 32000
+      removeAudio: true
+      video:
+      - bitrate: 128
+        codec: libx264
+        fps: 3
+    - audio:
+      - bitrate: 256
+        codec: libfdk_aac
+        sampleRate: 44100
+      removeAudio: true
+      tehdConfig:
+      - type: TEHD-100
+      video:
+      - bitrate: 256
+        codec: libx264
+        fps: 4
+    subAppId: ${tonumber(split("#", tencentcloud_vod_sub_application.sub_application.id)[1])}
+
+---
+
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: ImageSpriteTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/proceduretemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    columnCount: 3
+    comment: test
+    fillType: stretch
+    height: 128
+    name: tf-sprite
+    resolutionAdaptive: false
+    rowCount: 3
+    sampleInterval: 10
+    sampleType: Percent
+    subAppId: ${tonumber(split("#", tencentcloud_vod_sub_application.sub_application.id)[1])}
+    width: 128
+
+---
+
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: SnapshotByTimeOffsetTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/proceduretemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    comment: test
+    fillType: white
+    format: png
+    height: 128
+    name: tf-snapshot
+    resolutionAdaptive: false
+    subAppId: ${tonumber(split("#", tencentcloud_vod_sub_application.sub_application.id)[1])}
+    width: 128
+
+---
+
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: SubApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/proceduretemplate
+  labels:
+    testing.upbound.io/example-name: sub_application
+  name: sub-application
+spec:
+  forProvider:
+    description: this is sub application
+    name: procedure-subapplication
+    status: "On"

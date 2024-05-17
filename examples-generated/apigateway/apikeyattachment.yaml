@@ -1,0 +1,48 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: ApiKeyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/apikeyattachment
+  labels:
+    testing.upbound.io/example-name: attach
+  name: attach
+spec:
+  forProvider:
+    apiKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: key
+    usagePlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: plan
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: ApiKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/apikeyattachment
+  labels:
+    testing.upbound.io/example-name: key
+  name: key
+spec:
+  forProvider:
+    secretName: my_api_key
+    status: "on"
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: UsagePlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/apikeyattachment
+  labels:
+    testing.upbound.io/example-name: plan
+  name: plan
+spec:
+  forProvider:
+    maxRequestNum: 100
+    maxRequestNumPreSec: 10
+    usagePlanDesc: nice plan
+    usagePlanName: my_plan

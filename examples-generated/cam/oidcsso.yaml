@@ -1,0 +1,20 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: OidcSSO
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/oidcsso
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    authorizationEndpoint: https://login.microsoftonline.com/.../oauth2/v2.0/authorize
+    clientId: '...'
+    identityKey: '...'
+    identityUrl: https://login.microsoftonline.com/.../v2.0
+    mappingFiled: name
+    responseMode: form_post
+    responseType: id_token
+    scope:
+    - openid
+    - email

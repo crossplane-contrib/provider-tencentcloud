@@ -1,0 +1,59 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: AuthAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/authattachment
+  labels:
+    testing.upbound.io/example-name: test_auth_attach
+  name: test-auth-attach
+spec:
+  forProvider:
+    autoCreateDiscoveryAnonymousAuth: true
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: managed_cluster
+    issuer: https://${tencentcloud_kubernetes_cluster.managed_cluster.id}.ccs.tencent-cloud.com
+    jwksUri: https://${tencentcloud_kubernetes_cluster.managed_cluster.id}.ccs.tencent-cloud.com/openid/v1/jwks
+
+---
+
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/authattachment
+  labels:
+    testing.upbound.io/example-name: managed_cluster
+  name: managed-cluster
+spec:
+  forProvider:
+    clusterCidr: 10.31.0.0/16
+    clusterDeployType: MANAGED_CLUSTER
+    clusterDesc: test cluster desc
+    clusterMaxPodNum: 32
+    clusterMaxServiceNum: 32
+    clusterName: keep
+    clusterVersion: 1.20.6
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_vpc_subnets
+    workerConfig:
+    - availabilityZone: ${var.availability_zone}
+      count: 1
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      instanceType: ${var.default_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      publicIpAssigned: true
+      subnetId: ${data.tencentcloud_vpc_subnets.vpc.instance_list.0.subnet_id}
+      systemDiskSize: 60
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==

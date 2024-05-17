@@ -1,0 +1,168 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: NatGatewaySnat
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: subnet_snat
+  name: subnet-snat
+spec:
+  forProvider:
+    description: terraform test
+    natGatewayId: ${tencentcloud_nat_gateway.my_nat.id}
+    publicIpAddr:
+    - ${tencentcloud_eip.eip_example1.public_ip}
+    - ${tencentcloud_eip.eip_example2.public_ip}
+    resourceType: SUBNET
+    subnetCidrBlock: ${tencentcloud_subnet.subnet.cidr_block}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Eip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: eip_example1
+  name: eip-example1
+spec:
+  forProvider:
+    name: eip_example1
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Eip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: eip_example2
+  name: eip-example2
+spec:
+  forProvider:
+    name: eip_example2
+
+---
+
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.0.name}
+    hostname: user
+    imageId: ${data.tencentcloud_images.image.images.0.image_id}
+    instanceName: tf_example
+    instanceType: ${data.tencentcloud_instance_types.instance_types.instance_types.0.instance_type}
+    projectId: 0
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    systemDiskSize: 50
+    systemDiskType: CLOUD_PREMIUM
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: NatGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: my_nat
+  name: my-nat
+spec:
+  forProvider:
+    assignedEipSet:
+    - ${tencentcloud_eip.eip_example1.public_ip}
+    - ${tencentcloud_eip.eip_example2.public_ip}
+    bandwidth: 500
+    maxConcurrent: 3000000
+    name: tf_example_nat_gateway
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: route_table
+  name: route-table
+spec:
+  forProvider:
+    name: tf_example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: RouteTableEntry
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: route_entry
+  name: route-entry
+spec:
+  forProvider:
+    destinationCidrBlock: 10.0.0.0/8
+    nextHub: ${tencentcloud_nat_gateway.my_nat.id}
+    nextType: NAT
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: route_table
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.0.name}
+    cidrBlock: 10.0.0.0/16
+    name: subnet-example
+    routeTableId: ${tencentcloud_route_table.route_table.id}
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgatewaysnat
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

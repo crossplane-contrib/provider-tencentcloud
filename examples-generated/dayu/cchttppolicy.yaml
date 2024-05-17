@@ -1,0 +1,20 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: CcHttpPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/cchttppolicy
+  labels:
+    testing.upbound.io/example-name: test_bgpip
+  name: test-bgpip
+spec:
+  forProvider:
+    action: drop
+    name: policy_match
+    resourceId: bgpip-00000294
+    resourceType: bgpip
+    ruleList:
+    - operator: include
+      skey: host
+      value: "123"
+    smode: matching
+    switch: true

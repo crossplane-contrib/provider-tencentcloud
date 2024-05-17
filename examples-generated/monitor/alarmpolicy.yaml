@@ -1,0 +1,86 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: AlarmPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/alarmpolicy
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    conditions:
+    - isUnionRule: 1
+      rules:
+      - continuePeriod: 1
+        isPowerNotice: 0
+        metricName: CpuUsage
+        noticeFrequency: 3600
+        operator: ge
+        period: 60
+        value: "89.9"
+    enable: 1
+    eventConditions:
+    - metricName: ping_unreachable
+    - metricName: guest_reboot
+    monitorType: MT_QCE
+    namespace: cvm_device
+    noticeIdsRefs:
+    - name: foo
+    policyName: tf-policy
+    projectId: 0
+    triggerTasks:
+    - taskConfig: '{"Region":"ap-guangzhou","Group":"asg-0z312312x","Policy":"asp-ganig28"}'
+      type: AS
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: AlarmNotice
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/alarmpolicy
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: tf-alarm_notice
+    noticeLanguage: zh-CN
+    noticeType: ALL
+    urlNotices:
+    - endTime: 0
+      startTime: 1
+      url: https://www.mytest.com/validate
+      weekday:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+    userNotices:
+    - endTime: 1
+      groupIds: []
+      needPhoneArriveNotice: 1
+      noticeWay:
+      - SMS
+      - EMAIL
+      phoneCallType: CIRCLE
+      phoneCircleInterval: 50
+      phoneCircleTimes: 2
+      phoneInnerInterval: 60
+      phoneOrder:
+      - 10001
+      receiverType: USER
+      startTime: 0
+      userIds:
+      - 10001
+      weekday:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7

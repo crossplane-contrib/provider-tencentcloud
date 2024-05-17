@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: storages.cbs.tencentcloud.crossplane.io
 spec:
   group: cbs.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Storage
     listKind: StorageList
     plural: storages
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Storage is the Schema for the Storages API
+        description: Storage is the Schema for the Storages API. Provides a resource
+          to create a CBS.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,35 +69,53 @@ spec:
                 properties:
                   availabilityZone:
                     description: The available zone that the CBS instance locates
-                      at.
+                      at. The available zone that the CBS instance locates at.
                     type: string
                   chargeType:
                     description: The charge type of CBS instance. Valid values are
-                      `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                      PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Valid values are `PREPAID`
+                      and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
                     type: string
                   diskBackupQuota:
-                    description: The quota of backup points of cloud disk.
+                    description: The quota of backup points of cloud disk. The quota
+                      of backup points of cloud disk.
                     type: number
                   encrypt:
-                    description: Indicates whether CBS is encrypted.
+                    description: Indicates whether CBS is encrypted. Indicates whether
+                      CBS is encrypted.
                     type: boolean
                   forceDelete:
                     description: Indicate whether to delete CBS instance directly
                       or not. Default is false. If set true, the instance will be
-                      deleted instead of staying recycle bin.
+                      deleted instead of staying recycle bin. Indicate whether to
+                      delete CBS instance directly or not. Default is false. If set
+                      true, the instance will be deleted instead of staying recycle
+                      bin.
                     type: boolean
                   period:
-                    description: 'The purchased usage period of CBS. Valid values:
-                      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].'
+                    description: 'It has been deprecated from version 1.33.0. Set
+                      prepaid_period instead. The purchased usage period of CBS. Valid
+                      values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36]. The
+                      purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5,
+                      6, 7, 8, 9, 10, 11, 12, 24, 36].'
                     type: number
                   prepaidPeriod:
                     description: 'The tenancy (time unit is month) of the prepaid
-                      instance, NOTE: it only works when charge_type is set to `PREPAID`.
+                      instance, NOTE: it only works when charge_type is set to PREPAID.
                       Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24,
-                      36.'
+                      36. The tenancy (time unit is month) of the prepaid instance,
+                      NOTE: it only works when charge_type is set to `PREPAID`. Valid
+                      values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.'
                     type: number
                   prepaidRenewFlag:
-                    description: 'Auto Renewal flag. Value range: `NOTIFY_AND_AUTO_RENEW`:
+                    description: 'Auto Renewal flag. Value range: NOTIFY_AND_AUTO_RENEW:
+                      Notify expiry and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                      Notify expiry but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
+                      Neither notify expiry nor renew automatically. Default value
+                      range: NOTIFY_AND_MANUAL_RENEW: Notify expiry but do not renew
+                      automatically. NOTE: it only works when charge_type is set to
+                      PREPAID. Auto Renewal flag. Value range: `NOTIFY_AND_AUTO_RENEW`:
                       Notify expiry and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
                       Notify expiry but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
                       Neither notify expiry nor renew automatically. Default value
@@ -103,81 +125,181 @@ spec:
                     type: string
                   projectId:
                     description: ID of the project to which the instance belongs.
+                      ID of the project to which the instance belongs.
                     type: number
                   snapshotId:
                     description: ID of the snapshot. If specified, created the CBS
-                      by this snapshot.
+                      by this snapshot. ID of the snapshot. If specified, created
+                      the CBS by this snapshot.
                     type: string
                   storageName:
                     description: Name of CBS. The maximum length can not exceed 60
-                      bytes.
+                      bytes. Name of CBS. The maximum length can not exceed 60 bytes.
                     type: string
                   storageSize:
-                    description: Volume of CBS, and unit is GB.
+                    description: Volume of CBS, and unit is GB. Volume of CBS, and
+                      unit is GB.
                     type: number
                   storageType:
                     description: 'Type of CBS medium. Valid values: CLOUD_BASIC: HDD
                       cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_BSSD:
                       General Purpose SSD, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD,
-                      CLOUD_TSSD: Tremendous SSD.'
+                      CLOUD_TSSD: Tremendous SSD. Type of CBS medium. Valid values:
+                      CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage,
+                      CLOUD_BSSD: General Purpose SSD, CLOUD_SSD: SSD, CLOUD_HSSD:
+                      Enhanced SSD, CLOUD_TSSD: Tremendous SSD.'
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: The available tags within this CBS.
+                    description: The available tags within this CBS. The available
+                      tags within this CBS.
                     type: object
                   throughputPerformance:
                     description: Add extra performance to the data disk. Only works
-                      when disk type is `CLOUD_TSSD` or `CLOUD_HSSD`.
+                      when disk type is CLOUD_TSSD or CLOUD_HSSD. Add extra performance
+                      to the data disk. Only works when disk type is `CLOUD_TSSD`
+                      or `CLOUD_HSSD`.
                     type: number
-                required:
-                - availabilityZone
-                - storageName
-                - storageSize
-                - storageType
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  availabilityZone:
+                    description: The available zone that the CBS instance locates
+                      at. The available zone that the CBS instance locates at.
+                    type: string
+                  chargeType:
+                    description: The charge type of CBS instance. Valid values are
+                      PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Valid values are `PREPAID`
+                      and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  diskBackupQuota:
+                    description: The quota of backup points of cloud disk. The quota
+                      of backup points of cloud disk.
+                    type: number
+                  encrypt:
+                    description: Indicates whether CBS is encrypted. Indicates whether
+                      CBS is encrypted.
+                    type: boolean
+                  forceDelete:
+                    description: Indicate whether to delete CBS instance directly
+                      or not. Default is false. If set true, the instance will be
+                      deleted instead of staying recycle bin. Indicate whether to
+                      delete CBS instance directly or not. Default is false. If set
+                      true, the instance will be deleted instead of staying recycle
+                      bin.
+                    type: boolean
+                  period:
+                    description: 'It has been deprecated from version 1.33.0. Set
+                      prepaid_period instead. The purchased usage period of CBS. Valid
+                      values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36]. The
+                      purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5,
+                      6, 7, 8, 9, 10, 11, 12, 24, 36].'
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance, NOTE: it only works when charge_type is set to PREPAID.
+                      Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24,
+                      36. The tenancy (time unit is month) of the prepaid instance,
+                      NOTE: it only works when charge_type is set to `PREPAID`. Valid
+                      values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.'
+                    type: number
+                  prepaidRenewFlag:
+                    description: 'Auto Renewal flag. Value range: NOTIFY_AND_AUTO_RENEW:
+                      Notify expiry and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                      Notify expiry but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
+                      Neither notify expiry nor renew automatically. Default value
+                      range: NOTIFY_AND_MANUAL_RENEW: Notify expiry but do not renew
+                      automatically. NOTE: it only works when charge_type is set to
+                      PREPAID. Auto Renewal flag. Value range: `NOTIFY_AND_AUTO_RENEW`:
+                      Notify expiry and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                      Notify expiry but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
+                      Neither notify expiry nor renew automatically. Default value
+                      range: `NOTIFY_AND_MANUAL_RENEW`: Notify expiry but do not renew
+                      automatically. NOTE: it only works when charge_type is set to
+                      `PREPAID`.'
+                    type: string
+                  projectId:
+                    description: ID of the project to which the instance belongs.
+                      ID of the project to which the instance belongs.
+                    type: number
+                  snapshotId:
+                    description: ID of the snapshot. If specified, created the CBS
+                      by this snapshot. ID of the snapshot. If specified, created
+                      the CBS by this snapshot.
+                    type: string
+                  storageName:
+                    description: Name of CBS. The maximum length can not exceed 60
+                      bytes. Name of CBS. The maximum length can not exceed 60 bytes.
+                    type: string
+                  storageSize:
+                    description: Volume of CBS, and unit is GB. Volume of CBS, and
+                      unit is GB.
+                    type: number
+                  storageType:
+                    description: 'Type of CBS medium. Valid values: CLOUD_BASIC: HDD
+                      cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_BSSD:
+                      General Purpose SSD, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD,
+                      CLOUD_TSSD: Tremendous SSD. Type of CBS medium. Valid values:
+                      CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage,
+                      CLOUD_BSSD: General Purpose SSD, CLOUD_SSD: SSD, CLOUD_HSSD:
+                      Enhanced SSD, CLOUD_TSSD: Tremendous SSD.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The available tags within this CBS. The available
+                      tags within this CBS.
+                    type: object
+                  throughputPerformance:
+                    description: Add extra performance to the data disk. Only works
+                      when disk type is CLOUD_TSSD or CLOUD_HSSD. Add extra performance
+                      to the data disk. Only works when disk type is `CLOUD_TSSD`
+                      or `CLOUD_HSSD`.
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -307,17 +429,135 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availabilityZone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityZone)
+                || (has(self.initProvider) && has(self.initProvider.availabilityZone))'
+            - message: spec.forProvider.storageName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageName)
+                || (has(self.initProvider) && has(self.initProvider.storageName))'
+            - message: spec.forProvider.storageSize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageSize)
+                || (has(self.initProvider) && has(self.initProvider.storageSize))'
+            - message: spec.forProvider.storageType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageType)
+                || (has(self.initProvider) && has(self.initProvider.storageType))'
           status:
             description: StorageStatus defines the observed state of Storage.
             properties:
               atProvider:
                 properties:
                   attached:
+                    description: Indicates whether the CBS is mounted the CVM. Indicates
+                      whether the CBS is mounted the CVM.
+                    type: boolean
+                  availabilityZone:
+                    description: The available zone that the CBS instance locates
+                      at. The available zone that the CBS instance locates at.
+                    type: string
+                  chargeType:
+                    description: The charge type of CBS instance. Valid values are
+                      PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Valid values are `PREPAID`
+                      and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  diskBackupQuota:
+                    description: The quota of backup points of cloud disk. The quota
+                      of backup points of cloud disk.
+                    type: number
+                  encrypt:
+                    description: Indicates whether CBS is encrypted. Indicates whether
+                      CBS is encrypted.
+                    type: boolean
+                  forceDelete:
+                    description: Indicate whether to delete CBS instance directly
+                      or not. Default is false. If set true, the instance will be
+                      deleted instead of staying recycle bin. Indicate whether to
+                      delete CBS instance directly or not. Default is false. If set
+                      true, the instance will be deleted instead of staying recycle
+                      bin.
                     type: boolean
                   id:
+                    description: ID of the resource.
                     type: string
+                  period:
+                    description: 'It has been deprecated from version 1.33.0. Set
+                      prepaid_period instead. The purchased usage period of CBS. Valid
+                      values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36]. The
+                      purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5,
+                      6, 7, 8, 9, 10, 11, 12, 24, 36].'
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance, NOTE: it only works when charge_type is set to PREPAID.
+                      Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24,
+                      36. The tenancy (time unit is month) of the prepaid instance,
+                      NOTE: it only works when charge_type is set to `PREPAID`. Valid
+                      values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.'
+                    type: number
+                  prepaidRenewFlag:
+                    description: 'Auto Renewal flag. Value range: NOTIFY_AND_AUTO_RENEW:
+                      Notify expiry and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                      Notify expiry but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
+                      Neither notify expiry nor renew automatically. Default value
+                      range: NOTIFY_AND_MANUAL_RENEW: Notify expiry but do not renew
+                      automatically. NOTE: it only works when charge_type is set to
+                      PREPAID. Auto Renewal flag. Value range: `NOTIFY_AND_AUTO_RENEW`:
+                      Notify expiry and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                      Notify expiry but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
+                      Neither notify expiry nor renew automatically. Default value
+                      range: `NOTIFY_AND_MANUAL_RENEW`: Notify expiry but do not renew
+                      automatically. NOTE: it only works when charge_type is set to
+                      `PREPAID`.'
+                    type: string
+                  projectId:
+                    description: ID of the project to which the instance belongs.
+                      ID of the project to which the instance belongs.
+                    type: number
+                  snapshotId:
+                    description: ID of the snapshot. If specified, created the CBS
+                      by this snapshot. ID of the snapshot. If specified, created
+                      the CBS by this snapshot.
+                    type: string
+                  storageName:
+                    description: Name of CBS. The maximum length can not exceed 60
+                      bytes. Name of CBS. The maximum length can not exceed 60 bytes.
+                    type: string
+                  storageSize:
+                    description: Volume of CBS, and unit is GB. Volume of CBS, and
+                      unit is GB.
+                    type: number
                   storageStatus:
+                    description: 'Status of CBS. Valid values: UNATTACHED, ATTACHING,
+                      ATTACHED, DETACHING, EXPANDING, ROLLBACKING, TORECYCLE and DUMPING.
+                      Status of CBS. Valid values: UNATTACHED, ATTACHING, ATTACHED,
+                      DETACHING, EXPANDING, ROLLBACKING, TORECYCLE and DUMPING.'
                     type: string
+                  storageType:
+                    description: 'Type of CBS medium. Valid values: CLOUD_BASIC: HDD
+                      cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_BSSD:
+                      General Purpose SSD, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD,
+                      CLOUD_TSSD: Tremendous SSD. Type of CBS medium. Valid values:
+                      CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage,
+                      CLOUD_BSSD: General Purpose SSD, CLOUD_SSD: SSD, CLOUD_HSSD:
+                      Enhanced SSD, CLOUD_TSSD: Tremendous SSD.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The available tags within this CBS. The available
+                      tags within this CBS.
+                    type: object
+                  throughputPerformance:
+                    description: Add extra performance to the data disk. Only works
+                      when disk type is CLOUD_TSSD or CLOUD_HSSD. Add extra performance
+                      to the data disk. Only works when disk type is `CLOUD_TSSD`
+                      or `CLOUD_HSSD`.
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -352,6 +592,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -360,9 +603,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

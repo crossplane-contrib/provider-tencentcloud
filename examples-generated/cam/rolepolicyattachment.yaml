@@ -1,0 +1,16 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: RolePolicyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/rolepolicyattachment
+  labels:
+    testing.upbound.io/example-name: role_policy_attachment_basic
+  name: role-policy-attachment-basic
+spec:
+  forProvider:
+    policyNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    roleNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -1,0 +1,82 @@
+apiVersion: teo.tencentcloud.crossplane.io/v1alpha1
+kind: RuleEngine
+metadata:
+  annotations:
+    meta.upbound.io/example-id: teo/v1alpha1/ruleengine
+  labels:
+    testing.upbound.io/example-name: rule1
+  name: rule1
+spec:
+  forProvider:
+    ruleName: test-rule
+    rules:
+    - actions:
+      - normalAction:
+        - action: UpstreamUrlRedirect
+          parameters:
+          - name: Type
+            values:
+            - Path
+          - name: Action
+            values:
+            - addPrefix
+          - name: Value
+            values:
+            - /sss
+      or:
+      - and:
+        - ignoreCase: false
+          operator: equal
+          target: host
+          values:
+          - a.tf-teo-t.xyz
+        - ignoreCase: false
+          operator: equal
+          target: extension
+          values:
+          - jpg
+      - and:
+        - ignoreCase: false
+          operator: equal
+          target: filename
+          values:
+          - test.txt
+      subRules:
+      - rules:
+        - actions:
+          - normalAction:
+            - action: UpstreamUrlRedirect
+              parameters:
+              - name: Type
+                values:
+                - Path
+              - name: Action
+                values:
+                - addPrefix
+              - name: Value
+                values:
+                - /www
+          or:
+          - and:
+            - ignoreCase: false
+              operator: notequal
+              target: host
+              values:
+              - a.tf-teo-t.xyz
+            - ignoreCase: false
+              operator: equal
+              target: extension
+              values:
+              - png
+          - and:
+            - ignoreCase: false
+              operator: notequal
+              target: filename
+              values:
+              - test.txt
+        tags:
+        - png
+    status: disable
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

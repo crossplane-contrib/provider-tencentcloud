@@ -1,0 +1,29 @@
+apiVersion: dc.tencentcloud.crossplane.io/v1alpha1
+kind: Gateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dc/v1alpha1/gateway
+  labels:
+    testing.upbound.io/example-name: vpc_main
+  name: vpc-main
+spec:
+  forProvider:
+    gatewayType: NAT
+    name: ci-cdg-vpc-test
+    networkInstanceId: ${tencentcloud_vpc.main.id}
+    networkType: VPC
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dc/v1alpha1/gateway
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: ci-vpc-instance-test

@@ -1,0 +1,29 @@
+apiVersion: dcdb.tencentcloud.crossplane.io/v1alpha1
+kind: HourdbInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dcdb/v1alpha1/hourdbinstance
+  labels:
+    testing.upbound.io/example-name: hourdb_instance
+  name: hourdb-instance
+spec:
+  forProvider:
+    dbVersionId: "8.0"
+    instanceName: test_dcdc_dc_instance
+    resourceTags:
+    - tagKey: aaa
+      tagValue: bbb
+    securityGroupId: ${local.sg_id}
+    shardCount: "2"
+    shardMemory: "2"
+    shardNodeCount: "2"
+    shardStorage: "10"
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    zones:
+    - ap-guangzhou-5
+    - ap-guangzhou-6

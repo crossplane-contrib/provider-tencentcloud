@@ -16,58 +16,50 @@ limitations under the License.
 
 package mariadb
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupMariadb = "mariadb"
 
 // Configure configures the mariadb group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_mariadb_hour_db_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_mariadb_hour_db_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMariadb
 		r.Kind = "HourDBInstance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mariadb_dedicatedcluster_db_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mariadb_dedicatedcluster_db_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMariadb
 		r.Kind = "DedicatedclusterDBInstance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mariadb_security_groups", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mariadb_security_groups", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMariadb
 		r.Kind = "SecurityGroups"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mariadb_parameters", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mariadb_parameters", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMariadb
 		r.Kind = "Parameters"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mariadb_log_file_retention_period", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mariadb_log_file_retention_period", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMariadb
 		r.Kind = "LogFileRetentionPeriod"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mariadb_account", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mariadb_account", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMariadb
 		r.Kind = "MariadbAccount"
 	})

@@ -1,0 +1,121 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: StrategyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/strategyattachment
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    bindApiIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: api
+    environmentName: release
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service
+    strategyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: Api
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/strategyattachment
+  labels:
+    testing.upbound.io/example-name: api
+  name: api
+spec:
+  forProvider:
+    apiDesc: my hello api update
+    apiName: tf_example
+    authType: SECRET
+    enableCors: true
+    protocol: HTTP
+    requestConfigMethod: POST
+    requestConfigPath: /user/info
+    requestParameters:
+    - defaultValue: tom@qq.com
+      desc: your email please?
+      name: email
+      position: QUERY
+      required: true
+      type: string
+    responseErrorCodes:
+    - code: 10
+      convertedCode: -10
+      desc: system error code
+      msg: system error
+      needConvert: true
+    responseFailExample: <note>fail</note>
+    responseSuccessExample: <note>success</note>
+    responseType: XML
+    serviceConfigMethod: POST
+    serviceConfigPath: /user
+    serviceConfigTimeout: 10
+    serviceConfigType: HTTP
+    serviceConfigUrl: http://www.tencent.com
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: IpStrategy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/strategyattachment
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service
+    strategyData: 9.9.9.9
+    strategyName: tf_test
+    strategyType: BLACK
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: Service
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/strategyattachment
+  labels:
+    testing.upbound.io/example-name: service
+  name: service
+spec:
+  forProvider:
+    ipVersion: IPv4
+    netType:
+    - INNER
+    - OUTER
+    protocol: http&https
+    serviceDesc: your nice service
+    serviceName: niceservice
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: ServiceRelease
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/strategyattachment
+  labels:
+    testing.upbound.io/example-name: service
+  name: service
+spec:
+  forProvider:
+    environmentName: release
+    releaseDesc: test service release
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service

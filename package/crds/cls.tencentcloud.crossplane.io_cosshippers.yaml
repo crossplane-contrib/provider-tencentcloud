@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: cosshippers.cls.tencentcloud.crossplane.io
 spec:
   group: cls.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: CosShipper
     listKind: CosShipperList
     plural: cosshippers
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CosShipper is the Schema for the CosShippers API
+        description: CosShipper is the Schema for the CosShippers API. Provides a
+          resource to create a cls cos shipper.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,132 +69,139 @@ spec:
                 properties:
                   bucket:
                     description: Destination bucket in the shipping rule to be created.
+                      Destination bucket in the shipping rule to be created.
                     type: string
                   compress:
-                    description: Compression configuration of shipped log.
+                    description: Compression configuration of shipped log. Compression
+                      configuration of shipped log.
                     items:
                       properties:
                         format:
                           description: 'Compression format. Valid values: gzip, lzop,
-                            none (no compression).'
+                            none (no compression). Compression format. Valid values:
+                            gzip, lzop, none (no compression).'
                           type: string
-                      required:
-                      - format
                       type: object
                     type: array
                   content:
-                    description: Format configuration of shipped log content.
+                    description: Format configuration of shipped log content. Format
+                      configuration of shipped log content.
                     items:
                       properties:
                         csv:
                           description: 'CSV format content description.Note: this
                             field may return null, indicating that no valid values
+                            can be obtained. CSV format content description.Note:
+                            this field may return null, indicating that no valid values
                             can be obtained.'
                           items:
                             properties:
                               delimiter:
-                                description: Field delimiter.
+                                description: Field delimiter. Field delimiter.
                                 type: string
                               escapeChar:
-                                description: Field delimiter.
+                                description: Field delimiter. Field delimiter.
                                 type: string
                               keys:
                                 description: 'Names of keys.Note: this field may return
-                                  null, indicating that no valid values can be obtained.'
+                                  null, indicating that no valid values can be obtained.
+                                  Names of keys.Note: this field may return null,
+                                  indicating that no valid values can be obtained.'
                                 items:
                                   type: string
                                 type: array
                               nonExistingField:
                                 description: Content used to populate non-existing
-                                  fields.
+                                  fields. Content used to populate non-existing fields.
                                 type: string
                               printKey:
                                 description: Whether to print key on the first row
-                                  of the CSV file.
+                                  of the CSV file. Whether to print key on the first
+                                  row of the CSV file.
                                 type: boolean
-                            required:
-                            - delimiter
-                            - escapeChar
-                            - keys
-                            - nonExistingField
-                            - printKey
                             type: object
                           type: array
                         format:
-                          description: 'Content format. Valid values: json, csv.'
+                          description: 'Compression format. Valid values: gzip, lzop,
+                            none (no compression). Content format. Valid values: json,
+                            csv.'
                           type: string
                         json:
                           description: 'JSON format content description.Note: this
                             field may return null, indicating that no valid values
+                            can be obtained. JSON format content description.Note:
+                            this field may return null, indicating that no valid values
                             can be obtained.'
                           items:
                             properties:
                               enableTag:
-                                description: Enablement flag.
+                                description: Enablement flag. Enablement flag.
                                 type: boolean
                               metaFields:
                                 description: 'Metadata information list Note: this
                                   field may return null, indicating that no valid
-                                  values can be obtained..'
+                                  values can be obtained.. Metadata information list
+                                  Note: this field may return null, indicating that
+                                  no valid values can be obtained..'
                                 items:
                                   type: string
                                 type: array
-                            required:
-                            - enableTag
-                            - metaFields
                             type: object
                           type: array
-                      required:
-                      - format
                       type: object
                     type: array
                   filterRules:
                     description: Filter rules for shipped logs. Only logs matching
                       the rules can be shipped. All rules are in the AND relationship,
                       and up to five rules can be added. If the array is empty, no
-                      filtering will be performed, and all logs will be shipped.
+                      filtering will be performed, and all logs will be shipped. Filter
+                      rules for shipped logs. Only logs matching the rules can be
+                      shipped. All rules are in the AND relationship, and up to five
+                      rules can be added. If the array is empty, no filtering will
+                      be performed, and all logs will be shipped.
                     items:
                       properties:
                         key:
-                          description: Filter rule key.
+                          description: Filter rule key. Filter rule key.
                           type: string
                         regex:
-                          description: Filter rule.
+                          description: Filter rule. Filter rule.
                           type: string
                         value:
-                          description: Filter rule value.
+                          description: Filter rule value. Filter rule value.
                           type: string
-                      required:
-                      - key
-                      - regex
-                      - value
                       type: object
                     type: array
                   interval:
                     description: 'Shipping time interval in seconds. Default value:
-                      300. Value range: 300~900.'
+                      300. Value range: 300~900. Shipping time interval in seconds.
+                      Default value: 300. Value range: 300~900.'
                     type: number
                   maxSize:
                     description: 'Maximum size of a file to be shipped, in MB. Default
-                      value: 256. Value range: 100~256.'
+                      value: 256. Value range: 100~256. Maximum size of a file to
+                      be shipped, in MB. Default value: 256. Value range: 100~256.'
                     type: number
                   partition:
                     description: Partition rule of shipped log, which can be represented
-                      in strftime time format.
+                      in strftime time format. Partition rule of shipped log, which
+                      can be represented in strftime time format.
                     type: string
                   prefix:
                     description: Prefix of the shipping directory in the shipping
-                      rule to be created.
+                      rule to be created. Prefix of the shipping directory in the
+                      shipping rule to be created.
                     type: string
                   shipperName:
-                    description: Shipping rule name.
+                    description: Shipping rule name. Shipping rule name.
                     type: string
                   topicId:
                     description: ID of the log topic to which the shipping rule to
-                      be created belongs.
+                      be created belongs. ID of the log topic to which the shipping
+                      rule to be created belongs.
                     type: string
                   topicIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Topic to populate topicId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -224,7 +235,7 @@ spec:
                     - name
                     type: object
                   topicIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Topic to populate topicId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -262,53 +273,179 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - bucket
-                - prefix
-                - shipperName
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  bucket:
+                    description: Destination bucket in the shipping rule to be created.
+                      Destination bucket in the shipping rule to be created.
+                    type: string
+                  compress:
+                    description: Compression configuration of shipped log. Compression
+                      configuration of shipped log.
+                    items:
+                      properties:
+                        format:
+                          description: 'Compression format. Valid values: gzip, lzop,
+                            none (no compression). Compression format. Valid values:
+                            gzip, lzop, none (no compression).'
+                          type: string
+                      type: object
+                    type: array
+                  content:
+                    description: Format configuration of shipped log content. Format
+                      configuration of shipped log content.
+                    items:
+                      properties:
+                        csv:
+                          description: 'CSV format content description.Note: this
+                            field may return null, indicating that no valid values
+                            can be obtained. CSV format content description.Note:
+                            this field may return null, indicating that no valid values
+                            can be obtained.'
+                          items:
+                            properties:
+                              delimiter:
+                                description: Field delimiter. Field delimiter.
+                                type: string
+                              escapeChar:
+                                description: Field delimiter. Field delimiter.
+                                type: string
+                              keys:
+                                description: 'Names of keys.Note: this field may return
+                                  null, indicating that no valid values can be obtained.
+                                  Names of keys.Note: this field may return null,
+                                  indicating that no valid values can be obtained.'
+                                items:
+                                  type: string
+                                type: array
+                              nonExistingField:
+                                description: Content used to populate non-existing
+                                  fields. Content used to populate non-existing fields.
+                                type: string
+                              printKey:
+                                description: Whether to print key on the first row
+                                  of the CSV file. Whether to print key on the first
+                                  row of the CSV file.
+                                type: boolean
+                            type: object
+                          type: array
+                        format:
+                          description: 'Compression format. Valid values: gzip, lzop,
+                            none (no compression). Content format. Valid values: json,
+                            csv.'
+                          type: string
+                        json:
+                          description: 'JSON format content description.Note: this
+                            field may return null, indicating that no valid values
+                            can be obtained. JSON format content description.Note:
+                            this field may return null, indicating that no valid values
+                            can be obtained.'
+                          items:
+                            properties:
+                              enableTag:
+                                description: Enablement flag. Enablement flag.
+                                type: boolean
+                              metaFields:
+                                description: 'Metadata information list Note: this
+                                  field may return null, indicating that no valid
+                                  values can be obtained.. Metadata information list
+                                  Note: this field may return null, indicating that
+                                  no valid values can be obtained..'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  filterRules:
+                    description: Filter rules for shipped logs. Only logs matching
+                      the rules can be shipped. All rules are in the AND relationship,
+                      and up to five rules can be added. If the array is empty, no
+                      filtering will be performed, and all logs will be shipped. Filter
+                      rules for shipped logs. Only logs matching the rules can be
+                      shipped. All rules are in the AND relationship, and up to five
+                      rules can be added. If the array is empty, no filtering will
+                      be performed, and all logs will be shipped.
+                    items:
+                      properties:
+                        key:
+                          description: Filter rule key. Filter rule key.
+                          type: string
+                        regex:
+                          description: Filter rule. Filter rule.
+                          type: string
+                        value:
+                          description: Filter rule value. Filter rule value.
+                          type: string
+                      type: object
+                    type: array
+                  interval:
+                    description: 'Shipping time interval in seconds. Default value:
+                      300. Value range: 300~900. Shipping time interval in seconds.
+                      Default value: 300. Value range: 300~900.'
+                    type: number
+                  maxSize:
+                    description: 'Maximum size of a file to be shipped, in MB. Default
+                      value: 256. Value range: 100~256. Maximum size of a file to
+                      be shipped, in MB. Default value: 256. Value range: 100~256.'
+                    type: number
+                  partition:
+                    description: Partition rule of shipped log, which can be represented
+                      in strftime time format. Partition rule of shipped log, which
+                      can be represented in strftime time format.
+                    type: string
+                  prefix:
+                    description: Prefix of the shipping directory in the shipping
+                      rule to be created. Prefix of the shipping directory in the
+                      shipping rule to be created.
+                    type: string
+                  shipperName:
+                    description: Shipping rule name. Shipping rule name.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -438,12 +575,159 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.bucket is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.bucket)
+                || (has(self.initProvider) && has(self.initProvider.bucket))'
+            - message: spec.forProvider.prefix is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.prefix)
+                || (has(self.initProvider) && has(self.initProvider.prefix))'
+            - message: spec.forProvider.shipperName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.shipperName)
+                || (has(self.initProvider) && has(self.initProvider.shipperName))'
           status:
             description: CosShipperStatus defines the observed state of CosShipper.
             properties:
               atProvider:
                 properties:
+                  bucket:
+                    description: Destination bucket in the shipping rule to be created.
+                      Destination bucket in the shipping rule to be created.
+                    type: string
+                  compress:
+                    description: Compression configuration of shipped log. Compression
+                      configuration of shipped log.
+                    items:
+                      properties:
+                        format:
+                          description: 'Compression format. Valid values: gzip, lzop,
+                            none (no compression). Compression format. Valid values:
+                            gzip, lzop, none (no compression).'
+                          type: string
+                      type: object
+                    type: array
+                  content:
+                    description: Format configuration of shipped log content. Format
+                      configuration of shipped log content.
+                    items:
+                      properties:
+                        csv:
+                          description: 'CSV format content description.Note: this
+                            field may return null, indicating that no valid values
+                            can be obtained. CSV format content description.Note:
+                            this field may return null, indicating that no valid values
+                            can be obtained.'
+                          items:
+                            properties:
+                              delimiter:
+                                description: Field delimiter. Field delimiter.
+                                type: string
+                              escapeChar:
+                                description: Field delimiter. Field delimiter.
+                                type: string
+                              keys:
+                                description: 'Names of keys.Note: this field may return
+                                  null, indicating that no valid values can be obtained.
+                                  Names of keys.Note: this field may return null,
+                                  indicating that no valid values can be obtained.'
+                                items:
+                                  type: string
+                                type: array
+                              nonExistingField:
+                                description: Content used to populate non-existing
+                                  fields. Content used to populate non-existing fields.
+                                type: string
+                              printKey:
+                                description: Whether to print key on the first row
+                                  of the CSV file. Whether to print key on the first
+                                  row of the CSV file.
+                                type: boolean
+                            type: object
+                          type: array
+                        format:
+                          description: 'Compression format. Valid values: gzip, lzop,
+                            none (no compression). Content format. Valid values: json,
+                            csv.'
+                          type: string
+                        json:
+                          description: 'JSON format content description.Note: this
+                            field may return null, indicating that no valid values
+                            can be obtained. JSON format content description.Note:
+                            this field may return null, indicating that no valid values
+                            can be obtained.'
+                          items:
+                            properties:
+                              enableTag:
+                                description: Enablement flag. Enablement flag.
+                                type: boolean
+                              metaFields:
+                                description: 'Metadata information list Note: this
+                                  field may return null, indicating that no valid
+                                  values can be obtained.. Metadata information list
+                                  Note: this field may return null, indicating that
+                                  no valid values can be obtained..'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  filterRules:
+                    description: Filter rules for shipped logs. Only logs matching
+                      the rules can be shipped. All rules are in the AND relationship,
+                      and up to five rules can be added. If the array is empty, no
+                      filtering will be performed, and all logs will be shipped. Filter
+                      rules for shipped logs. Only logs matching the rules can be
+                      shipped. All rules are in the AND relationship, and up to five
+                      rules can be added. If the array is empty, no filtering will
+                      be performed, and all logs will be shipped.
+                    items:
+                      properties:
+                        key:
+                          description: Filter rule key. Filter rule key.
+                          type: string
+                        regex:
+                          description: Filter rule. Filter rule.
+                          type: string
+                        value:
+                          description: Filter rule value. Filter rule value.
+                          type: string
+                      type: object
+                    type: array
                   id:
+                    description: ID of the resource.
+                    type: string
+                  interval:
+                    description: 'Shipping time interval in seconds. Default value:
+                      300. Value range: 300~900. Shipping time interval in seconds.
+                      Default value: 300. Value range: 300~900.'
+                    type: number
+                  maxSize:
+                    description: 'Maximum size of a file to be shipped, in MB. Default
+                      value: 256. Value range: 100~256. Maximum size of a file to
+                      be shipped, in MB. Default value: 256. Value range: 100~256.'
+                    type: number
+                  partition:
+                    description: Partition rule of shipped log, which can be represented
+                      in strftime time format. Partition rule of shipped log, which
+                      can be represented in strftime time format.
+                    type: string
+                  prefix:
+                    description: Prefix of the shipping directory in the shipping
+                      rule to be created. Prefix of the shipping directory in the
+                      shipping rule to be created.
+                    type: string
+                  shipperName:
+                    description: Shipping rule name. Shipping rule name.
+                    type: string
+                  topicId:
+                    description: ID of the log topic to which the shipping rule to
+                      be created belongs. ID of the log topic to which the shipping
+                      rule to be created belongs.
                     type: string
                 type: object
               conditions:
@@ -479,6 +763,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -487,9 +774,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

@@ -1,0 +1,121 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Dnat
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/dnat
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: desc.
+    elasticIp: ${tencentcloud_eip.eip_example.public_ip}
+    elasticPort: 80
+    natIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    privateIp: ${tencentcloud_instance.example.private_ip}
+    privatePort: 9090
+    protocol: TCP
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Eip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/dnat
+  labels:
+    testing.upbound.io/example-name: eip_example
+  name: eip-example
+spec:
+  forProvider:
+    name: tf_nat_gateway_eip
+
+---
+
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/dnat
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    allocatePublicIp: true
+    availabilityZone: ${data.tencentcloud_availability_zones.zones.zones.0.name}
+    imageId: ${data.tencentcloud_images.example.images.0.image_id}
+    instanceName: tf_example_instance
+    instanceType: ${data.tencentcloud_instance_types.instance_types.instance_types.0.instance_type}
+    internetMaxBandwidthOut: 10
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    systemDiskSize: 50
+    systemDiskType: CLOUD_PREMIUM
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: NatGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/dnat
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    assignedEipSet:
+    - ${tencentcloud_eip.eip_example.public_ip}
+    bandwidth: 100
+    maxConcurrent: 1000000
+    name: tf_example_nat_gateway
+    tags:
+      tf_tag_key: tf_tag_value
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/dnat
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.zones.zones.0.name}
+    cidrBlock: 10.0.0.0/16
+    isMulticast: false
+    name: example-vpc
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/dnat
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

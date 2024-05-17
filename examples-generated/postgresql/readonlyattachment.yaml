@@ -1,0 +1,16 @@
+apiVersion: postgresql.tencentcloud.crossplane.io/v1alpha1
+kind: ReadonlyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyattachment
+  labels:
+    testing.upbound.io/example-name: attach
+  name: attach
+spec:
+  forProvider:
+    dbInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    readOnlyGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: group

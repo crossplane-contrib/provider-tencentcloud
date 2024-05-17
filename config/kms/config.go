@@ -16,22 +16,18 @@ limitations under the License.
 
 package kms
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupKms = "kms"
 
 // Configure configures the kms group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_kms_key", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_kms_key", func(r *config.Resource) {
 		r.ShortGroup = shortGroupKms
 		r.Kind = "Key"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_kms_external_key", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_kms_external_key", func(r *config.Resource) {
 		r.ShortGroup = shortGroupKms
 		r.Kind = "ExternalKey"
 	})

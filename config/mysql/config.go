@@ -16,73 +16,65 @@ limitations under the License.
 
 package mysql
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupMysql = "mysql"
 
 // Configure configures the mysql group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_mysql_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_mysql_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMysql
 		r.Kind = "Instance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mysql_account", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mysql_account", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMysql
 		r.Kind = "Account"
-		r.References["mysql_id"] = tjconfig.Reference{
+		r.References["mysql_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mysql_account_privilege", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mysql_account_privilege", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMysql
 		r.Kind = "AccountPrivilege"
-		r.References["mysql_id"] = tjconfig.Reference{
+		r.References["mysql_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mysql_backup_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mysql_backup_policy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMysql
 		r.Kind = "BackupPolicy"
-		r.References["mysql_id"] = tjconfig.Reference{
+		r.References["mysql_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mysql_privilege", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mysql_privilege", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMysql
 		r.Kind = "Privilege"
-		r.References["mysql_id"] = tjconfig.Reference{
+		r.References["mysql_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_mysql_readonly_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_mysql_readonly_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupMysql
 		r.Kind = "ReadonlyInstance"
-		r.References["master_instance_id"] = tjconfig.Reference{
+		r.References["master_instance_id"] = config.Reference{
 			Type: "Instance",
 		}
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})

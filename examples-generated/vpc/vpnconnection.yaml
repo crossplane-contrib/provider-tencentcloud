@@ -1,0 +1,41 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPNConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpnconnection
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    customerGatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    ikeDhGroupName: GROUP2
+    ikeExchangeMode: AGGRESSIVE
+    ikeLocalAddress: 1.1.1.1
+    ikeLocalIdentity: ADDRESS
+    ikeProtoAuthenAlgorithm: SHA
+    ikeProtoEncryAlgorithm: 3DES-CBC
+    ikeRemoteAddress: 2.2.2.2
+    ikeRemoteIdentity: ADDRESS
+    ikeSaLifetimeSeconds: 86401
+    ipsecEncryptAlgorithm: 3DES-CBC
+    ipsecIntegrityAlgorithm: SHA1
+    ipsecPfsDhGroup: "NULL"
+    ipsecSaLifetimeSeconds: 7200
+    ipsecSaLifetimeTraffic: 2570
+    name: vpn_connection_test
+    preShareKey: testt
+    securityGroupPolicy:
+    - localCidrBlock: 172.16.0.0/16
+      remoteCidrBlock:
+      - 2.2.2.0/26
+    tags:
+      test: testt
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpnGatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

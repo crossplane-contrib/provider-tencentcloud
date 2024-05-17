@@ -1,0 +1,41 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: GroupMembership
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/groupmembership
+  labels:
+    testing.upbound.io/example-name: group_membership_basic
+  name: group-membership-basic
+spec:
+  forProvider:
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_cam_groups
+    userNames:
+    - ${tencentcloud_cam_user.foo.id}
+
+---
+
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/groupmembership
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    consoleLogin: true
+    countryCode: "86"
+    email: 1234@qq.com
+    forceDelete: true
+    name: tf_cam_user
+    needResetPassword: true
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    phoneNum: "12345678910"
+    remark: tf_user_remark
+    useApi: true

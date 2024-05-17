@@ -1,0 +1,77 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpRecordingRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmprecordingrule
+  labels:
+    testing.upbound.io/example-name: recordingRule
+  name: recordingrule
+spec:
+  forProvider:
+    group: |
+      ---
+      name: example-test
+      rules:
+        - record: job:http_inprogress_requests:sum
+          expr: sum by (job) (http_inprogress_requests)
+    instanceId: ${tencentcloud_monitor_tmp_instance.foo.id}
+    name: tf-recording-rule
+    ruleState: 2
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmprecordingrule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    dataRetentionTime: 30
+    instanceName: tf-tmp-instance
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      createdBy: terraform
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+    zone: ${var.availability_zone}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmprecordingrule
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.1.0/24
+    name: tf_monitor_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmprecordingrule
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf_monitor_vpc

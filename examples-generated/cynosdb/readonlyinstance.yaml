@@ -1,0 +1,27 @@
+apiVersion: cynosdb.tencentcloud.crossplane.io/v1alpha1
+kind: ReadonlyInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cynosdb/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    forceDelete: true
+    instanceCpuCore: 2
+    instanceMaintainDuration: 7200
+    instanceMaintainStartTime: 21600
+    instanceMaintainWeekdays:
+    - Fri
+    - Mon
+    - Sat
+    - Sun
+    - Thu
+    - Wed
+    - Tue
+    instanceMemorySize: 4
+    instanceName: tf-cynosdb-readonly-instance

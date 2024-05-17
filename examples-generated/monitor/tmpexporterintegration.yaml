@@ -1,0 +1,17 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpExporterIntegration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmpexporterintegration
+  labels:
+    testing.upbound.io/example-name: tmpExporterIntegration
+  name: tmpexporterintegration
+spec:
+  forProvider:
+    clusterId: cls-bmuaukfu
+    content: '{"name":"test","kind":"blackbox-exporter","spec":{"instanceSpec":{"module":"http_get","urls":["xx"]}}}'
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    kind: blackbox-exporter
+    kubeType: 1

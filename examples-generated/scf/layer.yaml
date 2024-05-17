@@ -1,0 +1,19 @@
+apiVersion: scf.tencentcloud.crossplane.io/v1alpha1
+kind: Layer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: scf/v1alpha1/layer
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    compatibleRuntimes:
+    - Python3.6
+    content:
+    - cosBucketName: test-bucket
+      cosBucketRegion: ap-guangzhou
+      cosObjectName: /foo.zip
+    description: foo
+    layerName: foo
+    licenseInfo: foo

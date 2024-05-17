@@ -1,0 +1,69 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: RouteTableEntry
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
+  labels:
+    testing.upbound.io/example-name: instance
+  name: instance
+spec:
+  forProvider:
+    description: ci-test-route-table-entry
+    destinationCidrBlock: 10.4.4.0/24
+    nextHub: "0"
+    nextType: EIP
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: ci-temp-test-rt
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.12.0/24
+    name: terraform test subnet
+    routeTableId: ${tencentcloud_route_table.foo.id}
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: ci-temp-test

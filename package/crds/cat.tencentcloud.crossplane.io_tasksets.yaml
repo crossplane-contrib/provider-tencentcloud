@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: tasksets.cat.tencentcloud.crossplane.io
 spec:
   group: cat.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: TaskSet
     listKind: TaskSetList
     plural: tasksets
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TaskSet is the Schema for the TaskSets API
+        description: TaskSet is the Schema for the TaskSets API. Provides a resource
+          to create a cat task_set
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,100 +68,152 @@ spec:
               forProvider:
                 properties:
                   batchTasks:
-                    description: Batch task name address.
+                    description: Batch task name address. Batch task name address.
                     items:
                       properties:
                         name:
-                          description: Task name.
+                          description: Task name. Task name.
                           type: string
                         targetAddress:
-                          description: Target address.
+                          description: Target address. Target address.
                           type: string
-                      required:
-                      - name
-                      - targetAddress
                       type: object
                     type: array
                   cron:
-                    description: Timer task cron expression.
+                    description: Timer task cron expression. Timer task cron expression.
                     type: string
                   interval:
                     description: Task interval minutes in (1,5,10,15,30,60,120,240).
+                      Task interval minutes in (1,5,10,15,30,60,120,240).
+                    type: number
+                  nodeIpType:
+                    description: 0-Unlimit ip type, 1-IPv4, 2-IPv6. `0`-Unlimit ip
+                      type, `1`-IPv4, `2`-IPv6.
                     type: number
                   nodes:
-                    description: Task Nodes.
+                    description: Task Nodes. Task Nodes.
                     items:
                       type: string
                     type: array
                   operate:
                     description: The input is valid when the parameter is modified,
-                      `suspend`/`resume`, used to suspend/resume the dial test task.
+                      suspend/resume, used to suspend/resume the dial test task. The
+                      input is valid when the parameter is modified, `suspend`/`resume`,
+                      used to suspend/resume the dial test task.
                     type: string
                   parameters:
-                    description: tasks parameters.
+                    description: tasks parameters. tasks parameters.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tag description list.
+                    description: Tag description list. Tag description list.
                     type: object
                   taskCategory:
-                    description: Task category,1:PC,2:Mobile.
+                    description: Task category,1:PC,2:Mobile. Task category,1:PC,2:Mobile.
                     type: number
                   taskType:
                     description: Task Type 1:Page Performance, 2:File upload,3:File
-                      Download,4:Port performance 5:Audio and video.
+                      Download,4:Port performance 5:Audio and video. Task Type 1:Page
+                      Performance, 2:File upload,3:File Download,4:Port performance
+                      5:Audio and video.
                     type: number
-                required:
-                - batchTasks
-                - interval
-                - nodes
-                - parameters
-                - taskCategory
-                - taskType
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  batchTasks:
+                    description: Batch task name address. Batch task name address.
+                    items:
+                      properties:
+                        name:
+                          description: Task name. Task name.
+                          type: string
+                        targetAddress:
+                          description: Target address. Target address.
+                          type: string
+                      type: object
+                    type: array
+                  cron:
+                    description: Timer task cron expression. Timer task cron expression.
+                    type: string
+                  interval:
+                    description: Task interval minutes in (1,5,10,15,30,60,120,240).
+                      Task interval minutes in (1,5,10,15,30,60,120,240).
+                    type: number
+                  nodeIpType:
+                    description: 0-Unlimit ip type, 1-IPv4, 2-IPv6. `0`-Unlimit ip
+                      type, `1`-IPv4, `2`-IPv6.
+                    type: number
+                  nodes:
+                    description: Task Nodes. Task Nodes.
+                    items:
+                      type: string
+                    type: array
+                  operate:
+                    description: The input is valid when the parameter is modified,
+                      suspend/resume, used to suspend/resume the dial test task. The
+                      input is valid when the parameter is modified, `suspend`/`resume`,
+                      used to suspend/resume the dial test task.
+                    type: string
+                  parameters:
+                    description: tasks parameters. tasks parameters.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list. Tag description list.
+                    type: object
+                  taskCategory:
+                    description: Task category,1:PC,2:Mobile. Task category,1:PC,2:Mobile.
+                    type: number
+                  taskType:
+                    description: Task Type 1:Page Performance, 2:File upload,3:File
+                      Download,4:Port performance 5:Audio and video. Task Type 1:Page
+                      Performance, 2:File upload,3:File Download,4:Port performance
+                      5:Audio and video.
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -287,17 +343,99 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.batchTasks is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.batchTasks)
+                || (has(self.initProvider) && has(self.initProvider.batchTasks))'
+            - message: spec.forProvider.interval is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.interval)
+                || (has(self.initProvider) && has(self.initProvider.interval))'
+            - message: spec.forProvider.nodes is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.nodes)
+                || (has(self.initProvider) && has(self.initProvider.nodes))'
+            - message: spec.forProvider.parameters is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.parameters)
+                || (has(self.initProvider) && has(self.initProvider.parameters))'
+            - message: spec.forProvider.taskCategory is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.taskCategory)
+                || (has(self.initProvider) && has(self.initProvider.taskCategory))'
+            - message: spec.forProvider.taskType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.taskType)
+                || (has(self.initProvider) && has(self.initProvider.taskType))'
           status:
             description: TaskSetStatus defines the observed state of TaskSet.
             properties:
               atProvider:
                 properties:
+                  batchTasks:
+                    description: Batch task name address. Batch task name address.
+                    items:
+                      properties:
+                        name:
+                          description: Task name. Task name.
+                          type: string
+                        targetAddress:
+                          description: Target address. Target address.
+                          type: string
+                      type: object
+                    type: array
+                  cron:
+                    description: Timer task cron expression. Timer task cron expression.
+                    type: string
                   id:
+                    description: ID of the resource.
+                    type: string
+                  interval:
+                    description: Task interval minutes in (1,5,10,15,30,60,120,240).
+                      Task interval minutes in (1,5,10,15,30,60,120,240).
+                    type: number
+                  nodeIpType:
+                    description: 0-Unlimit ip type, 1-IPv4, 2-IPv6. `0`-Unlimit ip
+                      type, `1`-IPv4, `2`-IPv6.
+                    type: number
+                  nodes:
+                    description: Task Nodes. Task Nodes.
+                    items:
+                      type: string
+                    type: array
+                  operate:
+                    description: The input is valid when the parameter is modified,
+                      suspend/resume, used to suspend/resume the dial test task. The
+                      input is valid when the parameter is modified, `suspend`/`resume`,
+                      used to suspend/resume the dial test task.
+                    type: string
+                  parameters:
+                    description: tasks parameters. tasks parameters.
                     type: string
                   status:
+                    description: Task status 1:TaskPending, 2:TaskRunning,3:TaskRunException,4:TaskSuspending
+                      5:TaskSuspendException,6:TaskSuspendException,7:TaskSuspended,9:TaskDeleted.
+                      Task status 1:TaskPending, 2:TaskRunning,3:TaskRunException,4:TaskSuspending
+                      5:TaskSuspendException,6:TaskSuspendException,7:TaskSuspended,9:TaskDeleted.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list. Tag description list.
+                    type: object
+                  taskCategory:
+                    description: Task category,1:PC,2:Mobile. Task category,1:PC,2:Mobile.
                     type: number
                   taskId:
+                    description: Task Id. Task Id.
                     type: string
+                  taskType:
+                    description: Task Type 1:Page Performance, 2:File upload,3:File
+                      Download,4:Port performance 5:Audio and video. Task Type 1:Page
+                      Performance, 2:File upload,3:File Download,4:Port performance
+                      5:Audio and video.
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -332,6 +470,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -340,9 +481,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

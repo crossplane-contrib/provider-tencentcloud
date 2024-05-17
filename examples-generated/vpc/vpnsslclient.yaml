@@ -1,0 +1,12 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPNSSLClient
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpnsslclient
+  labels:
+    testing.upbound.io/example-name: client
+  name: client
+spec:
+  forProvider:
+    sslVpnClientName: hello
+    sslVpnServerId: vpns-aog5xcjj

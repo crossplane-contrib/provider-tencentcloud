@@ -16,43 +16,37 @@ limitations under the License.
 
 package cos
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCos = "cos"
 
 // Configure configures the cos group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cos_bucket", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_cos_bucket", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCos
 		r.Kind = "Bucket"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cos_bucket_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cos_bucket_policy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCos
 		r.Kind = "BucketPolicy"
-		r.References["bucket"] = tjconfig.Reference{
+		r.References["bucket"] = config.Reference{
 			Type: "Bucket",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cos_bucket_object", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cos_bucket_object", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCos
 		r.Kind = "BucketObject"
-		r.References["bucket"] = tjconfig.Reference{
+		r.References["bucket"] = config.Reference{
 			Type: "Bucket",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cos_bucket_domain_certificate_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cos_bucket_domain_certificate_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCos
 		r.Kind = "BucketDomainCertificateAttachment"
-		r.References["bucket"] = tjconfig.Reference{
+		r.References["bucket"] = config.Reference{
 			Type: "Bucket",
 		}
 	})

@@ -1,0 +1,19 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/application
+  labels:
+    testing.upbound.io/example-name: application
+  name: application
+spec:
+  forProvider:
+    applicationName: demo
+    codingLanguage: JAVA
+    description: demo for test
+    repoName: qcloud/nginx
+    repoServer: ccr.ccs.tencentyun.com
+    repoType: 2
+    tags:
+      created: terraform
+    useDefaultImageService: 0

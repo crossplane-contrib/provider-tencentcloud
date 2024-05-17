@@ -16,37 +16,35 @@ limitations under the License.
 
 package tdmq
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupTdmq = "tdmq"
 
 // Configure configures the tdmq group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_tdmq_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_tdmq_instance", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTdmq
 		r.Kind = "Instance"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tdmq_namespace", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tdmq_namespace", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTdmq
 		r.Kind = "TdmqNamespace"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tdmq_topic", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tdmq_topic", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTdmq
 		r.Kind = "Topic"
-		r.References["environ_id"] = tjconfig.Reference{
+		r.References["environ_id"] = config.Reference{
 			Type: "TdmqNamespace",
 		}
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Instance",
 		}
 
@@ -56,23 +54,23 @@ func Configure(p *tjconfig.Provider) {
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tdmq_role", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tdmq_role", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTdmq
 		r.Kind = "Role"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tdmq_namespace_role_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tdmq_namespace_role_attachment", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTdmq
 		r.Kind = "NamespaceRoleAttachment"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Instance",
 		}
-		r.References["environ_id"] = tjconfig.Reference{
+		r.References["environ_id"] = config.Reference{
 			Type: "TdmqNamespace",
 		}
 	})

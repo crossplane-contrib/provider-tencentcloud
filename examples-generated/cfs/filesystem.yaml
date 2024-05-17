@@ -1,0 +1,22 @@
+apiVersion: cfs.tencentcloud.crossplane.io/v1alpha1
+kind: FileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cfs/v1alpha1/filesystem
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    accessGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    availabilityZone: ap-guangzhou-3
+    name: test_file_system
+    protocol: NFS
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -16,16 +16,13 @@ limitations under the License.
 
 package audit
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupAudit = "audit"
 
 // Configure configures the audit group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_audit", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_audit", func(r *config.Resource) {
 		r.ShortGroup = shortGroupAudit
 	})
 }

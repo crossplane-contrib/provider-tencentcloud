@@ -1,0 +1,99 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: TargetGroupInstanceAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    bindIp: ${data.tencentcloud_instances.foo.instance_list[0].private_ip}
+    port: 222
+    targetGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test
+    weight: 3
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: TargetGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    targetGroupName: test
+    vpcId: ${tencentcloud_vpc.app.id}
+
+---
+
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
+  labels:
+    testing.upbound.io/example-name: my_awesome_app
+  name: my-awesome-app
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.default.zones.0.name}
+    dataDisks:
+    - dataDiskSize: 50
+      dataDiskType: CLOUD_PREMIUM
+      encrypt: false
+    hostname: user
+    imageId: ${data.tencentcloud_images.my_favorite_image.images.0.image_id}
+    instanceName: awesome_app
+    instanceType: ${data.tencentcloud_instance_types.my_favorite_instance_types.instance_types.0.instance_type}
+    internetMaxBandwidthOut: 20
+    projectId: 0
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: app
+    systemDiskSize: 50
+    systemDiskType: CLOUD_PREMIUM
+    tags:
+      tagKey: tagValue
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: app
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
+  labels:
+    testing.upbound.io/example-name: app
+  name: app
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.default.zones.0.name}
+    cidrBlock: 10.0.1.0/24
+    name: awesome_app_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: app
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
+  labels:
+    testing.upbound.io/example-name: app
+  name: app
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: awesome_app_vpc

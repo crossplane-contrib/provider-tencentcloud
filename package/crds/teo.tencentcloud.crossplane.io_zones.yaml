@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: zones.teo.tencentcloud.crossplane.io
 spec:
   group: teo.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Zone
     listKind: ZoneList
     plural: zones
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Zone is the Schema for the Zones API
+        description: Zone is the Schema for the Zones API. Provides a resource to
+          create a teo zone
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -67,92 +71,173 @@ spec:
                     description: Alias site identifier. Limit the input to a combination
                       of numbers, English, - and _, within 20 characters. For details,
                       refer to the alias site identifier. If there is no such usage
-                      scenario, leave this field empty.
+                      scenario, leave this field empty. Alias site identifier. Limit
+                      the input to a combination of numbers, English, - and _, within
+                      20 characters. For details, refer to the alias site identifier.
+                      If there is no such usage scenario, leave this field empty.
                     type: string
                   area:
-                    description: 'When the `type` value is `partial` or `full`, the
-                      acceleration region of the L7 domain name. The following are
-                      the values of this parameter, and the default value is `overseas`
-                      if not filled in. When the `type` value is `noDomainAccess`,
-                      please leave this value empty. Valid values: `global`: Global
-                      availability zone; `mainland`: Chinese mainland availability
-                      zone; `overseas`: Global availability zone (excluding Chinese
-                      mainland).'
+                    description: 'When the type value is partial or full, the acceleration
+                      region of the L7 domain name. The following are the values of
+                      this parameter, and the default value is overseas if not filled
+                      in. When the type value is noDomainAccess, please leave this
+                      value empty. Valid values: global: Global availability zone;
+                      mainland: Chinese mainland availability zone; overseas: Global
+                      availability zone (excluding Chinese mainland). When the `type`
+                      value is `partial` or `full`, the acceleration region of the
+                      L7 domain name. The following are the values of this parameter,
+                      and the default value is `overseas` if not filled in. When the
+                      `type` value is `noDomainAccess`, please leave this value empty.
+                      Valid values: `global`: Global availability zone; `mainland`:
+                      Chinese mainland availability zone; `overseas`: Global availability
+                      zone (excluding Chinese mainland).'
                     type: string
                   paused:
-                    description: Indicates whether the site is disabled.
+                    description: Indicates whether the site is disabled. Indicates
+                      whether the site is disabled.
                     type: boolean
                   planId:
                     description: The target Plan ID to be bound. When you have an
                       existing Plan in your account, you can fill in this parameter
                       to directly bind the site to the Plan. If you do not have a
                       Plan that can be bound at the moment, please go to the console
-                      to purchase a Plan to complete the site creation.
+                      to purchase a Plan to complete the site creation. The target
+                      Plan ID to be bound. When you have an existing Plan in your
+                      account, you can fill in this parameter to directly bind the
+                      site to the Plan. If you do not have a Plan that can be bound
+                      at the moment, please go to the console to purchase a Plan to
+                      complete the site creation.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tag description list.
+                    description: Tag description list. Tag description list.
                     type: object
                   type:
                     description: 'Site access type. The value of this parameter is
-                      as follows, and the default is `partial` if not filled in. Valid
-                      values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`:
+                      as follows, and the default is partial if not filled in. Valid
+                      values: partial: CNAME access; full: NS access; noDomainAccess:
+                      No domain access. Site access type. The value of this parameter
+                      is as follows, and the default is `partial` if not filled in.
+                      Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`:
                       No domain access.'
                     type: string
                   zoneName:
                     description: Site name. When accessing CNAME/NS, please pass the
                       second-level domain (example.com) as the site name; when accessing
-                      without a domain name, please leave this value empty.
+                      without a domain name, please leave this value empty. Site name.
+                      When accessing CNAME/NS, please pass the second-level domain
+                      (example.com) as the site name; when accessing without a domain
+                      name, please leave this value empty.
                     type: string
-                required:
-                - area
-                - planId
-                - type
-                - zoneName
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  aliasZoneName:
+                    description: Alias site identifier. Limit the input to a combination
+                      of numbers, English, - and _, within 20 characters. For details,
+                      refer to the alias site identifier. If there is no such usage
+                      scenario, leave this field empty. Alias site identifier. Limit
+                      the input to a combination of numbers, English, - and _, within
+                      20 characters. For details, refer to the alias site identifier.
+                      If there is no such usage scenario, leave this field empty.
+                    type: string
+                  area:
+                    description: 'When the type value is partial or full, the acceleration
+                      region of the L7 domain name. The following are the values of
+                      this parameter, and the default value is overseas if not filled
+                      in. When the type value is noDomainAccess, please leave this
+                      value empty. Valid values: global: Global availability zone;
+                      mainland: Chinese mainland availability zone; overseas: Global
+                      availability zone (excluding Chinese mainland). When the `type`
+                      value is `partial` or `full`, the acceleration region of the
+                      L7 domain name. The following are the values of this parameter,
+                      and the default value is `overseas` if not filled in. When the
+                      `type` value is `noDomainAccess`, please leave this value empty.
+                      Valid values: `global`: Global availability zone; `mainland`:
+                      Chinese mainland availability zone; `overseas`: Global availability
+                      zone (excluding Chinese mainland).'
+                    type: string
+                  paused:
+                    description: Indicates whether the site is disabled. Indicates
+                      whether the site is disabled.
+                    type: boolean
+                  planId:
+                    description: The target Plan ID to be bound. When you have an
+                      existing Plan in your account, you can fill in this parameter
+                      to directly bind the site to the Plan. If you do not have a
+                      Plan that can be bound at the moment, please go to the console
+                      to purchase a Plan to complete the site creation. The target
+                      Plan ID to be bound. When you have an existing Plan in your
+                      account, you can fill in this parameter to directly bind the
+                      site to the Plan. If you do not have a Plan that can be bound
+                      at the moment, please go to the console to purchase a Plan to
+                      complete the site creation.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list. Tag description list.
+                    type: object
+                  type:
+                    description: 'Site access type. The value of this parameter is
+                      as follows, and the default is partial if not filled in. Valid
+                      values: partial: CNAME access; full: NS access; noDomainAccess:
+                      No domain access. Site access type. The value of this parameter
+                      is as follows, and the default is `partial` if not filled in.
+                      Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`:
+                      No domain access.'
+                    type: string
+                  zoneName:
+                    description: Site name. When accessing CNAME/NS, please pass the
+                      second-level domain (example.com) as the site name; when accessing
+                      without a domain name, please leave this value empty. Site name.
+                      When accessing CNAME/NS, please pass the second-level domain
+                      (example.com) as the site name; when accessing without a domain
+                      name, please leave this value empty.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -282,34 +367,134 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.area is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.area)
+                || (has(self.initProvider) && has(self.initProvider.area))'
+            - message: spec.forProvider.planId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.planId)
+                || (has(self.initProvider) && has(self.initProvider.planId))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+            - message: spec.forProvider.zoneName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneName)
+                || (has(self.initProvider) && has(self.initProvider.zoneName))'
           status:
             description: ZoneStatus defines the observed state of Zone.
             properties:
               atProvider:
                 properties:
+                  aliasZoneName:
+                    description: Alias site identifier. Limit the input to a combination
+                      of numbers, English, - and _, within 20 characters. For details,
+                      refer to the alias site identifier. If there is no such usage
+                      scenario, leave this field empty. Alias site identifier. Limit
+                      the input to a combination of numbers, English, - and _, within
+                      20 characters. For details, refer to the alias site identifier.
+                      If there is no such usage scenario, leave this field empty.
+                    type: string
+                  area:
+                    description: 'When the type value is partial or full, the acceleration
+                      region of the L7 domain name. The following are the values of
+                      this parameter, and the default value is overseas if not filled
+                      in. When the type value is noDomainAccess, please leave this
+                      value empty. Valid values: global: Global availability zone;
+                      mainland: Chinese mainland availability zone; overseas: Global
+                      availability zone (excluding Chinese mainland). When the `type`
+                      value is `partial` or `full`, the acceleration region of the
+                      L7 domain name. The following are the values of this parameter,
+                      and the default value is `overseas` if not filled in. When the
+                      `type` value is `noDomainAccess`, please leave this value empty.
+                      Valid values: `global`: Global availability zone; `mainland`:
+                      Chinese mainland availability zone; `overseas`: Global availability
+                      zone (excluding Chinese mainland).'
+                    type: string
                   id:
+                    description: ID of the resource.
                     type: string
                   nameServers:
+                    description: NS list allocated by Tencent Cloud. NS list allocated
+                      by Tencent Cloud.
                     items:
                       type: string
                     type: array
                   ownershipVerification:
+                    description: 'Ownership verification information. Note: This field
+                      may return null, indicating that no valid value can be obtained.
+                      Ownership verification information. Note: This field may return
+                      null, indicating that no valid value can be obtained.'
                     items:
                       properties:
                         dnsVerification:
+                          description: 'CNAME access, using DNS to resolve the information
+                            required for authentication. For details, please refer
+                            to Site/Domain Name Ownership Verification . Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained.'
                           items:
                             properties:
                               recordType:
+                                description: Record type.
                                 type: string
                               recordValue:
+                                description: Record the value.
                                 type: string
                               subdomain:
+                                description: Host record.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
+                  paused:
+                    description: Indicates whether the site is disabled. Indicates
+                      whether the site is disabled.
+                    type: boolean
+                  planId:
+                    description: The target Plan ID to be bound. When you have an
+                      existing Plan in your account, you can fill in this parameter
+                      to directly bind the site to the Plan. If you do not have a
+                      Plan that can be bound at the moment, please go to the console
+                      to purchase a Plan to complete the site creation. The target
+                      Plan ID to be bound. When you have an existing Plan in your
+                      account, you can fill in this parameter to directly bind the
+                      site to the Plan. If you do not have a Plan that can be bound
+                      at the moment, please go to the console to purchase a Plan to
+                      complete the site creation.
+                    type: string
                   status:
+                    description: 'Site status. Valid values: active: NS is switched;
+                      pending: NS is not switched; moved: NS is moved; deactivated:
+                      this site is blocked. Site status. Valid values: `active`: NS
+                      is switched; `pending`: NS is not switched; `moved`: NS is moved;
+                      `deactivated`: this site is blocked.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list. Tag description list.
+                    type: object
+                  type:
+                    description: 'Site access type. The value of this parameter is
+                      as follows, and the default is partial if not filled in. Valid
+                      values: partial: CNAME access; full: NS access; noDomainAccess:
+                      No domain access. Site access type. The value of this parameter
+                      is as follows, and the default is `partial` if not filled in.
+                      Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`:
+                      No domain access.'
+                    type: string
+                  zoneName:
+                    description: Site name. When accessing CNAME/NS, please pass the
+                      second-level domain (example.com) as the site name; when accessing
+                      without a domain name, please leave this value empty. Site name.
+                      When accessing CNAME/NS, please pass the second-level domain
+                      (example.com) as the site name; when accessing without a domain
+                      name, please leave this value empty.
                     type: string
                 type: object
               conditions:
@@ -345,6 +530,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -353,9 +541,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

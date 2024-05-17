@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: scalinggroups.as.tencentcloud.crossplane.io
 spec:
   group: as.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: ScalingGroup
     listKind: ScalingGroupList
     plural: scalinggroups
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ScalingGroup is the Schema for the ScalingGroups API
+        description: ScalingGroup is the Schema for the ScalingGroups API. Provides
+          a resource to create a group of AS (Auto scaling) instances.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,10 +68,11 @@ spec:
               forProvider:
                 properties:
                   configurationId:
-                    description: An available ID for a launch configuration.
+                    description: An available ID for a launch configuration. An available
+                      ID for a launch configuration.
                     type: string
                   configurationIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a ScalingConfig to populate configurationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -101,7 +106,7 @@ spec:
                     - name
                     type: object
                   configurationIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a ScalingConfig to populate configurationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -141,164 +146,305 @@ spec:
                     type: object
                   defaultCooldown:
                     description: Default cooldown time in second, and default value
-                      is `300`.
+                      is 300. Default cooldown time in second, and default value is
+                      `300`.
                     type: number
                   desiredCapacity:
                     description: Desired volume of CVM instances, which is between
-                      `max_size` and `min_size`.
+                      max_size and min_size. Desired volume of CVM instances, which
+                      is between `max_size` and `min_size`.
                     type: number
                   forwardBalancerIds:
                     description: List of application load balancers, which can't be
-                      specified with `load_balancer_ids` together.
+                      specified with load_balancer_ids together. List of application
+                      load balancers, which can't be specified with `load_balancer_ids`
+                      together.
                     items:
                       properties:
                         listenerId:
                           description: Listener ID for application load balancers.
+                            Listener ID for application load balancers.
                           type: string
                         loadBalancerId:
-                          description: ID of available load balancers.
+                          description: ID of available load balancers. ID of available
+                            load balancers.
                           type: string
                         ruleId:
-                          description: ID of forwarding rules.
+                          description: ID of forwarding rules. ID of forwarding rules.
                           type: string
                         targetAttribute:
-                          description: Attribute list of target rules.
+                          description: Attribute list of target rules. Attribute list
+                            of target rules.
                           items:
                             properties:
                               port:
-                                description: Port number.
+                                description: Port number. Port number.
                                 type: number
                               weight:
-                                description: Weight.
+                                description: Weight. Weight.
                                 type: number
-                            required:
-                            - port
-                            - weight
                             type: object
                           type: array
-                      required:
-                      - listenerId
-                      - loadBalancerId
-                      - targetAttribute
                       type: object
                     type: array
                   loadBalancerIds:
-                    description: ID list of traditional load balancers.
+                    description: ID list of traditional load balancers. ID list of
+                      traditional load balancers.
                     items:
                       type: string
                     type: array
                   maxSize:
                     description: 'Maximum number of CVM instances. Valid value ranges:
+                      (0~2000). Maximum number of CVM instances. Valid value ranges:
                       (0~2000).'
                     type: number
                   minSize:
                     description: 'Minimum number of CVM instances. Valid value ranges:
+                      (0~2000). Minimum number of CVM instances. Valid value ranges:
                       (0~2000).'
                     type: number
                   multiZoneSubnetPolicy:
                     description: 'Multi zone or subnet strategy, Valid values: PRIORITY
+                      and EQUALITY. Multi zone or subnet strategy, Valid values: PRIORITY
                       and EQUALITY.'
                     type: string
                   projectId:
                     description: Specifies to which project the scaling group belongs.
+                      Specifies to which project the scaling group belongs.
                     type: number
                   replaceLoadBalancerUnhealthy:
                     description: Enable unhealthy instance replacement. If set to
-                      `true`, AS will replace instances that are found unhealthy in
-                      the CLB health check.
+                      true, AS will replace instances that are found unhealthy in
+                      the CLB health check. Enable unhealthy instance replacement.
+                      If set to `true`, AS will replace instances that are found unhealthy
+                      in the CLB health check.
                     type: boolean
                   replaceMonitorUnhealthy:
                     description: Enables unhealthy instance replacement. If set to
-                      `true`, AS will replace instances that are flagged as unhealthy
-                      by Cloud Monitor.
+                      true, AS will replace instances that are flagged as unhealthy
+                      by Cloud Monitor. Enables unhealthy instance replacement. If
+                      set to `true`, AS will replace instances that are flagged as
+                      unhealthy by Cloud Monitor.
                     type: boolean
                   retryPolicy:
                     description: 'Available values for retry policies. Valid values:
-                      IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.'
+                      IMMEDIATE_RETRY and INCREMENTAL_INTERVALS. Available values
+                      for retry policies. Valid values: IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.'
                     type: string
                   scalingGroupName:
-                    description: Name of a scaling group.
+                    description: Name of a scaling group. Name of a scaling group.
                     type: string
                   scalingMode:
                     description: 'Indicates scaling mode which creates and terminates
                       instances (classic method), or method first tries to start stopped
                       instances (wake up stopped) to perform scaling operations. Available
-                      values: `CLASSIC_SCALING`, `WAKE_UP_STOPPED_SCALING`. Default:
-                      `CLASSIC_SCALING`.'
+                      values: CLASSIC_SCALING, WAKE_UP_STOPPED_SCALING. Default: CLASSIC_SCALING.
+                      Indicates scaling mode which creates and terminates instances
+                      (classic method), or method first tries to start stopped instances
+                      (wake up stopped) to perform scaling operations. Available values:
+                      `CLASSIC_SCALING`, `WAKE_UP_STOPPED_SCALING`. Default: `CLASSIC_SCALING`.'
                     type: string
                   subnetIds:
-                    description: ID list of subnet, and for VPC it is required.
+                    description: ID list of subnet, and for VPC it is required. ID
+                      list of subnet, and for VPC it is required.
                     items:
                       type: string
                     type: array
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tags of a scaling group.
+                    description: Tags of a scaling group. Tags of a scaling group.
                     type: object
                   terminationPolicies:
                     description: 'Available values for termination policies. Valid
-                      values: OLDEST_INSTANCE and NEWEST_INSTANCE.'
+                      values: OLDEST_INSTANCE and NEWEST_INSTANCE. Available values
+                      for termination policies. Valid values: OLDEST_INSTANCE and
+                      NEWEST_INSTANCE.'
                     items:
                       type: string
                     type: array
                   vpcId:
-                    description: ID of VPC network.
+                    description: ID of VPC network. ID of VPC network.
                     type: string
                   zones:
                     description: List of available zones, for Basic network it is
-                      required.
+                      required. List of available zones, for Basic network it is required.
                     items:
                       type: string
                     type: array
-                required:
-                - maxSize
-                - minSize
-                - scalingGroupName
-                - vpcId
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  defaultCooldown:
+                    description: Default cooldown time in second, and default value
+                      is 300. Default cooldown time in second, and default value is
+                      `300`.
+                    type: number
+                  desiredCapacity:
+                    description: Desired volume of CVM instances, which is between
+                      max_size and min_size. Desired volume of CVM instances, which
+                      is between `max_size` and `min_size`.
+                    type: number
+                  forwardBalancerIds:
+                    description: List of application load balancers, which can't be
+                      specified with load_balancer_ids together. List of application
+                      load balancers, which can't be specified with `load_balancer_ids`
+                      together.
+                    items:
+                      properties:
+                        listenerId:
+                          description: Listener ID for application load balancers.
+                            Listener ID for application load balancers.
+                          type: string
+                        loadBalancerId:
+                          description: ID of available load balancers. ID of available
+                            load balancers.
+                          type: string
+                        ruleId:
+                          description: ID of forwarding rules. ID of forwarding rules.
+                          type: string
+                        targetAttribute:
+                          description: Attribute list of target rules. Attribute list
+                            of target rules.
+                          items:
+                            properties:
+                              port:
+                                description: Port number. Port number.
+                                type: number
+                              weight:
+                                description: Weight. Weight.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  loadBalancerIds:
+                    description: ID list of traditional load balancers. ID list of
+                      traditional load balancers.
+                    items:
+                      type: string
+                    type: array
+                  maxSize:
+                    description: 'Maximum number of CVM instances. Valid value ranges:
+                      (0~2000). Maximum number of CVM instances. Valid value ranges:
+                      (0~2000).'
+                    type: number
+                  minSize:
+                    description: 'Minimum number of CVM instances. Valid value ranges:
+                      (0~2000). Minimum number of CVM instances. Valid value ranges:
+                      (0~2000).'
+                    type: number
+                  multiZoneSubnetPolicy:
+                    description: 'Multi zone or subnet strategy, Valid values: PRIORITY
+                      and EQUALITY. Multi zone or subnet strategy, Valid values: PRIORITY
+                      and EQUALITY.'
+                    type: string
+                  projectId:
+                    description: Specifies to which project the scaling group belongs.
+                      Specifies to which project the scaling group belongs.
+                    type: number
+                  replaceLoadBalancerUnhealthy:
+                    description: Enable unhealthy instance replacement. If set to
+                      true, AS will replace instances that are found unhealthy in
+                      the CLB health check. Enable unhealthy instance replacement.
+                      If set to `true`, AS will replace instances that are found unhealthy
+                      in the CLB health check.
+                    type: boolean
+                  replaceMonitorUnhealthy:
+                    description: Enables unhealthy instance replacement. If set to
+                      true, AS will replace instances that are flagged as unhealthy
+                      by Cloud Monitor. Enables unhealthy instance replacement. If
+                      set to `true`, AS will replace instances that are flagged as
+                      unhealthy by Cloud Monitor.
+                    type: boolean
+                  retryPolicy:
+                    description: 'Available values for retry policies. Valid values:
+                      IMMEDIATE_RETRY and INCREMENTAL_INTERVALS. Available values
+                      for retry policies. Valid values: IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.'
+                    type: string
+                  scalingGroupName:
+                    description: Name of a scaling group. Name of a scaling group.
+                    type: string
+                  scalingMode:
+                    description: 'Indicates scaling mode which creates and terminates
+                      instances (classic method), or method first tries to start stopped
+                      instances (wake up stopped) to perform scaling operations. Available
+                      values: CLASSIC_SCALING, WAKE_UP_STOPPED_SCALING. Default: CLASSIC_SCALING.
+                      Indicates scaling mode which creates and terminates instances
+                      (classic method), or method first tries to start stopped instances
+                      (wake up stopped) to perform scaling operations. Available values:
+                      `CLASSIC_SCALING`, `WAKE_UP_STOPPED_SCALING`. Default: `CLASSIC_SCALING`.'
+                    type: string
+                  subnetIds:
+                    description: ID list of subnet, and for VPC it is required. ID
+                      list of subnet, and for VPC it is required.
+                    items:
+                      type: string
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tags of a scaling group. Tags of a scaling group.
+                    type: object
+                  terminationPolicies:
+                    description: 'Available values for termination policies. Valid
+                      values: OLDEST_INSTANCE and NEWEST_INSTANCE. Available values
+                      for termination policies. Valid values: OLDEST_INSTANCE and
+                      NEWEST_INSTANCE.'
+                    items:
+                      type: string
+                    type: array
+                  vpcId:
+                    description: ID of VPC network. ID of VPC network.
+                    type: string
+                  zones:
+                    description: List of available zones, for Basic network it is
+                      required. List of available zones, for Basic network it is required.
+                    items:
+                      type: string
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -428,19 +574,175 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.maxSize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.maxSize)
+                || (has(self.initProvider) && has(self.initProvider.maxSize))'
+            - message: spec.forProvider.minSize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.minSize)
+                || (has(self.initProvider) && has(self.initProvider.minSize))'
+            - message: spec.forProvider.scalingGroupName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.scalingGroupName)
+                || (has(self.initProvider) && has(self.initProvider.scalingGroupName))'
+            - message: spec.forProvider.vpcId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.vpcId)
+                || (has(self.initProvider) && has(self.initProvider.vpcId))'
           status:
             description: ScalingGroupStatus defines the observed state of ScalingGroup.
             properties:
               atProvider:
                 properties:
-                  createTime:
+                  configurationId:
+                    description: An available ID for a launch configuration. An available
+                      ID for a launch configuration.
                     type: string
+                  createTime:
+                    description: The time when the AS group was created. The time
+                      when the AS group was created.
+                    type: string
+                  defaultCooldown:
+                    description: Default cooldown time in second, and default value
+                      is 300. Default cooldown time in second, and default value is
+                      `300`.
+                    type: number
+                  desiredCapacity:
+                    description: Desired volume of CVM instances, which is between
+                      max_size and min_size. Desired volume of CVM instances, which
+                      is between `max_size` and `min_size`.
+                    type: number
+                  forwardBalancerIds:
+                    description: List of application load balancers, which can't be
+                      specified with load_balancer_ids together. List of application
+                      load balancers, which can't be specified with `load_balancer_ids`
+                      together.
+                    items:
+                      properties:
+                        listenerId:
+                          description: Listener ID for application load balancers.
+                            Listener ID for application load balancers.
+                          type: string
+                        loadBalancerId:
+                          description: ID of available load balancers. ID of available
+                            load balancers.
+                          type: string
+                        ruleId:
+                          description: ID of forwarding rules. ID of forwarding rules.
+                          type: string
+                        targetAttribute:
+                          description: Attribute list of target rules. Attribute list
+                            of target rules.
+                          items:
+                            properties:
+                              port:
+                                description: Port number. Port number.
+                                type: number
+                              weight:
+                                description: Weight. Weight.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   id:
+                    description: ID of the resource.
                     type: string
                   instanceCount:
+                    description: Instance number of a scaling group. Instance number
+                      of a scaling group.
                     type: number
-                  status:
+                  loadBalancerIds:
+                    description: ID list of traditional load balancers. ID list of
+                      traditional load balancers.
+                    items:
+                      type: string
+                    type: array
+                  maxSize:
+                    description: 'Maximum number of CVM instances. Valid value ranges:
+                      (0~2000). Maximum number of CVM instances. Valid value ranges:
+                      (0~2000).'
+                    type: number
+                  minSize:
+                    description: 'Minimum number of CVM instances. Valid value ranges:
+                      (0~2000). Minimum number of CVM instances. Valid value ranges:
+                      (0~2000).'
+                    type: number
+                  multiZoneSubnetPolicy:
+                    description: 'Multi zone or subnet strategy, Valid values: PRIORITY
+                      and EQUALITY. Multi zone or subnet strategy, Valid values: PRIORITY
+                      and EQUALITY.'
                     type: string
+                  projectId:
+                    description: Specifies to which project the scaling group belongs.
+                      Specifies to which project the scaling group belongs.
+                    type: number
+                  replaceLoadBalancerUnhealthy:
+                    description: Enable unhealthy instance replacement. If set to
+                      true, AS will replace instances that are found unhealthy in
+                      the CLB health check. Enable unhealthy instance replacement.
+                      If set to `true`, AS will replace instances that are found unhealthy
+                      in the CLB health check.
+                    type: boolean
+                  replaceMonitorUnhealthy:
+                    description: Enables unhealthy instance replacement. If set to
+                      true, AS will replace instances that are flagged as unhealthy
+                      by Cloud Monitor. Enables unhealthy instance replacement. If
+                      set to `true`, AS will replace instances that are flagged as
+                      unhealthy by Cloud Monitor.
+                    type: boolean
+                  retryPolicy:
+                    description: 'Available values for retry policies. Valid values:
+                      IMMEDIATE_RETRY and INCREMENTAL_INTERVALS. Available values
+                      for retry policies. Valid values: IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.'
+                    type: string
+                  scalingGroupName:
+                    description: Name of a scaling group. Name of a scaling group.
+                    type: string
+                  scalingMode:
+                    description: 'Indicates scaling mode which creates and terminates
+                      instances (classic method), or method first tries to start stopped
+                      instances (wake up stopped) to perform scaling operations. Available
+                      values: CLASSIC_SCALING, WAKE_UP_STOPPED_SCALING. Default: CLASSIC_SCALING.
+                      Indicates scaling mode which creates and terminates instances
+                      (classic method), or method first tries to start stopped instances
+                      (wake up stopped) to perform scaling operations. Available values:
+                      `CLASSIC_SCALING`, `WAKE_UP_STOPPED_SCALING`. Default: `CLASSIC_SCALING`.'
+                    type: string
+                  status:
+                    description: Current status of a scaling group. Current status
+                      of a scaling group.
+                    type: string
+                  subnetIds:
+                    description: ID list of subnet, and for VPC it is required. ID
+                      list of subnet, and for VPC it is required.
+                    items:
+                      type: string
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tags of a scaling group. Tags of a scaling group.
+                    type: object
+                  terminationPolicies:
+                    description: 'Available values for termination policies. Valid
+                      values: OLDEST_INSTANCE and NEWEST_INSTANCE. Available values
+                      for termination policies. Valid values: OLDEST_INSTANCE and
+                      NEWEST_INSTANCE.'
+                    items:
+                      type: string
+                    type: array
+                  vpcId:
+                    description: ID of VPC network. ID of VPC network.
+                    type: string
+                  zones:
+                    description: List of available zones, for Basic network it is
+                      required. List of available zones, for Basic network it is required.
+                    items:
+                      type: string
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -475,6 +777,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -483,9 +788,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

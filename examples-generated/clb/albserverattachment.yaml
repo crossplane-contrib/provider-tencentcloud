@@ -1,0 +1,20 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: AlbServerAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/albserverattachment
+  labels:
+    testing.upbound.io/example-name: service1
+  name: service1
+spec:
+  forProvider:
+    backends:
+    - instanceId: ins-4j30i5pe
+      port: 80
+      weight: 50
+    - instanceId: ins-4j30i5pe
+      port: 8080
+      weight: 50
+    listenerId: lbl-ghoke4tl
+    loadbalancerId: lb-qk1dqox5
+    locationId: loc-i858qv1l

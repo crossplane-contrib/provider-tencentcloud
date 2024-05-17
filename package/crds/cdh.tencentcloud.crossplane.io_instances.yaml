@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: instances.cdh.tencentcloud.crossplane.io
 spec:
   group: cdh.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Instance
     listKind: InstanceList
     plural: instances
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API
+        description: Instance is the Schema for the Instances API. Provides a resource
+          to manage CDH instance.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,28 +68,43 @@ spec:
               forProvider:
                 properties:
                   availabilityZone:
-                    description: The available zone for the CDH instance.
+                    description: The available zone for the CDH instance. The available
+                      zone for the CDH instance.
                     type: string
                   chargeType:
-                    description: The charge type of instance. Valid values are `PREPAID`.
-                      The default is `PREPAID`.
+                    description: The charge type of instance. Valid values are PREPAID.
+                      The default is PREPAID. The charge type of instance. Valid values
+                      are `PREPAID`. The default is `PREPAID`.
                     type: string
                   hostName:
                     description: The name of the CDH instance. The max length of host_name
+                      is 60. The name of the CDH instance. The max length of host_name
                       is 60.
                     type: string
                   hostType:
-                    description: The type of the CDH instance.
+                    description: The type of the CDH instance. The type of the CDH
+                      instance.
                     type: string
                   prepaidPeriod:
                     description: 'The tenancy (time unit is month) of the prepaid
-                      instance, NOTE: it only works when charge_type is set to `PREPAID`.
-                      Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`,
-                      `10`, `11`, `12`, `24`, `36`.'
+                      instance, NOTE: it only works when charge_type is set to PREPAID.
+                      Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24,
+                      36. The tenancy (time unit is month) of the prepaid instance,
+                      NOTE: it only works when charge_type is set to `PREPAID`. Valid
+                      values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`,
+                      `11`, `12`, `24`, `36`.'
                     type: number
                   prepaidRenewFlag:
-                    description: 'Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`:
-                      notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                    description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
+                      notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                      notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
+                      neither notify upon expiration nor renew automatically. Default
+                      value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified
+                      as NOTIFY_AND_AUTO_RENEW, the instance will be automatically
+                      renewed on a monthly basis if the account balance is sufficient.
+                      NOTE: it only works when charge_type is set to PREPAID. Auto
+                      renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
+                      upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
                       notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
                       neither notify upon expiration nor renew automatically. Default
                       value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
@@ -95,52 +114,102 @@ spec:
                     type: string
                   projectId:
                     description: The project the instance belongs to, default to 0.
+                      The project the instance belongs to, default to 0.
                     type: number
-                required:
-                - availabilityZone
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  availabilityZone:
+                    description: The available zone for the CDH instance. The available
+                      zone for the CDH instance.
+                    type: string
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID.
+                      The default is PREPAID. The charge type of instance. Valid values
+                      are `PREPAID`. The default is `PREPAID`.
+                    type: string
+                  hostName:
+                    description: The name of the CDH instance. The max length of host_name
+                      is 60. The name of the CDH instance. The max length of host_name
+                      is 60.
+                    type: string
+                  hostType:
+                    description: The type of the CDH instance. The type of the CDH
+                      instance.
+                    type: string
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance, NOTE: it only works when charge_type is set to PREPAID.
+                      Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24,
+                      36. The tenancy (time unit is month) of the prepaid instance,
+                      NOTE: it only works when charge_type is set to `PREPAID`. Valid
+                      values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`,
+                      `11`, `12`, `24`, `36`.'
+                    type: number
+                  prepaidRenewFlag:
+                    description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
+                      notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                      notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
+                      neither notify upon expiration nor renew automatically. Default
+                      value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified
+                      as NOTIFY_AND_AUTO_RENEW, the instance will be automatically
+                      renewed on a monthly basis if the account balance is sufficient.
+                      NOTE: it only works when charge_type is set to PREPAID. Auto
+                      renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
+                      upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                      notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
+                      neither notify upon expiration nor renew automatically. Default
+                      value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
+                      as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically
+                      renewed on a monthly basis if the account balance is sufficient.
+                      NOTE: it only works when charge_type is set to `PREPAID`.'
+                    type: string
+                  projectId:
+                    description: The project the instance belongs to, default to 0.
+                      The project the instance belongs to, default to 0.
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -270,42 +339,115 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availabilityZone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityZone)
+                || (has(self.initProvider) && has(self.initProvider.availabilityZone))'
           status:
             description: InstanceStatus defines the observed state of Instance.
             properties:
               atProvider:
                 properties:
+                  availabilityZone:
+                    description: The available zone for the CDH instance. The available
+                      zone for the CDH instance.
+                    type: string
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID.
+                      The default is PREPAID. The charge type of instance. Valid values
+                      are `PREPAID`. The default is `PREPAID`.
+                    type: string
                   createTime:
+                    description: Create time of the instance. Create time of the instance.
                     type: string
                   cvmInstanceIds:
+                    description: Id of CVM instances that have been created on the
+                      CDH instance. Id of CVM instances that have been created on
+                      the CDH instance.
                     items:
                       type: string
                     type: array
                   expiredTime:
+                    description: Expired time of the instance. Expired time of the
+                      instance.
+                    type: string
+                  hostName:
+                    description: The name of the CDH instance. The max length of host_name
+                      is 60. The name of the CDH instance. The max length of host_name
+                      is 60.
                     type: string
                   hostResource:
+                    description: 'An information list of host resource. Each element
+                      contains the following attributes: An information list of host
+                      resource. Each element contains the following attributes:'
                     items:
                       properties:
                         cpuAvailableNum:
+                          description: The number of available CPU cores of the instance.
                           type: number
                         cpuTotalNum:
+                          description: The number of total CPU cores of the instance.
                           type: number
                         diskAvailableSize:
+                          description: Instance disk available capacity, unit in GB.
                           type: number
                         diskTotalSize:
+                          description: Instance disk total capacity, unit in GB.
                           type: number
                         diskType:
+                          description: Type of the disk.
                           type: string
                         memoryAvailableSize:
+                          description: Instance memory available capacity, unit in
+                            GB.
                           type: number
                         memoryTotalSize:
+                          description: Instance memory total capacity, unit in GB.
                           type: number
                       type: object
                     type: array
                   hostState:
+                    description: State of the CDH instance. State of the CDH instance.
+                    type: string
+                  hostType:
+                    description: The type of the CDH instance. The type of the CDH
+                      instance.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance, NOTE: it only works when charge_type is set to PREPAID.
+                      Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24,
+                      36. The tenancy (time unit is month) of the prepaid instance,
+                      NOTE: it only works when charge_type is set to `PREPAID`. Valid
+                      values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`,
+                      `11`, `12`, `24`, `36`.'
+                    type: number
+                  prepaidRenewFlag:
+                    description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
+                      notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                      notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
+                      neither notify upon expiration nor renew automatically. Default
+                      value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified
+                      as NOTIFY_AND_AUTO_RENEW, the instance will be automatically
+                      renewed on a monthly basis if the account balance is sufficient.
+                      NOTE: it only works when charge_type is set to PREPAID. Auto
+                      renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
+                      upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                      notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
+                      neither notify upon expiration nor renew automatically. Default
+                      value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
+                      as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically
+                      renewed on a monthly basis if the account balance is sufficient.
+                      NOTE: it only works when charge_type is set to `PREPAID`.'
+                    type: string
+                  projectId:
+                    description: The project the instance belongs to, default to 0.
+                      The project the instance belongs to, default to 0.
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -340,6 +482,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -348,9 +493,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

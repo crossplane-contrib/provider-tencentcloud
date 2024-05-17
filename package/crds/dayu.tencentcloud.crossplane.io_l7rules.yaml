@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: l7rules.dayu.tencentcloud.crossplane.io
 spec:
   group: dayu.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: L7Rule
     listKind: L7RuleList
     plural: l7rules
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: L7Rule is the Schema for the L7Rules API
+        description: L7Rule is the Schema for the L7Rules API. Use this resource to
+          create dayu layer 7 rule
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,123 +69,239 @@ spec:
                 properties:
                   domain:
                     description: Domain that the layer 7 rule works for. Valid string
-                      length ranges from 0 to 80.
+                      length ranges from 0 to 80. Domain that the layer 7 rule works
+                      for. Valid string length ranges from 0 to 80.
                     type: string
                   healthCheckCode:
-                    description: 'HTTP Status Code. The default is `26`. Valid value
-                      ranges: [1~31]. `1` means the return value ''1xx'' is health.
-                      `2` means the return value ''2xx'' is health. `4` means the
-                      return value ''3xx'' is health. `8` means the return value ''4xx''
-                      is health. `16` means the return value ''5xx'' is health. If
-                      you want multiple return codes to indicate health, need to add
-                      the corresponding values.'
+                    description: 'HTTP Status Code. The default is 26. Valid value
+                      ranges: [1~31]. 1 means the return value ''1xx'' is health.
+                      2 means the return value ''2xx'' is health. 4 means the return
+                      value ''3xx'' is health. 8 means the return value ''4xx'' is
+                      health. 16 means the return value ''5xx'' is health. If you
+                      want multiple return codes to indicate health, need to add the
+                      corresponding values. HTTP Status Code. The default is `26`.
+                      Valid value ranges: [1~31]. `1` means the return value ''1xx''
+                      is health. `2` means the return value ''2xx'' is health. `4`
+                      means the return value ''3xx'' is health. `8` means the return
+                      value ''4xx'' is health. `16` means the return value ''5xx''
+                      is health. If you want multiple return codes to indicate health,
+                      need to add the corresponding values.'
                     type: number
                   healthCheckHealthNum:
                     description: Health threshold of health check, and the default
-                      is `3`. If a success result is returned for the health check
-                      3 consecutive times, indicates that the forwarding is normal.
-                      The value range is [2-10].
+                      is 3. If a success result is returned for the health check 3
+                      consecutive times, indicates that the forwarding is normal.
+                      The value range is [2-10]. Health threshold of health check,
+                      and the default is `3`. If a success result is returned for
+                      the health check 3 consecutive times, indicates that the forwarding
+                      is normal. The value range is [2-10].
                     type: number
                   healthCheckInterval:
                     description: 'Interval time of health check. Valid value ranges:
-                      [10~60]sec. The default is 15 sec.'
+                      [10~60]sec. The default is 15 sec. Interval time of health check.
+                      Valid value ranges: [10~60]sec. The default is 15 sec.'
                     type: number
                   healthCheckMethod:
                     description: Methods of health check. The default is 'HEAD', the
-                      available value are 'HEAD' and 'GET'.
+                      available value are 'HEAD' and 'GET'. Methods of health check.
+                      The default is 'HEAD', the available value are 'HEAD' and 'GET'.
                     type: string
                   healthCheckPath:
-                    description: Path of health check. The default is `/`.
+                    description: Path of health check. The default is /. Path of health
+                      check. The default is `/`.
                     type: string
                   healthCheckSwitch:
                     description: Indicates whether health check is enabled. The default
+                      is false. Indicates whether health check is enabled. The default
                       is `false`.
                     type: boolean
                   healthCheckUnhealthNum:
                     description: Unhealthy threshold of health check, and the default
+                      is 3. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10]. Unhealthy threshold of health check, and the default
                       is `3`. If the unhealthy result is returned 3 consecutive times,
                       indicates that the forwarding is abnormal. The value range is
                       [2-10].
                     type: number
+                  name:
+                    description: Name of the rule. Name of the rule.
+                    type: string
                   protocol:
-                    description: 'Protocol of the rule. Valid values: `http`, `https`.'
+                    description: 'Protocol of the rule. Valid values: http, https.
+                      Protocol of the rule. Valid values: `http`, `https`.'
                     type: string
                   resourceId:
                     description: ID of the resource that the layer 7 rule works for.
+                      ID of the resource that the layer 7 rule works for.
                     type: string
                   resourceType:
                     description: Type of the resource that the layer 7 rule works
-                      for, valid value is `bgpip`.
+                      for, valid value is bgpip. Type of the resource that the layer
+                      7 rule works for, valid value is `bgpip`.
                     type: string
                   sourceList:
                     description: Source list of the rule, it can be a set of ip sources
+                      or a set of domain sources. The number of items ranges from
+                      1 to 16. Source list of the rule, it can be a set of ip sources
                       or a set of domain sources. The number of items ranges from
                       1 to 16.
                     items:
                       type: string
                     type: array
                   sourceType:
-                    description: Source type, `1` for source of host, `2` for source
-                      of IP.
+                    description: Source type, 1 for source of host, 2 for source of
+                      IP. Source type, `1` for source of host, `2` for source of IP.
                     type: number
                   sslId:
-                    description: SSL ID, when the `protocol` is `https`, the field
-                      should be set with valid SSL id.
+                    description: SSL ID, when the protocol is https, the field should
+                      be set with valid SSL id. SSL ID, when the `protocol` is `https`,
+                      the field should be set with valid SSL id.
                     type: string
                   switch:
-                    description: Indicate the rule will take effect or not.
+                    description: Indicate the rule will take effect or not. Indicate
+                      the rule will take effect or not.
                     type: boolean
-                required:
-                - domain
-                - protocol
-                - resourceId
-                - resourceType
-                - sourceList
-                - sourceType
-                - switch
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  domain:
+                    description: Domain that the layer 7 rule works for. Valid string
+                      length ranges from 0 to 80. Domain that the layer 7 rule works
+                      for. Valid string length ranges from 0 to 80.
+                    type: string
+                  healthCheckCode:
+                    description: 'HTTP Status Code. The default is 26. Valid value
+                      ranges: [1~31]. 1 means the return value ''1xx'' is health.
+                      2 means the return value ''2xx'' is health. 4 means the return
+                      value ''3xx'' is health. 8 means the return value ''4xx'' is
+                      health. 16 means the return value ''5xx'' is health. If you
+                      want multiple return codes to indicate health, need to add the
+                      corresponding values. HTTP Status Code. The default is `26`.
+                      Valid value ranges: [1~31]. `1` means the return value ''1xx''
+                      is health. `2` means the return value ''2xx'' is health. `4`
+                      means the return value ''3xx'' is health. `8` means the return
+                      value ''4xx'' is health. `16` means the return value ''5xx''
+                      is health. If you want multiple return codes to indicate health,
+                      need to add the corresponding values.'
+                    type: number
+                  healthCheckHealthNum:
+                    description: Health threshold of health check, and the default
+                      is 3. If a success result is returned for the health check 3
+                      consecutive times, indicates that the forwarding is normal.
+                      The value range is [2-10]. Health threshold of health check,
+                      and the default is `3`. If a success result is returned for
+                      the health check 3 consecutive times, indicates that the forwarding
+                      is normal. The value range is [2-10].
+                    type: number
+                  healthCheckInterval:
+                    description: 'Interval time of health check. Valid value ranges:
+                      [10~60]sec. The default is 15 sec. Interval time of health check.
+                      Valid value ranges: [10~60]sec. The default is 15 sec.'
+                    type: number
+                  healthCheckMethod:
+                    description: Methods of health check. The default is 'HEAD', the
+                      available value are 'HEAD' and 'GET'. Methods of health check.
+                      The default is 'HEAD', the available value are 'HEAD' and 'GET'.
+                    type: string
+                  healthCheckPath:
+                    description: Path of health check. The default is /. Path of health
+                      check. The default is `/`.
+                    type: string
+                  healthCheckSwitch:
+                    description: Indicates whether health check is enabled. The default
+                      is false. Indicates whether health check is enabled. The default
+                      is `false`.
+                    type: boolean
+                  healthCheckUnhealthNum:
+                    description: Unhealthy threshold of health check, and the default
+                      is 3. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10]. Unhealthy threshold of health check, and the default
+                      is `3`. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10].
+                    type: number
+                  name:
+                    description: Name of the rule. Name of the rule.
+                    type: string
+                  protocol:
+                    description: 'Protocol of the rule. Valid values: http, https.
+                      Protocol of the rule. Valid values: `http`, `https`.'
+                    type: string
+                  resourceId:
+                    description: ID of the resource that the layer 7 rule works for.
+                      ID of the resource that the layer 7 rule works for.
+                    type: string
+                  resourceType:
+                    description: Type of the resource that the layer 7 rule works
+                      for, valid value is bgpip. Type of the resource that the layer
+                      7 rule works for, valid value is `bgpip`.
+                    type: string
+                  sourceList:
+                    description: Source list of the rule, it can be a set of ip sources
+                      or a set of domain sources. The number of items ranges from
+                      1 to 16. Source list of the rule, it can be a set of ip sources
+                      or a set of domain sources. The number of items ranges from
+                      1 to 16.
+                    items:
+                      type: string
+                    type: array
+                  sourceType:
+                    description: Source type, 1 for source of host, 2 for source of
+                      IP. Source type, `1` for source of host, `2` for source of IP.
+                    type: number
+                  sslId:
+                    description: SSL ID, when the protocol is https, the field should
+                      be set with valid SSL id. SSL ID, when the `protocol` is `https`,
+                      the field should be set with valid SSL id.
+                    type: string
+                  switch:
+                    description: Indicate the rule will take effect or not. Indicate
+                      the rule will take effect or not.
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -311,17 +431,155 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.domain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.domain)
+                || (has(self.initProvider) && has(self.initProvider.domain))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.protocol is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.protocol)
+                || (has(self.initProvider) && has(self.initProvider.protocol))'
+            - message: spec.forProvider.resourceId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceId)
+                || (has(self.initProvider) && has(self.initProvider.resourceId))'
+            - message: spec.forProvider.resourceType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceType)
+                || (has(self.initProvider) && has(self.initProvider.resourceType))'
+            - message: spec.forProvider.sourceList is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.sourceList)
+                || (has(self.initProvider) && has(self.initProvider.sourceList))'
+            - message: spec.forProvider.sourceType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.sourceType)
+                || (has(self.initProvider) && has(self.initProvider.sourceType))'
+            - message: spec.forProvider.switch is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.switch)
+                || (has(self.initProvider) && has(self.initProvider.switch))'
           status:
             description: L7RuleStatus defines the observed state of L7Rule.
             properties:
               atProvider:
                 properties:
+                  domain:
+                    description: Domain that the layer 7 rule works for. Valid string
+                      length ranges from 0 to 80. Domain that the layer 7 rule works
+                      for. Valid string length ranges from 0 to 80.
+                    type: string
+                  healthCheckCode:
+                    description: 'HTTP Status Code. The default is 26. Valid value
+                      ranges: [1~31]. 1 means the return value ''1xx'' is health.
+                      2 means the return value ''2xx'' is health. 4 means the return
+                      value ''3xx'' is health. 8 means the return value ''4xx'' is
+                      health. 16 means the return value ''5xx'' is health. If you
+                      want multiple return codes to indicate health, need to add the
+                      corresponding values. HTTP Status Code. The default is `26`.
+                      Valid value ranges: [1~31]. `1` means the return value ''1xx''
+                      is health. `2` means the return value ''2xx'' is health. `4`
+                      means the return value ''3xx'' is health. `8` means the return
+                      value ''4xx'' is health. `16` means the return value ''5xx''
+                      is health. If you want multiple return codes to indicate health,
+                      need to add the corresponding values.'
+                    type: number
+                  healthCheckHealthNum:
+                    description: Health threshold of health check, and the default
+                      is 3. If a success result is returned for the health check 3
+                      consecutive times, indicates that the forwarding is normal.
+                      The value range is [2-10]. Health threshold of health check,
+                      and the default is `3`. If a success result is returned for
+                      the health check 3 consecutive times, indicates that the forwarding
+                      is normal. The value range is [2-10].
+                    type: number
+                  healthCheckInterval:
+                    description: 'Interval time of health check. Valid value ranges:
+                      [10~60]sec. The default is 15 sec. Interval time of health check.
+                      Valid value ranges: [10~60]sec. The default is 15 sec.'
+                    type: number
+                  healthCheckMethod:
+                    description: Methods of health check. The default is 'HEAD', the
+                      available value are 'HEAD' and 'GET'. Methods of health check.
+                      The default is 'HEAD', the available value are 'HEAD' and 'GET'.
+                    type: string
+                  healthCheckPath:
+                    description: Path of health check. The default is /. Path of health
+                      check. The default is `/`.
+                    type: string
+                  healthCheckSwitch:
+                    description: Indicates whether health check is enabled. The default
+                      is false. Indicates whether health check is enabled. The default
+                      is `false`.
+                    type: boolean
+                  healthCheckUnhealthNum:
+                    description: Unhealthy threshold of health check, and the default
+                      is 3. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10]. Unhealthy threshold of health check, and the default
+                      is `3`. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10].
+                    type: number
                   id:
+                    description: ID of the resource.
+                    type: string
+                  name:
+                    description: Name of the rule. Name of the rule.
+                    type: string
+                  protocol:
+                    description: 'Protocol of the rule. Valid values: http, https.
+                      Protocol of the rule. Valid values: `http`, `https`.'
+                    type: string
+                  resourceId:
+                    description: ID of the resource that the layer 7 rule works for.
+                      ID of the resource that the layer 7 rule works for.
+                    type: string
+                  resourceType:
+                    description: Type of the resource that the layer 7 rule works
+                      for, valid value is bgpip. Type of the resource that the layer
+                      7 rule works for, valid value is `bgpip`.
                     type: string
                   ruleId:
+                    description: ID of the layer 7 rule. ID of the layer 7 rule.
+                    type: string
+                  sourceList:
+                    description: Source list of the rule, it can be a set of ip sources
+                      or a set of domain sources. The number of items ranges from
+                      1 to 16. Source list of the rule, it can be a set of ip sources
+                      or a set of domain sources. The number of items ranges from
+                      1 to 16.
+                    items:
+                      type: string
+                    type: array
+                  sourceType:
+                    description: Source type, 1 for source of host, 2 for source of
+                      IP. Source type, `1` for source of host, `2` for source of IP.
+                    type: number
+                  sslId:
+                    description: SSL ID, when the protocol is https, the field should
+                      be set with valid SSL id. SSL ID, when the `protocol` is `https`,
+                      the field should be set with valid SSL id.
                     type: string
                   status:
+                    description: Status of the rule. 0 for create/modify success,
+                      2 for create/modify fail, 3 for delete success, 5 for delete
+                      failed, 6 for waiting to be created/modified, 7 for waiting
+                      to be deleted and 8 for waiting to get SSL ID. Status of the
+                      rule. `0` for create/modify success, `2` for create/modify fail,
+                      `3` for delete success, `5` for delete failed, `6` for waiting
+                      to be created/modified, `7` for waiting to be deleted and 8
+                      for waiting to get SSL ID.
                     type: number
+                  switch:
+                    description: Indicate the rule will take effect or not. Indicate
+                      the rule will take effect or not.
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -356,6 +614,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -364,9 +625,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

@@ -1,0 +1,52 @@
+apiVersion: cat.tencentcloud.crossplane.io/v1alpha1
+kind: TaskSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cat/v1alpha1/taskset
+  labels:
+    testing.upbound.io/example-name: task_set
+  name: task-set
+spec:
+  forProvider:
+    batchTasks:
+    - name: demo
+      targetAddress: http://www.baidu.com
+    cron: '* 0-6 * * *'
+    interval: 6
+    nodes:
+    - "12136"
+    - "12137"
+    - "12138"
+    - "12141"
+    - "12144"
+    parameters: |-
+      ${jsonencode(
+          {
+            "ipType"            = 0,
+            "grabBag"           = 0,
+            "filterIp"          = 0,
+            "netIcmpOn"         = 1,
+            "netIcmpActivex"    = 0,
+            "netIcmpTimeout"    = 20,
+            "netIcmpInterval"   = 0.5,
+            "netIcmpNum"        = 20,
+            "netIcmpSize"       = 32,
+            "netIcmpDataCut"    = 1,
+            "netDnsOn"          = 1,
+            "netDnsTimeout"     = 5,
+            "netDnsQuerymethod" = 1,
+            "netDnsNs"          = "",
+            "netDigOn"          = 1,
+            "netDnsServer"      = 2,
+            "netTracertOn"      = 1,
+            "netTracertTimeout" = 60,
+            "netTracertNum"     = 30,
+            "whiteList"         = "",
+            "blackList"         = "",
+            "netIcmpActivexStr" = ""
+          }
+        )}
+    tags:
+      createdBy: terraform
+    taskCategory: 1
+    taskType: 5

@@ -1,0 +1,96 @@
+apiVersion: as.tencentcloud.crossplane.io/v1alpha1
+kind: LifecycleHook
+metadata:
+  annotations:
+    meta.upbound.io/example-id: as/v1alpha1/lifecyclehook
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    defaultResult: CONTINUE
+    heartbeatTimeout: 500
+    lifecycleHookName: tf-as-lifecycle-hook
+    lifecycleTransition: INSTANCE_LAUNCHING
+    notificationMetadata: tf test
+    scalingGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: as.tencentcloud.crossplane.io/v1alpha1
+kind: ScalingConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: as/v1alpha1/lifecyclehook
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    configurationName: tf-example
+    imageId: ${data.tencentcloud_images.image.images.0.image_id}
+    instanceNameSettings:
+    - instanceName: test-ins-name
+    instanceTypes:
+    - SA1.SMALL1
+    - SA2.SMALL1
+    - SA2.SMALL2
+    - SA2.SMALL4
+
+---
+
+apiVersion: as.tencentcloud.crossplane.io/v1alpha1
+kind: ScalingGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: as/v1alpha1/lifecyclehook
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    configurationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    maxSize: 1
+    minSize: 0
+    scalingGroupName: tf-example
+    subnetIds:
+    - ${tencentcloud_subnet.subnet.id}
+    vpcId: ${tencentcloud_vpc.vpc.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: as/v1alpha1/lifecyclehook
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.0.name}
+    cidrBlock: 10.0.0.0/16
+    name: subnet-example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: as/v1alpha1/lifecyclehook
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

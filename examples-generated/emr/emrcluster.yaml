@@ -1,0 +1,103 @@
+apiVersion: emr.tencentcloud.crossplane.io/v1alpha1
+kind: EmrCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: emr/v1alpha1/emrcluster
+  labels:
+    testing.upbound.io/example-name: emr_cluster
+  name: emr-cluster
+spec:
+  forProvider:
+    instanceName: emr-cluster-test
+    loginSettingsSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    payMode: 0
+    placementInfo:
+      projectId: 0
+      zone: ${var.availability_zone}
+    productId: 38
+    resourceSpec:
+    - coreCount: 2
+      coreResourceSpec:
+      - cpu: 4
+        diskSize: 100
+        diskType: CLOUD_PREMIUM
+        memSize: 8192
+        rootSize: 50
+        spec: CVM.${data.tencentcloud_instance_types.cvm4c8m.instance_types.0.family}
+        storageType: 5
+      masterCount: 1
+      masterResourceSpec:
+      - cpu: 4
+        diskSize: 100
+        diskType: CLOUD_PREMIUM
+        memSize: 8192
+        rootSize: 50
+        spec: CVM.${data.tencentcloud_instance_types.cvm4c8m.instance_types.0.family}
+        storageType: 5
+    sgId: ${tencentcloud_security_group.emr_sg.id}
+    softwares:
+    - hdfs-2.8.5
+    - knox-1.6.1
+    - openldap-2.4.44
+    - yarn-2.8.5
+    - zookeeper-3.6.3
+    supportHa: 0
+    timeSpan: 3600
+    timeUnit: s
+    vpcSettings:
+      subnet_id: ${tencentcloud_subnet.emr_subnet.id}
+      vpc_id: ${tencentcloud_vpc.emr_vpc.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: emr/v1alpha1/emrcluster
+  labels:
+    testing.upbound.io/example-name: emr_sg
+  name: emr-sg
+spec:
+  forProvider:
+    description: emr sg
+    name: emr-sg
+    projectId: 0
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: emr/v1alpha1/emrcluster
+  labels:
+    testing.upbound.io/example-name: emr_subnet
+  name: emr-subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.20.0/28
+    isMulticast: false
+    name: emr-subnets
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: emr_vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: emr/v1alpha1/emrcluster
+  labels:
+    testing.upbound.io/example-name: emr_vpc
+  name: emr-vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: emr-vpc

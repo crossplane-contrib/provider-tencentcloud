@@ -1,0 +1,21 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: CustomDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/customdomain
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    defaultDomain: service-ohxqslqe-1259649581.gz.apigw.tencentcs.com
+    isDefaultMapping: "false"
+    netType: OUTER
+    pathMappings:
+    - /good#test
+    - /root#release
+    protocol: http
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    subDomain: tic-test.dnsv1.com

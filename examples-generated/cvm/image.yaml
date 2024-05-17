@@ -1,0 +1,16 @@
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: Image
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cvm/v1alpha1/image
+  labels:
+    testing.upbound.io/example-name: image_snap
+  name: image-snap
+spec:
+  forProvider:
+    forcePoweroff: true
+    imageDescription: create image with snapshot
+    imageName: image-snapshot-keep
+    snapshotIds:
+    - snap-nbp3xy1d
+    - snap-nvzu3dmh

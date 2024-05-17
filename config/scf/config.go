@@ -16,28 +16,26 @@ limitations under the License.
 
 package scf
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupScf = "scf"
 
 // Configure configures the scf group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_scf_function", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_scf_function", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupScf
 		r.Kind = "Function"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_scf_namespace", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_scf_namespace", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupScf
 		r.Kind = "ScfNamespace"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_scf_layer", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_scf_layer", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupScf
 		r.Kind = "Layer"
 	})

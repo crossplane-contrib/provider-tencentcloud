@@ -1,0 +1,86 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: ClusterAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/clusterattachment
+  labels:
+    testing.upbound.io/example-name: test_attach
+  name: test-attach
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: managed_cluster
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    labels:
+      test1: test1
+      test2: test2
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    workerConfigOverrides:
+    - desiredPodNum: 8
+
+---
+
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/clusterattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    imageId: ${data.tencentcloud_images.default.images.0.image_id}
+    instanceName: tf-auto-test-1-1
+    instanceType: ${var.default_instance_type}
+    systemDiskSize: 50
+    systemDiskType: CLOUD_PREMIUM
+
+---
+
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/clusterattachment
+  labels:
+    testing.upbound.io/example-name: managed_cluster
+  name: managed-cluster
+spec:
+  forProvider:
+    clusterCidr: 10.1.0.0/16
+    clusterDeployType: MANAGED_CLUSTER
+    clusterDesc: test cluster desc
+    clusterMaxPodNum: 32
+    clusterMaxServiceNum: 32
+    clusterName: keep
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_vpc_subnets
+    workerConfig:
+    - availabilityZone: ${var.availability_zone}
+      count: 1
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      instanceType: ${var.default_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      publicIpAssigned: true
+      subnetId: ${data.tencentcloud_vpc_subnets.vpc.instance_list.0.subnet_id}
+      systemDiskSize: 60
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==

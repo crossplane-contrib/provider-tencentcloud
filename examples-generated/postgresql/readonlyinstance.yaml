@@ -1,0 +1,145 @@
+apiVersion: postgresql.tencentcloud.crossplane.io/v1alpha1
+kind: ReadonlyInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autoRenewFlag: 0
+    cpu: 2
+    dbVersion: "10.4"
+    instanceChargeType: POSTPAID_BY_HOUR
+    masterDbInstanceId: ${tencentcloud_postgresql_instance.example.id}
+    memory: 4
+    name: example
+    needSupportIpv6: 0
+    projectId: 0
+    readOnlyGroupId: ${tencentcloud_postgresql_readonly_group.example.id}
+    securityGroupsIdsRefs:
+    - name: example
+    storage: 250
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+    zone: ${var.availability_zone}
+
+---
+
+apiVersion: postgresql.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    chargeType: POSTPAID_BY_HOUR
+    charset: UTF8
+    cpu: 1
+    engineVersion: "10.4"
+    memory: 2
+    name: example
+    projectId: 0
+    rootPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    rootUser: root123
+    storage: 10
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      test: tf
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: postgresql.tencentcloud.crossplane.io/v1alpha1
+kind: ReadonlyGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    masterDbInstanceId: ${tencentcloud_postgresql_instance.example.id}
+    maxReplayLag: 100
+    maxReplayLatency: 512
+    minDelayEliminateReserve: 1
+    name: tf_ro_group
+    projectId: 0
+    replayLagEliminate: 1
+    replayLatencyEliminate: 1
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: sg desc.
+    name: tf-example
+    projectId: 0
+    tags:
+      example: test
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.20.0/28
+    isMulticast: false
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlyinstance
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc

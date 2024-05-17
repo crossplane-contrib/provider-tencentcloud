@@ -16,52 +16,50 @@ limitations under the License.
 
 package teo
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupTeo = "teo"
 
 // Configure configures the teo group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_teo_zone", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_teo_zone", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
 		r.Kind = "Zone"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_zone_setting", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_teo_zone_setting", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
 		r.Kind = "ZoneSetting"
-		r.References["zone_id"] = tjconfig.Reference{
+		r.References["zone_id"] = config.Reference{
 			Type: "Zone",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_rule_engine", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_teo_rule_engine", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
 		r.Kind = "RuleEngine"
-		r.References["zone_id"] = tjconfig.Reference{
+		r.References["zone_id"] = config.Reference{
 			Type: "Zone",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_origin_group", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_teo_origin_group", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
 		r.Kind = "OriginGroup"
-		r.References["zone_id"] = tjconfig.Reference{
+		r.References["zone_id"] = config.Reference{
 			Type: "Zone",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_teo_application_proxy_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_teo_application_proxy_rule", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTeo
 		r.Kind = "ApplicationProxyRule"
-		r.References["zone_id"] = tjconfig.Reference{
+		r.References["zone_id"] = config.Reference{
 			Type: "Zone",
 		}
 	})

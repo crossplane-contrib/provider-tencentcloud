@@ -16,33 +16,28 @@ limitations under the License.
 
 package dc
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupDc = "dc"
 
 // Configure configures the dc group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_dcx", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_dcx", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDc
 		r.Kind = "Dcx"
 	})
-	p.AddResourceConfigurator("tencentcloud_dc_gateway", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dc_gateway", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDc
 		r.Kind = "Gateway"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dc_gateway_ccn_route", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dc_gateway_ccn_route", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDc
 		r.Kind = "GatewayCcnRoute"
-		r.References["dcg_id"] = tjconfig.Reference{
+		r.References["dcg_id"] = config.Reference{
 			Type: "Gateway",
 		}
 	})

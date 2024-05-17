@@ -1,0 +1,51 @@
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/securityrule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    action: ACCEPT
+    cidrIp: 1.1.1.1
+    policyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    protocol: TCP
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Proxy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/securityrule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    accessRegion: SouthChina
+    bandwidth: 10
+    concurrent: 2
+    name: ci-test-gaap-proxy
+    realserverRegion: NorthChina
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/securityrule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    action: ACCEPT
+    proxyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo

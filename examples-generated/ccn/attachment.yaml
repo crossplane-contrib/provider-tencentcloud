@@ -1,0 +1,49 @@
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: Attachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/attachment
+  labels:
+    testing.upbound.io/example-name: attachment
+  name: attachment
+spec:
+  forProvider:
+    ccnId: ${tencentcloud_ccn.main.id}
+    instanceId: ${tencentcloud_vpc.vpc.id}
+    instanceRegion: ${var.region}
+    instanceType: VPC
+
+---
+
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: CCN
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/attachment
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    description: ci-temp-test-ccn-des
+    name: ci-temp-test-ccn
+    qos: AG
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/attachment
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    dnsServers:
+    - 119.29.29.29
+    - 8.8.8.8
+    isMulticast: false
+    name: ci-temp-test-vpc

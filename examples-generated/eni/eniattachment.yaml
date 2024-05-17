@@ -1,0 +1,99 @@
+apiVersion: eni.tencentcloud.crossplane.io/v1alpha1
+kind: EniAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eniattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    eniIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: eni.tencentcloud.crossplane.io/v1alpha1
+kind: Eni
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eniattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    description: eni desc
+    ipv4Count: 1
+    name: ci-test-eni
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eniattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.my_favorite_zones.zones.0.name}
+    disableMonitorService: true
+    disableSecurityService: true
+    imageId: ${data.tencentcloud_images.my_favorite_image.images.0.image_id}
+    instanceName: ci-test-eni-attach
+    instanceType: ${data.tencentcloud_instance_types.my_favorite_instance_types.instance_types.0.instance_type}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    systemDiskType: CLOUD_PREMIUM
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eniattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    availabilityZone: ap-guangzhou-3
+    cidrBlock: 10.0.0.0/16
+    isMulticast: false
+    name: ci-test-eni-subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eniattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: ci-test-eni-vpc

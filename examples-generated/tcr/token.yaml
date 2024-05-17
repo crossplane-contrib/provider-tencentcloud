@@ -1,0 +1,32 @@
+apiVersion: tcr.tencentcloud.crossplane.io/v1alpha1
+kind: Token
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcr/v1alpha1/token
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: example for the tcr token
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: tcr.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcr/v1alpha1/token
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    deleteBucket: true
+    instanceType: basic
+    name: tf-example-tcr
+    tags:
+      createdBy: terraform

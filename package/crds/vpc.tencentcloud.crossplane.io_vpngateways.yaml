@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: vpngateways.vpc.tencentcloud.crossplane.io
 spec:
   group: vpc.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: VPNGateway
     listKind: VPNGatewayList
     plural: vpngateways
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: VPNGateway is the Schema for the VPNGateways API
+        description: VPNGateway is the Schema for the VPNGateways API. Provides a
+          resource to create a VPN gateway.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -66,52 +70,72 @@ spec:
                   bandwidth:
                     description: 'The maximum public network output bandwidth of VPN
                       gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000.
-                      Default is 5. When charge type is `PREPAID`, bandwidth degradation
-                      operation is unsupported.'
+                      Default is 5. When charge type is PREPAID, bandwidth degradation
+                      operation is unsupported. The maximum public network output
+                      bandwidth of VPN gateway (unit: Mbps), the available values
+                      include: 5,10,20,50,100,200,500,1000. Default is 5. When charge
+                      type is `PREPAID`, bandwidth degradation operation is unsupported.'
                     type: number
                   cdcId:
-                    description: CDC instance ID.
+                    description: CDC instance ID. CDC instance ID.
                     type: string
                   chargeType:
-                    description: 'Charge Type of the VPN gateway. Valid value: `PREPAID`,
-                      `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.'
+                    description: 'Charge Type of the VPN gateway. Valid value: PREPAID,
+                      POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Charge Type
+                      of the VPN gateway. Valid value: `PREPAID`, `POSTPAID_BY_HOUR`.
+                      The default is `POSTPAID_BY_HOUR`.'
                     type: string
                   maxConnection:
                     description: 'Maximum number of connected clients allowed for
                       the SSL VPN gateway. Valid values: [5, 10, 20, 50, 100]. This
-                      parameter is only required for SSL VPN gateways.'
+                      parameter is only required for SSL VPN gateways. Maximum number
+                      of connected clients allowed for the SSL VPN gateway. Valid
+                      values: [5, 10, 20, 50, 100]. This parameter is only required
+                      for SSL VPN gateways.'
                     type: number
                   name:
                     description: Name of the VPN gateway. The length of character
+                      is limited to 1-60. Name of the VPN gateway. The length of character
                       is limited to 1-60.
                     type: string
                   prepaidPeriod:
-                    description: 'Period of instance to be prepaid. Valid value: `1`,
-                      `2`, `3`, `4`, `6`, `7`, `8`, `9`, `12`, `24`, `36`. The unit
-                      is month. Caution: when this para and renew_flag para are valid,
-                      the request means to renew several months more pre-paid period.
-                      This para can only be changed on `IPSEC` vpn gateway.'
+                    description: 'Period of instance to be prepaid. Valid value: 1,
+                      2, 3, 4, 6, 7, 8, 9, 12, 24, 36. The unit is month. Caution:
+                      when this para and renew_flag para are valid, the request means
+                      to renew several months more pre-paid period. This para can
+                      only be changed on IPSEC vpn gateway. Period of instance to
+                      be prepaid. Valid value: `1`, `2`, `3`, `4`, `6`, `7`, `8`,
+                      `9`, `12`, `24`, `36`. The unit is month. Caution: when this
+                      para and renew_flag para are valid, the request means to renew
+                      several months more pre-paid period. This para can only be changed
+                      on `IPSEC` vpn gateway.'
                     type: number
                   prepaidRenewFlag:
                     description: 'Flag indicates whether to renew or not. Valid value:
-                      `NOTIFY_AND_AUTO_RENEW`, `NOTIFY_AND_MANUAL_RENEW`.'
+                      NOTIFY_AND_AUTO_RENEW, NOTIFY_AND_MANUAL_RENEW. Flag indicates
+                      whether to renew or not. Valid value: `NOTIFY_AND_AUTO_RENEW`,
+                      `NOTIFY_AND_MANUAL_RENEW`.'
                     type: string
                   tags:
                     additionalProperties:
                       type: string
                     description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
                     type: object
                   type:
-                    description: 'Type of gateway instance, Default is `IPSEC`. Valid
-                      value: `IPSEC`, `SSL`, `CCN` and `SSL_CCN`.'
+                    description: 'Type of gateway instance, Default is IPSEC. Valid
+                      value: IPSEC, SSL, CCN and SSL_CCN. Type of gateway instance,
+                      Default is `IPSEC`. Valid value: `IPSEC`, `SSL`, `CCN` and `SSL_CCN`.'
                     type: string
                   vpcId:
                     description: ID of the VPC. Required if vpn gateway is not in
+                      CCN or SSL_CCN type, and doesn't make sense for CCN or SSL_CCN
+                      vpn gateway. ID of the VPC. Required if vpn gateway is not in
                       `CCN` or `SSL_CCN` type, and doesn't make sense for `CCN` or
                       `SSL_CCN` vpn gateway.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -144,8 +168,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -184,53 +208,116 @@ spec:
                         type: object
                     type: object
                   zone:
-                    description: Zone of the VPN gateway.
+                    description: Zone of the VPN gateway. Zone of the VPN gateway.
                     type: string
-                required:
-                - name
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  bandwidth:
+                    description: 'The maximum public network output bandwidth of VPN
+                      gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000.
+                      Default is 5. When charge type is PREPAID, bandwidth degradation
+                      operation is unsupported. The maximum public network output
+                      bandwidth of VPN gateway (unit: Mbps), the available values
+                      include: 5,10,20,50,100,200,500,1000. Default is 5. When charge
+                      type is `PREPAID`, bandwidth degradation operation is unsupported.'
+                    type: number
+                  cdcId:
+                    description: CDC instance ID. CDC instance ID.
+                    type: string
+                  chargeType:
+                    description: 'Charge Type of the VPN gateway. Valid value: PREPAID,
+                      POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Charge Type
+                      of the VPN gateway. Valid value: `PREPAID`, `POSTPAID_BY_HOUR`.
+                      The default is `POSTPAID_BY_HOUR`.'
+                    type: string
+                  maxConnection:
+                    description: 'Maximum number of connected clients allowed for
+                      the SSL VPN gateway. Valid values: [5, 10, 20, 50, 100]. This
+                      parameter is only required for SSL VPN gateways. Maximum number
+                      of connected clients allowed for the SSL VPN gateway. Valid
+                      values: [5, 10, 20, 50, 100]. This parameter is only required
+                      for SSL VPN gateways.'
+                    type: number
+                  name:
+                    description: Name of the VPN gateway. The length of character
+                      is limited to 1-60. Name of the VPN gateway. The length of character
+                      is limited to 1-60.
+                    type: string
+                  prepaidPeriod:
+                    description: 'Period of instance to be prepaid. Valid value: 1,
+                      2, 3, 4, 6, 7, 8, 9, 12, 24, 36. The unit is month. Caution:
+                      when this para and renew_flag para are valid, the request means
+                      to renew several months more pre-paid period. This para can
+                      only be changed on IPSEC vpn gateway. Period of instance to
+                      be prepaid. Valid value: `1`, `2`, `3`, `4`, `6`, `7`, `8`,
+                      `9`, `12`, `24`, `36`. The unit is month. Caution: when this
+                      para and renew_flag para are valid, the request means to renew
+                      several months more pre-paid period. This para can only be changed
+                      on `IPSEC` vpn gateway.'
+                    type: number
+                  prepaidRenewFlag:
+                    description: 'Flag indicates whether to renew or not. Valid value:
+                      NOTIFY_AND_AUTO_RENEW, NOTIFY_AND_MANUAL_RENEW. Flag indicates
+                      whether to renew or not. Valid value: `NOTIFY_AND_AUTO_RENEW`,
+                      `NOTIFY_AND_MANUAL_RENEW`.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
+                    type: object
+                  type:
+                    description: 'Type of gateway instance, Default is IPSEC. Valid
+                      value: IPSEC, SSL, CCN and SSL_CCN. Type of gateway instance,
+                      Default is `IPSEC`. Valid value: `IPSEC`, `SSL`, `CCN` and `SSL_CCN`.'
+                    type: string
+                  zone:
+                    description: Zone of the VPN gateway. Zone of the VPN gateway.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -360,26 +447,119 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
           status:
             description: VPNGatewayStatus defines the observed state of VPNGateway.
             properties:
               atProvider:
                 properties:
+                  bandwidth:
+                    description: 'The maximum public network output bandwidth of VPN
+                      gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000.
+                      Default is 5. When charge type is PREPAID, bandwidth degradation
+                      operation is unsupported. The maximum public network output
+                      bandwidth of VPN gateway (unit: Mbps), the available values
+                      include: 5,10,20,50,100,200,500,1000. Default is 5. When charge
+                      type is `PREPAID`, bandwidth degradation operation is unsupported.'
+                    type: number
+                  cdcId:
+                    description: CDC instance ID. CDC instance ID.
+                    type: string
+                  chargeType:
+                    description: 'Charge Type of the VPN gateway. Valid value: PREPAID,
+                      POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Charge Type
+                      of the VPN gateway. Valid value: `PREPAID`, `POSTPAID_BY_HOUR`.
+                      The default is `POSTPAID_BY_HOUR`.'
+                    type: string
                   createTime:
+                    description: Create time of the VPN gateway. Create time of the
+                      VPN gateway.
                     type: string
                   expiredTime:
+                    description: Expired time of the VPN gateway when charge type
+                      is PREPAID. Expired time of the VPN gateway when charge type
+                      is `PREPAID`.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
                   isAddressBlocked:
+                    description: Indicates whether ip address is blocked. Indicates
+                      whether ip address is blocked.
                     type: boolean
+                  maxConnection:
+                    description: 'Maximum number of connected clients allowed for
+                      the SSL VPN gateway. Valid values: [5, 10, 20, 50, 100]. This
+                      parameter is only required for SSL VPN gateways. Maximum number
+                      of connected clients allowed for the SSL VPN gateway. Valid
+                      values: [5, 10, 20, 50, 100]. This parameter is only required
+                      for SSL VPN gateways.'
+                    type: number
+                  name:
+                    description: Name of the VPN gateway. The length of character
+                      is limited to 1-60. Name of the VPN gateway. The length of character
+                      is limited to 1-60.
+                    type: string
                   newPurchasePlan:
+                    description: 'The plan of new purchase. Valid value: PREPAID_TO_POSTPAID.
+                      The plan of new purchase. Valid value: `PREPAID_TO_POSTPAID`.'
+                    type: string
+                  prepaidPeriod:
+                    description: 'Period of instance to be prepaid. Valid value: 1,
+                      2, 3, 4, 6, 7, 8, 9, 12, 24, 36. The unit is month. Caution:
+                      when this para and renew_flag para are valid, the request means
+                      to renew several months more pre-paid period. This para can
+                      only be changed on IPSEC vpn gateway. Period of instance to
+                      be prepaid. Valid value: `1`, `2`, `3`, `4`, `6`, `7`, `8`,
+                      `9`, `12`, `24`, `36`. The unit is month. Caution: when this
+                      para and renew_flag para are valid, the request means to renew
+                      several months more pre-paid period. This para can only be changed
+                      on `IPSEC` vpn gateway.'
+                    type: number
+                  prepaidRenewFlag:
+                    description: 'Flag indicates whether to renew or not. Valid value:
+                      NOTIFY_AND_AUTO_RENEW, NOTIFY_AND_MANUAL_RENEW. Flag indicates
+                      whether to renew or not. Valid value: `NOTIFY_AND_AUTO_RENEW`,
+                      `NOTIFY_AND_MANUAL_RENEW`.'
                     type: string
                   publicIpAddress:
+                    description: Public IP of the VPN gateway. Public IP of the VPN
+                      gateway.
                     type: string
                   restrictState:
+                    description: 'Restrict state of gateway. Valid value: PRETECIVELY_ISOLATED,
+                      NORMAL. Restrict state of gateway. Valid value: `PRETECIVELY_ISOLATED`,
+                      `NORMAL`.'
                     type: string
                   state:
+                    description: 'State of the VPN gateway. Valid value: PENDING,
+                      DELETING, AVAILABLE. State of the VPN gateway. Valid value:
+                      `PENDING`, `DELETING`, `AVAILABLE`.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
+                    type: object
+                  type:
+                    description: 'Type of gateway instance, Default is IPSEC. Valid
+                      value: IPSEC, SSL, CCN and SSL_CCN. Type of gateway instance,
+                      Default is `IPSEC`. Valid value: `IPSEC`, `SSL`, `CCN` and `SSL_CCN`.'
+                    type: string
+                  vpcId:
+                    description: ID of the VPC. Required if vpn gateway is not in
+                      CCN or SSL_CCN type, and doesn't make sense for CCN or SSL_CCN
+                      vpn gateway. ID of the VPC. Required if vpn gateway is not in
+                      `CCN` or `SSL_CCN` type, and doesn't make sense for `CCN` or
+                      `SSL_CCN` vpn gateway.
+                    type: string
+                  zone:
+                    description: Zone of the VPN gateway. Zone of the VPN gateway.
                     type: string
                 type: object
               conditions:
@@ -415,6 +595,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -423,9 +606,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

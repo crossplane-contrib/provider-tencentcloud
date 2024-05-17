@@ -1,0 +1,33 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: SnatIp
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/snatip
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: snat_test
+    ips:
+    - ip: 172.16.0.1
+      subnetId: subnet-12345678
+    - ip: 172.16.0.2
+      subnetId: subnet-12345678
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/snatip
+  labels:
+    testing.upbound.io/example-name: snat_test
+  name: snat-test
+spec:
+  forProvider:
+    clbName: tf-clb-snat-test
+    networkType: OPEN

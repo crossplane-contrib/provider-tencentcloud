@@ -1,0 +1,96 @@
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: ConfigExtra
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/configextra
+  labels:
+    testing.upbound.io/example-name: extra
+  name: extra
+spec:
+  forProvider:
+    configFlag: label_k8s
+    containerFile:
+    - container: nginx
+      filePattern: log
+      logPath: /nginx
+      namespace: default
+      workload:
+      - container: nginx
+        kind: deployment
+        name: nginx
+        namespace: default
+    groupId: ${tencentcloud_cls_machine_group.group.id}
+    logType: json_log
+    logsetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: logset
+    logsetName: ${tencentcloud_cls_logset.logset.logset_name}
+    name: helloworld-test
+    topicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: topic
+    topicName: ${tencentcloud_cls_topic.topic.topic_name}
+    type: container_file
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Logset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/configextra
+  labels:
+    testing.upbound.io/example-name: logset
+  name: logset
+spec:
+  forProvider:
+    logsetName: tf-config-extra-test
+    tags:
+      test: test
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: MachineGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/configextra
+  labels:
+    testing.upbound.io/example-name: group
+  name: group
+spec:
+  forProvider:
+    autoUpdate: true
+    groupName: tf-config-extra-test
+    machineGroupType:
+    - type: ip
+      values:
+      - 192.168.1.1
+      - 192.168.1.2
+    serviceLogging: true
+    updateEndTime: "19:05:00"
+    updateStartTime: "17:05:00"
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Topic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/configextra
+  labels:
+    testing.upbound.io/example-name: topic
+  name: topic
+spec:
+  forProvider:
+    autoSplit: true
+    logsetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: logset
+    maxSplitPartitions: 20
+    partitionCount: 1
+    period: 10
+    storageType: hot
+    tags:
+      test: test
+    topicName: tf-config-extra-test

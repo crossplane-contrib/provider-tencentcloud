@@ -1,0 +1,34 @@
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: BucketPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cos/v1alpha1/bucketpolicy
+  labels:
+    testing.upbound.io/example-name: cos_policy
+  name: cos-policy
+spec:
+  forProvider:
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    policy: |
+      {
+        "version": "2.0",
+        "Statement": [
+          {
+            "Principal": {
+              "qcs": [
+                "qcs::cam::uin/<your-account-id>:uin/<your-account-id>"
+              ]
+            },
+            "Action": [
+              "name/cos:DeleteBucket",
+              "name/cos:PutBucketACL"
+            ],
+            "Effect": "allow",
+            "Resource": [
+              "qcs::cos:<bucket region>:uid/<your-account-id>:<bucket name>/*"
+            ]
+          }
+        ]
+      }

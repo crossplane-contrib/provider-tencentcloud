@@ -1,0 +1,13 @@
+apiVersion: ssl.tencentcloud.crossplane.io/v1alpha1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ssl/v1alpha1/certificate
+  labels:
+    testing.upbound.io/example-name: ca
+  name: ca
+spec:
+  forProvider:
+    cert: ${var.ca}
+    name: ssl-ca
+    type: CA

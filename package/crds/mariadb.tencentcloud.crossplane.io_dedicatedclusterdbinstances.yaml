@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: dedicatedclusterdbinstances.mariadb.tencentcloud.crossplane.io
 spec:
   group: mariadb.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: DedicatedclusterDBInstance
     listKind: DedicatedclusterDBInstanceList
     plural: dedicatedclusterdbinstances
@@ -36,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: DedicatedclusterDBInstance is the Schema for the DedicatedclusterDBInstances
-          API
+          API. Provides a resource to create a mariadb dedicatedcluster_db_instance
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -56,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -66,31 +69,33 @@ spec:
               forProvider:
                 properties:
                   clusterId:
-                    description: dedicated cluster id.
+                    description: dedicated cluster id. dedicated cluster id.
                     type: string
                   dbVersionId:
-                    description: db engine version, default to 0.
+                    description: db engine version, default to 0. db engine version,
+                      default to 0.
                     type: string
                   goodsNum:
-                    description: number of instance.
+                    description: number of instance. number of instance.
                     type: number
                   instanceName:
-                    description: name of this instance.
+                    description: name of this instance. name of this instance.
                     type: string
                   memory:
-                    description: instance memory.
+                    description: instance memory. instance memory.
                     type: number
                   projectId:
-                    description: project id.
+                    description: project id. project id.
                     type: number
                   storage:
-                    description: instance disk storage.
+                    description: instance disk storage. instance disk storage.
                     type: number
                   subnetId:
-                    description: subnet id, it&amp;#39;s required when vpcId is set.
+                    description: subnet id, it&#39;s required when vpcId is set. subnet
+                      id, it&amp;#39;s required when vpcId is set.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -124,7 +129,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -165,16 +170,16 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tag description list.
+                    description: Tag description list. Tag description list.
                     type: object
                   vip:
-                    description: vip.
+                    description: vip. vip.
                     type: string
                   vpcId:
-                    description: vpc id.
+                    description: vpc id. vpc id.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -207,8 +212,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -246,54 +251,81 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - clusterId
-                - goodsNum
-                - memory
-                - storage
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  clusterId:
+                    description: dedicated cluster id. dedicated cluster id.
+                    type: string
+                  dbVersionId:
+                    description: db engine version, default to 0. db engine version,
+                      default to 0.
+                    type: string
+                  goodsNum:
+                    description: number of instance. number of instance.
+                    type: number
+                  instanceName:
+                    description: name of this instance. name of this instance.
+                    type: string
+                  memory:
+                    description: instance memory. instance memory.
+                    type: number
+                  projectId:
+                    description: project id. project id.
+                    type: number
+                  storage:
+                    description: instance disk storage. instance disk storage.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list. Tag description list.
+                    type: object
+                  vip:
+                    description: vip. vip.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -423,13 +455,68 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.clusterId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterId)
+                || (has(self.initProvider) && has(self.initProvider.clusterId))'
+            - message: spec.forProvider.goodsNum is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.goodsNum)
+                || (has(self.initProvider) && has(self.initProvider.goodsNum))'
+            - message: spec.forProvider.memory is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.memory)
+                || (has(self.initProvider) && has(self.initProvider.memory))'
+            - message: spec.forProvider.storage is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storage)
+                || (has(self.initProvider) && has(self.initProvider.storage))'
           status:
             description: DedicatedclusterDBInstanceStatus defines the observed state
               of DedicatedclusterDBInstance.
             properties:
               atProvider:
                 properties:
+                  clusterId:
+                    description: dedicated cluster id. dedicated cluster id.
+                    type: string
+                  dbVersionId:
+                    description: db engine version, default to 0. db engine version,
+                      default to 0.
+                    type: string
+                  goodsNum:
+                    description: number of instance. number of instance.
+                    type: number
                   id:
+                    description: ID of the resource.
+                    type: string
+                  instanceName:
+                    description: name of this instance. name of this instance.
+                    type: string
+                  memory:
+                    description: instance memory. instance memory.
+                    type: number
+                  projectId:
+                    description: project id. project id.
+                    type: number
+                  storage:
+                    description: instance disk storage. instance disk storage.
+                    type: number
+                  subnetId:
+                    description: subnet id, it&#39;s required when vpcId is set. subnet
+                      id, it&amp;#39;s required when vpcId is set.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Tag description list. Tag description list.
+                    type: object
+                  vip:
+                    description: vip. vip.
+                    type: string
+                  vpcId:
+                    description: vpc id. vpc id.
                     type: string
                 type: object
               conditions:
@@ -465,6 +552,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -473,9 +563,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

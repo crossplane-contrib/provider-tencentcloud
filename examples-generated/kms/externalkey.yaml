@@ -1,0 +1,14 @@
+apiVersion: kms.tencentcloud.crossplane.io/v1alpha1
+kind: ExternalKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/externalkey
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    alias: tf-example-kms-externalkey
+    description: example of kms external key
+    tags:
+      createdBy: terraform
