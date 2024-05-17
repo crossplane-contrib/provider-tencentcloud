@@ -23,8 +23,8 @@ type AttachmentInitParameters struct {
 	// ID of the CCN.
 	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
 
-	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
-	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
+	// Uin of the ccn attached. Default is “, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
+	// Uin of the ccn attached. Default is “, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
 	CcnUin *string `json:"ccnUin,omitempty" tf:"ccn_uin,omitempty"`
 
 	// Remark of attachment.
@@ -54,8 +54,8 @@ type AttachmentObservation struct {
 	// ID of the CCN.
 	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
 
-	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
-	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
+	// Uin of the ccn attached. Default is “, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
+	// Uin of the ccn attached. Default is “, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
 	CcnUin *string `json:"ccnUin,omitempty" tf:"ccn_uin,omitempty"`
 
 	// A network address block of the instance that is attached.
@@ -97,8 +97,8 @@ type AttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
 
-	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
-	// Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
+	// Uin of the ccn attached. Default is “, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
+	// Uin of the ccn attached. Default is “, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
 	// +kubebuilder:validation:Optional
 	CcnUin *string `json:"ccnUin,omitempty" tf:"ccn_uin,omitempty"`
 
