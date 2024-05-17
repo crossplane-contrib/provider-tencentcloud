@@ -8,10 +8,10 @@ export TERRAFORM_VERSION ?= 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE ?= tencentcloudstack/tencentcloud
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/tencentcloudstack/terraform-provider-tencentcloud
-export TERRAFORM_PROVIDER_VERSION ?= 1.81.94
+export TERRAFORM_PROVIDER_VERSION ?= 1.81.95
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-tencentcloud
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-tencentcloud_v1.81.94
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-tencentcloud_v1.81.95
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 
 
