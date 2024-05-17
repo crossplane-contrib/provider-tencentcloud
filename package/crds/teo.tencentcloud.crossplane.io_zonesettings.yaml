@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: zonesettings.teo.tencentcloud.crossplane.io
 spec:
   group: teo.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: ZoneSetting
     listKind: ZoneSettingList
     plural: zonesettings
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ZoneSetting is the Schema for the ZoneSettings API
+        description: ZoneSetting is the Schema for the ZoneSettings API. Provides
+          a resource to create a teo zone_setting
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,249 +68,305 @@ spec:
               forProvider:
                 properties:
                   cache:
-                    description: Cache expiration time configuration.
+                    description: Cache expiration time configuration. Cache expiration
+                      time configuration.
                     items:
                       properties:
                         cache:
-                          description: 'Cache configuration. Note: This field may
-                            return null, indicating that no valid value can be obtained.'
+                          description: 'Cache expiration time configuration. Cache
+                            configuration. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
                           items:
                             properties:
                               cacheTime:
                                 description: 'Cache expiration time settings, Unit:
                                   second. The maximum value is 365 days. Note: This
                                   field may return null, indicating that no valid
+                                  value can be obtained. Cache expiration time settings,
+                                  Unit: second. The maximum value is 365 days. Note:
+                                  This field may return null, indicating that no valid
                                   value can be obtained.'
                                 type: number
                               ignoreCacheControl:
                                 description: 'Specifies whether to enable force cache.
+                                  Valid values: on: Enable; off: Disable. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained. Specifies whether to enable
+                                  force cache. Valid values: `on`: Enable; `off`:
+                                  Disable. Note: This field may return null, indicating
+                                  that no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Cache configuration switch.
                                   Valid values: `on`: Enable; `off`: Disable. Note:
                                   This field may return null, indicating that no valid
                                   value can be obtained.'
-                                type: string
-                              switch:
-                                description: 'Cache configuration switch. Valid values:
-                                  `on`: Enable; `off`: Disable. Note: This field may
-                                  return null, indicating that no valid value can
-                                  be obtained.'
                                 type: string
                             type: object
                           type: array
                         followOrigin:
                           description: 'Follows the origin server configuration. Note:
                             This field may return null, indicating that no valid value
-                            can be obtained.'
+                            can be obtained. Follows the origin server configuration.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
                           items:
                             properties:
                               switch:
-                                description: 'Specifies whether to follow the origin
-                                  server configuration.- `on`: Enable.- `off`: Disable.
-                                  Note: This field may return null, indicating that
-                                  no valid value can be obtained.'
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Specifies whether to
+                                  follow the origin server configuration.- `on`: Enable.-
+                                  `off`: Disable. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
                                 type: string
                             type: object
                           type: array
                         noCache:
                           description: 'No-cache configuration. Note: This field may
-                            return null, indicating that no valid value can be obtained.'
+                            return null, indicating that no valid value can be obtained.
+                            No-cache configuration. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
                           items:
                             properties:
                               switch:
-                                description: 'Whether to cache the configuration.
-                                  Valid values: `on`: Do not cache; `off`: Cache.
-                                  Note: This field may return null, indicating that
-                                  no valid value can be obtained.'
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Whether to cache the
+                                  configuration. Valid values: `on`: Do not cache;
+                                  `off`: Cache. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   cacheKey:
-                    description: Node cache key configuration.
+                    description: Node cache key configuration. Node cache key configuration.
                     items:
                       properties:
                         fullUrlCache:
                           description: 'Specifies whether to enable full-path cache.-
-                            `on`: Enable full-path cache (i.e., disable Ignore Query
-                            String).- `off`: Disable full-path cache (i.e., enable
-                            Ignore Query String). Note: This field may return null,
-                            indicating that no valid value can be obtained.'
+                            on: Enable full-path cache (i.e., disable Ignore Query
+                            String).- off: Disable full-path cache (i.e., enable Ignore
+                            Query String). Note: This field may return null, indicating
+                            that no valid value can be obtained. Specifies whether
+                            to enable full-path cache.- `on`: Enable full-path cache
+                            (i.e., disable Ignore Query String).- `off`: Disable full-path
+                            cache (i.e., enable Ignore Query String). Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained.'
                           type: string
                         ignoreCase:
                           description: 'Specifies whether the cache key is case-sensitive.
                             Note: This field may return null, indicating that no valid
-                            value can be obtained.'
+                            value can be obtained. Specifies whether the cache key
+                            is case-sensitive. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
                           type: string
                         queryString:
                           description: 'Request parameter contained in CacheKey. Note:
                             This field may return null, indicating that no valid value
-                            can be obtained.'
+                            can be obtained. Request parameter contained in CacheKey.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
                           items:
                             properties:
                               action:
-                                description: '- `includeCustom`: Include the specified
-                                  query strings.- `excludeCustom`: Exclude the specified
+                                description: '- includeCustom: Include the specified
+                                  query strings.- excludeCustom: Exclude the specified
                                   query strings. Note: This field may return null,
-                                  indicating that no valid value can be obtained.'
+                                  indicating that no valid value can be obtained.
+                                  - `includeCustom`: Include the specified query strings.-
+                                  `excludeCustom`: Exclude the specified query strings.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
                                 type: string
                               switch:
-                                description: 'Whether to use QueryString as part of
-                                  CacheKey.- `on`: Enable.- `off`: Disable. Note:
-                                  This field may return null, indicating that no valid
-                                  value can be obtained.'
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Whether to use QueryString
+                                  as part of CacheKey.- `on`: Enable.- `off`: Disable.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
                                 type: string
                               value:
                                 description: 'Array of query strings used/excluded.
                                   Note: This field may return null, indicating that
-                                  no valid value can be obtained.'
+                                  no valid value can be obtained. Array of query strings
+                                  used/excluded. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
                                 items:
                                   type: string
                                 type: array
-                            required:
-                            - switch
                             type: object
                           type: array
                       type: object
                     type: array
                   cachePrefresh:
-                    description: Cache pre-refresh configuration.
+                    description: Cache pre-refresh configuration. Cache pre-refresh
+                      configuration.
                     items:
                       properties:
                         percent:
                           description: 'Percentage of cache time before try to prefresh.
-                            Valid value range: 1-99.'
+                            Valid value range: 1-99. Percentage of cache time before
+                            try to prefresh. Valid value range: 1-99.'
                           type: number
                         switch:
                           description: 'Specifies whether to enable cache prefresh.-
-                            `on`: Enable.- `off`: Disable.'
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            cache prefresh.- `on`: Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   clientIpHeader:
-                    description: Origin-pull client IP header configuration.
+                    description: Origin-pull client IP header configuration. Origin-pull
+                      client IP header configuration.
                     items:
                       properties:
                         headerName:
                           description: 'Name of the origin-pull client IP request
                             header. Note: This field may return null, indicating that
-                            no valid value can be obtained.'
-                          type: string
-                        switch:
-                          description: 'Specifies whether to enable client IP header.-
-                            `on`: Enable.- `off`: Disable. Note: This field may return
+                            no valid value can be obtained. Name of the origin-pull
+                            client IP request header. Note: This field may return
                             null, indicating that no valid value can be obtained.'
                           type: string
-                      required:
-                      - switch
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            client IP header.- `on`: Enable.- `off`: Disable. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: string
                       type: object
                     type: array
                   compression:
-                    description: Smart compression configuration.
+                    description: Smart compression configuration. Smart compression
+                      configuration.
                     items:
                       properties:
                         algorithms:
                           description: 'Compression algorithms to select. Valid values:
-                            `brotli`, `gzip`.'
+                            brotli, gzip. Compression algorithms to select. Valid
+                            values: `brotli`, `gzip`.'
                           items:
                             type: string
                           type: array
                         switch:
-                          description: 'Whether to enable Smart compression.- `on`:
-                            Enable.- `off`: Disable.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable Smart compression.-
+                            `on`: Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   forceRedirect:
-                    description: Force HTTPS redirect configuration.
+                    description: Force HTTPS redirect configuration. Force HTTPS redirect
+                      configuration.
                     items:
                       properties:
                         redirectStatusCode:
                           description: 'Redirection status code.- 301- 302 Note: This
                             field may return null, indicating that no valid value
+                            can be obtained. Redirection status code.- 301- 302 Note:
+                            This field may return null, indicating that no valid value
                             can be obtained.'
                           type: number
                         switch:
-                          description: 'Whether to enable force redirect.- `on`: Enable.-
-                            `off`: Disable.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable force redirect.-
+                            `on`: Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   https:
-                    description: HTTPS acceleration configuration.
+                    description: HTTPS acceleration configuration. HTTPS acceleration
+                      configuration.
                     items:
                       properties:
                         hsts:
                           description: 'HSTS Configuration. Note: This field may return
-                            null, indicating that no valid value can be obtained.'
+                            null, indicating that no valid value can be obtained.
+                            HSTS Configuration. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
                           items:
                             properties:
                               includeSubDomains:
                                 description: 'Specifies whether to include subdomain
+                                  names. Valid values: on and off. Note: This field
+                                  may return null, indicating that no valid value
+                                  can be obtained. Specifies whether to include subdomain
                                   names. Valid values: `on` and `off`. Note: This
                                   field may return null, indicating that no valid
                                   value can be obtained.'
                                 type: string
                               maxAge:
-                                description: 'MaxAge value in seconds, should be no
-                                  more than 1 day. Note: This field may return null,
-                                  indicating that no valid value can be obtained.'
+                                description: 'Browser cache configuration. MaxAge
+                                  value in seconds, should be no more than 1 day.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
                                 type: number
                               preload:
                                 description: 'Specifies whether to preload. Valid
-                                  values: `on` and `off`. Note: This field may return
-                                  null, indicating that no valid value can be obtained.'
+                                  values: on and off. Note: This field may return
+                                  null, indicating that no valid value can be obtained.
+                                  Specifies whether to preload. Valid values: `on`
+                                  and `off`. Note: This field may return null, indicating
+                                  that no valid value can be obtained.'
                                 type: string
                               switch:
-                                description: '- `on`: Enable.- `off`: Disable.'
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. - `on`: Enable.- `off`:
+                                  Disable.'
                                 type: string
-                            required:
-                            - switch
                             type: object
                           type: array
                         http2:
-                          description: 'HTTP2 configuration switch.- `on`: Enable.-
-                            `off`: Disable. Note: This field may return null, indicating
-                            that no valid value can be obtained.'
-                          type: string
-                        ocspStapling:
-                          description: 'OCSP configuration switch.- `on`: Enable.-
-                            `off`: Disable.It is disabled by default. Note: This field
+                          description: 'HTTP2 configuration switch.- on: Enable.-
+                            off: Disable. Note: This field may return null, indicating
+                            that no valid value can be obtained. HTTP2 configuration
+                            switch.- `on`: Enable.- `off`: Disable. Note: This field
                             may return null, indicating that no valid value can be
                             obtained.'
                           type: string
+                        ocspStapling:
+                          description: 'OCSP configuration switch.- on: Enable.- off:
+                            Disable.It is disabled by default. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            OCSP configuration switch.- `on`: Enable.- `off`: Disable.It
+                            is disabled by default. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          type: string
                         tlsVersion:
-                          description: 'TLS version settings. Valid values: `TLSv1`,
-                            `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions
+                          description: 'TLS version settings. Valid values: TLSv1,
+                            TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions
                             can be enabled at the same time. Note: This field may
-                            return null, indicating that no valid value can be obtained.'
+                            return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`,
+                            `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can
+                            be enabled at the same time. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   ipv6:
-                    description: IPv6 access configuration.
+                    description: IPv6 access configuration. IPv6 access configuration.
                     items:
                       properties:
                         switch:
-                          description: '- `on`: Enable.- `off`: Disable.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. - `on`: Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   maxAge:
-                    description: Browser cache configuration.
+                    description: Browser cache configuration. Browser cache configuration.
                     items:
                       properties:
                         followOrigin:
-                          description: 'Specifies whether to follow the max cache
+                          description: 'Follows the origin server configuration. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Specifies whether to follow the max cache
                             age of the origin server.- `on`: Enable.- `off`: Disable.If
                             is on, MaxAgeTime is ignored. Note: This field may return
                             null, indicating that no valid value can be obtained.'
@@ -315,41 +375,53 @@ spec:
                           description: 'Specifies the max age of the cache (in seconds).
                             The maximum value is 365 days. Note: the value 0 means
                             not to cache. Note: This field may return null, indicating
-                            that no valid value can be obtained.'
+                            that no valid value can be obtained. Specifies the max
+                            age of the cache (in seconds). The maximum value is 365
+                            days. Note: the value 0 means not to cache. Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained.'
                           type: number
                       type: object
                     type: array
                   offlineCache:
-                    description: Offline cache configuration.
+                    description: Offline cache configuration. Offline cache configuration.
                     items:
                       properties:
                         switch:
-                          description: 'Whether to enable offline cache.- `on`: Enable.-
-                            `off`: Disable. Note: This field may return null, indicating
-                            that no valid value can be obtained.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable offline cache.-
+                            `on`: Enable.- `off`: Disable. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   origin:
-                    description: Origin server configuration.
+                    description: Origin server configuration. Origin server configuration.
                     items:
                       properties:
                         backupOrigins:
                           description: 'Backup origin sites list. Note: This field
                             may return null, indicating that no valid value can be
-                            obtained.'
+                            obtained. Backup origin sites list. Note: This field may
+                            return null, indicating that no valid value can be obtained.'
                           items:
                             type: string
                           type: array
                         cosPrivateAccess:
                           description: 'Whether access private cos bucket is allowed
-                            when `OriginType` is cos. Note: This field may return
-                            null, indicating that no valid value can be obtained.'
+                            when OriginType is cos. Note: This field may return null,
+                            indicating that no valid value can be obtained. Whether
+                            access private cos bucket is allowed when `OriginType`
+                            is cos. Note: This field may return null, indicating that
+                            no valid value can be obtained.'
                           type: string
                         originPullProtocol:
-                          description: 'Origin-pull protocol.- `http`: Switch HTTPS
+                          description: 'Origin-pull protocol.- http: Switch HTTPS
+                            requests to HTTP.- follow: Follow the protocol of the
+                            request.- https: Switch HTTP requests to HTTPS. This only
+                            supports port 443 on the origin server. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained. Origin-pull protocol.- `http`: Switch HTTPS
                             requests to HTTP.- `follow`: Follow the protocol of the
                             request.- `https`: Switch HTTP requests to HTTPS. This
                             only supports port 443 on the origin server. Note: This
@@ -358,7 +430,9 @@ spec:
                           type: string
                         origins:
                           description: 'Origin sites list. Note: This field may return
-                            null, indicating that no valid value can be obtained.'
+                            null, indicating that no valid value can be obtained.
+                            Origin sites list. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
                           items:
                             type: string
                           type: array
@@ -366,82 +440,82 @@ spec:
                     type: array
                   postMaxSize:
                     description: Maximum size of files transferred over POST request.
+                      Maximum size of files transferred over POST request.
                     items:
                       properties:
                         maxSize:
                           description: 'Maximum size. Value range: 1-500 MB. Note:
                             This field may return null, indicating that no valid value
-                            can be obtained.'
+                            can be obtained. Maximum size. Value range: 1-500 MB.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
                           type: number
                         switch:
-                          description: 'Specifies whether to enable custom setting
-                            of the maximum file size.- `on`: Enable. You can set a
-                            custom max size.- `off`: Disable. In this case, the max
-                            size defaults to 32 MB.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            custom setting of the maximum file size.- `on`: Enable.
+                            You can set a custom max size.- `off`: Disable. In this
+                            case, the max size defaults to 32 MB.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   quic:
-                    description: QUIC access configuration.
+                    description: QUIC access configuration. QUIC access configuration.
                     items:
                       properties:
                         switch:
-                          description: 'Whether to enable QUIC.- `on`: Enable.- `off`:
-                            Disable.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable QUIC.- `on`:
+                            Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   smartRouting:
-                    description: Smart acceleration configuration.
+                    description: Smart acceleration configuration. Smart acceleration
+                      configuration.
                     items:
                       properties:
                         switch:
-                          description: 'Whether to enable smart acceleration.- `on`:
-                            Enable.- `off`: Disable.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable smart acceleration.-
+                            `on`: Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   upstreamHttp2:
-                    description: HTTP2 origin-pull configuration.
+                    description: HTTP2 origin-pull configuration. HTTP2 origin-pull
+                      configuration.
                     items:
                       properties:
                         switch:
-                          description: 'Whether to enable HTTP2 origin-pull.- `on`:
-                            Enable.- `off`: Disable.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable HTTP2 origin-pull.-
+                            `on`: Enable.- `off`: Disable.'
                           type: string
-                      required:
-                      - switch
                       type: object
                     type: array
                   webSocket:
-                    description: WebSocket configuration.
+                    description: WebSocket configuration. WebSocket configuration.
                     items:
                       properties:
                         switch:
-                          description: 'Whether to enable custom WebSocket timeout
-                            setting. When is off: it means to keep the default WebSocket
-                            connection timeout period, which is 15 seconds. To change
-                            the timeout period, please set it to on.'
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable custom WebSocket
+                            timeout setting. When is off: it means to keep the default
+                            WebSocket connection timeout period, which is 15 seconds.
+                            To change the timeout period, please set it to on.'
                           type: string
                         timeout:
                           description: 'Sets timeout period in seconds. Maximum value:
-                            120.'
+                            120. Sets timeout period in seconds. Maximum value: 120.'
                           type: number
-                      required:
-                      - switch
                       type: object
                     type: array
                   zoneId:
-                    description: Site ID.
+                    description: Site ID. Site ID.
                     type: string
                   zoneIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Zone to populate zoneId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -475,7 +549,7 @@ spec:
                     - name
                     type: object
                   zoneIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Zone to populate zoneId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -514,48 +588,494 @@ spec:
                         type: object
                     type: object
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  cache:
+                    description: Cache expiration time configuration. Cache expiration
+                      time configuration.
+                    items:
+                      properties:
+                        cache:
+                          description: 'Cache expiration time configuration. Cache
+                            configuration. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
+                          items:
+                            properties:
+                              cacheTime:
+                                description: 'Cache expiration time settings, Unit:
+                                  second. The maximum value is 365 days. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained. Cache expiration time settings,
+                                  Unit: second. The maximum value is 365 days. Note:
+                                  This field may return null, indicating that no valid
+                                  value can be obtained.'
+                                type: number
+                              ignoreCacheControl:
+                                description: 'Specifies whether to enable force cache.
+                                  Valid values: on: Enable; off: Disable. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained. Specifies whether to enable
+                                  force cache. Valid values: `on`: Enable; `off`:
+                                  Disable. Note: This field may return null, indicating
+                                  that no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Cache configuration switch.
+                                  Valid values: `on`: Enable; `off`: Disable. Note:
+                                  This field may return null, indicating that no valid
+                                  value can be obtained.'
+                                type: string
+                            type: object
+                          type: array
+                        followOrigin:
+                          description: 'Follows the origin server configuration. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Follows the origin server configuration.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
+                          items:
+                            properties:
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Specifies whether to
+                                  follow the origin server configuration.- `on`: Enable.-
+                                  `off`: Disable. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
+                                type: string
+                            type: object
+                          type: array
+                        noCache:
+                          description: 'No-cache configuration. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            No-cache configuration. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          items:
+                            properties:
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Whether to cache the
+                                  configuration. Valid values: `on`: Do not cache;
+                                  `off`: Cache. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  cacheKey:
+                    description: Node cache key configuration. Node cache key configuration.
+                    items:
+                      properties:
+                        fullUrlCache:
+                          description: 'Specifies whether to enable full-path cache.-
+                            on: Enable full-path cache (i.e., disable Ignore Query
+                            String).- off: Disable full-path cache (i.e., enable Ignore
+                            Query String). Note: This field may return null, indicating
+                            that no valid value can be obtained. Specifies whether
+                            to enable full-path cache.- `on`: Enable full-path cache
+                            (i.e., disable Ignore Query String).- `off`: Disable full-path
+                            cache (i.e., enable Ignore Query String). Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained.'
+                          type: string
+                        ignoreCase:
+                          description: 'Specifies whether the cache key is case-sensitive.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained. Specifies whether the cache key
+                            is case-sensitive. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
+                          type: string
+                        queryString:
+                          description: 'Request parameter contained in CacheKey. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Request parameter contained in CacheKey.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
+                          items:
+                            properties:
+                              action:
+                                description: '- includeCustom: Include the specified
+                                  query strings.- excludeCustom: Exclude the specified
+                                  query strings. Note: This field may return null,
+                                  indicating that no valid value can be obtained.
+                                  - `includeCustom`: Include the specified query strings.-
+                                  `excludeCustom`: Exclude the specified query strings.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Whether to use QueryString
+                                  as part of CacheKey.- `on`: Enable.- `off`: Disable.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
+                                type: string
+                              value:
+                                description: 'Array of query strings used/excluded.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained. Array of query strings
+                                  used/excluded. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  cachePrefresh:
+                    description: Cache pre-refresh configuration. Cache pre-refresh
+                      configuration.
+                    items:
+                      properties:
+                        percent:
+                          description: 'Percentage of cache time before try to prefresh.
+                            Valid value range: 1-99. Percentage of cache time before
+                            try to prefresh. Valid value range: 1-99.'
+                          type: number
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            cache prefresh.- `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  clientIpHeader:
+                    description: Origin-pull client IP header configuration. Origin-pull
+                      client IP header configuration.
+                    items:
+                      properties:
+                        headerName:
+                          description: 'Name of the origin-pull client IP request
+                            header. Note: This field may return null, indicating that
+                            no valid value can be obtained. Name of the origin-pull
+                            client IP request header. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          type: string
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            client IP header.- `on`: Enable.- `off`: Disable. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: string
+                      type: object
+                    type: array
+                  compression:
+                    description: Smart compression configuration. Smart compression
+                      configuration.
+                    items:
+                      properties:
+                        algorithms:
+                          description: 'Compression algorithms to select. Valid values:
+                            brotli, gzip. Compression algorithms to select. Valid
+                            values: `brotli`, `gzip`.'
+                          items:
+                            type: string
+                          type: array
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable Smart compression.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  forceRedirect:
+                    description: Force HTTPS redirect configuration. Force HTTPS redirect
+                      configuration.
+                    items:
+                      properties:
+                        redirectStatusCode:
+                          description: 'Redirection status code.- 301- 302 Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained. Redirection status code.- 301- 302 Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: number
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable force redirect.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  https:
+                    description: HTTPS acceleration configuration. HTTPS acceleration
+                      configuration.
+                    items:
+                      properties:
+                        hsts:
+                          description: 'HSTS Configuration. Note: This field may return
+                            null, indicating that no valid value can be obtained.
+                            HSTS Configuration. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          items:
+                            properties:
+                              includeSubDomains:
+                                description: 'Specifies whether to include subdomain
+                                  names. Valid values: on and off. Note: This field
+                                  may return null, indicating that no valid value
+                                  can be obtained. Specifies whether to include subdomain
+                                  names. Valid values: `on` and `off`. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained.'
+                                type: string
+                              maxAge:
+                                description: 'Browser cache configuration. MaxAge
+                                  value in seconds, should be no more than 1 day.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
+                                type: number
+                              preload:
+                                description: 'Specifies whether to preload. Valid
+                                  values: on and off. Note: This field may return
+                                  null, indicating that no valid value can be obtained.
+                                  Specifies whether to preload. Valid values: `on`
+                                  and `off`. Note: This field may return null, indicating
+                                  that no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. - `on`: Enable.- `off`:
+                                  Disable.'
+                                type: string
+                            type: object
+                          type: array
+                        http2:
+                          description: 'HTTP2 configuration switch.- on: Enable.-
+                            off: Disable. Note: This field may return null, indicating
+                            that no valid value can be obtained. HTTP2 configuration
+                            switch.- `on`: Enable.- `off`: Disable. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained.'
+                          type: string
+                        ocspStapling:
+                          description: 'OCSP configuration switch.- on: Enable.- off:
+                            Disable.It is disabled by default. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            OCSP configuration switch.- `on`: Enable.- `off`: Disable.It
+                            is disabled by default. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          type: string
+                        tlsVersion:
+                          description: 'TLS version settings. Valid values: TLSv1,
+                            TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions
+                            can be enabled at the same time. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`,
+                            `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can
+                            be enabled at the same time. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  ipv6:
+                    description: IPv6 access configuration. IPv6 access configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. - `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  maxAge:
+                    description: Browser cache configuration. Browser cache configuration.
+                    items:
+                      properties:
+                        followOrigin:
+                          description: 'Follows the origin server configuration. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Specifies whether to follow the max cache
+                            age of the origin server.- `on`: Enable.- `off`: Disable.If
+                            is on, MaxAgeTime is ignored. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          type: string
+                        maxAgeTime:
+                          description: 'Specifies the max age of the cache (in seconds).
+                            The maximum value is 365 days. Note: the value 0 means
+                            not to cache. Note: This field may return null, indicating
+                            that no valid value can be obtained. Specifies the max
+                            age of the cache (in seconds). The maximum value is 365
+                            days. Note: the value 0 means not to cache. Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: number
+                      type: object
+                    type: array
+                  offlineCache:
+                    description: Offline cache configuration. Offline cache configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable offline cache.-
+                            `on`: Enable.- `off`: Disable. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          type: string
+                      type: object
+                    type: array
+                  origin:
+                    description: Origin server configuration. Origin server configuration.
+                    items:
+                      properties:
+                        backupOrigins:
+                          description: 'Backup origin sites list. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained. Backup origin sites list. Note: This field may
+                            return null, indicating that no valid value can be obtained.'
+                          items:
+                            type: string
+                          type: array
+                        cosPrivateAccess:
+                          description: 'Whether access private cos bucket is allowed
+                            when OriginType is cos. Note: This field may return null,
+                            indicating that no valid value can be obtained. Whether
+                            access private cos bucket is allowed when `OriginType`
+                            is cos. Note: This field may return null, indicating that
+                            no valid value can be obtained.'
+                          type: string
+                        originPullProtocol:
+                          description: 'Origin-pull protocol.- http: Switch HTTPS
+                            requests to HTTP.- follow: Follow the protocol of the
+                            request.- https: Switch HTTP requests to HTTPS. This only
+                            supports port 443 on the origin server. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained. Origin-pull protocol.- `http`: Switch HTTPS
+                            requests to HTTP.- `follow`: Follow the protocol of the
+                            request.- `https`: Switch HTTP requests to HTTPS. This
+                            only supports port 443 on the origin server. Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: string
+                        origins:
+                          description: 'Origin sites list. Note: This field may return
+                            null, indicating that no valid value can be obtained.
+                            Origin sites list. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  postMaxSize:
+                    description: Maximum size of files transferred over POST request.
+                      Maximum size of files transferred over POST request.
+                    items:
+                      properties:
+                        maxSize:
+                          description: 'Maximum size. Value range: 1-500 MB. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Maximum size. Value range: 1-500 MB.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
+                          type: number
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            custom setting of the maximum file size.- `on`: Enable.
+                            You can set a custom max size.- `off`: Disable. In this
+                            case, the max size defaults to 32 MB.'
+                          type: string
+                      type: object
+                    type: array
+                  quic:
+                    description: QUIC access configuration. QUIC access configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable QUIC.- `on`:
+                            Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  smartRouting:
+                    description: Smart acceleration configuration. Smart acceleration
+                      configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable smart acceleration.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  upstreamHttp2:
+                    description: HTTP2 origin-pull configuration. HTTP2 origin-pull
+                      configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable HTTP2 origin-pull.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  webSocket:
+                    description: WebSocket configuration. WebSocket configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable custom WebSocket
+                            timeout setting. When is off: it means to keep the default
+                            WebSocket connection timeout period, which is 15 seconds.
+                            To change the timeout period, please set it to on.'
+                          type: string
+                        timeout:
+                          description: 'Sets timeout period in seconds. Maximum value:
+                            120. Sets timeout period in seconds. Maximum value: 120.'
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -691,8 +1211,459 @@ spec:
               atProvider:
                 properties:
                   area:
+                    description: 'Acceleration area of the zone. Valid values: mainland,
+                      overseas. Acceleration area of the zone. Valid values: `mainland`,
+                      `overseas`.'
                     type: string
+                  cache:
+                    description: Cache expiration time configuration. Cache expiration
+                      time configuration.
+                    items:
+                      properties:
+                        cache:
+                          description: 'Cache expiration time configuration. Cache
+                            configuration. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
+                          items:
+                            properties:
+                              cacheTime:
+                                description: 'Cache expiration time settings, Unit:
+                                  second. The maximum value is 365 days. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained. Cache expiration time settings,
+                                  Unit: second. The maximum value is 365 days. Note:
+                                  This field may return null, indicating that no valid
+                                  value can be obtained.'
+                                type: number
+                              ignoreCacheControl:
+                                description: 'Specifies whether to enable force cache.
+                                  Valid values: on: Enable; off: Disable. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained. Specifies whether to enable
+                                  force cache. Valid values: `on`: Enable; `off`:
+                                  Disable. Note: This field may return null, indicating
+                                  that no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Cache configuration switch.
+                                  Valid values: `on`: Enable; `off`: Disable. Note:
+                                  This field may return null, indicating that no valid
+                                  value can be obtained.'
+                                type: string
+                            type: object
+                          type: array
+                        followOrigin:
+                          description: 'Follows the origin server configuration. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Follows the origin server configuration.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
+                          items:
+                            properties:
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Specifies whether to
+                                  follow the origin server configuration.- `on`: Enable.-
+                                  `off`: Disable. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
+                                type: string
+                            type: object
+                          type: array
+                        noCache:
+                          description: 'No-cache configuration. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            No-cache configuration. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          items:
+                            properties:
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Whether to cache the
+                                  configuration. Valid values: `on`: Do not cache;
+                                  `off`: Cache. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  cacheKey:
+                    description: Node cache key configuration. Node cache key configuration.
+                    items:
+                      properties:
+                        fullUrlCache:
+                          description: 'Specifies whether to enable full-path cache.-
+                            on: Enable full-path cache (i.e., disable Ignore Query
+                            String).- off: Disable full-path cache (i.e., enable Ignore
+                            Query String). Note: This field may return null, indicating
+                            that no valid value can be obtained. Specifies whether
+                            to enable full-path cache.- `on`: Enable full-path cache
+                            (i.e., disable Ignore Query String).- `off`: Disable full-path
+                            cache (i.e., enable Ignore Query String). Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained.'
+                          type: string
+                        ignoreCase:
+                          description: 'Specifies whether the cache key is case-sensitive.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained. Specifies whether the cache key
+                            is case-sensitive. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
+                          type: string
+                        queryString:
+                          description: 'Request parameter contained in CacheKey. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Request parameter contained in CacheKey.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
+                          items:
+                            properties:
+                              action:
+                                description: '- includeCustom: Include the specified
+                                  query strings.- excludeCustom: Exclude the specified
+                                  query strings. Note: This field may return null,
+                                  indicating that no valid value can be obtained.
+                                  - `includeCustom`: Include the specified query strings.-
+                                  `excludeCustom`: Exclude the specified query strings.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. Whether to use QueryString
+                                  as part of CacheKey.- `on`: Enable.- `off`: Disable.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
+                                type: string
+                              value:
+                                description: 'Array of query strings used/excluded.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained. Array of query strings
+                                  used/excluded. Note: This field may return null,
+                                  indicating that no valid value can be obtained.'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  cachePrefresh:
+                    description: Cache pre-refresh configuration. Cache pre-refresh
+                      configuration.
+                    items:
+                      properties:
+                        percent:
+                          description: 'Percentage of cache time before try to prefresh.
+                            Valid value range: 1-99. Percentage of cache time before
+                            try to prefresh. Valid value range: 1-99.'
+                          type: number
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            cache prefresh.- `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  clientIpHeader:
+                    description: Origin-pull client IP header configuration. Origin-pull
+                      client IP header configuration.
+                    items:
+                      properties:
+                        headerName:
+                          description: 'Name of the origin-pull client IP request
+                            header. Note: This field may return null, indicating that
+                            no valid value can be obtained. Name of the origin-pull
+                            client IP request header. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          type: string
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            client IP header.- `on`: Enable.- `off`: Disable. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: string
+                      type: object
+                    type: array
+                  compression:
+                    description: Smart compression configuration. Smart compression
+                      configuration.
+                    items:
+                      properties:
+                        algorithms:
+                          description: 'Compression algorithms to select. Valid values:
+                            brotli, gzip. Compression algorithms to select. Valid
+                            values: `brotli`, `gzip`.'
+                          items:
+                            type: string
+                          type: array
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable Smart compression.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  forceRedirect:
+                    description: Force HTTPS redirect configuration. Force HTTPS redirect
+                      configuration.
+                    items:
+                      properties:
+                        redirectStatusCode:
+                          description: 'Redirection status code.- 301- 302 Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained. Redirection status code.- 301- 302 Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: number
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable force redirect.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  https:
+                    description: HTTPS acceleration configuration. HTTPS acceleration
+                      configuration.
+                    items:
+                      properties:
+                        hsts:
+                          description: 'HSTS Configuration. Note: This field may return
+                            null, indicating that no valid value can be obtained.
+                            HSTS Configuration. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          items:
+                            properties:
+                              includeSubDomains:
+                                description: 'Specifies whether to include subdomain
+                                  names. Valid values: on and off. Note: This field
+                                  may return null, indicating that no valid value
+                                  can be obtained. Specifies whether to include subdomain
+                                  names. Valid values: `on` and `off`. Note: This
+                                  field may return null, indicating that no valid
+                                  value can be obtained.'
+                                type: string
+                              maxAge:
+                                description: 'Browser cache configuration. MaxAge
+                                  value in seconds, should be no more than 1 day.
+                                  Note: This field may return null, indicating that
+                                  no valid value can be obtained.'
+                                type: number
+                              preload:
+                                description: 'Specifies whether to preload. Valid
+                                  values: on and off. Note: This field may return
+                                  null, indicating that no valid value can be obtained.
+                                  Specifies whether to preload. Valid values: `on`
+                                  and `off`. Note: This field may return null, indicating
+                                  that no valid value can be obtained.'
+                                type: string
+                              switch:
+                                description: 'Specifies whether to enable cache prefresh.-
+                                  on: Enable.- off: Disable. - `on`: Enable.- `off`:
+                                  Disable.'
+                                type: string
+                            type: object
+                          type: array
+                        http2:
+                          description: 'HTTP2 configuration switch.- on: Enable.-
+                            off: Disable. Note: This field may return null, indicating
+                            that no valid value can be obtained. HTTP2 configuration
+                            switch.- `on`: Enable.- `off`: Disable. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained.'
+                          type: string
+                        ocspStapling:
+                          description: 'OCSP configuration switch.- on: Enable.- off:
+                            Disable.It is disabled by default. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            OCSP configuration switch.- `on`: Enable.- `off`: Disable.It
+                            is disabled by default. Note: This field may return null,
+                            indicating that no valid value can be obtained.'
+                          type: string
+                        tlsVersion:
+                          description: 'TLS version settings. Valid values: TLSv1,
+                            TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions
+                            can be enabled at the same time. Note: This field may
+                            return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`,
+                            `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can
+                            be enabled at the same time. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
                   id:
+                    description: ID of the resource.
+                    type: string
+                  ipv6:
+                    description: IPv6 access configuration. IPv6 access configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. - `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  maxAge:
+                    description: Browser cache configuration. Browser cache configuration.
+                    items:
+                      properties:
+                        followOrigin:
+                          description: 'Follows the origin server configuration. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Specifies whether to follow the max cache
+                            age of the origin server.- `on`: Enable.- `off`: Disable.If
+                            is on, MaxAgeTime is ignored. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          type: string
+                        maxAgeTime:
+                          description: 'Specifies the max age of the cache (in seconds).
+                            The maximum value is 365 days. Note: the value 0 means
+                            not to cache. Note: This field may return null, indicating
+                            that no valid value can be obtained. Specifies the max
+                            age of the cache (in seconds). The maximum value is 365
+                            days. Note: the value 0 means not to cache. Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: number
+                      type: object
+                    type: array
+                  offlineCache:
+                    description: Offline cache configuration. Offline cache configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable offline cache.-
+                            `on`: Enable.- `off`: Disable. Note: This field may return
+                            null, indicating that no valid value can be obtained.'
+                          type: string
+                      type: object
+                    type: array
+                  origin:
+                    description: Origin server configuration. Origin server configuration.
+                    items:
+                      properties:
+                        backupOrigins:
+                          description: 'Backup origin sites list. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained. Backup origin sites list. Note: This field may
+                            return null, indicating that no valid value can be obtained.'
+                          items:
+                            type: string
+                          type: array
+                        cosPrivateAccess:
+                          description: 'Whether access private cos bucket is allowed
+                            when OriginType is cos. Note: This field may return null,
+                            indicating that no valid value can be obtained. Whether
+                            access private cos bucket is allowed when `OriginType`
+                            is cos. Note: This field may return null, indicating that
+                            no valid value can be obtained.'
+                          type: string
+                        originPullProtocol:
+                          description: 'Origin-pull protocol.- http: Switch HTTPS
+                            requests to HTTP.- follow: Follow the protocol of the
+                            request.- https: Switch HTTP requests to HTTPS. This only
+                            supports port 443 on the origin server. Note: This field
+                            may return null, indicating that no valid value can be
+                            obtained. Origin-pull protocol.- `http`: Switch HTTPS
+                            requests to HTTP.- `follow`: Follow the protocol of the
+                            request.- `https`: Switch HTTP requests to HTTPS. This
+                            only supports port 443 on the origin server. Note: This
+                            field may return null, indicating that no valid value
+                            can be obtained.'
+                          type: string
+                        origins:
+                          description: 'Origin sites list. Note: This field may return
+                            null, indicating that no valid value can be obtained.
+                            Origin sites list. Note: This field may return null, indicating
+                            that no valid value can be obtained.'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  postMaxSize:
+                    description: Maximum size of files transferred over POST request.
+                      Maximum size of files transferred over POST request.
+                    items:
+                      properties:
+                        maxSize:
+                          description: 'Maximum size. Value range: 1-500 MB. Note:
+                            This field may return null, indicating that no valid value
+                            can be obtained. Maximum size. Value range: 1-500 MB.
+                            Note: This field may return null, indicating that no valid
+                            value can be obtained.'
+                          type: number
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Specifies whether to enable
+                            custom setting of the maximum file size.- `on`: Enable.
+                            You can set a custom max size.- `off`: Disable. In this
+                            case, the max size defaults to 32 MB.'
+                          type: string
+                      type: object
+                    type: array
+                  quic:
+                    description: QUIC access configuration. QUIC access configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable QUIC.- `on`:
+                            Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  smartRouting:
+                    description: Smart acceleration configuration. Smart acceleration
+                      configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable smart acceleration.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  upstreamHttp2:
+                    description: HTTP2 origin-pull configuration. HTTP2 origin-pull
+                      configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable HTTP2 origin-pull.-
+                            `on`: Enable.- `off`: Disable.'
+                          type: string
+                      type: object
+                    type: array
+                  webSocket:
+                    description: WebSocket configuration. WebSocket configuration.
+                    items:
+                      properties:
+                        switch:
+                          description: 'Specifies whether to enable cache prefresh.-
+                            on: Enable.- off: Disable. Whether to enable custom WebSocket
+                            timeout setting. When is off: it means to keep the default
+                            WebSocket connection timeout period, which is 15 seconds.
+                            To change the timeout period, please set it to on.'
+                          type: string
+                        timeout:
+                          description: 'Sets timeout period in seconds. Maximum value:
+                            120. Sets timeout period in seconds. Maximum value: 120.'
+                          type: number
+                      type: object
+                    type: array
+                  zoneId:
+                    description: Site ID. Site ID.
                     type: string
                 type: object
               conditions:
@@ -728,6 +1699,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -736,9 +1710,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

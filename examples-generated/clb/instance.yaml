@@ -1,0 +1,21 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: internal_clb
+  name: internal-clb
+spec:
+  forProvider:
+    clbName: myclb
+    networkType: INTERNAL
+    projectId: 0
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tags:
+      test: tf
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -1,0 +1,23 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: Workload
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/workload
+  labels:
+    testing.upbound.io/example-name: workload
+  name: workload
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuSpec: 1
+    deployMode: IMAGE
+    deployVersion: hello-world
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    imgRepo: tem_demo/tem_demo
+    initPodNum: 1
+    memorySpec: 1
+    repoServer: ccr.ccs.tencentyun.com

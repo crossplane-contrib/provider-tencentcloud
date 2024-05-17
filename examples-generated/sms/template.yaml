@@ -1,0 +1,15 @@
+apiVersion: sms.tencentcloud.crossplane.io/v1alpha1
+kind: Template
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sms/v1alpha1/template
+  labels:
+    testing.upbound.io/example-name: template
+  name: template
+spec:
+  forProvider:
+    international: 0
+    remark: terraform example
+    smsType: 0
+    templateContent: example for sms template
+    templateName: tf_example_sms_template

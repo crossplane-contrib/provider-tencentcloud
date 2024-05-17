@@ -1,0 +1,57 @@
+apiVersion: sqlserver.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.4.name}
+    chargeType: POSTPAID_BY_HOUR
+    memory: 16
+    name: tf-example
+    projectId: 0
+    storage: 100
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.4.name}
+    cidrBlock: 10.0.0.0/16
+    isMulticast: false
+    name: subnet-example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

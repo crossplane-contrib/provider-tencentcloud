@@ -1,0 +1,14 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: UserPolicyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/userpolicyattachment
+  labels:
+    testing.upbound.io/example-name: user_policy_attachment_basic
+  name: user-policy-attachment-basic
+spec:
+  forProvider:
+    policyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: policy_basic
+    userName: ${data.tencentcloud_cam_users.users.user_list.0.user_id}

@@ -1,0 +1,14 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: LB
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/lb
+  labels:
+    testing.upbound.io/example-name: classic
+  name: classic
+spec:
+  forProvider:
+    forward: APPLICATION
+    name: tf-test-classic
+    projectId: 0
+    type: OPEN

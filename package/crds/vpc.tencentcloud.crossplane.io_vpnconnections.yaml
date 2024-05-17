@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: vpnconnections.vpc.tencentcloud.crossplane.io
 spec:
   group: vpc.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: VPNConnection
     listKind: VPNConnectionList
     plural: vpnconnections
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: VPNConnection is the Schema for the VPNConnections API
+        description: VPNConnection is the Schema for the VPNConnections API. Provides
+          a resource to create a VPN connection.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,10 +68,10 @@ spec:
               forProvider:
                 properties:
                   customerGatewayId:
-                    description: ID of the customer gateway.
+                    description: ID of the customer gateway. ID of the customer gateway.
                     type: string
                   customerGatewayIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a VPNCustomerGateway to populate customerGatewayId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -101,7 +105,7 @@ spec:
                     - name
                     type: object
                   customerGatewayIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a VPNCustomerGateway to populate customerGatewayId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -142,139 +146,196 @@ spec:
                   dpdAction:
                     description: 'The action after DPD timeout. Valid values: clear
                       (disconnect) and restart (try again). It is valid when DpdEnable
-                      is 1.'
+                      is 1. The action after DPD timeout. Valid values: clear (disconnect)
+                      and restart (try again). It is valid when DpdEnable is 1.'
                     type: string
                   dpdEnable:
                     description: 'Specifies whether to enable DPD. Valid values: 0
-                      (disable) and 1 (enable).'
+                      (disable) and 1 (enable). Specifies whether to enable DPD. Valid
+                      values: 0 (disable) and 1 (enable).'
                     type: number
                   dpdTimeout:
                     description: 'DPD timeout period.Valid value ranges: [30~60],
                       Default: 30; unit: second. If the request is not responded within
                       this period, the peer end is considered not exists. This parameter
-                      is valid when the value of DpdEnable is 1.'
+                      is valid when the value of DpdEnable is 1. DPD timeout period.Valid
+                      value ranges: [30~60], Default: 30; unit: second. If the request
+                      is not responded within this period, the peer end is considered
+                      not exists. This parameter is valid when the value of DpdEnable
+                      is 1.'
                     type: number
                   enableHealthCheck:
                     description: Whether intra-tunnel health checks are supported.
+                      Whether intra-tunnel health checks are supported.
                     type: boolean
                   healthCheckLocalIp:
-                    description: Health check the address of this terminal.
+                    description: Health check the address of this terminal. Health
+                      check the address of this terminal.
                     type: string
                   healthCheckRemoteIp:
-                    description: Health check peer address.
+                    description: Health check peer address. Health check peer address.
                     type: string
                   ikeDhGroupName:
                     description: 'DH group name of the IKE operation specification.
+                      Valid values: GROUP1, GROUP2, GROUP5, GROUP14, GROUP24. Default
+                      value is GROUP1. DH group name of the IKE operation specification.
                       Valid values: `GROUP1`, `GROUP2`, `GROUP5`, `GROUP14`, `GROUP24`.
                       Default value is `GROUP1`.'
                     type: string
                   ikeExchangeMode:
                     description: 'Exchange mode of the IKE operation specification.
-                      Valid values: `AGGRESSIVE`, `MAIN`. Default value is `MAIN`.'
+                      Valid values: AGGRESSIVE, MAIN. Default value is MAIN. Exchange
+                      mode of the IKE operation specification. Valid values: `AGGRESSIVE`,
+                      `MAIN`. Default value is `MAIN`.'
                     type: string
                   ikeLocalAddress:
                     description: Local address of IKE operation specification, valid
-                      when ike_local_identity is `ADDRESS`, generally the value is
-                      `public_ip_address` of the related VPN gateway.
+                      when ike_local_identity is ADDRESS, generally the value is public_ip_address
+                      of the related VPN gateway. Local address of IKE operation specification,
+                      valid when ike_local_identity is `ADDRESS`, generally the value
+                      is `public_ip_address` of the related VPN gateway.
                     type: string
                   ikeLocalFqdnName:
                     description: Local FQDN name of the IKE operation specification.
+                      Local FQDN name of the IKE operation specification.
                     type: string
                   ikeLocalIdentity:
                     description: 'Local identity way of IKE operation specification.
-                      Valid values: `ADDRESS`, `FQDN`. Default value is `ADDRESS`.'
+                      Valid values: ADDRESS, FQDN. Default value is ADDRESS. Local
+                      identity way of IKE operation specification. Valid values: `ADDRESS`,
+                      `FQDN`. Default value is `ADDRESS`.'
                     type: string
                   ikeProtoAuthenAlgorithm:
                     description: 'Proto authenticate algorithm of the IKE operation
-                      specification. Valid values: `MD5`, `SHA`, `SHA-256`. Default
-                      Value is `MD5`.'
+                      specification. Valid values: MD5, SHA, SHA-256. Default Value
+                      is MD5. Proto authenticate algorithm of the IKE operation specification.
+                      Valid values: `MD5`, `SHA`, `SHA-256`. Default Value is `MD5`.'
                     type: string
                   ikeProtoEncryAlgorithm:
                     description: 'Proto encrypt algorithm of the IKE operation specification.
-                      Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
+                      Valid values: 3DES-CBC, AES-CBC-128, AES-CBC-192, AES-CBC-256,
+                      DES-CBC, SM4, AES128GCM128, AES192GCM128, AES256GCM128,AES128GCM128,
+                      AES192GCM128, AES256GCM128. Default value is 3DES-CBC. Proto
+                      encrypt algorithm of the IKE operation specification. Valid
+                      values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
                       `DES-CBC`, `SM4`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`,`AES128GCM128`,
                       `AES192GCM128`, `AES256GCM128`. Default value is `3DES-CBC`.'
                     type: string
                   ikeRemoteAddress:
                     description: Remote address of IKE operation specification, valid
-                      when ike_remote_identity is `ADDRESS`, generally the value is
-                      `public_ip_address` of the related customer gateway.
+                      when ike_remote_identity is ADDRESS, generally the value is
+                      public_ip_address of the related customer gateway. Remote address
+                      of IKE operation specification, valid when ike_remote_identity
+                      is `ADDRESS`, generally the value is `public_ip_address` of
+                      the related customer gateway.
                     type: string
                   ikeRemoteFqdnName:
                     description: Remote FQDN name of the IKE operation specification.
+                      Remote FQDN name of the IKE operation specification.
                     type: string
                   ikeRemoteIdentity:
                     description: 'Remote identity way of IKE operation specification.
-                      Valid values: `ADDRESS`, `FQDN`. Default value is `ADDRESS`.'
+                      Valid values: ADDRESS, FQDN. Default value is ADDRESS. Remote
+                      identity way of IKE operation specification. Valid values: `ADDRESS`,
+                      `FQDN`. Default value is `ADDRESS`.'
                     type: string
                   ikeSaLifetimeSeconds:
                     description: SA lifetime of the IKE operation specification, unit
-                      is `second`. The value ranges from 60 to 604800. Default value
-                      is 86400 seconds.
+                      is second. The value ranges from 60 to 604800. Default value
+                      is 86400 seconds. SA lifetime of the IKE operation specification,
+                      unit is `second`. The value ranges from 60 to 604800. Default
+                      value is 86400 seconds.
                     type: number
                   ikeVersion:
                     description: 'Version of the IKE operation specification, values:
-                      `IKEV1`, `IKEV2`. Default value is `IKEV1`.'
+                      IKEV1, IKEV2. Default value is IKEV1. Version of the IKE operation
+                      specification, values: `IKEV1`, `IKEV2`. Default value is `IKEV1`.'
                     type: string
                   ipsecEncryptAlgorithm:
                     description: 'Encrypt algorithm of the IPSEC operation specification.
-                      Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
-                      `DES-CBC`, `SM4`, `NULL`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`.
-                      Default value is `3DES-CBC`.'
+                      Valid values: 3DES-CBC, AES-CBC-128, AES-CBC-192, AES-CBC-256,
+                      DES-CBC, SM4, NULL, AES128GCM128, AES192GCM128, AES256GCM128.
+                      Default value is 3DES-CBC. Encrypt algorithm of the IPSEC operation
+                      specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`,
+                      `AES-CBC-256`, `DES-CBC`, `SM4`, `NULL`, `AES128GCM128`, `AES192GCM128`,
+                      `AES256GCM128`. Default value is `3DES-CBC`.'
                     type: string
                   ipsecIntegrityAlgorithm:
                     description: 'Integrity algorithm of the IPSEC operation specification.
-                      Valid values: `SHA1`, `MD5`, `SHA-256`. Default value is `MD5`.'
+                      Valid values: SHA1, MD5, SHA-256. Default value is MD5. Integrity
+                      algorithm of the IPSEC operation specification. Valid values:
+                      `SHA1`, `MD5`, `SHA-256`. Default value is `MD5`.'
                     type: string
                   ipsecPfsDhGroup:
-                    description: 'PFS DH group. Valid value: `GROUP1`, `GROUP2`, `GROUP5`,
-                      `GROUP14`, `GROUP24`, `NULL`. Default value is `NULL`.'
+                    description: 'PFS DH group. Valid value: DH-GROUP1, DH-GROUP2,
+                      DH-GROUP5, DH-GROUP14, DH-GROUP24, NULL. Default value is NULL.
+                      PFS DH group. Valid value: `DH-GROUP1`, `DH-GROUP2`, `DH-GROUP5`,
+                      `DH-GROUP14`, `DH-GROUP24`, `NULL`. Default value is `NULL`.'
                     type: string
                   ipsecSaLifetimeSeconds:
                     description: 'SA lifetime of the IPSEC operation specification,
+                      unit is second. Valid value ranges: [180~604800]. Default value
+                      is 3600 seconds. SA lifetime of the IPSEC operation specification,
                       unit is second. Valid value ranges: [180~604800]. Default value
                       is 3600 seconds.'
                     type: number
                   ipsecSaLifetimeTraffic:
                     description: SA lifetime of the IPSEC operation specification,
                       unit is KB. The value should not be less then 2560. Default
+                      value is 1843200. SA lifetime of the IPSEC operation specification,
+                      unit is KB. The value should not be less then 2560. Default
                       value is 1843200.
                     type: number
                   name:
                     description: Name of the VPN connection. The length of character
-                      is limited to 1-60.
+                      is limited to 1-60. Name of the VPN connection. The length of
+                      character is limited to 1-60.
                     type: string
                   preShareKey:
-                    description: Pre-shared key of the VPN connection.
+                    description: Pre-shared key of the VPN connection. Pre-shared
+                      key of the VPN connection.
+                    type: string
+                  routeType:
+                    description: 'Route type of the VPN connection. Valid value: STATIC,
+                      StaticRoute, Policy. Route type of the VPN connection. Valid
+                      value: `STATIC`, `StaticRoute`, `Policy`.'
                     type: string
                   securityGroupPolicy:
-                    description: Security group policy of the VPN connection.
+                    description: 'SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]},
+                      10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16
+                      is the IDC network segment. Users specify which network segments
+                      in the VPC can communicate with which network segments in your
+                      IDC. SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]},
+                      10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16
+                      is the IDC network segment. Users specify which network segments
+                      in the VPC can communicate with which network segments in your
+                      IDC.'
                     items:
                       properties:
                         localCidrBlock:
-                          description: Local cidr block.
+                          description: Local cidr block. Local cidr block.
                           type: string
                         remoteCidrBlock:
-                          description: Remote cidr block list.
+                          description: Remote cidr block list. Remote cidr block list.
                           items:
                             type: string
                           type: array
-                      required:
-                      - localCidrBlock
-                      - remoteCidrBlock
                       type: object
                     type: array
                   tags:
                     additionalProperties:
                       type: string
                     description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
                     type: object
                   vpcId:
                     description: ID of the VPC. Required if vpn gateway is not in
-                      `CCN` type, and doesn't make sense for `CCN` vpn gateway.
+                      CCN type, and doesn't make sense for CCN vpn gateway. ID of
+                      the VPC. Required if vpn gateway is not in `CCN` type, and doesn't
+                      make sense for `CCN` vpn gateway.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -307,8 +368,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -347,10 +408,10 @@ spec:
                         type: object
                     type: object
                   vpnGatewayId:
-                    description: ID of the VPN gateway.
+                    description: ID of the VPN gateway. ID of the VPN gateway.
                     type: string
                   vpnGatewayIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a VPNGateway to populate vpnGatewayId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -384,7 +445,7 @@ spec:
                     - name
                     type: object
                   vpnGatewayIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a VPNGateway to populate vpnGatewayId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -422,53 +483,236 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - name
-                - preShareKey
-                - securityGroupPolicy
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  dpdAction:
+                    description: 'The action after DPD timeout. Valid values: clear
+                      (disconnect) and restart (try again). It is valid when DpdEnable
+                      is 1. The action after DPD timeout. Valid values: clear (disconnect)
+                      and restart (try again). It is valid when DpdEnable is 1.'
+                    type: string
+                  dpdEnable:
+                    description: 'Specifies whether to enable DPD. Valid values: 0
+                      (disable) and 1 (enable). Specifies whether to enable DPD. Valid
+                      values: 0 (disable) and 1 (enable).'
+                    type: number
+                  dpdTimeout:
+                    description: 'DPD timeout period.Valid value ranges: [30~60],
+                      Default: 30; unit: second. If the request is not responded within
+                      this period, the peer end is considered not exists. This parameter
+                      is valid when the value of DpdEnable is 1. DPD timeout period.Valid
+                      value ranges: [30~60], Default: 30; unit: second. If the request
+                      is not responded within this period, the peer end is considered
+                      not exists. This parameter is valid when the value of DpdEnable
+                      is 1.'
+                    type: number
+                  enableHealthCheck:
+                    description: Whether intra-tunnel health checks are supported.
+                      Whether intra-tunnel health checks are supported.
+                    type: boolean
+                  healthCheckLocalIp:
+                    description: Health check the address of this terminal. Health
+                      check the address of this terminal.
+                    type: string
+                  healthCheckRemoteIp:
+                    description: Health check peer address. Health check peer address.
+                    type: string
+                  ikeDhGroupName:
+                    description: 'DH group name of the IKE operation specification.
+                      Valid values: GROUP1, GROUP2, GROUP5, GROUP14, GROUP24. Default
+                      value is GROUP1. DH group name of the IKE operation specification.
+                      Valid values: `GROUP1`, `GROUP2`, `GROUP5`, `GROUP14`, `GROUP24`.
+                      Default value is `GROUP1`.'
+                    type: string
+                  ikeExchangeMode:
+                    description: 'Exchange mode of the IKE operation specification.
+                      Valid values: AGGRESSIVE, MAIN. Default value is MAIN. Exchange
+                      mode of the IKE operation specification. Valid values: `AGGRESSIVE`,
+                      `MAIN`. Default value is `MAIN`.'
+                    type: string
+                  ikeLocalAddress:
+                    description: Local address of IKE operation specification, valid
+                      when ike_local_identity is ADDRESS, generally the value is public_ip_address
+                      of the related VPN gateway. Local address of IKE operation specification,
+                      valid when ike_local_identity is `ADDRESS`, generally the value
+                      is `public_ip_address` of the related VPN gateway.
+                    type: string
+                  ikeLocalFqdnName:
+                    description: Local FQDN name of the IKE operation specification.
+                      Local FQDN name of the IKE operation specification.
+                    type: string
+                  ikeLocalIdentity:
+                    description: 'Local identity way of IKE operation specification.
+                      Valid values: ADDRESS, FQDN. Default value is ADDRESS. Local
+                      identity way of IKE operation specification. Valid values: `ADDRESS`,
+                      `FQDN`. Default value is `ADDRESS`.'
+                    type: string
+                  ikeProtoAuthenAlgorithm:
+                    description: 'Proto authenticate algorithm of the IKE operation
+                      specification. Valid values: MD5, SHA, SHA-256. Default Value
+                      is MD5. Proto authenticate algorithm of the IKE operation specification.
+                      Valid values: `MD5`, `SHA`, `SHA-256`. Default Value is `MD5`.'
+                    type: string
+                  ikeProtoEncryAlgorithm:
+                    description: 'Proto encrypt algorithm of the IKE operation specification.
+                      Valid values: 3DES-CBC, AES-CBC-128, AES-CBC-192, AES-CBC-256,
+                      DES-CBC, SM4, AES128GCM128, AES192GCM128, AES256GCM128,AES128GCM128,
+                      AES192GCM128, AES256GCM128. Default value is 3DES-CBC. Proto
+                      encrypt algorithm of the IKE operation specification. Valid
+                      values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
+                      `DES-CBC`, `SM4`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`,`AES128GCM128`,
+                      `AES192GCM128`, `AES256GCM128`. Default value is `3DES-CBC`.'
+                    type: string
+                  ikeRemoteAddress:
+                    description: Remote address of IKE operation specification, valid
+                      when ike_remote_identity is ADDRESS, generally the value is
+                      public_ip_address of the related customer gateway. Remote address
+                      of IKE operation specification, valid when ike_remote_identity
+                      is `ADDRESS`, generally the value is `public_ip_address` of
+                      the related customer gateway.
+                    type: string
+                  ikeRemoteFqdnName:
+                    description: Remote FQDN name of the IKE operation specification.
+                      Remote FQDN name of the IKE operation specification.
+                    type: string
+                  ikeRemoteIdentity:
+                    description: 'Remote identity way of IKE operation specification.
+                      Valid values: ADDRESS, FQDN. Default value is ADDRESS. Remote
+                      identity way of IKE operation specification. Valid values: `ADDRESS`,
+                      `FQDN`. Default value is `ADDRESS`.'
+                    type: string
+                  ikeSaLifetimeSeconds:
+                    description: SA lifetime of the IKE operation specification, unit
+                      is second. The value ranges from 60 to 604800. Default value
+                      is 86400 seconds. SA lifetime of the IKE operation specification,
+                      unit is `second`. The value ranges from 60 to 604800. Default
+                      value is 86400 seconds.
+                    type: number
+                  ikeVersion:
+                    description: 'Version of the IKE operation specification, values:
+                      IKEV1, IKEV2. Default value is IKEV1. Version of the IKE operation
+                      specification, values: `IKEV1`, `IKEV2`. Default value is `IKEV1`.'
+                    type: string
+                  ipsecEncryptAlgorithm:
+                    description: 'Encrypt algorithm of the IPSEC operation specification.
+                      Valid values: 3DES-CBC, AES-CBC-128, AES-CBC-192, AES-CBC-256,
+                      DES-CBC, SM4, NULL, AES128GCM128, AES192GCM128, AES256GCM128.
+                      Default value is 3DES-CBC. Encrypt algorithm of the IPSEC operation
+                      specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`,
+                      `AES-CBC-256`, `DES-CBC`, `SM4`, `NULL`, `AES128GCM128`, `AES192GCM128`,
+                      `AES256GCM128`. Default value is `3DES-CBC`.'
+                    type: string
+                  ipsecIntegrityAlgorithm:
+                    description: 'Integrity algorithm of the IPSEC operation specification.
+                      Valid values: SHA1, MD5, SHA-256. Default value is MD5. Integrity
+                      algorithm of the IPSEC operation specification. Valid values:
+                      `SHA1`, `MD5`, `SHA-256`. Default value is `MD5`.'
+                    type: string
+                  ipsecPfsDhGroup:
+                    description: 'PFS DH group. Valid value: DH-GROUP1, DH-GROUP2,
+                      DH-GROUP5, DH-GROUP14, DH-GROUP24, NULL. Default value is NULL.
+                      PFS DH group. Valid value: `DH-GROUP1`, `DH-GROUP2`, `DH-GROUP5`,
+                      `DH-GROUP14`, `DH-GROUP24`, `NULL`. Default value is `NULL`.'
+                    type: string
+                  ipsecSaLifetimeSeconds:
+                    description: 'SA lifetime of the IPSEC operation specification,
+                      unit is second. Valid value ranges: [180~604800]. Default value
+                      is 3600 seconds. SA lifetime of the IPSEC operation specification,
+                      unit is second. Valid value ranges: [180~604800]. Default value
+                      is 3600 seconds.'
+                    type: number
+                  ipsecSaLifetimeTraffic:
+                    description: SA lifetime of the IPSEC operation specification,
+                      unit is KB. The value should not be less then 2560. Default
+                      value is 1843200. SA lifetime of the IPSEC operation specification,
+                      unit is KB. The value should not be less then 2560. Default
+                      value is 1843200.
+                    type: number
+                  name:
+                    description: Name of the VPN connection. The length of character
+                      is limited to 1-60. Name of the VPN connection. The length of
+                      character is limited to 1-60.
+                    type: string
+                  preShareKey:
+                    description: Pre-shared key of the VPN connection. Pre-shared
+                      key of the VPN connection.
+                    type: string
+                  routeType:
+                    description: 'Route type of the VPN connection. Valid value: STATIC,
+                      StaticRoute, Policy. Route type of the VPN connection. Valid
+                      value: `STATIC`, `StaticRoute`, `Policy`.'
+                    type: string
+                  securityGroupPolicy:
+                    description: 'SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]},
+                      10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16
+                      is the IDC network segment. Users specify which network segments
+                      in the VPC can communicate with which network segments in your
+                      IDC. SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]},
+                      10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16
+                      is the IDC network segment. Users specify which network segments
+                      in the VPC can communicate with which network segments in your
+                      IDC.'
+                    items:
+                      properties:
+                        localCidrBlock:
+                          description: Local cidr block. Local cidr block.
+                          type: string
+                        remoteCidrBlock:
+                          description: Remote cidr block list. Remote cidr block list.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -598,26 +842,248 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.preShareKey is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.preShareKey)
+                || (has(self.initProvider) && has(self.initProvider.preShareKey))'
           status:
             description: VPNConnectionStatus defines the observed state of VPNConnection.
             properties:
               atProvider:
                 properties:
                   createTime:
+                    description: Create time of the VPN connection. Create time of
+                      the VPN connection.
                     type: string
+                  customerGatewayId:
+                    description: ID of the customer gateway. ID of the customer gateway.
+                    type: string
+                  dpdAction:
+                    description: 'The action after DPD timeout. Valid values: clear
+                      (disconnect) and restart (try again). It is valid when DpdEnable
+                      is 1. The action after DPD timeout. Valid values: clear (disconnect)
+                      and restart (try again). It is valid when DpdEnable is 1.'
+                    type: string
+                  dpdEnable:
+                    description: 'Specifies whether to enable DPD. Valid values: 0
+                      (disable) and 1 (enable). Specifies whether to enable DPD. Valid
+                      values: 0 (disable) and 1 (enable).'
+                    type: number
+                  dpdTimeout:
+                    description: 'DPD timeout period.Valid value ranges: [30~60],
+                      Default: 30; unit: second. If the request is not responded within
+                      this period, the peer end is considered not exists. This parameter
+                      is valid when the value of DpdEnable is 1. DPD timeout period.Valid
+                      value ranges: [30~60], Default: 30; unit: second. If the request
+                      is not responded within this period, the peer end is considered
+                      not exists. This parameter is valid when the value of DpdEnable
+                      is 1.'
+                    type: number
+                  enableHealthCheck:
+                    description: Whether intra-tunnel health checks are supported.
+                      Whether intra-tunnel health checks are supported.
+                    type: boolean
                   encryptProto:
+                    description: Encrypt proto of the VPN connection. Encrypt proto
+                      of the VPN connection.
+                    type: string
+                  healthCheckLocalIp:
+                    description: Health check the address of this terminal. Health
+                      check the address of this terminal.
+                    type: string
+                  healthCheckRemoteIp:
+                    description: Health check peer address. Health check peer address.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
+                  ikeDhGroupName:
+                    description: 'DH group name of the IKE operation specification.
+                      Valid values: GROUP1, GROUP2, GROUP5, GROUP14, GROUP24. Default
+                      value is GROUP1. DH group name of the IKE operation specification.
+                      Valid values: `GROUP1`, `GROUP2`, `GROUP5`, `GROUP14`, `GROUP24`.
+                      Default value is `GROUP1`.'
+                    type: string
+                  ikeExchangeMode:
+                    description: 'Exchange mode of the IKE operation specification.
+                      Valid values: AGGRESSIVE, MAIN. Default value is MAIN. Exchange
+                      mode of the IKE operation specification. Valid values: `AGGRESSIVE`,
+                      `MAIN`. Default value is `MAIN`.'
+                    type: string
+                  ikeLocalAddress:
+                    description: Local address of IKE operation specification, valid
+                      when ike_local_identity is ADDRESS, generally the value is public_ip_address
+                      of the related VPN gateway. Local address of IKE operation specification,
+                      valid when ike_local_identity is `ADDRESS`, generally the value
+                      is `public_ip_address` of the related VPN gateway.
+                    type: string
+                  ikeLocalFqdnName:
+                    description: Local FQDN name of the IKE operation specification.
+                      Local FQDN name of the IKE operation specification.
+                    type: string
+                  ikeLocalIdentity:
+                    description: 'Local identity way of IKE operation specification.
+                      Valid values: ADDRESS, FQDN. Default value is ADDRESS. Local
+                      identity way of IKE operation specification. Valid values: `ADDRESS`,
+                      `FQDN`. Default value is `ADDRESS`.'
+                    type: string
+                  ikeProtoAuthenAlgorithm:
+                    description: 'Proto authenticate algorithm of the IKE operation
+                      specification. Valid values: MD5, SHA, SHA-256. Default Value
+                      is MD5. Proto authenticate algorithm of the IKE operation specification.
+                      Valid values: `MD5`, `SHA`, `SHA-256`. Default Value is `MD5`.'
+                    type: string
+                  ikeProtoEncryAlgorithm:
+                    description: 'Proto encrypt algorithm of the IKE operation specification.
+                      Valid values: 3DES-CBC, AES-CBC-128, AES-CBC-192, AES-CBC-256,
+                      DES-CBC, SM4, AES128GCM128, AES192GCM128, AES256GCM128,AES128GCM128,
+                      AES192GCM128, AES256GCM128. Default value is 3DES-CBC. Proto
+                      encrypt algorithm of the IKE operation specification. Valid
+                      values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`, `AES-CBC-256`,
+                      `DES-CBC`, `SM4`, `AES128GCM128`, `AES192GCM128`, `AES256GCM128`,`AES128GCM128`,
+                      `AES192GCM128`, `AES256GCM128`. Default value is `3DES-CBC`.'
+                    type: string
+                  ikeRemoteAddress:
+                    description: Remote address of IKE operation specification, valid
+                      when ike_remote_identity is ADDRESS, generally the value is
+                      public_ip_address of the related customer gateway. Remote address
+                      of IKE operation specification, valid when ike_remote_identity
+                      is `ADDRESS`, generally the value is `public_ip_address` of
+                      the related customer gateway.
+                    type: string
+                  ikeRemoteFqdnName:
+                    description: Remote FQDN name of the IKE operation specification.
+                      Remote FQDN name of the IKE operation specification.
+                    type: string
+                  ikeRemoteIdentity:
+                    description: 'Remote identity way of IKE operation specification.
+                      Valid values: ADDRESS, FQDN. Default value is ADDRESS. Remote
+                      identity way of IKE operation specification. Valid values: `ADDRESS`,
+                      `FQDN`. Default value is `ADDRESS`.'
+                    type: string
+                  ikeSaLifetimeSeconds:
+                    description: SA lifetime of the IKE operation specification, unit
+                      is second. The value ranges from 60 to 604800. Default value
+                      is 86400 seconds. SA lifetime of the IKE operation specification,
+                      unit is `second`. The value ranges from 60 to 604800. Default
+                      value is 86400 seconds.
+                    type: number
+                  ikeVersion:
+                    description: 'Version of the IKE operation specification, values:
+                      IKEV1, IKEV2. Default value is IKEV1. Version of the IKE operation
+                      specification, values: `IKEV1`, `IKEV2`. Default value is `IKEV1`.'
+                    type: string
+                  ipsecEncryptAlgorithm:
+                    description: 'Encrypt algorithm of the IPSEC operation specification.
+                      Valid values: 3DES-CBC, AES-CBC-128, AES-CBC-192, AES-CBC-256,
+                      DES-CBC, SM4, NULL, AES128GCM128, AES192GCM128, AES256GCM128.
+                      Default value is 3DES-CBC. Encrypt algorithm of the IPSEC operation
+                      specification. Valid values: `3DES-CBC`, `AES-CBC-128`, `AES-CBC-192`,
+                      `AES-CBC-256`, `DES-CBC`, `SM4`, `NULL`, `AES128GCM128`, `AES192GCM128`,
+                      `AES256GCM128`. Default value is `3DES-CBC`.'
+                    type: string
+                  ipsecIntegrityAlgorithm:
+                    description: 'Integrity algorithm of the IPSEC operation specification.
+                      Valid values: SHA1, MD5, SHA-256. Default value is MD5. Integrity
+                      algorithm of the IPSEC operation specification. Valid values:
+                      `SHA1`, `MD5`, `SHA-256`. Default value is `MD5`.'
+                    type: string
+                  ipsecPfsDhGroup:
+                    description: 'PFS DH group. Valid value: DH-GROUP1, DH-GROUP2,
+                      DH-GROUP5, DH-GROUP14, DH-GROUP24, NULL. Default value is NULL.
+                      PFS DH group. Valid value: `DH-GROUP1`, `DH-GROUP2`, `DH-GROUP5`,
+                      `DH-GROUP14`, `DH-GROUP24`, `NULL`. Default value is `NULL`.'
+                    type: string
+                  ipsecSaLifetimeSeconds:
+                    description: 'SA lifetime of the IPSEC operation specification,
+                      unit is second. Valid value ranges: [180~604800]. Default value
+                      is 3600 seconds. SA lifetime of the IPSEC operation specification,
+                      unit is second. Valid value ranges: [180~604800]. Default value
+                      is 3600 seconds.'
+                    type: number
+                  ipsecSaLifetimeTraffic:
+                    description: SA lifetime of the IPSEC operation specification,
+                      unit is KB. The value should not be less then 2560. Default
+                      value is 1843200. SA lifetime of the IPSEC operation specification,
+                      unit is KB. The value should not be less then 2560. Default
+                      value is 1843200.
+                    type: number
                   isCcnType:
+                    description: Indicate whether is ccn type. Modification of this
+                      field only impacts force new logic of vpc_id. If is_ccn_type
+                      is true, modification of vpc_id will be ignored. Indicate whether
+                      is ccn type. Modification of this field only impacts force new
+                      logic of `vpc_id`. If `is_ccn_type` is true, modification of
+                      `vpc_id` will be ignored.
                     type: boolean
+                  name:
+                    description: Name of the VPN connection. The length of character
+                      is limited to 1-60. Name of the VPN connection. The length of
+                      character is limited to 1-60.
+                    type: string
                   netStatus:
+                    description: 'Net status of the VPN connection. Valid value: AVAILABLE.
+                      Net status of the VPN connection. Valid value: `AVAILABLE`.'
+                    type: string
+                  preShareKey:
+                    description: Pre-shared key of the VPN connection. Pre-shared
+                      key of the VPN connection.
                     type: string
                   routeType:
+                    description: 'Route type of the VPN connection. Valid value: STATIC,
+                      StaticRoute, Policy. Route type of the VPN connection. Valid
+                      value: `STATIC`, `StaticRoute`, `Policy`.'
                     type: string
+                  securityGroupPolicy:
+                    description: 'SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]},
+                      10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16
+                      is the IDC network segment. Users specify which network segments
+                      in the VPC can communicate with which network segments in your
+                      IDC. SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]},
+                      10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16
+                      is the IDC network segment. Users specify which network segments
+                      in the VPC can communicate with which network segments in your
+                      IDC.'
+                    items:
+                      properties:
+                        localCidrBlock:
+                          description: Local cidr block. Local cidr block.
+                          type: string
+                        remoteCidrBlock:
+                          description: Remote cidr block list. Remote cidr block list.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
                   state:
+                    description: 'State of the connection. Valid value: PENDING, AVAILABLE,
+                      DELETING. State of the connection. Valid value: `PENDING`, `AVAILABLE`,
+                      `DELETING`.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
+                    type: object
+                  vpcId:
+                    description: ID of the VPC. Required if vpn gateway is not in
+                      CCN type, and doesn't make sense for CCN vpn gateway. ID of
+                      the VPC. Required if vpn gateway is not in `CCN` type, and doesn't
+                      make sense for `CCN` vpn gateway.
+                    type: string
+                  vpnGatewayId:
+                    description: ID of the VPN gateway. ID of the VPN gateway.
                     type: string
                   vpnProto:
+                    description: Vpn proto of the VPN connection. Vpn proto of the
+                      VPN connection.
                     type: string
                 type: object
               conditions:
@@ -653,6 +1119,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -661,9 +1130,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

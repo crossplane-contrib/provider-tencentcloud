@@ -1,0 +1,36 @@
+apiVersion: tdmq.tencentcloud.crossplane.io/v1alpha1
+kind: TdmqNamespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tdmq/v1alpha1/tdmqnamespace
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    environName: tf_example
+    msgTtl: 300
+    remark: remark.
+    retentionPolicy:
+    - sizeInMb: 10
+      timeInMinutes: 60
+
+---
+
+apiVersion: tdmq.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tdmq/v1alpha1/tdmqnamespace
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterName: tf_example
+    remark: remark.
+    tags:
+      createdBy: terraform

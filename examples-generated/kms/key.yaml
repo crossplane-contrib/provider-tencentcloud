@@ -1,0 +1,16 @@
+apiVersion: kms.tencentcloud.crossplane.io/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/key
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    alias: tf-example-kms-key
+    description: example of kms key
+    isEnabled: true
+    keyRotationEnabled: false
+    tags:
+      createdBy: terraform

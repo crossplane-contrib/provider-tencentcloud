@@ -16,79 +16,69 @@ limitations under the License.
 
 package cls
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCls = "cls"
 
 // Configure configures the cls group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cls_logset", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_cls_logset", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "Logset"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_topic", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_topic", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "Topic"
-		r.References["logset_id"] = tjconfig.Reference{
+		r.References["logset_id"] = config.Reference{
 			Type: "Logset",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_index", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_index", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "Index"
-		r.References["topic_id"] = tjconfig.Reference{
+		r.References["topic_id"] = config.Reference{
 			Type: "Topic",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_cos_shipper", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_cos_shipper", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "CosShipper"
-		r.References["topic_id"] = tjconfig.Reference{
+		r.References["topic_id"] = config.Reference{
 			Type: "Topic",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_config", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_config", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "Config"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_config_extra", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_config_extra", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "ConfigExtra"
-		r.References["topic_id"] = tjconfig.Reference{
+		r.References["topic_id"] = config.Reference{
 			Type: "Topic",
 		}
-		r.References["logset_id"] = tjconfig.Reference{
+		r.References["logset_id"] = config.Reference{
 			Type: "Logset",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_machine_group", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_machine_group", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "MachineGroup"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cls_config_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cls_config_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCls
 		r.Kind = "ConfigAttachment"
-		r.References["config_id"] = tjconfig.Reference{
+		r.References["config_id"] = config.Reference{
 			Type: "Config",
 		}
-		r.References["group_id"] = tjconfig.Reference{
+		r.References["group_id"] = config.Reference{
 			Type: "MachineGroup",
 		}
 	})

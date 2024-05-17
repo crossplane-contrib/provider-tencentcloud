@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: nodepools.tke.tencentcloud.crossplane.io
 spec:
   group: tke.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: NodePool
     listKind: NodePoolList
     plural: nodepools
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: NodePool is the Schema for the NodePools API
+        description: NodePool is the Schema for the NodePools API. Provide a resource
+          to create an auto scaling group for kubernetes cluster.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,61 +68,81 @@ spec:
               forProvider:
                 properties:
                   autoScalingConfig:
-                    description: Auto scaling config parameters.
+                    description: Auto scaling config parameters. Auto scaling config
+                      parameters.
                     items:
                       properties:
                         backupInstanceTypes:
                           description: Backup CVM instance types if specified instance
-                            type sold out or mismatch.
+                            type sold out or mismatch. Backup CVM instance types if
+                            specified instance type sold out or mismatch.
                           items:
                             type: string
                           type: array
                         bandwidthPackageId:
                           description: bandwidth package id. if user is standard user,
                             then the bandwidth_package_id is needed, or default has
-                            bandwidth_package_id.
+                            bandwidth_package_id. bandwidth package id. if user is
+                            standard user, then the bandwidth_package_id is needed,
+                            or default has bandwidth_package_id.
                           type: string
                         camRoleName:
-                          description: Name of cam role.
+                          description: Name of cam role. Name of cam role.
                           type: string
                         dataDisk:
-                          description: Configurations of data disk.
+                          description: Configurations of data disk. Configurations
+                            of data disk.
                           items:
                             properties:
                               deleteWithInstance:
                                 description: Indicates whether the disk remove after
-                                  instance terminated. Default is `false`.
+                                  instance terminated. Default is false. Indicates
+                                  whether the disk remove after instance terminated.
+                                  Default is `false`.
                                 type: boolean
                               diskSize:
-                                description: Volume of disk in GB. Default is `0`.
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
                                 type: number
                               diskType:
-                                description: 'Types of disk. Valid value: `CLOUD_PREMIUM`
-                                  and `CLOUD_SSD`.'
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
                                 type: string
                               encrypt:
                                 description: 'Specify whether to encrypt data disk,
+                                  default: false. NOTE: Make sure the instance type
+                                  is offering and the cam role QcloudKMSAccessForCVMRole
+                                  was provided. Specify whether to encrypt data disk,
                                   default: false. NOTE: Make sure the instance type
                                   is offering and the cam role `QcloudKMSAccessForCVMRole`
                                   was provided.'
                                 type: boolean
                               snapshotId:
-                                description: Data disk snapshot ID.
+                                description: Data disk snapshot ID. Data disk snapshot
+                                  ID.
                                 type: string
                               throughputPerformance:
                                 description: Add extra performance to the data disk.
-                                  Only works when disk type is `CLOUD_TSSD` or `CLOUD_HSSD`
-                                  and `data_size` > 460GB.
+                                  Only works when disk type is CLOUD_TSSD or CLOUD_HSSD
+                                  and data_size > 460GB. Add extra performance to
+                                  the data disk. Only works when disk type is `CLOUD_TSSD`
+                                  or `CLOUD_HSSD` and `data_size` > 460GB.
                                 type: number
                             type: object
                           type: array
                         enhancedMonitorService:
                           description: To specify whether to enable cloud monitor
-                            service. Default is TRUE.
+                            service. Default is TRUE. To specify whether to enable
+                            cloud monitor service. Default is TRUE.
                           type: boolean
                         enhancedSecurityService:
                           description: To specify whether to enable cloud security
-                            service. Default is TRUE.
+                            service. Default is TRUE. To specify whether to enable
+                            cloud security service. Default is TRUE.
                           type: boolean
                         hostName:
                           description: 'The hostname of the cloud server, dot (.)
@@ -129,30 +153,57 @@ spec:
                             are allowed, and there is a paragraph between the dots,
                             and each paragraph is allowed to consist of letters (unlimited
                             case), numbers and dashes (-). Pure numbers are not allowed.
+                            For usage, refer to HostNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+                            The hostname of the cloud server, dot (.) and dash (-)
+                            cannot be used as the first and last characters of HostName
+                            and cannot be used consecutively. Windows instances are
+                            not supported. Examples of other types (Linux, etc.):
+                            The character length is [2, 40], multiple periods are
+                            allowed, and there is a paragraph between the dots, and
+                            each paragraph is allowed to consist of letters (unlimited
+                            case), numbers and dashes (-). Pure numbers are not allowed.
                             For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.'
                           type: string
                         hostNameStyle:
                           description: The style of the host name of the cloud server,
                             the value range includes ORIGINAL and UNIQUE, and the
-                            default is ORIGINAL. For usage, refer to `HostNameSettings`
+                            default is ORIGINAL. For usage, refer to HostNameSettings
                             in https://www.tencentcloud.com/document/product/377/31001.
+                            The style of the host name of the cloud server, the value
+                            range includes ORIGINAL and UNIQUE, and the default is
+                            ORIGINAL. For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
                           type: string
                         instanceChargeType:
                           description: 'Charge type of instance. Valid values are
-                            `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default
-                            is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must
-                            set `spot_instance_type` and `spot_max_price` at the same
-                            time.'
+                            PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR.
+                            NOTE: SPOTPAID instance must set spot_instance_type and
+                            spot_max_price at the same time. Charge type of instance.
+                            Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`.
+                            The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance
+                            must set `spot_instance_type` and `spot_max_price` at
+                            the same time.'
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: 'The tenancy (in month) of the prepaid instance,
                             NOTE: it only works when instance_charge_type is set to
-                            `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`,
-                            `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
+                            PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                            11, 12, 24, 36. The tenancy (in month) of the prepaid
+                            instance, NOTE: it only works when instance_charge_type
+                            is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`,
+                            `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
                           type: number
                         instanceChargeTypePrepaidRenewFlag:
-                          description: 'Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`:
-                            notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                          description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
+                            notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                            notify upon expiration but do not renew automatically,
+                            DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration
+                            nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW.
+                            If this parameter is specified as NOTIFY_AND_AUTO_RENEW,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to PREPAID. Auto
+                            renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
+                            upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
                             notify upon expiration but do not renew automatically,
                             `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon
                             expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`.
@@ -163,32 +214,39 @@ spec:
                           type: string
                         instanceName:
                           description: Instance name, no more than 60 characters.
-                            For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+                            For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+                            Instance name, no more than 60 characters. For usage,
+                            refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
                           type: string
                         instanceType:
-                          description: Specified types of CVM instance.
+                          description: Specified types of CVM instance. Specified
+                            types of CVM instance.
                           type: string
                         internetChargeType:
                           description: 'Charge types for network traffic. Valid value:
-                            `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.'
+                            BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
+                            Charge types for network traffic. Valid value: `BANDWIDTH_PREPAID`,
+                            `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.'
                           type: string
                         internetMaxBandwidthOut:
                           description: Max bandwidth of Internet access in Mbps. Default
+                            is 0. Max bandwidth of Internet access in Mbps. Default
                             is `0`.
                           type: number
                         keyIds:
-                          description: ID list of keys.
+                          description: ID list of keys. ID list of keys.
                           items:
                             type: string
                           type: array
                         orderlySecurityGroupIds:
                           description: Ordered security groups to which a CVM instance
+                            belongs. Ordered security groups to which a CVM instance
                             belongs.
                           items:
                             type: string
                           type: array
                         passwordSecretRef:
-                          description: Password to access.
+                          description: Password to access. Password to access.
                           properties:
                             key:
                               description: The key to select.
@@ -206,56 +264,72 @@ spec:
                           type: object
                         publicIpAssigned:
                           description: Specify whether to assign an Internet IP address.
+                            Specify whether to assign an Internet IP address.
                           type: boolean
                         securityGroupIds:
-                          description: (**Deprecated**) The order of elements in this
-                            field cannot be guaranteed. Use `orderly_security_group_ids`
-                            instead. Security groups to which a CVM instance belongs.
+                          description: The order of elements in this field cannot
+                            be guaranteed. Use orderly_security_group_ids instead.
+                            Security groups to which a CVM instance belongs. Security
+                            groups to which a CVM instance belongs.
                           items:
                             type: string
                           type: array
                         spotInstanceType:
-                          description: 'Type of spot instance, only support `one-time`
+                          description: 'Type of spot instance, only support one-time
+                            now. Note: it only works when instance_charge_type is
+                            set to SPOTPAID. Type of spot instance, only support `one-time`
                             now. Note: it only works when instance_charge_type is
                             set to `SPOTPAID`.'
                           type: string
                         spotMaxPrice:
                           description: 'Max price of a spot instance, is the format
                             of decimal string, for example "0.50". Note: it only works
-                            when instance_charge_type is set to `SPOTPAID`.'
+                            when instance_charge_type is set to SPOTPAID. Max price
+                            of a spot instance, is the format of decimal string, for
+                            example "0.50". Note: it only works when instance_charge_type
+                            is set to `SPOTPAID`.'
                           type: string
                         systemDiskSize:
-                          description: Volume of system disk in GB. Default is `50`.
+                          description: Volume of system disk in GB. Default is 50.
+                            Volume of system disk in GB. Default is `50`.
                           type: number
                         systemDiskType:
-                          description: 'Type of a CVM disk. Valid value: `CLOUD_PREMIUM`
-                            and `CLOUD_SSD`. Default is `CLOUD_PREMIUM`.'
+                          description: 'Type of a CVM disk. Valid value: LOCAL_BASIC,
+                            LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD,
+                            CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM. Type
+                            of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`,
+                            `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`,
+                            `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.'
                           type: string
-                      required:
-                      - instanceType
                       type: object
                     type: array
                   clusterId:
-                    description: ID of the cluster.
+                    description: ID of the cluster. ID of the cluster.
                     type: string
                   defaultCooldown:
                     description: Seconds of scaling group cool down. Default value
-                      is `300`.
+                      is 300. Seconds of scaling group cool down. Default value is
+                      `300`.
                     type: number
                   deleteKeepInstance:
                     description: Indicate to keep the CVM instance when delete the
-                      node pool. Default is `true`.
+                      node pool. Default is true. Indicate to keep the CVM instance
+                      when delete the node pool. Default is `true`.
                     type: boolean
                   deletionProtection:
                     description: Indicates whether the node pool deletion protection
+                      is enabled. Indicates whether the node pool deletion protection
                       is enabled.
                     type: boolean
                   desiredCapacity:
-                    description: Desired capacity of the node. If `enable_auto_scale`
-                      is set `true`, this will be a computed parameter.
+                    description: Desired capacity of the node. If enable_auto_scale
+                      is set true, this will be a computed parameter. Desired capacity
+                      of the node. If `enable_auto_scale` is set `true`, this will
+                      be a computed parameter.
                     type: number
                   enableAutoScale:
-                    description: Indicate whether to enable auto scaling or not.
+                    description: Indicate whether to enable auto scaling or not. Indicate
+                      whether to enable auto scaling or not.
                     type: boolean
                   labels:
                     additionalProperties:
@@ -263,83 +337,112 @@ spec:
                     description: Labels of kubernetes node pool created nodes. The
                       label key name does not exceed 63 characters, only supports
                       English, numbers,'/','-', and does not allow beginning with
-                      ('/').
+                      ('/'). Labels of kubernetes node pool created nodes. The label
+                      key name does not exceed 63 characters, only supports English,
+                      numbers,'/','-', and does not allow beginning with ('/').
                     type: object
                   maxSize:
-                    description: Maximum number of node.
+                    description: Maximum number of node. Maximum number of node.
                     type: number
                   minSize:
-                    description: Minimum number of node.
+                    description: Minimum number of node. Minimum number of node.
                     type: number
                   multiZoneSubnetPolicy:
                     description: 'Multi-availability zone/subnet policy. Valid values:
-                      PRIORITY and EQUALITY. Default value: PRIORITY.'
+                      PRIORITY and EQUALITY. Default value: PRIORITY. Multi-availability
+                      zone/subnet policy. Valid values: PRIORITY and EQUALITY. Default
+                      value: PRIORITY.'
                     type: string
                   name:
                     description: Name of the node pool. The name does not exceed 25
                       characters, and only supports Chinese, English, numbers, underscores,
-                      separators (`-`) and decimal points.
+                      separators (-) and decimal points. Name of the node pool. The
+                      name does not exceed 25 characters, and only supports Chinese,
+                      English, numbers, underscores, separators (`-`) and decimal
+                      points.
                     type: string
                   nodeConfig:
-                    description: Node config.
+                    description: Node config. Node config.
                     items:
                       properties:
                         dataDisk:
-                          description: Configurations of data disk.
+                          description: Configurations of data disk. Configurations
+                            of data disk.
                           items:
                             properties:
                               autoFormatAndMount:
                                 description: Indicate whether to auto format and mount
-                                  or not. Default is `false`.
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
                                 type: boolean
                               diskPartition:
                                 description: 'The name of the device or partition
                                   to mount. NOTE: this argument doesn''t support setting
-                                  in node pool, or will leads to mount error.'
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
                                 type: string
                               diskSize:
-                                description: Volume of disk in GB. Default is `0`.
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
                                 type: number
                               diskType:
-                                description: 'Types of disk, available values: `CLOUD_PREMIUM`
-                                  and `CLOUD_SSD`.'
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
                                 type: string
                               fileSystem:
-                                description: File system, e.g. `ext3/ext4/xfs`.
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
                                 type: string
                               mountTarget:
-                                description: Mount target.
+                                description: Mount target. Mount target.
                                 type: string
                             type: object
                           type: array
                         desiredPodNum:
                           description: Indicate to set desired pod number in node.
-                            valid when the cluster is podCIDR.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
                           type: number
                         dockerGraphPath:
-                          description: Docker graph path. Default is `/var/lib/docker`.
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: Custom parameter information related to the
-                            node. This is a white-list parameter.
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
                           items:
                             type: string
                           type: array
                         gpuArgs:
-                          description: GPU driver parameters.
+                          description: GPU driver parameters. GPU driver parameters.
                           items:
                             properties:
                               cuda:
                                 additionalProperties:
                                   type: string
-                                description: 'CUDA  version. Format like: `{ version:
-                                  String, name: String }`. `version`: Version of GPU
-                                  driver or CUDA; `name`: Name of GPU driver or CUDA.'
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
                                 type: object
                               cudnn:
                                 additionalProperties:
                                   type: string
-                                description: 'cuDNN version. Format like: `{ version:
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
                                   String, name: String, doc_name: String, dev_name:
                                   String }`. `version`: cuDNN version; `name`: cuDNN
                                   name; `doc_name`: Doc name of cuDNN; `dev_name`:
@@ -348,59 +451,89 @@ spec:
                               customDriver:
                                 additionalProperties:
                                   type: string
-                                description: 'Custom GPU driver. Format like: `{address:
-                                  String}`. `address`: URL of custom GPU driver address.'
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
                                 type: object
                               driver:
                                 additionalProperties:
                                   type: string
-                                description: 'GPU driver version. Format like: `{
-                                  version: String, name: String }`. `version`: Version
-                                  of GPU driver or CUDA; `name`: Name of GPU driver
-                                  or CUDA.'
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
                                 type: object
                               migEnable:
-                                description: Whether to enable MIG.
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
                                 type: boolean
                             type: object
                           type: array
                         isSchedule:
                           description: Indicate to schedule the adding node or not.
-                            Default is true.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
                           type: boolean
                         mountTarget:
-                          description: Mount target. Default is not mounting.
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
                           type: string
                         userData:
                           description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
                             is 16KB.
                           type: string
                       type: object
                     type: array
                   nodeOs:
                     description: Operating system of the cluster. Please refer to
-                      [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke)
+                      TencentCloud Documentation for available values. Default is
+                      'tlinux2.4x86_64'. This parameter will only affect new nodes,
+                      not including the existing nodes. Operating system of the cluster.
+                      Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke)
                       for available values. Default is 'tlinux2.4x86_64'. This parameter
                       will only affect new nodes, not including the existing nodes.
                     type: string
                   nodeOsType:
                     description: The image version of the node. Valida values are
-                      `DOCKER_CUSTOMIZE` and `GENERAL`. Default is `GENERAL`. This
-                      parameter will only affect new nodes, not including the existing
-                      nodes.
+                      DOCKER_CUSTOMIZE and GENERAL. Default is GENERAL. This parameter
+                      will only affect new nodes, not including the existing nodes.
+                      The image version of the node. Valida values are `DOCKER_CUSTOMIZE`
+                      and `GENERAL`. Default is `GENERAL`. This parameter will only
+                      affect new nodes, not including the existing nodes.
                     type: string
                   retryPolicy:
-                    description: Available values for retry policies include `IMMEDIATE_RETRY`
-                      and `INCREMENTAL_INTERVALS`.
+                    description: Available values for retry policies include IMMEDIATE_RETRY
+                      and INCREMENTAL_INTERVALS. Available values for retry policies
+                      include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
                     type: string
                   scalingGroupName:
-                    description: Name of relative scaling group.
+                    description: Name of relative scaling group. Name of relative
+                      scaling group.
                     type: string
                   scalingGroupProjectId:
-                    description: Project ID the scaling group belongs to.
+                    description: Project ID the scaling group belongs to. Project
+                      ID the scaling group belongs to.
                     type: number
                   scalingMode:
-                    description: Auto scaling mode. Valid values are `CLASSIC_SCALING`(scaling
+                    description: Auto scaling mode. Valid values are CLASSIC_SCALING(scaling
+                      by create/destroy instances), WAKE_UP_STOPPED_SCALING(Boot priority
+                      for expansion. When expanding the capacity, the shutdown operation
+                      is given priority to the shutdown of the instance. If the number
+                      of instances is still lower than the expected number of instances
+                      after the startup, the instance will be created, and the method
+                      of destroying the instance will still be used for shrinking).
+                      Auto scaling mode. Valid values are `CLASSIC_SCALING`(scaling
                       by create/destroy instances), `WAKE_UP_STOPPED_SCALING`(Boot
                       priority for expansion. When expanding the capacity, the shutdown
                       operation is given priority to the shutdown of the instance.
@@ -410,7 +543,8 @@ spec:
                       be used for shrinking).
                     type: string
                   subnetIds:
-                    description: ID list of subnet, and for VPC it is required.
+                    description: ID list of subnet, and for VPC it is required. ID
+                      list of subnet, and for VPC it is required.
                     items:
                       type: string
                     type: array
@@ -418,45 +552,51 @@ spec:
                     additionalProperties:
                       type: string
                     description: Node pool tag specifications, will passthroughs to
-                      the scaling instances.
+                      the scaling instances. Node pool tag specifications, will passthroughs
+                      to the scaling instances.
                     type: object
                   taints:
-                    description: Taints of kubernetes node pool created nodes.
+                    description: Taints of kubernetes node pool created nodes. Taints
+                      of kubernetes node pool created nodes.
                     items:
                       properties:
                         effect:
-                          description: 'Effect of the taint. Valid values are: `NoSchedule`,
-                            `PreferNoSchedule`, `NoExecute`.'
+                          description: 'Effect of the taint. Valid values are: NoSchedule,
+                            PreferNoSchedule, NoExecute. Effect of the taint. Valid
+                            values are: `NoSchedule`, `PreferNoSchedule`, `NoExecute`.'
                           type: string
                         key:
                           description: Key of the taint. The taint key name does not
                             exceed 63 characters, only supports English, numbers,'/','-',
-                            and does not allow beginning with ('/').
+                            and does not allow beginning with ('/'). Key of the taint.
+                            The taint key name does not exceed 63 characters, only
+                            supports English, numbers,'/','-', and does not allow
+                            beginning with ('/').
                           type: string
                         value:
-                          description: Value of the taint.
+                          description: Value of the taint. Value of the taint.
                           type: string
-                      required:
-                      - effect
-                      - key
-                      - value
                       type: object
                     type: array
                   terminationPolicies:
                     description: 'Policy of scaling group termination. Available values:
-                      `["OLDEST_INSTANCE"]`, `["NEWEST_INSTANCE"]`.'
+                      ["OLDEST_INSTANCE"], ["NEWEST_INSTANCE"]. Policy of scaling
+                      group termination. Available values: `["OLDEST_INSTANCE"]`,
+                      `["NEWEST_INSTANCE"]`.'
                     items:
                       type: string
                     type: array
                   unschedulable:
                     description: Sets whether the joining node participates in the
-                      schedule. Default is '0'. Participate in scheduling.
+                      schedule. Default is '0'. Participate in scheduling. Sets whether
+                      the joining node participates in the schedule. Default is '0'.
+                      Participate in scheduling.
                     type: number
                   vpcId:
-                    description: ID of VPC network.
+                    description: ID of VPC network. ID of VPC network.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -489,8 +629,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -530,59 +670,571 @@ spec:
                     type: object
                   zones:
                     description: List of auto scaling group available zones, for Basic
-                      network it is required.
+                      network it is required. List of auto scaling group available
+                      zones, for Basic network it is required.
                     items:
                       type: string
                     type: array
-                required:
-                - autoScalingConfig
-                - clusterId
-                - maxSize
-                - minSize
-                - name
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  autoScalingConfig:
+                    description: Auto scaling config parameters. Auto scaling config
+                      parameters.
+                    items:
+                      properties:
+                        backupInstanceTypes:
+                          description: Backup CVM instance types if specified instance
+                            type sold out or mismatch. Backup CVM instance types if
+                            specified instance type sold out or mismatch.
+                          items:
+                            type: string
+                          type: array
+                        bandwidthPackageId:
+                          description: bandwidth package id. if user is standard user,
+                            then the bandwidth_package_id is needed, or default has
+                            bandwidth_package_id. bandwidth package id. if user is
+                            standard user, then the bandwidth_package_id is needed,
+                            or default has bandwidth_package_id.
+                          type: string
+                        camRoleName:
+                          description: Name of cam role. Name of cam role.
+                          type: string
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              deleteWithInstance:
+                                description: Indicates whether the disk remove after
+                                  instance terminated. Default is false. Indicates
+                                  whether the disk remove after instance terminated.
+                                  Default is `false`.
+                                type: boolean
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              encrypt:
+                                description: 'Specify whether to encrypt data disk,
+                                  default: false. NOTE: Make sure the instance type
+                                  is offering and the cam role QcloudKMSAccessForCVMRole
+                                  was provided. Specify whether to encrypt data disk,
+                                  default: false. NOTE: Make sure the instance type
+                                  is offering and the cam role `QcloudKMSAccessForCVMRole`
+                                  was provided.'
+                                type: boolean
+                              snapshotId:
+                                description: Data disk snapshot ID. Data disk snapshot
+                                  ID.
+                                type: string
+                              throughputPerformance:
+                                description: Add extra performance to the data disk.
+                                  Only works when disk type is CLOUD_TSSD or CLOUD_HSSD
+                                  and data_size > 460GB. Add extra performance to
+                                  the data disk. Only works when disk type is `CLOUD_TSSD`
+                                  or `CLOUD_HSSD` and `data_size` > 460GB.
+                                type: number
+                            type: object
+                          type: array
+                        enhancedMonitorService:
+                          description: To specify whether to enable cloud monitor
+                            service. Default is TRUE. To specify whether to enable
+                            cloud monitor service. Default is TRUE.
+                          type: boolean
+                        enhancedSecurityService:
+                          description: To specify whether to enable cloud security
+                            service. Default is TRUE. To specify whether to enable
+                            cloud security service. Default is TRUE.
+                          type: boolean
+                        hostName:
+                          description: 'The hostname of the cloud server, dot (.)
+                            and dash (-) cannot be used as the first and last characters
+                            of HostName and cannot be used consecutively. Windows
+                            instances are not supported. Examples of other types (Linux,
+                            etc.): The character length is [2, 40], multiple periods
+                            are allowed, and there is a paragraph between the dots,
+                            and each paragraph is allowed to consist of letters (unlimited
+                            case), numbers and dashes (-). Pure numbers are not allowed.
+                            For usage, refer to HostNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+                            The hostname of the cloud server, dot (.) and dash (-)
+                            cannot be used as the first and last characters of HostName
+                            and cannot be used consecutively. Windows instances are
+                            not supported. Examples of other types (Linux, etc.):
+                            The character length is [2, 40], multiple periods are
+                            allowed, and there is a paragraph between the dots, and
+                            each paragraph is allowed to consist of letters (unlimited
+                            case), numbers and dashes (-). Pure numbers are not allowed.
+                            For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.'
+                          type: string
+                        hostNameStyle:
+                          description: The style of the host name of the cloud server,
+                            the value range includes ORIGINAL and UNIQUE, and the
+                            default is ORIGINAL. For usage, refer to HostNameSettings
+                            in https://www.tencentcloud.com/document/product/377/31001.
+                            The style of the host name of the cloud server, the value
+                            range includes ORIGINAL and UNIQUE, and the default is
+                            ORIGINAL. For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+                          type: string
+                        instanceChargeType:
+                          description: 'Charge type of instance. Valid values are
+                            PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR.
+                            NOTE: SPOTPAID instance must set spot_instance_type and
+                            spot_max_price at the same time. Charge type of instance.
+                            Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`.
+                            The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance
+                            must set `spot_instance_type` and `spot_max_price` at
+                            the same time.'
+                          type: string
+                        instanceChargeTypePrepaidPeriod:
+                          description: 'The tenancy (in month) of the prepaid instance,
+                            NOTE: it only works when instance_charge_type is set to
+                            PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                            11, 12, 24, 36. The tenancy (in month) of the prepaid
+                            instance, NOTE: it only works when instance_charge_type
+                            is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`,
+                            `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
+                          type: number
+                        instanceChargeTypePrepaidRenewFlag:
+                          description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
+                            notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                            notify upon expiration but do not renew automatically,
+                            DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration
+                            nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW.
+                            If this parameter is specified as NOTIFY_AND_AUTO_RENEW,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to PREPAID. Auto
+                            renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
+                            upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                            notify upon expiration but do not renew automatically,
+                            `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon
+                            expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`.
+                            If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to `PREPAID`.'
+                          type: string
+                        instanceName:
+                          description: Instance name, no more than 60 characters.
+                            For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+                            Instance name, no more than 60 characters. For usage,
+                            refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+                          type: string
+                        instanceType:
+                          description: Specified types of CVM instance. Specified
+                            types of CVM instance.
+                          type: string
+                        internetChargeType:
+                          description: 'Charge types for network traffic. Valid value:
+                            BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
+                            Charge types for network traffic. Valid value: `BANDWIDTH_PREPAID`,
+                            `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.'
+                          type: string
+                        internetMaxBandwidthOut:
+                          description: Max bandwidth of Internet access in Mbps. Default
+                            is 0. Max bandwidth of Internet access in Mbps. Default
+                            is `0`.
+                          type: number
+                        keyIds:
+                          description: ID list of keys. ID list of keys.
+                          items:
+                            type: string
+                          type: array
+                        orderlySecurityGroupIds:
+                          description: Ordered security groups to which a CVM instance
+                            belongs. Ordered security groups to which a CVM instance
+                            belongs.
+                          items:
+                            type: string
+                          type: array
+                        publicIpAssigned:
+                          description: Specify whether to assign an Internet IP address.
+                            Specify whether to assign an Internet IP address.
+                          type: boolean
+                        securityGroupIds:
+                          description: The order of elements in this field cannot
+                            be guaranteed. Use orderly_security_group_ids instead.
+                            Security groups to which a CVM instance belongs. Security
+                            groups to which a CVM instance belongs.
+                          items:
+                            type: string
+                          type: array
+                        spotInstanceType:
+                          description: 'Type of spot instance, only support one-time
+                            now. Note: it only works when instance_charge_type is
+                            set to SPOTPAID. Type of spot instance, only support `one-time`
+                            now. Note: it only works when instance_charge_type is
+                            set to `SPOTPAID`.'
+                          type: string
+                        spotMaxPrice:
+                          description: 'Max price of a spot instance, is the format
+                            of decimal string, for example "0.50". Note: it only works
+                            when instance_charge_type is set to SPOTPAID. Max price
+                            of a spot instance, is the format of decimal string, for
+                            example "0.50". Note: it only works when instance_charge_type
+                            is set to `SPOTPAID`.'
+                          type: string
+                        systemDiskSize:
+                          description: Volume of system disk in GB. Default is 50.
+                            Volume of system disk in GB. Default is `50`.
+                          type: number
+                        systemDiskType:
+                          description: 'Type of a CVM disk. Valid value: LOCAL_BASIC,
+                            LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD,
+                            CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM. Type
+                            of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`,
+                            `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`,
+                            `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.'
+                          type: string
+                      type: object
+                    type: array
+                  clusterId:
+                    description: ID of the cluster. ID of the cluster.
+                    type: string
+                  defaultCooldown:
+                    description: Seconds of scaling group cool down. Default value
+                      is 300. Seconds of scaling group cool down. Default value is
+                      `300`.
+                    type: number
+                  deleteKeepInstance:
+                    description: Indicate to keep the CVM instance when delete the
+                      node pool. Default is true. Indicate to keep the CVM instance
+                      when delete the node pool. Default is `true`.
+                    type: boolean
+                  deletionProtection:
+                    description: Indicates whether the node pool deletion protection
+                      is enabled. Indicates whether the node pool deletion protection
+                      is enabled.
+                    type: boolean
+                  desiredCapacity:
+                    description: Desired capacity of the node. If enable_auto_scale
+                      is set true, this will be a computed parameter. Desired capacity
+                      of the node. If `enable_auto_scale` is set `true`, this will
+                      be a computed parameter.
+                    type: number
+                  enableAutoScale:
+                    description: Indicate whether to enable auto scaling or not. Indicate
+                      whether to enable auto scaling or not.
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: Labels of kubernetes node pool created nodes. The
+                      label key name does not exceed 63 characters, only supports
+                      English, numbers,'/','-', and does not allow beginning with
+                      ('/'). Labels of kubernetes node pool created nodes. The label
+                      key name does not exceed 63 characters, only supports English,
+                      numbers,'/','-', and does not allow beginning with ('/').
+                    type: object
+                  maxSize:
+                    description: Maximum number of node. Maximum number of node.
+                    type: number
+                  minSize:
+                    description: Minimum number of node. Minimum number of node.
+                    type: number
+                  multiZoneSubnetPolicy:
+                    description: 'Multi-availability zone/subnet policy. Valid values:
+                      PRIORITY and EQUALITY. Default value: PRIORITY. Multi-availability
+                      zone/subnet policy. Valid values: PRIORITY and EQUALITY. Default
+                      value: PRIORITY.'
+                    type: string
+                  name:
+                    description: Name of the node pool. The name does not exceed 25
+                      characters, and only supports Chinese, English, numbers, underscores,
+                      separators (-) and decimal points. Name of the node pool. The
+                      name does not exceed 25 characters, and only supports Chinese,
+                      English, numbers, underscores, separators (`-`) and decimal
+                      points.
+                    type: string
+                  nodeConfig:
+                    description: Node config. Node config.
+                    items:
+                      properties:
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: 'The name of the device or partition
+                                  to mount. NOTE: this argument doesn''t support setting
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              fileSystem:
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              mountTarget:
+                                description: Mount target. Mount target.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
+                          type: number
+                        dockerGraphPath:
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
+                          type: string
+                        extraArgs:
+                          description: Custom parameter information related to the
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
+                          items:
+                            type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters. GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
+                                type: boolean
+                            type: object
+                          type: array
+                        isSchedule:
+                          description: Indicate to schedule the adding node or not.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
+                          type: boolean
+                        mountTarget:
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
+                          type: string
+                        userData:
+                          description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      type: object
+                    type: array
+                  nodeOs:
+                    description: Operating system of the cluster. Please refer to
+                      TencentCloud Documentation for available values. Default is
+                      'tlinux2.4x86_64'. This parameter will only affect new nodes,
+                      not including the existing nodes. Operating system of the cluster.
+                      Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke)
+                      for available values. Default is 'tlinux2.4x86_64'. This parameter
+                      will only affect new nodes, not including the existing nodes.
+                    type: string
+                  nodeOsType:
+                    description: The image version of the node. Valida values are
+                      DOCKER_CUSTOMIZE and GENERAL. Default is GENERAL. This parameter
+                      will only affect new nodes, not including the existing nodes.
+                      The image version of the node. Valida values are `DOCKER_CUSTOMIZE`
+                      and `GENERAL`. Default is `GENERAL`. This parameter will only
+                      affect new nodes, not including the existing nodes.
+                    type: string
+                  retryPolicy:
+                    description: Available values for retry policies include IMMEDIATE_RETRY
+                      and INCREMENTAL_INTERVALS. Available values for retry policies
+                      include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
+                    type: string
+                  scalingGroupName:
+                    description: Name of relative scaling group. Name of relative
+                      scaling group.
+                    type: string
+                  scalingGroupProjectId:
+                    description: Project ID the scaling group belongs to. Project
+                      ID the scaling group belongs to.
+                    type: number
+                  scalingMode:
+                    description: Auto scaling mode. Valid values are CLASSIC_SCALING(scaling
+                      by create/destroy instances), WAKE_UP_STOPPED_SCALING(Boot priority
+                      for expansion. When expanding the capacity, the shutdown operation
+                      is given priority to the shutdown of the instance. If the number
+                      of instances is still lower than the expected number of instances
+                      after the startup, the instance will be created, and the method
+                      of destroying the instance will still be used for shrinking).
+                      Auto scaling mode. Valid values are `CLASSIC_SCALING`(scaling
+                      by create/destroy instances), `WAKE_UP_STOPPED_SCALING`(Boot
+                      priority for expansion. When expanding the capacity, the shutdown
+                      operation is given priority to the shutdown of the instance.
+                      If the number of instances is still lower than the expected
+                      number of instances after the startup, the instance will be
+                      created, and the method of destroying the instance will still
+                      be used for shrinking).
+                    type: string
+                  subnetIds:
+                    description: ID list of subnet, and for VPC it is required. ID
+                      list of subnet, and for VPC it is required.
+                    items:
+                      type: string
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Node pool tag specifications, will passthroughs to
+                      the scaling instances. Node pool tag specifications, will passthroughs
+                      to the scaling instances.
+                    type: object
+                  taints:
+                    description: Taints of kubernetes node pool created nodes. Taints
+                      of kubernetes node pool created nodes.
+                    items:
+                      properties:
+                        effect:
+                          description: 'Effect of the taint. Valid values are: NoSchedule,
+                            PreferNoSchedule, NoExecute. Effect of the taint. Valid
+                            values are: `NoSchedule`, `PreferNoSchedule`, `NoExecute`.'
+                          type: string
+                        key:
+                          description: Key of the taint. The taint key name does not
+                            exceed 63 characters, only supports English, numbers,'/','-',
+                            and does not allow beginning with ('/'). Key of the taint.
+                            The taint key name does not exceed 63 characters, only
+                            supports English, numbers,'/','-', and does not allow
+                            beginning with ('/').
+                          type: string
+                        value:
+                          description: Value of the taint. Value of the taint.
+                          type: string
+                      type: object
+                    type: array
+                  terminationPolicies:
+                    description: 'Policy of scaling group termination. Available values:
+                      ["OLDEST_INSTANCE"], ["NEWEST_INSTANCE"]. Policy of scaling
+                      group termination. Available values: `["OLDEST_INSTANCE"]`,
+                      `["NEWEST_INSTANCE"]`.'
+                    items:
+                      type: string
+                    type: array
+                  unschedulable:
+                    description: Sets whether the joining node participates in the
+                      schedule. Default is '0'. Participate in scheduling. Sets whether
+                      the joining node participates in the schedule. Default is '0'.
+                      Participate in scheduling.
+                    type: number
+                  zones:
+                    description: List of auto scaling group available zones, for Basic
+                      network it is required. List of auto scaling group available
+                      zones, for Basic network it is required.
+                    items:
+                      type: string
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -712,25 +1364,574 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.autoScalingConfig is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.autoScalingConfig)
+                || (has(self.initProvider) && has(self.initProvider.autoScalingConfig))'
+            - message: spec.forProvider.clusterId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterId)
+                || (has(self.initProvider) && has(self.initProvider.clusterId))'
+            - message: spec.forProvider.maxSize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.maxSize)
+                || (has(self.initProvider) && has(self.initProvider.maxSize))'
+            - message: spec.forProvider.minSize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.minSize)
+                || (has(self.initProvider) && has(self.initProvider.minSize))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
           status:
             description: NodePoolStatus defines the observed state of NodePool.
             properties:
               atProvider:
                 properties:
+                  autoScalingConfig:
+                    description: Auto scaling config parameters. Auto scaling config
+                      parameters.
+                    items:
+                      properties:
+                        backupInstanceTypes:
+                          description: Backup CVM instance types if specified instance
+                            type sold out or mismatch. Backup CVM instance types if
+                            specified instance type sold out or mismatch.
+                          items:
+                            type: string
+                          type: array
+                        bandwidthPackageId:
+                          description: bandwidth package id. if user is standard user,
+                            then the bandwidth_package_id is needed, or default has
+                            bandwidth_package_id. bandwidth package id. if user is
+                            standard user, then the bandwidth_package_id is needed,
+                            or default has bandwidth_package_id.
+                          type: string
+                        camRoleName:
+                          description: Name of cam role. Name of cam role.
+                          type: string
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              deleteWithInstance:
+                                description: Indicates whether the disk remove after
+                                  instance terminated. Default is false. Indicates
+                                  whether the disk remove after instance terminated.
+                                  Default is `false`.
+                                type: boolean
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              encrypt:
+                                description: 'Specify whether to encrypt data disk,
+                                  default: false. NOTE: Make sure the instance type
+                                  is offering and the cam role QcloudKMSAccessForCVMRole
+                                  was provided. Specify whether to encrypt data disk,
+                                  default: false. NOTE: Make sure the instance type
+                                  is offering and the cam role `QcloudKMSAccessForCVMRole`
+                                  was provided.'
+                                type: boolean
+                              snapshotId:
+                                description: Data disk snapshot ID. Data disk snapshot
+                                  ID.
+                                type: string
+                              throughputPerformance:
+                                description: Add extra performance to the data disk.
+                                  Only works when disk type is CLOUD_TSSD or CLOUD_HSSD
+                                  and data_size > 460GB. Add extra performance to
+                                  the data disk. Only works when disk type is `CLOUD_TSSD`
+                                  or `CLOUD_HSSD` and `data_size` > 460GB.
+                                type: number
+                            type: object
+                          type: array
+                        enhancedMonitorService:
+                          description: To specify whether to enable cloud monitor
+                            service. Default is TRUE. To specify whether to enable
+                            cloud monitor service. Default is TRUE.
+                          type: boolean
+                        enhancedSecurityService:
+                          description: To specify whether to enable cloud security
+                            service. Default is TRUE. To specify whether to enable
+                            cloud security service. Default is TRUE.
+                          type: boolean
+                        hostName:
+                          description: 'The hostname of the cloud server, dot (.)
+                            and dash (-) cannot be used as the first and last characters
+                            of HostName and cannot be used consecutively. Windows
+                            instances are not supported. Examples of other types (Linux,
+                            etc.): The character length is [2, 40], multiple periods
+                            are allowed, and there is a paragraph between the dots,
+                            and each paragraph is allowed to consist of letters (unlimited
+                            case), numbers and dashes (-). Pure numbers are not allowed.
+                            For usage, refer to HostNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+                            The hostname of the cloud server, dot (.) and dash (-)
+                            cannot be used as the first and last characters of HostName
+                            and cannot be used consecutively. Windows instances are
+                            not supported. Examples of other types (Linux, etc.):
+                            The character length is [2, 40], multiple periods are
+                            allowed, and there is a paragraph between the dots, and
+                            each paragraph is allowed to consist of letters (unlimited
+                            case), numbers and dashes (-). Pure numbers are not allowed.
+                            For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.'
+                          type: string
+                        hostNameStyle:
+                          description: The style of the host name of the cloud server,
+                            the value range includes ORIGINAL and UNIQUE, and the
+                            default is ORIGINAL. For usage, refer to HostNameSettings
+                            in https://www.tencentcloud.com/document/product/377/31001.
+                            The style of the host name of the cloud server, the value
+                            range includes ORIGINAL and UNIQUE, and the default is
+                            ORIGINAL. For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+                          type: string
+                        instanceChargeType:
+                          description: 'Charge type of instance. Valid values are
+                            PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR.
+                            NOTE: SPOTPAID instance must set spot_instance_type and
+                            spot_max_price at the same time. Charge type of instance.
+                            Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`.
+                            The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance
+                            must set `spot_instance_type` and `spot_max_price` at
+                            the same time.'
+                          type: string
+                        instanceChargeTypePrepaidPeriod:
+                          description: 'The tenancy (in month) of the prepaid instance,
+                            NOTE: it only works when instance_charge_type is set to
+                            PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                            11, 12, 24, 36. The tenancy (in month) of the prepaid
+                            instance, NOTE: it only works when instance_charge_type
+                            is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`,
+                            `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.'
+                          type: number
+                        instanceChargeTypePrepaidRenewFlag:
+                          description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
+                            notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
+                            notify upon expiration but do not renew automatically,
+                            DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration
+                            nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW.
+                            If this parameter is specified as NOTIFY_AND_AUTO_RENEW,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to PREPAID. Auto
+                            renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
+                            upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
+                            notify upon expiration but do not renew automatically,
+                            `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon
+                            expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`.
+                            If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`,
+                            the instance will be automatically renewed on a monthly
+                            basis if the account balance is sufficient. NOTE: it only
+                            works when instance_charge_type is set to `PREPAID`.'
+                          type: string
+                        instanceName:
+                          description: Instance name, no more than 60 characters.
+                            For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+                            Instance name, no more than 60 characters. For usage,
+                            refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+                          type: string
+                        instanceType:
+                          description: Specified types of CVM instance. Specified
+                            types of CVM instance.
+                          type: string
+                        internetChargeType:
+                          description: 'Charge types for network traffic. Valid value:
+                            BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
+                            Charge types for network traffic. Valid value: `BANDWIDTH_PREPAID`,
+                            `TRAFFIC_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.'
+                          type: string
+                        internetMaxBandwidthOut:
+                          description: Max bandwidth of Internet access in Mbps. Default
+                            is 0. Max bandwidth of Internet access in Mbps. Default
+                            is `0`.
+                          type: number
+                        keyIds:
+                          description: ID list of keys. ID list of keys.
+                          items:
+                            type: string
+                          type: array
+                        orderlySecurityGroupIds:
+                          description: Ordered security groups to which a CVM instance
+                            belongs. Ordered security groups to which a CVM instance
+                            belongs.
+                          items:
+                            type: string
+                          type: array
+                        publicIpAssigned:
+                          description: Specify whether to assign an Internet IP address.
+                            Specify whether to assign an Internet IP address.
+                          type: boolean
+                        securityGroupIds:
+                          description: The order of elements in this field cannot
+                            be guaranteed. Use orderly_security_group_ids instead.
+                            Security groups to which a CVM instance belongs. Security
+                            groups to which a CVM instance belongs.
+                          items:
+                            type: string
+                          type: array
+                        spotInstanceType:
+                          description: 'Type of spot instance, only support one-time
+                            now. Note: it only works when instance_charge_type is
+                            set to SPOTPAID. Type of spot instance, only support `one-time`
+                            now. Note: it only works when instance_charge_type is
+                            set to `SPOTPAID`.'
+                          type: string
+                        spotMaxPrice:
+                          description: 'Max price of a spot instance, is the format
+                            of decimal string, for example "0.50". Note: it only works
+                            when instance_charge_type is set to SPOTPAID. Max price
+                            of a spot instance, is the format of decimal string, for
+                            example "0.50". Note: it only works when instance_charge_type
+                            is set to `SPOTPAID`.'
+                          type: string
+                        systemDiskSize:
+                          description: Volume of system disk in GB. Default is 50.
+                            Volume of system disk in GB. Default is `50`.
+                          type: number
+                        systemDiskType:
+                          description: 'Type of a CVM disk. Valid value: LOCAL_BASIC,
+                            LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD,
+                            CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM. Type
+                            of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`,
+                            `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`,
+                            `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.'
+                          type: string
+                      type: object
+                    type: array
                   autoScalingGroupId:
+                    description: The auto scaling group ID. The auto scaling group
+                      ID.
                     type: string
                   autoscalingAddedTotal:
+                    description: The total of autoscaling added node. The total of
+                      autoscaling added node.
                     type: number
-                  id:
+                  clusterId:
+                    description: ID of the cluster. ID of the cluster.
                     type: string
+                  defaultCooldown:
+                    description: Seconds of scaling group cool down. Default value
+                      is 300. Seconds of scaling group cool down. Default value is
+                      `300`.
+                    type: number
+                  deleteKeepInstance:
+                    description: Indicate to keep the CVM instance when delete the
+                      node pool. Default is true. Indicate to keep the CVM instance
+                      when delete the node pool. Default is `true`.
+                    type: boolean
+                  deletionProtection:
+                    description: Indicates whether the node pool deletion protection
+                      is enabled. Indicates whether the node pool deletion protection
+                      is enabled.
+                    type: boolean
+                  desiredCapacity:
+                    description: Desired capacity of the node. If enable_auto_scale
+                      is set true, this will be a computed parameter. Desired capacity
+                      of the node. If `enable_auto_scale` is set `true`, this will
+                      be a computed parameter.
+                    type: number
+                  enableAutoScale:
+                    description: Indicate whether to enable auto scaling or not. Indicate
+                      whether to enable auto scaling or not.
+                    type: boolean
+                  id:
+                    description: ID of the resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: Labels of kubernetes node pool created nodes. The
+                      label key name does not exceed 63 characters, only supports
+                      English, numbers,'/','-', and does not allow beginning with
+                      ('/'). Labels of kubernetes node pool created nodes. The label
+                      key name does not exceed 63 characters, only supports English,
+                      numbers,'/','-', and does not allow beginning with ('/').
+                    type: object
                   launchConfigId:
+                    description: The launch config ID. The launch config ID.
                     type: string
                   manuallyAddedTotal:
+                    description: The total of manually added node. The total of manually
+                      added node.
                     type: number
-                  nodeCount:
+                  maxSize:
+                    description: Maximum number of node. Maximum number of node.
                     type: number
-                  status:
+                  minSize:
+                    description: Minimum number of node. Minimum number of node.
+                    type: number
+                  multiZoneSubnetPolicy:
+                    description: 'Multi-availability zone/subnet policy. Valid values:
+                      PRIORITY and EQUALITY. Default value: PRIORITY. Multi-availability
+                      zone/subnet policy. Valid values: PRIORITY and EQUALITY. Default
+                      value: PRIORITY.'
                     type: string
+                  name:
+                    description: Name of the node pool. The name does not exceed 25
+                      characters, and only supports Chinese, English, numbers, underscores,
+                      separators (-) and decimal points. Name of the node pool. The
+                      name does not exceed 25 characters, and only supports Chinese,
+                      English, numbers, underscores, separators (`-`) and decimal
+                      points.
+                    type: string
+                  nodeConfig:
+                    description: Node config. Node config.
+                    items:
+                      properties:
+                        dataDisk:
+                          description: Configurations of data disk. Configurations
+                            of data disk.
+                          items:
+                            properties:
+                              autoFormatAndMount:
+                                description: Indicate whether to auto format and mount
+                                  or not. Default is false. Indicate whether to auto
+                                  format and mount or not. Default is `false`.
+                                type: boolean
+                              diskPartition:
+                                description: 'The name of the device or partition
+                                  to mount. NOTE: this argument doesn''t support setting
+                                  in node pool, or will leads to mount error. The
+                                  name of the device or partition to mount. NOTE:
+                                  this argument doesn''t support setting in node pool,
+                                  or will leads to mount error.'
+                                type: string
+                              diskSize:
+                                description: Volume of disk in GB. Default is 0. Volume
+                                  of disk in GB. Default is `0`.
+                                type: number
+                              diskType:
+                                description: 'Types of disk. Valid value: LOCAL_BASIC,
+                                  LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD,
+                                  CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Types of
+                                  disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`,
+                                  `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`
+                                  and `CLOUD_BSSD`.'
+                                type: string
+                              fileSystem:
+                                description: File system, e.g. ext3/ext4/xfs. File
+                                  system, e.g. `ext3/ext4/xfs`.
+                                type: string
+                              mountTarget:
+                                description: Mount target. Mount target.
+                                type: string
+                            type: object
+                          type: array
+                        desiredPodNum:
+                          description: Indicate to set desired pod number in node.
+                            valid when the cluster is podCIDR. Indicate to set desired
+                            pod number in node. valid when the cluster is podCIDR.
+                          type: number
+                        dockerGraphPath:
+                          description: Docker graph path. Default is /var/lib/docker.
+                            Docker graph path. Default is `/var/lib/docker`.
+                          type: string
+                        extraArgs:
+                          description: Custom parameter information related to the
+                            node. This is a white-list parameter. Custom parameter
+                            information related to the node. This is a white-list
+                            parameter.
+                          items:
+                            type: string
+                          type: array
+                        gpuArgs:
+                          description: GPU driver parameters. GPU driver parameters.
+                          items:
+                            properties:
+                              cuda:
+                                additionalProperties:
+                                  type: string
+                                description: 'CUDA  version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  CUDA  version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              cudnn:
+                                additionalProperties:
+                                  type: string
+                                description: 'cuDNN version. Format like: { version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }. version: cuDNN version; name: cuDNN name;
+                                  doc_name: Doc name of cuDNN; dev_name: Dev name
+                                  of cuDNN. cuDNN version. Format like: `{ version:
+                                  String, name: String, doc_name: String, dev_name:
+                                  String }`. `version`: cuDNN version; `name`: cuDNN
+                                  name; `doc_name`: Doc name of cuDNN; `dev_name`:
+                                  Dev name of cuDNN.'
+                                type: object
+                              customDriver:
+                                additionalProperties:
+                                  type: string
+                                description: 'Custom GPU driver. Format like: {address:
+                                  String}. address: URL of custom GPU driver address.
+                                  Custom GPU driver. Format like: `{address: String}`.
+                                  `address`: URL of custom GPU driver address.'
+                                type: object
+                              driver:
+                                additionalProperties:
+                                  type: string
+                                description: 'GPU driver version. Format like: { version:
+                                  String, name: String }. version: Version of GPU
+                                  driver or CUDA; name: Name of GPU driver or CUDA.
+                                  GPU driver version. Format like: `{ version: String,
+                                  name: String }`. `version`: Version of GPU driver
+                                  or CUDA; `name`: Name of GPU driver or CUDA.'
+                                type: object
+                              migEnable:
+                                description: Whether to enable MIG. Whether to enable
+                                  MIG.
+                                type: boolean
+                            type: object
+                          type: array
+                        isSchedule:
+                          description: Indicate to schedule the adding node or not.
+                            Default is true. Indicate to schedule the adding node
+                            or not. Default is true.
+                          type: boolean
+                        mountTarget:
+                          description: Mount target. Mount target. Default is not
+                            mounting.
+                          type: string
+                        preStartUserScript:
+                          description: Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes. Base64-encoded user script, executed before
+                            initializing the node, currently only effective for adding
+                            existing nodes.
+                          type: string
+                        userData:
+                          description: Base64-encoded User Data text, the length limit
+                            is 16KB. Base64-encoded User Data text, the length limit
+                            is 16KB.
+                          type: string
+                      type: object
+                    type: array
+                  nodeCount:
+                    description: The total node count. The total node count.
+                    type: number
+                  nodeOs:
+                    description: Operating system of the cluster. Please refer to
+                      TencentCloud Documentation for available values. Default is
+                      'tlinux2.4x86_64'. This parameter will only affect new nodes,
+                      not including the existing nodes. Operating system of the cluster.
+                      Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke)
+                      for available values. Default is 'tlinux2.4x86_64'. This parameter
+                      will only affect new nodes, not including the existing nodes.
+                    type: string
+                  nodeOsType:
+                    description: The image version of the node. Valida values are
+                      DOCKER_CUSTOMIZE and GENERAL. Default is GENERAL. This parameter
+                      will only affect new nodes, not including the existing nodes.
+                      The image version of the node. Valida values are `DOCKER_CUSTOMIZE`
+                      and `GENERAL`. Default is `GENERAL`. This parameter will only
+                      affect new nodes, not including the existing nodes.
+                    type: string
+                  retryPolicy:
+                    description: Available values for retry policies include IMMEDIATE_RETRY
+                      and INCREMENTAL_INTERVALS. Available values for retry policies
+                      include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
+                    type: string
+                  scalingGroupName:
+                    description: Name of relative scaling group. Name of relative
+                      scaling group.
+                    type: string
+                  scalingGroupProjectId:
+                    description: Project ID the scaling group belongs to. Project
+                      ID the scaling group belongs to.
+                    type: number
+                  scalingMode:
+                    description: Auto scaling mode. Valid values are CLASSIC_SCALING(scaling
+                      by create/destroy instances), WAKE_UP_STOPPED_SCALING(Boot priority
+                      for expansion. When expanding the capacity, the shutdown operation
+                      is given priority to the shutdown of the instance. If the number
+                      of instances is still lower than the expected number of instances
+                      after the startup, the instance will be created, and the method
+                      of destroying the instance will still be used for shrinking).
+                      Auto scaling mode. Valid values are `CLASSIC_SCALING`(scaling
+                      by create/destroy instances), `WAKE_UP_STOPPED_SCALING`(Boot
+                      priority for expansion. When expanding the capacity, the shutdown
+                      operation is given priority to the shutdown of the instance.
+                      If the number of instances is still lower than the expected
+                      number of instances after the startup, the instance will be
+                      created, and the method of destroying the instance will still
+                      be used for shrinking).
+                    type: string
+                  status:
+                    description: Status of the node pool. Status of the node pool.
+                    type: string
+                  subnetIds:
+                    description: ID list of subnet, and for VPC it is required. ID
+                      list of subnet, and for VPC it is required.
+                    items:
+                      type: string
+                    type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Node pool tag specifications, will passthroughs to
+                      the scaling instances. Node pool tag specifications, will passthroughs
+                      to the scaling instances.
+                    type: object
+                  taints:
+                    description: Taints of kubernetes node pool created nodes. Taints
+                      of kubernetes node pool created nodes.
+                    items:
+                      properties:
+                        effect:
+                          description: 'Effect of the taint. Valid values are: NoSchedule,
+                            PreferNoSchedule, NoExecute. Effect of the taint. Valid
+                            values are: `NoSchedule`, `PreferNoSchedule`, `NoExecute`.'
+                          type: string
+                        key:
+                          description: Key of the taint. The taint key name does not
+                            exceed 63 characters, only supports English, numbers,'/','-',
+                            and does not allow beginning with ('/'). Key of the taint.
+                            The taint key name does not exceed 63 characters, only
+                            supports English, numbers,'/','-', and does not allow
+                            beginning with ('/').
+                          type: string
+                        value:
+                          description: Value of the taint. Value of the taint.
+                          type: string
+                      type: object
+                    type: array
+                  terminationPolicies:
+                    description: 'Policy of scaling group termination. Available values:
+                      ["OLDEST_INSTANCE"], ["NEWEST_INSTANCE"]. Policy of scaling
+                      group termination. Available values: `["OLDEST_INSTANCE"]`,
+                      `["NEWEST_INSTANCE"]`.'
+                    items:
+                      type: string
+                    type: array
+                  unschedulable:
+                    description: Sets whether the joining node participates in the
+                      schedule. Default is '0'. Participate in scheduling. Sets whether
+                      the joining node participates in the schedule. Default is '0'.
+                      Participate in scheduling.
+                    type: number
+                  vpcId:
+                    description: ID of VPC network. ID of VPC network.
+                    type: string
+                  zones:
+                    description: List of auto scaling group available zones, for Basic
+                      network it is required. List of auto scaling group available
+                      zones, for Basic network it is required.
+                    items:
+                      type: string
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -765,6 +1966,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -773,9 +1977,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

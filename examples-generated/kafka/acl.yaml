@@ -1,0 +1,19 @@
+apiVersion: kafka.tencentcloud.crossplane.io/v1alpha1
+kind: Acl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/acl
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    host: '*'
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    operationType: WRITE
+    permissionType: ALLOW
+    principal: ${tencentcloud_ckafka_user.foo.account_name}
+    resourceName: topic-tf-test
+    resourceType: TOPIC

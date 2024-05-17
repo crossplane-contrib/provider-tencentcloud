@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: roles.cam.tencentcloud.crossplane.io
 spec:
   group: cam.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Role
     listKind: RoleList
     plural: roles
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Role is the Schema for the Roles API
+        description: Role is the Schema for the Roles API. Provides a resource to
+          create a CAM role.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,69 +69,93 @@ spec:
                 properties:
                   consoleLogin:
                     description: Indicates whether the CAM role can login or not.
+                      Indicates whether the CAM role can login or not.
                     type: boolean
                   description:
-                    description: Description of the CAM role.
+                    description: Description of the CAM role. Description of the CAM
+                      role.
                     type: string
                   document:
-                    description: 'Document of the CAM role. The syntax refers to [CAM
-                      POLICY](https://intl.cloud.tencent.com/document/product/598/10604).
-                      There are some notes when using this para in terraform: 1. The
-                      elements in json claimed supporting two types as `string` and
-                      `array` only support type `array`; 2. Terraform does not support
-                      the `root` syntax, when appears, it must be replaced with the
-                      uin it stands for.'
+                    description: Document of the CAM role. The syntax refers to CAM
+                      POLICY. The elements in json claimed supporting two types as
+                      string and array only support type array; 2. Document of the
+                      CAM role. The syntax refers to [CAM POLICY](https://intl.cloud.tencent.com/document/product/598/10604).
+                      The elements in json claimed supporting two types as `string`
+                      and `array` only support type `array`; 2.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
                     description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
                     type: object
-                required:
-                - document
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  consoleLogin:
+                    description: Indicates whether the CAM role can login or not.
+                      Indicates whether the CAM role can login or not.
+                    type: boolean
+                  description:
+                    description: Description of the CAM role. Description of the CAM
+                      role.
+                    type: string
+                  document:
+                    description: Document of the CAM role. The syntax refers to CAM
+                      POLICY. The elements in json claimed supporting two types as
+                      string and array only support type array; 2. Document of the
+                      CAM role. The syntax refers to [CAM POLICY](https://intl.cloud.tencent.com/document/product/598/10604).
+                      The elements in json claimed supporting two types as `string`
+                      and `array` only support type `array`; 2.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -257,16 +285,48 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.document is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.document)
+                || (has(self.initProvider) && has(self.initProvider.document))'
           status:
             description: RoleStatus defines the observed state of Role.
             properties:
               atProvider:
                 properties:
+                  consoleLogin:
+                    description: Indicates whether the CAM role can login or not.
+                      Indicates whether the CAM role can login or not.
+                    type: boolean
                   createTime:
+                    description: Create time of the CAM role. Create time of the CAM
+                      role.
+                    type: string
+                  description:
+                    description: Description of the CAM role. Description of the CAM
+                      role.
+                    type: string
+                  document:
+                    description: Document of the CAM role. The syntax refers to CAM
+                      POLICY. The elements in json claimed supporting two types as
+                      string and array only support type array; 2. Document of the
+                      CAM role. The syntax refers to [CAM POLICY](https://intl.cloud.tencent.com/document/product/598/10604).
+                      The elements in json claimed supporting two types as `string`
+                      and `array` only support type `array`; 2.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A list of tags used to associate different resources.
+                      A list of tags used to associate different resources.
+                    type: object
                   updateTime:
+                    description: The last update time of the CAM role. The last update
+                      time of the CAM role.
                     type: string
                 type: object
               conditions:
@@ -302,6 +362,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -310,9 +373,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

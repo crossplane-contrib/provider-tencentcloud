@@ -1,26 +1,33 @@
-# Terrajet TencentCloud Provider
+# Provider Tencentcloud
 
 `provider-tencentcloud` is a [Crossplane](https://crossplane.io/) provider that
-is built using [Terrajet](https://github.com/crossplane/terrajet) code
+is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
-[TencentCloud](https://cloud.tencent.com/).
+Tencentcloud API.
 
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://github.com/crossplane-contrib/provider-tencentcloud/releases):
+to the [latest release](https://marketplace.upbound.io/providers/crossplane-contrib/provider-tencentcloud):
 ```
-kubectl crossplane install provider crossplanecontrib/provider-tencentcloud:v0.2.0
+up ctp provider install crossplane-contrib/provider-tencentcloud:v0.1.0
 ```
 
 Alternatively, you can use declarative installation:
 ```
-kubectl apply -f examples/install.yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-tencentcloud
+spec:
+  package: crossplane-contrib/provider-tencentcloud:v0.1.0
+EOF
 ```
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
-You can see the API reference [here](https://marketplace.upbound.io/providers/crossplane-contrib/provider-tencentcloud/).
+You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-tencentcloud).
 
 ## Developing
 
@@ -51,30 +58,3 @@ make build
 
 For filing bugs, suggesting improvements, or requesting new features, please
 open an [issue](https://github.com/crossplane-contrib/provider-tencentcloud/issues).
-
-## Contact
-
-Please use the following to reach members of the community:
-
-* Slack: Join our [slack channel](https://slack.crossplane.io)
-* Forums:
-  [crossplane-dev](https://groups.google.com/forum/#!forum/crossplane-dev)
-* Twitter: [@crossplane_io](https://twitter.com/crossplane_io)
-* Email: [info@crossplane.io](mailto:info@crossplane.io)
-
-## Governance and Owners
-
-provider-tencentcloud is run according to the same
-[Governance](https://github.com/crossplane/crossplane/blob/master/GOVERNANCE.md)
-and [Ownership](https://github.com/crossplane/crossplane/blob/master/OWNERS.md)
-structure as the core Crossplane project.
-
-## Code of Conduct
-
-provider-tencentcloud adheres to the same [Code of
-Conduct](https://github.com/crossplane/crossplane/blob/master/CODE_OF_CONDUCT.md)
-as the core Crossplane project.
-
-## Licensing
-
-provider-tencentcloud is under the Apache 2.0 license.

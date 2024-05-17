@@ -1,0 +1,183 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpTkeGlobalNotification
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmptkeglobalnotification
+  labels:
+    testing.upbound.io/example-name: basic
+  name: basic
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    notification:
+    - alertManager:
+      - clusterId: ""
+        clusterType: ""
+        url: ""
+      enabled: true
+      notifyWay:
+      - SMS
+      - EMAIL
+      phoneArriveNotice: false
+      phoneCircleInterval: 0
+      phoneCircleTimes: 0
+      phoneInnerInterval: 0
+      phoneNotifyOrder: []
+      receiverGroups: []
+      repeatInterval: 5m
+      timeRangeEnd: "23:59:59"
+      timeRangeStart: "00:00:00"
+      type: webhook
+      webHook: ""
+
+---
+
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmptkeglobalnotification
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterCidr: ${var.example_cluster_cidr}
+    clusterDeployType: MANAGED_CLUSTER
+    clusterDesc: example for tke cluster
+    clusterInternet: false
+    clusterInternetSecurityGroup: ${local.sg_id}
+    clusterMaxPodNum: 32
+    clusterMaxServiceNum: 32
+    clusterName: tf_example_cluster
+    clusterVersion: 1.22.5
+    labels:
+      test1: test1
+      test2: test2
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    workerConfig:
+    - availabilityZone: ${var.availability_zone_first}
+      count: 1
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      imgId: ${local.image_id}
+      instanceType: ${var.default_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      publicIpAssigned: true
+      subnetId: ${local.first_subnet_id}
+      systemDiskSize: 60
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==
+    - availabilityZone: ${var.availability_zone_second}
+      camRoleName: CVM_QcsRole
+      count: 1
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      instanceType: ${var.default_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      publicIpAssigned: true
+      subnetId: ${local.second_subnet_id}
+      systemDiskSize: 60
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmptkeglobalnotification
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    dataRetentionTime: 30
+    instanceName: tf-tmp-instance
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tags:
+      createdBy: terraform
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    zone: ${var.availability_zone_second}
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpTkeClusterAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmptkeglobalnotification
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    agents:
+    - clusterId: ${tencentcloud_kubernetes_cluster.example.id}
+      clusterType: ${var.cluster_type}
+      enableExternal: false
+      region: ${var.zone}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmptkeglobalnotification
+  labels:
+    testing.upbound.io/example-name: sg
+  name: sg
+spec:
+  forProvider:
+    name: tf-example-sg
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroupLiteRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmptkeglobalnotification
+  labels:
+    testing.upbound.io/example-name: sg_rule
+  name: sg-rule
+spec:
+  forProvider:
+    egress:
+    - ACCEPT#172.16.0.0/22#ALL#ALL
+    ingress:
+    - ACCEPT#10.0.0.0/16#ALL#ALL
+    - ACCEPT#172.16.0.0/22#ALL#ALL
+    - DROP#0.0.0.0/0#ALL#ALL
+    securityGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: sg

@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: tmptkealertpolicies.monitor.tencentcloud.crossplane.io
 spec:
   group: monitor.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: TmpTkeAlertPolicy
     listKind: TmpTkeAlertPolicyList
     plural: tmptkealertpolicies
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TmpTkeAlertPolicy is the Schema for the TmpTkeAlertPolicys API
+        description: TmpTkeAlertPolicy is the Schema for the TmpTkeAlertPolicys API.
+          Provides a resource to create a tke tmpAlertPolicy
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,184 +68,198 @@ spec:
               forProvider:
                 properties:
                   alertRule:
-                    description: Alarm notification channels.
+                    description: Alarm notification channels. Alarm notification channels.
                     items:
                       properties:
                         clusterId:
-                          description: If the alarm policy is derived from the CRD
-                            resource definition of the user cluster, the ClusterId
-                            is the cluster ID to which it belongs.
+                          description: 'The ID of the cluster where the alertmanager
+                            is deployed. Note: This field may return null, indicating
+                            that a valid value could not be retrieved. If the alarm
+                            policy is derived from the CRD resource definition of
+                            the user cluster, the ClusterId is the cluster ID to which
+                            it belongs.'
                           type: string
                         id:
                           description: 'Alarm policy ID. Note: This field may return
-                            null, indicating that a valid value could not be retrieved.'
+                            null, indicating that a valid value could not be retrieved.
+                            Alarm policy ID. Note: This field may return null, indicating
+                            that a valid value could not be retrieved.'
                           type: string
                         name:
-                          description: Policy name.
+                          description: Policy name. Policy name.
                           type: string
                         notification:
                           description: Alarm channels, which may be returned using
-                            null in the template.
+                            null in the template. Alarm channels, which may be returned
+                            using null in the template.
                           items:
                             properties:
                               alertManager:
                                 description: 'If Type is alertmanager, the field is
                                   required. Note: This field may return null, indicating
-                                  that a valid value could not be retrieved..'
+                                  that a valid value could not be retrieved.. If Type
+                                  is alertmanager, the field is required. Note: This
+                                  field may return null, indicating that a valid value
+                                  could not be retrieved..'
                                 items:
                                   properties:
                                     clusterId:
                                       description: 'The ID of the cluster where the
                                         alertmanager is deployed. Note: This field
                                         may return null, indicating that a valid value
-                                        could not be retrieved.'
+                                        could not be retrieved. The ID of the cluster
+                                        where the alertmanager is deployed. Note:
+                                        This field may return null, indicating that
+                                        a valid value could not be retrieved.'
                                       type: string
                                     clusterType:
                                       description: 'Alertmanager is deployed in the
                                         cluster type. Note: This field may return
                                         null, indicating that a valid value could
-                                        not be retrieved.'
+                                        not be retrieved. Alertmanager is deployed
+                                        in the cluster type. Note: This field may
+                                        return null, indicating that a valid value
+                                        could not be retrieved.'
                                       type: string
                                     url:
-                                      description: Alertmanager url.
+                                      description: Alertmanager url. Alertmanager
+                                        url.
                                       type: string
-                                  required:
-                                  - url
                                   type: object
                                 type: array
                               enabled:
-                                description: Whether it is enabled.
+                                description: Whether it is enabled. Whether it is
+                                  enabled.
                                 type: boolean
                               notifyWay:
                                 description: Alarm notification method. At present,
-                                  there are SMS, EMAIL, CALL, WECHAT methods.
+                                  there are SMS, EMAIL, CALL, WECHAT methods. Alarm
+                                  notification method. At present, there are SMS,
+                                  EMAIL, CALL, WECHAT methods.
                                 items:
                                   type: string
                                 type: array
                               phoneArriveNotice:
                                 description: Telephone alerts reach notifications.
+                                  Telephone alerts reach notifications.
                                 type: boolean
                               phoneCircleInterval:
                                 description: 'Effective end timeTelephone alarm wheel
-                                  interval. Units: Seconds.'
+                                  interval. Units: Seconds. Effective end timeTelephone
+                                  alarm wheel interval. Units: Seconds.'
                                 type: number
                               phoneCircleTimes:
-                                description: PhoneCircleTimes.
+                                description: PhoneCircleTimes. PhoneCircleTimes.
                                 type: number
                               phoneInnerInterval:
                                 description: 'Telephone alarm wheel intervals. Units:
+                                  Seconds. Telephone alarm wheel intervals. Units:
                                   Seconds.'
                                 type: number
                               phoneNotifyOrder:
-                                description: Telephone alarm sequence.
+                                description: Telephone alarm sequence. Telephone alarm
+                                  sequence.
                                 items:
                                   type: number
                                 type: array
                               receiverGroups:
-                                description: Alert Receiving Group (User Group).
+                                description: Alert Receiving Group (User Group). Alert
+                                  Receiving Group (User Group).
                                 items:
                                   type: string
                                 type: array
                               repeatInterval:
-                                description: Convergence time.
+                                description: Convergence time. Convergence time.
                                 type: string
                               timeRangeEnd:
-                                description: Effective end time.
+                                description: Effective end time. Effective end time.
                                 type: string
                               timeRangeStart:
                                 description: The time from which it takes effect.
+                                  The time from which it takes effect.
                                 type: string
                               type:
                                 description: The channel type, which defaults to amp,
-                                  supports the following `amp`, `webhook`, `alertmanager`.
+                                  supports the following amp, webhook, alertmanager.
+                                  The channel type, which defaults to amp, supports
+                                  the following `amp`, `webhook`, `alertmanager`.
                                 type: string
                               webHook:
                                 description: 'If Type is webhook, the field is required.
                                   Note: This field may return null, indicating that
-                                  a valid value could not be retrieved.'
+                                  a valid value could not be retrieved. If Type is
+                                  webhook, the field is required. Note: This field
+                                  may return null, indicating that a valid value could
+                                  not be retrieved.'
                                 type: string
-                            required:
-                            - enabled
-                            - type
                             type: object
                           type: array
                         rules:
-                          description: A list of rules.
+                          description: A list of rules. A list of rules.
                           items:
                             properties:
                               annotations:
                                 description: Refer to annotations in prometheus rule.
+                                  Refer to annotations in prometheus rule.
                                 items:
                                   properties:
                                     name:
-                                      description: Name of map.
+                                      description: Policy name. Name of map.
                                       type: string
                                     value:
-                                      description: Value of map.
+                                      description: Value of map. Value of map.
                                       type: string
-                                  required:
-                                  - name
-                                  - value
                                   type: object
                                 type: array
                               describe:
-                                description: A description of the rule.
+                                description: A description of the rule. A description
+                                  of the rule.
                                 type: string
                               for:
-                                description: Time of duration.
+                                description: Time of duration. Time of duration.
                                 type: string
                               labels:
-                                description: Extra labels.
+                                description: Extra labels. Extra labels.
                                 items:
                                   properties:
                                     name:
-                                      description: Name of map.
+                                      description: Policy name. Name of map.
                                       type: string
                                     value:
-                                      description: Value of map.
+                                      description: Value of map. Value of map.
                                       type: string
-                                  required:
-                                  - name
-                                  - value
                                   type: object
                                 type: array
                               name:
-                                description: Rule name.
+                                description: Policy name. Rule name.
                                 type: string
                               rule:
-                                description: Prometheus statement.
+                                description: Prometheus statement. Prometheus statement.
                                 type: string
                               ruleState:
-                                description: Alarm rule status.
+                                description: Alarm rule status. Alarm rule status.
                                 type: number
                               template:
-                                description: Alert sending template.
+                                description: Alert sending template. Alert sending
+                                  template.
                                 type: string
-                            required:
-                            - for
-                            - labels
-                            - name
-                            - rule
-                            - template
                             type: object
                           type: array
                         templateId:
                           description: If the alarm is sent from a template, the TemplateId
-                            is the template id.
+                            is the template id. If the alarm is sent from a template,
+                            the TemplateId is the template id.
                           type: string
                         updatedAt:
-                          description: Last modified time.
+                          description: Last modified time. Last modified time.
                           type: string
-                      required:
-                      - name
-                      - rules
                       type: object
                     type: array
                   instanceId:
-                    description: Instance Id.
+                    description: Instance Id. Instance Id.
                     type: string
                   instanceIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a TmpInstance to populate instanceId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -275,7 +293,7 @@ spec:
                     - name
                     type: object
                   instanceIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a TmpInstance to populate instanceId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -313,51 +331,239 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - alertRule
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  alertRule:
+                    description: Alarm notification channels. Alarm notification channels.
+                    items:
+                      properties:
+                        clusterId:
+                          description: 'The ID of the cluster where the alertmanager
+                            is deployed. Note: This field may return null, indicating
+                            that a valid value could not be retrieved. If the alarm
+                            policy is derived from the CRD resource definition of
+                            the user cluster, the ClusterId is the cluster ID to which
+                            it belongs.'
+                          type: string
+                        id:
+                          description: 'Alarm policy ID. Note: This field may return
+                            null, indicating that a valid value could not be retrieved.
+                            Alarm policy ID. Note: This field may return null, indicating
+                            that a valid value could not be retrieved.'
+                          type: string
+                        name:
+                          description: Policy name. Policy name.
+                          type: string
+                        notification:
+                          description: Alarm channels, which may be returned using
+                            null in the template. Alarm channels, which may be returned
+                            using null in the template.
+                          items:
+                            properties:
+                              alertManager:
+                                description: 'If Type is alertmanager, the field is
+                                  required. Note: This field may return null, indicating
+                                  that a valid value could not be retrieved.. If Type
+                                  is alertmanager, the field is required. Note: This
+                                  field may return null, indicating that a valid value
+                                  could not be retrieved..'
+                                items:
+                                  properties:
+                                    clusterId:
+                                      description: 'The ID of the cluster where the
+                                        alertmanager is deployed. Note: This field
+                                        may return null, indicating that a valid value
+                                        could not be retrieved. The ID of the cluster
+                                        where the alertmanager is deployed. Note:
+                                        This field may return null, indicating that
+                                        a valid value could not be retrieved.'
+                                      type: string
+                                    clusterType:
+                                      description: 'Alertmanager is deployed in the
+                                        cluster type. Note: This field may return
+                                        null, indicating that a valid value could
+                                        not be retrieved. Alertmanager is deployed
+                                        in the cluster type. Note: This field may
+                                        return null, indicating that a valid value
+                                        could not be retrieved.'
+                                      type: string
+                                    url:
+                                      description: Alertmanager url. Alertmanager
+                                        url.
+                                      type: string
+                                  type: object
+                                type: array
+                              enabled:
+                                description: Whether it is enabled. Whether it is
+                                  enabled.
+                                type: boolean
+                              notifyWay:
+                                description: Alarm notification method. At present,
+                                  there are SMS, EMAIL, CALL, WECHAT methods. Alarm
+                                  notification method. At present, there are SMS,
+                                  EMAIL, CALL, WECHAT methods.
+                                items:
+                                  type: string
+                                type: array
+                              phoneArriveNotice:
+                                description: Telephone alerts reach notifications.
+                                  Telephone alerts reach notifications.
+                                type: boolean
+                              phoneCircleInterval:
+                                description: 'Effective end timeTelephone alarm wheel
+                                  interval. Units: Seconds. Effective end timeTelephone
+                                  alarm wheel interval. Units: Seconds.'
+                                type: number
+                              phoneCircleTimes:
+                                description: PhoneCircleTimes. PhoneCircleTimes.
+                                type: number
+                              phoneInnerInterval:
+                                description: 'Telephone alarm wheel intervals. Units:
+                                  Seconds. Telephone alarm wheel intervals. Units:
+                                  Seconds.'
+                                type: number
+                              phoneNotifyOrder:
+                                description: Telephone alarm sequence. Telephone alarm
+                                  sequence.
+                                items:
+                                  type: number
+                                type: array
+                              receiverGroups:
+                                description: Alert Receiving Group (User Group). Alert
+                                  Receiving Group (User Group).
+                                items:
+                                  type: string
+                                type: array
+                              repeatInterval:
+                                description: Convergence time. Convergence time.
+                                type: string
+                              timeRangeEnd:
+                                description: Effective end time. Effective end time.
+                                type: string
+                              timeRangeStart:
+                                description: The time from which it takes effect.
+                                  The time from which it takes effect.
+                                type: string
+                              type:
+                                description: The channel type, which defaults to amp,
+                                  supports the following amp, webhook, alertmanager.
+                                  The channel type, which defaults to amp, supports
+                                  the following `amp`, `webhook`, `alertmanager`.
+                                type: string
+                              webHook:
+                                description: 'If Type is webhook, the field is required.
+                                  Note: This field may return null, indicating that
+                                  a valid value could not be retrieved. If Type is
+                                  webhook, the field is required. Note: This field
+                                  may return null, indicating that a valid value could
+                                  not be retrieved.'
+                                type: string
+                            type: object
+                          type: array
+                        rules:
+                          description: A list of rules. A list of rules.
+                          items:
+                            properties:
+                              annotations:
+                                description: Refer to annotations in prometheus rule.
+                                  Refer to annotations in prometheus rule.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Policy name. Name of map.
+                                      type: string
+                                    value:
+                                      description: Value of map. Value of map.
+                                      type: string
+                                  type: object
+                                type: array
+                              describe:
+                                description: A description of the rule. A description
+                                  of the rule.
+                                type: string
+                              for:
+                                description: Time of duration. Time of duration.
+                                type: string
+                              labels:
+                                description: Extra labels. Extra labels.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Policy name. Name of map.
+                                      type: string
+                                    value:
+                                      description: Value of map. Value of map.
+                                      type: string
+                                  type: object
+                                type: array
+                              name:
+                                description: Policy name. Rule name.
+                                type: string
+                              rule:
+                                description: Prometheus statement. Prometheus statement.
+                                type: string
+                              ruleState:
+                                description: Alarm rule status. Alarm rule status.
+                                type: number
+                              template:
+                                description: Alert sending template. Alert sending
+                                  template.
+                                type: string
+                            type: object
+                          type: array
+                        templateId:
+                          description: If the alarm is sent from a template, the TemplateId
+                            is the template id. If the alarm is sent from a template,
+                            the TemplateId is the template id.
+                          type: string
+                        updatedAt:
+                          description: Last modified time. Last modified time.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -487,12 +693,210 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.alertRule is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.alertRule)
+                || (has(self.initProvider) && has(self.initProvider.alertRule))'
           status:
             description: TmpTkeAlertPolicyStatus defines the observed state of TmpTkeAlertPolicy.
             properties:
               atProvider:
                 properties:
+                  alertRule:
+                    description: Alarm notification channels. Alarm notification channels.
+                    items:
+                      properties:
+                        clusterId:
+                          description: 'The ID of the cluster where the alertmanager
+                            is deployed. Note: This field may return null, indicating
+                            that a valid value could not be retrieved. If the alarm
+                            policy is derived from the CRD resource definition of
+                            the user cluster, the ClusterId is the cluster ID to which
+                            it belongs.'
+                          type: string
+                        id:
+                          description: 'Alarm policy ID. Note: This field may return
+                            null, indicating that a valid value could not be retrieved.
+                            Alarm policy ID. Note: This field may return null, indicating
+                            that a valid value could not be retrieved.'
+                          type: string
+                        name:
+                          description: Policy name. Policy name.
+                          type: string
+                        notification:
+                          description: Alarm channels, which may be returned using
+                            null in the template. Alarm channels, which may be returned
+                            using null in the template.
+                          items:
+                            properties:
+                              alertManager:
+                                description: 'If Type is alertmanager, the field is
+                                  required. Note: This field may return null, indicating
+                                  that a valid value could not be retrieved.. If Type
+                                  is alertmanager, the field is required. Note: This
+                                  field may return null, indicating that a valid value
+                                  could not be retrieved..'
+                                items:
+                                  properties:
+                                    clusterId:
+                                      description: 'The ID of the cluster where the
+                                        alertmanager is deployed. Note: This field
+                                        may return null, indicating that a valid value
+                                        could not be retrieved. The ID of the cluster
+                                        where the alertmanager is deployed. Note:
+                                        This field may return null, indicating that
+                                        a valid value could not be retrieved.'
+                                      type: string
+                                    clusterType:
+                                      description: 'Alertmanager is deployed in the
+                                        cluster type. Note: This field may return
+                                        null, indicating that a valid value could
+                                        not be retrieved. Alertmanager is deployed
+                                        in the cluster type. Note: This field may
+                                        return null, indicating that a valid value
+                                        could not be retrieved.'
+                                      type: string
+                                    url:
+                                      description: Alertmanager url. Alertmanager
+                                        url.
+                                      type: string
+                                  type: object
+                                type: array
+                              enabled:
+                                description: Whether it is enabled. Whether it is
+                                  enabled.
+                                type: boolean
+                              notifyWay:
+                                description: Alarm notification method. At present,
+                                  there are SMS, EMAIL, CALL, WECHAT methods. Alarm
+                                  notification method. At present, there are SMS,
+                                  EMAIL, CALL, WECHAT methods.
+                                items:
+                                  type: string
+                                type: array
+                              phoneArriveNotice:
+                                description: Telephone alerts reach notifications.
+                                  Telephone alerts reach notifications.
+                                type: boolean
+                              phoneCircleInterval:
+                                description: 'Effective end timeTelephone alarm wheel
+                                  interval. Units: Seconds. Effective end timeTelephone
+                                  alarm wheel interval. Units: Seconds.'
+                                type: number
+                              phoneCircleTimes:
+                                description: PhoneCircleTimes. PhoneCircleTimes.
+                                type: number
+                              phoneInnerInterval:
+                                description: 'Telephone alarm wheel intervals. Units:
+                                  Seconds. Telephone alarm wheel intervals. Units:
+                                  Seconds.'
+                                type: number
+                              phoneNotifyOrder:
+                                description: Telephone alarm sequence. Telephone alarm
+                                  sequence.
+                                items:
+                                  type: number
+                                type: array
+                              receiverGroups:
+                                description: Alert Receiving Group (User Group). Alert
+                                  Receiving Group (User Group).
+                                items:
+                                  type: string
+                                type: array
+                              repeatInterval:
+                                description: Convergence time. Convergence time.
+                                type: string
+                              timeRangeEnd:
+                                description: Effective end time. Effective end time.
+                                type: string
+                              timeRangeStart:
+                                description: The time from which it takes effect.
+                                  The time from which it takes effect.
+                                type: string
+                              type:
+                                description: The channel type, which defaults to amp,
+                                  supports the following amp, webhook, alertmanager.
+                                  The channel type, which defaults to amp, supports
+                                  the following `amp`, `webhook`, `alertmanager`.
+                                type: string
+                              webHook:
+                                description: 'If Type is webhook, the field is required.
+                                  Note: This field may return null, indicating that
+                                  a valid value could not be retrieved. If Type is
+                                  webhook, the field is required. Note: This field
+                                  may return null, indicating that a valid value could
+                                  not be retrieved.'
+                                type: string
+                            type: object
+                          type: array
+                        rules:
+                          description: A list of rules. A list of rules.
+                          items:
+                            properties:
+                              annotations:
+                                description: Refer to annotations in prometheus rule.
+                                  Refer to annotations in prometheus rule.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Policy name. Name of map.
+                                      type: string
+                                    value:
+                                      description: Value of map. Value of map.
+                                      type: string
+                                  type: object
+                                type: array
+                              describe:
+                                description: A description of the rule. A description
+                                  of the rule.
+                                type: string
+                              for:
+                                description: Time of duration. Time of duration.
+                                type: string
+                              labels:
+                                description: Extra labels. Extra labels.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Policy name. Name of map.
+                                      type: string
+                                    value:
+                                      description: Value of map. Value of map.
+                                      type: string
+                                  type: object
+                                type: array
+                              name:
+                                description: Policy name. Rule name.
+                                type: string
+                              rule:
+                                description: Prometheus statement. Prometheus statement.
+                                type: string
+                              ruleState:
+                                description: Alarm rule status. Alarm rule status.
+                                type: number
+                              template:
+                                description: Alert sending template. Alert sending
+                                  template.
+                                type: string
+                            type: object
+                          type: array
+                        templateId:
+                          description: If the alarm is sent from a template, the TemplateId
+                            is the template id. If the alarm is sent from a template,
+                            the TemplateId is the template id.
+                          type: string
+                        updatedAt:
+                          description: Last modified time. Last modified time.
+                          type: string
+                      type: object
+                    type: array
                   id:
+                    description: 'Alarm policy ID. Note: This field may return null,
+                      indicating that a valid value could not be retrieved.'
+                    type: string
+                  instanceId:
+                    description: Instance Id. Instance Id.
                     type: string
                 type: object
               conditions:
@@ -528,6 +932,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -536,9 +943,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

@@ -16,31 +16,26 @@ limitations under the License.
 
 package ccn
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCcn = "ccn"
 
 // Configure configures the ccn group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_ccn", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_ccn", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCcn
 		r.Kind = "CCN"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ccn_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ccn_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCcn
 		r.Kind = "Attachment"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ccn_bandwidth_limit", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ccn_bandwidth_limit", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCcn
 		r.Kind = "BandwidthLimit"
-		r.References["ccn_id"] = tjconfig.Reference{
+		r.References["ccn_id"] = config.Reference{
 			Type: "CCN",
 		}
 	})

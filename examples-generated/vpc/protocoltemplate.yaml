@@ -1,0 +1,15 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: ProtocolTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/protocoltemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: protocol-template-test
+    protocols:
+    - tcp:80
+    - udp:all
+    - icmp:10-30

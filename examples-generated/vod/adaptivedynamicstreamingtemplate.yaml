@@ -1,0 +1,45 @@
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: AdaptiveDynamicStreamingTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/adaptivedynamicstreamingtemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    comment: test
+    disableHigherVideoBitrate: false
+    disableHigherVideoResolution: false
+    drmType: SimpleAES
+    format: HLS
+    name: tf-adaptive
+    streamInfo:
+    - audio:
+      - bitrate: 128
+        codec: libfdk_aac
+        sampleRate: 32000
+      removeAudio: true
+      tehdConfig:
+      - type: TEHD-100
+      video:
+      - bitrate: 128
+        codec: libx264
+        fps: 3
+    subAppId: ${tonumber(split("#", tencentcloud_vod_sub_application.sub_application.id)[1])}
+
+---
+
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: SubApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/adaptivedynamicstreamingtemplate
+  labels:
+    testing.upbound.io/example-name: sub_application
+  name: sub-application
+spec:
+  forProvider:
+    description: this is sub application
+    name: adaptive-subapplication
+    status: "On"

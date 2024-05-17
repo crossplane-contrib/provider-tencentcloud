@@ -1,0 +1,28 @@
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: config
+  name: config
+spec:
+  forProvider:
+    excludePaths:
+    - type: Path
+      value: /data
+    - type: File
+      value: /file
+    extractRule:
+    - backtracking: -1
+      filterKeyRegex:
+      - key: key1
+        regex: value1
+      - key: key2
+        regex: value2
+      unMatchLogKey: config
+      unMatchUpLoadSwitch: true
+    logType: json_log
+    name: config_hello
+    output: 4d07fba0-b93e-4e0b-9a7f-d58542560bbb
+    path: /var/log/kubernetes

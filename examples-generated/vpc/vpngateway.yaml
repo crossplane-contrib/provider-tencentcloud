@@ -1,0 +1,19 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPNGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpngateway
+  labels:
+    testing.upbound.io/example-name: my_cgw
+  name: my-cgw
+spec:
+  forProvider:
+    bandwidth: 5
+    name: test
+    tags:
+      test: test
+    type: SSL
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    zone: ap-guangzhou-3

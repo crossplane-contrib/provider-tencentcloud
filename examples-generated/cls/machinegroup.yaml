@@ -1,0 +1,21 @@
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: MachineGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/machinegroup
+  labels:
+    testing.upbound.io/example-name: group
+  name: group
+spec:
+  forProvider:
+    groupName: group
+    machineGroupType:
+    - type: ip
+      values:
+      - 192.168.1.1
+      - 192.168.1.2
+    serviceLogging: true
+    tags:
+      test: test1
+    updateEndTime: "19:05:40"
+    updateStartTime: "17:05:40"

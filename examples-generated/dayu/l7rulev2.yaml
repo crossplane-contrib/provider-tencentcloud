@@ -1,0 +1,25 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: L7RuleV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/l7rulev2
+  labels:
+    testing.upbound.io/example-name: tencentcloud_dayu_l7_rule_v2
+  name: tencentcloud-dayu-l7-rule-v2
+spec:
+  forProvider:
+    resourceId: bgpip-000004xe
+    resourceIp: 119.28.217.162
+    resourceType: bgpip
+    rule:
+    - domain: github.com
+      keepEnable: false
+      keeptime: 0
+      lbType: 1
+      protocol: http
+      sourceList:
+      - source: 1.2.3.5
+        weight: 100
+      - source: 1.2.3.6
+        weight: 100
+      sourceType: 2

@@ -1,0 +1,23 @@
+apiVersion: ssl.tencentcloud.crossplane.io/v1alpha1
+kind: FreeCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ssl/v1alpha1/freecertificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    alias: example_free_cert
+    contactEmail: test@example.com
+    contactPhone: "18352458901"
+    csrEncryptAlgo: RSA
+    csrKeyParameter: "2048"
+    csrKeyPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    domain: example.com
+    dvAuthMethod: DNS_AUTO
+    packageType: "2"
+    validityPeriod: 12

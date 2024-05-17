@@ -1,0 +1,12 @@
+apiVersion: dnspod.tencentcloud.crossplane.io/v1alpha1
+kind: DomainInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dnspod/v1alpha1/domaininstance
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    domain: hello.com
+    remark: this is demo

@@ -1,0 +1,14 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: UsagePlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/usageplan
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    maxRequestNum: 100
+    maxRequestNumPreSec: 10
+    usagePlanDesc: desc.
+    usagePlanName: tf_example

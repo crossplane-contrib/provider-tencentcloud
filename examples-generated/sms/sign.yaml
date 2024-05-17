@@ -1,0 +1,16 @@
+apiVersion: sms.tencentcloud.crossplane.io/v1alpha1
+kind: Sign
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sms/v1alpha1/sign
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    documentType: 4
+    international: 0
+    proofImage: your_proof_image
+    signName: tf_example_sms_sign
+    signPurpose: 0
+    signType: 1

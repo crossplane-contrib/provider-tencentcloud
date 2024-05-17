@@ -1,0 +1,32 @@
+apiVersion: mongodb.tencentcloud.crossplane.io/v1alpha1
+kind: ShardingInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mongodb/v1alpha1/shardinginstance
+  labels:
+    testing.upbound.io/example-name: mongodb
+  name: mongodb
+spec:
+  forProvider:
+    availableZone: ap-guangzhou-3
+    engineVersion: MONGO_36_WT
+    instanceName: mongodb
+    machineType: HIO10G
+    memory: 4
+    mongosCpu: 1
+    mongosMemory: 2
+    mongosNodeNum: 3
+    nodesPerShard: 3
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    projectId: 0
+    shardQuantity: 2
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    volume: 100
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

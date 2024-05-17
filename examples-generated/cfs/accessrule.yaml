@@ -1,0 +1,17 @@
+apiVersion: cfs.tencentcloud.crossplane.io/v1alpha1
+kind: AccessRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cfs/v1alpha1/accessrule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    accessGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    authClientIp: 10.10.1.0/24
+    priority: 1
+    rwPermission: RO
+    userPermission: root_squash

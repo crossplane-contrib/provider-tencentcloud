@@ -1,0 +1,14 @@
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Realserver
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/realserver
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    ip: 1.1.1.1
+    name: ci-test-gaap-realserver
+    tags:
+      test: test

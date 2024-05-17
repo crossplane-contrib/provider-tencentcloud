@@ -1,0 +1,12 @@
+apiVersion: cfs.tencentcloud.crossplane.io/v1alpha1
+kind: AccessGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cfs/v1alpha1/accessgroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: desc.
+    name: tx_example

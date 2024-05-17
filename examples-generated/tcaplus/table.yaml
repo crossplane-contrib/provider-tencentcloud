@@ -1,0 +1,115 @@
+apiVersion: tcaplus.tencentcloud.crossplane.io/v1alpha1
+kind: Table
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcaplus/v1alpha1/table
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: test
+    idlId: ${tencentcloud_tcaplus_idl.example.id}
+    reservedReadCu: 1000
+    reservedVolume: 1
+    reservedWriteCu: 20
+    tableIdlType: PROTO
+    tableName: example_table
+    tableType: GENERIC
+    tablegroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: tcaplus.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcaplus/v1alpha1/table
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterName: tf_example_tcaplus_cluster
+    idlType: PROTO
+    oldPasswordExpireLast: 3600
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: tcaplus.tencentcloud.crossplane.io/v1alpha1
+kind: Idl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcaplus/v1alpha1/table
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    fileContent: |2
+          syntax = "proto2";
+          package myTcaplusTable;
+          import "tcaplusservice.optionv1.proto";
+          message example_table { # refer the table name
+              option(tcaplusservice.tcaplus_primary_key) = "uin,name,region";
+              required int64 uin = 1;
+              required string name = 2;
+              required int32 region = 3;
+              required int32 gamesvrid = 4;
+              optional int32 logintime = 5 [default = 1];
+              repeated int64 lockid = 6 [packed = true];
+              optional bool is_available = 7 [default = false];
+              optional pay_info pay = 8;
+          }
+
+          message pay_info {
+              required int64 pay_id = 1;
+              optional uint64 total_money = 2;
+              optional uint64 pay_times = 3;
+              optional pay_auth_info auth = 4;
+              message pay_auth_info {
+                  required string pay_keys = 1;
+                  optional int64 update_time = 2;
+              }
+          }
+    fileExtType: proto
+    fileName: tf_example_tcaplus_idl
+    fileType: PROTO
+    tablegroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: tcaplus.tencentcloud.crossplane.io/v1alpha1
+kind: TableGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcaplus/v1alpha1/table
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tablegroupName: tf_example_group_name

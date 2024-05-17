@@ -1,0 +1,29 @@
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: CosShipper
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/cosshipper
+  labels:
+    testing.upbound.io/example-name: shipper
+  name: shipper
+spec:
+  forProvider:
+    bucket: preset-scf-bucket-1308919341
+    compress:
+    - format: lzop
+    content:
+    - format: json
+      json:
+      - enableTag: true
+        metaFields:
+        - __FILENAME__
+        - __SOURCE__
+        - __TIMESTAMP__
+    interval: 300
+    maxSize: 200
+    partition: /%Y/%m/%d/%H/
+    prefix: ap-guangzhou-fffsasad-1649734752
+    shipperName: ap-guangzhou-fffsasad-1649734752
+    topicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

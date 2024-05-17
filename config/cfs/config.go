@@ -16,40 +16,35 @@ limitations under the License.
 
 package cfs
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCfs = "cfs"
 
 // Configure configures the cfs group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cfs_file_system", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_cfs_file_system", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCfs
 		r.Kind = "FileSystem"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
-		r.References["access_group_id"] = tjconfig.Reference{
+		r.References["access_group_id"] = config.Reference{
 			Type: "AccessGroup",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cfs_access_group", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cfs_access_group", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCfs
 		r.Kind = "AccessGroup"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cfs_access_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cfs_access_rule", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCfs
 		r.Kind = "AccessRule"
-		r.References["access_group_id"] = tjconfig.Reference{
+		r.References["access_group_id"] = config.Reference{
 			Type: "AccessGroup",
 		}
 	})

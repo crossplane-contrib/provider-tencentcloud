@@ -1,17 +1,5 @@
 /*
-Copyright 2021 The Crossplane Authors.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Copyright 2021 Upbound Inc.
 */
 
 package clients
@@ -25,9 +13,9 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crossplane/terrajet/pkg/terraform"
+	"github.com/crossplane/upjet/pkg/terraform"
 
-	"github.com/crossplane-contrib/provider-tencentcloud/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-tencentcloud/apis/v1beta1"
 )
 
 const (
@@ -58,12 +46,12 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if configRef == nil {
 			return ps, errors.New(errNoProviderConfig)
 		}
-		pc := &v1alpha1.ProviderConfig{}
+		pc := &v1beta1.ProviderConfig{}
 		if err := client.Get(ctx, types.NamespacedName{Name: configRef.Name}, pc); err != nil {
 			return ps, errors.Wrap(err, errGetProviderConfig)
 		}
 
-		t := resource.NewProviderConfigUsageTracker(client, &v1alpha1.ProviderConfigUsage{})
+		t := resource.NewProviderConfigUsageTracker(client, &v1beta1.ProviderConfigUsage{})
 		if err := t.Track(ctx, mg); err != nil {
 			return ps, errors.Wrap(err, errTrackUsage)
 		}
@@ -72,28 +60,20 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		tencentcloudCreds := map[string]string{}
-		if err := json.Unmarshal(data, &tencentcloudCreds); err != nil {
+		creds := map[string]string{}
+		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// set environment variables for sensitive provider configuration
-		// Deprecated: In shared gRPC mode we do not support injecting
-		// credentials via the environment variables. You should specify
-		// credentials via the Terraform main.tf.json instead.
-		/*ps.Env = []string{
-			fmt.Sprintf("%s=%s", envSecretId, tencentcloudCreds[keySecretId]),
-			fmt.Sprintf("%s=%s", envSecretKey, tencentcloudCreds[keySecretKey]),
-		}*/
-		// set credentials in Terraform provider configuration
+		// Set credentials in Terraform provider configuration.
 		ps.Configuration = map[string]interface{}{}
-		if v, ok := tencentcloudCreds[keySecretID]; ok {
+		if v, ok := creds[keySecretID]; ok {
 			ps.Configuration[keySecretID] = v
 		}
-		if v, ok := tencentcloudCreds[keySecretKey]; ok {
+		if v, ok := creds[keySecretKey]; ok {
 			ps.Configuration[keySecretKey] = v
 		}
-		if v, ok := tencentcloudCreds[keyRegion]; ok {
+		if v, ok := creds[keyRegion]; ok {
 			ps.Configuration[keyRegion] = v
 		}
 		return ps, nil

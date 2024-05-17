@@ -1,0 +1,23 @@
+apiVersion: tcaplus.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcaplus/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterName: tf_example_tcaplus_cluster
+    idlType: PROTO
+    oldPasswordExpireLast: 3600
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

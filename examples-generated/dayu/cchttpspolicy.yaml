@@ -1,0 +1,21 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: CcHttpsPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/cchttpspolicy
+  labels:
+    testing.upbound.io/example-name: test_policy
+  name: test-policy
+spec:
+  forProvider:
+    action: drop
+    domain: zhaoshaona.com
+    name: policy_test
+    resourceId: ${tencentcloud_dayu_l7_rule.test_rule.resource_id}
+    resourceType: ${tencentcloud_dayu_l7_rule.test_rule.resource_type}
+    ruleId: ${tencentcloud_dayu_l7_rule.test_rule.rule_id}
+    ruleList:
+    - operator: include
+      skey: cgi
+      value: "123"
+    switch: true

@@ -1,0 +1,144 @@
+apiVersion: sqlserver.tencentcloud.crossplane.io/v1alpha1
+kind: AccountDBAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accountName: tf_example_account
+    dbName: tf_example_db
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    privilege: ReadWrite
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: security_group
+  name: security-group
+spec:
+  forProvider:
+    description: desc.
+    name: sg-example
+
+---
+
+apiVersion: sqlserver.tencentcloud.crossplane.io/v1alpha1
+kind: Account
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: tf_example_account
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    remark: test-remark
+
+---
+
+apiVersion: sqlserver.tencentcloud.crossplane.io/v1alpha1
+kind: BasicInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.4.name}
+    chargeType: POSTPAID_BY_HOUR
+    cpu: 2
+    machineType: CLOUD_PREMIUM
+    maintenanceStartTime: "09:00"
+    maintenanceTimeSpan: 3
+    maintenanceWeekSet:
+    - 1
+    - 2
+    - 3
+    memory: 4
+    name: tf-example
+    projectId: 0
+    securityGroups:
+    - ${tencentcloud_security_group.security_group.id}
+    storage: 100
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      test: test
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: sqlserver.tencentcloud.crossplane.io/v1alpha1
+kind: DB
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    charset: Chinese_PRC_BIN
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: tf_example_db
+    remark: test-remark
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.4.name}
+    cidrBlock: 10.0.0.0/16
+    isMulticast: false
+    name: subnet-example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sqlserver/v1alpha1/accountdbattachment
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

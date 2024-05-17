@@ -1,0 +1,23 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Attachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/attachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    ruleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    targets:
+    - instanceId: ins-1flbqyp8
+      port: 80
+      weight: 10

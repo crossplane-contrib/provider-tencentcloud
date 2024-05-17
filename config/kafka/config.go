@@ -16,49 +16,43 @@ limitations under the License.
 
 package kafka
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupKafka = "kafka"
 
 // Configure configures the kafka group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_ckafka_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_ckafka_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupKafka
 		r.Kind = "Instance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ckafka_user", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ckafka_user", func(r *config.Resource) {
 		r.ShortGroup = shortGroupKafka
 		r.Kind = "User"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ckafka_topic", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ckafka_topic", func(r *config.Resource) {
 		r.ShortGroup = shortGroupKafka
 		r.Kind = "Topic"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ckafka_acl", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ckafka_acl", func(r *config.Resource) {
 		r.ShortGroup = shortGroupKafka
 		r.Kind = "Acl"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})

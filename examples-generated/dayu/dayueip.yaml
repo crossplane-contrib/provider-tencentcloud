@@ -1,0 +1,15 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: DayuEip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/dayueip
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    bindResourceId: ins-4m0jvxic
+    bindResourceRegion: hk
+    bindResourceType: cvm
+    eip: 162.62.163.50
+    resourceId: bgpip-000004xg

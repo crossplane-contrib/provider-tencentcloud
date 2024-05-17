@@ -1,0 +1,63 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: Api
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/api
+  labels:
+    testing.upbound.io/example-name: api
+  name: api
+spec:
+  forProvider:
+    apiDesc: desc.
+    apiName: tf-example
+    authType: NONE
+    enableCors: true
+    preLimit: 500
+    protocol: HTTP
+    releaseLimit: 500
+    requestConfigMethod: GET
+    requestConfigPath: /user/info
+    requestParameters:
+    - defaultValue: tom
+      desc: who are you?
+      name: name
+      position: QUERY
+      required: true
+      type: string
+    responseErrorCodes:
+    - code: 500
+      convertedCode: 5000
+      desc: system error code
+      msg: system error
+      needConvert: true
+    responseFailExample: fail
+    responseSuccessExample: success
+    responseType: HTML
+    serviceConfigMethod: GET
+    serviceConfigPath: /user
+    serviceConfigTimeout: 15
+    serviceConfigType: HTTP
+    serviceConfigUrl: http://www.qq.com
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    testLimit: 500
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: Service
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/api
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    ipVersion: IPv4
+    netType:
+    - INNER
+    - OUTER
+    protocol: http&https
+    serviceName: tf-example

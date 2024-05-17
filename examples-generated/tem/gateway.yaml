@@ -1,0 +1,33 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: Gateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/gateway
+  labels:
+    testing.upbound.io/example-name: gateway
+  name: gateway
+spec:
+  forProvider:
+    ingress:
+    - addressIpVersion: IPV4
+      environmentId: en-853mggjm
+      ingressName: demo
+      mixed: false
+      rewriteType: NONE
+      rules:
+      - host: test.com
+        http:
+        - paths:
+          - backend:
+            - serviceName: demo
+              servicePort: 80
+            path: /
+        protocol: http
+      - host: hello.com
+        http:
+        - paths:
+          - backend:
+            - serviceName: hello
+              servicePort: 36000
+            path: /
+        protocol: http

@@ -16,22 +16,18 @@ limitations under the License.
 
 package ssm
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupSsm = "ssm"
 
 // Configure configures the ssm group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_ssm_secret", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_ssm_secret", func(r *config.Resource) {
 		r.ShortGroup = shortGroupSsm
 		r.Kind = "Secret"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ssm_secret_version", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ssm_secret_version", func(r *config.Resource) {
 		r.ShortGroup = shortGroupSsm
 		r.Kind = "SecretVersion"
 	})

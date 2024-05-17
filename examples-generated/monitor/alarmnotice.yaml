@@ -1,0 +1,51 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: AlarmNotice
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/alarmnotice
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: test_alarm_notice
+    noticeLanguage: zh-CN
+    noticeType: ALL
+    urlNotices:
+    - endTime: 86399
+      isValid: 0
+      startTime: 0
+      url: https://www.mytest.com/validate
+      weekday:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+    userNotices:
+    - endTime: 86399
+      groupIds: []
+      needPhoneArriveNotice: 1
+      noticeWay:
+      - EMAIL
+      - SMS
+      phoneCallType: CIRCLE
+      phoneCircleInterval: 180
+      phoneCircleTimes: 2
+      phoneInnerInterval: 180
+      phoneOrder: []
+      receiverType: USER
+      startTime: 0
+      userIds:
+      - 11082189
+      - 11082190
+      weekday:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7

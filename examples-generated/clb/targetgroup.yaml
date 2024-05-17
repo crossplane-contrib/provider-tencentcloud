@@ -1,0 +1,12 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: TargetGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroup
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    port: 33
+    targetGroupName: test

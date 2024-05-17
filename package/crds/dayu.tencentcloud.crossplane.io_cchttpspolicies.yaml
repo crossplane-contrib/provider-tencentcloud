@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: cchttpspolicies.dayu.tencentcloud.crossplane.io
 spec:
   group: dayu.tencentcloud.crossplane.io
@@ -12,9 +11,9 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
-    kind: CcHTTPSPolicy
-    listKind: CcHTTPSPolicyList
+    - tencentcloud
+    kind: CcHttpsPolicy
+    listKind: CcHttpsPolicyList
     plural: cchttpspolicies
     singular: cchttpspolicy
   scope: Cluster
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CcHTTPSPolicy is the Schema for the CcHTTPSPolicys API
+        description: CcHttpsPolicy is the Schema for the CcHttpsPolicys API. Use this
+          resource to create a dayu CC self-define https policy
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,13 +50,17 @@ spec:
           metadata:
             type: object
           spec:
-            description: CcHTTPSPolicySpec defines the desired state of CcHTTPSPolicy
+            description: CcHttpsPolicySpec defines the desired state of CcHttpsPolicy
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,99 +68,166 @@ spec:
               forProvider:
                 properties:
                   action:
-                    description: Action mode. Valid values are `alg` and `drop`.
+                    description: Action mode. Valid values are alg and drop. Action
+                      mode. Valid values are `alg` and `drop`.
                     type: string
                   domain:
                     description: Domain that the CC self-define https policy works
-                      for, only valid when `protocol` is `https`.
+                      for, only valid when protocol is https. Domain that the CC self-define
+                      https policy works for, only valid when `protocol` is `https`.
+                    type: string
+                  name:
+                    description: Name of the CC self-define https policy. Length should
+                      between 1 and 20. Name of the CC self-define https policy. Length
+                      should between 1 and 20.
                     type: string
                   resourceId:
                     description: ID of the resource that the CC self-define https
-                      policy works for.
+                      policy works for. ID of the resource that the CC self-define
+                      https policy works for.
                     type: string
                   resourceType:
                     description: Type of the resource that the CC self-define https
-                      policy works for, valid value is `bgpip`.
+                      policy works for, valid value is bgpip. Type of the resource
+                      that the CC self-define https policy works for, valid value
+                      is `bgpip`.
                     type: string
                   ruleId:
                     description: Rule id of the domain that the CC self-define https
-                      policy works for, only valid when `protocol` is `https`.
+                      policy works for, only valid when protocol is https. Rule id
+                      of the domain that the CC self-define https policy works for,
+                      only valid when `protocol` is `https`.
                     type: string
                   ruleList:
-                    description: Rule list of the CC self-define https policy.
+                    description: Rule list of the CC self-define https policy. Rule
+                      list of the CC self-define https policy.
                     items:
                       properties:
                         operator:
-                          description: Operator of the rule. Valid values are `include`
+                          description: Operator of the rule. Valid values are include
+                            and equal. Operator of the rule. Valid values are `include`
                             and `equal`.
                           type: string
                         skey:
-                          description: Key of the rule. Valid values are `cgi`, `ua`
+                          description: Key of the rule. Valid values are cgi, ua and
+                            referer. Key of the rule. Valid values are `cgi`, `ua`
                             and `referer`.
                           type: string
                         value:
                           description: Rule value, then length should be less than
+                            31 bytes. Rule value, then length should be less than
                             31 bytes.
                           type: string
-                      required:
-                      - operator
-                      - skey
-                      - value
                       type: object
                     type: array
                   switch:
                     description: Indicate the CC self-define https policy takes effect
+                      or not. Indicate the CC self-define https policy takes effect
                       or not.
                     type: boolean
-                required:
-                - domain
-                - resourceId
-                - resourceType
-                - ruleId
-                - ruleList
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  action:
+                    description: Action mode. Valid values are alg and drop. Action
+                      mode. Valid values are `alg` and `drop`.
+                    type: string
+                  domain:
+                    description: Domain that the CC self-define https policy works
+                      for, only valid when protocol is https. Domain that the CC self-define
+                      https policy works for, only valid when `protocol` is `https`.
+                    type: string
+                  name:
+                    description: Name of the CC self-define https policy. Length should
+                      between 1 and 20. Name of the CC self-define https policy. Length
+                      should between 1 and 20.
+                    type: string
+                  resourceId:
+                    description: ID of the resource that the CC self-define https
+                      policy works for. ID of the resource that the CC self-define
+                      https policy works for.
+                    type: string
+                  resourceType:
+                    description: Type of the resource that the CC self-define https
+                      policy works for, valid value is bgpip. Type of the resource
+                      that the CC self-define https policy works for, valid value
+                      is `bgpip`.
+                    type: string
+                  ruleId:
+                    description: Rule id of the domain that the CC self-define https
+                      policy works for, only valid when protocol is https. Rule id
+                      of the domain that the CC self-define https policy works for,
+                      only valid when `protocol` is `https`.
+                    type: string
+                  ruleList:
+                    description: Rule list of the CC self-define https policy. Rule
+                      list of the CC self-define https policy.
+                    items:
+                      properties:
+                        operator:
+                          description: Operator of the rule. Valid values are include
+                            and equal. Operator of the rule. Valid values are `include`
+                            and `equal`.
+                          type: string
+                        skey:
+                          description: Key of the rule. Valid values are cgi, ua and
+                            referer. Key of the rule. Valid values are `cgi`, `ua`
+                            and `referer`.
+                          type: string
+                        value:
+                          description: Rule value, then length should be less than
+                            31 bytes. Rule value, then length should be less than
+                            31 bytes.
+                          type: string
+                      type: object
+                    type: array
+                  switch:
+                    description: Indicate the CC self-define https policy takes effect
+                      or not. Indicate the CC self-define https policy takes effect
+                      or not.
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -286,21 +357,111 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.domain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.domain)
+                || (has(self.initProvider) && has(self.initProvider.domain))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.resourceId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceId)
+                || (has(self.initProvider) && has(self.initProvider.resourceId))'
+            - message: spec.forProvider.resourceType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceType)
+                || (has(self.initProvider) && has(self.initProvider.resourceType))'
+            - message: spec.forProvider.ruleId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.ruleId)
+                || (has(self.initProvider) && has(self.initProvider.ruleId))'
+            - message: spec.forProvider.ruleList is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.ruleList)
+                || (has(self.initProvider) && has(self.initProvider.ruleList))'
           status:
-            description: CcHTTPSPolicyStatus defines the observed state of CcHTTPSPolicy.
+            description: CcHttpsPolicyStatus defines the observed state of CcHttpsPolicy.
             properties:
               atProvider:
                 properties:
+                  action:
+                    description: Action mode. Valid values are alg and drop. Action
+                      mode. Valid values are `alg` and `drop`.
+                    type: string
                   createTime:
+                    description: Create time of the CC self-define https policy. Create
+                      time of the CC self-define https policy.
+                    type: string
+                  domain:
+                    description: Domain that the CC self-define https policy works
+                      for, only valid when protocol is https. Domain that the CC self-define
+                      https policy works for, only valid when `protocol` is `https`.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
                   ipList:
+                    description: Ip of the CC self-define https policy. Ip of the
+                      CC self-define https policy.
                     items:
                       type: string
                     type: array
-                  policyId:
+                  name:
+                    description: Name of the CC self-define https policy. Length should
+                      between 1 and 20. Name of the CC self-define https policy. Length
+                      should between 1 and 20.
                     type: string
+                  policyId:
+                    description: Id of the CC self-define https policy. Id of the
+                      CC self-define https policy.
+                    type: string
+                  resourceId:
+                    description: ID of the resource that the CC self-define https
+                      policy works for. ID of the resource that the CC self-define
+                      https policy works for.
+                    type: string
+                  resourceType:
+                    description: Type of the resource that the CC self-define https
+                      policy works for, valid value is bgpip. Type of the resource
+                      that the CC self-define https policy works for, valid value
+                      is `bgpip`.
+                    type: string
+                  ruleId:
+                    description: Rule id of the domain that the CC self-define https
+                      policy works for, only valid when protocol is https. Rule id
+                      of the domain that the CC self-define https policy works for,
+                      only valid when `protocol` is `https`.
+                    type: string
+                  ruleList:
+                    description: Rule list of the CC self-define https policy. Rule
+                      list of the CC self-define https policy.
+                    items:
+                      properties:
+                        operator:
+                          description: Operator of the rule. Valid values are include
+                            and equal. Operator of the rule. Valid values are `include`
+                            and `equal`.
+                          type: string
+                        skey:
+                          description: Key of the rule. Valid values are cgi, ua and
+                            referer. Key of the rule. Valid values are `cgi`, `ua`
+                            and `referer`.
+                          type: string
+                        value:
+                          description: Rule value, then length should be less than
+                            31 bytes. Rule value, then length should be less than
+                            31 bytes.
+                          type: string
+                      type: object
+                    type: array
+                  switch:
+                    description: Indicate the CC self-define https policy takes effect
+                      or not. Indicate the CC self-define https policy takes effect
+                      or not.
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -335,6 +496,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -343,9 +507,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

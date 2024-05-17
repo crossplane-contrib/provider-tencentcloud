@@ -16,55 +16,49 @@ limitations under the License.
 
 package tcaplus
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupTcaplus = "tcaplus"
 
 // Configure configures the tcaplus group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_tcaplus_cluster", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_tcaplus_cluster", func(r *config.Resource) {
 		r.ShortGroup = shortGroupTcaplus
 		r.Kind = "Cluster"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcaplus_tablegroup", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcaplus_tablegroup", func(r *config.Resource) {
 		r.ShortGroup = shortGroupTcaplus
 		r.Kind = "TableGroup"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcaplus_table", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcaplus_table", func(r *config.Resource) {
 		r.ShortGroup = shortGroupTcaplus
 		r.Kind = "Table"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}
-		r.References["tablegroup_id"] = tjconfig.Reference{
+		r.References["tablegroup_id"] = config.Reference{
 			Type: "TableGroup",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcaplus_idl", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcaplus_idl", func(r *config.Resource) {
 		r.ShortGroup = shortGroupTcaplus
 		r.Kind = "Idl"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}
-		r.References["tablegroup_id"] = tjconfig.Reference{
+		r.References["tablegroup_id"] = config.Reference{
 			Type: "TableGroup",
 		}
 	})

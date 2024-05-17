@@ -1,0 +1,82 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: DdosPolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/ddospolicyv2
+  labels:
+    testing.upbound.io/example-name: ddos_v2
+  name: ddos-v2
+spec:
+  forProvider:
+    acls:
+    - action: transmit
+      dPortEnd: 10
+      dPortStart: 1
+      forwardProtocol: all
+      priority: 9
+      sPortEnd: 20
+      sPortStart: 10
+    blackWhiteIps:
+    - ip: 1.2.3.4
+      ipType: black
+    business: bgpip
+    ddosAi: "on"
+    ddosConnectLimit:
+    - badConnThreshold: 30
+      connTimeout: 30
+      dstConnLimit: 21
+      dstNewLimit: 20
+      nullConnEnable: 1
+      sdConnLimit: 11
+      sdNewLimit: 10
+      synLimit: 20
+      synRate: 10
+    ddosGeoIpBlockConfig:
+    - action: drop
+      areaList:
+      - "100001"
+      regionType: customized
+    ddosLevel: low
+    ddosSpeedLimitConfig:
+    - bandwidth: 20
+      dstPortList: "10"
+      mode: 1
+      packetRate: 10
+      protocolList: TCP
+    ddosThreshold: "100"
+    packetFilters:
+    - action: drop
+      dPortEnd: 20
+      dPortStart: 20
+      depth: 2
+      depth2: 3
+      isNot: 0
+      isNot2: 0
+      matchBegin: begin_l3
+      matchBegin2: begin_l3
+      matchLogic: and
+      matchType: pcre
+      matchType2: pcre
+      offset: 1
+      offset2: 2
+      pktlenMax: 30
+      pktlenMin: 30
+      protocol: all
+      sPortEnd: 10
+      sPortStart: 10
+      str: "12"
+      str2: "30"
+    protocolBlockConfig:
+    - dropIcmp: 1
+      dropOther: 0
+      dropTcp: 0
+      dropUdp: 0
+    resourceId: bgpip-000004xf
+    waterPrintConfig:
+    - listeners:
+      - forwardProtocol: TCP
+        frontendPort: 90
+        frontendPortEnd: 90
+      offset: 1
+      openStatus: 1
+      verify: checkall

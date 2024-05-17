@@ -16,16 +16,13 @@ limitations under the License.
 
 package cat
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCat = "cat"
 
 // Configure configures the cat group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cat_task_set", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_cat_task_set", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCat
 		r.Kind = "TaskSet"
 	})

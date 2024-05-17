@@ -1,0 +1,13 @@
+apiVersion: mariadb.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroups
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mariadb/v1alpha1/securitygroups
+  labels:
+    testing.upbound.io/example-name: security_groups
+  name: security-groups
+spec:
+  forProvider:
+    instanceId: tdsql-4pzs5b67
+    product: mariadb
+    securityGroupId: sg-7kpsbxdb

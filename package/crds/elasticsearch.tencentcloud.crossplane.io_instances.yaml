@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: instances.elasticsearch.tencentcloud.crossplane.io
 spec:
   group: elasticsearch.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Instance
     listKind: InstanceList
     plural: instances
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API
+        description: Instance is the Schema for the Instances API. Provides an elasticsearch
+          instance resource.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,38 +69,51 @@ spec:
                 properties:
                   availabilityZone:
                     description: Availability zone. When create multi-az es, this
-                      parameter must be omitted or `-`.
+                      parameter must be omitted or -. Availability zone. When create
+                      multi-az es, this parameter must be omitted or `-`.
                     type: string
                   basicSecurityType:
                     description: 'Whether to enable X-Pack security authentication
-                      in Basic Edition 6.8 and above. Valid values are `1` and `2`.
-                      `1` is disabled, `2` is enabled, and default value is `1`. Notice:
-                      this parameter is only take effect on `basic` license.'
+                      in Basic Edition 6.8 and above. Valid values are 1 and 2. 1
+                      is disabled, 2 is enabled, and default value is 1. Notice: this
+                      parameter is only take effect on basic license. Whether to enable
+                      X-Pack security authentication in Basic Edition 6.8 and above.
+                      Valid values are `1` and `2`. `1` is disabled, `2` is enabled,
+                      and default value is `1`. Notice: this parameter is only take
+                      effect on `basic` license.'
                     type: number
                   chargePeriod:
                     description: 'The tenancy of the prepaid instance, and uint is
-                      month. NOTE: it only works when charge_type is set to `PREPAID`.'
+                      month. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy of the prepaid instance, and uint is month. NOTE:
+                      it only works when charge_type is set to `PREPAID`.'
                     type: number
                   chargeType:
-                    description: The charge type of instance. Valid values are `PREPAID`
-                      and `POSTPAID_BY_HOUR`.
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. The charge type of instance. Valid values
+                      are `PREPAID` and `POSTPAID_BY_HOUR`.
                     type: string
                   deployMode:
-                    description: Cluster deployment mode. Valid values are `0` and
+                    description: Cluster deployment mode. Valid values are 0 and 1.
+                      0 is single-AZ deployment, and 1 is multi-AZ deployment. Default
+                      value is 0. Cluster deployment mode. Valid values are `0` and
                       `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment.
                       Default value is `0`.
                     type: number
                   esAcl:
-                    description: Kibana Access Control Configuration.
+                    description: Kibana Access Control Configuration. Kibana Access
+                      Control Configuration.
                     items:
                       properties:
                         blackList:
-                          description: Blacklist of kibana access.
+                          description: Blacklist of kibana access. Blacklist of kibana
+                            access.
                           items:
                             type: string
                           type: array
                         whiteList:
-                          description: Whitelist of kibana access.
+                          description: Whitelist of kibana access. Whitelist of kibana
+                            access.
                           items:
                             type: string
                           type: array
@@ -105,66 +122,79 @@ spec:
                   instanceName:
                     description: Name of the instance, which can contain 1 to 50 English
                       letters, Chinese characters, digits, dashes(-), or underscores(_).
+                      Name of the instance, which can contain 1 to 50 English letters,
+                      Chinese characters, digits, dashes(-), or underscores(_).
                     type: string
                   licenseType:
-                    description: License type. Valid values are `oss`, `basic` and
-                      `platinum`. The default value is `platinum`.
+                    description: License type. Valid values are oss, basic and platinum.
+                      The default value is platinum. License type. Valid values are
+                      `oss`, `basic` and `platinum`. The default value is `platinum`.
                     type: string
                   multiZoneInfos:
                     description: Details of AZs in multi-AZ deployment mode (which
-                      is required when deploy_mode is `1`).
+                      is required when deploy_mode is 1). Details of AZs in multi-AZ
+                      deployment mode (which is required when deploy_mode is `1`).
                     items:
                       properties:
                         availabilityZone:
-                          description: Availability zone.
+                          description: Availability zone. When create multi-az es,
+                            this parameter must be omitted or -. Availability zone.
                           type: string
                         subnetId:
-                          description: The ID of a VPC subnetwork.
+                          description: The ID of a VPC subnetwork. When create multi-az
+                            es, this parameter must be omitted or -. The ID of a VPC
+                            subnetwork.
                           type: string
-                      required:
-                      - availabilityZone
-                      - subnetId
                       type: object
                     type: array
                   nodeInfoList:
                     description: Node information list, which is used to describe
                       the specification information of various types of nodes in the
                       cluster, such as node type, node quantity, node specification,
-                      disk type, and disk size.
+                      disk type, and disk size. Node information list, which is used
+                      to describe the specification information of various types of
+                      nodes in the cluster, such as node type, node quantity, node
+                      specification, disk type, and disk size.
                     items:
                       properties:
                         diskSize:
                           description: Node disk size. Unit is GB, and default value
+                            is 100. Node disk size. Unit is GB, and default value
                             is `100`.
                           type: number
                         diskType:
-                          description: Node disk type. Valid values are `CLOUD_SSD`
-                            and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is
-                            `CLOUD_SSD`.
+                          description: Node disk type. Valid values are CLOUD_SSD
+                            and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
+                            Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`,
+                            `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
                           type: string
                         encrypt:
-                          description: Decides to encrypt this disk or not.
+                          description: Decides to encrypt this disk or not. Decides
+                            to encrypt this disk or not.
                           type: boolean
                         nodeNum:
-                          description: Number of nodes.
+                          description: Number of nodes. Number of nodes.
                           type: number
                         nodeType:
                           description: Node specification, and valid values refer
-                            to [document of tencentcloud](https://intl.cloud.tencent.com/document/product/845/18376).
+                            to document of tencentcloud. Node specification, and valid
+                            values refer to [document of tencentcloud](https://intl.cloud.tencent.com/document/product/845/18376).
                           type: string
                         type:
-                          description: Node type. Valid values are `hotData`, `warmData`
-                            and `dedicatedMaster`. The default value is 'hotData`.
+                          description: Node type. Valid values are hotData, warmData
+                            and dedicatedMaster. The default value is 'hotData`. Node
+                            type. Valid values are `hotData`, `warmData` and `dedicatedMaster`.
+                            The default value is 'hotData`.
                           type: string
-                      required:
-                      - nodeNum
-                      - nodeType
                       type: object
                     type: array
                   passwordSecretRef:
                     description: Password to an instance, the password needs to be
                       8 to 16 characters, including at least two items ([a-z,A-Z],
-                      [0-9] and [-!@#$%&^*+=_:;,.?] special symbols.
+                      [0-9] and [-!@#$%&^*+=_:;,.?] special symbols. Password to an
+                      instance, the password needs to be 8 to 16 characters, including
+                      at least two items ([a-z,A-Z], [0-9] and [-!@#$%&^*+=_:;,.?]
+                      special symbols.
                     properties:
                       key:
                         description: The key to select.
@@ -183,15 +213,19 @@ spec:
                   renewFlag:
                     description: 'When enabled, the instance will be renew automatically
                       when it reach the end of the prepaid tenancy. Valid values are
-                      `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works
-                      when charge_type is set to `PREPAID`.'
+                      RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when
+                      charge_type is set to PREPAID. When enabled, the instance will
+                      be renew automatically when it reach the end of the prepaid
+                      tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`.
+                      NOTE: it only works when charge_type is set to `PREPAID`.'
                     type: string
                   subnetId:
                     description: The ID of a VPC subnetwork. When create multi-az
-                      es, this parameter must be omitted or `-`.
+                      es, this parameter must be omitted or -. The ID of a VPC subnetwork.
+                      When create multi-az es, this parameter must be omitted or `-`.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -225,7 +259,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -267,17 +301,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: A mapping of tags to assign to the instance. For
-                      tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                      tag limits, please refer to Use Limits. A mapping of tags to
+                      assign to the instance. For tag limits, please refer to [Use
+                      Limits](https://intl.cloud.tencent.com/document/product/651/13354).
                     type: object
                   version:
-                    description: Version of the instance. Valid values are `5.6.4`,
-                      `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
+                    description: Version of the instance. Valid values are 5.6.4,
+                      6.4.3, 6.8.2, 7.5.1 and 7.10.1. Version of the instance. Valid
+                      values are `5.6.4`, `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
                     type: string
                   vpcId:
-                    description: The ID of a VPC network.
+                    description: The ID of a VPC network. The ID of a VPC network.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -310,8 +347,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -350,67 +387,219 @@ spec:
                         type: object
                     type: object
                   webNodeTypeInfo:
-                    description: Visual node configuration.
+                    description: Visual node configuration. Visual node configuration.
                     items:
                       properties:
                         nodeNum:
-                          description: Visual node number.
+                          description: Number of nodes. Visual node number.
                           type: number
                         nodeType:
-                          description: Visual node specifications.
+                          description: Node specification, and valid values refer
+                            to document of tencentcloud. Visual node specifications.
                           type: string
-                      required:
-                      - nodeNum
-                      - nodeType
                       type: object
                     type: array
-                required:
-                - nodeInfoList
-                - passwordSecretRef
-                - version
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  availabilityZone:
+                    description: Availability zone. When create multi-az es, this
+                      parameter must be omitted or -. Availability zone. When create
+                      multi-az es, this parameter must be omitted or `-`.
+                    type: string
+                  basicSecurityType:
+                    description: 'Whether to enable X-Pack security authentication
+                      in Basic Edition 6.8 and above. Valid values are 1 and 2. 1
+                      is disabled, 2 is enabled, and default value is 1. Notice: this
+                      parameter is only take effect on basic license. Whether to enable
+                      X-Pack security authentication in Basic Edition 6.8 and above.
+                      Valid values are `1` and `2`. `1` is disabled, `2` is enabled,
+                      and default value is `1`. Notice: this parameter is only take
+                      effect on `basic` license.'
+                    type: number
+                  chargePeriod:
+                    description: 'The tenancy of the prepaid instance, and uint is
+                      month. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy of the prepaid instance, and uint is month. NOTE:
+                      it only works when charge_type is set to `PREPAID`.'
+                    type: number
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. The charge type of instance. Valid values
+                      are `PREPAID` and `POSTPAID_BY_HOUR`.
+                    type: string
+                  deployMode:
+                    description: Cluster deployment mode. Valid values are 0 and 1.
+                      0 is single-AZ deployment, and 1 is multi-AZ deployment. Default
+                      value is 0. Cluster deployment mode. Valid values are `0` and
+                      `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment.
+                      Default value is `0`.
+                    type: number
+                  esAcl:
+                    description: Kibana Access Control Configuration. Kibana Access
+                      Control Configuration.
+                    items:
+                      properties:
+                        blackList:
+                          description: Blacklist of kibana access. Blacklist of kibana
+                            access.
+                          items:
+                            type: string
+                          type: array
+                        whiteList:
+                          description: Whitelist of kibana access. Whitelist of kibana
+                            access.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  instanceName:
+                    description: Name of the instance, which can contain 1 to 50 English
+                      letters, Chinese characters, digits, dashes(-), or underscores(_).
+                      Name of the instance, which can contain 1 to 50 English letters,
+                      Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  licenseType:
+                    description: License type. Valid values are oss, basic and platinum.
+                      The default value is platinum. License type. Valid values are
+                      `oss`, `basic` and `platinum`. The default value is `platinum`.
+                    type: string
+                  multiZoneInfos:
+                    description: Details of AZs in multi-AZ deployment mode (which
+                      is required when deploy_mode is 1). Details of AZs in multi-AZ
+                      deployment mode (which is required when deploy_mode is `1`).
+                    items:
+                      properties:
+                        availabilityZone:
+                          description: Availability zone. When create multi-az es,
+                            this parameter must be omitted or -. Availability zone.
+                          type: string
+                        subnetId:
+                          description: The ID of a VPC subnetwork. When create multi-az
+                            es, this parameter must be omitted or -. The ID of a VPC
+                            subnetwork.
+                          type: string
+                      type: object
+                    type: array
+                  nodeInfoList:
+                    description: Node information list, which is used to describe
+                      the specification information of various types of nodes in the
+                      cluster, such as node type, node quantity, node specification,
+                      disk type, and disk size. Node information list, which is used
+                      to describe the specification information of various types of
+                      nodes in the cluster, such as node type, node quantity, node
+                      specification, disk type, and disk size.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Node disk size. Unit is GB, and default value
+                            is 100. Node disk size. Unit is GB, and default value
+                            is `100`.
+                          type: number
+                        diskType:
+                          description: Node disk type. Valid values are CLOUD_SSD
+                            and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
+                            Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`,
+                            `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+                          type: string
+                        encrypt:
+                          description: Decides to encrypt this disk or not. Decides
+                            to encrypt this disk or not.
+                          type: boolean
+                        nodeNum:
+                          description: Number of nodes. Number of nodes.
+                          type: number
+                        nodeType:
+                          description: Node specification, and valid values refer
+                            to document of tencentcloud. Node specification, and valid
+                            values refer to [document of tencentcloud](https://intl.cloud.tencent.com/document/product/845/18376).
+                          type: string
+                        type:
+                          description: Node type. Valid values are hotData, warmData
+                            and dedicatedMaster. The default value is 'hotData`. Node
+                            type. Valid values are `hotData`, `warmData` and `dedicatedMaster`.
+                            The default value is 'hotData`.
+                          type: string
+                      type: object
+                    type: array
+                  renewFlag:
+                    description: 'When enabled, the instance will be renew automatically
+                      when it reach the end of the prepaid tenancy. Valid values are
+                      RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when
+                      charge_type is set to PREPAID. When enabled, the instance will
+                      be renew automatically when it reach the end of the prepaid
+                      tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`.
+                      NOTE: it only works when charge_type is set to `PREPAID`.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A mapping of tags to assign to the instance. For
+                      tag limits, please refer to Use Limits. A mapping of tags to
+                      assign to the instance. For tag limits, please refer to [Use
+                      Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                    type: object
+                  version:
+                    description: Version of the instance. Valid values are 5.6.4,
+                      6.4.3, 6.8.2, 7.5.1 and 7.10.1. Version of the instance. Valid
+                      values are `5.6.4`, `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
+                    type: string
+                  webNodeTypeInfo:
+                    description: Visual node configuration. Visual node configuration.
+                    items:
+                      properties:
+                        nodeNum:
+                          description: Number of nodes. Visual node number.
+                          type: number
+                        nodeType:
+                          description: Node specification, and valid values refer
+                            to document of tencentcloud. Visual node specifications.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -540,23 +729,205 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.nodeInfoList is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.nodeInfoList)
+                || (has(self.initProvider) && has(self.initProvider.nodeInfoList))'
+            - message: spec.forProvider.passwordSecretRef is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)'
+            - message: spec.forProvider.version is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.version)
+                || (has(self.initProvider) && has(self.initProvider.version))'
           status:
             description: InstanceStatus defines the observed state of Instance.
             properties:
               atProvider:
                 properties:
-                  createTime:
+                  availabilityZone:
+                    description: Availability zone. When create multi-az es, this
+                      parameter must be omitted or -. Availability zone. When create
+                      multi-az es, this parameter must be omitted or `-`.
                     type: string
+                  basicSecurityType:
+                    description: 'Whether to enable X-Pack security authentication
+                      in Basic Edition 6.8 and above. Valid values are 1 and 2. 1
+                      is disabled, 2 is enabled, and default value is 1. Notice: this
+                      parameter is only take effect on basic license. Whether to enable
+                      X-Pack security authentication in Basic Edition 6.8 and above.
+                      Valid values are `1` and `2`. `1` is disabled, `2` is enabled,
+                      and default value is `1`. Notice: this parameter is only take
+                      effect on `basic` license.'
+                    type: number
+                  chargePeriod:
+                    description: 'The tenancy of the prepaid instance, and uint is
+                      month. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy of the prepaid instance, and uint is month. NOTE:
+                      it only works when charge_type is set to `PREPAID`.'
+                    type: number
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. The charge type of instance. Valid values
+                      are `PREPAID` and `POSTPAID_BY_HOUR`.
+                    type: string
+                  createTime:
+                    description: Instance creation time. Instance creation time.
+                    type: string
+                  deployMode:
+                    description: Cluster deployment mode. Valid values are 0 and 1.
+                      0 is single-AZ deployment, and 1 is multi-AZ deployment. Default
+                      value is 0. Cluster deployment mode. Valid values are `0` and
+                      `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment.
+                      Default value is `0`.
+                    type: number
                   elasticsearchDomain:
+                    description: Elasticsearch domain name. Elasticsearch domain name.
                     type: string
                   elasticsearchPort:
+                    description: Elasticsearch port. Elasticsearch port.
                     type: number
                   elasticsearchVip:
+                    description: Elasticsearch VIP. Elasticsearch VIP.
                     type: string
+                  esAcl:
+                    description: Kibana Access Control Configuration. Kibana Access
+                      Control Configuration.
+                    items:
+                      properties:
+                        blackList:
+                          description: Blacklist of kibana access. Blacklist of kibana
+                            access.
+                          items:
+                            type: string
+                          type: array
+                        whiteList:
+                          description: Whitelist of kibana access. Whitelist of kibana
+                            access.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
                   id:
+                    description: ID of the resource.
+                    type: string
+                  instanceName:
+                    description: Name of the instance, which can contain 1 to 50 English
+                      letters, Chinese characters, digits, dashes(-), or underscores(_).
+                      Name of the instance, which can contain 1 to 50 English letters,
+                      Chinese characters, digits, dashes(-), or underscores(_).
                     type: string
                   kibanaUrl:
+                    description: Kibana access URL. Kibana access URL.
                     type: string
+                  licenseType:
+                    description: License type. Valid values are oss, basic and platinum.
+                      The default value is platinum. License type. Valid values are
+                      `oss`, `basic` and `platinum`. The default value is `platinum`.
+                    type: string
+                  multiZoneInfos:
+                    description: Details of AZs in multi-AZ deployment mode (which
+                      is required when deploy_mode is 1). Details of AZs in multi-AZ
+                      deployment mode (which is required when deploy_mode is `1`).
+                    items:
+                      properties:
+                        availabilityZone:
+                          description: Availability zone. When create multi-az es,
+                            this parameter must be omitted or -. Availability zone.
+                          type: string
+                        subnetId:
+                          description: The ID of a VPC subnetwork. When create multi-az
+                            es, this parameter must be omitted or -. The ID of a VPC
+                            subnetwork.
+                          type: string
+                      type: object
+                    type: array
+                  nodeInfoList:
+                    description: Node information list, which is used to describe
+                      the specification information of various types of nodes in the
+                      cluster, such as node type, node quantity, node specification,
+                      disk type, and disk size. Node information list, which is used
+                      to describe the specification information of various types of
+                      nodes in the cluster, such as node type, node quantity, node
+                      specification, disk type, and disk size.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Node disk size. Unit is GB, and default value
+                            is 100. Node disk size. Unit is GB, and default value
+                            is `100`.
+                          type: number
+                        diskType:
+                          description: Node disk type. Valid values are CLOUD_SSD
+                            and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
+                            Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`,
+                            `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+                          type: string
+                        encrypt:
+                          description: Decides to encrypt this disk or not. Decides
+                            to encrypt this disk or not.
+                          type: boolean
+                        nodeNum:
+                          description: Number of nodes. Number of nodes.
+                          type: number
+                        nodeType:
+                          description: Node specification, and valid values refer
+                            to document of tencentcloud. Node specification, and valid
+                            values refer to [document of tencentcloud](https://intl.cloud.tencent.com/document/product/845/18376).
+                          type: string
+                        type:
+                          description: Node type. Valid values are hotData, warmData
+                            and dedicatedMaster. The default value is 'hotData`. Node
+                            type. Valid values are `hotData`, `warmData` and `dedicatedMaster`.
+                            The default value is 'hotData`.
+                          type: string
+                      type: object
+                    type: array
+                  renewFlag:
+                    description: 'When enabled, the instance will be renew automatically
+                      when it reach the end of the prepaid tenancy. Valid values are
+                      RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when
+                      charge_type is set to PREPAID. When enabled, the instance will
+                      be renew automatically when it reach the end of the prepaid
+                      tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`.
+                      NOTE: it only works when charge_type is set to `PREPAID`.'
+                    type: string
+                  subnetId:
+                    description: The ID of a VPC subnetwork. When create multi-az
+                      es, this parameter must be omitted or -. The ID of a VPC subnetwork.
+                      When create multi-az es, this parameter must be omitted or `-`.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: A mapping of tags to assign to the instance. For
+                      tag limits, please refer to Use Limits. A mapping of tags to
+                      assign to the instance. For tag limits, please refer to [Use
+                      Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                    type: object
+                  version:
+                    description: Version of the instance. Valid values are 5.6.4,
+                      6.4.3, 6.8.2, 7.5.1 and 7.10.1. Version of the instance. Valid
+                      values are `5.6.4`, `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
+                    type: string
+                  vpcId:
+                    description: The ID of a VPC network. The ID of a VPC network.
+                    type: string
+                  webNodeTypeInfo:
+                    description: Visual node configuration. Visual node configuration.
+                    items:
+                      properties:
+                        nodeNum:
+                          description: Number of nodes. Visual node number.
+                          type: number
+                        nodeType:
+                          description: Node specification, and valid values refer
+                            to document of tencentcloud. Visual node specifications.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -591,6 +962,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -599,9 +973,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

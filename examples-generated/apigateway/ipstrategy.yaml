@@ -1,0 +1,36 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: IpStrategy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/ipstrategy
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service
+    strategyData: 9.9.9.9
+    strategyName: tf_test
+    strategyType: BLACK
+
+---
+
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: Service
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/ipstrategy
+  labels:
+    testing.upbound.io/example-name: service
+  name: service
+spec:
+  forProvider:
+    ipVersion: IPv4
+    netType:
+    - INNER
+    - OUTER
+    protocol: http&https
+    serviceDesc: your nice service
+    serviceName: niceservice

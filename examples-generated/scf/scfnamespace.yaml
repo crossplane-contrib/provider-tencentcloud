@@ -1,0 +1,11 @@
+apiVersion: scf.tencentcloud.crossplane.io/v1alpha1
+kind: ScfNamespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: scf/v1alpha1/scfnamespace
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    namespace: ci-test-scf

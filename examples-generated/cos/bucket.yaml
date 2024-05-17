@@ -1,0 +1,12 @@
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cos/v1alpha1/bucket
+  labels:
+    testing.upbound.io/example-name: private_sbucket
+  name: private-sbucket
+spec:
+  forProvider:
+    acl: private
+    bucket: private-bucket-${local.app_id}

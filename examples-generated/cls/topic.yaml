@@ -1,0 +1,39 @@
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Topic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/topic
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autoSplit: false
+    describes: Test Demo.
+    hotPeriod: 10
+    logsetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    maxSplitPartitions: 20
+    partitionCount: 1
+    period: 30
+    storageType: hot
+    tags:
+      test: test
+    topicName: tf_example
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Logset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/topic
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    logsetName: tf_example
+    tags:
+      demo: test

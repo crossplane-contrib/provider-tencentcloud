@@ -1,8 +1,0 @@
-apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
-kind: VPC
-metadata:
-  name: example-cvm-vpc
-spec:
-  forProvider:
-    cidrBlock: "10.2.0.0/16"
-    name: "test-crossplane-cvm-vpc"

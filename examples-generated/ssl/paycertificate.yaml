@@ -1,0 +1,37 @@
+apiVersion: ssl.tencentcloud.crossplane.io/v1alpha1
+kind: PayCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ssl/v1alpha1/paycertificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    alias: ssl desc.
+    domainNum: 1
+    information:
+    - adminEmail: test@tencent.com
+      adminFirstName: test
+      adminLastName: test
+      adminPhoneNum: "12345678901"
+      adminPosition: developer
+      certificateDomain: www.example.com
+      contactEmail: test@tencent.com
+      contactFirstName: test
+      contactLastName: test
+      contactNumber: "12345678901"
+      contactPosition: developer
+      csrType: online
+      organizationAddress: 广东省深圳市南山区腾讯大厦1000号
+      organizationCity: 深圳市
+      organizationCountry: CN
+      organizationDivision: Qcloud
+      organizationName: Tencent
+      organizationRegion: 广东省
+      phoneAreaCode: "0755"
+      phoneNumber: "86013388"
+      postalCode: "0755"
+      verifyType: DNS
+    productId: 33
+    projectId: 0

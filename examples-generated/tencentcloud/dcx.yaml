@@ -1,0 +1,18 @@
+apiVersion: tencentcloud.tencentcloud.crossplane.io/v1alpha1
+kind: Dcx
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tencentcloud/v1alpha1/dcx
+  labels:
+    testing.upbound.io/example-name: bgp_main
+  name: bgp-main
+spec:
+  forProvider:
+    bandwidth: 900
+    dcId: ${var.dc_id}
+    dcgId: ${var.dcg_id}
+    name: bgp_main
+    networkType: VPC
+    routeType: BGP
+    vlan: 306
+    vpcId: ${var.vpc_id}

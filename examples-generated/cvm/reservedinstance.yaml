@@ -1,0 +1,12 @@
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: ReservedInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cvm/v1alpha1/reservedinstance
+  labels:
+    testing.upbound.io/example-name: ri
+  name: ri
+spec:
+  forProvider:
+    configId: 469043dd-28b9-4d89-b557-74f6a8326259
+    instanceCount: 2

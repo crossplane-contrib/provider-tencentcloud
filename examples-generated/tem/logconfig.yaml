@@ -1,0 +1,24 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: LogConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/logconfig
+  labels:
+    testing.upbound.io/example-name: logConfig
+  name: logconfig
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    inputType: container_stdout
+    logType: minimalist_log
+    logsetId: b5824781-8d5b-4029-a2f7-d03c37f72bdf
+    name: terraform
+    topicId: 5a85bb6d-8e41-4e04-b7bd-c05e04782f94
+    workloadIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_tem_workload

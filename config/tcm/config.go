@@ -16,22 +16,18 @@ limitations under the License.
 
 package tcm
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupTcm = "tcm"
 
 // Configure configures the tcm group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_tcm_mesh", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_tcm_mesh", func(r *config.Resource) {
 		r.ShortGroup = shortGroupTcm
 		r.Kind = "Mesh"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcm_cluster_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcm_cluster_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupTcm
 		r.Kind = "ClusterAttachment"
 	})

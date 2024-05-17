@@ -16,55 +16,53 @@ limitations under the License.
 
 package tcr
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupTcr = "tcr"
 
 // Configure configures the tcr group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_tcr_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_tcr_instance", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
 		r.Kind = "Instance"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcr_namespace", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcr_namespace", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
 		r.Kind = "TcrNamespace"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcr_repository", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcr_repository", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
 		r.Kind = "Repository"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcr_token", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcr_token", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
 		r.Kind = "Token"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_tcr_vpc_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_tcr_vpc_attachment", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
 		r.Kind = "VpcAttachment"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})

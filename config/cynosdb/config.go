@@ -16,31 +16,27 @@ limitations under the License.
 
 package cynosdb
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupCynosdb = "cynosdb"
 
 // Configure configures the cynosdb group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_cynosdb_cluster", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_cynosdb_cluster", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCynosdb
 		r.Kind = "Cluster"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_cynosdb_readonly_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_cynosdb_readonly_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCynosdb
 		r.Kind = "ReadonlyInstance"
-		r.References["cluster_id"] = tjconfig.Reference{
+		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}
 	})

@@ -1,0 +1,48 @@
+apiVersion: mongodb.tencentcloud.crossplane.io/v1alpha1
+kind: StandbyInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mongodb/v1alpha1/standbyinstance
+  labels:
+    testing.upbound.io/example-name: mongodb
+  name: mongodb
+spec:
+  forProvider:
+    availableZone: ap-shanghai-2
+    fatherInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: mongodb
+    fatherInstanceRegion: ap-guangzhou
+    instanceName: tf-mongodb-standby-test
+    memory: 4
+    projectId: 0
+    provider: ${tencentcloud.shanghai}
+    tags:
+      test: test
+    volume: 100
+
+---
+
+apiVersion: mongodb.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mongodb/v1alpha1/standbyinstance
+  labels:
+    testing.upbound.io/example-name: mongodb
+  name: mongodb
+spec:
+  forProvider:
+    availableZone: ${var.availability_zone}
+    engineVersion: MONGO_40_WT
+    instanceName: tf-mongodb-test
+    machineType: HIO10G
+    memory: 4
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    projectId: 0
+    tags:
+      test: test
+    volume: 100

@@ -1,0 +1,13 @@
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/certificate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    content: test:tx2KGdo3zJg/.
+    name: test_certificate
+    type: BASIC

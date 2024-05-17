@@ -1,0 +1,74 @@
+apiVersion: teo.tencentcloud.crossplane.io/v1alpha1
+kind: ZoneSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: teo/v1alpha1/zonesetting
+  labels:
+    testing.upbound.io/example-name: zone_setting
+  name: zone-setting
+spec:
+  forProvider:
+    cache:
+    - followOrigin:
+      - switch: "on"
+      noCache:
+      - switch: "off"
+    cacheKey:
+    - fullUrlCache: "on"
+      ignoreCase: "off"
+      queryString:
+      - action: includeCustom
+        switch: "off"
+        value: []
+    cachePrefresh:
+    - percent: 90
+      switch: "off"
+    clientIpHeader:
+    - switch: "off"
+    compression:
+    - algorithms:
+      - brotli
+      - gzip
+      switch: "on"
+    forceRedirect:
+    - redirectStatusCode: 302
+      switch: "off"
+    https:
+    - hsts:
+      - includeSubDomains: "off"
+        maxAge: 0
+        preload: "off"
+        switch: "off"
+      http2: "on"
+      ocspStapling: "off"
+      tlsVersion:
+      - TLSv1
+      - TLSv1.1
+      - TLSv1.2
+      - TLSv1.3
+    ipv6:
+    - switch: "off"
+    maxAge:
+    - followOrigin: "on"
+      maxAgeTime: 0
+    offlineCache:
+    - switch: "on"
+    origin:
+    - backupOrigins: []
+      originPullProtocol: follow
+      origins: []
+    postMaxSize:
+    - maxSize: 524288000
+      switch: "on"
+    quic:
+    - switch: "off"
+    smartRouting:
+    - switch: "off"
+    upstreamHttp2:
+    - switch: "off"
+    webSocket:
+    - switch: "off"
+      timeout: 30
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

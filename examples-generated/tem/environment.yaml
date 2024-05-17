@@ -1,0 +1,19 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: Environment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/environment
+  labels:
+    testing.upbound.io/example-name: environment
+  name: environment
+spec:
+  forProvider:
+    description: demo for test
+    environmentName: demo
+    subnetIds:
+    - subnet-rdkj0agk
+    - subnet-r1c4pn5m
+    - subnet-02hcj95c
+    tags:
+      created: terraform
+    vpc: vpc-2hfyray3

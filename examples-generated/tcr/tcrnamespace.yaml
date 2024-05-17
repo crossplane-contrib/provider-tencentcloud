@@ -1,0 +1,35 @@
+apiVersion: tcr.tencentcloud.crossplane.io/v1alpha1
+kind: TcrNamespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcr/v1alpha1/tcrnamespace
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    cveWhitelistItems:
+    - cveId: cve-xxxxx
+    instanceId: ${tencentcloud_tcr_instance.example.id}
+    isAutoScan: true
+    isPreventVul: true
+    isPublic: true
+    name: example
+    severity: medium
+
+---
+
+apiVersion: tcr.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcr/v1alpha1/tcrnamespace
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    instanceType: premium
+    name: tf-example-tcr
+    tags:
+      createdBy: terraform

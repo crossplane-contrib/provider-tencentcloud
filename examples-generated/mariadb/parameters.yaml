@@ -1,0 +1,142 @@
+apiVersion: mariadb.tencentcloud.crossplane.io/v1alpha1
+kind: Parameters
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mariadb/v1alpha1/parameters
+  labels:
+    testing.upbound.io/example-name: parameters
+  name: parameters
+spec:
+  forProvider:
+    instanceId: tdsql-4pzs5b67
+    params:
+    - param: auto_increment_increment
+      value: "1"
+    - param: auto_increment_offset
+      value: "1"
+    - param: autocommit
+      value: "ON"
+    - param: character_set_server
+      value: utf8mb4
+    - param: collation_connection
+      value: utf8mb4_general_ci
+    - param: collation_database
+      value: utf8mb4_general_ci
+    - param: collation_server
+      value: utf8mb4_general_ci
+    - param: connect_timeout
+      value: "10"
+    - param: default_collation_for_utf8mb4
+      value: utf8mb4_general_ci
+    - param: default_week_format
+      value: "0"
+    - param: delay_key_write
+      value: "ON"
+    - param: delayed_insert_limit
+      value: "100"
+    - param: delayed_insert_timeout
+      value: "300"
+    - param: delayed_queue_size
+      value: "1000"
+    - param: div_precision_increment
+      value: "4"
+    - param: event_scheduler
+      value: "ON"
+    - param: group_concat_max_len
+      value: "1024"
+    - param: innodb_concurrency_tickets
+      value: "5000"
+    - param: innodb_flush_log_at_trx_commit
+      value: "1"
+    - param: innodb_lock_wait_timeout
+      value: "20"
+    - param: innodb_max_dirty_pages_pct
+      value: "70.000000"
+    - param: innodb_old_blocks_pct
+      value: "37"
+    - param: innodb_old_blocks_time
+      value: "1000"
+    - param: innodb_purge_batch_size
+      value: "1000"
+    - param: innodb_read_ahead_threshold
+      value: "56"
+    - param: innodb_stats_method
+      value: nulls_equal
+    - param: innodb_stats_on_metadata
+      value: "OFF"
+    - param: innodb_strict_mode
+      value: "OFF"
+    - param: innodb_table_locks
+      value: "ON"
+    - param: innodb_thread_concurrency
+      value: "0"
+    - param: interactive_timeout
+      value: "28800"
+    - param: key_cache_age_threshold
+      value: "300"
+    - param: key_cache_block_size
+      value: "1024"
+    - param: key_cache_division_limit
+      value: "100"
+    - param: local_infile
+      value: "OFF"
+    - param: lock_wait_timeout
+      value: "5"
+    - param: log_queries_not_using_indexes
+      value: "OFF"
+    - param: long_query_time
+      value: "1.000000"
+    - param: low_priority_updates
+      value: "OFF"
+    - param: max_allowed_packet
+      value: "1073741824"
+    - param: max_binlog_size
+      value: "536870912"
+    - param: max_connect_errors
+      value: "2000"
+    - param: max_connections
+      value: "10000"
+    - param: max_execution_time
+      value: "0"
+    - param: max_prepared_stmt_count
+      value: "200000"
+    - param: myisam_sort_buffer_size
+      value: "4194304"
+    - param: net_buffer_length
+      value: "16384"
+    - param: net_read_timeout
+      value: "150"
+    - param: net_retry_count
+      value: "10"
+    - param: net_write_timeout
+      value: "300"
+    - param: query_alloc_block_size
+      value: "16384"
+    - param: query_prealloc_size
+      value: "24576"
+    - param: slow_launch_time
+      value: "2"
+    - param: sort_buffer_size
+      value: "2097152"
+    - param: sql_mode
+      value: NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+    - param: sql_require_primary_key
+      value: "ON"
+    - param: sql_safe_updates
+      value: "OFF"
+    - param: sqlasyntimeout
+      value: "30"
+    - param: sync_binlog
+      value: "1"
+    - param: table_definition_cache
+      value: "10240"
+    - param: table_open_cache
+      value: "20480"
+    - param: time_zone
+      value: "+08:00"
+    - param: tmp_table_size
+      value: "33554432"
+    - param: tx_isolation
+      value: READ-COMMITTED
+    - param: wait_timeout
+      value: "28800"

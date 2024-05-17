@@ -1,0 +1,38 @@
+apiVersion: apigateway.tencentcloud.crossplane.io/v1alpha1
+kind: Service
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/service
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    ipVersion: IPv4
+    netType:
+    - INNER
+    - OUTER
+    preLimit: 500
+    protocol: http&https
+    releaseLimit: 500
+    serviceDesc: desc.
+    serviceName: tf-example
+    tags:
+      createdBy: terraform
+    testLimit: 500
+    uniqVpcId: ${tencentcloud_vpc.vpc.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/service
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: example-vpc

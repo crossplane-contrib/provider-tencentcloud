@@ -1,0 +1,18 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPNGatewayRoute
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpngatewayroute
+  labels:
+    testing.upbound.io/example-name: route
+  name: route
+spec:
+  forProvider:
+    destinationCidrBlock: 10.0.0.0/16
+    instanceId: vpnx-5b5dmao3
+    instanceType: VPNCONN
+    priority: 100
+    status: DISABLE
+    vpnGatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

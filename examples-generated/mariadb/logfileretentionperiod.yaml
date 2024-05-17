@@ -1,0 +1,12 @@
+apiVersion: mariadb.tencentcloud.crossplane.io/v1alpha1
+kind: LogFileRetentionPeriod
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mariadb/v1alpha1/logfileretentionperiod
+  labels:
+    testing.upbound.io/example-name: log_file_retention_period
+  name: log-file-retention-period
+spec:
+  forProvider:
+    days: "8"
+    instanceId: tdsql-4pzs5b67

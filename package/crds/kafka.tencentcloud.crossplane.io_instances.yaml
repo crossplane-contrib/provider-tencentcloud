@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: instances.kafka.tencentcloud.crossplane.io
 spec:
   group: kafka.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Instance
     listKind: InstanceList
     plural: instances
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API
+        description: Instance is the Schema for the Instances API. Use this resource
+          to create ckafka instance.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,118 +68,156 @@ spec:
               forProvider:
                 properties:
                   bandWidth:
-                    description: Instance bandwidth in MBps.
+                    description: Instance bandwidth in MBps. Instance bandwidth in
+                      MBps.
                     type: number
                   chargeType:
-                    description: The charge type of instance. Valid values are `PREPAID`
-                      and `POSTPAID_BY_HOUR`. Default value is `PREPAID`.
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is PREPAID. The charge type
+                      of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `PREPAID`.
                     type: string
                   config:
-                    description: Instance configuration.
+                    description: Instance configuration. Instance configuration.
                     items:
                       properties:
                         autoCreateTopicEnable:
                           description: 'Automatic creation. true: enabled, false:
+                            not enabled. Automatic creation. true: enabled, false:
                             not enabled.'
                           type: boolean
                         defaultNumPartitions:
                           description: If auto.create.topic.enable is set to true
                             and this value is not set, 3 will be used by default.
+                            If auto.create.topic.enable is set to true and this value
+                            is not set, 3 will be used by default.
                           type: number
                         defaultReplicationFactor:
                           description: If auto.create.topic.enable is set to true
                             but this value is not set, 2 will be used by default.
+                            If auto.create.topic.enable is set to true but this value
+                            is not set, 2 will be used by default.
                           type: number
-                      required:
-                      - autoCreateTopicEnable
-                      - defaultNumPartitions
-                      - defaultReplicationFactor
                       type: object
                     type: array
                   diskSize:
                     description: Disk Size. Its interval varies with bandwidth, and
                       the input must be within the interval, which can be viewed through
                       the control. If it is not within the interval, the plan will
-                      cause a change when first created.
+                      cause a change when first created. Disk Size. Its interval varies
+                      with bandwidth, and the input must be within the interval, which
+                      can be viewed through the control. If it is not within the interval,
+                      the plan will cause a change when first created.
                     type: number
                   diskType:
-                    description: Type of disk.
+                    description: Type of disk. Type of disk.
                     type: string
                   dynamicRetentionConfig:
-                    description: Dynamic message retention policy configuration.
+                    description: Dynamic message retention policy configuration. Dynamic
+                      message retention policy configuration.
                     items:
                       properties:
                         bottomRetention:
-                          description: Minimum retention time, in minutes.
+                          description: Minimum retention time, in minutes. Minimum
+                            retention time, in minutes.
                           type: number
                         diskQuotaPercentage:
                           description: Disk quota threshold (in percentage) for triggering
-                            the message retention time change event.
+                            the message retention time change event. Disk quota threshold
+                            (in percentage) for triggering the message retention time
+                            change event.
                           type: number
                         enable:
                           description: 'Whether the dynamic message retention time
-                            configuration is enabled. 0: disabled; 1: enabled.'
+                            configuration is enabled. 0: disabled; 1: enabled. Whether
+                            the dynamic message retention time configuration is enabled.
+                            0: disabled; 1: enabled.'
                           type: number
                         stepForwardPercentage:
                           description: Percentage by which the message retention time
-                            is shortened each time.
+                            is shortened each time. Percentage by which the message
+                            retention time is shortened each time.
                           type: number
                       type: object
                     type: array
                   instanceName:
-                    description: Instance name.
+                    description: Instance name. Instance name.
                     type: string
                   instanceType:
-                    description: 'Description of instance type. `profession`: 1, `standard`:  1(general),
+                    description: 'Description of instance type. profession: 1, standard:  1(general),
+                      2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
+                      7(specialized-3), 8(specialized-4), 9(exclusive). Description
+                      of instance type. `profession`: 1, `standard`:  1(general),
                       2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
                       7(specialized-3), 8(specialized-4), 9(exclusive).'
                     type: number
                   kafkaVersion:
-                    description: Kafka version (0.10.2/1.1.1/2.4.1).
+                    description: Kafka version (0.10.2/1.1.1/2.4.1). Kafka version
+                      (0.10.2/1.1.1/2.4.1).
                     type: string
                   maxMessageByte:
                     description: 'The size of a single message in bytes at the instance
-                      level. Value range: `1024 - 12*1024*1024 bytes (i.e., 1KB-12MB).'
+                      level. Value range: `1024 - 1210241024 bytes (i.e., 1KB-12MB).
+                      The size of a single message in bytes at the instance level.
+                      Value range: `1024 - 12*1024*1024 bytes (i.e., 1KB-12MB).'
                     type: number
                   msgRetentionTime:
                     description: The maximum retention time of instance logs, in minutes.
                       the default is 10080 (7 days), the maximum is 30 days, and the
                       default 0 is not filled, which means that the log retention
-                      time recovery policy is not enabled.
+                      time recovery policy is not enabled. The maximum retention time
+                      of instance logs, in minutes. the default is 10080 (7 days),
+                      the maximum is 30 days, and the default 0 is not filled, which
+                      means that the log retention time recovery policy is not enabled.
                     type: number
                   multiZoneFlag:
                     description: 'Indicates whether the instance is multi zones. NOTE:
-                      if set to `true`, `zone_ids` must set together.'
+                      if set to true, zone_ids must set together. Indicates whether
+                      the instance is multi zones. NOTE: if set to `true`, `zone_ids`
+                      must set together.'
                     type: boolean
                   partition:
                     description: Partition Size. Its interval varies with bandwidth,
                       and the input must be within the interval, which can be viewed
                       through the control. If it is not within the interval, the plan
-                      will cause a change when first created.
+                      will cause a change when first created. Partition Size. Its
+                      interval varies with bandwidth, and the input must be within
+                      the interval, which can be viewed through the control. If it
+                      is not within the interval, the plan will cause a change when
+                      first created.
                     type: number
                   period:
-                    description: Prepaid purchase time, such as 1, is one month.
+                    description: Prepaid purchase time, such as 1, is one month. Prepaid
+                      purchase time, such as 1, is one month.
                     type: number
                   publicNetwork:
-                    description: Bandwidth of the public network.
+                    description: Bandwidth of the public network. Bandwidth of the
+                      public network.
                     type: number
                   rebalanceTime:
                     description: Modification of the rebalancing time after upgrade.
+                      Modification of the rebalancing time after upgrade.
                     type: number
                   renewFlag:
                     description: Prepaid automatic renewal mark, 0 means the default
                       state, the initial state, 1 means automatic renewal, 2 means
-                      clear no automatic renewal (user setting).
+                      clear no automatic renewal (user setting). Prepaid automatic
+                      renewal mark, 0 means the default state, the initial state,
+                      1 means automatic renewal, 2 means clear no automatic renewal
+                      (user setting).
                     type: number
                   specificationsType:
                     description: Specifications type of instance. Allowed values are
-                      `standard`, `profession`. Default is `profession`.
+                      standard, profession. Default is profession. Specifications
+                      type of instance. Allowed values are `standard`, `profession`.
+                      Default is `profession`.
                     type: string
                   subnetId:
-                    description: Subnet id, it will be basic network if not set.
+                    description: Subnet id, it will be basic network if not set. Subnet
+                      id, it will be basic network if not set.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -209,7 +251,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -250,33 +292,35 @@ spec:
                   tagSet:
                     additionalProperties:
                       type: string
-                    description: Tag set of instance.
+                    description: Tag set of instance. Tag set of instance.
                     type: object
                   tags:
-                    description: Tags of instance. Partition size, the professional
-                      version does not need tag.
+                    description: It has been deprecated from version 1.78.5, because
+                      it do not support change. Use tag_set instead. Tags of instance.
+                      Partition size, the professional version does not need tag.
+                      Tags of instance. Partition size, the professional version does
+                      not need tag.
                     items:
                       properties:
                         key:
-                          description: Tag key.
+                          description: Tag key. Tag key.
                           type: string
                         value:
-                          description: Tag value.
+                          description: Tag value. Tag value.
                           type: string
-                      required:
-                      - key
-                      - value
                       type: object
                     type: array
                   upgradeStrategy:
-                    description: 'POSTPAID_BY_HOUR scale-down mode - 1: stable transformation;
-                      - 2: High-speed transformer.'
+                    description: 'POSTPAID_BY_HOUR scale-down mode POSTPAID_BY_HOUR
+                      scale-down mode - 1: stable transformation; - 2: High-speed
+                      transformer.'
                     type: number
                   vpcId:
-                    description: Vpc id, it will be basic network if not set.
+                    description: Vpc id, it will be basic network if not set. Vpc
+                      id, it will be basic network if not set.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -309,8 +353,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -349,60 +393,241 @@ spec:
                         type: object
                     type: object
                   zoneId:
-                    description: Available zone id.
+                    description: Available zone id. Available zone id.
                     type: number
                   zoneIds:
                     description: 'List of available zone id. NOTE: this argument must
-                      set together with `multi_zone_flag`.'
+                      set together with multi_zone_flag. List of available zone id.
+                      NOTE: this argument must set together with `multi_zone_flag`.'
                     items:
                       type: number
                     type: array
-                required:
-                - instanceName
-                - zoneId
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  bandWidth:
+                    description: Instance bandwidth in MBps. Instance bandwidth in
+                      MBps.
+                    type: number
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is PREPAID. The charge type
+                      of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `PREPAID`.
+                    type: string
+                  config:
+                    description: Instance configuration. Instance configuration.
+                    items:
+                      properties:
+                        autoCreateTopicEnable:
+                          description: 'Automatic creation. true: enabled, false:
+                            not enabled. Automatic creation. true: enabled, false:
+                            not enabled.'
+                          type: boolean
+                        defaultNumPartitions:
+                          description: If auto.create.topic.enable is set to true
+                            and this value is not set, 3 will be used by default.
+                            If auto.create.topic.enable is set to true and this value
+                            is not set, 3 will be used by default.
+                          type: number
+                        defaultReplicationFactor:
+                          description: If auto.create.topic.enable is set to true
+                            but this value is not set, 2 will be used by default.
+                            If auto.create.topic.enable is set to true but this value
+                            is not set, 2 will be used by default.
+                          type: number
+                      type: object
+                    type: array
+                  diskSize:
+                    description: Disk Size. Its interval varies with bandwidth, and
+                      the input must be within the interval, which can be viewed through
+                      the control. If it is not within the interval, the plan will
+                      cause a change when first created. Disk Size. Its interval varies
+                      with bandwidth, and the input must be within the interval, which
+                      can be viewed through the control. If it is not within the interval,
+                      the plan will cause a change when first created.
+                    type: number
+                  diskType:
+                    description: Type of disk. Type of disk.
+                    type: string
+                  dynamicRetentionConfig:
+                    description: Dynamic message retention policy configuration. Dynamic
+                      message retention policy configuration.
+                    items:
+                      properties:
+                        bottomRetention:
+                          description: Minimum retention time, in minutes. Minimum
+                            retention time, in minutes.
+                          type: number
+                        diskQuotaPercentage:
+                          description: Disk quota threshold (in percentage) for triggering
+                            the message retention time change event. Disk quota threshold
+                            (in percentage) for triggering the message retention time
+                            change event.
+                          type: number
+                        enable:
+                          description: 'Whether the dynamic message retention time
+                            configuration is enabled. 0: disabled; 1: enabled. Whether
+                            the dynamic message retention time configuration is enabled.
+                            0: disabled; 1: enabled.'
+                          type: number
+                        stepForwardPercentage:
+                          description: Percentage by which the message retention time
+                            is shortened each time. Percentage by which the message
+                            retention time is shortened each time.
+                          type: number
+                      type: object
+                    type: array
+                  instanceName:
+                    description: Instance name. Instance name.
+                    type: string
+                  instanceType:
+                    description: 'Description of instance type. profession: 1, standard:  1(general),
+                      2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
+                      7(specialized-3), 8(specialized-4), 9(exclusive). Description
+                      of instance type. `profession`: 1, `standard`:  1(general),
+                      2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
+                      7(specialized-3), 8(specialized-4), 9(exclusive).'
+                    type: number
+                  kafkaVersion:
+                    description: Kafka version (0.10.2/1.1.1/2.4.1). Kafka version
+                      (0.10.2/1.1.1/2.4.1).
+                    type: string
+                  maxMessageByte:
+                    description: 'The size of a single message in bytes at the instance
+                      level. Value range: `1024 - 1210241024 bytes (i.e., 1KB-12MB).
+                      The size of a single message in bytes at the instance level.
+                      Value range: `1024 - 12*1024*1024 bytes (i.e., 1KB-12MB).'
+                    type: number
+                  msgRetentionTime:
+                    description: The maximum retention time of instance logs, in minutes.
+                      the default is 10080 (7 days), the maximum is 30 days, and the
+                      default 0 is not filled, which means that the log retention
+                      time recovery policy is not enabled. The maximum retention time
+                      of instance logs, in minutes. the default is 10080 (7 days),
+                      the maximum is 30 days, and the default 0 is not filled, which
+                      means that the log retention time recovery policy is not enabled.
+                    type: number
+                  multiZoneFlag:
+                    description: 'Indicates whether the instance is multi zones. NOTE:
+                      if set to true, zone_ids must set together. Indicates whether
+                      the instance is multi zones. NOTE: if set to `true`, `zone_ids`
+                      must set together.'
+                    type: boolean
+                  partition:
+                    description: Partition Size. Its interval varies with bandwidth,
+                      and the input must be within the interval, which can be viewed
+                      through the control. If it is not within the interval, the plan
+                      will cause a change when first created. Partition Size. Its
+                      interval varies with bandwidth, and the input must be within
+                      the interval, which can be viewed through the control. If it
+                      is not within the interval, the plan will cause a change when
+                      first created.
+                    type: number
+                  period:
+                    description: Prepaid purchase time, such as 1, is one month. Prepaid
+                      purchase time, such as 1, is one month.
+                    type: number
+                  publicNetwork:
+                    description: Bandwidth of the public network. Bandwidth of the
+                      public network.
+                    type: number
+                  rebalanceTime:
+                    description: Modification of the rebalancing time after upgrade.
+                      Modification of the rebalancing time after upgrade.
+                    type: number
+                  renewFlag:
+                    description: Prepaid automatic renewal mark, 0 means the default
+                      state, the initial state, 1 means automatic renewal, 2 means
+                      clear no automatic renewal (user setting). Prepaid automatic
+                      renewal mark, 0 means the default state, the initial state,
+                      1 means automatic renewal, 2 means clear no automatic renewal
+                      (user setting).
+                    type: number
+                  specificationsType:
+                    description: Specifications type of instance. Allowed values are
+                      standard, profession. Default is profession. Specifications
+                      type of instance. Allowed values are `standard`, `profession`.
+                      Default is `profession`.
+                    type: string
+                  tagSet:
+                    additionalProperties:
+                      type: string
+                    description: Tag set of instance. Tag set of instance.
+                    type: object
+                  tags:
+                    description: It has been deprecated from version 1.78.5, because
+                      it do not support change. Use tag_set instead. Tags of instance.
+                      Partition size, the professional version does not need tag.
+                      Tags of instance. Partition size, the professional version does
+                      not need tag.
+                    items:
+                      properties:
+                        key:
+                          description: Tag key. Tag key.
+                          type: string
+                        value:
+                          description: Tag value. Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  upgradeStrategy:
+                    description: 'POSTPAID_BY_HOUR scale-down mode POSTPAID_BY_HOUR
+                      scale-down mode - 1: stable transformation; - 2: High-speed
+                      transformer.'
+                    type: number
+                  zoneId:
+                    description: Available zone id. Available zone id.
+                    type: number
+                  zoneIds:
+                    description: 'List of available zone id. NOTE: this argument must
+                      set together with multi_zone_flag. List of available zone id.
+                      NOTE: this argument must set together with `multi_zone_flag`.'
+                    items:
+                      type: number
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -532,17 +757,218 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.instanceName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.instanceName)
+                || (has(self.initProvider) && has(self.initProvider.instanceName))'
+            - message: spec.forProvider.zoneId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
+                || (has(self.initProvider) && has(self.initProvider.zoneId))'
           status:
             description: InstanceStatus defines the observed state of Instance.
             properties:
               atProvider:
                 properties:
-                  id:
+                  bandWidth:
+                    description: Instance bandwidth in MBps. Instance bandwidth in
+                      MBps.
+                    type: number
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is PREPAID. The charge type
+                      of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `PREPAID`.
                     type: string
+                  config:
+                    description: Instance configuration. Instance configuration.
+                    items:
+                      properties:
+                        autoCreateTopicEnable:
+                          description: 'Automatic creation. true: enabled, false:
+                            not enabled. Automatic creation. true: enabled, false:
+                            not enabled.'
+                          type: boolean
+                        defaultNumPartitions:
+                          description: If auto.create.topic.enable is set to true
+                            and this value is not set, 3 will be used by default.
+                            If auto.create.topic.enable is set to true and this value
+                            is not set, 3 will be used by default.
+                          type: number
+                        defaultReplicationFactor:
+                          description: If auto.create.topic.enable is set to true
+                            but this value is not set, 2 will be used by default.
+                            If auto.create.topic.enable is set to true but this value
+                            is not set, 2 will be used by default.
+                          type: number
+                      type: object
+                    type: array
+                  diskSize:
+                    description: Disk Size. Its interval varies with bandwidth, and
+                      the input must be within the interval, which can be viewed through
+                      the control. If it is not within the interval, the plan will
+                      cause a change when first created. Disk Size. Its interval varies
+                      with bandwidth, and the input must be within the interval, which
+                      can be viewed through the control. If it is not within the interval,
+                      the plan will cause a change when first created.
+                    type: number
+                  diskType:
+                    description: Type of disk. Type of disk.
+                    type: string
+                  dynamicRetentionConfig:
+                    description: Dynamic message retention policy configuration. Dynamic
+                      message retention policy configuration.
+                    items:
+                      properties:
+                        bottomRetention:
+                          description: Minimum retention time, in minutes. Minimum
+                            retention time, in minutes.
+                          type: number
+                        diskQuotaPercentage:
+                          description: Disk quota threshold (in percentage) for triggering
+                            the message retention time change event. Disk quota threshold
+                            (in percentage) for triggering the message retention time
+                            change event.
+                          type: number
+                        enable:
+                          description: 'Whether the dynamic message retention time
+                            configuration is enabled. 0: disabled; 1: enabled. Whether
+                            the dynamic message retention time configuration is enabled.
+                            0: disabled; 1: enabled.'
+                          type: number
+                        stepForwardPercentage:
+                          description: Percentage by which the message retention time
+                            is shortened each time. Percentage by which the message
+                            retention time is shortened each time.
+                          type: number
+                      type: object
+                    type: array
+                  id:
+                    description: ID of the resource.
+                    type: string
+                  instanceName:
+                    description: Instance name. Instance name.
+                    type: string
+                  instanceType:
+                    description: 'Description of instance type. profession: 1, standard:  1(general),
+                      2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
+                      7(specialized-3), 8(specialized-4), 9(exclusive). Description
+                      of instance type. `profession`: 1, `standard`:  1(general),
+                      2(standard), 3(advanced), 4(capacity), 5(specialized-1), 6(specialized-2),
+                      7(specialized-3), 8(specialized-4), 9(exclusive).'
+                    type: number
+                  kafkaVersion:
+                    description: Kafka version (0.10.2/1.1.1/2.4.1). Kafka version
+                      (0.10.2/1.1.1/2.4.1).
+                    type: string
+                  maxMessageByte:
+                    description: 'The size of a single message in bytes at the instance
+                      level. Value range: `1024 - 1210241024 bytes (i.e., 1KB-12MB).
+                      The size of a single message in bytes at the instance level.
+                      Value range: `1024 - 12*1024*1024 bytes (i.e., 1KB-12MB).'
+                    type: number
+                  msgRetentionTime:
+                    description: The maximum retention time of instance logs, in minutes.
+                      the default is 10080 (7 days), the maximum is 30 days, and the
+                      default 0 is not filled, which means that the log retention
+                      time recovery policy is not enabled. The maximum retention time
+                      of instance logs, in minutes. the default is 10080 (7 days),
+                      the maximum is 30 days, and the default 0 is not filled, which
+                      means that the log retention time recovery policy is not enabled.
+                    type: number
+                  multiZoneFlag:
+                    description: 'Indicates whether the instance is multi zones. NOTE:
+                      if set to true, zone_ids must set together. Indicates whether
+                      the instance is multi zones. NOTE: if set to `true`, `zone_ids`
+                      must set together.'
+                    type: boolean
+                  partition:
+                    description: Partition Size. Its interval varies with bandwidth,
+                      and the input must be within the interval, which can be viewed
+                      through the control. If it is not within the interval, the plan
+                      will cause a change when first created. Partition Size. Its
+                      interval varies with bandwidth, and the input must be within
+                      the interval, which can be viewed through the control. If it
+                      is not within the interval, the plan will cause a change when
+                      first created.
+                    type: number
+                  period:
+                    description: Prepaid purchase time, such as 1, is one month. Prepaid
+                      purchase time, such as 1, is one month.
+                    type: number
+                  publicNetwork:
+                    description: Bandwidth of the public network. Bandwidth of the
+                      public network.
+                    type: number
+                  rebalanceTime:
+                    description: Modification of the rebalancing time after upgrade.
+                      Modification of the rebalancing time after upgrade.
+                    type: number
+                  renewFlag:
+                    description: Prepaid automatic renewal mark, 0 means the default
+                      state, the initial state, 1 means automatic renewal, 2 means
+                      clear no automatic renewal (user setting). Prepaid automatic
+                      renewal mark, 0 means the default state, the initial state,
+                      1 means automatic renewal, 2 means clear no automatic renewal
+                      (user setting).
+                    type: number
+                  specificationsType:
+                    description: Specifications type of instance. Allowed values are
+                      standard, profession. Default is profession. Specifications
+                      type of instance. Allowed values are `standard`, `profession`.
+                      Default is `profession`.
+                    type: string
+                  subnetId:
+                    description: Subnet id, it will be basic network if not set. Subnet
+                      id, it will be basic network if not set.
+                    type: string
+                  tagSet:
+                    additionalProperties:
+                      type: string
+                    description: Tag set of instance. Tag set of instance.
+                    type: object
+                  tags:
+                    description: It has been deprecated from version 1.78.5, because
+                      it do not support change. Use tag_set instead. Tags of instance.
+                      Partition size, the professional version does not need tag.
+                      Tags of instance. Partition size, the professional version does
+                      not need tag.
+                    items:
+                      properties:
+                        key:
+                          description: Tag key. Tag key.
+                          type: string
+                        value:
+                          description: Tag value. Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  upgradeStrategy:
+                    description: 'POSTPAID_BY_HOUR scale-down mode POSTPAID_BY_HOUR
+                      scale-down mode - 1: stable transformation; - 2: High-speed
+                      transformer.'
+                    type: number
                   vip:
+                    description: Vip of instance. Vip of instance.
+                    type: string
+                  vpcId:
+                    description: Vpc id, it will be basic network if not set. Vpc
+                      id, it will be basic network if not set.
                     type: string
                   vport:
+                    description: Type of instance. Type of instance.
                     type: string
+                  zoneId:
+                    description: Available zone id. Available zone id.
+                    type: number
+                  zoneIds:
+                    description: 'List of available zone id. NOTE: this argument must
+                      set together with multi_zone_flag. List of available zone id.
+                      NOTE: this argument must set together with `multi_zone_flag`.'
+                    items:
+                      type: number
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -577,6 +1003,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -585,9 +1014,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

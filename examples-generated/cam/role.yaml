@@ -1,0 +1,27 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/role
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    consoleLogin: true
+    description: test
+    document: |
+      {
+        "version": "2.0",
+        "statement": [
+          {
+            "action": ["name/sts:AssumeRole"],
+            "effect": "allow",
+            "principal": {
+              "qcs": ["qcs::cam::uin/<your-account-id>:uin/<your-account-id>"]
+            }
+          }
+        ]
+      }
+    tags:
+      test: tf-cam-role

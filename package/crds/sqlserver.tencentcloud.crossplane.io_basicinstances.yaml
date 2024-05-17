@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: basicinstances.sqlserver.tencentcloud.crossplane.io
 spec:
   group: sqlserver.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: BasicInstance
     listKind: BasicInstanceList
     plural: basicinstances
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: BasicInstance is the Schema for the BasicInstances API
+        description: BasicInstance is the Schema for the BasicInstances API. Provides
+          a SQL Server instance resource to create basic database instances.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -66,81 +70,113 @@ spec:
                   autoRenew:
                     description: Automatic renewal sign. 0 for normal renewal, 1 for
                       automatic renewal, the default is 1 automatic renewal. Only
-                      valid when purchasing a prepaid instance.
+                      valid when purchasing a prepaid instance. Automatic renewal
+                      sign. 0 for normal renewal, 1 for automatic renewal, the default
+                      is 1 automatic renewal. Only valid when purchasing a prepaid
+                      instance.
                     type: number
                   autoVoucher:
                     description: Whether to use the voucher automatically; 1 for yes,
-                      0 for no, the default is 0.
+                      0 for no, the default is 0. Whether to use the voucher automatically;
+                      1 for yes, 0 for no, the default is 0.
                     type: number
                   availabilityZone:
-                    description: Availability zone.
+                    description: Availability zone. Availability zone.
                     type: string
                   chargeType:
                     description: Pay type of the SQL Server basic instance. For now,
-                      only `POSTPAID_BY_HOUR` is valid.
+                      only POSTPAID_BY_HOUR is valid. Pay type of the SQL Server basic
+                      instance. For now, only `POSTPAID_BY_HOUR` is valid.
+                    type: string
+                  collation:
+                    description: 'System character set sorting rule, default: Chinese_PRC_CI_AS.
+                      System character set sorting rule, default: Chinese_PRC_CI_AS.'
                     type: string
                   cpu:
                     description: The CPU number of the SQL Server basic instance.
+                      The CPU number of the SQL Server basic instance.
                     type: number
                   engineVersion:
                     description: Version of the SQL Server basic database engine.
-                      Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL
-                      Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise),
-                      `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017
-                      Enterprise). Default is `2008R2`.
+                      Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL
+                      Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise),
+                      201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise).
+                      Default is 2008R2. Version of the SQL Server basic database
+                      engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise),
+                      `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server
+                      2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL
+                      Server 2017 Enterprise). Default is `2008R2`.
                     type: string
                   machineType:
-                    description: The host type of the purchased instance, `CLOUD_PREMIUM`
-                      for virtual machine high-performance cloud disk, `CLOUD_SSD`
-                      for virtual machine SSD cloud disk, `CLOUD_HSSD` for virtual
-                      machine enhanced cloud disk, `CLOUD_BSSD` for virtual machine
-                      general purpose SSD cloud disk.
+                    description: The host type of the purchased instance, CLOUD_PREMIUM
+                      for virtual machine high-performance cloud disk, CLOUD_SSD for
+                      virtual machine SSD cloud disk, CLOUD_HSSD for virtual machine
+                      enhanced cloud disk, CLOUD_BSSD for virtual machine general
+                      purpose SSD cloud disk. The host type of the purchased instance,
+                      `CLOUD_PREMIUM` for virtual machine high-performance cloud disk,
+                      `CLOUD_SSD` for virtual machine SSD cloud disk, `CLOUD_HSSD`
+                      for virtual machine enhanced cloud disk, `CLOUD_BSSD` for virtual
+                      machine general purpose SSD cloud disk.
                     type: string
                   maintenanceStartTime:
                     description: Start time of the maintenance in one day, format
+                      like HH:mm. Start time of the maintenance in one day, format
                       like `HH:mm`.
                     type: string
                   maintenanceTimeSpan:
                     description: The timespan of maintenance in one day, unit is hour.
+                      The timespan of maintenance in one day, unit is hour.
                     type: number
                   maintenanceWeekSet:
                     description: A list of integer indicates weekly maintenance. For
                       example, [1,7] presents do weekly maintenance on every Monday
+                      and Sunday. A list of integer indicates weekly maintenance.
+                      For example, [1,7] presents do weekly maintenance on every Monday
                       and Sunday.
                     items:
                       type: number
                     type: array
                   memory:
                     description: Memory size (in GB). Allowed value must be larger
+                      than memory that data source tencentcloud_sqlserver_specinfos
+                      provides. Memory size (in GB). Allowed value must be larger
                       than `memory` that data source `tencentcloud_sqlserver_specinfos`
                       provides.
                     type: number
                   name:
-                    description: Name of the SQL Server basic instance.
+                    description: Name of the SQL Server basic instance. Name of the
+                      SQL Server basic instance.
                     type: string
                   period:
                     description: Purchase instance period, the default value is 1,
-                      which means one month. The value does not exceed 48.
+                      which means one month. The value does not exceed 48. Purchase
+                      instance period, the default value is 1, which means one month.
+                      The value does not exceed 48.
                     type: number
                   projectId:
-                    description: Project ID, default value is 0.
+                    description: Project ID, default value is 0. Project ID, default
+                      value is 0.
                     type: number
                   securityGroups:
-                    description: Security group bound to the instance.
+                    description: Security group bound to the instance. Security group
+                      bound to the instance.
                     items:
                       type: string
                     type: array
                   storage:
                     description: Disk size (in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of storage_min
+                      and storage_max which data source tencentcloud_sqlserver_specinfos
+                      provides. Disk size (in GB). Allowed value must be a multiple
                       of 10. The storage must be set with the limit of `storage_min`
                       and `storage_max` which data source `tencentcloud_sqlserver_specinfos`
                       provides.
                     type: number
                   subnetId:
-                    description: ID of subnet.
+                    description: ID of subnet. ID of subnet.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -174,7 +210,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -215,19 +251,21 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: The tags of the SQL Server basic instance.
+                    description: The tags of the SQL Server basic instance. The tags
+                      of the SQL Server basic instance.
                     type: object
                   voucherIds:
                     description: An array of voucher IDs, currently only one can be
-                      used for a single order.
+                      used for a single order. An array of voucher IDs, currently
+                      only one can be used for a single order.
                     items:
                       type: string
                     type: array
                   vpcId:
-                    description: ID of VPC.
+                    description: ID of VPC. ID of VPC.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -260,8 +298,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -299,55 +337,169 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - cpu
-                - machineType
-                - memory
-                - name
-                - storage
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  autoRenew:
+                    description: Automatic renewal sign. 0 for normal renewal, 1 for
+                      automatic renewal, the default is 1 automatic renewal. Only
+                      valid when purchasing a prepaid instance. Automatic renewal
+                      sign. 0 for normal renewal, 1 for automatic renewal, the default
+                      is 1 automatic renewal. Only valid when purchasing a prepaid
+                      instance.
+                    type: number
+                  autoVoucher:
+                    description: Whether to use the voucher automatically; 1 for yes,
+                      0 for no, the default is 0. Whether to use the voucher automatically;
+                      1 for yes, 0 for no, the default is 0.
+                    type: number
+                  availabilityZone:
+                    description: Availability zone. Availability zone.
+                    type: string
+                  chargeType:
+                    description: Pay type of the SQL Server basic instance. For now,
+                      only POSTPAID_BY_HOUR is valid. Pay type of the SQL Server basic
+                      instance. For now, only `POSTPAID_BY_HOUR` is valid.
+                    type: string
+                  collation:
+                    description: 'System character set sorting rule, default: Chinese_PRC_CI_AS.
+                      System character set sorting rule, default: Chinese_PRC_CI_AS.'
+                    type: string
+                  cpu:
+                    description: The CPU number of the SQL Server basic instance.
+                      The CPU number of the SQL Server basic instance.
+                    type: number
+                  engineVersion:
+                    description: Version of the SQL Server basic database engine.
+                      Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL
+                      Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise),
+                      201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise).
+                      Default is 2008R2. Version of the SQL Server basic database
+                      engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise),
+                      `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server
+                      2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL
+                      Server 2017 Enterprise). Default is `2008R2`.
+                    type: string
+                  machineType:
+                    description: The host type of the purchased instance, CLOUD_PREMIUM
+                      for virtual machine high-performance cloud disk, CLOUD_SSD for
+                      virtual machine SSD cloud disk, CLOUD_HSSD for virtual machine
+                      enhanced cloud disk, CLOUD_BSSD for virtual machine general
+                      purpose SSD cloud disk. The host type of the purchased instance,
+                      `CLOUD_PREMIUM` for virtual machine high-performance cloud disk,
+                      `CLOUD_SSD` for virtual machine SSD cloud disk, `CLOUD_HSSD`
+                      for virtual machine enhanced cloud disk, `CLOUD_BSSD` for virtual
+                      machine general purpose SSD cloud disk.
+                    type: string
+                  maintenanceStartTime:
+                    description: Start time of the maintenance in one day, format
+                      like HH:mm. Start time of the maintenance in one day, format
+                      like `HH:mm`.
+                    type: string
+                  maintenanceTimeSpan:
+                    description: The timespan of maintenance in one day, unit is hour.
+                      The timespan of maintenance in one day, unit is hour.
+                    type: number
+                  maintenanceWeekSet:
+                    description: A list of integer indicates weekly maintenance. For
+                      example, [1,7] presents do weekly maintenance on every Monday
+                      and Sunday. A list of integer indicates weekly maintenance.
+                      For example, [1,7] presents do weekly maintenance on every Monday
+                      and Sunday.
+                    items:
+                      type: number
+                    type: array
+                  memory:
+                    description: Memory size (in GB). Allowed value must be larger
+                      than memory that data source tencentcloud_sqlserver_specinfos
+                      provides. Memory size (in GB). Allowed value must be larger
+                      than `memory` that data source `tencentcloud_sqlserver_specinfos`
+                      provides.
+                    type: number
+                  name:
+                    description: Name of the SQL Server basic instance. Name of the
+                      SQL Server basic instance.
+                    type: string
+                  period:
+                    description: Purchase instance period, the default value is 1,
+                      which means one month. The value does not exceed 48. Purchase
+                      instance period, the default value is 1, which means one month.
+                      The value does not exceed 48.
+                    type: number
+                  projectId:
+                    description: Project ID, default value is 0. Project ID, default
+                      value is 0.
+                    type: number
+                  securityGroups:
+                    description: Security group bound to the instance. Security group
+                      bound to the instance.
+                    items:
+                      type: string
+                    type: array
+                  storage:
+                    description: Disk size (in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of storage_min
+                      and storage_max which data source tencentcloud_sqlserver_specinfos
+                      provides. Disk size (in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of `storage_min`
+                      and `storage_max` which data source `tencentcloud_sqlserver_specinfos`
+                      provides.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the SQL Server basic instance. The tags
+                      of the SQL Server basic instance.
+                    type: object
+                  voucherIds:
+                    description: An array of voucher IDs, currently only one can be
+                      used for a single order. An array of voucher IDs, currently
+                      only one can be used for a single order.
+                    items:
+                      type: string
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -477,20 +629,178 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.cpu is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.cpu)
+                || (has(self.initProvider) && has(self.initProvider.cpu))'
+            - message: spec.forProvider.machineType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.machineType)
+                || (has(self.initProvider) && has(self.initProvider.machineType))'
+            - message: spec.forProvider.memory is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.memory)
+                || (has(self.initProvider) && has(self.initProvider.memory))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.storage is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storage)
+                || (has(self.initProvider) && has(self.initProvider.storage))'
           status:
             description: BasicInstanceStatus defines the observed state of BasicInstance.
             properties:
               atProvider:
                 properties:
+                  autoRenew:
+                    description: Automatic renewal sign. 0 for normal renewal, 1 for
+                      automatic renewal, the default is 1 automatic renewal. Only
+                      valid when purchasing a prepaid instance. Automatic renewal
+                      sign. 0 for normal renewal, 1 for automatic renewal, the default
+                      is 1 automatic renewal. Only valid when purchasing a prepaid
+                      instance.
+                    type: number
+                  autoVoucher:
+                    description: Whether to use the voucher automatically; 1 for yes,
+                      0 for no, the default is 0. Whether to use the voucher automatically;
+                      1 for yes, 0 for no, the default is 0.
+                    type: number
+                  availabilityZone:
+                    description: Availability zone. Availability zone.
+                    type: string
+                  chargeType:
+                    description: Pay type of the SQL Server basic instance. For now,
+                      only POSTPAID_BY_HOUR is valid. Pay type of the SQL Server basic
+                      instance. For now, only `POSTPAID_BY_HOUR` is valid.
+                    type: string
+                  collation:
+                    description: 'System character set sorting rule, default: Chinese_PRC_CI_AS.
+                      System character set sorting rule, default: Chinese_PRC_CI_AS.'
+                    type: string
+                  cpu:
+                    description: The CPU number of the SQL Server basic instance.
+                      The CPU number of the SQL Server basic instance.
+                    type: number
                   createTime:
+                    description: Create time of the SQL Server basic instance. Create
+                      time of the SQL Server basic instance.
+                    type: string
+                  engineVersion:
+                    description: Version of the SQL Server basic database engine.
+                      Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL
+                      Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise),
+                      201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise).
+                      Default is 2008R2. Version of the SQL Server basic database
+                      engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise),
+                      `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server
+                      2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL
+                      Server 2017 Enterprise). Default is `2008R2`.
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
-                  status:
+                  machineType:
+                    description: The host type of the purchased instance, CLOUD_PREMIUM
+                      for virtual machine high-performance cloud disk, CLOUD_SSD for
+                      virtual machine SSD cloud disk, CLOUD_HSSD for virtual machine
+                      enhanced cloud disk, CLOUD_BSSD for virtual machine general
+                      purpose SSD cloud disk. The host type of the purchased instance,
+                      `CLOUD_PREMIUM` for virtual machine high-performance cloud disk,
+                      `CLOUD_SSD` for virtual machine SSD cloud disk, `CLOUD_HSSD`
+                      for virtual machine enhanced cloud disk, `CLOUD_BSSD` for virtual
+                      machine general purpose SSD cloud disk.
+                    type: string
+                  maintenanceStartTime:
+                    description: Start time of the maintenance in one day, format
+                      like HH:mm. Start time of the maintenance in one day, format
+                      like `HH:mm`.
+                    type: string
+                  maintenanceTimeSpan:
+                    description: The timespan of maintenance in one day, unit is hour.
+                      The timespan of maintenance in one day, unit is hour.
                     type: number
+                  maintenanceWeekSet:
+                    description: A list of integer indicates weekly maintenance. For
+                      example, [1,7] presents do weekly maintenance on every Monday
+                      and Sunday. A list of integer indicates weekly maintenance.
+                      For example, [1,7] presents do weekly maintenance on every Monday
+                      and Sunday.
+                    items:
+                      type: number
+                    type: array
+                  memory:
+                    description: Memory size (in GB). Allowed value must be larger
+                      than memory that data source tencentcloud_sqlserver_specinfos
+                      provides. Memory size (in GB). Allowed value must be larger
+                      than `memory` that data source `tencentcloud_sqlserver_specinfos`
+                      provides.
+                    type: number
+                  name:
+                    description: Name of the SQL Server basic instance. Name of the
+                      SQL Server basic instance.
+                    type: string
+                  period:
+                    description: Purchase instance period, the default value is 1,
+                      which means one month. The value does not exceed 48. Purchase
+                      instance period, the default value is 1, which means one month.
+                      The value does not exceed 48.
+                    type: number
+                  projectId:
+                    description: Project ID, default value is 0. Project ID, default
+                      value is 0.
+                    type: number
+                  securityGroups:
+                    description: Security group bound to the instance. Security group
+                      bound to the instance.
+                    items:
+                      type: string
+                    type: array
+                  status:
+                    description: Status of the SQL Server basic instance. 1 for applying,
+                      2 for running, 3 for running with limit, 4 for isolated, 5 for
+                      recycling, 6 for recycled, 7 for running with task, 8 for off-line,
+                      9 for expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
+                      Status of the SQL Server basic instance. 1 for applying, 2 for
+                      running, 3 for running with limit, 4 for isolated, 5 for recycling,
+                      6 for recycled, 7 for running with task, 8 for off-line, 9 for
+                      expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
+                    type: number
+                  storage:
+                    description: Disk size (in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of storage_min
+                      and storage_max which data source tencentcloud_sqlserver_specinfos
+                      provides. Disk size (in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of `storage_min`
+                      and `storage_max` which data source `tencentcloud_sqlserver_specinfos`
+                      provides.
+                    type: number
+                  subnetId:
+                    description: ID of subnet. ID of subnet.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the SQL Server basic instance. The tags
+                      of the SQL Server basic instance.
+                    type: object
                   vip:
+                    description: IP for private access. IP for private access.
+                    type: string
+                  voucherIds:
+                    description: An array of voucher IDs, currently only one can be
+                      used for a single order. An array of voucher IDs, currently
+                      only one can be used for a single order.
+                    items:
+                      type: string
+                    type: array
+                  vpcId:
+                    description: ID of VPC. ID of VPC.
                     type: string
                   vport:
+                    description: Port for private access. Port for private access.
                     type: number
                 type: object
               conditions:
@@ -526,6 +836,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -534,9 +847,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

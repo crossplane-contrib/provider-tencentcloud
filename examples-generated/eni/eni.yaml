@@ -1,0 +1,93 @@
+apiVersion: eni.tencentcloud.crossplane.io/v1alpha1
+kind: Eni
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eni
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: eni desc.
+    ipv4Count: 1
+    name: tf-example-eni
+    securityGroups:
+    - ${tencentcloud_security_group.example1.id}
+    - ${tencentcloud_security_group.example2.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eni
+  labels:
+    testing.upbound.io/example-name: example1
+  name: example1
+spec:
+  forProvider:
+    description: sg desc.
+    name: tf-example-sg1
+    projectId: 0
+    tags:
+      example: test
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eni
+  labels:
+    testing.upbound.io/example-name: example2
+  name: example2
+spec:
+  forProvider:
+    description: sg desc.
+    name: tf-example-sg2
+    projectId: 0
+    tags:
+      example: test
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eni
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.0.name}
+    cidrBlock: 10.0.0.0/16
+    isMulticast: false
+    name: subnet-example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eni
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example
