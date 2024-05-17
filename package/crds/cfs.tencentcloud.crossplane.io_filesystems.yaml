@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: filesystems.cfs.tencentcloud.crossplane.io
 spec:
   group: cfs.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: FileSystem
     listKind: FileSystemList
     plural: filesystems
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: FileSystem is the Schema for the FileSystems API
+        description: FileSystem is the Schema for the FileSystems API. Provides a
+          resource to create a cloud file system(CFS).
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,10 +68,10 @@ spec:
               forProvider:
                 properties:
                   accessGroupId:
-                    description: ID of a access group.
+                    description: ID of a access group. ID of a access group.
                     type: string
                   accessGroupIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a AccessGroup to populate accessGroupId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -101,7 +105,7 @@ spec:
                     - name
                     type: object
                   accessGroupIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a AccessGroup to populate accessGroupId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -141,51 +145,65 @@ spec:
                     type: object
                   availabilityZone:
                     description: The available zone that the file system locates at.
+                      The available zone that the file system locates at.
                     type: string
                   capacity:
-                    description: File system capacity, in GiB (required for the Turbo
-                      series). For Standard Turbo, the minimum purchase required is
-                      40,960 GiB (40 TiB) and the expansion increment is 20,480 GiB
-                      (20 TiB). For High-Performance Turbo, the minimum purchase required
-                      is 20,480 GiB (20 TiB) and the expansion increment is 10,240
-                      GiB (10 TiB).
+                    description: File system capacity, in GiB . For Standard Turbo,
+                      the minimum purchase required is 40,960 GiB (40 TiB) and the
+                      expansion increment is 20,480 GiB (20 TiB). For High-Performance
+                      Turbo, the minimum purchase required is 20,480 GiB (20 TiB)
+                      and the expansion increment is 10,240 GiB (10 TiB). File system
+                      capacity, in GiB (required for the Turbo series). For Standard
+                      Turbo, the minimum purchase required is 40,960 GiB (40 TiB)
+                      and the expansion increment is 20,480 GiB (20 TiB). For High-Performance
+                      Turbo, the minimum purchase required is 20,480 GiB (20 TiB)
+                      and the expansion increment is 10,240 GiB (10 TiB).
                     type: number
                   ccnId:
-                    description: CCN instance ID (required if the network type is
-                      CCN).
+                    description: CCN instance ID . CCN instance ID (required if the
+                      network type is CCN).
                     type: string
                   cidrBlock:
-                    description: CCN IP range used by the CFS (required if the network
-                      type is CCN), which cannot conflict with other IP ranges bound
-                      in CCN.
+                    description: CCN IP range used by the CFS , which cannot conflict
+                      with other IP ranges bound in CCN. CCN IP range used by the
+                      CFS (required if the network type is CCN), which cannot conflict
+                      with other IP ranges bound in CCN.
                     type: string
                   mountIp:
-                    description: IP of mount point.
+                    description: IP of mount point. IP of mount point.
                     type: string
                   name:
-                    description: Name of a file system.
+                    description: Name of a file system. Name of a file system.
                     type: string
                   netInterface:
-                    description: 'Network type, Default `VPC`. Valid values: `VPC`
-                      and `CCN`. Select `VPC` for a Standard or High-Performance file
-                      system, and `CCN` for a Standard Turbo or High-Performance Turbo
-                      one.'
+                    description: 'Network type, Default VPC. Valid values: VPC and
+                      CCN. Select VPC for a Standard or High-Performance file system,
+                      and CCN for a Standard Turbo or High-Performance Turbo one.
+                      Network type, Default `VPC`. Valid values: `VPC` and `CCN`.
+                      Select `VPC` for a Standard or High-Performance file system,
+                      and `CCN` for a Standard Turbo or High-Performance Turbo one.'
                     type: string
                   protocol:
-                    description: 'File system protocol. Valid values: `NFS`, `CIFS`,
-                      `TURBO`. If this parameter is left empty, `NFS` is used by default.
-                      For the Turbo series, you must set this parameter to `TURBO`.'
+                    description: 'File system protocol. Valid values: NFS, CIFS, TURBO.
+                      If this parameter is left empty, NFS is used by default. For
+                      the Turbo series, you must set this parameter to TURBO. File
+                      system protocol. Valid values: `NFS`, `CIFS`, `TURBO`. If this
+                      parameter is left empty, `NFS` is used by default. For the Turbo
+                      series, you must set this parameter to `TURBO`.'
                     type: string
                   storageType:
-                    description: 'Storage type of the file system. Valid values: `SD`
-                      (Standard), `HP` (High-Performance), `TB` (Standard Turbo),
-                      and `TP` (High-Performance Turbo). Default value: `SD`.'
+                    description: 'Storage type of the file system. Valid values: SD
+                      (Standard), HP (High-Performance), TB (Standard Turbo), and
+                      TP (High-Performance Turbo). Default value: SD. Storage type
+                      of the file system. Valid values: `SD` (Standard), `HP` (High-Performance),
+                      `TB` (Standard Turbo), and `TP` (High-Performance Turbo). Default
+                      value: `SD`.'
                     type: string
                   subnetId:
-                    description: ID of a subnet.
+                    description: ID of a subnet. ID of a subnet.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -219,7 +237,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -260,13 +278,13 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: Instance tags.
+                    description: Instance tags. Instance tags.
                     type: object
                   vpcId:
-                    description: ID of a VPC network.
+                    description: ID of a VPC network. ID of a VPC network.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -299,8 +317,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -338,51 +356,112 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - availabilityZone
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  availabilityZone:
+                    description: The available zone that the file system locates at.
+                      The available zone that the file system locates at.
+                    type: string
+                  capacity:
+                    description: File system capacity, in GiB . For Standard Turbo,
+                      the minimum purchase required is 40,960 GiB (40 TiB) and the
+                      expansion increment is 20,480 GiB (20 TiB). For High-Performance
+                      Turbo, the minimum purchase required is 20,480 GiB (20 TiB)
+                      and the expansion increment is 10,240 GiB (10 TiB). File system
+                      capacity, in GiB (required for the Turbo series). For Standard
+                      Turbo, the minimum purchase required is 40,960 GiB (40 TiB)
+                      and the expansion increment is 20,480 GiB (20 TiB). For High-Performance
+                      Turbo, the minimum purchase required is 20,480 GiB (20 TiB)
+                      and the expansion increment is 10,240 GiB (10 TiB).
+                    type: number
+                  ccnId:
+                    description: CCN instance ID . CCN instance ID (required if the
+                      network type is CCN).
+                    type: string
+                  cidrBlock:
+                    description: CCN IP range used by the CFS , which cannot conflict
+                      with other IP ranges bound in CCN. CCN IP range used by the
+                      CFS (required if the network type is CCN), which cannot conflict
+                      with other IP ranges bound in CCN.
+                    type: string
+                  mountIp:
+                    description: IP of mount point. IP of mount point.
+                    type: string
+                  name:
+                    description: Name of a file system. Name of a file system.
+                    type: string
+                  netInterface:
+                    description: 'Network type, Default VPC. Valid values: VPC and
+                      CCN. Select VPC for a Standard or High-Performance file system,
+                      and CCN for a Standard Turbo or High-Performance Turbo one.
+                      Network type, Default `VPC`. Valid values: `VPC` and `CCN`.
+                      Select `VPC` for a Standard or High-Performance file system,
+                      and `CCN` for a Standard Turbo or High-Performance Turbo one.'
+                    type: string
+                  protocol:
+                    description: 'File system protocol. Valid values: NFS, CIFS, TURBO.
+                      If this parameter is left empty, NFS is used by default. For
+                      the Turbo series, you must set this parameter to TURBO. File
+                      system protocol. Valid values: `NFS`, `CIFS`, `TURBO`. If this
+                      parameter is left empty, `NFS` is used by default. For the Turbo
+                      series, you must set this parameter to `TURBO`.'
+                    type: string
+                  storageType:
+                    description: 'Storage type of the file system. Valid values: SD
+                      (Standard), HP (High-Performance), TB (Standard Turbo), and
+                      TP (High-Performance Turbo). Default value: SD. Storage type
+                      of the file system. Valid values: `SD` (Standard), `HP` (High-Performance),
+                      `TB` (Standard Turbo), and `TP` (High-Performance Turbo). Default
+                      value: `SD`.'
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Instance tags. Instance tags.
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -512,16 +591,95 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availabilityZone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityZone)
+                || (has(self.initProvider) && has(self.initProvider.availabilityZone))'
           status:
             description: FileSystemStatus defines the observed state of FileSystem.
             properties:
               atProvider:
                 properties:
+                  accessGroupId:
+                    description: ID of a access group. ID of a access group.
+                    type: string
+                  availabilityZone:
+                    description: The available zone that the file system locates at.
+                      The available zone that the file system locates at.
+                    type: string
+                  capacity:
+                    description: File system capacity, in GiB . For Standard Turbo,
+                      the minimum purchase required is 40,960 GiB (40 TiB) and the
+                      expansion increment is 20,480 GiB (20 TiB). For High-Performance
+                      Turbo, the minimum purchase required is 20,480 GiB (20 TiB)
+                      and the expansion increment is 10,240 GiB (10 TiB). File system
+                      capacity, in GiB (required for the Turbo series). For Standard
+                      Turbo, the minimum purchase required is 40,960 GiB (40 TiB)
+                      and the expansion increment is 20,480 GiB (20 TiB). For High-Performance
+                      Turbo, the minimum purchase required is 20,480 GiB (20 TiB)
+                      and the expansion increment is 10,240 GiB (10 TiB).
+                    type: number
+                  ccnId:
+                    description: CCN instance ID . CCN instance ID (required if the
+                      network type is CCN).
+                    type: string
+                  cidrBlock:
+                    description: CCN IP range used by the CFS , which cannot conflict
+                      with other IP ranges bound in CCN. CCN IP range used by the
+                      CFS (required if the network type is CCN), which cannot conflict
+                      with other IP ranges bound in CCN.
+                    type: string
                   createTime:
+                    description: Create time of the file system. Create time of the
+                      file system.
                     type: string
                   fsId:
+                    description: Mount root-directory. Mount root-directory.
                     type: string
                   id:
+                    description: ID of the resource.
+                    type: string
+                  mountIp:
+                    description: IP of mount point. IP of mount point.
+                    type: string
+                  name:
+                    description: Name of a file system. Name of a file system.
+                    type: string
+                  netInterface:
+                    description: 'Network type, Default VPC. Valid values: VPC and
+                      CCN. Select VPC for a Standard or High-Performance file system,
+                      and CCN for a Standard Turbo or High-Performance Turbo one.
+                      Network type, Default `VPC`. Valid values: `VPC` and `CCN`.
+                      Select `VPC` for a Standard or High-Performance file system,
+                      and `CCN` for a Standard Turbo or High-Performance Turbo one.'
+                    type: string
+                  protocol:
+                    description: 'File system protocol. Valid values: NFS, CIFS, TURBO.
+                      If this parameter is left empty, NFS is used by default. For
+                      the Turbo series, you must set this parameter to TURBO. File
+                      system protocol. Valid values: `NFS`, `CIFS`, `TURBO`. If this
+                      parameter is left empty, `NFS` is used by default. For the Turbo
+                      series, you must set this parameter to `TURBO`.'
+                    type: string
+                  storageType:
+                    description: 'Storage type of the file system. Valid values: SD
+                      (Standard), HP (High-Performance), TB (Standard Turbo), and
+                      TP (High-Performance Turbo). Default value: SD. Storage type
+                      of the file system. Valid values: `SD` (Standard), `HP` (High-Performance),
+                      `TB` (Standard Turbo), and `TP` (High-Performance Turbo). Default
+                      value: `SD`.'
+                    type: string
+                  subnetId:
+                    description: ID of a subnet. ID of a subnet.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Instance tags. Instance tags.
+                    type: object
+                  vpcId:
+                    description: ID of a VPC network. ID of a VPC network.
                     type: string
                 type: object
               conditions:
@@ -557,6 +715,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -565,9 +726,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

@@ -1,0 +1,17 @@
+apiVersion: cbs.tencentcloud.crossplane.io/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cbs/v1alpha1/snapshotpolicy
+  labels:
+    testing.upbound.io/example-name: snapshot_policy
+  name: snapshot-policy
+spec:
+  forProvider:
+    repeatHours:
+    - 1
+    repeatWeekdays:
+    - 1
+    - 4
+    retentionDays: 7
+    snapshotPolicyName: mysnapshotpolicyname

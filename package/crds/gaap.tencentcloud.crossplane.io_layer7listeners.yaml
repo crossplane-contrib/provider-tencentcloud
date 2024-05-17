@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: layer7listeners.gaap.tencentcloud.crossplane.io
 spec:
   group: gaap.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Layer7Listener
     listKind: Layer7ListenerList
     plural: layer7listeners
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Layer7Listener is the Schema for the Layer7Listeners API
+        description: Layer7Listener is the Schema for the Layer7Listeners API. Provides
+          a resource to create a layer7 listener of GAAP.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,46 +68,59 @@ spec:
               forProvider:
                 properties:
                   authType:
-                    description: 'Authentication type of the layer7 listener. `0`
-                      is one-way authentication and `1` is mutual authentication.
-                      NOTES: Only supports listeners of `HTTPS` protocol.'
+                    description: 'Authentication type of the layer7 listener. 0 is
+                      one-way authentication and 1 is mutual authentication. NOTES:
+                      Only supports listeners of HTTPS protocol. Authentication type
+                      of the layer7 listener. `0` is one-way authentication and `1`
+                      is mutual authentication. NOTES: Only supports listeners of
+                      `HTTPS` protocol.'
                     type: number
                   certificateId:
                     description: 'Certificate ID of the layer7 listener. NOTES: Only
-                      supports listeners of `HTTPS` protocol.'
+                      supports listeners of HTTPS protocol. Certificate ID of the
+                      layer7 listener. NOTES: Only supports listeners of `HTTPS` protocol.'
                     type: string
                   clientCertificateId:
-                    description: 'ID of the client certificate. Set only when `auth_type`
-                      is specified as mutual authentication. NOTES: Only supports
-                      listeners of `HTTPS` protocol.'
+                    description: 'It has been deprecated from version 1.26.0. Set
+                      client_certificate_ids instead. ID of the client certificate.
+                      Set only when auth_type is specified as mutual authentication.
+                      NOTES: Only supports listeners of HTTPS protocol. ID of the
+                      client certificate. Set only when `auth_type` is specified as
+                      mutual authentication. NOTES: Only supports listeners of `HTTPS`
+                      protocol.'
                     type: string
                   clientCertificateIds:
                     description: 'ID list of the client certificate. Set only when
-                      `auth_type` is specified as mutual authentication. NOTES: Only
-                      supports listeners of `HTTPS` protocol.'
+                      auth_type is specified as mutual authentication. NOTES: Only
+                      supports listeners of HTTPS protocol. ID list of the client
+                      certificate. Set only when `auth_type` is specified as mutual
+                      authentication. NOTES: Only supports listeners of `HTTPS` protocol.'
                     items:
                       type: string
                     type: array
                   forwardProtocol:
-                    description: 'Protocol type of the forwarding. Valid value: `HTTP`
-                      and `HTTPS`. NOTES: Only supports listeners of `HTTPS` protocol.'
+                    description: 'Protocol type of the forwarding. Valid value: HTTP
+                      and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
+                      Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`.
+                      NOTES: Only supports listeners of `HTTPS` protocol.'
                     type: string
                   name:
                     description: Name of the layer7 listener, the maximum length is
-                      30.
+                      30. Name of the layer7 listener, the maximum length is 30.
                     type: string
                   port:
-                    description: Port of the layer7 listener.
+                    description: Port of the layer7 listener. Port of the layer7 listener.
                     type: number
                   protocol:
-                    description: 'Protocol of the layer7 listener. Valid value: `HTTP`
+                    description: 'Protocol of the layer7 listener. Valid value: HTTP
+                      and HTTPS. Protocol of the layer7 listener. Valid value: `HTTP`
                       and `HTTPS`.'
                     type: string
                   proxyId:
-                    description: ID of the GAAP proxy.
+                    description: ID of the GAAP proxy. ID of the GAAP proxy.
                     type: string
                   proxyIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Proxy to populate proxyId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -137,7 +154,7 @@ spec:
                     - name
                     type: object
                   proxyIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Proxy to populate proxyId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -175,53 +192,100 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - name
-                - port
-                - protocol
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  authType:
+                    description: 'Authentication type of the layer7 listener. 0 is
+                      one-way authentication and 1 is mutual authentication. NOTES:
+                      Only supports listeners of HTTPS protocol. Authentication type
+                      of the layer7 listener. `0` is one-way authentication and `1`
+                      is mutual authentication. NOTES: Only supports listeners of
+                      `HTTPS` protocol.'
+                    type: number
+                  certificateId:
+                    description: 'Certificate ID of the layer7 listener. NOTES: Only
+                      supports listeners of HTTPS protocol. Certificate ID of the
+                      layer7 listener. NOTES: Only supports listeners of `HTTPS` protocol.'
+                    type: string
+                  clientCertificateId:
+                    description: 'It has been deprecated from version 1.26.0. Set
+                      client_certificate_ids instead. ID of the client certificate.
+                      Set only when auth_type is specified as mutual authentication.
+                      NOTES: Only supports listeners of HTTPS protocol. ID of the
+                      client certificate. Set only when `auth_type` is specified as
+                      mutual authentication. NOTES: Only supports listeners of `HTTPS`
+                      protocol.'
+                    type: string
+                  clientCertificateIds:
+                    description: 'ID list of the client certificate. Set only when
+                      auth_type is specified as mutual authentication. NOTES: Only
+                      supports listeners of HTTPS protocol. ID list of the client
+                      certificate. Set only when `auth_type` is specified as mutual
+                      authentication. NOTES: Only supports listeners of `HTTPS` protocol.'
+                    items:
+                      type: string
+                    type: array
+                  forwardProtocol:
+                    description: 'Protocol type of the forwarding. Valid value: HTTP
+                      and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
+                      Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`.
+                      NOTES: Only supports listeners of `HTTPS` protocol.'
+                    type: string
+                  name:
+                    description: Name of the layer7 listener, the maximum length is
+                      30. Name of the layer7 listener, the maximum length is 30.
+                    type: string
+                  port:
+                    description: Port of the layer7 listener. Port of the layer7 listener.
+                    type: number
+                  protocol:
+                    description: 'Protocol of the layer7 listener. Valid value: HTTP
+                      and HTTPS. Protocol of the layer7 listener. Valid value: `HTTP`
+                      and `HTTPS`.'
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -351,16 +415,86 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.port is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.port)
+                || (has(self.initProvider) && has(self.initProvider.port))'
+            - message: spec.forProvider.protocol is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.protocol)
+                || (has(self.initProvider) && has(self.initProvider.protocol))'
           status:
             description: Layer7ListenerStatus defines the observed state of Layer7Listener.
             properties:
               atProvider:
                 properties:
+                  authType:
+                    description: 'Authentication type of the layer7 listener. 0 is
+                      one-way authentication and 1 is mutual authentication. NOTES:
+                      Only supports listeners of HTTPS protocol. Authentication type
+                      of the layer7 listener. `0` is one-way authentication and `1`
+                      is mutual authentication. NOTES: Only supports listeners of
+                      `HTTPS` protocol.'
+                    type: number
+                  certificateId:
+                    description: 'Certificate ID of the layer7 listener. NOTES: Only
+                      supports listeners of HTTPS protocol. Certificate ID of the
+                      layer7 listener. NOTES: Only supports listeners of `HTTPS` protocol.'
+                    type: string
+                  clientCertificateId:
+                    description: 'It has been deprecated from version 1.26.0. Set
+                      client_certificate_ids instead. ID of the client certificate.
+                      Set only when auth_type is specified as mutual authentication.
+                      NOTES: Only supports listeners of HTTPS protocol. ID of the
+                      client certificate. Set only when `auth_type` is specified as
+                      mutual authentication. NOTES: Only supports listeners of `HTTPS`
+                      protocol.'
+                    type: string
+                  clientCertificateIds:
+                    description: 'ID list of the client certificate. Set only when
+                      auth_type is specified as mutual authentication. NOTES: Only
+                      supports listeners of HTTPS protocol. ID list of the client
+                      certificate. Set only when `auth_type` is specified as mutual
+                      authentication. NOTES: Only supports listeners of `HTTPS` protocol.'
+                    items:
+                      type: string
+                    type: array
                   createTime:
+                    description: Creation time of the layer7 listener. Creation time
+                      of the layer7 listener.
+                    type: string
+                  forwardProtocol:
+                    description: 'Protocol type of the forwarding. Valid value: HTTP
+                      and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
+                      Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`.
+                      NOTES: Only supports listeners of `HTTPS` protocol.'
                     type: string
                   id:
+                    description: ID of the resource.
+                    type: string
+                  name:
+                    description: Name of the layer7 listener, the maximum length is
+                      30. Name of the layer7 listener, the maximum length is 30.
+                    type: string
+                  port:
+                    description: Port of the layer7 listener. Port of the layer7 listener.
+                    type: number
+                  protocol:
+                    description: 'Protocol of the layer7 listener. Valid value: HTTP
+                      and HTTPS. Protocol of the layer7 listener. Valid value: `HTTP`
+                      and `HTTPS`.'
+                    type: string
+                  proxyId:
+                    description: ID of the GAAP proxy. ID of the GAAP proxy.
                     type: string
                   status:
+                    description: Status of the layer7 listener. Status of the layer7
+                      listener.
                     type: number
                 type: object
               conditions:
@@ -396,6 +530,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -404,9 +541,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

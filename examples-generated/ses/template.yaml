@@ -1,0 +1,11 @@
+apiVersion: ses.tencentcloud.crossplane.io/v1alpha1
+kind: Template
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ses/v1alpha1/template
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    templateName: tf_example_ses_temp

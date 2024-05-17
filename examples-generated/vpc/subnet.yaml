@@ -1,0 +1,32 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/subnet
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.zones.zones.0.name}
+    cidrBlock: 10.0.0.0/16
+    isMulticast: false
+    name: subnet-example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/subnet
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

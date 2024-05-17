@@ -1,0 +1,19 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: AppConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/appconfig
+  labels:
+    testing.upbound.io/example-name: appConfig
+  name: appconfig
+spec:
+  forProvider:
+    configData:
+    - key: key
+      value: value
+    - key: key1
+      value: value1
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: demo

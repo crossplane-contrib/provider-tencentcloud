@@ -1,0 +1,20 @@
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: BucketDomainCertificateAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cos/v1alpha1/bucketdomaincertificateattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    domainCertificate:
+    - certificate:
+      - certType: CustomCert
+        customCert:
+        - cert: ===CERTIFICATE===
+          privateKey: ===PRIVATE_KEY===
+      domain: domain_name

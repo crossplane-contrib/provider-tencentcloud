@@ -1,0 +1,25 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Redirection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/redirection
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    sourceListenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    sourceRuleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    targetListenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    targetRuleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -16,43 +16,38 @@ limitations under the License.
 
 package dcdb
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupDcdb = "dcdb"
 
 // Configure configures the dcdb group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_dcdb_hourdb_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_dcdb_hourdb_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDcdb
 		r.Kind = "HourdbInstance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dcdb_account", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dcdb_account", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDcdb
 		r.Kind = "DcdbAccount"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "HourdbInstance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dcdb_security_group_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dcdb_security_group_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDcdb
 		r.Kind = "SecurityGroupAttachment"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "HourdbInstance",
 		}
-		r.References["security_group_id"] = tjconfig.Reference{
+		r.References["security_group_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.SecurityGroup",
 		}
 	})

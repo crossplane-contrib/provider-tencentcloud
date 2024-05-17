@@ -1,25 +1,13 @@
-/*
-Copyright 2021 The Crossplane Authors.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package controller
 
 import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/terrajet/pkg/controller"
+	"github.com/crossplane/upjet/pkg/controller"
 
 	api "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/apigateway/api"
 	apikey "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/apigateway/apikey"
@@ -61,9 +49,6 @@ import (
 	bandwidthlimit "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/bandwidthlimit"
 	ccn "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/ccn"
 	instance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cdh/instance"
-	domain "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cdn/domain"
-	urlpurge "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cdn/urlpurge"
-	urlpush "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cdn/urlpush"
 	accessgroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cfs/accessgroup"
 	accessrule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cfs/accessrule"
 	filesystem "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cfs/filesystem"
@@ -89,8 +74,6 @@ import (
 	logsetcls "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cls/logset"
 	machinegroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cls/machinegroup"
 	topic "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cls/topic"
-	containercluster "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/containercluster/containercluster"
-	containerclusterinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/containercluster/containerclusterinstance"
 	bucket "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cos/bucket"
 	bucketdomaincertificateattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cos/bucketdomaincertificateattachment"
 	bucketobject "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cos/bucketobject"
@@ -106,16 +89,15 @@ import (
 	cchttppolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/cchttppolicy"
 	cchttpspolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/cchttpspolicy"
 	ccpolicyv2 "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/ccpolicyv2"
+	dayueip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/dayueip"
 	ddospolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/ddospolicy"
 	ddospolicyattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/ddospolicyattachment"
 	ddospolicycase "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/ddospolicycase"
 	ddospolicyv2 "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/ddospolicyv2"
-	eip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/eip"
 	l4rule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/l4rule"
 	l4rulev2 "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/l4rulev2"
 	l7rule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/l7rule"
 	l7rulev2 "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dayu/l7rulev2"
-	dcx "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dc/dcx"
 	gateway "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dc/gateway"
 	gatewayccnroute "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dc/gatewayccnroute"
 	dcdbaccount "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/dcdb/dcdbaccount"
@@ -175,12 +157,6 @@ import (
 	tmptkerecordruleyaml "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/monitor/tmptkerecordruleyaml"
 	tmptketemplate "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/monitor/tmptketemplate"
 	tmptketemplateattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/monitor/tmptketemplateattachment"
-	account "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mysql/account"
-	accountprivilege "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mysql/accountprivilege"
-	backuppolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mysql/backuppolicy"
-	instancemysql "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mysql/instance"
-	privilege "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mysql/privilege"
-	readonlyinstancemysql "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/mysql/readonlyinstance"
 	instancepostgresql "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/postgresql/instance"
 	readonlyattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/postgresql/readonlyattachment"
 	readonlygroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/postgresql/readonlygroup"
@@ -193,12 +169,12 @@ import (
 	function "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/function"
 	layer "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/layer"
 	scfnamespace "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/scf/scfnamespace"
-	domainses "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/domain"
+	domain "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/domain"
 	emailaddress "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/emailaddress"
 	template "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ses/template"
 	sign "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sms/sign"
 	templatesms "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sms/template"
-	accountsqlserver "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sqlserver/account"
+	account "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sqlserver/account"
 	accountdbattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sqlserver/accountdbattachment"
 	basicinstance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sqlserver/basicinstance"
 	db "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/sqlserver/db"
@@ -233,6 +209,7 @@ import (
 	logconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/logconfig"
 	scalerule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/scalerule"
 	workload "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tem/workload"
+	dcx "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tencentcloud/dcx"
 	applicationproxyrule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/applicationproxyrule"
 	origingroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/origingroup"
 	ruleengine "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/ruleengine"
@@ -254,7 +231,7 @@ import (
 	addresstemplate "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/addresstemplate"
 	addresstemplategroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/addresstemplategroup"
 	dnat "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/dnat"
-	eipvpc "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eip"
+	eip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eip"
 	eipassociation "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eipassociation"
 	havip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/havip"
 	natgateway "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/natgateway"
@@ -325,9 +302,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		bandwidthlimit.Setup,
 		ccn.Setup,
 		instance.Setup,
-		domain.Setup,
-		urlpurge.Setup,
-		urlpush.Setup,
 		accessgroup.Setup,
 		accessrule.Setup,
 		filesystem.Setup,
@@ -353,8 +327,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		logsetcls.Setup,
 		machinegroup.Setup,
 		topic.Setup,
-		containercluster.Setup,
-		containerclusterinstance.Setup,
 		bucket.Setup,
 		bucketdomaincertificateattachment.Setup,
 		bucketobject.Setup,
@@ -370,16 +342,15 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		cchttppolicy.Setup,
 		cchttpspolicy.Setup,
 		ccpolicyv2.Setup,
+		dayueip.Setup,
 		ddospolicy.Setup,
 		ddospolicyattachment.Setup,
 		ddospolicycase.Setup,
 		ddospolicyv2.Setup,
-		eip.Setup,
 		l4rule.Setup,
 		l4rulev2.Setup,
 		l7rule.Setup,
 		l7rulev2.Setup,
-		dcx.Setup,
 		gateway.Setup,
 		gatewayccnroute.Setup,
 		dcdbaccount.Setup,
@@ -439,12 +410,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		tmptkerecordruleyaml.Setup,
 		tmptketemplate.Setup,
 		tmptketemplateattachment.Setup,
-		account.Setup,
-		accountprivilege.Setup,
-		backuppolicy.Setup,
-		instancemysql.Setup,
-		privilege.Setup,
-		readonlyinstancemysql.Setup,
 		instancepostgresql.Setup,
 		readonlyattachment.Setup,
 		readonlygroup.Setup,
@@ -457,12 +422,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		function.Setup,
 		layer.Setup,
 		scfnamespace.Setup,
-		domainses.Setup,
+		domain.Setup,
 		emailaddress.Setup,
 		template.Setup,
 		sign.Setup,
 		templatesms.Setup,
-		accountsqlserver.Setup,
+		account.Setup,
 		accountdbattachment.Setup,
 		basicinstance.Setup,
 		db.Setup,
@@ -497,6 +462,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		logconfig.Setup,
 		scalerule.Setup,
 		workload.Setup,
+		dcx.Setup,
 		applicationproxyrule.Setup,
 		origingroup.Setup,
 		ruleengine.Setup,
@@ -518,7 +484,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		addresstemplate.Setup,
 		addresstemplategroup.Setup,
 		dnat.Setup,
-		eipvpc.Setup,
+		eip.Setup,
 		eipassociation.Setup,
 		havip.Setup,
 		natgateway.Setup,

@@ -1,0 +1,94 @@
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: TargetGroupAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: group
+  name: group
+spec:
+  forProvider:
+    clbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: clb_basic
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: listener_basic
+    ruleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: rule_basic
+    targetGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: clb_basic
+  name: clb-basic
+spec:
+  forProvider:
+    clbName: tf-clb-rule-basic
+    networkType: OPEN
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Listener
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: listener_basic
+  name: listener-basic
+spec:
+  forProvider:
+    clbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: clb_basic
+    listenerName: listener_basic
+    port: 1
+    protocol: HTTP
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: ListenerRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: rule_basic
+  name: rule-basic
+spec:
+  forProvider:
+    clbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: clb_basic
+    domain: abc.com
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: listener_basic
+    scheduler: WRR
+    sessionExpireTime: 30
+    targetType: TARGETGROUP
+    url: /
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: TargetGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    targetGroupName: test-target-keep-1

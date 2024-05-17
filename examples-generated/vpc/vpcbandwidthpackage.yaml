@@ -1,0 +1,15 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPCBandwidthPackage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpcbandwidthpackage
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    bandwidthPackageName: tf-example
+    chargeType: TOP5_POSTPAID_BY_MONTH
+    networkType: BGP
+    tags:
+      createdBy: terraform

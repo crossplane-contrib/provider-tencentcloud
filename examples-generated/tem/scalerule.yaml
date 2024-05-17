@@ -1,0 +1,46 @@
+apiVersion: tem.tencentcloud.crossplane.io/v1alpha1
+kind: ScaleRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tem/v1alpha1/scalerule
+  labels:
+    testing.upbound.io/example-name: scaleRule
+  name: scalerule
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    autoscaler:
+    - autoscalerName: test3123
+      cronHorizontalAutoscaler:
+      - enabled: true
+        name: test
+        period: '* * *'
+        priority: 1
+        schedules:
+        - startAt: "03:00"
+          targetReplicas: 1
+      - enabled: true
+        name: test123123
+        period: '* * *'
+        priority: 0
+        schedules:
+        - startAt: "04:13"
+          targetReplicas: 1
+      description: test
+      enabled: true
+      horizontalAutoscaler:
+      - enabled: true
+        maxReplicas: 4
+        metrics: CPU
+        minReplicas: 1
+        threshold: 60
+      maxReplicas: 4
+      minReplicas: 1
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    workloadIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_tem_workload

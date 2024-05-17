@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: configs.cls.tencentcloud.crossplane.io
 spec:
   group: cls.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Config
     listKind: ConfigList
     plural: configs
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Config is the Schema for the Configs API
+        description: Config is the Schema for the Configs API. Provides a resource
+          to create a cls config
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,108 +68,134 @@ spec:
               forProvider:
                 properties:
                   excludePaths:
-                    description: Collection path blocklist.
+                    description: Collection path blocklist. Collection path blocklist.
                     items:
                       properties:
                         type:
-                          description: 'Type. Valid values: File, Path.'
+                          description: 'Type. Valid values: File, Path. Type. Valid
+                            values: File, Path.'
                           type: string
                         value:
-                          description: Specific content corresponding to Type.
+                          description: Specific content corresponding to Type. Specific
+                            content corresponding to Type.
                           type: string
                       type: object
                     type: array
                   extractRule:
                     description: Extraction rule. If ExtractRule is set, LogType must
+                      be set. Extraction rule. If ExtractRule is set, LogType must
                       be set.
                     items:
                       properties:
                         address:
                           description: syslog system log collection specifies the
-                            address and port that the collector listens to.
+                            address and port that the collector listens to. syslog
+                            system log collection specifies the address and port that
+                            the collector listens to.
                           type: string
                         backtracking:
                           description: 'Size of the data to be rewound in incremental
-                            collection mode. Default value: -1 (full collection).'
+                            collection mode. Default value: -1 (full collection).
+                            Size of the data to be rewound in incremental collection
+                            mode. Default value: -1 (full collection).'
                           type: number
                         beginRegex:
                           description: First-Line matching rule, which is valid only
-                            if log_type is multiline_log or fullregex_log.
+                            if log_type is multiline_log or fullregex_log. First-Line
+                            matching rule, which is valid only if log_type is multiline_log
+                            or fullregex_log.
                           type: string
                         delimiter:
                           description: Delimiter for delimited log, which is valid
-                            only if log_type is delimiter_log.
+                            only if log_type is delimiter_log. Delimiter for delimited
+                            log, which is valid only if log_type is delimiter_log.
                           type: string
                         filterKeyRegex:
                           description: Log keys to be filtered and the corresponding
-                            regex.
+                            regex. Log keys to be filtered and the corresponding regex.
                           items:
                             properties:
                               key:
-                                description: Log key to be filtered.
+                                description: Log key to be filtered. Log key to be
+                                  filtered.
                                 type: string
                               regex:
                                 description: Filter rule regex corresponding to key.
+                                  Filter rule regex corresponding to key.
                                 type: string
                             type: object
                           type: array
                         isGbk:
-                          description: GBK encoding. Default 0.
+                          description: GBK encoding. Default 0. GBK encoding. Default
+                            0.
                           type: number
                         jsonStandard:
-                          description: standard json. Default 0.
+                          description: standard json. Default 0. standard json. Default
+                            0.
                           type: number
                         keys:
                           description: Key name of each extracted field. An empty
                             key indicates to discard the field. This parameter is
                             valid only if log_type is delimiter_log. json_log logs
-                            use the key of JSON itself.
+                            use the key of JSON itself. Key name of each extracted
+                            field. An empty key indicates to discard the field. This
+                            parameter is valid only if log_type is delimiter_log.
+                            json_log logs use the key of JSON itself.
                           items:
                             type: string
                           type: array
                         logRegex:
                           description: Full log matching rule, which is valid only
-                            if log_type is fullregex_log.
+                            if log_type is fullregex_log. Full log matching rule,
+                            which is valid only if log_type is fullregex_log.
                           type: string
                         metaTags:
-                          description: metadata tags.
+                          description: metadata tags. metadata tags.
                           items:
                             properties:
                               key:
-                                description: tag key.
+                                description: Log key to be filtered. tag key.
                                 type: string
                               value:
-                                description: tag value.
+                                description: Specific content corresponding to Type.
+                                  tag value.
                                 type: string
                             type: object
                           type: array
                         metadataType:
-                          description: metadata type.
+                          description: metadata type. metadata type.
                           type: number
                         parseProtocol:
-                          description: parse protocol.
+                          description: parse protocol. parse protocol.
                           type: string
                         pathRegex:
-                          description: metadata path regex.
+                          description: metadata path regex. metadata path regex.
                           type: string
                         protocol:
-                          description: syslog protocol, tcp or udp.
+                          description: syslog protocol, tcp or udp. syslog protocol,
+                            tcp or udp.
                           type: string
                         timeFormat:
                           description: Time field format. For more information, please
                             see the output parameters of the time format description
-                            of the strftime function in C language.
+                            of the strftime function in C language. Time field format.
+                            For more information, please see the output parameters
+                            of the time format description of the strftime function
+                            in C language.
                           type: string
                         timeKey:
                           description: Time field key name. time_key and time_format
-                            must appear in pair.
+                            must appear in pair. Time field key name. time_key and
+                            time_format must appear in pair.
                           type: string
                         unMatchLogKey:
-                          description: Unmatched log key.
+                          description: Unmatched log key. Unmatched log key.
                           type: string
                         unMatchUpLoadSwitch:
                           description: 'Whether to upload the logs that failed to
-                            be parsed. Valid values: true: yes; false: no.'
+                            be parsed. Valid values: true: yes; false: no. Whether
+                            to upload the logs that failed to be parsed. Valid values:
+                            true: yes; false: no.'
                           type: boolean
                       type: object
                     type: array
@@ -174,67 +204,232 @@ spec:
                       log in JSON format; delimiter_log: log in delimited format;
                       minimalist_log: minimalist log; multiline_log: log in multi-line
                       format; fullregex_log: log in full regex format. Default value:
-                      minimalist_log.'
+                      minimalist_log. Type of the log to be collected. Valid values:
+                      json_log: log in JSON format; delimiter_log: log in delimited
+                      format; minimalist_log: minimalist log; multiline_log: log in
+                      multi-line format; fullregex_log: log in full regex format.
+                      Default value: minimalist_log.'
                     type: string
                   name:
-                    description: Collection configuration name.
+                    description: Collection configuration name. Collection configuration
+                      name.
                     type: string
                   output:
                     description: Log topic ID (TopicId) of collection configuration.
+                      Log topic ID (TopicId) of collection configuration.
                     type: string
                   path:
-                    description: Log collection path containing the filename.
+                    description: Log collection path containing the filename. Log
+                      collection path containing the filename.
                     type: string
                   userDefineRule:
                     description: Custom collection rule, which is a serialized JSON
-                      string.
+                      string. Custom collection rule, which is a serialized JSON string.
                     type: string
-                required:
-                - extractRule
-                - name
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  excludePaths:
+                    description: Collection path blocklist. Collection path blocklist.
+                    items:
+                      properties:
+                        type:
+                          description: 'Type. Valid values: File, Path. Type. Valid
+                            values: File, Path.'
+                          type: string
+                        value:
+                          description: Specific content corresponding to Type. Specific
+                            content corresponding to Type.
+                          type: string
+                      type: object
+                    type: array
+                  extractRule:
+                    description: Extraction rule. If ExtractRule is set, LogType must
+                      be set. Extraction rule. If ExtractRule is set, LogType must
+                      be set.
+                    items:
+                      properties:
+                        address:
+                          description: syslog system log collection specifies the
+                            address and port that the collector listens to. syslog
+                            system log collection specifies the address and port that
+                            the collector listens to.
+                          type: string
+                        backtracking:
+                          description: 'Size of the data to be rewound in incremental
+                            collection mode. Default value: -1 (full collection).
+                            Size of the data to be rewound in incremental collection
+                            mode. Default value: -1 (full collection).'
+                          type: number
+                        beginRegex:
+                          description: First-Line matching rule, which is valid only
+                            if log_type is multiline_log or fullregex_log. First-Line
+                            matching rule, which is valid only if log_type is multiline_log
+                            or fullregex_log.
+                          type: string
+                        delimiter:
+                          description: Delimiter for delimited log, which is valid
+                            only if log_type is delimiter_log. Delimiter for delimited
+                            log, which is valid only if log_type is delimiter_log.
+                          type: string
+                        filterKeyRegex:
+                          description: Log keys to be filtered and the corresponding
+                            regex. Log keys to be filtered and the corresponding regex.
+                          items:
+                            properties:
+                              key:
+                                description: Log key to be filtered. Log key to be
+                                  filtered.
+                                type: string
+                              regex:
+                                description: Filter rule regex corresponding to key.
+                                  Filter rule regex corresponding to key.
+                                type: string
+                            type: object
+                          type: array
+                        isGbk:
+                          description: GBK encoding. Default 0. GBK encoding. Default
+                            0.
+                          type: number
+                        jsonStandard:
+                          description: standard json. Default 0. standard json. Default
+                            0.
+                          type: number
+                        keys:
+                          description: Key name of each extracted field. An empty
+                            key indicates to discard the field. This parameter is
+                            valid only if log_type is delimiter_log. json_log logs
+                            use the key of JSON itself. Key name of each extracted
+                            field. An empty key indicates to discard the field. This
+                            parameter is valid only if log_type is delimiter_log.
+                            json_log logs use the key of JSON itself.
+                          items:
+                            type: string
+                          type: array
+                        logRegex:
+                          description: Full log matching rule, which is valid only
+                            if log_type is fullregex_log. Full log matching rule,
+                            which is valid only if log_type is fullregex_log.
+                          type: string
+                        metaTags:
+                          description: metadata tags. metadata tags.
+                          items:
+                            properties:
+                              key:
+                                description: Log key to be filtered. tag key.
+                                type: string
+                              value:
+                                description: Specific content corresponding to Type.
+                                  tag value.
+                                type: string
+                            type: object
+                          type: array
+                        metadataType:
+                          description: metadata type. metadata type.
+                          type: number
+                        parseProtocol:
+                          description: parse protocol. parse protocol.
+                          type: string
+                        pathRegex:
+                          description: metadata path regex. metadata path regex.
+                          type: string
+                        protocol:
+                          description: syslog protocol, tcp or udp. syslog protocol,
+                            tcp or udp.
+                          type: string
+                        timeFormat:
+                          description: Time field format. For more information, please
+                            see the output parameters of the time format description
+                            of the strftime function in C language. Time field format.
+                            For more information, please see the output parameters
+                            of the time format description of the strftime function
+                            in C language.
+                          type: string
+                        timeKey:
+                          description: Time field key name. time_key and time_format
+                            must appear in pair. Time field key name. time_key and
+                            time_format must appear in pair.
+                          type: string
+                        unMatchLogKey:
+                          description: Unmatched log key. Unmatched log key.
+                          type: string
+                        unMatchUpLoadSwitch:
+                          description: 'Whether to upload the logs that failed to
+                            be parsed. Valid values: true: yes; false: no. Whether
+                            to upload the logs that failed to be parsed. Valid values:
+                            true: yes; false: no.'
+                          type: boolean
+                      type: object
+                    type: array
+                  logType:
+                    description: 'Type of the log to be collected. Valid values: json_log:
+                      log in JSON format; delimiter_log: log in delimited format;
+                      minimalist_log: minimalist log; multiline_log: log in multi-line
+                      format; fullregex_log: log in full regex format. Default value:
+                      minimalist_log. Type of the log to be collected. Valid values:
+                      json_log: log in JSON format; delimiter_log: log in delimited
+                      format; minimalist_log: minimalist log; multiline_log: log in
+                      multi-line format; fullregex_log: log in full regex format.
+                      Default value: minimalist_log.'
+                    type: string
+                  name:
+                    description: Collection configuration name. Collection configuration
+                      name.
+                    type: string
+                  output:
+                    description: Log topic ID (TopicId) of collection configuration.
+                      Log topic ID (TopicId) of collection configuration.
+                    type: string
+                  path:
+                    description: Log collection path containing the filename. Log
+                      collection path containing the filename.
+                    type: string
+                  userDefineRule:
+                    description: Custom collection rule, which is a serialized JSON
+                      string. Custom collection rule, which is a serialized JSON string.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -364,12 +559,181 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.extractRule is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.extractRule)
+                || (has(self.initProvider) && has(self.initProvider.extractRule))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
           status:
             description: ConfigStatus defines the observed state of Config.
             properties:
               atProvider:
                 properties:
+                  excludePaths:
+                    description: Collection path blocklist. Collection path blocklist.
+                    items:
+                      properties:
+                        type:
+                          description: 'Type. Valid values: File, Path. Type. Valid
+                            values: File, Path.'
+                          type: string
+                        value:
+                          description: Specific content corresponding to Type. Specific
+                            content corresponding to Type.
+                          type: string
+                      type: object
+                    type: array
+                  extractRule:
+                    description: Extraction rule. If ExtractRule is set, LogType must
+                      be set. Extraction rule. If ExtractRule is set, LogType must
+                      be set.
+                    items:
+                      properties:
+                        address:
+                          description: syslog system log collection specifies the
+                            address and port that the collector listens to. syslog
+                            system log collection specifies the address and port that
+                            the collector listens to.
+                          type: string
+                        backtracking:
+                          description: 'Size of the data to be rewound in incremental
+                            collection mode. Default value: -1 (full collection).
+                            Size of the data to be rewound in incremental collection
+                            mode. Default value: -1 (full collection).'
+                          type: number
+                        beginRegex:
+                          description: First-Line matching rule, which is valid only
+                            if log_type is multiline_log or fullregex_log. First-Line
+                            matching rule, which is valid only if log_type is multiline_log
+                            or fullregex_log.
+                          type: string
+                        delimiter:
+                          description: Delimiter for delimited log, which is valid
+                            only if log_type is delimiter_log. Delimiter for delimited
+                            log, which is valid only if log_type is delimiter_log.
+                          type: string
+                        filterKeyRegex:
+                          description: Log keys to be filtered and the corresponding
+                            regex. Log keys to be filtered and the corresponding regex.
+                          items:
+                            properties:
+                              key:
+                                description: Log key to be filtered. Log key to be
+                                  filtered.
+                                type: string
+                              regex:
+                                description: Filter rule regex corresponding to key.
+                                  Filter rule regex corresponding to key.
+                                type: string
+                            type: object
+                          type: array
+                        isGbk:
+                          description: GBK encoding. Default 0. GBK encoding. Default
+                            0.
+                          type: number
+                        jsonStandard:
+                          description: standard json. Default 0. standard json. Default
+                            0.
+                          type: number
+                        keys:
+                          description: Key name of each extracted field. An empty
+                            key indicates to discard the field. This parameter is
+                            valid only if log_type is delimiter_log. json_log logs
+                            use the key of JSON itself. Key name of each extracted
+                            field. An empty key indicates to discard the field. This
+                            parameter is valid only if log_type is delimiter_log.
+                            json_log logs use the key of JSON itself.
+                          items:
+                            type: string
+                          type: array
+                        logRegex:
+                          description: Full log matching rule, which is valid only
+                            if log_type is fullregex_log. Full log matching rule,
+                            which is valid only if log_type is fullregex_log.
+                          type: string
+                        metaTags:
+                          description: metadata tags. metadata tags.
+                          items:
+                            properties:
+                              key:
+                                description: Log key to be filtered. tag key.
+                                type: string
+                              value:
+                                description: Specific content corresponding to Type.
+                                  tag value.
+                                type: string
+                            type: object
+                          type: array
+                        metadataType:
+                          description: metadata type. metadata type.
+                          type: number
+                        parseProtocol:
+                          description: parse protocol. parse protocol.
+                          type: string
+                        pathRegex:
+                          description: metadata path regex. metadata path regex.
+                          type: string
+                        protocol:
+                          description: syslog protocol, tcp or udp. syslog protocol,
+                            tcp or udp.
+                          type: string
+                        timeFormat:
+                          description: Time field format. For more information, please
+                            see the output parameters of the time format description
+                            of the strftime function in C language. Time field format.
+                            For more information, please see the output parameters
+                            of the time format description of the strftime function
+                            in C language.
+                          type: string
+                        timeKey:
+                          description: Time field key name. time_key and time_format
+                            must appear in pair. Time field key name. time_key and
+                            time_format must appear in pair.
+                          type: string
+                        unMatchLogKey:
+                          description: Unmatched log key. Unmatched log key.
+                          type: string
+                        unMatchUpLoadSwitch:
+                          description: 'Whether to upload the logs that failed to
+                            be parsed. Valid values: true: yes; false: no. Whether
+                            to upload the logs that failed to be parsed. Valid values:
+                            true: yes; false: no.'
+                          type: boolean
+                      type: object
+                    type: array
                   id:
+                    description: ID of the resource.
+                    type: string
+                  logType:
+                    description: 'Type of the log to be collected. Valid values: json_log:
+                      log in JSON format; delimiter_log: log in delimited format;
+                      minimalist_log: minimalist log; multiline_log: log in multi-line
+                      format; fullregex_log: log in full regex format. Default value:
+                      minimalist_log. Type of the log to be collected. Valid values:
+                      json_log: log in JSON format; delimiter_log: log in delimited
+                      format; minimalist_log: minimalist log; multiline_log: log in
+                      multi-line format; fullregex_log: log in full regex format.
+                      Default value: minimalist_log.'
+                    type: string
+                  name:
+                    description: Collection configuration name. Collection configuration
+                      name.
+                    type: string
+                  output:
+                    description: Log topic ID (TopicId) of collection configuration.
+                      Log topic ID (TopicId) of collection configuration.
+                    type: string
+                  path:
+                    description: Log collection path containing the filename. Log
+                      collection path containing the filename.
+                    type: string
+                  userDefineRule:
+                    description: Custom collection rule, which is a serialized JSON
+                      string. Custom collection rule, which is a serialized JSON string.
                     type: string
                 type: object
               conditions:
@@ -405,6 +769,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -413,9 +780,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

@@ -1,0 +1,18 @@
+apiVersion: kafka.tencentcloud.crossplane.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/user
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    accountName: tf-test
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

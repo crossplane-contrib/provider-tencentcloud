@@ -1,0 +1,38 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: DdosPolicyCase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/ddospolicycase
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    appProtocols:
+    - tcp
+    - udp
+    appType: WEB
+    hasAbroad: "yes"
+    hasInitiateTcp: "yes"
+    hasInitiateUdp: "yes"
+    hasVpn: "yes"
+    maxTcpPackageLen: "1200"
+    maxUdpPackageLen: "1200"
+    minTcpPackageLen: "1000"
+    minUdpPackageLen: "1000"
+    name: tf_test_policy_case
+    peerTcpPort: "1111"
+    peerUdpPort: "3333"
+    platformTypes:
+    - PC
+    - MOBILE
+    resourceType: bgpip
+    tcpEndPort: "2000"
+    tcpFootprint: "511"
+    tcpStartPort: "1000"
+    udpEndPort: "4000"
+    udpFootprint: "500"
+    udpStartPort: "3000"
+    webApiUrls:
+    - abc.com
+    - test.cn/aaa.png

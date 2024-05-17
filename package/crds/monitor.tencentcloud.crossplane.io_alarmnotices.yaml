@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: alarmnotices.monitor.tencentcloud.crossplane.io
 spec:
   group: monitor.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: AlarmNotice
     listKind: AlarmNoticeList
     plural: alarmnotices
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: AlarmNotice is the Schema for the AlarmNotices API
+        description: AlarmNotice is the Schema for the AlarmNotices API. Provides
+          a alarm notice resource for monitor.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,185 +69,341 @@ spec:
                 properties:
                   clsNotices:
                     description: A maximum of one alarm notification can be pushed
-                      to the CLS service.
+                      to the CLS service. A maximum of one alarm notification can
+                      be pushed to the CLS service.
                     items:
                       properties:
                         enable:
                           description: Start-stop status, can not be transmitted,
-                            default enabled. 0= Disabled, 1= enabled.
+                            default enabled. 0= Disabled, 1= enabled. Start-stop status,
+                            can not be transmitted, default enabled. 0= Disabled,
+                            1= enabled.
                           type: number
                         logSetId:
-                          description: Log collection Id.
+                          description: Log collection Id. Log collection Id.
                           type: string
                         region:
-                          description: Regional.
+                          description: Regional. Regional.
                           type: string
                         topicId:
-                          description: Theme Id.
+                          description: Theme Id. Theme Id.
                           type: string
-                      required:
-                      - logSetId
-                      - region
-                      - topicId
                       type: object
                     type: array
                   name:
-                    description: Notification template name within 60.
+                    description: Notification template name within 60. Notification
+                      template name within 60.
                     type: string
                   noticeLanguage:
                     description: Notification language zh-CN=Chinese en-US=English.
+                      Notification language zh-CN=Chinese en-US=English.
                     type: string
                   noticeType:
                     description: Alarm notification type ALARM=Notification not restored
-                      OK=Notification restored ALL.
+                      OK=Notification restored ALL. Alarm notification type ALARM=Notification
+                      not restored OK=Notification restored ALL.
                     type: string
                   urlNotices:
                     description: The maximum number of callback notifications is 3.
+                      The maximum number of callback notifications is 3.
                     items:
                       properties:
                         endTime:
                           description: Notification End Time Seconds at the start
-                            of a day.
+                            of a day. Notification End Time Seconds at the start of
+                            a day.
                           type: number
                         isValid:
-                          description: If passed verification `0` is no, `1` is yes.
-                            Default `0`.
+                          description: If passed verification 0 is no, 1 is yes. Default
+                            0. If passed verification `0` is no, `1` is yes. Default
+                            `0`.
                           type: number
                         startTime:
                           description: Notification Start Time Number of seconds at
-                            the start of a day.
+                            the start of a day. Notification Start Time Number of
+                            seconds at the start of a day.
                           type: number
                         url:
-                          description: Callback URL (limited to 256 characters).
+                          description: Callback URL (limited to 256 characters). Callback
+                            URL (limited to 256 characters).
                           type: string
                         validationCode:
-                          description: Verification code.
+                          description: Verification code. Verification code.
                           type: string
                         weekday:
                           description: Notification period 1-7 indicates Monday to
-                            Sunday.
+                            Sunday. Notification period 1-7 indicates Monday to Sunday.
                           items:
                             type: number
                           type: array
-                      required:
-                      - url
                       type: object
                     type: array
                   userNotices:
                     description: Alarm notification template list.(At most five).
+                      Alarm notification template list.(At most five).
                     items:
                       properties:
                         endTime:
-                          description: The number of seconds since the notification
+                          description: Notification End Time Seconds at the start
+                            of a day. The number of seconds since the notification
                             end time 00:00:00 (value range 0-86399).
                           type: number
                         groupIds:
-                          description: User group ID list.
+                          description: User group ID list. User group ID list.
                           items:
                             type: number
                           type: array
                         needPhoneArriveNotice:
                           description: Contact notification required 0= No 1= Yes.
+                            Contact notification required 0= No 1= Yes.
                           type: number
                         noticeWay:
                           description: Notification Channel List EMAIL=Mail SMS=SMS
-                            CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
+                            CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat. Notification
+                            Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat
+                            RTX=Enterprise WeChat.
                           items:
                             type: string
                           type: array
                         phoneCallType:
                           description: Call type SYNC= Simultaneous call CIRCLE= Round
                             call If this parameter is not specified, the default value
-                            is round call.
+                            is round call. Call type SYNC= Simultaneous call CIRCLE=
+                            Round call If this parameter is not specified, the default
+                            value is round call.
                           type: string
                         phoneCircleInterval:
                           description: 'Number of seconds between polls (value range:
+                            60-900). Number of seconds between polls (value range:
                             60-900).'
                           type: number
                         phoneCircleTimes:
-                          description: 'Number of telephone polls (value range: 1-5).'
+                          description: 'Number of telephone polls (value range: 1-5).
+                            Number of telephone polls (value range: 1-5).'
                           type: number
                         phoneInnerInterval:
                           description: 'Number of seconds between calls in a polling
-                            session (value range: 60-900).'
+                            session (value range: 60-900). Number of seconds between
+                            calls in a polling session (value range: 60-900).'
                           type: number
                         phoneOrder:
-                          description: Telephone polling list.
+                          description: Telephone polling list. Telephone polling list.
                           items:
                             type: number
                           type: array
                         receiverType:
                           description: Recipient Type USER=User GROUP=User Group.
+                            Recipient Type USER=User GROUP=User Group.
                           type: string
                         startTime:
-                          description: The number of seconds since the notification
+                          description: Notification Start Time Number of seconds at
+                            the start of a day. The number of seconds since the notification
                             start time 00:00:00 (value range 0-86399).
                           type: number
                         userIds:
-                          description: User UID List.
+                          description: User UID List. User UID List.
                           items:
                             type: number
                           type: array
                         weekday:
                           description: Notification period 1-7 indicates Monday to
-                            Sunday.
+                            Sunday. Notification period 1-7 indicates Monday to Sunday.
                           items:
                             type: number
                           type: array
-                      required:
-                      - endTime
-                      - noticeWay
-                      - receiverType
-                      - startTime
                       type: object
                     type: array
-                required:
-                - name
-                - noticeLanguage
-                - noticeType
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  clsNotices:
+                    description: A maximum of one alarm notification can be pushed
+                      to the CLS service. A maximum of one alarm notification can
+                      be pushed to the CLS service.
+                    items:
+                      properties:
+                        enable:
+                          description: Start-stop status, can not be transmitted,
+                            default enabled. 0= Disabled, 1= enabled. Start-stop status,
+                            can not be transmitted, default enabled. 0= Disabled,
+                            1= enabled.
+                          type: number
+                        logSetId:
+                          description: Log collection Id. Log collection Id.
+                          type: string
+                        region:
+                          description: Regional. Regional.
+                          type: string
+                        topicId:
+                          description: Theme Id. Theme Id.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: Notification template name within 60. Notification
+                      template name within 60.
+                    type: string
+                  noticeLanguage:
+                    description: Notification language zh-CN=Chinese en-US=English.
+                      Notification language zh-CN=Chinese en-US=English.
+                    type: string
+                  noticeType:
+                    description: Alarm notification type ALARM=Notification not restored
+                      OK=Notification restored ALL. Alarm notification type ALARM=Notification
+                      not restored OK=Notification restored ALL.
+                    type: string
+                  urlNotices:
+                    description: The maximum number of callback notifications is 3.
+                      The maximum number of callback notifications is 3.
+                    items:
+                      properties:
+                        endTime:
+                          description: Notification End Time Seconds at the start
+                            of a day. Notification End Time Seconds at the start of
+                            a day.
+                          type: number
+                        isValid:
+                          description: If passed verification 0 is no, 1 is yes. Default
+                            0. If passed verification `0` is no, `1` is yes. Default
+                            `0`.
+                          type: number
+                        startTime:
+                          description: Notification Start Time Number of seconds at
+                            the start of a day. Notification Start Time Number of
+                            seconds at the start of a day.
+                          type: number
+                        url:
+                          description: Callback URL (limited to 256 characters). Callback
+                            URL (limited to 256 characters).
+                          type: string
+                        validationCode:
+                          description: Verification code. Verification code.
+                          type: string
+                        weekday:
+                          description: Notification period 1-7 indicates Monday to
+                            Sunday. Notification period 1-7 indicates Monday to Sunday.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  userNotices:
+                    description: Alarm notification template list.(At most five).
+                      Alarm notification template list.(At most five).
+                    items:
+                      properties:
+                        endTime:
+                          description: Notification End Time Seconds at the start
+                            of a day. The number of seconds since the notification
+                            end time 00:00:00 (value range 0-86399).
+                          type: number
+                        groupIds:
+                          description: User group ID list. User group ID list.
+                          items:
+                            type: number
+                          type: array
+                        needPhoneArriveNotice:
+                          description: Contact notification required 0= No 1= Yes.
+                            Contact notification required 0= No 1= Yes.
+                          type: number
+                        noticeWay:
+                          description: Notification Channel List EMAIL=Mail SMS=SMS
+                            CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat. Notification
+                            Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat
+                            RTX=Enterprise WeChat.
+                          items:
+                            type: string
+                          type: array
+                        phoneCallType:
+                          description: Call type SYNC= Simultaneous call CIRCLE= Round
+                            call If this parameter is not specified, the default value
+                            is round call. Call type SYNC= Simultaneous call CIRCLE=
+                            Round call If this parameter is not specified, the default
+                            value is round call.
+                          type: string
+                        phoneCircleInterval:
+                          description: 'Number of seconds between polls (value range:
+                            60-900). Number of seconds between polls (value range:
+                            60-900).'
+                          type: number
+                        phoneCircleTimes:
+                          description: 'Number of telephone polls (value range: 1-5).
+                            Number of telephone polls (value range: 1-5).'
+                          type: number
+                        phoneInnerInterval:
+                          description: 'Number of seconds between calls in a polling
+                            session (value range: 60-900). Number of seconds between
+                            calls in a polling session (value range: 60-900).'
+                          type: number
+                        phoneOrder:
+                          description: Telephone polling list. Telephone polling list.
+                          items:
+                            type: number
+                          type: array
+                        receiverType:
+                          description: Recipient Type USER=User GROUP=User Group.
+                            Recipient Type USER=User GROUP=User Group.
+                          type: string
+                        startTime:
+                          description: Notification Start Time Number of seconds at
+                            the start of a day. The number of seconds since the notification
+                            start time 00:00:00 (value range 0-86399).
+                          type: number
+                        userIds:
+                          description: User UID List. User UID List.
+                          items:
+                            type: number
+                          type: array
+                        weekday:
+                          description: Notification period 1-7 indicates Monday to
+                            Sunday. Notification period 1-7 indicates Monday to Sunday.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -373,25 +533,194 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.noticeLanguage is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.noticeLanguage)
+                || (has(self.initProvider) && has(self.initProvider.noticeLanguage))'
+            - message: spec.forProvider.noticeType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.noticeType)
+                || (has(self.initProvider) && has(self.initProvider.noticeType))'
           status:
             description: AlarmNoticeStatus defines the observed state of AlarmNotice.
             properties:
               atProvider:
                 properties:
                   ampConsumerId:
+                    description: Amp consumer ID. Amp consumer ID.
                     type: string
+                  clsNotices:
+                    description: A maximum of one alarm notification can be pushed
+                      to the CLS service. A maximum of one alarm notification can
+                      be pushed to the CLS service.
+                    items:
+                      properties:
+                        enable:
+                          description: Start-stop status, can not be transmitted,
+                            default enabled. 0= Disabled, 1= enabled. Start-stop status,
+                            can not be transmitted, default enabled. 0= Disabled,
+                            1= enabled.
+                          type: number
+                        logSetId:
+                          description: Log collection Id. Log collection Id.
+                          type: string
+                        region:
+                          description: Regional. Regional.
+                          type: string
+                        topicId:
+                          description: Theme Id. Theme Id.
+                          type: string
+                      type: object
+                    type: array
                   id:
+                    description: ID of the resource.
                     type: string
                   isPreset:
+                    description: Whether it is the system default notification template
+                      0=No 1=Yes. Whether it is the system default notification template
+                      0=No 1=Yes.
                     type: number
+                  name:
+                    description: Notification template name within 60. Notification
+                      template name within 60.
+                    type: string
+                  noticeLanguage:
+                    description: Notification language zh-CN=Chinese en-US=English.
+                      Notification language zh-CN=Chinese en-US=English.
+                    type: string
+                  noticeType:
+                    description: Alarm notification type ALARM=Notification not restored
+                      OK=Notification restored ALL. Alarm notification type ALARM=Notification
+                      not restored OK=Notification restored ALL.
+                    type: string
                   policyIds:
+                    description: List of alarm policy IDs bound to the alarm notification
+                      template. List of alarm policy IDs bound to the alarm notification
+                      template.
                     items:
                       type: string
                     type: array
                   updatedAt:
+                    description: Last modified time. Last modified time.
                     type: string
                   updatedBy:
+                    description: Last Modified By. Last Modified By.
                     type: string
+                  urlNotices:
+                    description: The maximum number of callback notifications is 3.
+                      The maximum number of callback notifications is 3.
+                    items:
+                      properties:
+                        endTime:
+                          description: Notification End Time Seconds at the start
+                            of a day. Notification End Time Seconds at the start of
+                            a day.
+                          type: number
+                        isValid:
+                          description: If passed verification 0 is no, 1 is yes. Default
+                            0. If passed verification `0` is no, `1` is yes. Default
+                            `0`.
+                          type: number
+                        startTime:
+                          description: Notification Start Time Number of seconds at
+                            the start of a day. Notification Start Time Number of
+                            seconds at the start of a day.
+                          type: number
+                        url:
+                          description: Callback URL (limited to 256 characters). Callback
+                            URL (limited to 256 characters).
+                          type: string
+                        validationCode:
+                          description: Verification code. Verification code.
+                          type: string
+                        weekday:
+                          description: Notification period 1-7 indicates Monday to
+                            Sunday. Notification period 1-7 indicates Monday to Sunday.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  userNotices:
+                    description: Alarm notification template list.(At most five).
+                      Alarm notification template list.(At most five).
+                    items:
+                      properties:
+                        endTime:
+                          description: Notification End Time Seconds at the start
+                            of a day. The number of seconds since the notification
+                            end time 00:00:00 (value range 0-86399).
+                          type: number
+                        groupIds:
+                          description: User group ID list. User group ID list.
+                          items:
+                            type: number
+                          type: array
+                        needPhoneArriveNotice:
+                          description: Contact notification required 0= No 1= Yes.
+                            Contact notification required 0= No 1= Yes.
+                          type: number
+                        noticeWay:
+                          description: Notification Channel List EMAIL=Mail SMS=SMS
+                            CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat. Notification
+                            Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat
+                            RTX=Enterprise WeChat.
+                          items:
+                            type: string
+                          type: array
+                        phoneCallType:
+                          description: Call type SYNC= Simultaneous call CIRCLE= Round
+                            call If this parameter is not specified, the default value
+                            is round call. Call type SYNC= Simultaneous call CIRCLE=
+                            Round call If this parameter is not specified, the default
+                            value is round call.
+                          type: string
+                        phoneCircleInterval:
+                          description: 'Number of seconds between polls (value range:
+                            60-900). Number of seconds between polls (value range:
+                            60-900).'
+                          type: number
+                        phoneCircleTimes:
+                          description: 'Number of telephone polls (value range: 1-5).
+                            Number of telephone polls (value range: 1-5).'
+                          type: number
+                        phoneInnerInterval:
+                          description: 'Number of seconds between calls in a polling
+                            session (value range: 60-900). Number of seconds between
+                            calls in a polling session (value range: 60-900).'
+                          type: number
+                        phoneOrder:
+                          description: Telephone polling list. Telephone polling list.
+                          items:
+                            type: number
+                          type: array
+                        receiverType:
+                          description: Recipient Type USER=User GROUP=User Group.
+                            Recipient Type USER=User GROUP=User Group.
+                          type: string
+                        startTime:
+                          description: Notification Start Time Number of seconds at
+                            the start of a day. The number of seconds since the notification
+                            start time 00:00:00 (value range 0-86399).
+                          type: number
+                        userIds:
+                          description: User UID List. User UID List.
+                          items:
+                            type: number
+                          type: array
+                        weekday:
+                          description: Notification period 1-7 indicates Monday to
+                            Sunday. Notification period 1-7 indicates Monday to Sunday.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -426,6 +755,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -434,9 +766,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

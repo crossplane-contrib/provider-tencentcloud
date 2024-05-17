@@ -1,9 +1,0 @@
-apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
-kind: Role
-metadata:
-  name: crossplane-cam-role
-spec:
-  forProvider:
-    document: "{\"version\":\"2.0\",\"statement\":[{\"action\":[\"name/sts:AssumeRole\"],\"effect\":\"allow\",\"principal\":{\"qcs\":[\"qcs::cam::uin/${UIN}:uin/${UIN}\"]}}]}"
-    description: "crossplane-test"
-    consoleLogin: True

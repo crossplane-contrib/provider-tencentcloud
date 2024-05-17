@@ -1,0 +1,28 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: L7Rule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/l7rule
+  labels:
+    testing.upbound.io/example-name: test_rule
+  name: test-rule
+spec:
+  forProvider:
+    domain: zhaoshaona.com
+    healthCheckCode: 31
+    healthCheckHealthNum: 5
+    healthCheckInterval: 30
+    healthCheckMethod: GET
+    healthCheckPath: /
+    healthCheckSwitch: true
+    healthCheckUnhealthNum: 10
+    name: rule_test
+    protocol: https
+    resourceId: bgpip-00000294
+    resourceType: bgpip
+    sourceList:
+    - 1.1.1.1:80
+    - 2.2.2.2
+    sourceType: 2
+    sslId: '%s'
+    switch: true

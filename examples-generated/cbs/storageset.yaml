@@ -1,0 +1,17 @@
+apiVersion: cbs.tencentcloud.crossplane.io/v1alpha1
+kind: StorageSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cbs/v1alpha1/storageset
+  labels:
+    testing.upbound.io/example-name: storage
+  name: storage
+spec:
+  forProvider:
+    availabilityZone: ap-guangzhou-3
+    diskCount: 10
+    encrypt: false
+    projectId: 0
+    storageName: mystorage
+    storageSize: 100
+    storageType: CLOUD_SSD

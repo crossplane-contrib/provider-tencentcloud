@@ -1,0 +1,94 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpScrapeJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmpscrapejob
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    agentId: ${tencentcloud_monitor_tmp_cvm_agent.foo.agent_id}
+    config: |
+      job_name: demo-config
+      honor_timestamps: true
+      metrics_path: /metrics
+      scheme: https
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpCvmAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmpscrapejob
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    name: tf-agent
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: TmpInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmpscrapejob
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    dataRetentionTime: 30
+    instanceName: tf-tmp-instance
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      createdBy: terraform
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+    zone: ${var.availability_zone}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmpscrapejob
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.1.0/24
+    name: tf_monitor_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/tmpscrapejob
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf_monitor_vpc

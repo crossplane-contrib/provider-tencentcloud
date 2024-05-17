@@ -16,25 +16,21 @@ limitations under the License.
 
 package redis
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupRedis = "redis"
 
 // Configure configures the redis group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_redis_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_redis_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupRedis
 		r.Kind = "Instance"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_redis_backup_config", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_redis_backup_config", func(r *config.Resource) {
 		r.ShortGroup = shortGroupRedis
 		r.Kind = "BackupConfig"
-		r.References["redis_id"] = tjconfig.Reference{
+		r.References["redis_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})

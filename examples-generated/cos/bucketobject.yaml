@@ -1,0 +1,15 @@
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: BucketObject
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cos/v1alpha1/bucketobject
+  labels:
+    testing.upbound.io/example-name: myobject
+  name: myobject
+spec:
+  forProvider:
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    key: new_object_key
+    source: path/to/file

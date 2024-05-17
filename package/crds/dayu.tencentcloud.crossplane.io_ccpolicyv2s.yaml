@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: ccpolicyv2s.dayu.tencentcloud.crossplane.io
 spec:
   group: dayu.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: CcPolicyV2
     listKind: CcPolicyV2List
     plural: ccpolicyv2s
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CcPolicyV2 is the Schema for the CcPolicyV2s API
+        description: CcPolicyV2 is the Schema for the CcPolicyV2s API. Use this resource
+          to create a dayu CC policy
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -66,258 +70,460 @@ spec:
                   business:
                     description: Business of resource instance. bgpip indicates anti-anti-ip
                       ip; bgp means exclusive package; bgp-multip means shared packet;
-                      net indicates anti-anti-ip pro version.
+                      net indicates anti-anti-ip pro version. Business of resource
+                      instance. bgpip indicates anti-anti-ip ip; bgp means exclusive
+                      package; bgp-multip means shared packet; net indicates anti-anti-ip
+                      pro version.
                     type: string
                   ccBlackWhiteIps:
-                    description: Blacklist and whitelist.
+                    description: Blacklist and whitelist. Blacklist and whitelist.
                     items:
                       properties:
                         blackWhiteIp:
-                          description: Blacklist and whitelist IP addresses.
+                          description: Blacklist and whitelist IP addresses. Blacklist
+                            and whitelist IP addresses.
                           type: string
                         createTime:
-                          description: Create time.
+                          description: Create time. Create time.
                           type: string
                         domain:
-                          description: Domain.
+                          description: Domain. Domain.
                           type: string
                         modifyTime:
-                          description: Modify time.
+                          description: Modify time. Modify time.
                           type: string
                         protocol:
-                          description: Protocol.
+                          description: Protocol. Protocol.
                           type: string
                         type:
                           description: IP type, value [black(blacklist IP), white
-                            (whitelist IP)].
+                            (whitelist IP)]. IP type, value [black(blacklist IP),
+                            white (whitelist IP)].
                           type: string
-                      required:
-                      - blackWhiteIp
-                      - domain
-                      - protocol
-                      - type
                       type: object
                     type: array
                   ccGeoIpPolicys:
-                    description: Details of the CC region blocking policy list.
+                    description: Details of the CC region blocking policy list. Details
+                      of the CC region blocking policy list.
                     items:
                       properties:
                         action:
-                          description: User action, drop or arg.
+                          description: User action, drop or arg. User action, drop
+                            or arg.
                           type: string
                         areaList:
                           description: The list of region IDs that the user selects
+                            to block. The list of region IDs that the user selects
                             to block.
                           items:
                             type: number
                           type: array
                         createTime:
-                          description: Create time.
+                          description: Create time. Create time.
                           type: string
                         domain:
-                          description: domain.
+                          description: Domain. domain.
                           type: string
                         modifyTime:
-                          description: Modify time.
+                          description: Modify time. Modify time.
                           type: string
                         protocol:
-                          description: Protocol, preferably HTTP, HTTPS.
+                          description: Protocol. Protocol, preferably HTTP, HTTPS.
                           type: string
                         regionType:
                           description: Regional types, divided into china, oversea
+                            and customized. Regional types, divided into china, oversea
                             and customized.
                           type: string
-                      required:
-                      - action
-                      - domain
-                      - protocol
-                      - regionType
                       type: object
                     type: array
                   ccPrecisionPolicys:
-                    description: CC Precision Protection List.
+                    description: CC Precision Protection List. CC Precision Protection
+                      List.
                     items:
                       properties:
                         domain:
-                          description: Domain.
+                          description: Domain. Domain.
                           type: string
                         ip:
-                          description: Ip address.
+                          description: Ip address. Ip address.
                           type: string
                         policyAction:
-                          description: Policy mode (discard or captcha).
+                          description: Policy mode (discard or captcha). Policy mode
+                            (discard or captcha).
                           type: string
                         policys:
-                          description: A list of policies.
+                          description: A list of policies. A list of policies.
                           items:
                             properties:
                               fieldName:
                                 description: Configuration item types, currently only
-                                  support value.
+                                  support value. Configuration item types, currently
+                                  only support value.
                                 type: string
                               fieldType:
                                 description: Configuration fields with the desirable
                                   values cgi, ua, cookie, referer, accept, srcip.
+                                  Configuration fields with the desirable values cgi,
+                                  ua, cookie, referer, accept, srcip.
                                 type: string
                               value:
-                                description: Configure the value.
+                                description: Configure the value. Configure the value.
                                 type: string
                               valueOperator:
                                 description: Configure the item-value comparison mode,
                                   which can be taken as the value of evaluate, not_equal,
+                                  include. Configure the item-value comparison mode,
+                                  which can be taken as the value of evaluate, not_equal,
                                   include.
                                 type: string
-                            required:
-                            - fieldName
-                            - fieldType
-                            - value
-                            - valueOperator
                             type: object
                           type: array
                         protocol:
-                          description: Protocol.
+                          description: Protocol. Protocol.
                           type: string
-                      required:
-                      - domain
-                      - ip
-                      - policyAction
-                      - policys
-                      - protocol
                       type: object
                     type: array
                   ccPrecisionReqLimits:
-                    description: CC frequency throttling policy.
+                    description: CC frequency throttling policy. CC frequency throttling
+                      policy.
                     items:
                       properties:
                         domain:
-                          description: Domain.
+                          description: Domain. Domain.
                           type: string
                         level:
                           description: Protection rating, the optional value of default
                             means default policy, loose means loose, and strict means
+                            strict. Protection rating, the optional value of default
+                            means default policy, loose means loose, and strict means
                             strict.
                           type: string
                         policys:
-                          description: The CC Frequency Limit Policy Item field.
+                          description: A list of policies. The CC Frequency Limit
+                            Policy Item field.
                           items:
                             properties:
                               action:
-                                description: The frequency limit policy mode, the
-                                  optional value of arg indicates the verification
-                                  code, and drop indicates the discard.
+                                description: User action, drop or arg. The frequency
+                                  limit policy mode, the optional value of arg indicates
+                                  the verification code, and drop indicates the discard.
                                 type: string
                               cookie:
                                 description: Cookies, one of the three policy entries
-                                  can only be filled in.
+                                  can only be filled in. Cookies, one of the three
+                                  policy entries can only be filled in.
                                 type: string
                               executeDuration:
                                 description: The duration of the frequency limit policy
-                                  can be taken from 1 to 86400 per second.
+                                  can be taken from 1 to 86400 per second. The duration
+                                  of the frequency limit policy can be taken from
+                                  1 to 86400 per second.
                                 type: number
                               mode:
                                 description: The policy item is compared, and the
                                   optional value include indicates inclusion, and
-                                  equal means equal.
+                                  equal means equal. The policy item is compared,
+                                  and the optional value include indicates inclusion,
+                                  and equal means equal.
                                 type: string
                               period:
                                 description: Statistical period, take values 1, 10,
-                                  30, 60, in seconds.
+                                  30, 60, in seconds. Statistical period, take values
+                                  1, 10, 30, 60, in seconds.
                                 type: number
                               requestNum:
                                 description: The number of requests, the value is
+                                  1 to 20000. The number of requests, the value is
                                   1 to 20000.
                                 type: number
                               uri:
                                 description: Uri, one of the three policy entries
-                                  can only be filled in.
+                                  can only be filled in. Uri, one of the three policy
+                                  entries can only be filled in.
                                 type: string
                               userAgent:
                                 description: User-Agent, only one of the three policy
-                                  entries can be filled in.
+                                  entries can be filled in. User-Agent, only one of
+                                  the three policy entries can be filled in.
                                 type: string
-                            required:
-                            - action
-                            - executeDuration
-                            - mode
-                            - period
-                            - requestNum
                             type: object
                           type: array
                         protocol:
-                          description: Protocol, preferably HTTP, HTTPS.
+                          description: Protocol. Protocol, preferably HTTP, HTTPS.
                           type: string
-                      required:
-                      - domain
-                      - level
-                      - policys
-                      - protocol
                       type: object
                     type: array
                   resourceId:
-                    description: The ID of the resource instance.
+                    description: The ID of the resource instance. The ID of the resource
+                      instance.
                     type: string
                   thresholds:
-                    description: List of protection threshold configurations.
+                    description: List of protection threshold configurations. List
+                      of protection threshold configurations.
                     items:
                       properties:
                         domain:
-                          description: domain.
+                          description: Domain. domain.
                           type: string
                         threshold:
-                          description: Cleaning threshold, -1 indicates that the `default`
-                            mode is turned on.
+                          description: Cleaning threshold, -1 indicates that the default
+                            mode is turned on. Cleaning threshold, -1 indicates that
+                            the `default` mode is turned on.
                           type: number
-                      required:
-                      - domain
-                      - threshold
                       type: object
                     type: array
-                required:
-                - business
-                - resourceId
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  business:
+                    description: Business of resource instance. bgpip indicates anti-anti-ip
+                      ip; bgp means exclusive package; bgp-multip means shared packet;
+                      net indicates anti-anti-ip pro version. Business of resource
+                      instance. bgpip indicates anti-anti-ip ip; bgp means exclusive
+                      package; bgp-multip means shared packet; net indicates anti-anti-ip
+                      pro version.
+                    type: string
+                  ccBlackWhiteIps:
+                    description: Blacklist and whitelist. Blacklist and whitelist.
+                    items:
+                      properties:
+                        blackWhiteIp:
+                          description: Blacklist and whitelist IP addresses. Blacklist
+                            and whitelist IP addresses.
+                          type: string
+                        createTime:
+                          description: Create time. Create time.
+                          type: string
+                        domain:
+                          description: Domain. Domain.
+                          type: string
+                        modifyTime:
+                          description: Modify time. Modify time.
+                          type: string
+                        protocol:
+                          description: Protocol. Protocol.
+                          type: string
+                        type:
+                          description: IP type, value [black(blacklist IP), white
+                            (whitelist IP)]. IP type, value [black(blacklist IP),
+                            white (whitelist IP)].
+                          type: string
+                      type: object
+                    type: array
+                  ccGeoIpPolicys:
+                    description: Details of the CC region blocking policy list. Details
+                      of the CC region blocking policy list.
+                    items:
+                      properties:
+                        action:
+                          description: User action, drop or arg. User action, drop
+                            or arg.
+                          type: string
+                        areaList:
+                          description: The list of region IDs that the user selects
+                            to block. The list of region IDs that the user selects
+                            to block.
+                          items:
+                            type: number
+                          type: array
+                        createTime:
+                          description: Create time. Create time.
+                          type: string
+                        domain:
+                          description: Domain. domain.
+                          type: string
+                        modifyTime:
+                          description: Modify time. Modify time.
+                          type: string
+                        protocol:
+                          description: Protocol. Protocol, preferably HTTP, HTTPS.
+                          type: string
+                        regionType:
+                          description: Regional types, divided into china, oversea
+                            and customized. Regional types, divided into china, oversea
+                            and customized.
+                          type: string
+                      type: object
+                    type: array
+                  ccPrecisionPolicys:
+                    description: CC Precision Protection List. CC Precision Protection
+                      List.
+                    items:
+                      properties:
+                        domain:
+                          description: Domain. Domain.
+                          type: string
+                        ip:
+                          description: Ip address. Ip address.
+                          type: string
+                        policyAction:
+                          description: Policy mode (discard or captcha). Policy mode
+                            (discard or captcha).
+                          type: string
+                        policys:
+                          description: A list of policies. A list of policies.
+                          items:
+                            properties:
+                              fieldName:
+                                description: Configuration item types, currently only
+                                  support value. Configuration item types, currently
+                                  only support value.
+                                type: string
+                              fieldType:
+                                description: Configuration fields with the desirable
+                                  values cgi, ua, cookie, referer, accept, srcip.
+                                  Configuration fields with the desirable values cgi,
+                                  ua, cookie, referer, accept, srcip.
+                                type: string
+                              value:
+                                description: Configure the value. Configure the value.
+                                type: string
+                              valueOperator:
+                                description: Configure the item-value comparison mode,
+                                  which can be taken as the value of evaluate, not_equal,
+                                  include. Configure the item-value comparison mode,
+                                  which can be taken as the value of evaluate, not_equal,
+                                  include.
+                                type: string
+                            type: object
+                          type: array
+                        protocol:
+                          description: Protocol. Protocol.
+                          type: string
+                      type: object
+                    type: array
+                  ccPrecisionReqLimits:
+                    description: CC frequency throttling policy. CC frequency throttling
+                      policy.
+                    items:
+                      properties:
+                        domain:
+                          description: Domain. Domain.
+                          type: string
+                        level:
+                          description: Protection rating, the optional value of default
+                            means default policy, loose means loose, and strict means
+                            strict. Protection rating, the optional value of default
+                            means default policy, loose means loose, and strict means
+                            strict.
+                          type: string
+                        policys:
+                          description: A list of policies. The CC Frequency Limit
+                            Policy Item field.
+                          items:
+                            properties:
+                              action:
+                                description: User action, drop or arg. The frequency
+                                  limit policy mode, the optional value of arg indicates
+                                  the verification code, and drop indicates the discard.
+                                type: string
+                              cookie:
+                                description: Cookies, one of the three policy entries
+                                  can only be filled in. Cookies, one of the three
+                                  policy entries can only be filled in.
+                                type: string
+                              executeDuration:
+                                description: The duration of the frequency limit policy
+                                  can be taken from 1 to 86400 per second. The duration
+                                  of the frequency limit policy can be taken from
+                                  1 to 86400 per second.
+                                type: number
+                              mode:
+                                description: The policy item is compared, and the
+                                  optional value include indicates inclusion, and
+                                  equal means equal. The policy item is compared,
+                                  and the optional value include indicates inclusion,
+                                  and equal means equal.
+                                type: string
+                              period:
+                                description: Statistical period, take values 1, 10,
+                                  30, 60, in seconds. Statistical period, take values
+                                  1, 10, 30, 60, in seconds.
+                                type: number
+                              requestNum:
+                                description: The number of requests, the value is
+                                  1 to 20000. The number of requests, the value is
+                                  1 to 20000.
+                                type: number
+                              uri:
+                                description: Uri, one of the three policy entries
+                                  can only be filled in. Uri, one of the three policy
+                                  entries can only be filled in.
+                                type: string
+                              userAgent:
+                                description: User-Agent, only one of the three policy
+                                  entries can be filled in. User-Agent, only one of
+                                  the three policy entries can be filled in.
+                                type: string
+                            type: object
+                          type: array
+                        protocol:
+                          description: Protocol. Protocol, preferably HTTP, HTTPS.
+                          type: string
+                      type: object
+                    type: array
+                  resourceId:
+                    description: The ID of the resource instance. The ID of the resource
+                      instance.
+                    type: string
+                  thresholds:
+                    description: List of protection threshold configurations. List
+                      of protection threshold configurations.
+                    items:
+                      properties:
+                        domain:
+                          description: Domain. domain.
+                          type: string
+                        threshold:
+                          description: Cleaning threshold, -1 indicates that the default
+                            mode is turned on. Cleaning threshold, -1 indicates that
+                            the `default` mode is turned on.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -447,29 +653,238 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.business is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.business)
+                || (has(self.initProvider) && has(self.initProvider.business))'
+            - message: spec.forProvider.resourceId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceId)
+                || (has(self.initProvider) && has(self.initProvider.resourceId))'
           status:
             description: CcPolicyV2Status defines the observed state of CcPolicyV2.
             properties:
               atProvider:
                 properties:
-                  ccPrecisionPolicys:
+                  business:
+                    description: Business of resource instance. bgpip indicates anti-anti-ip
+                      ip; bgp means exclusive package; bgp-multip means shared packet;
+                      net indicates anti-anti-ip pro version. Business of resource
+                      instance. bgpip indicates anti-anti-ip ip; bgp means exclusive
+                      package; bgp-multip means shared packet; net indicates anti-anti-ip
+                      pro version.
+                    type: string
+                  ccBlackWhiteIps:
+                    description: Blacklist and whitelist. Blacklist and whitelist.
                     items:
                       properties:
+                        blackWhiteIp:
+                          description: Blacklist and whitelist IP addresses. Blacklist
+                            and whitelist IP addresses.
+                          type: string
+                        createTime:
+                          description: Create time. Create time.
+                          type: string
+                        domain:
+                          description: Domain. Domain.
+                          type: string
+                        modifyTime:
+                          description: Modify time. Modify time.
+                          type: string
+                        protocol:
+                          description: Protocol. Protocol.
+                          type: string
+                        type:
+                          description: IP type, value [black(blacklist IP), white
+                            (whitelist IP)]. IP type, value [black(blacklist IP),
+                            white (whitelist IP)].
+                          type: string
+                      type: object
+                    type: array
+                  ccGeoIpPolicys:
+                    description: Details of the CC region blocking policy list. Details
+                      of the CC region blocking policy list.
+                    items:
+                      properties:
+                        action:
+                          description: User action, drop or arg. User action, drop
+                            or arg.
+                          type: string
+                        areaList:
+                          description: The list of region IDs that the user selects
+                            to block. The list of region IDs that the user selects
+                            to block.
+                          items:
+                            type: number
+                          type: array
+                        createTime:
+                          description: Create time. Create time.
+                          type: string
+                        domain:
+                          description: Domain. domain.
+                          type: string
+                        modifyTime:
+                          description: Modify time. Modify time.
+                          type: string
+                        protocol:
+                          description: Protocol. Protocol, preferably HTTP, HTTPS.
+                          type: string
+                        regionType:
+                          description: Regional types, divided into china, oversea
+                            and customized. Regional types, divided into china, oversea
+                            and customized.
+                          type: string
+                      type: object
+                    type: array
+                  ccPrecisionPolicys:
+                    description: CC Precision Protection List. CC Precision Protection
+                      List.
+                    items:
+                      properties:
+                        domain:
+                          description: Domain. Domain.
+                          type: string
+                        ip:
+                          description: Ip address. Ip address.
+                          type: string
+                        policyAction:
+                          description: Policy mode (discard or captcha). Policy mode
+                            (discard or captcha).
+                          type: string
                         policyId:
+                          description: ID of the resource. Policy Id.
+                          type: string
+                        policys:
+                          description: A list of policies. A list of policies.
+                          items:
+                            properties:
+                              fieldName:
+                                description: Configuration item types, currently only
+                                  support value. Configuration item types, currently
+                                  only support value.
+                                type: string
+                              fieldType:
+                                description: Configuration fields with the desirable
+                                  values cgi, ua, cookie, referer, accept, srcip.
+                                  Configuration fields with the desirable values cgi,
+                                  ua, cookie, referer, accept, srcip.
+                                type: string
+                              value:
+                                description: Configure the value. Configure the value.
+                                type: string
+                              valueOperator:
+                                description: Configure the item-value comparison mode,
+                                  which can be taken as the value of evaluate, not_equal,
+                                  include. Configure the item-value comparison mode,
+                                  which can be taken as the value of evaluate, not_equal,
+                                  include.
+                                type: string
+                            type: object
+                          type: array
+                        protocol:
+                          description: Protocol. Protocol.
                           type: string
                       type: object
                     type: array
                   ccPrecisionReqLimits:
+                    description: CC frequency throttling policy. CC frequency throttling
+                      policy.
                     items:
                       properties:
+                        domain:
+                          description: Domain. Domain.
+                          type: string
                         instanceId:
+                          description: ID of the resource. Instance id.
                           type: string
                         ip:
+                          description: Ip address. IP address.
+                          type: string
+                        level:
+                          description: Protection rating, the optional value of default
+                            means default policy, loose means loose, and strict means
+                            strict. Protection rating, the optional value of default
+                            means default policy, loose means loose, and strict means
+                            strict.
+                          type: string
+                        policys:
+                          description: A list of policies. The CC Frequency Limit
+                            Policy Item field.
+                          items:
+                            properties:
+                              action:
+                                description: User action, drop or arg. The frequency
+                                  limit policy mode, the optional value of arg indicates
+                                  the verification code, and drop indicates the discard.
+                                type: string
+                              cookie:
+                                description: Cookies, one of the three policy entries
+                                  can only be filled in. Cookies, one of the three
+                                  policy entries can only be filled in.
+                                type: string
+                              executeDuration:
+                                description: The duration of the frequency limit policy
+                                  can be taken from 1 to 86400 per second. The duration
+                                  of the frequency limit policy can be taken from
+                                  1 to 86400 per second.
+                                type: number
+                              mode:
+                                description: The policy item is compared, and the
+                                  optional value include indicates inclusion, and
+                                  equal means equal. The policy item is compared,
+                                  and the optional value include indicates inclusion,
+                                  and equal means equal.
+                                type: string
+                              period:
+                                description: Statistical period, take values 1, 10,
+                                  30, 60, in seconds. Statistical period, take values
+                                  1, 10, 30, 60, in seconds.
+                                type: number
+                              requestNum:
+                                description: The number of requests, the value is
+                                  1 to 20000. The number of requests, the value is
+                                  1 to 20000.
+                                type: number
+                              uri:
+                                description: Uri, one of the three policy entries
+                                  can only be filled in. Uri, one of the three policy
+                                  entries can only be filled in.
+                                type: string
+                              userAgent:
+                                description: User-Agent, only one of the three policy
+                                  entries can be filled in. User-Agent, only one of
+                                  the three policy entries can be filled in.
+                                type: string
+                            type: object
+                          type: array
+                        protocol:
+                          description: Protocol. Protocol, preferably HTTP, HTTPS.
                           type: string
                       type: object
                     type: array
                   id:
+                    description: ID of the resource.
                     type: string
+                  resourceId:
+                    description: The ID of the resource instance. The ID of the resource
+                      instance.
+                    type: string
+                  thresholds:
+                    description: List of protection threshold configurations. List
+                      of protection threshold configurations.
+                    items:
+                      properties:
+                        domain:
+                          description: Domain. domain.
+                          type: string
+                        threshold:
+                          description: Cleaning threshold, -1 indicates that the default
+                            mode is turned on. Cleaning threshold, -1 indicates that
+                            the `default` mode is turned on.
+                          type: number
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -504,6 +919,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -512,9 +930,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

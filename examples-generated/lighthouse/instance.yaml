@@ -1,0 +1,54 @@
+apiVersion: lighthouse.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lighthouse/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: lighthouse
+  name: lighthouse
+spec:
+  forProvider:
+    blueprintId: lhbp-f1lkcd41
+    bundleId: bundle2022_gen_01
+    containers:
+    - command: ls -l
+      containerImage: ccr.ccs.tencentyun.com/qcloud/nginx
+      containerName: nginx
+      envs:
+      - key: key
+        value: value
+      - key: key2
+        value: value2
+      publishPorts:
+      - containerPort: 80
+        hostPort: 80
+        ip: 127.0.0.1
+        protocol: tcp
+      - containerPort: 36000
+        hostPort: 36000
+        ip: 127.0.0.1
+        protocol: tcp
+      volumes:
+      - containerPath: /data
+        hostPath: /tmp
+      - containerPath: /var
+        hostPath: /tmp
+    - command: echo "hello"
+      containerImage: ccr.ccs.tencentyun.com/qcloud/resty
+      containerName: resty
+      envs:
+      - key: key2
+        value: value2
+      publishPorts:
+      - containerPort: 80
+        hostPort: 80
+        ip: 127.0.0.1
+        protocol: udp
+      volumes:
+      - containerPath: /var
+        hostPath: /tmp
+    firewallTemplateId: ${tencentcloud_lighthouse_firewall_template.firewall_template.id}
+    instanceName: hello world
+    period: 1
+    renewFlag: NOTIFY_AND_AUTO_RENEW
+    zone: ap-guangzhou-3

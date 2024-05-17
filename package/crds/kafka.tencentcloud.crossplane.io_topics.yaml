@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: topics.kafka.tencentcloud.crossplane.io
 spec:
   group: kafka.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Topic
     listKind: TopicList
     plural: topics
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Topic is the Schema for the Topics API
+        description: Topic is the Schema for the Topics API. Use this resource to
+          create ckafka topic.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,21 +68,26 @@ spec:
               forProvider:
                 properties:
                   cleanUpPolicy:
-                    description: 'Clear log policy, log clear mode, default is `delete`.
-                      `delete`: logs are deleted according to the storage time. `compact`:
-                      logs are compressed according to the key. `compact, delete`:
-                      logs are compressed according to the key and will be deleted
-                      according to the storage time.'
+                    description: 'Clear log policy, log clear mode, default is delete.
+                      delete: logs are deleted according to the storage time. compact:
+                      logs are compressed according to the key. compact, delete: logs
+                      are compressed according to the key and will be deleted according
+                      to the storage time. Clear log policy, log clear mode, default
+                      is `delete`. `delete`: logs are deleted according to the storage
+                      time. `compact`: logs are compressed according to the key. `compact,
+                      delete`: logs are compressed according to the key and will be
+                      deleted according to the storage time.'
                     type: string
                   enableWhiteList:
-                    description: 'Whether to open the ip whitelist, `true`: open,
-                      `false`: close.'
+                    description: 'Whether to open the ip whitelist, true: open, false:
+                      close. Whether to open the ip whitelist, `true`: open, `false`:
+                      close.'
                     type: boolean
                   instanceId:
-                    description: Ckafka instance ID.
+                    description: Ckafka instance ID. Ckafka instance ID.
                     type: string
                   instanceIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Instance to populate instanceId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -112,7 +121,7 @@ spec:
                     - name
                     type: object
                   instanceIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Instance to populate instanceId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -152,90 +161,163 @@ spec:
                     type: object
                   ipWhiteList:
                     description: Ip whitelist, quota limit, required when enableWhileList=true.
+                      Ip whitelist, quota limit, required when enableWhileList=true.
                     items:
                       type: string
                     type: array
                   maxMessageBytes:
                     description: 'Max message bytes. min: 1024 Byte(1KB), max: 8388608
+                      Byte(8MB). Max message bytes. min: 1024 Byte(1KB), max: 8388608
                       Byte(8MB).'
                     type: number
                   note:
                     description: The subject note. It must start with a letter, and
                       the remaining part can contain letters, numbers and dashes (-).
+                      The subject note. It must start with a letter, and the remaining
+                      part can contain letters, numbers and dashes (-).
                     type: string
                   partitionNum:
-                    description: The number of partition.
+                    description: The number of partition. The number of partition.
                     type: number
                   replicaNum:
-                    description: The number of replica.
+                    description: The number of replica. The number of replica.
                     type: number
                   retention:
                     description: Message can be selected. Retention time, unit is
-                      ms, the current minimum value is 60000ms.
+                      ms, the current minimum value is 60000ms. Message can be selected.
+                      Retention time, unit is ms, the current minimum value is 60000ms.
                     type: number
                   segment:
                     description: Segment scrolling time, in ms, the current minimum
+                      is 3600000ms. Segment scrolling time, in ms, the current minimum
                       is 3600000ms.
                     type: number
                   syncReplicaMinNum:
-                    description: Min number of sync replicas, Default is `1`.
+                    description: Min number of sync replicas, Default is 1. Min number
+                      of sync replicas, Default is `1`.
                     type: number
                   topicName:
                     description: Name of the CKafka topic. It must start with a letter,
-                      the rest can contain letters, numbers and dashes(-).
+                      the rest can contain letters, numbers and dashes(-). Name of
+                      the CKafka topic. It must start with a letter, the rest can
+                      contain letters, numbers and dashes(-).
                     type: string
                   uncleanLeaderElectionEnable:
                     description: 'Whether to allow unsynchronized replicas to be selected
-                      as leader, default is `false`, `true: `allowed, `false`: not
-                      allowed.'
+                      as leader, default is false, true: allowed, false: not allowed.
+                      Whether to allow unsynchronized replicas to be selected as leader,
+                      default is `false`, `true: `allowed, `false`: not allowed.'
                     type: boolean
-                required:
-                - partitionNum
-                - replicaNum
-                - topicName
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  cleanUpPolicy:
+                    description: 'Clear log policy, log clear mode, default is delete.
+                      delete: logs are deleted according to the storage time. compact:
+                      logs are compressed according to the key. compact, delete: logs
+                      are compressed according to the key and will be deleted according
+                      to the storage time. Clear log policy, log clear mode, default
+                      is `delete`. `delete`: logs are deleted according to the storage
+                      time. `compact`: logs are compressed according to the key. `compact,
+                      delete`: logs are compressed according to the key and will be
+                      deleted according to the storage time.'
+                    type: string
+                  enableWhiteList:
+                    description: 'Whether to open the ip whitelist, true: open, false:
+                      close. Whether to open the ip whitelist, `true`: open, `false`:
+                      close.'
+                    type: boolean
+                  ipWhiteList:
+                    description: Ip whitelist, quota limit, required when enableWhileList=true.
+                      Ip whitelist, quota limit, required when enableWhileList=true.
+                    items:
+                      type: string
+                    type: array
+                  maxMessageBytes:
+                    description: 'Max message bytes. min: 1024 Byte(1KB), max: 8388608
+                      Byte(8MB). Max message bytes. min: 1024 Byte(1KB), max: 8388608
+                      Byte(8MB).'
+                    type: number
+                  note:
+                    description: The subject note. It must start with a letter, and
+                      the remaining part can contain letters, numbers and dashes (-).
+                      The subject note. It must start with a letter, and the remaining
+                      part can contain letters, numbers and dashes (-).
+                    type: string
+                  partitionNum:
+                    description: The number of partition. The number of partition.
+                    type: number
+                  replicaNum:
+                    description: The number of replica. The number of replica.
+                    type: number
+                  retention:
+                    description: Message can be selected. Retention time, unit is
+                      ms, the current minimum value is 60000ms. Message can be selected.
+                      Retention time, unit is ms, the current minimum value is 60000ms.
+                    type: number
+                  segment:
+                    description: Segment scrolling time, in ms, the current minimum
+                      is 3600000ms. Segment scrolling time, in ms, the current minimum
+                      is 3600000ms.
+                    type: number
+                  syncReplicaMinNum:
+                    description: Min number of sync replicas, Default is 1. Min number
+                      of sync replicas, Default is `1`.
+                    type: number
+                  topicName:
+                    description: Name of the CKafka topic. It must start with a letter,
+                      the rest can contain letters, numbers and dashes(-). Name of
+                      the CKafka topic. It must start with a letter, the rest can
+                      contain letters, numbers and dashes(-).
+                    type: string
+                  uncleanLeaderElectionEnable:
+                    description: 'Whether to allow unsynchronized replicas to be selected
+                      as leader, default is false, true: allowed, false: not allowed.
+                      Whether to allow unsynchronized replicas to be selected as leader,
+                      default is `false`, `true: `allowed, `false`: not allowed.'
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -365,25 +447,121 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.partitionNum is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.partitionNum)
+                || (has(self.initProvider) && has(self.initProvider.partitionNum))'
+            - message: spec.forProvider.replicaNum is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.replicaNum)
+                || (has(self.initProvider) && has(self.initProvider.replicaNum))'
+            - message: spec.forProvider.topicName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.topicName)
+                || (has(self.initProvider) && has(self.initProvider.topicName))'
           status:
             description: TopicStatus defines the observed state of Topic.
             properties:
               atProvider:
                 properties:
-                  createTime:
+                  cleanUpPolicy:
+                    description: 'Clear log policy, log clear mode, default is delete.
+                      delete: logs are deleted according to the storage time. compact:
+                      logs are compressed according to the key. compact, delete: logs
+                      are compressed according to the key and will be deleted according
+                      to the storage time. Clear log policy, log clear mode, default
+                      is `delete`. `delete`: logs are deleted according to the storage
+                      time. `compact`: logs are compressed according to the key. `compact,
+                      delete`: logs are compressed according to the key and will be
+                      deleted according to the storage time.'
                     type: string
+                  createTime:
+                    description: Create time of the CKafka topic. Create time of the
+                      CKafka topic.
+                    type: string
+                  enableWhiteList:
+                    description: 'Whether to open the ip whitelist, true: open, false:
+                      close. Whether to open the ip whitelist, `true`: open, `false`:
+                      close.'
+                    type: boolean
                   forwardCosBucket:
+                    description: 'Data backup cos bucket: the bucket address that
+                      is dumped to cos. Data backup cos bucket: the bucket address
+                      that is dumped to cos.'
                     type: string
                   forwardInterval:
+                    description: Periodic frequency of data backup to cos. Periodic
+                      frequency of data backup to cos.
                     type: number
                   forwardStatus:
+                    description: 'Data backup cos status. Valid values: 0, 1. 1: do
+                      not open data backup, 0: open data backup. Data backup cos status.
+                      Valid values: `0`, `1`. `1`: do not open data backup, `0`: open
+                      data backup.'
                     type: number
                   id:
+                    description: ID of the resource.
                     type: string
-                  messageStorageLocation:
+                  instanceId:
+                    description: Ckafka instance ID. Ckafka instance ID.
                     type: string
-                  segmentBytes:
+                  ipWhiteList:
+                    description: Ip whitelist, quota limit, required when enableWhileList=true.
+                      Ip whitelist, quota limit, required when enableWhileList=true.
+                    items:
+                      type: string
+                    type: array
+                  maxMessageBytes:
+                    description: 'Max message bytes. min: 1024 Byte(1KB), max: 8388608
+                      Byte(8MB). Max message bytes. min: 1024 Byte(1KB), max: 8388608
+                      Byte(8MB).'
                     type: number
+                  messageStorageLocation:
+                    description: Message storage location. Message storage location.
+                    type: string
+                  note:
+                    description: The subject note. It must start with a letter, and
+                      the remaining part can contain letters, numbers and dashes (-).
+                      The subject note. It must start with a letter, and the remaining
+                      part can contain letters, numbers and dashes (-).
+                    type: string
+                  partitionNum:
+                    description: The number of partition. The number of partition.
+                    type: number
+                  replicaNum:
+                    description: The number of replica. The number of replica.
+                    type: number
+                  retention:
+                    description: Message can be selected. Retention time, unit is
+                      ms, the current minimum value is 60000ms. Message can be selected.
+                      Retention time, unit is ms, the current minimum value is 60000ms.
+                    type: number
+                  segment:
+                    description: Segment scrolling time, in ms, the current minimum
+                      is 3600000ms. Segment scrolling time, in ms, the current minimum
+                      is 3600000ms.
+                    type: number
+                  segmentBytes:
+                    description: Number of bytes rolled by shard. Number of bytes
+                      rolled by shard.
+                    type: number
+                  syncReplicaMinNum:
+                    description: Min number of sync replicas, Default is 1. Min number
+                      of sync replicas, Default is `1`.
+                    type: number
+                  topicName:
+                    description: Name of the CKafka topic. It must start with a letter,
+                      the rest can contain letters, numbers and dashes(-). Name of
+                      the CKafka topic. It must start with a letter, the rest can
+                      contain letters, numbers and dashes(-).
+                    type: string
+                  uncleanLeaderElectionEnable:
+                    description: 'Whether to allow unsynchronized replicas to be selected
+                      as leader, default is false, true: allowed, false: not allowed.
+                      Whether to allow unsynchronized replicas to be selected as leader,
+                      default is `false`, `true: `allowed, `false`: not allowed.'
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -418,6 +596,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -426,9 +607,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

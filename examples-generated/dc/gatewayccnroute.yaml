@@ -1,0 +1,45 @@
+apiVersion: dc.tencentcloud.crossplane.io/v1alpha1
+kind: GatewayCcnRoute
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dc/v1alpha1/gatewayccnroute
+  labels:
+    testing.upbound.io/example-name: route1
+  name: route1
+spec:
+  forProvider:
+    cidrBlock: 10.1.1.0/32
+    dcgId: ${tencentcloud_dc_gateway.ccn_main.id}
+
+---
+
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: CCN
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dc/v1alpha1/gatewayccnroute
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    description: ci-temp-test-ccn-des
+    name: ci-temp-test-ccn
+    qos: AG
+
+---
+
+apiVersion: dc.tencentcloud.crossplane.io/v1alpha1
+kind: Gateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dc/v1alpha1/gatewayccnroute
+  labels:
+    testing.upbound.io/example-name: ccn_main
+  name: ccn-main
+spec:
+  forProvider:
+    gatewayType: NORMAL
+    name: ci-cdg-ccn-test
+    networkInstanceId: ${tencentcloud_ccn.main.id}
+    networkType: CCN

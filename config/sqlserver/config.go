@@ -16,83 +16,80 @@ limitations under the License.
 
 package sqlserver
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupSQLServer = "sqlserver"
 
 // Configure configures the sqlserver group
-func Configure(p *tjconfig.Provider) {
-
-	p.AddResourceConfigurator("tencentcloud_sqlserver_basic_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_sqlserver_basic_instance", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "BasicInstance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_sqlserver_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sqlserver_instance", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "Instance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_sqlserver_db", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sqlserver_db", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "DB"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_sqlserver_readonly_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sqlserver_readonly_instance", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "ReadonlyInstance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
-		r.References["master_instance_id"] = tjconfig.Reference{
+		r.References["master_instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_sqlserver_account", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sqlserver_account", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "Account"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_sqlserver_account_db_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sqlserver_account_db_attachment", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "AccountDBAttachment"
-		r.References["instance_id"] = tjconfig.Reference{
+		r.References["instance_id"] = config.Reference{
 			Type: "Instance",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_sqlserver_publish_subscribe", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sqlserver_publish_subscribe", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSQLServer
 		r.Kind = "PublishSubscribe"
 	})

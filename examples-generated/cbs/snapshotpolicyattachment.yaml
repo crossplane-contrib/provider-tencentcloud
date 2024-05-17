@@ -1,0 +1,16 @@
+apiVersion: cbs.tencentcloud.crossplane.io/v1alpha1
+kind: SnapshotPolicyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cbs/v1alpha1/snapshotpolicyattachment
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    snapshotPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: policy
+    storageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo

@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: userpolicyattachments.cam.tencentcloud.crossplane.io
 spec:
   group: cam.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: UserPolicyAttachment
     listKind: UserPolicyAttachmentList
     plural: userpolicyattachments
@@ -36,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: UserPolicyAttachment is the Schema for the UserPolicyAttachments
-          API
+          API. Provides a resource to create a CAM user policy attachment.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -55,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,10 +68,10 @@ spec:
               forProvider:
                 properties:
                   policyId:
-                    description: ID of the policy.
+                    description: ID of the policy. ID of the policy.
                     type: string
                   policyIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Policy to populate policyId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -102,7 +105,7 @@ spec:
                     - name
                     type: object
                   policyIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Policy to populate policyId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -141,10 +144,12 @@ spec:
                         type: object
                     type: object
                   userId:
-                    description: ID of the attached CAM user.
+                    description: It has been deprecated from version 1.59.5. Use user_name
+                      instead. ID of the attached CAM user. ID of the attached CAM
+                      user.
                     type: string
                   userIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a User to populate userId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -178,7 +183,7 @@ spec:
                     - name
                     type: object
                   userIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a User to populate userId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -217,51 +222,58 @@ spec:
                         type: object
                     type: object
                   userName:
-                    description: Name of the attached CAM user as uniq key.
+                    description: Name of the attached CAM user as uniq key. Name of
+                      the attached CAM user as uniq key.
                     type: string
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  userName:
+                    description: Name of the attached CAM user as uniq key. Name of
+                      the attached CAM user as uniq key.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -398,14 +410,39 @@ spec:
               atProvider:
                 properties:
                   createMode:
+                    description: Mode of Creation of the CAM user policy attachment.
+                      1 means the CAM policy attachment is created by production,
+                      and the others indicate syntax strategy ways. Mode of Creation
+                      of the CAM user policy attachment. `1` means the CAM policy
+                      attachment is created by production, and the others indicate
+                      syntax strategy ways.
                     type: number
                   createTime:
+                    description: Create time of the CAM user policy attachment. Create
+                      time of the CAM user policy attachment.
                     type: string
                   id:
+                    description: ID of the resource.
+                    type: string
+                  policyId:
+                    description: ID of the policy. ID of the policy.
                     type: string
                   policyName:
+                    description: Name of the policy. Name of the policy.
                     type: string
                   policyType:
+                    description: Type of the policy strategy. User means customer
+                      strategy and QCS means preset strategy. Type of the policy strategy.
+                      `User` means customer strategy and `QCS` means preset strategy.
+                    type: string
+                  userId:
+                    description: It has been deprecated from version 1.59.5. Use user_name
+                      instead. ID of the attached CAM user. ID of the attached CAM
+                      user.
+                    type: string
+                  userName:
+                    description: Name of the attached CAM user as uniq key. Name of
+                      the attached CAM user as uniq key.
                     type: string
                 type: object
               conditions:
@@ -441,6 +478,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -449,9 +489,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

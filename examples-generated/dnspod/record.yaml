@@ -1,0 +1,15 @@
+apiVersion: dnspod.tencentcloud.crossplane.io/v1alpha1
+kind: Record
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dnspod/v1alpha1/record
+  labels:
+    testing.upbound.io/example-name: demo
+  name: demo
+spec:
+  forProvider:
+    domain: mikatong.com
+    recordLine: 默认
+    recordType: A
+    subDomain: demo
+    value: 1.2.3.9

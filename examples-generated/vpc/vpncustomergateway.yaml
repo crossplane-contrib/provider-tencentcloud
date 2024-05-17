@@ -1,0 +1,14 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPNCustomerGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpncustomergateway
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: test_vpn_customer_gateway
+    publicIpAddress: 1.1.1.1
+    tags:
+      tag: test

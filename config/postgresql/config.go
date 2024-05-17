@@ -16,64 +16,58 @@ limitations under the License.
 
 package postgresql
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupPostgresql = "postgresql"
 
 // Configure configures the postgresql group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_postgresql_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_postgresql_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPostgresql
 		r.Kind = "Instance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPostgresql
 		r.Kind = "ReadonlyInstance"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
-		r.References["master_instance_id"] = tjconfig.Reference{
+		r.References["master_instance_id"] = config.Reference{
 			Type: "Instance",
 		}
-		r.References["security_groups_ids"] = tjconfig.Reference{
+		r.References["security_groups_ids"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.SecurityGroup",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_group", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_group", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPostgresql
 		r.Kind = "ReadonlyGroup"
-		r.References["vpc_id"] = tjconfig.Reference{
+		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
-		r.References["subnet_id"] = tjconfig.Reference{
+		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPostgresql
 		r.Kind = "ReadonlyAttachment"
-		r.References["db_instance_id"] = tjconfig.Reference{
+		r.References["db_instance_id"] = config.Reference{
 			Type: "ReadonlyInstance",
 		}
-		r.References["read_only_group_id"] = tjconfig.Reference{
+		r.References["read_only_group_id"] = config.Reference{
 			Type: "ReadonlyGroup",
 		}
 	})

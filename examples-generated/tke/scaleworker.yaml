@@ -1,0 +1,37 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: ScaleWorker
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/scaleworker
+  labels:
+    testing.upbound.io/example-name: test_scale
+  name: test-scale
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    desiredPodNum: 16
+    labels:
+      test1: test1
+      test2: test2
+    workerConfig:
+    - availabilityZone: ${var.availability_zone}
+      count: 3
+      dataDisk:
+      - diskSize: 50
+        diskType: CLOUD_PREMIUM
+      enhancedMonitorService: false
+      enhancedSecurityService: false
+      instanceType: ${var.scale_instance_type}
+      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+      internetMaxBandwidthOut: 100
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      publicIpAssigned: true
+      subnetId: ${var.subnet}
+      systemDiskSize: 50
+      systemDiskType: CLOUD_SSD
+      userData: dGVzdA==

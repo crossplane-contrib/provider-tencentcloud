@@ -1,0 +1,22 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPNSSLServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpnsslserver
+  labels:
+    testing.upbound.io/example-name: server
+  name: server
+spec:
+  forProvider:
+    compress: true
+    encryptAlgorithm: AES-128-CBC
+    integrityAlgorithm: MD5
+    localAddress:
+    - 10.0.0.0/17
+    remoteAddress: 11.0.0.0/16
+    sslVpnPort: 1194
+    sslVpnProtocol: UDP
+    sslVpnServerName: helloworld
+    vpnGatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

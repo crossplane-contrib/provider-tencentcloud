@@ -1,0 +1,22 @@
+apiVersion: teo.tencentcloud.crossplane.io/v1alpha1
+kind: OriginGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: teo/v1alpha1/origingroup
+  labels:
+    testing.upbound.io/example-name: origin_group
+  name: origin-group
+spec:
+  forProvider:
+    configurationType: weight
+    originGroupName: test-group
+    originRecords:
+    - area: []
+      port: 8080
+      private: false
+      record: 150.109.8.1
+      weight: 100
+    originType: self
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

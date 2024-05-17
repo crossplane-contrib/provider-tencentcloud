@@ -1,0 +1,11 @@
+apiVersion: cvm.tencentcloud.crossplane.io/v1alpha1
+kind: KeyPair
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cvm/v1alpha1/keypair
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    keyName: terraform_test

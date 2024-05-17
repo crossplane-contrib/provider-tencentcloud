@@ -1,0 +1,16 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: RoleSSO
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/rolesso
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clientIds:
+    - '...'
+    description: this is a description
+    identityKey: '...'
+    identityUrl: https://login.microsoftonline.com/.../v2.0
+    name: tf_cam_role_sso

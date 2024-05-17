@@ -1,0 +1,15 @@
+apiVersion: eni.tencentcloud.crossplane.io/v1alpha1
+kind: Eni
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eni/v1alpha1/eni
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: eni desc.
+    ipv4Count: 1
+    name: tf-example-eni
+    subnetId: subnet-j10lsueq
+    vpcId: vpc-m0d2dbnn

@@ -1,0 +1,13 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: DdosPolicyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/ddospolicyattachment
+  labels:
+    testing.upbound.io/example-name: dayu_ddos_policy_attachment_basic
+  name: dayu-ddos-policy-attachment-basic
+spec:
+  forProvider:
+    policyId: ${tencentcloud_dayu_ddos_policy.test_policy.policy_id}
+    resourceId: bgpip-00000294
+    resourceType: ${tencentcloud_dayu_ddos_policy.test_policy.resource_type}

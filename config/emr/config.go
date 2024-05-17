@@ -16,16 +16,14 @@ limitations under the License.
 
 package emr
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupEmr = "emr"
 
 // Configure configures the emr group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_emr_cluster", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_emr_cluster", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupEmr
 		r.Kind = "EmrCluster"
 	})

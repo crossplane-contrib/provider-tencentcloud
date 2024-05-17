@@ -1,0 +1,34 @@
+apiVersion: kafka.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: kafka_instance_prepaid
+  name: kafka-instance-prepaid
+spec:
+  forProvider:
+    bandWidth: 20
+    config:
+    - autoCreateTopicEnable: true
+      defaultNumPartitions: 3
+      defaultReplicationFactor: 3
+    diskSize: 200
+    diskType: CLOUD_BASIC
+    dynamicRetentionConfig:
+    - enable: 1
+    instanceName: ckafka-instance-prepaid
+    instanceType: 2
+    kafkaVersion: 2.4.1
+    msgRetentionTime: 1300
+    partition: 400
+    period: 1
+    renewFlag: 0
+    specificationsType: standard
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    zoneId: ${data.tencentcloud_availability_zones_by_product.gz.zones.0.id}

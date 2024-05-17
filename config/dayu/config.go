@@ -16,81 +16,67 @@ limitations under the License.
 
 package dayu
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupDayu = "dayu"
 
 // Configure configures the dayu group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_dayu_eip", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_dayu_eip", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
-		r.Kind = "eip"
+		r.Kind = "DayuEip"
 	})
-	p.AddResourceConfigurator("tencentcloud_dayu_l4_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_l4_rule", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "L4Rule"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_l4_rule_v2", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_l4_rule_v2", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "L4RuleV2"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_l7_rule", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_l7_rule", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "L7Rule"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_l7_rule_v2", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_l7_rule_v2", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "L7RuleV2"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "DdosPolicy"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy_v2", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy_v2", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "DdosPolicyV2"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy_case", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy_case", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "DdosPolicyCase"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy_attachment", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_ddos_policy_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "DdosPolicyAttachment"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_cc_policy_v2", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_cc_policy_v2", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "CcPolicyV2"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_cc_https_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_cc_https_policy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "CcHttpsPolicy"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dayu_cc_http_policy", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dayu_cc_http_policy", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDayu
 		r.Kind = "CcHttpPolicy"
 	})

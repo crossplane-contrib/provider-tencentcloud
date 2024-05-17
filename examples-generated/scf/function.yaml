@@ -1,0 +1,16 @@
+apiVersion: scf.tencentcloud.crossplane.io/v1alpha1
+kind: Function
+metadata:
+  annotations:
+    meta.upbound.io/example-id: scf/v1alpha1/function
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    cosBucketName: scf-code-1234567890
+    cosBucketRegion: ap-guangzhou
+    cosObjectName: code.zip
+    handler: main.do_it
+    name: ci-test-function
+    runtime: Python3.6

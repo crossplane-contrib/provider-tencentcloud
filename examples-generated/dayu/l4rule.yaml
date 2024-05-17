@@ -1,0 +1,29 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: L4Rule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/l4rule
+  labels:
+    testing.upbound.io/example-name: test_rule
+  name: test-rule
+spec:
+  forProvider:
+    dPort: 60
+    healthCheckHealthNum: 5
+    healthCheckInterval: 35
+    healthCheckSwitch: true
+    healthCheckTimeout: 30
+    healthCheckUnhealthNum: 10
+    name: rule_test
+    protocol: TCP
+    resourceId: bgpip-00000294
+    resourceType: bgpip
+    sPort: 80
+    sessionSwitch: false
+    sessionTime: 300
+    sourceList:
+    - source: 1.1.1.1
+      weight: 100
+    - source: 2.2.2.2
+      weight: 50
+    sourceType: 2

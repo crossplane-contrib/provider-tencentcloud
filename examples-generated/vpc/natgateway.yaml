@@ -1,0 +1,64 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: NatGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgateway
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    assignedEipSet:
+    - ${tencentcloud_eip.eip_example1.public_ip}
+    - ${tencentcloud_eip.eip_example2.public_ip}
+    bandwidth: 100
+    maxConcurrent: 1000000
+    name: tf_example_nat_gateway
+    tags:
+      tf_tag_key: tf_tag_value
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Eip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgateway
+  labels:
+    testing.upbound.io/example-name: eip_example1
+  name: eip-example1
+spec:
+  forProvider:
+    name: tf_nat_gateway_eip1
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Eip
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgateway
+  labels:
+    testing.upbound.io/example-name: eip_example2
+  name: eip-example2
+spec:
+  forProvider:
+    name: tf_nat_gateway_eip2
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/natgateway
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf_nat_gateway_vpc

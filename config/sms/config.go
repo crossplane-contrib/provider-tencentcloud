@@ -16,21 +16,19 @@ limitations under the License.
 
 package sms
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupSms = "sms"
 
 // Configure configures the sms group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_sms_sign", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_sms_sign", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSms
 		r.Kind = "Sign"
 	})
-	p.AddResourceConfigurator("tencentcloud_sms_template", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_sms_template", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSms
 		r.Kind = "Template"
 	})

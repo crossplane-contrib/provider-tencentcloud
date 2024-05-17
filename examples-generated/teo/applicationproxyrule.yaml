@@ -1,0 +1,24 @@
+apiVersion: teo.tencentcloud.crossplane.io/v1alpha1
+kind: ApplicationProxyRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: teo/v1alpha1/applicationproxyrule
+  labels:
+    testing.upbound.io/example-name: application_proxy_rule
+  name: application-proxy-rule
+spec:
+  forProvider:
+    forwardClientIp: TOA
+    originPort: "8083"
+    originType: custom
+    originValue:
+    - 127.0.0.1
+    port:
+    - "8083"
+    proto: TCP
+    proxyId: proxy-6972528a-373a-11ed-afca-52540044a456
+    sessionPersist: false
+    status: online
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

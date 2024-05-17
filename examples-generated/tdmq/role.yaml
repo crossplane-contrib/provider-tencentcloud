@@ -1,0 +1,32 @@
+apiVersion: tdmq.tencentcloud.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tdmq/v1alpha1/role
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    remark: remark.
+    roleName: tf_example
+
+---
+
+apiVersion: tdmq.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tdmq/v1alpha1/role
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterName: tf_example
+    remark: remark.
+    tags:
+      createdBy: terraform

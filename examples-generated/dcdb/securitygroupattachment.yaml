@@ -1,0 +1,16 @@
+apiVersion: dcdb.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroupAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dcdb/v1alpha1/securitygroupattachment
+  labels:
+    testing.upbound.io/example-name: security_group_attachment
+  name: security-group-attachment
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    securityGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

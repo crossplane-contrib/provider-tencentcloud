@@ -1,0 +1,92 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPCBandwidthPackageAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpcbandwidthpackageattachment
+  labels:
+    testing.upbound.io/example-name: attachment
+  name: attachment
+spec:
+  forProvider:
+    bandwidthPackageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    networkType: BGP
+    resourceId: ${tencentcloud_clb_instance.example.id}
+    resourceType: LoadBalance
+
+---
+
+apiVersion: clb.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpcbandwidthpackageattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clbName: tf-example
+    networkType: INTERNAL
+    projectId: 0
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      createdBy: terraform
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpcbandwidthpackageattachment
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones.zones.zones.0.name}
+    cidrBlock: 10.0.0.0/16
+    name: subnet-example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpcbandwidthpackageattachment
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPCBandwidthPackage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/vpcbandwidthpackageattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    bandwidthPackageName: tf-example
+    chargeType: TOP5_POSTPAID_BY_MONTH
+    networkType: BGP
+    tags:
+      createdBy: terraform

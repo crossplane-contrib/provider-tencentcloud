@@ -1,0 +1,51 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: RouteEntry
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routeentry
+  labels:
+    testing.upbound.io/example-name: rtb_entry_instance
+  name: rtb-entry-instance
+spec:
+  forProvider:
+    cidrBlock: 10.4.8.0/24
+    nextHub: 10.16.1.7
+    nextType: instance
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: r
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: main
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routeentry
+  labels:
+    testing.upbound.io/example-name: r
+  name: r
+spec:
+  forProvider:
+    name: Used to test the routing entry
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: main
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routeentry
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    cidrBlock: 10.4.0.0/16
+    name: Used to test the routing entry

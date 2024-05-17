@@ -1,0 +1,27 @@
+apiVersion: kafka.tencentcloud.crossplane.io/v1alpha1
+kind: Topic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/topic
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    cleanUpPolicy: delete
+    enableWhiteList: true
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    ipWhiteList:
+    - ip1
+    - ip2
+    maxMessageBytes: 0
+    note: topic note
+    partitionNum: 1
+    replicaNum: 2
+    retention: 60000
+    segment: 3600000
+    syncReplicaMinNum: 1
+    topicName: example
+    uncleanLeaderElectionEnable: false

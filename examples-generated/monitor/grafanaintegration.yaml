@@ -1,0 +1,72 @@
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: GrafanaIntegration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/grafanaintegration
+  labels:
+    testing.upbound.io/example-name: grafanaIntegration
+  name: grafanaintegration
+spec:
+  forProvider:
+    content: '{"kind":"tencentcloud-monitor-app","spec":{"dataSourceSpec":{"authProvider":{"__anyOf":"使用密钥","useRole":true,"secretId":"arunma@tencent.com","secretKey":"12345678"},"name":"uint-test"},"grafanaSpec":{"organizationIds":[]}}}'
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    kind: tencentcloud-monitor-app
+
+---
+
+apiVersion: monitor.tencentcloud.crossplane.io/v1alpha1
+kind: GrafanaInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/grafanaintegration
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    enableInternet: false
+    grafanaInitPassword: "1234567890"
+    instanceName: test-grafana
+    subnetIds:
+    - ${tencentcloud_subnet.subnet.id}
+    tags:
+      createdBy: test
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/grafanaintegration
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.1.0/24
+    name: tf_monitor_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitor/v1alpha1/grafanaintegration
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf_monitor_vpc

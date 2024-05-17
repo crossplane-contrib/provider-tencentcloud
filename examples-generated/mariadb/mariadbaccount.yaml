@@ -1,0 +1,19 @@
+apiVersion: mariadb.tencentcloud.crossplane.io/v1alpha1
+kind: MariadbAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mariadb/v1alpha1/mariadbaccount
+  labels:
+    testing.upbound.io/example-name: account
+  name: account
+spec:
+  forProvider:
+    description: desc
+    host: 10.101.202.22
+    instanceId: tdsql-4pzs5b67
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    readOnly: 0
+    userName: account-test

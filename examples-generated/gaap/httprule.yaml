@@ -1,0 +1,112 @@
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: HttpRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/httprule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    domain: www.qq.com
+    healthCheck: true
+    healthCheckMethod: GET
+    healthCheckPath: /
+    healthCheckStatusCodes:
+    - 200
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    path: /
+    realserverType: IP
+    realservers:
+    - id: ${tencentcloud_gaap_realserver.foo.id}
+      ip: 1.1.1.1
+      port: 80
+    - id: ${tencentcloud_gaap_realserver.bar.id}
+      ip: 1.1.1.1
+      port: 80
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: HttpDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/httprule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    domain: www.qq.com
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Layer7Listener
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/httprule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: ci-test-gaap-l7-listener
+    port: 80
+    protocol: HTTP
+    proxyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Proxy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/httprule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    accessRegion: SouthChina
+    bandwidth: 10
+    concurrent: 2
+    name: ci-test-gaap-proxy
+    realserverRegion: NorthChina
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Realserver
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/httprule
+  labels:
+    testing.upbound.io/example-name: bar
+  name: bar
+spec:
+  forProvider:
+    ip: 8.8.8.8
+    name: ci-test-gaap-realserver
+
+---
+
+apiVersion: gaap.tencentcloud.crossplane.io/v1alpha1
+kind: Realserver
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gaap/v1alpha1/httprule
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    ip: 1.1.1.1
+    name: ci-test-gaap-realserver

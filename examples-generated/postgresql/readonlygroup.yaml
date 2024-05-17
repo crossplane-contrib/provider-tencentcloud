@@ -1,0 +1,24 @@
+apiVersion: postgresql.tencentcloud.crossplane.io/v1alpha1
+kind: ReadonlyGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlygroup
+  labels:
+    testing.upbound.io/example-name: group
+  name: group
+spec:
+  forProvider:
+    masterDbInstanceId: postgres-gzg9jb2n
+    maxReplayLag: 100
+    maxReplayLatency: 512
+    minDelayEliminateReserve: 1
+    name: world
+    projectId: 0
+    replayLagEliminate: 1
+    replayLatencyEliminate: 1
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

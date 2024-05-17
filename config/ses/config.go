@@ -16,28 +16,26 @@ limitations under the License.
 
 package ses
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupSes = "ses"
 
 // Configure configures the ses group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_ses_domain", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_ses_domain", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSes
 		r.Kind = "Domain"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ses_email_address", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ses_email_address", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSes
 		r.Kind = "EmailAddress"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_ses_template", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_ses_template", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupSes
 		r.Kind = "Template"
 	})

@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: origingroups.teo.tencentcloud.crossplane.io
 spec:
   group: teo.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: OriginGroup
     listKind: OriginGroupList
     plural: origingroups
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: OriginGroup is the Schema for the OriginGroups API
+        description: OriginGroup is the Schema for the OriginGroups API. Provides
+          a resource to create a teo origin_group
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,75 +69,85 @@ spec:
                 properties:
                   configurationType:
                     description: 'Type of the origin group, this field should be set
-                      when `OriginType` is self, otherwise leave it empty. Valid values:
-                      `area`: select an origin by using Geo info of the client IP
-                      and `Area` field in Records; `weight`: weighted select an origin
-                      by using `Weight` field in Records; `proto`: config by HTTP
-                      protocol.'
+                      when OriginType is self, otherwise leave it empty. Valid values:
+                      area: select an origin by using Geo info of the client IP and
+                      Area field in Records; weight: weighted select an origin by
+                      using Weight field in Records; proto: config by HTTP protocol.
+                      Type of the origin group, this field should be set when `OriginType`
+                      is self, otherwise leave it empty. Valid values: `area`: select
+                      an origin by using Geo info of the client IP and `Area` field
+                      in Records; `weight`: weighted select an origin by using `Weight`
+                      field in Records; `proto`: config by HTTP protocol.'
                     type: string
                   originGroupName:
-                    description: OriginGroup Name.
+                    description: OriginGroup Name. OriginGroup Name.
                     type: string
                   originRecords:
-                    description: Origin site records.
+                    description: Origin site records. Origin site records.
                     items:
                       properties:
                         area:
-                          description: Indicating origin sites area when `Type` field
-                            is `area`. An empty List indicate the default area. Valid
-                            value:- Asia, Americas, Europe, Africa or Oceania.
+                          description: Indicating origin sites area when Type field
+                            is area. An empty List indicate the default area. Valid
+                            value:- Asia, Americas, Europe, Africa or Oceania. Indicating
+                            origin sites area when `Type` field is `area`. An empty
+                            List indicate the default area. Valid value:- Asia, Americas,
+                            Europe, Africa or Oceania.
                           items:
                             type: string
                           type: array
                         port:
                           description: 'Port of the origin site. Valid value range:
-                            1-65535.'
+                            1-65535. Port of the origin site. Valid value range: 1-65535.'
                           type: number
                         private:
                           description: Whether origin site is using private authentication.
-                            Only valid when `OriginType` is `third_party`.
+                            Only valid when OriginType is third_party. Whether origin
+                            site is using private authentication. Only valid when
+                            `OriginType` is `third_party`.
                           type: boolean
                         privateParameter:
                           description: Parameters for private authentication. Only
-                            valid when `Private` is `true`.
+                            valid when Private is true. Parameters for private authentication.
+                            Only valid when `Private` is `true`.
                           items:
                             properties:
                               name:
-                                description: 'Parameter Name. Valid values: `AccessKeyId`:
-                                  Access Key ID; `SecretAccessKey`: Secret Access
-                                  Key.'
+                                description: 'Parameter Name. Valid values: AccessKeyId:
+                                  Access Key ID; SecretAccessKey: Secret Access Key.
+                                  Parameter Name. Valid values: `AccessKeyId`: Access
+                                  Key ID; `SecretAccessKey`: Secret Access Key.'
                                 type: string
                               value:
-                                description: Parameter value.
+                                description: Parameter value. Parameter value.
                                 type: string
-                            required:
-                            - name
-                            - value
                             type: object
                           type: array
                         record:
                           description: Record value, which could be an IPv4/IPv6 address
-                            or a domain.
+                            or a domain. Record value, which could be an IPv4/IPv6
+                            address or a domain.
                           type: string
                         weight:
-                          description: 'Indicating origin sites weight when `Type`
+                          description: 'Indicating origin sites weight when Type field
+                            is weight. Valid value range: 1-100. Sum of all weights
+                            should be 100. Indicating origin sites weight when `Type`
                             field is `weight`. Valid value range: 1-100. Sum of all
                             weights should be 100.'
                           type: number
-                      required:
-                      - port
-                      - record
                       type: object
                     type: array
                   originType:
-                    description: 'Type of the origin site. Valid values: `self`: self-build
-                      website; `cos`: tencent cos; `third_party`: third party cos.'
+                    description: 'Type of the origin site. Valid values: self: self-build
+                      website; cos: tencent cos; third_party: third party cos. Type
+                      of the origin site. Valid values: `self`: self-build website;
+                      `cos`: tencent cos; `third_party`: third party cos.'
                     type: string
                   zoneId:
-                    description: Site ID.
+                    description: Site ID. Site ID.
                     type: string
                   zoneIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Zone to populate zoneId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -167,7 +181,7 @@ spec:
                     - name
                     type: object
                   zoneIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Zone to populate zoneId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -205,54 +219,127 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - configurationType
-                - originGroupName
-                - originRecords
-                - originType
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  configurationType:
+                    description: 'Type of the origin group, this field should be set
+                      when OriginType is self, otherwise leave it empty. Valid values:
+                      area: select an origin by using Geo info of the client IP and
+                      Area field in Records; weight: weighted select an origin by
+                      using Weight field in Records; proto: config by HTTP protocol.
+                      Type of the origin group, this field should be set when `OriginType`
+                      is self, otherwise leave it empty. Valid values: `area`: select
+                      an origin by using Geo info of the client IP and `Area` field
+                      in Records; `weight`: weighted select an origin by using `Weight`
+                      field in Records; `proto`: config by HTTP protocol.'
+                    type: string
+                  originGroupName:
+                    description: OriginGroup Name. OriginGroup Name.
+                    type: string
+                  originRecords:
+                    description: Origin site records. Origin site records.
+                    items:
+                      properties:
+                        area:
+                          description: Indicating origin sites area when Type field
+                            is area. An empty List indicate the default area. Valid
+                            value:- Asia, Americas, Europe, Africa or Oceania. Indicating
+                            origin sites area when `Type` field is `area`. An empty
+                            List indicate the default area. Valid value:- Asia, Americas,
+                            Europe, Africa or Oceania.
+                          items:
+                            type: string
+                          type: array
+                        port:
+                          description: 'Port of the origin site. Valid value range:
+                            1-65535. Port of the origin site. Valid value range: 1-65535.'
+                          type: number
+                        private:
+                          description: Whether origin site is using private authentication.
+                            Only valid when OriginType is third_party. Whether origin
+                            site is using private authentication. Only valid when
+                            `OriginType` is `third_party`.
+                          type: boolean
+                        privateParameter:
+                          description: Parameters for private authentication. Only
+                            valid when Private is true. Parameters for private authentication.
+                            Only valid when `Private` is `true`.
+                          items:
+                            properties:
+                              name:
+                                description: 'Parameter Name. Valid values: AccessKeyId:
+                                  Access Key ID; SecretAccessKey: Secret Access Key.
+                                  Parameter Name. Valid values: `AccessKeyId`: Access
+                                  Key ID; `SecretAccessKey`: Secret Access Key.'
+                                type: string
+                              value:
+                                description: Parameter value. Parameter value.
+                                type: string
+                            type: object
+                          type: array
+                        record:
+                          description: Record value, which could be an IPv4/IPv6 address
+                            or a domain. Record value, which could be an IPv4/IPv6
+                            address or a domain.
+                          type: string
+                        weight:
+                          description: 'Indicating origin sites weight when Type field
+                            is weight. Valid value range: 1-100. Sum of all weights
+                            should be 100. Indicating origin sites weight when `Type`
+                            field is `weight`. Valid value range: 1-100. Sum of all
+                            weights should be 100.'
+                          type: number
+                      type: object
+                    type: array
+                  originType:
+                    description: 'Type of the origin site. Valid values: self: self-build
+                      website; cos: tencent cos; third_party: third party cos. Type
+                      of the origin site. Valid values: `self`: self-build website;
+                      `cos`: tencent cos; `third_party`: third party cos.'
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -382,23 +469,118 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.configurationType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.configurationType)
+                || (has(self.initProvider) && has(self.initProvider.configurationType))'
+            - message: spec.forProvider.originGroupName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.originGroupName)
+                || (has(self.initProvider) && has(self.initProvider.originGroupName))'
+            - message: spec.forProvider.originRecords is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.originRecords)
+                || (has(self.initProvider) && has(self.initProvider.originRecords))'
+            - message: spec.forProvider.originType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.originType)
+                || (has(self.initProvider) && has(self.initProvider.originType))'
           status:
             description: OriginGroupStatus defines the observed state of OriginGroup.
             properties:
               atProvider:
                 properties:
+                  configurationType:
+                    description: 'Type of the origin group, this field should be set
+                      when OriginType is self, otherwise leave it empty. Valid values:
+                      area: select an origin by using Geo info of the client IP and
+                      Area field in Records; weight: weighted select an origin by
+                      using Weight field in Records; proto: config by HTTP protocol.
+                      Type of the origin group, this field should be set when `OriginType`
+                      is self, otherwise leave it empty. Valid values: `area`: select
+                      an origin by using Geo info of the client IP and `Area` field
+                      in Records; `weight`: weighted select an origin by using `Weight`
+                      field in Records; `proto`: config by HTTP protocol.'
+                    type: string
                   id:
+                    description: ID of the resource.
                     type: string
                   originGroupId:
+                    description: OriginGroup ID. OriginGroup ID.
+                    type: string
+                  originGroupName:
+                    description: OriginGroup Name. OriginGroup Name.
                     type: string
                   originRecords:
+                    description: Origin site records. Origin site records.
                     items:
                       properties:
-                        recordId:
+                        area:
+                          description: Indicating origin sites area when Type field
+                            is area. An empty List indicate the default area. Valid
+                            value:- Asia, Americas, Europe, Africa or Oceania. Indicating
+                            origin sites area when `Type` field is `area`. An empty
+                            List indicate the default area. Valid value:- Asia, Americas,
+                            Europe, Africa or Oceania.
+                          items:
+                            type: string
+                          type: array
+                        port:
+                          description: 'Port of the origin site. Valid value range:
+                            1-65535. Port of the origin site. Valid value range: 1-65535.'
+                          type: number
+                        private:
+                          description: Whether origin site is using private authentication.
+                            Only valid when OriginType is third_party. Whether origin
+                            site is using private authentication. Only valid when
+                            `OriginType` is `third_party`.
+                          type: boolean
+                        privateParameter:
+                          description: Parameters for private authentication. Only
+                            valid when Private is true. Parameters for private authentication.
+                            Only valid when `Private` is `true`.
+                          items:
+                            properties:
+                              name:
+                                description: 'Parameter Name. Valid values: AccessKeyId:
+                                  Access Key ID; SecretAccessKey: Secret Access Key.
+                                  Parameter Name. Valid values: `AccessKeyId`: Access
+                                  Key ID; `SecretAccessKey`: Secret Access Key.'
+                                type: string
+                              value:
+                                description: Parameter value. Parameter value.
+                                type: string
+                            type: object
+                          type: array
+                        record:
+                          description: Record value, which could be an IPv4/IPv6 address
+                            or a domain. Record value, which could be an IPv4/IPv6
+                            address or a domain.
                           type: string
+                        recordId:
+                          description: ID of the resource. Record Id.
+                          type: string
+                        weight:
+                          description: 'Indicating origin sites weight when Type field
+                            is weight. Valid value range: 1-100. Sum of all weights
+                            should be 100. Indicating origin sites weight when `Type`
+                            field is `weight`. Valid value range: 1-100. Sum of all
+                            weights should be 100.'
+                          type: number
                       type: object
                     type: array
+                  originType:
+                    description: 'Type of the origin site. Valid values: self: self-build
+                      website; cos: tencent cos; third_party: third party cos. Type
+                      of the origin site. Valid values: `self`: self-build website;
+                      `cos`: tencent cos; `third_party`: third party cos.'
+                    type: string
                   updateTime:
+                    description: Last modification date. Last modification date.
+                    type: string
+                  zoneId:
+                    description: Site ID. Site ID.
                     type: string
                 type: object
               conditions:
@@ -434,6 +616,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -442,9 +627,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

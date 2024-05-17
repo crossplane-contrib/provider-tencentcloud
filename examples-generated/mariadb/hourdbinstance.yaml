@@ -1,0 +1,27 @@
+apiVersion: mariadb.tencentcloud.crossplane.io/v1alpha1
+kind: HourDBInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mariadb/v1alpha1/hourdbinstance
+  labels:
+    testing.upbound.io/example-name: basic
+  name: basic
+spec:
+  forProvider:
+    dbVersionId: "10.0"
+    instanceName: db-test-del
+    memory: 2
+    nodeCount: 2
+    storage: 10
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tags:
+      createdBy: terraform
+    vip: 10.0.0.197
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    zones:
+    - ap-guangzhou-6
+    - ap-guangzhou-7

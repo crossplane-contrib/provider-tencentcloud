@@ -1,0 +1,25 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/user
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    consoleLogin: true
+    countryCode: "86"
+    email: hello@test.com
+    forceDelete: true
+    name: tf_cam_user
+    needResetPassword: true
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    phoneNum: "12345678910"
+    remark: tf_user_test
+    tags:
+      test: tf_cam_user
+    useApi: true

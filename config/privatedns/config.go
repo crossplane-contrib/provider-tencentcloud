@@ -16,21 +16,17 @@ limitations under the License.
 
 package privatedns
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupPrivateDNS = "privatedns"
 
 // Configure configures the privatedns group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_private_dns_record", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_private_dns_record", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPrivateDNS
 		r.Kind = "Record"
 	})
-	p.AddResourceConfigurator("tencentcloud_private_dns_zone", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_private_dns_zone", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPrivateDNS
 		r.Kind = "Zone"
 	})

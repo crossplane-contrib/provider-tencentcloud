@@ -1,0 +1,76 @@
+apiVersion: redis.tencentcloud.crossplane.io/v1alpha1
+kind: BackupConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/backupconfig
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    backupPeriod:
+    - Monday
+    backupTime: 04:00-05:00
+    redisIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: redis.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/backupconfig
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_redis_zone_config.zone.list[1].zone}
+    memSize: 8192
+    name: terrform_test
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    port: 6379
+    redisReplicasNum: ${data.tencentcloud_redis_zone_config.zone.list[1].redis_replicas_nums[0]}
+    redisShardNum: ${data.tencentcloud_redis_zone_config.zone.list[1].redis_shard_nums[0]}
+    subnetId: ${tencentcloud_subnet.subnet.id}
+    typeId: ${data.tencentcloud_redis_zone_config.zone.list[1].type_id}
+    vpcId: ${tencentcloud_vpc.vpc.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/backupconfig
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_redis_zone_config.zone.list[1].zone}
+    cidrBlock: 10.0.1.0/24
+    name: tf_redis_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/backupconfig
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf_redis_vpc

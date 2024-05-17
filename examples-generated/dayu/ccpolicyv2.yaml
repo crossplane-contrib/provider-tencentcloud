@@ -1,0 +1,46 @@
+apiVersion: dayu.tencentcloud.crossplane.io/v1alpha1
+kind: CcPolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dayu/v1alpha1/ccpolicyv2
+  labels:
+    testing.upbound.io/example-name: demo
+  name: demo
+spec:
+  forProvider:
+    business: bgpip
+    ccBlackWhiteIps:
+    - blackWhiteIp: 1.2.3.4
+      domain: 12.com
+      protocol: http
+      type: black
+    ccGeoIpPolicys:
+    - action: drop
+      domain: 12.com
+      protocol: http
+      regionType: china
+    ccPrecisionPolicys:
+    - domain: 1.com
+      ip: 162.62.163.34
+      policyAction: drop
+      policys:
+      - fieldName: cgi
+        fieldType: value
+        value: 12123.com
+        valueOperator: equal
+      protocol: http
+    ccPrecisionReqLimits:
+    - domain: 11.com
+      level: loose
+      policys:
+      - action: alg
+        executeDuration: 2
+        mode: equal
+        period: 5
+        requestNum: 12
+        uri: 15.com
+      protocol: http
+    resourceId: bgpip-000004xf
+    thresholds:
+    - domain: 12.com
+      threshold: 0

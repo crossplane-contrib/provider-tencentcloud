@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: instances.postgresql.tencentcloud.crossplane.io
 spec:
   group: postgresql.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Instance
     listKind: InstanceList
     plural: instances
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API
+        description: Instance is the Schema for the Instances API. Use this resource
+          to create postgresql instance.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -64,130 +68,175 @@ spec:
               forProvider:
                 properties:
                   autoRenewFlag:
-                    description: 'Auto renew flag, `1` for enabled. NOTES: Only support
-                      prepaid instance.'
+                    description: 'Auto renew flag, 1 for enabled. NOTES: Only support
+                      prepaid instance. Auto renew flag, `1` for enabled. NOTES: Only
+                      support prepaid instance.'
                     type: number
                   autoVoucher:
-                    description: Whether to use voucher, `1` for enabled.
+                    description: Whether to use voucher, 1 for enabled. Whether to
+                      use voucher, `1` for enabled.
                     type: number
                   availabilityZone:
                     description: 'Availability zone. NOTE: This field could not be
-                      modified, please use `db_node_set` instead of modification.
-                      The changes on this field will be suppressed when using the
-                      `db_node_set`.'
+                      modified, please use db_node_set instead of modification. The
+                      changes on this field will be suppressed when using the db_node_set.
+                      Availability zone. NOTE: This field could not be modified, please
+                      use `db_node_set` instead of modification. The changes on this
+                      field will be suppressed when using the `db_node_set`.'
                     type: string
                   backupPlan:
-                    description: Specify DB backup plan.
+                    description: Specify DB backup plan. Specify DB backup plan.
                     items:
                       properties:
                         backupPeriod:
                           description: 'List of backup period per week, available
-                            values: `monday`, `tuesday`, `wednesday`, `thursday`,
-                            `friday`, `saturday`, `sunday`. NOTE: At least specify
-                            two days.'
+                            values: monday, tuesday, wednesday, thursday, friday,
+                            saturday, sunday. NOTE: At least specify two days. List
+                            of backup period per week, available values: `monday`,
+                            `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`,
+                            `sunday`. NOTE: At least specify two days.'
                           items:
                             type: string
                           type: array
                         baseBackupRetentionPeriod:
-                          description: Specify days of the retention.
+                          description: Specify days of the retention. Specify days
+                            of the retention.
                           type: number
                         maxBackupStartTime:
-                          description: Specify latest backup start time, format `hh:mm:ss`.
+                          description: Specify latest backup start time, format hh:mm:ss.
+                            Specify latest backup start time, format `hh:mm:ss`.
                           type: string
                         minBackupStartTime:
                           description: Specify earliest backup start time, format
-                            `hh:mm:ss`.
+                            hh:mm:ss. Specify earliest backup start time, format `hh:mm:ss`.
                           type: string
                       type: object
                     type: array
                   chargeType:
-                    description: Pay type of the postgresql instance. Values `POSTPAID_BY_HOUR`
-                      (Default), `PREPAID`. It only support to update the type from
-                      `POSTPAID_BY_HOUR` to `PREPAID`.
+                    description: Pay type of the postgresql instance. Values POSTPAID_BY_HOUR
+                      (Default), PREPAID. It only support to update the type from
+                      POSTPAID_BY_HOUR to PREPAID. Pay type of the postgresql instance.
+                      Values `POSTPAID_BY_HOUR` (Default), `PREPAID`. It only support
+                      to update the type from `POSTPAID_BY_HOUR` to `PREPAID`.
                     type: string
                   charset:
-                    description: Charset of the root account. Valid values are `UTF8`,`LATIN1`.
+                    description: Charset of the root account. Valid values are UTF8,LATIN1.
+                      Charset of the root account. Valid values are `UTF8`,`LATIN1`.
                     type: string
+                  cpu:
+                    description: Number of CPU cores. Allowed value must be equal
+                      cpu that data source tencentcloud_postgresql_specinfos provides.
+                      Number of CPU cores. Allowed value must be equal `cpu` that
+                      data source `tencentcloud_postgresql_specinfos` provides.
+                    type: number
                   dbKernelVersion:
                     description: PostgreSQL kernel version number. If it is specified,
                       an instance running kernel DBKernelVersion will be created.
-                      It supports updating the minor kernel version immediately.
+                      It supports updating the minor kernel version immediately. PostgreSQL
+                      kernel version number. If it is specified, an instance running
+                      kernel DBKernelVersion will be created. It supports updating
+                      the minor kernel version immediately.
                     type: string
                   dbMajorVersion:
                     description: 'PostgreSQL major version number. Valid values: 10,
                       11, 12, 13. If it is specified, an instance running the latest
-                      kernel of PostgreSQL DBMajorVersion will be created.'
+                      kernel of PostgreSQL DBMajorVersion will be created. PostgreSQL
+                      major version number. Valid values: 10, 11, 12, 13. If it is
+                      specified, an instance running the latest kernel of PostgreSQL
+                      DBMajorVersion will be created.'
                     type: string
                   dbMajorVesion:
-                    description: 'PostgreSQL major version number. Valid values: 10,
+                    description: 'db_major_vesion will be deprecated, use db_major_version
+                      instead. PostgreSQL major version number. Valid values: 10,
                       11, 12, 13. If it is specified, an instance running the latest
-                      kernel of PostgreSQL DBMajorVersion will be created.'
+                      kernel of PostgreSQL DBMajorVersion will be created. PostgreSQL
+                      major version number. Valid values: 10, 11, 12, 13. If it is
+                      specified, an instance running the latest kernel of PostgreSQL
+                      DBMajorVersion will be created.'
                     type: string
                   dbNodeSet:
                     description: Specify instance node info for disaster migration.
+                      Specify instance node info for disaster migration.
                     items:
                       properties:
                         role:
-                          description: 'Indicates node type, available values:`Primary`,
-                            `Standby`. Default: `Standby`.'
+                          description: 'Indicates node type, available values:Primary,
+                            Standby. Default: Standby. Indicates node type, available
+                            values:`Primary`, `Standby`. Default: `Standby`.'
                           type: string
                         zone:
-                          description: Indicates the node available zone.
+                          description: Indicates the node available zone. Indicates
+                            the node available zone.
                           type: string
-                      required:
-                      - zone
                       type: object
                     type: array
                   engineVersion:
                     description: 'Version of the postgresql database engine. Valid
-                      values: `10.4`, `11.8`, `12.4`.'
+                      values: 10.4, 11.8, 12.4. Version of the postgresql database
+                      engine. Valid values: `10.4`, `11.8`, `12.4`.'
                     type: string
                   kmsKeyId:
-                    description: KeyId of the custom key.
+                    description: KeyId of the custom key. KeyId of the custom key.
                     type: string
                   kmsRegion:
-                    description: Region of the custom key.
+                    description: Region of the custom key. Region of the custom key.
                     type: string
                   maxStandbyArchiveDelay:
                     description: max_standby_archive_delay applies when WAL data is
                       being read from WAL archive (and is therefore not current).
-                      Units are milliseconds if not specified.
+                      Units are milliseconds if not specified. max_standby_archive_delay
+                      applies when WAL data is being read from WAL archive (and is
+                      therefore not current). Units are milliseconds if not specified.
                     type: number
                   maxStandbyStreamingDelay:
                     description: max_standby_streaming_delay applies when WAL data
                       is being received via streaming replication. Units are milliseconds
-                      if not specified.
+                      if not specified. max_standby_streaming_delay applies when WAL
+                      data is being received via streaming replication. Units are
+                      milliseconds if not specified.
                     type: number
                   memory:
                     description: Memory size(in GB). Allowed value must be larger
-                      than `memory` that data source `tencentcloud_postgresql_specinfos`
+                      than memory that data source tencentcloud_postgresql_specinfos
+                      provides. Memory size(in GB). Allowed value must be larger than
+                      `memory` that data source `tencentcloud_postgresql_specinfos`
                       provides.
                     type: number
                   name:
-                    description: Name of the postgresql instance.
+                    description: Name of the postgresql instance. Name of the postgresql
+                      instance.
                     type: string
                   needSupportTde:
                     description: 'Whether to support data transparent encryption,
-                      1: yes, 0: no (default).'
+                      1: yes, 0: no (default). Whether to support data transparent
+                      encryption, 1: yes, 0: no (default).'
                     type: number
                   period:
-                    description: 'Specify Prepaid period in month. Default `1`. Values:
-                      `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`,
-                      `24`, `36`. This field is valid only when creating a `PREPAID`
-                      type instance, or updating the charge type from `POSTPAID_BY_HOUR`
-                      to `PREPAID`.'
+                    description: 'Specify Prepaid period in month. Default 1. Values:
+                      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. This field is
+                      valid only when creating a PREPAID type instance, or updating
+                      the charge type from POSTPAID_BY_HOUR to PREPAID. Specify Prepaid
+                      period in month. Default `1`. Values: `1`, `2`, `3`, `4`, `5`,
+                      `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`. This field
+                      is valid only when creating a `PREPAID` type instance, or updating
+                      the charge type from `POSTPAID_BY_HOUR` to `PREPAID`.'
                     type: number
                   projectId:
-                    description: Project id, default value is `0`.
+                    description: Project id, default value is 0. Project id, default
+                      value is `0`.
                     type: number
                   publicAccessSwitch:
                     description: Indicates whether to enable the access to an instance
-                      from public network or not.
+                      from public network or not. Indicates whether to enable the
+                      access to an instance from public network or not.
                     type: boolean
                   rootPasswordSecretRef:
                     description: Password of root account. This parameter can be specified
                       when you purchase master instances, but it should be ignored
                       when you purchase read-only instances or disaster recovery instances.
+                      Password of root account. This parameter can be specified when
+                      you purchase master instances, but it should be ignored when
+                      you purchase read-only instances or disaster recovery instances.
                     properties:
                       key:
                         description: The key to select.
@@ -205,25 +254,31 @@ spec:
                     type: object
                   rootUser:
                     description: Instance root account name. This parameter is optional,
-                      Default value is `root`.
+                      Default value is root. Instance root account name. This parameter
+                      is optional, Default value is `root`.
                     type: string
                   securityGroups:
                     description: ID of security group. If both vpc_id and subnet_id
-                      are not set, this argument should not be set either.
+                      are not set, this argument should not be set either. ID of security
+                      group. If both vpc_id and subnet_id are not set, this argument
+                      should not be set either.
                     items:
                       type: string
                     type: array
                   storage:
                     description: Volume size(in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of storage_min
+                      and storage_max which data source tencentcloud_postgresql_specinfos
+                      provides. Volume size(in GB). Allowed value must be a multiple
                       of 10. The storage must be set with the limit of `storage_min`
                       and `storage_max` which data source `tencentcloud_postgresql_specinfos`
                       provides.
                     type: number
                   subnetId:
-                    description: ID of subnet.
+                    description: ID of subnet. ID of subnet.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -257,7 +312,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -298,19 +353,21 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: The available tags within this postgresql.
+                    description: The available tags within this postgresql. The available
+                      tags within this postgresql.
                     type: object
                   voucherIds:
-                    description: Specify Voucher Ids if `auto_voucher` was `1`, only
-                      support using 1 vouchers for now.
+                    description: Specify Voucher Ids if auto_voucher was 1, only support
+                      using 1 vouchers for now. Specify Voucher Ids if `auto_voucher`
+                      was `1`, only support using 1 vouchers for now.
                     items:
                       type: string
                     type: array
                   vpcId:
-                    description: ID of VPC.
+                    description: ID of VPC. ID of VPC.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -343,8 +400,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -382,55 +439,249 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - availabilityZone
-                - memory
-                - name
-                - rootPasswordSecretRef
-                - storage
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  autoRenewFlag:
+                    description: 'Auto renew flag, 1 for enabled. NOTES: Only support
+                      prepaid instance. Auto renew flag, `1` for enabled. NOTES: Only
+                      support prepaid instance.'
+                    type: number
+                  autoVoucher:
+                    description: Whether to use voucher, 1 for enabled. Whether to
+                      use voucher, `1` for enabled.
+                    type: number
+                  availabilityZone:
+                    description: 'Availability zone. NOTE: This field could not be
+                      modified, please use db_node_set instead of modification. The
+                      changes on this field will be suppressed when using the db_node_set.
+                      Availability zone. NOTE: This field could not be modified, please
+                      use `db_node_set` instead of modification. The changes on this
+                      field will be suppressed when using the `db_node_set`.'
+                    type: string
+                  backupPlan:
+                    description: Specify DB backup plan. Specify DB backup plan.
+                    items:
+                      properties:
+                        backupPeriod:
+                          description: 'List of backup period per week, available
+                            values: monday, tuesday, wednesday, thursday, friday,
+                            saturday, sunday. NOTE: At least specify two days. List
+                            of backup period per week, available values: `monday`,
+                            `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`,
+                            `sunday`. NOTE: At least specify two days.'
+                          items:
+                            type: string
+                          type: array
+                        baseBackupRetentionPeriod:
+                          description: Specify days of the retention. Specify days
+                            of the retention.
+                          type: number
+                        maxBackupStartTime:
+                          description: Specify latest backup start time, format hh:mm:ss.
+                            Specify latest backup start time, format `hh:mm:ss`.
+                          type: string
+                        minBackupStartTime:
+                          description: Specify earliest backup start time, format
+                            hh:mm:ss. Specify earliest backup start time, format `hh:mm:ss`.
+                          type: string
+                      type: object
+                    type: array
+                  chargeType:
+                    description: Pay type of the postgresql instance. Values POSTPAID_BY_HOUR
+                      (Default), PREPAID. It only support to update the type from
+                      POSTPAID_BY_HOUR to PREPAID. Pay type of the postgresql instance.
+                      Values `POSTPAID_BY_HOUR` (Default), `PREPAID`. It only support
+                      to update the type from `POSTPAID_BY_HOUR` to `PREPAID`.
+                    type: string
+                  charset:
+                    description: Charset of the root account. Valid values are UTF8,LATIN1.
+                      Charset of the root account. Valid values are `UTF8`,`LATIN1`.
+                    type: string
+                  cpu:
+                    description: Number of CPU cores. Allowed value must be equal
+                      cpu that data source tencentcloud_postgresql_specinfos provides.
+                      Number of CPU cores. Allowed value must be equal `cpu` that
+                      data source `tencentcloud_postgresql_specinfos` provides.
+                    type: number
+                  dbKernelVersion:
+                    description: PostgreSQL kernel version number. If it is specified,
+                      an instance running kernel DBKernelVersion will be created.
+                      It supports updating the minor kernel version immediately. PostgreSQL
+                      kernel version number. If it is specified, an instance running
+                      kernel DBKernelVersion will be created. It supports updating
+                      the minor kernel version immediately.
+                    type: string
+                  dbMajorVersion:
+                    description: 'PostgreSQL major version number. Valid values: 10,
+                      11, 12, 13. If it is specified, an instance running the latest
+                      kernel of PostgreSQL DBMajorVersion will be created. PostgreSQL
+                      major version number. Valid values: 10, 11, 12, 13. If it is
+                      specified, an instance running the latest kernel of PostgreSQL
+                      DBMajorVersion will be created.'
+                    type: string
+                  dbMajorVesion:
+                    description: 'db_major_vesion will be deprecated, use db_major_version
+                      instead. PostgreSQL major version number. Valid values: 10,
+                      11, 12, 13. If it is specified, an instance running the latest
+                      kernel of PostgreSQL DBMajorVersion will be created. PostgreSQL
+                      major version number. Valid values: 10, 11, 12, 13. If it is
+                      specified, an instance running the latest kernel of PostgreSQL
+                      DBMajorVersion will be created.'
+                    type: string
+                  dbNodeSet:
+                    description: Specify instance node info for disaster migration.
+                      Specify instance node info for disaster migration.
+                    items:
+                      properties:
+                        role:
+                          description: 'Indicates node type, available values:Primary,
+                            Standby. Default: Standby. Indicates node type, available
+                            values:`Primary`, `Standby`. Default: `Standby`.'
+                          type: string
+                        zone:
+                          description: Indicates the node available zone. Indicates
+                            the node available zone.
+                          type: string
+                      type: object
+                    type: array
+                  engineVersion:
+                    description: 'Version of the postgresql database engine. Valid
+                      values: 10.4, 11.8, 12.4. Version of the postgresql database
+                      engine. Valid values: `10.4`, `11.8`, `12.4`.'
+                    type: string
+                  kmsKeyId:
+                    description: KeyId of the custom key. KeyId of the custom key.
+                    type: string
+                  kmsRegion:
+                    description: Region of the custom key. Region of the custom key.
+                    type: string
+                  maxStandbyArchiveDelay:
+                    description: max_standby_archive_delay applies when WAL data is
+                      being read from WAL archive (and is therefore not current).
+                      Units are milliseconds if not specified. max_standby_archive_delay
+                      applies when WAL data is being read from WAL archive (and is
+                      therefore not current). Units are milliseconds if not specified.
+                    type: number
+                  maxStandbyStreamingDelay:
+                    description: max_standby_streaming_delay applies when WAL data
+                      is being received via streaming replication. Units are milliseconds
+                      if not specified. max_standby_streaming_delay applies when WAL
+                      data is being received via streaming replication. Units are
+                      milliseconds if not specified.
+                    type: number
+                  memory:
+                    description: Memory size(in GB). Allowed value must be larger
+                      than memory that data source tencentcloud_postgresql_specinfos
+                      provides. Memory size(in GB). Allowed value must be larger than
+                      `memory` that data source `tencentcloud_postgresql_specinfos`
+                      provides.
+                    type: number
+                  name:
+                    description: Name of the postgresql instance. Name of the postgresql
+                      instance.
+                    type: string
+                  needSupportTde:
+                    description: 'Whether to support data transparent encryption,
+                      1: yes, 0: no (default). Whether to support data transparent
+                      encryption, 1: yes, 0: no (default).'
+                    type: number
+                  period:
+                    description: 'Specify Prepaid period in month. Default 1. Values:
+                      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. This field is
+                      valid only when creating a PREPAID type instance, or updating
+                      the charge type from POSTPAID_BY_HOUR to PREPAID. Specify Prepaid
+                      period in month. Default `1`. Values: `1`, `2`, `3`, `4`, `5`,
+                      `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`. This field
+                      is valid only when creating a `PREPAID` type instance, or updating
+                      the charge type from `POSTPAID_BY_HOUR` to `PREPAID`.'
+                    type: number
+                  projectId:
+                    description: Project id, default value is 0. Project id, default
+                      value is `0`.
+                    type: number
+                  publicAccessSwitch:
+                    description: Indicates whether to enable the access to an instance
+                      from public network or not. Indicates whether to enable the
+                      access to an instance from public network or not.
+                    type: boolean
+                  rootUser:
+                    description: Instance root account name. This parameter is optional,
+                      Default value is root. Instance root account name. This parameter
+                      is optional, Default value is `root`.
+                    type: string
+                  securityGroups:
+                    description: ID of security group. If both vpc_id and subnet_id
+                      are not set, this argument should not be set either. ID of security
+                      group. If both vpc_id and subnet_id are not set, this argument
+                      should not be set either.
+                    items:
+                      type: string
+                    type: array
+                  storage:
+                    description: Volume size(in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of storage_min
+                      and storage_max which data source tencentcloud_postgresql_specinfos
+                      provides. Volume size(in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of `storage_min`
+                      and `storage_max` which data source `tencentcloud_postgresql_specinfos`
+                      provides.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The available tags within this postgresql. The available
+                      tags within this postgresql.
+                    type: object
+                  voucherIds:
+                    description: Specify Voucher Ids if auto_voucher was 1, only support
+                      using 1 vouchers for now. Specify Voucher Ids if `auto_voucher`
+                      was `1`, only support using 1 vouchers for now.
+                    items:
+                      type: string
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -560,25 +811,258 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availabilityZone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityZone)
+                || (has(self.initProvider) && has(self.initProvider.availabilityZone))'
+            - message: spec.forProvider.memory is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.memory)
+                || (has(self.initProvider) && has(self.initProvider.memory))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.rootPasswordSecretRef is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.rootPasswordSecretRef)'
+            - message: spec.forProvider.storage is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storage)
+                || (has(self.initProvider) && has(self.initProvider.storage))'
           status:
             description: InstanceStatus defines the observed state of Instance.
             properties:
               atProvider:
                 properties:
+                  autoRenewFlag:
+                    description: 'Auto renew flag, 1 for enabled. NOTES: Only support
+                      prepaid instance. Auto renew flag, `1` for enabled. NOTES: Only
+                      support prepaid instance.'
+                    type: number
+                  autoVoucher:
+                    description: Whether to use voucher, 1 for enabled. Whether to
+                      use voucher, `1` for enabled.
+                    type: number
+                  availabilityZone:
+                    description: 'Availability zone. NOTE: This field could not be
+                      modified, please use db_node_set instead of modification. The
+                      changes on this field will be suppressed when using the db_node_set.
+                      Availability zone. NOTE: This field could not be modified, please
+                      use `db_node_set` instead of modification. The changes on this
+                      field will be suppressed when using the `db_node_set`.'
+                    type: string
+                  backupPlan:
+                    description: Specify DB backup plan. Specify DB backup plan.
+                    items:
+                      properties:
+                        backupPeriod:
+                          description: 'List of backup period per week, available
+                            values: monday, tuesday, wednesday, thursday, friday,
+                            saturday, sunday. NOTE: At least specify two days. List
+                            of backup period per week, available values: `monday`,
+                            `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`,
+                            `sunday`. NOTE: At least specify two days.'
+                          items:
+                            type: string
+                          type: array
+                        baseBackupRetentionPeriod:
+                          description: Specify days of the retention. Specify days
+                            of the retention.
+                          type: number
+                        maxBackupStartTime:
+                          description: Specify latest backup start time, format hh:mm:ss.
+                            Specify latest backup start time, format `hh:mm:ss`.
+                          type: string
+                        minBackupStartTime:
+                          description: Specify earliest backup start time, format
+                            hh:mm:ss. Specify earliest backup start time, format `hh:mm:ss`.
+                          type: string
+                      type: object
+                    type: array
+                  chargeType:
+                    description: Pay type of the postgresql instance. Values POSTPAID_BY_HOUR
+                      (Default), PREPAID. It only support to update the type from
+                      POSTPAID_BY_HOUR to PREPAID. Pay type of the postgresql instance.
+                      Values `POSTPAID_BY_HOUR` (Default), `PREPAID`. It only support
+                      to update the type from `POSTPAID_BY_HOUR` to `PREPAID`.
+                    type: string
+                  charset:
+                    description: Charset of the root account. Valid values are UTF8,LATIN1.
+                      Charset of the root account. Valid values are `UTF8`,`LATIN1`.
+                    type: string
+                  cpu:
+                    description: Number of CPU cores. Allowed value must be equal
+                      cpu that data source tencentcloud_postgresql_specinfos provides.
+                      Number of CPU cores. Allowed value must be equal `cpu` that
+                      data source `tencentcloud_postgresql_specinfos` provides.
+                    type: number
                   createTime:
+                    description: Create time of the postgresql instance. Create time
+                      of the postgresql instance.
+                    type: string
+                  dbKernelVersion:
+                    description: PostgreSQL kernel version number. If it is specified,
+                      an instance running kernel DBKernelVersion will be created.
+                      It supports updating the minor kernel version immediately. PostgreSQL
+                      kernel version number. If it is specified, an instance running
+                      kernel DBKernelVersion will be created. It supports updating
+                      the minor kernel version immediately.
+                    type: string
+                  dbMajorVersion:
+                    description: 'PostgreSQL major version number. Valid values: 10,
+                      11, 12, 13. If it is specified, an instance running the latest
+                      kernel of PostgreSQL DBMajorVersion will be created. PostgreSQL
+                      major version number. Valid values: 10, 11, 12, 13. If it is
+                      specified, an instance running the latest kernel of PostgreSQL
+                      DBMajorVersion will be created.'
+                    type: string
+                  dbMajorVesion:
+                    description: 'db_major_vesion will be deprecated, use db_major_version
+                      instead. PostgreSQL major version number. Valid values: 10,
+                      11, 12, 13. If it is specified, an instance running the latest
+                      kernel of PostgreSQL DBMajorVersion will be created. PostgreSQL
+                      major version number. Valid values: 10, 11, 12, 13. If it is
+                      specified, an instance running the latest kernel of PostgreSQL
+                      DBMajorVersion will be created.'
+                    type: string
+                  dbNodeSet:
+                    description: Specify instance node info for disaster migration.
+                      Specify instance node info for disaster migration.
+                    items:
+                      properties:
+                        role:
+                          description: 'Indicates node type, available values:Primary,
+                            Standby. Default: Standby. Indicates node type, available
+                            values:`Primary`, `Standby`. Default: `Standby`.'
+                          type: string
+                        zone:
+                          description: Indicates the node available zone. Indicates
+                            the node available zone.
+                          type: string
+                      type: object
+                    type: array
+                  engineVersion:
+                    description: 'Version of the postgresql database engine. Valid
+                      values: 10.4, 11.8, 12.4. Version of the postgresql database
+                      engine. Valid values: `10.4`, `11.8`, `12.4`.'
                     type: string
                   id:
+                    description: ID of the resource.
                     type: string
+                  kmsKeyId:
+                    description: KeyId of the custom key. KeyId of the custom key.
+                    type: string
+                  kmsRegion:
+                    description: Region of the custom key. Region of the custom key.
+                    type: string
+                  maxStandbyArchiveDelay:
+                    description: max_standby_archive_delay applies when WAL data is
+                      being read from WAL archive (and is therefore not current).
+                      Units are milliseconds if not specified. max_standby_archive_delay
+                      applies when WAL data is being read from WAL archive (and is
+                      therefore not current). Units are milliseconds if not specified.
+                    type: number
+                  maxStandbyStreamingDelay:
+                    description: max_standby_streaming_delay applies when WAL data
+                      is being received via streaming replication. Units are milliseconds
+                      if not specified. max_standby_streaming_delay applies when WAL
+                      data is being received via streaming replication. Units are
+                      milliseconds if not specified.
+                    type: number
+                  memory:
+                    description: Memory size(in GB). Allowed value must be larger
+                      than memory that data source tencentcloud_postgresql_specinfos
+                      provides. Memory size(in GB). Allowed value must be larger than
+                      `memory` that data source `tencentcloud_postgresql_specinfos`
+                      provides.
+                    type: number
+                  name:
+                    description: Name of the postgresql instance. Name of the postgresql
+                      instance.
+                    type: string
+                  needSupportTde:
+                    description: 'Whether to support data transparent encryption,
+                      1: yes, 0: no (default). Whether to support data transparent
+                      encryption, 1: yes, 0: no (default).'
+                    type: number
+                  period:
+                    description: 'Specify Prepaid period in month. Default 1. Values:
+                      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. This field is
+                      valid only when creating a PREPAID type instance, or updating
+                      the charge type from POSTPAID_BY_HOUR to PREPAID. Specify Prepaid
+                      period in month. Default `1`. Values: `1`, `2`, `3`, `4`, `5`,
+                      `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`. This field
+                      is valid only when creating a `PREPAID` type instance, or updating
+                      the charge type from `POSTPAID_BY_HOUR` to `PREPAID`.'
+                    type: number
                   privateAccessIp:
+                    description: IP for private access. IP for private access.
                     type: string
                   privateAccessPort:
+                    description: Port for private access. Port for private access.
+                    type: number
+                  projectId:
+                    description: Project id, default value is 0. Project id, default
+                      value is `0`.
                     type: number
                   publicAccessHost:
+                    description: Host for public access. Host for public access.
                     type: string
                   publicAccessPort:
+                    description: Port for public access. Port for public access.
                     type: number
+                  publicAccessSwitch:
+                    description: Indicates whether to enable the access to an instance
+                      from public network or not. Indicates whether to enable the
+                      access to an instance from public network or not.
+                    type: boolean
+                  rootUser:
+                    description: Instance root account name. This parameter is optional,
+                      Default value is root. Instance root account name. This parameter
+                      is optional, Default value is `root`.
+                    type: string
+                  securityGroups:
+                    description: ID of security group. If both vpc_id and subnet_id
+                      are not set, this argument should not be set either. ID of security
+                      group. If both vpc_id and subnet_id are not set, this argument
+                      should not be set either.
+                    items:
+                      type: string
+                    type: array
+                  storage:
+                    description: Volume size(in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of storage_min
+                      and storage_max which data source tencentcloud_postgresql_specinfos
+                      provides. Volume size(in GB). Allowed value must be a multiple
+                      of 10. The storage must be set with the limit of `storage_min`
+                      and `storage_max` which data source `tencentcloud_postgresql_specinfos`
+                      provides.
+                    type: number
+                  subnetId:
+                    description: ID of subnet. ID of subnet.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The available tags within this postgresql. The available
+                      tags within this postgresql.
+                    type: object
                   uid:
+                    description: Uid of the postgresql instance. Uid of the postgresql
+                      instance.
                     type: number
+                  voucherIds:
+                    description: Specify Voucher Ids if auto_voucher was 1, only support
+                      using 1 vouchers for now. Specify Voucher Ids if `auto_voucher`
+                      was `1`, only support using 1 vouchers for now.
+                    items:
+                      type: string
+                    type: array
+                  vpcId:
+                    description: ID of VPC. ID of VPC.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -613,6 +1097,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -621,9 +1108,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

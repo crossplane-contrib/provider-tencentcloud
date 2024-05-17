@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: listenerrules.clb.tencentcloud.crossplane.io
 spec:
   group: clb.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: ListenerRule
     listKind: ListenerRuleList
     plural: listenerrules
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ListenerRule is the Schema for the ListenerRules API
+        description: ListenerRule is the Schema for the ListenerRules API. Provides
+          a resource to create a CLB listener rule.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,21 +69,25 @@ spec:
                 properties:
                   certificateCaId:
                     description: 'ID of the client certificate. NOTES: Only supports
-                      listeners of HTTPS protocol.'
+                      listeners of HTTPS protocol. ID of the client certificate. NOTES:
+                      Only supports listeners of HTTPS protocol.'
                     type: string
                   certificateId:
                     description: 'ID of the server certificate. NOTES: Only supports
-                      listeners of HTTPS protocol.'
+                      listeners of HTTPS protocol. ID of the server certificate. NOTES:
+                      Only supports listeners of HTTPS protocol.'
                     type: string
                   certificateSslMode:
-                    description: 'Type of certificate. Valid values: `UNIDIRECTIONAL`,
-                      `MUTUAL`. NOTES: Only supports listeners of HTTPS protocol.'
+                    description: 'Type of certificate. Valid values: UNIDIRECTIONAL,
+                      MUTUAL. NOTES: Only supports listeners of HTTPS protocol. Type
+                      of certificate. Valid values: `UNIDIRECTIONAL`, `MUTUAL`. NOTES:
+                      Only supports listeners of HTTPS protocol.'
                     type: string
                   clbId:
-                    description: ID of CLB instance.
+                    description: ID of CLB instance. ID of CLB instance.
                     type: string
                   clbIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Instance to populate clbId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -113,7 +121,7 @@ spec:
                     - name
                     type: object
                   clbIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Instance to populate clbId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -152,77 +160,111 @@ spec:
                         type: object
                     type: object
                   domain:
-                    description: Domain name of the listener rule.
+                    description: Domain name of the listener rule. Domain name of
+                      the listener rule.
                     type: string
                   forwardType:
                     description: 'Forwarding protocol between the CLB instance and
-                      real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default
-                      is `HTTP`.'
+                      real server. Valid values: HTTP, HTTPS, TRPC. The default is
+                      HTTP. Forwarding protocol between the CLB instance and real
+                      server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is
+                      `HTTP`.'
                     type: string
                   healthCheckHealthNum:
                     description: 'Health threshold of health check, and the default
-                      is `3`. If a success result is returned for the health check
-                      3 consecutive times, indicates that the forwarding is normal.
+                      is 3. If a success result is returned for the health check 3
+                      consecutive times, indicates that the forwarding is normal.
                       The value range is [2-10]. NOTES: TCP/UDP/TCP_SSL listener allows
                       direct configuration, HTTP/HTTPS listener needs to be configured
-                      in `tencentcloud_clb_listener_rule`.'
+                      in tencentcloud_clb_listener_rule. Health threshold of health
+                      check, and the default is `3`. If a success result is returned
+                      for the health check 3 consecutive times, indicates that the
+                      forwarding is normal. The value range is [2-10]. NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in `tencentcloud_clb_listener_rule`.'
                     type: number
                   healthCheckHttpCode:
                     description: 'HTTP Status Code. The default is 31. Valid value
-                      ranges: [1~31]. `1 means the return value ''1xx'' is health.
-                      `2` means the return value ''2xx'' is health. `4` means the
-                      return value ''3xx'' is health. `8` means the return value ''4xx''
-                      is health. 16 means the return value ''5xx'' is health. If you
+                      ranges: [1~31]. 1 means the return value ''1xx'' is health.
+                      2means the return value ''2xx'' is health.4means the return
+                      value ''3xx'' is health.8` means the return value ''4xx'' is
+                      health. 16 means the return value ''5xx'' is health. If you
                       want multiple return codes to indicate health, need to add the
                       corresponding values. NOTES: The ''HTTP'' health check of the
                       ''TCP'' listener only supports specifying one health check status
                       code. NOTES: Only supports listeners of ''HTTP'' and ''HTTPS''
-                      protocol.'
+                      protocol. HTTP Status Code. The default is 31. Valid value ranges:
+                      [1~31]. `1 means the return value ''1xx'' is health. `2` means
+                      the return value ''2xx'' is health. `4` means the return value
+                      ''3xx'' is health. `8` means the return value ''4xx'' is health.
+                      16 means the return value ''5xx'' is health. If you want multiple
+                      return codes to indicate health, need to add the corresponding
+                      values. NOTES: The ''HTTP'' health check of the ''TCP'' listener
+                      only supports specifying one health check status code. NOTES:
+                      Only supports listeners of ''HTTP'' and ''HTTPS'' protocol.'
                     type: number
                   healthCheckHttpDomain:
                     description: 'Domain name of health check. NOTES: Only supports
-                      listeners of `HTTP` and `HTTPS` protocol.'
+                      listeners of HTTP and HTTPS protocol. Domain name of health
+                      check. NOTES: Only supports listeners of `HTTP` and `HTTPS`
+                      protocol.'
                     type: string
                   healthCheckHttpMethod:
                     description: 'Methods of health check. NOTES: Only supports listeners
-                      of `HTTP` and `HTTPS` protocol. The default is `HEAD`, the available
-                      value are `HEAD` and `GET`.'
+                      of HTTP and HTTPS protocol. The default is HEAD, the available
+                      value are HEAD and GET. Methods of health check. NOTES: Only
+                      supports listeners of `HTTP` and `HTTPS` protocol. The default
+                      is `HEAD`, the available value are `HEAD` and `GET`.'
                     type: string
                   healthCheckHttpPath:
                     description: 'Path of health check. NOTES: Only supports listeners
-                      of `HTTP` and `HTTPS` protocol.'
+                      of HTTP and HTTPS protocol. Path of health check. NOTES: Only
+                      supports listeners of `HTTP` and `HTTPS` protocol.'
                     type: string
                   healthCheckIntervalTime:
                     description: 'Interval time of health check. Valid value ranges:
-                      (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL
+                      (2~300) sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL
                       listener allows direct configuration, HTTP/HTTPS listener needs
-                      to be configured in `tencentcloud_clb_listener_rule`.'
+                      to be configured in tencentcloud_clb_listener_rule. Interval
+                      time of health check. Valid value ranges: (2~300) sec. and the
+                      default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct
+                      configuration, HTTP/HTTPS listener needs to be configured in
+                      `tencentcloud_clb_listener_rule`.'
                     type: number
                   healthCheckSwitch:
-                    description: Indicates whether health check is enabled.
+                    description: Indicates whether health check is enabled. Indicates
+                      whether health check is enabled.
                     type: boolean
                   healthCheckTimeOut:
-                    description: Time out of health check. The value range is [2-60](SEC).
+                    description: Time out of health check. The value range is 2-60.
+                      Time out of health check. The value range is [2-60](SEC).
                     type: number
                   healthCheckType:
-                    description: Type of health check. Valid value is `CUSTOM`, `TCP`,
+                    description: Type of health check. Valid value is CUSTOM, TCP,
+                      HTTP. Type of health check. Valid value is `CUSTOM`, `TCP`,
                       `HTTP`.
                     type: string
                   healthCheckUnhealthNum:
                     description: 'Unhealthy threshold of health check, and the default
-                      is `3`. If the unhealthy result is returned 3 consecutive times,
+                      is 3. If the unhealthy result is returned 3 consecutive times,
                       indicates that the forwarding is abnormal. The value range is
                       [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration,
-                      HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.'
+                      HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
+                      Unhealthy threshold of health check, and the default is `3`.
+                      If the unhealthy result is returned 3 consecutive times, indicates
+                      that the forwarding is abnormal. The value range is [2-10].  NOTES:
+                      TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS
+                      listener needs to be configured in `tencentcloud_clb_listener_rule`.'
                     type: number
                   http2Switch:
-                    description: Indicate to apply HTTP2.0 protocol or not.
+                    description: Indicate to apply HTTP2.0 protocol or not. Indicate
+                      to apply HTTP2.0 protocol or not.
                     type: boolean
                   listenerId:
-                    description: ID of CLB listener.
+                    description: ID of CLB listener. ID of CLB listener.
                     type: string
                   listenerIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Listener to populate listenerId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -256,7 +298,7 @@ spec:
                     - name
                     type: object
                   listenerIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Listener to populate listenerId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -294,73 +336,242 @@ spec:
                             type: string
                         type: object
                     type: object
+                  quic:
+                    description: 'Whether to enable QUIC. Note: QUIC can be enabled
+                      only for HTTPS domain names. Whether to enable QUIC. Note: QUIC
+                      can be enabled only for HTTPS domain names.'
+                    type: boolean
                   scheduler:
                     description: 'Scheduling method of the CLB listener rules. Valid
-                      values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES:
+                      values: WRR, IP HASH, LEAST_CONN. The default is WRR.  NOTES:
                       TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS
-                      listener needs to be configured in `tencentcloud_clb_listener_rule`.'
+                      listener needs to be configured in tencentcloud_clb_listener_rule.
+                      Scheduling method of the CLB listener rules. Valid values: `WRR`,
+                      `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in `tencentcloud_clb_listener_rule`.'
                     type: string
                   sessionExpireTime:
                     description: 'Time of session persistence within the CLB listener.
-                      NOTES: Available when scheduler is specified as `WRR`, and not
-                      available when listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL
+                      NOTES: Available when scheduler is specified as WRR, and not
+                      available when listener protocol is TCP_SSL.  NOTES: TCP/UDP/TCP_SSL
                       listener allows direct configuration, HTTP/HTTPS listener needs
-                      to be configured in `tencentcloud_clb_listener_rule`.'
+                      to be configured in tencentcloud_clb_listener_rule. Time of
+                      session persistence within the CLB listener. NOTES: Available
+                      when scheduler is specified as `WRR`, and not available when
+                      listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL listener
+                      allows direct configuration, HTTP/HTTPS listener needs to be
+                      configured in `tencentcloud_clb_listener_rule`.'
                     type: number
                   targetType:
-                    description: 'Backend target type. Valid values: `NODE`, `TARGETGROUP`.
+                    description: 'Backend target type. Valid values: NODE, TARGETGROUP.
+                      NODE means to bind ordinary nodes, TARGETGROUP means to bind
+                      target group. Backend target type. Valid values: `NODE`, `TARGETGROUP`.
                       `NODE` means to bind ordinary nodes, `TARGETGROUP` means to
                       bind target group.'
                     type: string
                   url:
-                    description: Url of the listener rule.
+                    description: Url of the listener rule. Url of the listener rule.
                     type: string
-                required:
-                - domain
-                - url
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  certificateCaId:
+                    description: 'ID of the client certificate. NOTES: Only supports
+                      listeners of HTTPS protocol. ID of the client certificate. NOTES:
+                      Only supports listeners of HTTPS protocol.'
+                    type: string
+                  certificateId:
+                    description: 'ID of the server certificate. NOTES: Only supports
+                      listeners of HTTPS protocol. ID of the server certificate. NOTES:
+                      Only supports listeners of HTTPS protocol.'
+                    type: string
+                  certificateSslMode:
+                    description: 'Type of certificate. Valid values: UNIDIRECTIONAL,
+                      MUTUAL. NOTES: Only supports listeners of HTTPS protocol. Type
+                      of certificate. Valid values: `UNIDIRECTIONAL`, `MUTUAL`. NOTES:
+                      Only supports listeners of HTTPS protocol.'
+                    type: string
+                  domain:
+                    description: Domain name of the listener rule. Domain name of
+                      the listener rule.
+                    type: string
+                  forwardType:
+                    description: 'Forwarding protocol between the CLB instance and
+                      real server. Valid values: HTTP, HTTPS, TRPC. The default is
+                      HTTP. Forwarding protocol between the CLB instance and real
+                      server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is
+                      `HTTP`.'
+                    type: string
+                  healthCheckHealthNum:
+                    description: 'Health threshold of health check, and the default
+                      is 3. If a success result is returned for the health check 3
+                      consecutive times, indicates that the forwarding is normal.
+                      The value range is [2-10]. NOTES: TCP/UDP/TCP_SSL listener allows
+                      direct configuration, HTTP/HTTPS listener needs to be configured
+                      in tencentcloud_clb_listener_rule. Health threshold of health
+                      check, and the default is `3`. If a success result is returned
+                      for the health check 3 consecutive times, indicates that the
+                      forwarding is normal. The value range is [2-10]. NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  healthCheckHttpCode:
+                    description: 'HTTP Status Code. The default is 31. Valid value
+                      ranges: [1~31]. 1 means the return value ''1xx'' is health.
+                      2means the return value ''2xx'' is health.4means the return
+                      value ''3xx'' is health.8` means the return value ''4xx'' is
+                      health. 16 means the return value ''5xx'' is health. If you
+                      want multiple return codes to indicate health, need to add the
+                      corresponding values. NOTES: The ''HTTP'' health check of the
+                      ''TCP'' listener only supports specifying one health check status
+                      code. NOTES: Only supports listeners of ''HTTP'' and ''HTTPS''
+                      protocol. HTTP Status Code. The default is 31. Valid value ranges:
+                      [1~31]. `1 means the return value ''1xx'' is health. `2` means
+                      the return value ''2xx'' is health. `4` means the return value
+                      ''3xx'' is health. `8` means the return value ''4xx'' is health.
+                      16 means the return value ''5xx'' is health. If you want multiple
+                      return codes to indicate health, need to add the corresponding
+                      values. NOTES: The ''HTTP'' health check of the ''TCP'' listener
+                      only supports specifying one health check status code. NOTES:
+                      Only supports listeners of ''HTTP'' and ''HTTPS'' protocol.'
+                    type: number
+                  healthCheckHttpDomain:
+                    description: 'Domain name of health check. NOTES: Only supports
+                      listeners of HTTP and HTTPS protocol. Domain name of health
+                      check. NOTES: Only supports listeners of `HTTP` and `HTTPS`
+                      protocol.'
+                    type: string
+                  healthCheckHttpMethod:
+                    description: 'Methods of health check. NOTES: Only supports listeners
+                      of HTTP and HTTPS protocol. The default is HEAD, the available
+                      value are HEAD and GET. Methods of health check. NOTES: Only
+                      supports listeners of `HTTP` and `HTTPS` protocol. The default
+                      is `HEAD`, the available value are `HEAD` and `GET`.'
+                    type: string
+                  healthCheckHttpPath:
+                    description: 'Path of health check. NOTES: Only supports listeners
+                      of HTTP and HTTPS protocol. Path of health check. NOTES: Only
+                      supports listeners of `HTTP` and `HTTPS` protocol.'
+                    type: string
+                  healthCheckIntervalTime:
+                    description: 'Interval time of health check. Valid value ranges:
+                      (2~300) sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in tencentcloud_clb_listener_rule. Interval
+                      time of health check. Valid value ranges: (2~300) sec. and the
+                      default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct
+                      configuration, HTTP/HTTPS listener needs to be configured in
+                      `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  healthCheckSwitch:
+                    description: Indicates whether health check is enabled. Indicates
+                      whether health check is enabled.
+                    type: boolean
+                  healthCheckTimeOut:
+                    description: Time out of health check. The value range is 2-60.
+                      Time out of health check. The value range is [2-60](SEC).
+                    type: number
+                  healthCheckType:
+                    description: Type of health check. Valid value is CUSTOM, TCP,
+                      HTTP. Type of health check. Valid value is `CUSTOM`, `TCP`,
+                      `HTTP`.
+                    type: string
+                  healthCheckUnhealthNum:
+                    description: 'Unhealthy threshold of health check, and the default
+                      is 3. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration,
+                      HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
+                      Unhealthy threshold of health check, and the default is `3`.
+                      If the unhealthy result is returned 3 consecutive times, indicates
+                      that the forwarding is abnormal. The value range is [2-10].  NOTES:
+                      TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS
+                      listener needs to be configured in `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  http2Switch:
+                    description: Indicate to apply HTTP2.0 protocol or not. Indicate
+                      to apply HTTP2.0 protocol or not.
+                    type: boolean
+                  quic:
+                    description: 'Whether to enable QUIC. Note: QUIC can be enabled
+                      only for HTTPS domain names. Whether to enable QUIC. Note: QUIC
+                      can be enabled only for HTTPS domain names.'
+                    type: boolean
+                  scheduler:
+                    description: 'Scheduling method of the CLB listener rules. Valid
+                      values: WRR, IP HASH, LEAST_CONN. The default is WRR.  NOTES:
+                      TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS
+                      listener needs to be configured in tencentcloud_clb_listener_rule.
+                      Scheduling method of the CLB listener rules. Valid values: `WRR`,
+                      `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in `tencentcloud_clb_listener_rule`.'
+                    type: string
+                  sessionExpireTime:
+                    description: 'Time of session persistence within the CLB listener.
+                      NOTES: Available when scheduler is specified as WRR, and not
+                      available when listener protocol is TCP_SSL.  NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in tencentcloud_clb_listener_rule. Time of
+                      session persistence within the CLB listener. NOTES: Available
+                      when scheduler is specified as `WRR`, and not available when
+                      listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL listener
+                      allows direct configuration, HTTP/HTTPS listener needs to be
+                      configured in `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  targetType:
+                    description: 'Backend target type. Valid values: NODE, TARGETGROUP.
+                      NODE means to bind ordinary nodes, TARGETGROUP means to bind
+                      target group. Backend target type. Valid values: `NODE`, `TARGETGROUP`.
+                      `NODE` means to bind ordinary nodes, `TARGETGROUP` means to
+                      bind target group.'
+                    type: string
+                  url:
+                    description: Url of the listener rule. Url of the listener rule.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -490,14 +701,186 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.domain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.domain)
+                || (has(self.initProvider) && has(self.initProvider.domain))'
+            - message: spec.forProvider.url is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.url)
+                || (has(self.initProvider) && has(self.initProvider.url))'
           status:
             description: ListenerRuleStatus defines the observed state of ListenerRule.
             properties:
               atProvider:
                 properties:
-                  id:
+                  certificateCaId:
+                    description: 'ID of the client certificate. NOTES: Only supports
+                      listeners of HTTPS protocol. ID of the client certificate. NOTES:
+                      Only supports listeners of HTTPS protocol.'
                     type: string
+                  certificateId:
+                    description: 'ID of the server certificate. NOTES: Only supports
+                      listeners of HTTPS protocol. ID of the server certificate. NOTES:
+                      Only supports listeners of HTTPS protocol.'
+                    type: string
+                  certificateSslMode:
+                    description: 'Type of certificate. Valid values: UNIDIRECTIONAL,
+                      MUTUAL. NOTES: Only supports listeners of HTTPS protocol. Type
+                      of certificate. Valid values: `UNIDIRECTIONAL`, `MUTUAL`. NOTES:
+                      Only supports listeners of HTTPS protocol.'
+                    type: string
+                  clbId:
+                    description: ID of CLB instance. ID of CLB instance.
+                    type: string
+                  domain:
+                    description: Domain name of the listener rule. Domain name of
+                      the listener rule.
+                    type: string
+                  forwardType:
+                    description: 'Forwarding protocol between the CLB instance and
+                      real server. Valid values: HTTP, HTTPS, TRPC. The default is
+                      HTTP. Forwarding protocol between the CLB instance and real
+                      server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is
+                      `HTTP`.'
+                    type: string
+                  healthCheckHealthNum:
+                    description: 'Health threshold of health check, and the default
+                      is 3. If a success result is returned for the health check 3
+                      consecutive times, indicates that the forwarding is normal.
+                      The value range is [2-10]. NOTES: TCP/UDP/TCP_SSL listener allows
+                      direct configuration, HTTP/HTTPS listener needs to be configured
+                      in tencentcloud_clb_listener_rule. Health threshold of health
+                      check, and the default is `3`. If a success result is returned
+                      for the health check 3 consecutive times, indicates that the
+                      forwarding is normal. The value range is [2-10]. NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  healthCheckHttpCode:
+                    description: 'HTTP Status Code. The default is 31. Valid value
+                      ranges: [1~31]. 1 means the return value ''1xx'' is health.
+                      2means the return value ''2xx'' is health.4means the return
+                      value ''3xx'' is health.8` means the return value ''4xx'' is
+                      health. 16 means the return value ''5xx'' is health. If you
+                      want multiple return codes to indicate health, need to add the
+                      corresponding values. NOTES: The ''HTTP'' health check of the
+                      ''TCP'' listener only supports specifying one health check status
+                      code. NOTES: Only supports listeners of ''HTTP'' and ''HTTPS''
+                      protocol. HTTP Status Code. The default is 31. Valid value ranges:
+                      [1~31]. `1 means the return value ''1xx'' is health. `2` means
+                      the return value ''2xx'' is health. `4` means the return value
+                      ''3xx'' is health. `8` means the return value ''4xx'' is health.
+                      16 means the return value ''5xx'' is health. If you want multiple
+                      return codes to indicate health, need to add the corresponding
+                      values. NOTES: The ''HTTP'' health check of the ''TCP'' listener
+                      only supports specifying one health check status code. NOTES:
+                      Only supports listeners of ''HTTP'' and ''HTTPS'' protocol.'
+                    type: number
+                  healthCheckHttpDomain:
+                    description: 'Domain name of health check. NOTES: Only supports
+                      listeners of HTTP and HTTPS protocol. Domain name of health
+                      check. NOTES: Only supports listeners of `HTTP` and `HTTPS`
+                      protocol.'
+                    type: string
+                  healthCheckHttpMethod:
+                    description: 'Methods of health check. NOTES: Only supports listeners
+                      of HTTP and HTTPS protocol. The default is HEAD, the available
+                      value are HEAD and GET. Methods of health check. NOTES: Only
+                      supports listeners of `HTTP` and `HTTPS` protocol. The default
+                      is `HEAD`, the available value are `HEAD` and `GET`.'
+                    type: string
+                  healthCheckHttpPath:
+                    description: 'Path of health check. NOTES: Only supports listeners
+                      of HTTP and HTTPS protocol. Path of health check. NOTES: Only
+                      supports listeners of `HTTP` and `HTTPS` protocol.'
+                    type: string
+                  healthCheckIntervalTime:
+                    description: 'Interval time of health check. Valid value ranges:
+                      (2~300) sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in tencentcloud_clb_listener_rule. Interval
+                      time of health check. Valid value ranges: (2~300) sec. and the
+                      default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct
+                      configuration, HTTP/HTTPS listener needs to be configured in
+                      `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  healthCheckSwitch:
+                    description: Indicates whether health check is enabled. Indicates
+                      whether health check is enabled.
+                    type: boolean
+                  healthCheckTimeOut:
+                    description: Time out of health check. The value range is 2-60.
+                      Time out of health check. The value range is [2-60](SEC).
+                    type: number
+                  healthCheckType:
+                    description: Type of health check. Valid value is CUSTOM, TCP,
+                      HTTP. Type of health check. Valid value is `CUSTOM`, `TCP`,
+                      `HTTP`.
+                    type: string
+                  healthCheckUnhealthNum:
+                    description: 'Unhealthy threshold of health check, and the default
+                      is 3. If the unhealthy result is returned 3 consecutive times,
+                      indicates that the forwarding is abnormal. The value range is
+                      [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration,
+                      HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
+                      Unhealthy threshold of health check, and the default is `3`.
+                      If the unhealthy result is returned 3 consecutive times, indicates
+                      that the forwarding is abnormal. The value range is [2-10].  NOTES:
+                      TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS
+                      listener needs to be configured in `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  http2Switch:
+                    description: Indicate to apply HTTP2.0 protocol or not. Indicate
+                      to apply HTTP2.0 protocol or not.
+                    type: boolean
+                  id:
+                    description: ID of the resource.
+                    type: string
+                  listenerId:
+                    description: ID of CLB listener. ID of CLB listener.
+                    type: string
+                  quic:
+                    description: 'Whether to enable QUIC. Note: QUIC can be enabled
+                      only for HTTPS domain names. Whether to enable QUIC. Note: QUIC
+                      can be enabled only for HTTPS domain names.'
+                    type: boolean
                   ruleId:
+                    description: ID of this CLB listener rule. ID of this CLB listener
+                      rule.
+                    type: string
+                  scheduler:
+                    description: 'Scheduling method of the CLB listener rules. Valid
+                      values: WRR, IP HASH, LEAST_CONN. The default is WRR.  NOTES:
+                      TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS
+                      listener needs to be configured in tencentcloud_clb_listener_rule.
+                      Scheduling method of the CLB listener rules. Valid values: `WRR`,
+                      `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in `tencentcloud_clb_listener_rule`.'
+                    type: string
+                  sessionExpireTime:
+                    description: 'Time of session persistence within the CLB listener.
+                      NOTES: Available when scheduler is specified as WRR, and not
+                      available when listener protocol is TCP_SSL.  NOTES: TCP/UDP/TCP_SSL
+                      listener allows direct configuration, HTTP/HTTPS listener needs
+                      to be configured in tencentcloud_clb_listener_rule. Time of
+                      session persistence within the CLB listener. NOTES: Available
+                      when scheduler is specified as `WRR`, and not available when
+                      listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL listener
+                      allows direct configuration, HTTP/HTTPS listener needs to be
+                      configured in `tencentcloud_clb_listener_rule`.'
+                    type: number
+                  targetType:
+                    description: 'Backend target type. Valid values: NODE, TARGETGROUP.
+                      NODE means to bind ordinary nodes, TARGETGROUP means to bind
+                      target group. Backend target type. Valid values: `NODE`, `TARGETGROUP`.
+                      `NODE` means to bind ordinary nodes, `TARGETGROUP` means to
+                      bind target group.'
+                    type: string
+                  url:
+                    description: Url of the listener rule. Url of the listener rule.
                     type: string
                 type: object
               conditions:
@@ -533,6 +916,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -541,9 +927,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

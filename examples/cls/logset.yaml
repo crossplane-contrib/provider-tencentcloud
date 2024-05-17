@@ -1,0 +1,13 @@
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Logset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/logset
+  labels:
+    testing.upbound.io/example-name: logset
+  name: logset
+spec:
+  forProvider:
+    logsetName: demo
+    tags:
+      createdBy: terraform

@@ -1,0 +1,26 @@
+apiVersion: cam.tencentcloud.crossplane.io/v1alpha1
+kind: Policy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cam/v1alpha1/policy
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    description: tf_test
+    document: |
+      {
+        "version": "2.0",
+        "statement": [
+          {
+            "action": [
+              "name/sts:AssumeRole"
+            ],
+            "effect": "allow",
+            "resource": [
+              "*"
+            ]
+          }
+        ]
+      }

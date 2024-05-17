@@ -1,0 +1,14 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: AddressTemplateGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/addresstemplategroup
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: group-test
+    templateIdsRefs:
+    - name: example
+    - name: example

@@ -1,0 +1,35 @@
+apiVersion: as.tencentcloud.crossplane.io/v1alpha1
+kind: ScalingConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: as/v1alpha1/scalingconfig
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    configurationName: example-launch-configuration
+    dataDisk:
+    - diskSize: 50
+      diskType: CLOUD_PREMIUM
+    enhancedMonitorService: false
+    enhancedSecurityService: false
+    hostNameSettings:
+    - hostName: host-name-test
+      hostNameStyle: UNIQUE
+    imageId: ${data.tencentcloud_images.example.images.0.image_id}
+    instanceTags:
+      tag: example
+    instanceTypes:
+    - SA1.SMALL1
+    internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
+    internetMaxBandwidthOut: 10
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    projectId: 0
+    publicIpAssigned: true
+    systemDiskSize: "50"
+    systemDiskType: CLOUD_PREMIUM
+    userData: dGVzdA==

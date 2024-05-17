@@ -1,0 +1,15 @@
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: CCN
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/ccn
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    bandwidthLimitType: INTER_REGION_LIMIT
+    chargeType: PREPAID
+    description: ci-temp-test-ccn-des
+    name: ci-temp-test-ccn
+    qos: AG

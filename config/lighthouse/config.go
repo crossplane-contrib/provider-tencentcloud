@@ -16,16 +16,13 @@ limitations under the License.
 
 package lighthouse
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupLighthouse = "lighthouse"
 
 // Configure configures the lighthouse group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_lighthouse_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_lighthouse_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupLighthouse
 		r.Kind = "Instance"
 	})

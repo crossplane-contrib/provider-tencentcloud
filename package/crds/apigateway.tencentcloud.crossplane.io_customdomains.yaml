@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: customdomains.apigateway.tencentcloud.crossplane.io
 spec:
   group: apigateway.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: CustomDomain
     listKind: CustomDomainList
     plural: customdomains
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CustomDomain is the Schema for the CustomDomains API
+        description: CustomDomain is the Schema for the CustomDomains API. Use this
+          resource to create custom domain of API gateway.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,42 +69,54 @@ spec:
                 properties:
                   certificateId:
                     description: Unique certificate ID of the custom domain name to
-                      be bound. You can choose to upload for the `protocol` attribute
-                      value `https` or `http&https`.
+                      be bound. You can choose to upload for the protocol attribute
+                      value https or http&https. Unique certificate ID of the custom
+                      domain name to be bound. You can choose to upload for the `protocol`
+                      attribute value `https` or `http&https`.
                     type: string
                   defaultDomain:
-                    description: Default domain name.
+                    description: Default domain name. Default domain name.
                     type: string
                   isDefaultMapping:
                     description: Whether the default path mapping is used. The default
-                      value is `true`. When it is `false`, it means custom path mapping.
-                      In this case, the `path_mappings` attribute is required.
+                      value is true. When it is false, it means custom path mapping.
+                      In this case, the path_mappings attribute is required. Whether
+                      the default path mapping is used. The default value is `true`.
+                      When it is `false`, it means custom path mapping. In this case,
+                      the `path_mappings` attribute is required.
                     type: boolean
                   isForcedHttps:
                     description: Whether to force HTTP requests to jump to HTTPS,
                       default to false. When the parameter is true, the API gateway
                       will redirect all HTTP protocol requests using the custom domain
-                      name to the HTTPS protocol for forwarding.
+                      name to the HTTPS protocol for forwarding. Whether to force
+                      HTTP requests to jump to HTTPS, default to false. When the parameter
+                      is true, the API gateway will redirect all HTTP protocol requests
+                      using the custom domain name to the HTTPS protocol for forwarding.
                     type: boolean
                   netType:
-                    description: 'Network type. Valid values: `OUTER`, `INNER`.'
+                    description: 'Network type. Valid values: OUTER, INNER. Network
+                      type. Valid values: `OUTER`, `INNER`.'
                     type: string
                   pathMappings:
                     description: 'Custom domain name path mapping. The data format
-                      is: `path#environment`. Optional values for the environment
-                      are `test`, `prepub`, and `release`.'
+                      is: path#environment. Optional values for the environment are
+                      test, prepub, and release. Custom domain name path mapping.
+                      The data format is: `path#environment`. Optional values for
+                      the environment are `test`, `prepub`, and `release`.'
                     items:
                       type: string
                     type: array
                   protocol:
-                    description: 'Protocol supported by service. Valid values: `http`,
-                      `https`, `http&https`.'
+                    description: 'Protocol supported by service. Valid values: http,
+                      https, http&https. Protocol supported by service. Valid values:
+                      `http`, `https`, `http&https`.'
                     type: string
                   serviceId:
-                    description: Unique service ID.
+                    description: Unique service ID. Unique service ID.
                     type: string
                   serviceIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Service to populate serviceId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -134,7 +150,7 @@ spec:
                     - name
                     type: object
                   serviceIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Service to populate serviceId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -173,56 +189,103 @@ spec:
                         type: object
                     type: object
                   subDomain:
-                    description: Custom domain name to be bound.
+                    description: Custom domain name to be bound. Custom domain name
+                      to be bound.
                     type: string
-                required:
-                - defaultDomain
-                - netType
-                - protocol
-                - subDomain
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  certificateId:
+                    description: Unique certificate ID of the custom domain name to
+                      be bound. You can choose to upload for the protocol attribute
+                      value https or http&https. Unique certificate ID of the custom
+                      domain name to be bound. You can choose to upload for the `protocol`
+                      attribute value `https` or `http&https`.
+                    type: string
+                  defaultDomain:
+                    description: Default domain name. Default domain name.
+                    type: string
+                  isDefaultMapping:
+                    description: Whether the default path mapping is used. The default
+                      value is true. When it is false, it means custom path mapping.
+                      In this case, the path_mappings attribute is required. Whether
+                      the default path mapping is used. The default value is `true`.
+                      When it is `false`, it means custom path mapping. In this case,
+                      the `path_mappings` attribute is required.
+                    type: boolean
+                  isForcedHttps:
+                    description: Whether to force HTTP requests to jump to HTTPS,
+                      default to false. When the parameter is true, the API gateway
+                      will redirect all HTTP protocol requests using the custom domain
+                      name to the HTTPS protocol for forwarding. Whether to force
+                      HTTP requests to jump to HTTPS, default to false. When the parameter
+                      is true, the API gateway will redirect all HTTP protocol requests
+                      using the custom domain name to the HTTPS protocol for forwarding.
+                    type: boolean
+                  netType:
+                    description: 'Network type. Valid values: OUTER, INNER. Network
+                      type. Valid values: `OUTER`, `INNER`.'
+                    type: string
+                  pathMappings:
+                    description: 'Custom domain name path mapping. The data format
+                      is: path#environment. Optional values for the environment are
+                      test, prepub, and release. Custom domain name path mapping.
+                      The data format is: `path#environment`. Optional values for
+                      the environment are `test`, `prepub`, and `release`.'
+                    items:
+                      type: string
+                    type: array
+                  protocol:
+                    description: 'Protocol supported by service. Valid values: http,
+                      https, http&https. Protocol supported by service. Valid values:
+                      `http`, `https`, `http&https`.'
+                    type: string
+                  subDomain:
+                    description: Custom domain name to be bound. Custom domain name
+                      to be bound.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -352,15 +415,88 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.defaultDomain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.defaultDomain)
+                || (has(self.initProvider) && has(self.initProvider.defaultDomain))'
+            - message: spec.forProvider.netType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.netType)
+                || (has(self.initProvider) && has(self.initProvider.netType))'
+            - message: spec.forProvider.protocol is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.protocol)
+                || (has(self.initProvider) && has(self.initProvider.protocol))'
+            - message: spec.forProvider.subDomain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.subDomain)
+                || (has(self.initProvider) && has(self.initProvider.subDomain))'
           status:
             description: CustomDomainStatus defines the observed state of CustomDomain.
             properties:
               atProvider:
                 properties:
+                  certificateId:
+                    description: Unique certificate ID of the custom domain name to
+                      be bound. You can choose to upload for the protocol attribute
+                      value https or http&https. Unique certificate ID of the custom
+                      domain name to be bound. You can choose to upload for the `protocol`
+                      attribute value `https` or `http&https`.
+                    type: string
+                  defaultDomain:
+                    description: Default domain name. Default domain name.
+                    type: string
                   id:
+                    description: ID of the resource.
+                    type: string
+                  isDefaultMapping:
+                    description: Whether the default path mapping is used. The default
+                      value is true. When it is false, it means custom path mapping.
+                      In this case, the path_mappings attribute is required. Whether
+                      the default path mapping is used. The default value is `true`.
+                      When it is `false`, it means custom path mapping. In this case,
+                      the `path_mappings` attribute is required.
+                    type: boolean
+                  isForcedHttps:
+                    description: Whether to force HTTP requests to jump to HTTPS,
+                      default to false. When the parameter is true, the API gateway
+                      will redirect all HTTP protocol requests using the custom domain
+                      name to the HTTPS protocol for forwarding. Whether to force
+                      HTTP requests to jump to HTTPS, default to false. When the parameter
+                      is true, the API gateway will redirect all HTTP protocol requests
+                      using the custom domain name to the HTTPS protocol for forwarding.
+                    type: boolean
+                  netType:
+                    description: 'Network type. Valid values: OUTER, INNER. Network
+                      type. Valid values: `OUTER`, `INNER`.'
+                    type: string
+                  pathMappings:
+                    description: 'Custom domain name path mapping. The data format
+                      is: path#environment. Optional values for the environment are
+                      test, prepub, and release. Custom domain name path mapping.
+                      The data format is: `path#environment`. Optional values for
+                      the environment are `test`, `prepub`, and `release`.'
+                    items:
+                      type: string
+                    type: array
+                  protocol:
+                    description: 'Protocol supported by service. Valid values: http,
+                      https, http&https. Protocol supported by service. Valid values:
+                      `http`, `https`, `http&https`.'
+                    type: string
+                  serviceId:
+                    description: Unique service ID. Unique service ID.
                     type: string
                   status:
+                    description: Domain name resolution status. 1 means normal analysis,
+                      0 means parsing failed. Domain name resolution status. `1` means
+                      normal analysis, `0` means parsing failed.
                     type: number
+                  subDomain:
+                    description: Custom domain name to be bound. Custom domain name
+                      to be bound.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -395,6 +531,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -403,9 +542,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

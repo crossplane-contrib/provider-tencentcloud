@@ -1,0 +1,31 @@
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: BandwidthLimit
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/bandwidthlimit
+  labels:
+    testing.upbound.io/example-name: limit1
+  name: limit1
+spec:
+  forProvider:
+    bandwidthLimit: 500
+    ccnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: main
+    region: ${var.other_region1}
+
+---
+
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: CCN
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/bandwidthlimit
+  labels:
+    testing.upbound.io/example-name: main
+  name: main
+spec:
+  forProvider:
+    description: ci-temp-test-ccn-des
+    name: ci-temp-test-ccn
+    qos: AG

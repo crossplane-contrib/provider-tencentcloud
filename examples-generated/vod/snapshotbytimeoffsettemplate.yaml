@@ -1,0 +1,17 @@
+apiVersion: vod.tencentcloud.crossplane.io/v1alpha1
+kind: SnapshotByTimeOffsetTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vod/v1alpha1/snapshotbytimeoffsettemplate
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    comment: test
+    fillType: white
+    format: png
+    height: 128
+    name: tf-snapshot
+    resolutionAdaptive: false
+    width: 130

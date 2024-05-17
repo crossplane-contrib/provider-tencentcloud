@@ -1,0 +1,34 @@
+apiVersion: privatedns.tencentcloud.crossplane.io/v1alpha1
+kind: Zone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privatedns/v1alpha1/zone
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    cnameSpeedupStatus: ENABLED
+    dnsForwardStatus: DISABLED
+    domain: domain.com
+    remark: remark.
+    tags:
+      createdBy: terraform
+    vpcSet:
+    - region: ap-guangzhou
+      uniqVpcId: ${tencentcloud_vpc.vpc.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privatedns/v1alpha1/zone
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc-example

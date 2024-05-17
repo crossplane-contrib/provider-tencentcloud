@@ -1,0 +1,71 @@
+apiVersion: elasticsearch.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: elasticsearch/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.availability_zone.zones.0.name}
+    basicSecurityType: 2
+    esAcl:
+    - whiteList:
+      - 127.0.0.1
+    instanceName: tf_example_es
+    licenseType: basic
+    nodeInfoList:
+    - encrypt: false
+      nodeNum: 2
+      nodeType: ES.S1.MEDIUM8
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      test: test
+    version: 7.10.1
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+    webNodeTypeInfo:
+    - nodeNum: 1
+      nodeType: ES.S1.MEDIUM4
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: elasticsearch/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${data.tencentcloud_availability_zones_by_product.availability_zone.zones.0.name}
+    cidrBlock: 10.0.1.0/24
+    name: tf_es_subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: elasticsearch/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf_es_vpc

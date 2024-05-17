@@ -1,0 +1,18 @@
+apiVersion: teo.tencentcloud.crossplane.io/v1alpha1
+kind: Zone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: teo/v1alpha1/zone
+  labels:
+    testing.upbound.io/example-name: zone
+  name: zone
+spec:
+  forProvider:
+    aliasZoneName: teo-test
+    area: overseas
+    paused: false
+    planId: edgeone-2kfv1h391n6w
+    tags:
+      createdBy: terraform
+    type: partial
+    zoneName: tf-teo.com

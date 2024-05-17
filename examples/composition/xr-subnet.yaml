@@ -1,7 +1,0 @@
-apiVersion: crd.tencentcloud.crossplane.io/v1alpha1
-kind: XSubnet
-metadata:
-  name: xsubnet-example
-spec:
-  vpcName: xvpcName
-  subnetName: xsubnetName

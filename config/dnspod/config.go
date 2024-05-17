@@ -16,22 +16,18 @@ limitations under the License.
 
 package dnspod
 
-import (
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 const shortGroupDNSPod = "dnspod"
 
 // Configure configures the dnspod group
-func Configure(p *tjconfig.Provider) {
-	p.AddResourceConfigurator("tencentcloud_dnspod_record", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_dnspod_record", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDNSPod
 		r.Kind = "Record"
 	})
 
-	p.AddResourceConfigurator("tencentcloud_dnspod_domain_instance", func(r *tjconfig.Resource) {
-		r.ExternalName = tjconfig.IdentifierFromProvider
+	p.AddResourceConfigurator("tencentcloud_dnspod_domain_instance", func(r *config.Resource) {
 		r.ShortGroup = shortGroupDNSPod
 		r.Kind = "DomainInstance"
 	})

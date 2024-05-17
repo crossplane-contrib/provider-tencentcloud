@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: clusters.cynosdb.tencentcloud.crossplane.io
 spec:
   group: cynosdb.tencentcloud.crossplane.io
@@ -12,7 +11,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - tencentcloudjet
+    - tencentcloud
     kind: Cluster
     listKind: ClusterList
     plural: clusters
@@ -35,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cluster is the Schema for the Clusters API
+        description: Cluster is the Schema for the Clusters API. Provide a resource
+          to create a CynosDB cluster.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -65,62 +69,86 @@ spec:
                 properties:
                   autoPause:
                     description: 'Specify whether the cluster can auto-pause while
-                      `db_mode` is `SERVERLESS`. Values: `yes` (default), `no`.'
+                      db_mode is SERVERLESS. Values: yes (default), no. Specify whether
+                      the cluster can auto-pause while `db_mode` is `SERVERLESS`.
+                      Values: `yes` (default), `no`.'
                     type: string
                   autoPauseDelay:
-                    description: 'Specify auto-pause delay in second while `db_mode`
-                      is `SERVERLESS`. Value range: `[600, 691200]`. Default: `600`.'
+                    description: 'Specify auto-pause delay in second while db_mode
+                      is SERVERLESS. Value range: [600, 691200]. Default: 600. Specify
+                      auto-pause delay in second while `db_mode` is `SERVERLESS`.
+                      Value range: `[600, 691200]`. Default: `600`.'
                     type: number
                   autoRenewFlag:
-                    description: Auto renew flag. Valid values are `0`(MANUAL_RENEW),
-                      `1`(AUTO_RENEW). Default value is `0`. Only works for PREPAID
-                      cluster.
+                    description: Auto renew flag. Valid values are 0(MANUAL_RENEW),
+                      1(AUTO_RENEW). Default value is 0. Only works for PREPAID cluster.
+                      Auto renew flag. Valid values are `0`(MANUAL_RENEW), `1`(AUTO_RENEW).
+                      Default value is `0`. Only works for PREPAID cluster.
                     type: number
                   availableZone:
-                    description: The available zone of the CynosDB Cluster.
+                    description: The available zone of the CynosDB Cluster. The available
+                      zone of the CynosDB Cluster.
                     type: string
                   chargeType:
-                    description: The charge type of instance. Valid values are `PREPAID`
-                      and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`.
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. The
+                      charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `POSTPAID_BY_HOUR`.
                     type: string
                   clusterName:
-                    description: Name of CynosDB cluster.
+                    description: Name of CynosDB cluster. Name of CynosDB cluster.
                     type: string
                   dbMode:
-                    description: 'Specify DB mode, only available when `db_type` is
-                      `MYSQL`. Values: `NORMAL` (Default), `SERVERLESS`.'
+                    description: 'Specify DB mode, only available when db_type is
+                      MYSQL. Values: NORMAL (Default), SERVERLESS. Specify DB mode,
+                      only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default),
+                      `SERVERLESS`.'
                     type: string
                   dbType:
-                    description: Type of CynosDB, and available values include `MYSQL`.
+                    description: Type of CynosDB, and available values include MYSQL.
+                      Type of CynosDB, and available values include `MYSQL`.
                     type: string
                   dbVersion:
-                    description: Version of CynosDB, which is related to `db_type`.
-                      For `MYSQL`, available value is `5.7`.
+                    description: Version of CynosDB, which is related to db_type.
+                      For MYSQL, available value is 5.7. Version of CynosDB, which
+                      is related to `db_type`. For `MYSQL`, available value is `5.7`.
                     type: string
                   forceDelete:
                     description: 'Indicate whether to delete cluster instance directly
-                      or not. Default is false. If set true, the cluster and its `All
-                      RELATED INSTANCES` will be deleted instead of staying recycle
-                      bin. Note: works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.'
+                      or not. Default is false. If set true, the cluster and its All
+                      RELATED INSTANCES will be deleted instead of staying recycle
+                      bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
+                      Indicate whether to delete cluster instance directly or not.
+                      Default is false. If set true, the cluster and its `All RELATED
+                      INSTANCES` will be deleted instead of staying recycle bin. Note:
+                      works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.'
                     type: boolean
                   instanceCpuCore:
                     description: 'The number of CPU cores of read-write type instance
                       in the CynosDB cluster. Required while creating normal cluster.
                       Note: modification of this field will take effect immediately,
                       if want to upgrade on maintenance window, please upgrade from
+                      console. The number of CPU cores of read-write type instance
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
                       console.'
                     type: number
                   instanceMaintainDuration:
-                    description: Duration time for maintenance, unit in second. `3600`
+                    description: Duration time for maintenance, unit in second. 3600
+                      by default. Duration time for maintenance, unit in second. `3600`
                       by default.
                     type: number
                   instanceMaintainStartTime:
                     description: Offset time from 00:00, unit in second. For example,
-                      03:00am should be `10800`. `10800` by default.
+                      03:00am should be 10800. 10800 by default. Offset time from
+                      00:00, unit in second. For example, 03:00am should be `10800`.
+                      `10800` by default.
                     type: number
                   instanceMaintainWeekdays:
-                    description: Weekdays for maintenance. `["Mon", "Tue", "Wed",
-                      "Thu", "Fri", "Sat", "Sun"]` by default.
+                    description: Weekdays for maintenance. ["Mon", "Tue", "Wed", "Thu",
+                      "Fri", "Sat", "Sun"] by default. Weekdays for maintenance. `["Mon",
+                      "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` by default.
                     items:
                       type: string
                     type: array
@@ -128,46 +156,61 @@ spec:
                     description: 'Memory capacity of read-write type instance, unit
                       in GB. Required while creating normal cluster. Note: modification
                       of this field will take effect immediately, if want to upgrade
-                      on maintenance window, please upgrade from console.'
+                      on maintenance window, please upgrade from console. Memory capacity
+                      of read-write type instance, unit in GB. Required while creating
+                      normal cluster. Note: modification of this field will take effect
+                      immediately, if want to upgrade on maintenance window, please
+                      upgrade from console.'
                     type: number
                   maxCpu:
-                    description: Maximum CPU core count, required while `db_mode`
+                    description: Maximum CPU core count, required while db_mode is
+                      SERVERLESS, request DescribeServerlessInstanceSpecs for more
+                      reference. Maximum CPU core count, required while `db_mode`
                       is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
                       more reference.
                     type: number
                   minCpu:
-                    description: Minimum CPU core count, required while `db_mode`
+                    description: Minimum CPU core count, required while db_mode is
+                      SERVERLESS, request DescribeServerlessInstanceSpecs for more
+                      reference. Minimum CPU core count, required while `db_mode`
                       is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
                       more reference.
                     type: number
                   oldIpReserveHours:
                     description: Recycling time of the old address, must be filled
                       in when modifying the vpcRecycling time of the old address,
-                      must be filled in when modifying the vpc.
+                      must be filled in when modifying the vpc. Recycling time of
+                      the old address, must be filled in when modifying the vpcRecycling
+                      time of the old address, must be filled in when modifying the
+                      vpc.
                     type: number
                   paramItems:
                     description: Specify parameter list of database. It is valid when
-                      prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params`
-                      to query available parameter details.
+                      prarm_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params
+                      to query available parameter details. Specify parameter list
+                      of database. It is valid when prarm_template_id is set in create
+                      cluster. Use `data.tencentcloud_mysql_default_params` to query
+                      available parameter details.
                     items:
                       properties:
                         currentValue:
-                          description: Param expected value to set.
+                          description: Param expected value to set. Param expected
+                            value to set.
                           type: string
                         name:
-                          description: Name of param, e.g. `character_set_server`.
+                          description: Name of param, e.g. character_set_server. Name
+                            of param, e.g. `character_set_server`.
                           type: string
                         oldValue:
                           description: Param old value, indicates the value which
                             already set, this value is required when modifying current_value.
+                            Param old value, indicates the value which already set,
+                            this value is required when modifying current_value.
                           type: string
-                      required:
-                      - currentValue
-                      - name
                       type: object
                     type: array
                   passwordSecretRef:
-                    description: Password of `root` account.
+                    description: Password of root account. Password of `root` account.
                     properties:
                       key:
                         description: The key to select.
@@ -184,36 +227,50 @@ spec:
                     - namespace
                     type: object
                   port:
-                    description: Port of CynosDB cluster.
+                    description: Port of CynosDB cluster. Port of CynosDB cluster.
                     type: number
                   prarmTemplateId:
-                    description: The ID of the parameter template.
+                    description: The ID of the parameter template. The ID of the parameter
+                      template.
                     type: number
                   prepaidPeriod:
                     description: 'The tenancy (time unit is month) of the prepaid
-                      instance. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`,
-                      `8`, `9`, `10`, `11`, `12`, `24`, `36`. NOTE: it only works
-                      when charge_type is set to `PREPAID`.'
+                      instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                      12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy (time unit is month) of the prepaid instance. Valid
+                      values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`,
+                      `11`, `12`, `24`, `36`. NOTE: it only works when charge_type
+                      is set to `PREPAID`.'
                     type: number
                   projectId:
-                    description: ID of the project. `0` by default.
+                    description: ID of the project. 0 by default. ID of the project.
+                      `0` by default.
                     type: number
                   roGroupSg:
-                    description: IDs of security group for `ro_group`.
+                    description: IDs of security group for ro_group. IDs of security
+                      group for `ro_group`.
                     items:
                       type: string
                     type: array
                   rwGroupSg:
-                    description: IDs of security group for `rw_group`.
+                    description: IDs of security group for rw_group. IDs of security
+                      group for `rw_group`.
                     items:
                       type: string
                     type: array
                   serverlessStatusFlag:
                     description: 'Specify whether to pause or resume serverless cluster.
-                      values: `resume`, `pause`.'
+                      values: resume, pause. Specify whether to pause or resume serverless
+                      cluster. values: `resume`, `pause`.'
                     type: string
                   storageLimit:
                     description: 'Storage limit of CynosDB cluster instance, unit
+                      in GB. The maximum storage of a non-serverless instance in GB.
+                      NOTE: If db_type is MYSQL and charge_type is PREPAID, the value
+                      cannot exceed the maximum storage corresponding to the CPU and
+                      memory specifications, and the transaction mode is order and
+                      pay. when charge_type is POSTPAID_BY_HOUR, this argument is
+                      unnecessary. Storage limit of CynosDB cluster instance, unit
                       in GB. The maximum storage of a non-serverless instance in GB.
                       NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the
                       value cannot exceed the maximum storage corresponding to the
@@ -222,18 +279,24 @@ spec:
                       is unnecessary.'
                     type: number
                   storagePayMode:
-                    description: 'Cluster storage billing mode, pay-as-you-go: `0`-yearly/monthly:
-                      `1`-The default is pay-as-you-go. When the DbType is MYSQL,
-                      when the cluster computing billing mode is post-paid (including
-                      DbMode is SERVERLESS), the storage billing mode can only be
-                      billing by volume; rollback and cloning do not support yearly
-                      subscriptions monthly storage.'
+                    description: 'Cluster storage billing mode, pay-as-you-go: 0-yearly/monthly:
+                      1-The default is pay-as-you-go. When the DbType is MYSQL, when
+                      the cluster computing billing mode is post-paid (including DbMode
+                      is SERVERLESS), the storage billing mode can only be billing
+                      by volume; rollback and cloning do not support yearly subscriptions
+                      monthly storage. Cluster storage billing mode, pay-as-you-go:
+                      `0`-yearly/monthly: `1`-The default is pay-as-you-go. When the
+                      DbType is MYSQL, when the cluster computing billing mode is
+                      post-paid (including DbMode is SERVERLESS), the storage billing
+                      mode can only be billing by volume; rollback and cloning do
+                      not support yearly subscriptions monthly storage.'
                     type: number
                   subnetId:
-                    description: ID of the subnet within this VPC.
+                    description: ID of the subnet within this VPC. ID of the subnet
+                      within this VPC.
                     type: string
                   subnetIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Subnet in vpc to populate subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -267,7 +330,7 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -308,13 +371,14 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: The tags of the CynosDB cluster.
+                    description: The tags of the CynosDB cluster. The tags of the
+                      CynosDB cluster.
                     type: object
                   vpcId:
-                    description: ID of the VPC.
+                    description: ID of the VPC. ID of the VPC.
                     type: string
-                  vpcidRef:
-                    description: A Reference to a named object.
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -347,8 +411,8 @@ spec:
                     required:
                     - name
                     type: object
-                  vpcidSelector:
-                    description: A Selector selects an object.
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -386,55 +450,264 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - availableZone
-                - clusterName
-                - dbType
-                - dbVersion
-                - passwordSecretRef
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  autoPause:
+                    description: 'Specify whether the cluster can auto-pause while
+                      db_mode is SERVERLESS. Values: yes (default), no. Specify whether
+                      the cluster can auto-pause while `db_mode` is `SERVERLESS`.
+                      Values: `yes` (default), `no`.'
+                    type: string
+                  autoPauseDelay:
+                    description: 'Specify auto-pause delay in second while db_mode
+                      is SERVERLESS. Value range: [600, 691200]. Default: 600. Specify
+                      auto-pause delay in second while `db_mode` is `SERVERLESS`.
+                      Value range: `[600, 691200]`. Default: `600`.'
+                    type: number
+                  autoRenewFlag:
+                    description: Auto renew flag. Valid values are 0(MANUAL_RENEW),
+                      1(AUTO_RENEW). Default value is 0. Only works for PREPAID cluster.
+                      Auto renew flag. Valid values are `0`(MANUAL_RENEW), `1`(AUTO_RENEW).
+                      Default value is `0`. Only works for PREPAID cluster.
+                    type: number
+                  availableZone:
+                    description: The available zone of the CynosDB Cluster. The available
+                      zone of the CynosDB Cluster.
+                    type: string
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. The
+                      charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `POSTPAID_BY_HOUR`.
+                    type: string
+                  clusterName:
+                    description: Name of CynosDB cluster. Name of CynosDB cluster.
+                    type: string
+                  dbMode:
+                    description: 'Specify DB mode, only available when db_type is
+                      MYSQL. Values: NORMAL (Default), SERVERLESS. Specify DB mode,
+                      only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default),
+                      `SERVERLESS`.'
+                    type: string
+                  dbType:
+                    description: Type of CynosDB, and available values include MYSQL.
+                      Type of CynosDB, and available values include `MYSQL`.
+                    type: string
+                  dbVersion:
+                    description: Version of CynosDB, which is related to db_type.
+                      For MYSQL, available value is 5.7. Version of CynosDB, which
+                      is related to `db_type`. For `MYSQL`, available value is `5.7`.
+                    type: string
+                  forceDelete:
+                    description: 'Indicate whether to delete cluster instance directly
+                      or not. Default is false. If set true, the cluster and its All
+                      RELATED INSTANCES will be deleted instead of staying recycle
+                      bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
+                      Indicate whether to delete cluster instance directly or not.
+                      Default is false. If set true, the cluster and its `All RELATED
+                      INSTANCES` will be deleted instead of staying recycle bin. Note:
+                      works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.'
+                    type: boolean
+                  instanceCpuCore:
+                    description: 'The number of CPU cores of read-write type instance
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console. The number of CPU cores of read-write type instance
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console.'
+                    type: number
+                  instanceMaintainDuration:
+                    description: Duration time for maintenance, unit in second. 3600
+                      by default. Duration time for maintenance, unit in second. `3600`
+                      by default.
+                    type: number
+                  instanceMaintainStartTime:
+                    description: Offset time from 00:00, unit in second. For example,
+                      03:00am should be 10800. 10800 by default. Offset time from
+                      00:00, unit in second. For example, 03:00am should be `10800`.
+                      `10800` by default.
+                    type: number
+                  instanceMaintainWeekdays:
+                    description: Weekdays for maintenance. ["Mon", "Tue", "Wed", "Thu",
+                      "Fri", "Sat", "Sun"] by default. Weekdays for maintenance. `["Mon",
+                      "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` by default.
+                    items:
+                      type: string
+                    type: array
+                  instanceMemorySize:
+                    description: 'Memory capacity of read-write type instance, unit
+                      in GB. Required while creating normal cluster. Note: modification
+                      of this field will take effect immediately, if want to upgrade
+                      on maintenance window, please upgrade from console. Memory capacity
+                      of read-write type instance, unit in GB. Required while creating
+                      normal cluster. Note: modification of this field will take effect
+                      immediately, if want to upgrade on maintenance window, please
+                      upgrade from console.'
+                    type: number
+                  maxCpu:
+                    description: Maximum CPU core count, required while db_mode is
+                      SERVERLESS, request DescribeServerlessInstanceSpecs for more
+                      reference. Maximum CPU core count, required while `db_mode`
+                      is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
+                      more reference.
+                    type: number
+                  minCpu:
+                    description: Minimum CPU core count, required while db_mode is
+                      SERVERLESS, request DescribeServerlessInstanceSpecs for more
+                      reference. Minimum CPU core count, required while `db_mode`
+                      is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
+                      more reference.
+                    type: number
+                  oldIpReserveHours:
+                    description: Recycling time of the old address, must be filled
+                      in when modifying the vpcRecycling time of the old address,
+                      must be filled in when modifying the vpc. Recycling time of
+                      the old address, must be filled in when modifying the vpcRecycling
+                      time of the old address, must be filled in when modifying the
+                      vpc.
+                    type: number
+                  paramItems:
+                    description: Specify parameter list of database. It is valid when
+                      prarm_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params
+                      to query available parameter details. Specify parameter list
+                      of database. It is valid when prarm_template_id is set in create
+                      cluster. Use `data.tencentcloud_mysql_default_params` to query
+                      available parameter details.
+                    items:
+                      properties:
+                        currentValue:
+                          description: Param expected value to set. Param expected
+                            value to set.
+                          type: string
+                        name:
+                          description: Name of param, e.g. character_set_server. Name
+                            of param, e.g. `character_set_server`.
+                          type: string
+                        oldValue:
+                          description: Param old value, indicates the value which
+                            already set, this value is required when modifying current_value.
+                            Param old value, indicates the value which already set,
+                            this value is required when modifying current_value.
+                          type: string
+                      type: object
+                    type: array
+                  port:
+                    description: Port of CynosDB cluster. Port of CynosDB cluster.
+                    type: number
+                  prarmTemplateId:
+                    description: The ID of the parameter template. The ID of the parameter
+                      template.
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                      12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy (time unit is month) of the prepaid instance. Valid
+                      values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`,
+                      `11`, `12`, `24`, `36`. NOTE: it only works when charge_type
+                      is set to `PREPAID`.'
+                    type: number
+                  projectId:
+                    description: ID of the project. 0 by default. ID of the project.
+                      `0` by default.
+                    type: number
+                  roGroupSg:
+                    description: IDs of security group for ro_group. IDs of security
+                      group for `ro_group`.
+                    items:
+                      type: string
+                    type: array
+                  rwGroupSg:
+                    description: IDs of security group for rw_group. IDs of security
+                      group for `rw_group`.
+                    items:
+                      type: string
+                    type: array
+                  serverlessStatusFlag:
+                    description: 'Specify whether to pause or resume serverless cluster.
+                      values: resume, pause. Specify whether to pause or resume serverless
+                      cluster. values: `resume`, `pause`.'
+                    type: string
+                  storageLimit:
+                    description: 'Storage limit of CynosDB cluster instance, unit
+                      in GB. The maximum storage of a non-serverless instance in GB.
+                      NOTE: If db_type is MYSQL and charge_type is PREPAID, the value
+                      cannot exceed the maximum storage corresponding to the CPU and
+                      memory specifications, and the transaction mode is order and
+                      pay. when charge_type is POSTPAID_BY_HOUR, this argument is
+                      unnecessary. Storage limit of CynosDB cluster instance, unit
+                      in GB. The maximum storage of a non-serverless instance in GB.
+                      NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the
+                      value cannot exceed the maximum storage corresponding to the
+                      CPU and memory specifications, and the transaction mode is `order
+                      and pay`. when charge_type is `POSTPAID_BY_HOUR`, this argument
+                      is unnecessary.'
+                    type: number
+                  storagePayMode:
+                    description: 'Cluster storage billing mode, pay-as-you-go: 0-yearly/monthly:
+                      1-The default is pay-as-you-go. When the DbType is MYSQL, when
+                      the cluster computing billing mode is post-paid (including DbMode
+                      is SERVERLESS), the storage billing mode can only be billing
+                      by volume; rollback and cloning do not support yearly subscriptions
+                      monthly storage. Cluster storage billing mode, pay-as-you-go:
+                      `0`-yearly/monthly: `1`-The default is pay-as-you-go. When the
+                      DbType is MYSQL, when the cluster computing billing mode is
+                      post-paid (including DbMode is SERVERLESS), the storage billing
+                      mode can only be billing by volume; rollback and cloning do
+                      not support yearly subscriptions monthly storage.'
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the CynosDB cluster. The tags of the
+                      CynosDB cluster.
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -564,71 +837,351 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availableZone is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availableZone)
+                || (has(self.initProvider) && has(self.initProvider.availableZone))'
+            - message: spec.forProvider.clusterName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterName)
+                || (has(self.initProvider) && has(self.initProvider.clusterName))'
+            - message: spec.forProvider.dbType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbType)
+                || (has(self.initProvider) && has(self.initProvider.dbType))'
+            - message: spec.forProvider.dbVersion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbVersion)
+                || (has(self.initProvider) && has(self.initProvider.dbVersion))'
+            - message: spec.forProvider.passwordSecretRef is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)'
           status:
             description: ClusterStatus defines the observed state of Cluster.
             properties:
               atProvider:
                 properties:
+                  autoPause:
+                    description: 'Specify whether the cluster can auto-pause while
+                      db_mode is SERVERLESS. Values: yes (default), no. Specify whether
+                      the cluster can auto-pause while `db_mode` is `SERVERLESS`.
+                      Values: `yes` (default), `no`.'
+                    type: string
+                  autoPauseDelay:
+                    description: 'Specify auto-pause delay in second while db_mode
+                      is SERVERLESS. Value range: [600, 691200]. Default: 600. Specify
+                      auto-pause delay in second while `db_mode` is `SERVERLESS`.
+                      Value range: `[600, 691200]`. Default: `600`.'
+                    type: number
+                  autoRenewFlag:
+                    description: Auto renew flag. Valid values are 0(MANUAL_RENEW),
+                      1(AUTO_RENEW). Default value is 0. Only works for PREPAID cluster.
+                      Auto renew flag. Valid values are `0`(MANUAL_RENEW), `1`(AUTO_RENEW).
+                      Default value is `0`. Only works for PREPAID cluster.
+                    type: number
+                  availableZone:
+                    description: The available zone of the CynosDB Cluster. The available
+                      zone of the CynosDB Cluster.
+                    type: string
+                  chargeType:
+                    description: The charge type of instance. Valid values are PREPAID
+                      and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. The
+                      charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
+                      Default value is `POSTPAID_BY_HOUR`.
+                    type: string
                   charset:
+                    description: Charset used by CynosDB cluster. Charset used by
+                      CynosDB cluster.
+                    type: string
+                  clusterName:
+                    description: Name of CynosDB cluster. Name of CynosDB cluster.
                     type: string
                   clusterStatus:
+                    description: Status of the Cynosdb cluster. Status of the Cynosdb
+                      cluster.
                     type: string
                   createTime:
+                    description: Creation time of the CynosDB cluster. Creation time
+                      of the CynosDB cluster.
                     type: string
+                  dbMode:
+                    description: 'Specify DB mode, only available when db_type is
+                      MYSQL. Values: NORMAL (Default), SERVERLESS. Specify DB mode,
+                      only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default),
+                      `SERVERLESS`.'
+                    type: string
+                  dbType:
+                    description: Type of CynosDB, and available values include MYSQL.
+                      Type of CynosDB, and available values include `MYSQL`.
+                    type: string
+                  dbVersion:
+                    description: Version of CynosDB, which is related to db_type.
+                      For MYSQL, available value is 5.7. Version of CynosDB, which
+                      is related to `db_type`. For `MYSQL`, available value is `5.7`.
+                    type: string
+                  forceDelete:
+                    description: 'Indicate whether to delete cluster instance directly
+                      or not. Default is false. If set true, the cluster and its All
+                      RELATED INSTANCES will be deleted instead of staying recycle
+                      bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
+                      Indicate whether to delete cluster instance directly or not.
+                      Default is false. If set true, the cluster and its `All RELATED
+                      INSTANCES` will be deleted instead of staying recycle bin. Note:
+                      works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.'
+                    type: boolean
                   id:
+                    description: ID of the resource.
                     type: string
+                  instanceCpuCore:
+                    description: 'The number of CPU cores of read-write type instance
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console. The number of CPU cores of read-write type instance
+                      in the CynosDB cluster. Required while creating normal cluster.
+                      Note: modification of this field will take effect immediately,
+                      if want to upgrade on maintenance window, please upgrade from
+                      console.'
+                    type: number
                   instanceId:
+                    description: ID of instance. ID of instance.
                     type: string
+                  instanceMaintainDuration:
+                    description: Duration time for maintenance, unit in second. 3600
+                      by default. Duration time for maintenance, unit in second. `3600`
+                      by default.
+                    type: number
+                  instanceMaintainStartTime:
+                    description: Offset time from 00:00, unit in second. For example,
+                      03:00am should be 10800. 10800 by default. Offset time from
+                      00:00, unit in second. For example, 03:00am should be `10800`.
+                      `10800` by default.
+                    type: number
+                  instanceMaintainWeekdays:
+                    description: Weekdays for maintenance. ["Mon", "Tue", "Wed", "Thu",
+                      "Fri", "Sat", "Sun"] by default. Weekdays for maintenance. `["Mon",
+                      "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` by default.
+                    items:
+                      type: string
+                    type: array
+                  instanceMemorySize:
+                    description: 'Memory capacity of read-write type instance, unit
+                      in GB. Required while creating normal cluster. Note: modification
+                      of this field will take effect immediately, if want to upgrade
+                      on maintenance window, please upgrade from console. Memory capacity
+                      of read-write type instance, unit in GB. Required while creating
+                      normal cluster. Note: modification of this field will take effect
+                      immediately, if want to upgrade on maintenance window, please
+                      upgrade from console.'
+                    type: number
                   instanceName:
+                    description: Name of instance. Name of instance.
                     type: string
                   instanceStatus:
+                    description: Status of the instance. Status of the instance.
                     type: string
                   instanceStorageSize:
+                    description: Storage size of the instance, unit in GB. Storage
+                      size of the instance, unit in GB.
+                    type: number
+                  maxCpu:
+                    description: Maximum CPU core count, required while db_mode is
+                      SERVERLESS, request DescribeServerlessInstanceSpecs for more
+                      reference. Maximum CPU core count, required while `db_mode`
+                      is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
+                      more reference.
+                    type: number
+                  minCpu:
+                    description: Minimum CPU core count, required while db_mode is
+                      SERVERLESS, request DescribeServerlessInstanceSpecs for more
+                      reference. Minimum CPU core count, required while `db_mode`
+                      is `SERVERLESS`, request DescribeServerlessInstanceSpecs for
+                      more reference.
+                    type: number
+                  oldIpReserveHours:
+                    description: Recycling time of the old address, must be filled
+                      in when modifying the vpcRecycling time of the old address,
+                      must be filled in when modifying the vpc. Recycling time of
+                      the old address, must be filled in when modifying the vpcRecycling
+                      time of the old address, must be filled in when modifying the
+                      vpc.
+                    type: number
+                  paramItems:
+                    description: Specify parameter list of database. It is valid when
+                      prarm_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params
+                      to query available parameter details. Specify parameter list
+                      of database. It is valid when prarm_template_id is set in create
+                      cluster. Use `data.tencentcloud_mysql_default_params` to query
+                      available parameter details.
+                    items:
+                      properties:
+                        currentValue:
+                          description: Param expected value to set. Param expected
+                            value to set.
+                          type: string
+                        name:
+                          description: Name of param, e.g. character_set_server. Name
+                            of param, e.g. `character_set_server`.
+                          type: string
+                        oldValue:
+                          description: Param old value, indicates the value which
+                            already set, this value is required when modifying current_value.
+                            Param old value, indicates the value which already set,
+                            this value is required when modifying current_value.
+                          type: string
+                      type: object
+                    type: array
+                  port:
+                    description: Port of CynosDB cluster. Port of CynosDB cluster.
+                    type: number
+                  prarmTemplateId:
+                    description: The ID of the parameter template. The ID of the parameter
+                      template.
+                    type: number
+                  prepaidPeriod:
+                    description: 'The tenancy (time unit is month) of the prepaid
+                      instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                      12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
+                      The tenancy (time unit is month) of the prepaid instance. Valid
+                      values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`,
+                      `11`, `12`, `24`, `36`. NOTE: it only works when charge_type
+                      is set to `PREPAID`.'
+                    type: number
+                  projectId:
+                    description: ID of the project. 0 by default. ID of the project.
+                      `0` by default.
                     type: number
                   roGroupAddr:
+                    description: 'Readonly addresses. Each element contains the following
+                      attributes: Readonly addresses. Each element contains the following
+                      attributes:'
                     items:
                       properties:
                         ip:
+                          description: IP address for readonly connection.
                           type: string
                         port:
+                          description: Port of CynosDB cluster.
                           type: number
                       type: object
                     type: array
                   roGroupId:
+                    description: ID of read-only instance group. ID of read-only instance
+                      group.
                     type: string
                   roGroupInstances:
+                    description: List of instances in the read-only instance group.
+                      List of instances in the read-only instance group.
                     items:
                       properties:
                         instanceId:
+                          description: ID of instance.
                           type: string
                         instanceName:
+                          description: Name of instance.
                           type: string
                       type: object
                     type: array
+                  roGroupSg:
+                    description: IDs of security group for ro_group. IDs of security
+                      group for `ro_group`.
+                    items:
+                      type: string
+                    type: array
                   rwGroupAddr:
+                    description: 'Read-write addresses. Each element contains the
+                      following attributes: Read-write addresses. Each element contains
+                      the following attributes:'
                     items:
                       properties:
                         ip:
+                          description: IP address for readonly connection.
                           type: string
                         port:
+                          description: Port of CynosDB cluster.
                           type: number
                       type: object
                     type: array
                   rwGroupId:
+                    description: ID of read-write instance group. ID of read-write
+                      instance group.
                     type: string
                   rwGroupInstances:
+                    description: List of instances in the read-write instance group.
+                      List of instances in the read-write instance group.
                     items:
                       properties:
                         instanceId:
+                          description: ID of instance.
                           type: string
                         instanceName:
+                          description: Name of instance.
                           type: string
                       type: object
                     type: array
+                  rwGroupSg:
+                    description: IDs of security group for rw_group. IDs of security
+                      group for `rw_group`.
+                    items:
+                      type: string
+                    type: array
                   serverlessStatus:
+                    description: 'Serverless cluster status. NOTE: This is a readonly
+                      attribute, to modify, please set serverless_status_flag. Serverless
+                      cluster status. NOTE: This is a readonly attribute, to modify,
+                      please set `serverless_status_flag`.'
                     type: string
-                  storageUsed:
+                  serverlessStatusFlag:
+                    description: 'Specify whether to pause or resume serverless cluster.
+                      values: resume, pause. Specify whether to pause or resume serverless
+                      cluster. values: `resume`, `pause`.'
+                    type: string
+                  storageLimit:
+                    description: 'Storage limit of CynosDB cluster instance, unit
+                      in GB. The maximum storage of a non-serverless instance in GB.
+                      NOTE: If db_type is MYSQL and charge_type is PREPAID, the value
+                      cannot exceed the maximum storage corresponding to the CPU and
+                      memory specifications, and the transaction mode is order and
+                      pay. when charge_type is POSTPAID_BY_HOUR, this argument is
+                      unnecessary. Storage limit of CynosDB cluster instance, unit
+                      in GB. The maximum storage of a non-serverless instance in GB.
+                      NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the
+                      value cannot exceed the maximum storage corresponding to the
+                      CPU and memory specifications, and the transaction mode is `order
+                      and pay`. when charge_type is `POSTPAID_BY_HOUR`, this argument
+                      is unnecessary.'
                     type: number
+                  storagePayMode:
+                    description: 'Cluster storage billing mode, pay-as-you-go: 0-yearly/monthly:
+                      1-The default is pay-as-you-go. When the DbType is MYSQL, when
+                      the cluster computing billing mode is post-paid (including DbMode
+                      is SERVERLESS), the storage billing mode can only be billing
+                      by volume; rollback and cloning do not support yearly subscriptions
+                      monthly storage. Cluster storage billing mode, pay-as-you-go:
+                      `0`-yearly/monthly: `1`-The default is pay-as-you-go. When the
+                      DbType is MYSQL, when the cluster computing billing mode is
+                      post-paid (including DbMode is SERVERLESS), the storage billing
+                      mode can only be billing by volume; rollback and cloning do
+                      not support yearly subscriptions monthly storage.'
+                    type: number
+                  storageUsed:
+                    description: Used storage of CynosDB cluster, unit in MB. Used
+                      storage of CynosDB cluster, unit in MB.
+                    type: number
+                  subnetId:
+                    description: ID of the subnet within this VPC. ID of the subnet
+                      within this VPC.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: The tags of the CynosDB cluster. The tags of the
+                      CynosDB cluster.
+                    type: object
+                  vpcId:
+                    description: ID of the VPC. ID of the VPC.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -663,6 +1216,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
@@ -671,9 +1227,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
