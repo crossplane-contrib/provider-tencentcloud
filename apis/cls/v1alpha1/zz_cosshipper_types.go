@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -124,6 +120,19 @@ type CosShipperInitParameters struct {
 	// Shipping rule name.
 	// Shipping rule name.
 	ShipperName *string `json:"shipperName,omitempty" tf:"shipper_name,omitempty"`
+
+	// ID of the log topic to which the shipping rule to be created belongs.
+	// ID of the log topic to which the shipping rule to be created belongs.
+	// +crossplane:generate:reference:type=Topic
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+
+	// Reference to a Topic to populate topicId.
+	// +kubebuilder:validation:Optional
+	TopicIDRef *v1.Reference `json:"topicIdRef,omitempty" tf:"-"`
+
+	// Selector for a Topic to populate topicId.
+	// +kubebuilder:validation:Optional
+	TopicIDSelector *v1.Selector `json:"topicIdSelector,omitempty" tf:"-"`
 }
 
 type CosShipperObservation struct {
@@ -246,6 +255,7 @@ type CsvInitParameters struct {
 
 	// Names of keys.Note: this field may return null, indicating that no valid values can be obtained.
 	// Names of keys.Note: this field may return null, indicating that no valid values can be obtained.
+	// +listType=set
 	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
 
 	// Content used to populate non-existing fields.
@@ -269,6 +279,7 @@ type CsvObservation struct {
 
 	// Names of keys.Note: this field may return null, indicating that no valid values can be obtained.
 	// Names of keys.Note: this field may return null, indicating that no valid values can be obtained.
+	// +listType=set
 	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
 
 	// Content used to populate non-existing fields.
@@ -295,6 +306,7 @@ type CsvParameters struct {
 	// Names of keys.Note: this field may return null, indicating that no valid values can be obtained.
 	// Names of keys.Note: this field may return null, indicating that no valid values can be obtained.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Keys []*string `json:"keys" tf:"keys,omitempty"`
 
 	// Content used to populate non-existing fields.
@@ -366,6 +378,7 @@ type JSONInitParameters struct {
 	// Note: this field may return null, indicating that no valid values can be obtained..
 	// Metadata information list
 	// Note: this field may return null, indicating that no valid values can be obtained..
+	// +listType=set
 	MetaFields []*string `json:"metaFields,omitempty" tf:"meta_fields,omitempty"`
 }
 
@@ -379,6 +392,7 @@ type JSONObservation struct {
 	// Note: this field may return null, indicating that no valid values can be obtained..
 	// Metadata information list
 	// Note: this field may return null, indicating that no valid values can be obtained..
+	// +listType=set
 	MetaFields []*string `json:"metaFields,omitempty" tf:"meta_fields,omitempty"`
 }
 
@@ -394,6 +408,7 @@ type JSONParameters struct {
 	// Metadata information list
 	// Note: this field may return null, indicating that no valid values can be obtained..
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	MetaFields []*string `json:"metaFields" tf:"meta_fields,omitempty"`
 }
 
@@ -421,13 +436,14 @@ type CosShipperStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // CosShipper is the Schema for the CosShippers API. Provides a resource to create a cls cos shipper.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type CosShipper struct {
 	metav1.TypeMeta   `json:",inline"`

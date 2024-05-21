@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,17 +17,32 @@ type BackupConfigInitParameters struct {
 
 	// It has been deprecated from version 1.58.2. It makes no difference to online config at all Specifys which day the backup action should take place. Valid values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.
 	// Specifys which day the backup action should take place. Valid values: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday` and `Sunday`.
+	// +listType=set
 	BackupPeriod []*string `json:"backupPeriod,omitempty" tf:"backup_period,omitempty"`
 
 	// Specifys what time the backup action should take place. And the time interval should be one hour.
 	// Specifys what time the backup action should take place. And the time interval should be one hour.
 	BackupTime *string `json:"backupTime,omitempty" tf:"backup_time,omitempty"`
+
+	// ID of a redis instance to which the policy will be applied.
+	// ID of a redis instance to which the policy will be applied.
+	// +crossplane:generate:reference:type=Instance
+	RedisID *string `json:"redisId,omitempty" tf:"redis_id,omitempty"`
+
+	// Reference to a Instance to populate redisId.
+	// +kubebuilder:validation:Optional
+	RedisIDRef *v1.Reference `json:"redisIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate redisId.
+	// +kubebuilder:validation:Optional
+	RedisIDSelector *v1.Selector `json:"redisIdSelector,omitempty" tf:"-"`
 }
 
 type BackupConfigObservation struct {
 
 	// It has been deprecated from version 1.58.2. It makes no difference to online config at all Specifys which day the backup action should take place. Valid values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.
 	// Specifys which day the backup action should take place. Valid values: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday` and `Sunday`.
+	// +listType=set
 	BackupPeriod []*string `json:"backupPeriod,omitempty" tf:"backup_period,omitempty"`
 
 	// Specifys what time the backup action should take place. And the time interval should be one hour.
@@ -51,6 +62,7 @@ type BackupConfigParameters struct {
 	// It has been deprecated from version 1.58.2. It makes no difference to online config at all Specifys which day the backup action should take place. Valid values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.
 	// Specifys which day the backup action should take place. Valid values: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday` and `Sunday`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	BackupPeriod []*string `json:"backupPeriod,omitempty" tf:"backup_period,omitempty"`
 
 	// Specifys what time the backup action should take place. And the time interval should be one hour.
@@ -97,13 +109,14 @@ type BackupConfigStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // BackupConfig is the Schema for the BackupConfigs API. Use this resource to create a backup config of redis.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type BackupConfig struct {
 	metav1.TypeMeta   `json:",inline"`

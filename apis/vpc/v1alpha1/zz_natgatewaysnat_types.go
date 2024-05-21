@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -46,6 +42,19 @@ type NatGatewaySnatInitParameters struct {
 	// The IPv4 CIDR of the subnet, required when resource_type is SUBNET.
 	// The IPv4 CIDR of the subnet, required when `resource_type` is SUBNET.
 	SubnetCidrBlock *string `json:"subnetCidrBlock,omitempty" tf:"subnet_cidr_block,omitempty"`
+
+	// Subnet instance ID, required when resource_type is SUBNET.
+	// Subnet instance ID, required when `resource_type` is SUBNET.
+	// +crossplane:generate:reference:type=Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type NatGatewaySnatObservation struct {
@@ -170,13 +179,14 @@ type NatGatewaySnatStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // NatGatewaySnat is the Schema for the NatGatewaySnats API. Provides a resource to create a NAT Gateway SNat rule.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type NatGatewaySnat struct {
 	metav1.TypeMeta   `json:",inline"`

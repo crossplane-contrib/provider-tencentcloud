@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,12 +15,27 @@ import (
 
 type GroupMembershipInitParameters struct {
 
+	// ID of CAM group.
+	// ID of CAM group.
+	// +crossplane:generate:reference:type=Group
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Reference to a Group to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
+
 	// It has been deprecated from version 1.59.5. Use user_names instead. ID set of the CAM group members.
 	// ID set of the CAM group members.
+	// +listType=set
 	UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 
 	// User name set as ID of the CAM group members.
 	// User name set as ID of the CAM group members.
+	// +listType=set
 	UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
 }
 
@@ -39,10 +50,12 @@ type GroupMembershipObservation struct {
 
 	// It has been deprecated from version 1.59.5. Use user_names instead. ID set of the CAM group members.
 	// ID set of the CAM group members.
+	// +listType=set
 	UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 
 	// User name set as ID of the CAM group members.
 	// User name set as ID of the CAM group members.
+	// +listType=set
 	UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
 }
 
@@ -65,11 +78,13 @@ type GroupMembershipParameters struct {
 	// It has been deprecated from version 1.59.5. Use user_names instead. ID set of the CAM group members.
 	// ID set of the CAM group members.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	UserIds []*string `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 
 	// User name set as ID of the CAM group members.
 	// User name set as ID of the CAM group members.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	UserNames []*string `json:"userNames,omitempty" tf:"user_names,omitempty"`
 }
 
@@ -97,13 +112,14 @@ type GroupMembershipStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // GroupMembership is the Schema for the GroupMemberships API. Provides a resource to create a CAM group membership.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type GroupMembership struct {
 	metav1.TypeMeta   `json:",inline"`

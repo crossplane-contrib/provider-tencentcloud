@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type ClusterEndpointInitParameters struct {
+
+	// Specify cluster ID.
+	// Specify cluster ID.
+	// +crossplane:generate:reference:type=Cluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// Open internet access or not.
 	// Open internet access or not.
@@ -38,6 +47,19 @@ type ClusterEndpointInitParameters struct {
 	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
 	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
 	ClusterIntranetDomain *string `json:"clusterIntranetDomain,omitempty" tf:"cluster_intranet_domain,omitempty"`
+
+	// Subnet id who can access this independent cluster, this field must and can only set  when cluster_intranet is true. cluster_intranet_subnet_id can not modify once be set.
+	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	ClusterIntranetSubnetID *string `json:"clusterIntranetSubnetId,omitempty" tf:"cluster_intranet_subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate clusterIntranetSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSubnetIDRef *v1.Reference `json:"clusterIntranetSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate clusterIntranetSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSubnetIDSelector *v1.Selector `json:"clusterIntranetSubnetIdSelector,omitempty" tf:"-"`
 
 	// The LB parameter. Only used for public network access.
 	// The LB parameter. Only used for public network access.
@@ -204,13 +226,14 @@ type ClusterEndpointStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClusterEndpoint is the Schema for the ClusterEndpoints API. Provide a resource to create a KubernetesClusterEndpoint. This resource allows you to create an empty cluster first without any workers. Only all attached node depends create complete, cluster endpoint will finally be enabled.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ClusterEndpoint struct {
 	metav1.TypeMeta   `json:",inline"`

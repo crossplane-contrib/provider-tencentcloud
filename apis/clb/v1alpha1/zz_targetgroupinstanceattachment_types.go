@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -26,6 +22,19 @@ type TargetGroupInstanceAttachmentInitParameters struct {
 	// Port of the target group instance.
 	// Port of the target group instance.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Target group ID.
+	// Target group ID.
+	// +crossplane:generate:reference:type=TargetGroup
+	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
+
+	// Reference to a TargetGroup to populate targetGroupId.
+	// +kubebuilder:validation:Optional
+	TargetGroupIDRef *v1.Reference `json:"targetGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a TargetGroup to populate targetGroupId.
+	// +kubebuilder:validation:Optional
+	TargetGroupIDSelector *v1.Selector `json:"targetGroupIdSelector,omitempty" tf:"-"`
 
 	// The weight of the target group instance.
 	// The weight of the target group instance.
@@ -110,13 +119,14 @@ type TargetGroupInstanceAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TargetGroupInstanceAttachment is the Schema for the TargetGroupInstanceAttachments API. Provides a resource to create a CLB target group instance attachment.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type TargetGroupInstanceAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

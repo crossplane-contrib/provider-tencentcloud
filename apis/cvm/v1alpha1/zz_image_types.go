@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,6 +17,7 @@ type ImageInitParameters struct {
 
 	// Cloud disk ID list, When creating a whole machine image based on an instance, specify the data disk ID contained in the image.
 	// Cloud disk ID list, When creating a whole machine image based on an instance, specify the data disk ID contained in the image.
+	// +listType=set
 	DataDiskIds []*string `json:"dataDiskIds,omitempty" tf:"data_disk_ids,omitempty"`
 
 	// Set whether to force shutdown during mirroring. The default value is false, when set to true, it means that the mirror will be made after shutdown.
@@ -41,6 +38,7 @@ type ImageInitParameters struct {
 
 	// Cloud disk snapshot ID list; creating a mirror based on a snapshot must include a system disk snapshot. It cannot be passed in simultaneously with InstanceId.
 	// Cloud disk snapshot ID list; creating a mirror based on a snapshot must include a system disk snapshot. It cannot be passed in simultaneously with InstanceId.
+	// +listType=set
 	SnapshotIds []*string `json:"snapshotIds,omitempty" tf:"snapshot_ids,omitempty"`
 
 	// Sysprep function under Windows. When creating a Windows image, you can select true or false to enable or disable the Syspre function.
@@ -49,6 +47,7 @@ type ImageInitParameters struct {
 
 	// Tags of the image.
 	// Tags of the image.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -56,6 +55,7 @@ type ImageObservation struct {
 
 	// Cloud disk ID list, When creating a whole machine image based on an instance, specify the data disk ID contained in the image.
 	// Cloud disk ID list, When creating a whole machine image based on an instance, specify the data disk ID contained in the image.
+	// +listType=set
 	DataDiskIds []*string `json:"dataDiskIds,omitempty" tf:"data_disk_ids,omitempty"`
 
 	// Set whether to force shutdown during mirroring. The default value is false, when set to true, it means that the mirror will be made after shutdown.
@@ -79,6 +79,7 @@ type ImageObservation struct {
 
 	// Cloud disk snapshot ID list; creating a mirror based on a snapshot must include a system disk snapshot. It cannot be passed in simultaneously with InstanceId.
 	// Cloud disk snapshot ID list; creating a mirror based on a snapshot must include a system disk snapshot. It cannot be passed in simultaneously with InstanceId.
+	// +listType=set
 	SnapshotIds []*string `json:"snapshotIds,omitempty" tf:"snapshot_ids,omitempty"`
 
 	// Sysprep function under Windows. When creating a Windows image, you can select true or false to enable or disable the Syspre function.
@@ -87,6 +88,7 @@ type ImageObservation struct {
 
 	// Tags of the image.
 	// Tags of the image.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -95,6 +97,7 @@ type ImageParameters struct {
 	// Cloud disk ID list, When creating a whole machine image based on an instance, specify the data disk ID contained in the image.
 	// Cloud disk ID list, When creating a whole machine image based on an instance, specify the data disk ID contained in the image.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	DataDiskIds []*string `json:"dataDiskIds,omitempty" tf:"data_disk_ids,omitempty"`
 
 	// Set whether to force shutdown during mirroring. The default value is false, when set to true, it means that the mirror will be made after shutdown.
@@ -120,6 +123,7 @@ type ImageParameters struct {
 	// Cloud disk snapshot ID list; creating a mirror based on a snapshot must include a system disk snapshot. It cannot be passed in simultaneously with InstanceId.
 	// Cloud disk snapshot ID list; creating a mirror based on a snapshot must include a system disk snapshot. It cannot be passed in simultaneously with InstanceId.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SnapshotIds []*string `json:"snapshotIds,omitempty" tf:"snapshot_ids,omitempty"`
 
 	// Sysprep function under Windows. When creating a Windows image, you can select true or false to enable or disable the Syspre function.
@@ -130,6 +134,7 @@ type ImageParameters struct {
 	// Tags of the image.
 	// Tags of the image.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -157,13 +162,14 @@ type ImageStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Image is the Schema for the Images API. Provide a resource to manage image.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Image struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -30,6 +26,32 @@ type RouteEntryInitParameters struct {
 	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
 	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
+
+	// The ID of the route table.
+	// The ID of the route table.
+	// +crossplane:generate:reference:type=RouteTable
+	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+
+	// The VPC ID.
+	// The VPC ID.
+	// +crossplane:generate:reference:type=VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 type RouteEntryObservation struct {
@@ -128,13 +150,14 @@ type RouteEntryStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // RouteEntry is the Schema for the RouteEntrys API. Provides a resource to create a routing entry in a VPC routing table.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type RouteEntry struct {
 	metav1.TypeMeta   `json:",inline"`

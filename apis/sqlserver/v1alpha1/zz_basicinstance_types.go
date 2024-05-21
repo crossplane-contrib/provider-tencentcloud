@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -61,6 +57,7 @@ type BasicInstanceInitParameters struct {
 
 	// A list of integer indicates weekly maintenance. For example, [1,7] presents do weekly maintenance on every Monday and Sunday.
 	// A list of integer indicates weekly maintenance. For example, [1,7] presents do weekly maintenance on every Monday and Sunday.
+	// +listType=set
 	MaintenanceWeekSet []*float64 `json:"maintenanceWeekSet,omitempty" tf:"maintenance_week_set,omitempty"`
 
 	// Memory size (in GB). Allowed value must be larger than memory that data source tencentcloud_sqlserver_specinfos provides.
@@ -81,18 +78,47 @@ type BasicInstanceInitParameters struct {
 
 	// Security group bound to the instance.
 	// Security group bound to the instance.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_sqlserver_specinfos provides.
 	// Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_sqlserver_specinfos` provides.
 	Storage *float64 `json:"storage,omitempty" tf:"storage,omitempty"`
 
+	// ID of subnet.
+	// ID of subnet.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// The tags of the SQL Server basic instance.
 	// The tags of the SQL Server basic instance.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of VPC.
+	// ID of VPC.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
 	// An array of voucher IDs, currently only one can be used for a single order.
 	// An array of voucher IDs, currently only one can be used for a single order.
+	// +listType=set
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
 }
 
@@ -147,6 +173,7 @@ type BasicInstanceObservation struct {
 
 	// A list of integer indicates weekly maintenance. For example, [1,7] presents do weekly maintenance on every Monday and Sunday.
 	// A list of integer indicates weekly maintenance. For example, [1,7] presents do weekly maintenance on every Monday and Sunday.
+	// +listType=set
 	MaintenanceWeekSet []*float64 `json:"maintenanceWeekSet,omitempty" tf:"maintenance_week_set,omitempty"`
 
 	// Memory size (in GB). Allowed value must be larger than memory that data source tencentcloud_sqlserver_specinfos provides.
@@ -167,6 +194,7 @@ type BasicInstanceObservation struct {
 
 	// Security group bound to the instance.
 	// Security group bound to the instance.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Status of the SQL Server basic instance. 1 for applying, 2 for running, 3 for running with limit, 4 for isolated, 5 for recycling, 6 for recycled, 7 for running with task, 8 for off-line, 9 for expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
@@ -183,6 +211,7 @@ type BasicInstanceObservation struct {
 
 	// The tags of the SQL Server basic instance.
 	// The tags of the SQL Server basic instance.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of VPC.
@@ -195,6 +224,7 @@ type BasicInstanceObservation struct {
 
 	// An array of voucher IDs, currently only one can be used for a single order.
 	// An array of voucher IDs, currently only one can be used for a single order.
+	// +listType=set
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
 
 	// Port for private access.
@@ -257,6 +287,7 @@ type BasicInstanceParameters struct {
 	// A list of integer indicates weekly maintenance. For example, [1,7] presents do weekly maintenance on every Monday and Sunday.
 	// A list of integer indicates weekly maintenance. For example, [1,7] presents do weekly maintenance on every Monday and Sunday.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	MaintenanceWeekSet []*float64 `json:"maintenanceWeekSet,omitempty" tf:"maintenance_week_set,omitempty"`
 
 	// Memory size (in GB). Allowed value must be larger than memory that data source tencentcloud_sqlserver_specinfos provides.
@@ -282,6 +313,7 @@ type BasicInstanceParameters struct {
 	// Security group bound to the instance.
 	// Security group bound to the instance.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_sqlserver_specinfos provides.
@@ -306,6 +338,7 @@ type BasicInstanceParameters struct {
 	// The tags of the SQL Server basic instance.
 	// The tags of the SQL Server basic instance.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of VPC.
@@ -325,6 +358,7 @@ type BasicInstanceParameters struct {
 	// An array of voucher IDs, currently only one can be used for a single order.
 	// An array of voucher IDs, currently only one can be used for a single order.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
 }
 
@@ -352,13 +386,14 @@ type BasicInstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // BasicInstance is the Schema for the BasicInstances API. Provides a SQL Server instance resource to create basic database instances.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type BasicInstance struct {
 	metav1.TypeMeta   `json:",inline"`

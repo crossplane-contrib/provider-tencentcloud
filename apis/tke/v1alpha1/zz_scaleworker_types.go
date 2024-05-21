@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -95,18 +91,22 @@ type ScaleWorkerGpuArgsInitParameters struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -118,18 +118,22 @@ type ScaleWorkerGpuArgsObservation struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -142,21 +146,25 @@ type ScaleWorkerGpuArgsParameters struct {
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -166,6 +174,19 @@ type ScaleWorkerGpuArgsParameters struct {
 }
 
 type ScaleWorkerInitParameters struct {
+
+	// ID of the cluster.
+	// ID of the cluster.
+	// +crossplane:generate:reference:type=Cluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// Configurations of data disk.
 	// Configurations of data disk.
@@ -189,6 +210,7 @@ type ScaleWorkerInitParameters struct {
 
 	// Labels of kubernetes scale worker created nodes.
 	// Labels of kubernetes scale worker created nodes.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Mount target. Default is not mounting.
@@ -235,6 +257,7 @@ type ScaleWorkerObservation struct {
 
 	// Labels of kubernetes scale worker created nodes.
 	// Labels of kubernetes scale worker created nodes.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Mount target. Default is not mounting.
@@ -298,6 +321,7 @@ type ScaleWorkerParameters struct {
 	// Labels of kubernetes scale worker created nodes.
 	// Labels of kubernetes scale worker created nodes.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Mount target. Default is not mounting.
@@ -842,13 +866,14 @@ type ScaleWorkerStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ScaleWorker is the Schema for the ScaleWorkers API. Provide a resource to increase instance to cluster
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ScaleWorker struct {
 	metav1.TypeMeta   `json:",inline"`

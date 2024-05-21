@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -25,7 +21,21 @@ type GrafanaNotificationChannelInitParameters struct {
 
 	// extra grafana organization id list, default to 1 representing Main Org.
 	// extra grafana organization id list, default to 1 representing Main Org.
+	// +listType=set
 	ExtraOrgIds []*string `json:"extraOrgIds,omitempty" tf:"extra_org_ids,omitempty"`
+
+	// grafana instance id.
+	// grafana instance id.
+	// +crossplane:generate:reference:type=GrafanaInstance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a GrafanaInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a GrafanaInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// Grafana organization which channel will be installed, default to 1 representing Main Org.
 	// Grafana organization which channel will be installed, default to 1 representing Main Org.
@@ -33,6 +43,7 @@ type GrafanaNotificationChannelInitParameters struct {
 
 	// cloud monitor notification template notice-id list.
 	// cloud monitor notification template notice-id list.
+	// +listType=set
 	Receivers []*string `json:"receivers,omitempty" tf:"receivers,omitempty"`
 }
 
@@ -48,6 +59,7 @@ type GrafanaNotificationChannelObservation struct {
 
 	// extra grafana organization id list, default to 1 representing Main Org.
 	// extra grafana organization id list, default to 1 representing Main Org.
+	// +listType=set
 	ExtraOrgIds []*string `json:"extraOrgIds,omitempty" tf:"extra_org_ids,omitempty"`
 
 	// ID of the resource.
@@ -63,6 +75,7 @@ type GrafanaNotificationChannelObservation struct {
 
 	// cloud monitor notification template notice-id list.
 	// cloud monitor notification template notice-id list.
+	// +listType=set
 	Receivers []*string `json:"receivers,omitempty" tf:"receivers,omitempty"`
 }
 
@@ -76,6 +89,7 @@ type GrafanaNotificationChannelParameters struct {
 	// extra grafana organization id list, default to 1 representing Main Org.
 	// extra grafana organization id list, default to 1 representing Main Org.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ExtraOrgIds []*string `json:"extraOrgIds,omitempty" tf:"extra_org_ids,omitempty"`
 
 	// grafana instance id.
@@ -100,6 +114,7 @@ type GrafanaNotificationChannelParameters struct {
 	// cloud monitor notification template notice-id list.
 	// cloud monitor notification template notice-id list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Receivers []*string `json:"receivers,omitempty" tf:"receivers,omitempty"`
 }
 
@@ -127,13 +142,14 @@ type GrafanaNotificationChannelStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // GrafanaNotificationChannel is the Schema for the GrafanaNotificationChannels API. Provides a resource to create a monitor grafanaNotificationChannel
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type GrafanaNotificationChannel struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -159,6 +155,7 @@ type EmrClusterInitParameters struct {
 
 	// It will be deprecated in later versions. Use placement_info instead. The location of the instance.
 	// The location of the instance.
+	// +mapType=granular
 	Placement map[string]*string `json:"placement,omitempty" tf:"placement,omitempty"`
 
 	// The location of the instance.
@@ -191,6 +188,7 @@ type EmrClusterInitParameters struct {
 
 	// The softwares of a EMR instance.
 	// The softwares of a EMR instance.
+	// +listType=set
 	Softwares []*string `json:"softwares,omitempty" tf:"softwares,omitempty"`
 
 	// The flag whether the instance support high availability.(0=>not support, 1=>support).
@@ -199,6 +197,7 @@ type EmrClusterInitParameters struct {
 
 	// Tag description list.
 	// Tag description list.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
@@ -213,6 +212,7 @@ type EmrClusterInitParameters struct {
 
 	// The private net config of EMR instance.
 	// The private net config of EMR instance.
+	// +mapType=granular
 	VPCSettings map[string]*string `json:"vpcSettings,omitempty" tf:"vpc_settings,omitempty"`
 }
 
@@ -253,6 +253,7 @@ type EmrClusterObservation struct {
 
 	// It will be deprecated in later versions. Use placement_info instead. The location of the instance.
 	// The location of the instance.
+	// +mapType=granular
 	Placement map[string]*string `json:"placement,omitempty" tf:"placement,omitempty"`
 
 	// The location of the instance.
@@ -285,6 +286,7 @@ type EmrClusterObservation struct {
 
 	// The softwares of a EMR instance.
 	// The softwares of a EMR instance.
+	// +listType=set
 	Softwares []*string `json:"softwares,omitempty" tf:"softwares,omitempty"`
 
 	// The flag whether the instance support high availability.(0=>not support, 1=>support).
@@ -293,6 +295,7 @@ type EmrClusterObservation struct {
 
 	// Tag description list.
 	// Tag description list.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
@@ -307,6 +310,7 @@ type EmrClusterObservation struct {
 
 	// The private net config of EMR instance.
 	// The private net config of EMR instance.
+	// +mapType=granular
 	VPCSettings map[string]*string `json:"vpcSettings,omitempty" tf:"vpc_settings,omitempty"`
 }
 
@@ -351,6 +355,7 @@ type EmrClusterParameters struct {
 	// It will be deprecated in later versions. Use placement_info instead. The location of the instance.
 	// The location of the instance.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Placement map[string]*string `json:"placement,omitempty" tf:"placement,omitempty"`
 
 	// The location of the instance.
@@ -388,6 +393,7 @@ type EmrClusterParameters struct {
 	// The softwares of a EMR instance.
 	// The softwares of a EMR instance.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Softwares []*string `json:"softwares,omitempty" tf:"softwares,omitempty"`
 
 	// The flag whether the instance support high availability.(0=>not support, 1=>support).
@@ -398,6 +404,7 @@ type EmrClusterParameters struct {
 	// Tag description list.
 	// Tag description list.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
@@ -415,6 +422,7 @@ type EmrClusterParameters struct {
 	// The private net config of EMR instance.
 	// The private net config of EMR instance.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	VPCSettings map[string]*string `json:"vpcSettings,omitempty" tf:"vpc_settings,omitempty"`
 }
 
@@ -678,13 +686,14 @@ type EmrClusterStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // EmrCluster is the Schema for the EmrClusters API. Provide a resource to create a emr cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type EmrCluster struct {
 	metav1.TypeMeta   `json:",inline"`

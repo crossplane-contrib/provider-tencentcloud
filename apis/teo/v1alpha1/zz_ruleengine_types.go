@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -110,6 +106,7 @@ type ActionsNormalActionParametersInitParameters struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -121,6 +118,7 @@ type ActionsNormalActionParametersObservation struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -134,6 +132,7 @@ type ActionsNormalActionParametersParameters struct {
 	// Condition Value.
 	// Parameter Values.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -217,6 +216,7 @@ type ActionsRewriteActionParametersInitParameters struct {
 
 	// Condition Value.
 	// Parameter Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -232,6 +232,7 @@ type ActionsRewriteActionParametersObservation struct {
 
 	// Condition Value.
 	// Parameter Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -250,6 +251,7 @@ type ActionsRewriteActionParametersParameters struct {
 	// Condition Value.
 	// Parameter Value.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -273,6 +275,7 @@ type AndInitParameters struct {
 
 	// Condition Value.
 	// Condition Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -296,6 +299,7 @@ type AndObservation struct {
 
 	// Condition Value.
 	// Condition Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -324,6 +328,7 @@ type AndParameters struct {
 	// Condition Value.
 	// Condition Value.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -374,6 +379,7 @@ type CodeActionParametersInitParameters struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -389,6 +395,7 @@ type CodeActionParametersObservation struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -407,6 +414,7 @@ type CodeActionParametersParameters struct {
 	// Condition Value.
 	// Parameter Values.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -453,6 +461,7 @@ type NormalActionParametersInitParameters struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -464,6 +473,7 @@ type NormalActionParametersObservation struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -477,6 +487,7 @@ type NormalActionParametersParameters struct {
 	// Condition Value.
 	// Parameter Values.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -500,6 +511,7 @@ type OrAndInitParameters struct {
 
 	// Condition Value.
 	// Condition Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -523,6 +535,7 @@ type OrAndObservation struct {
 
 	// Condition Value.
 	// Condition Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -551,6 +564,7 @@ type OrAndParameters struct {
 	// Condition Value.
 	// Condition Value.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -588,6 +602,7 @@ type ParametersInitParameters struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -603,6 +618,7 @@ type ParametersObservation struct {
 
 	// Condition Value.
 	// Parameter Values.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -621,6 +637,7 @@ type ParametersParameters struct {
 	// Condition Value.
 	// Parameter Values.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -671,6 +688,7 @@ type RewriteActionParametersInitParameters struct {
 
 	// Condition Value.
 	// Parameter Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -686,6 +704,7 @@ type RewriteActionParametersObservation struct {
 
 	// Condition Value.
 	// Parameter Value.
+	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
@@ -704,6 +723,7 @@ type RewriteActionParametersParameters struct {
 	// Condition Value.
 	// Parameter Value.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
 }
 
@@ -723,7 +743,21 @@ type RuleEngineInitParameters struct {
 
 	// rule tag list.
 	// rule tag list.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of the site.
+	// ID of the site.
+	// +crossplane:generate:reference:type=Zone
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type RuleEngineObservation struct {
@@ -749,6 +783,7 @@ type RuleEngineObservation struct {
 
 	// rule tag list.
 	// rule tag list.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the site.
@@ -776,6 +811,7 @@ type RuleEngineParameters struct {
 	// rule tag list.
 	// rule tag list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the site.
@@ -919,6 +955,7 @@ type SubRulesInitParameters struct {
 
 	// rule tag list.
 	// rule tag list.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -930,6 +967,7 @@ type SubRulesObservation struct {
 
 	// rule tag list.
 	// rule tag list.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -943,6 +981,7 @@ type SubRulesParameters struct {
 	// rule tag list.
 	// rule tag list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -1005,13 +1044,14 @@ type RuleEngineStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // RuleEngine is the Schema for the RuleEngines API. Provides a resource to create a teo rule_engine
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type RuleEngine struct {
 	metav1.TypeMeta   `json:",inline"`

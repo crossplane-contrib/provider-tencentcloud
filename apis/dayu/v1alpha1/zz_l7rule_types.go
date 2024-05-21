@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -73,6 +69,7 @@ type L7RuleInitParameters struct {
 
 	// Source list of the rule, it can be a set of ip sources or a set of domain sources. The number of items ranges from 1 to 16.
 	// Source list of the rule, it can be a set of ip sources or a set of domain sources. The number of items ranges from 1 to 16.
+	// +listType=set
 	SourceList []*string `json:"sourceList,omitempty" tf:"source_list,omitempty"`
 
 	// Source type, 1 for source of host, 2 for source of IP.
@@ -147,6 +144,7 @@ type L7RuleObservation struct {
 
 	// Source list of the rule, it can be a set of ip sources or a set of domain sources. The number of items ranges from 1 to 16.
 	// Source list of the rule, it can be a set of ip sources or a set of domain sources. The number of items ranges from 1 to 16.
+	// +listType=set
 	SourceList []*string `json:"sourceList,omitempty" tf:"source_list,omitempty"`
 
 	// Source type, 1 for source of host, 2 for source of IP.
@@ -232,6 +230,7 @@ type L7RuleParameters struct {
 	// Source list of the rule, it can be a set of ip sources or a set of domain sources. The number of items ranges from 1 to 16.
 	// Source list of the rule, it can be a set of ip sources or a set of domain sources. The number of items ranges from 1 to 16.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SourceList []*string `json:"sourceList,omitempty" tf:"source_list,omitempty"`
 
 	// Source type, 1 for source of host, 2 for source of IP.
@@ -269,13 +268,14 @@ type L7RuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // L7Rule is the Schema for the L7Rules API. Use this resource to create dayu layer 7 rule
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type L7Rule struct {
 	metav1.TypeMeta   `json:",inline"`

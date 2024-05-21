@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type VPVAclAttachmentInitParameters struct {
+
+	// ID of the attached ACL.
+	// ID of the attached ACL.
+	// +crossplane:generate:reference:type=VPCAcl
+	ACLID *string `json:"aclId,omitempty" tf:"acl_id,omitempty"`
+
+	// Reference to a VPCAcl to populate aclId.
+	// +kubebuilder:validation:Optional
+	ACLIDRef *v1.Reference `json:"aclIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPCAcl to populate aclId.
+	// +kubebuilder:validation:Optional
+	ACLIDSelector *v1.Selector `json:"aclIdSelector,omitempty" tf:"-"`
+
+	// The Subnet instance ID.
+	// The Subnet instance ID.
+	// +crossplane:generate:reference:type=Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type VPVAclAttachmentObservation struct {
@@ -89,13 +111,14 @@ type VPVAclAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VPVAclAttachment is the Schema for the VPVAclAttachments API. Provide a resource to attach an existing subnet to Network ACL.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type VPVAclAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

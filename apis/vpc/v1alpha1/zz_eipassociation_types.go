@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type EipAssociationInitParameters struct {
+
+	// The ID of EIP.
+	// The ID of EIP.
+	// +crossplane:generate:reference:type=Eip
+	EIPID *string `json:"eipId,omitempty" tf:"eip_id,omitempty"`
+
+	// Reference to a Eip to populate eipId.
+	// +kubebuilder:validation:Optional
+	EIPIDRef *v1.Reference `json:"eipIdRef,omitempty" tf:"-"`
+
+	// Selector for a Eip to populate eipId.
+	// +kubebuilder:validation:Optional
+	EIPIDSelector *v1.Selector `json:"eipIdSelector,omitempty" tf:"-"`
 
 	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with network_interface_id and private_ip fields.
 	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with `network_interface_id` and `private_ip fields`.
@@ -110,13 +119,14 @@ type EipAssociationStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // EipAssociation is the Schema for the EipAssociations API. Provides an eip resource associated with other resource like CVM, ENI and CLB.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type EipAssociation struct {
 	metav1.TypeMeta   `json:",inline"`

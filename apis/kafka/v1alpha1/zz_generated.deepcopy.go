@@ -48,6 +48,21 @@ func (in *AclInitParameters) DeepCopyInto(out *AclInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceID != nil {
+		in, out := &in.InstanceID, &out.InstanceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.OperationType != nil {
 		in, out := &in.OperationType, &out.OperationType
 		*out = new(string)
@@ -586,6 +601,21 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TagSet != nil {
 		in, out := &in.TagSet, &out.TagSet
 		*out = make(map[string]*string, len(*in))
@@ -613,6 +643,21 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		in, out := &in.UpgradeStrategy, &out.UpgradeStrategy
 		*out = new(float64)
 		**out = **in
+	}
+	if in.VPCID != nil {
+		in, out := &in.VPCID, &out.VPCID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCIDRef != nil {
+		in, out := &in.VPCIDRef, &out.VPCIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VPCIDSelector != nil {
+		in, out := &in.VPCIDSelector, &out.VPCIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
@@ -1196,6 +1241,21 @@ func (in *TopicInitParameters) DeepCopyInto(out *TopicInitParameters) {
 			}
 		}
 	}
+	if in.InstanceID != nil {
+		in, out := &in.InstanceID, &out.InstanceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.MaxMessageBytes != nil {
 		in, out := &in.MaxMessageBytes, &out.MaxMessageBytes
 		*out = new(float64)
@@ -1571,6 +1631,21 @@ func (in *UserInitParameters) DeepCopyInto(out *UserInitParameters) {
 		in, out := &in.AccountName, &out.AccountName
 		*out = new(string)
 		**out = **in
+	}
+	if in.InstanceID != nil {
+		in, out := &in.InstanceID, &out.InstanceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

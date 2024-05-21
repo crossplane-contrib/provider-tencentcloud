@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -75,6 +71,7 @@ type AlarmNoticeObservation struct {
 
 	// List of alarm policy IDs bound to the alarm notification template.
 	// List of alarm policy IDs bound to the alarm notification template.
+	// +listType=set
 	PolicyIds []*string `json:"policyIds,omitempty" tf:"policy_ids,omitempty"`
 
 	// The maximum number of callback notifications is 3.
@@ -212,6 +209,7 @@ type URLNoticesInitParameters struct {
 
 	// Notification period 1-7 indicates Monday to Sunday.
 	// Notification period 1-7 indicates Monday to Sunday.
+	// +listType=set
 	Weekday []*float64 `json:"weekday,omitempty" tf:"weekday,omitempty"`
 }
 
@@ -239,6 +237,7 @@ type URLNoticesObservation struct {
 
 	// Notification period 1-7 indicates Monday to Sunday.
 	// Notification period 1-7 indicates Monday to Sunday.
+	// +listType=set
 	Weekday []*float64 `json:"weekday,omitempty" tf:"weekday,omitempty"`
 }
 
@@ -272,6 +271,7 @@ type URLNoticesParameters struct {
 	// Notification period 1-7 indicates Monday to Sunday.
 	// Notification period 1-7 indicates Monday to Sunday.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Weekday []*float64 `json:"weekday,omitempty" tf:"weekday,omitempty"`
 }
 
@@ -283,6 +283,7 @@ type UserNoticesInitParameters struct {
 
 	// User group ID list.
 	// User group ID list.
+	// +listType=set
 	GroupIds []*float64 `json:"groupIds,omitempty" tf:"group_ids,omitempty"`
 
 	// Contact notification required 0= No 1= Yes.
@@ -291,6 +292,7 @@ type UserNoticesInitParameters struct {
 
 	// Notification Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
 	// Notification Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
+	// +listType=set
 	NoticeWay []*string `json:"noticeWay,omitempty" tf:"notice_way,omitempty"`
 
 	// Call type SYNC= Simultaneous call CIRCLE= Round call If this parameter is not specified, the default value is round call.
@@ -311,6 +313,7 @@ type UserNoticesInitParameters struct {
 
 	// Telephone polling list.
 	// Telephone polling list.
+	// +listType=set
 	PhoneOrder []*float64 `json:"phoneOrder,omitempty" tf:"phone_order,omitempty"`
 
 	// Recipient Type USER=User GROUP=User Group.
@@ -323,10 +326,12 @@ type UserNoticesInitParameters struct {
 
 	// User UID List.
 	// User UID List.
+	// +listType=set
 	UserIds []*float64 `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 
 	// Notification period 1-7 indicates Monday to Sunday.
 	// Notification period 1-7 indicates Monday to Sunday.
+	// +listType=set
 	Weekday []*float64 `json:"weekday,omitempty" tf:"weekday,omitempty"`
 }
 
@@ -338,6 +343,7 @@ type UserNoticesObservation struct {
 
 	// User group ID list.
 	// User group ID list.
+	// +listType=set
 	GroupIds []*float64 `json:"groupIds,omitempty" tf:"group_ids,omitempty"`
 
 	// Contact notification required 0= No 1= Yes.
@@ -346,6 +352,7 @@ type UserNoticesObservation struct {
 
 	// Notification Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
 	// Notification Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
+	// +listType=set
 	NoticeWay []*string `json:"noticeWay,omitempty" tf:"notice_way,omitempty"`
 
 	// Call type SYNC= Simultaneous call CIRCLE= Round call If this parameter is not specified, the default value is round call.
@@ -366,6 +373,7 @@ type UserNoticesObservation struct {
 
 	// Telephone polling list.
 	// Telephone polling list.
+	// +listType=set
 	PhoneOrder []*float64 `json:"phoneOrder,omitempty" tf:"phone_order,omitempty"`
 
 	// Recipient Type USER=User GROUP=User Group.
@@ -378,10 +386,12 @@ type UserNoticesObservation struct {
 
 	// User UID List.
 	// User UID List.
+	// +listType=set
 	UserIds []*float64 `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 
 	// Notification period 1-7 indicates Monday to Sunday.
 	// Notification period 1-7 indicates Monday to Sunday.
+	// +listType=set
 	Weekday []*float64 `json:"weekday,omitempty" tf:"weekday,omitempty"`
 }
 
@@ -395,6 +405,7 @@ type UserNoticesParameters struct {
 	// User group ID list.
 	// User group ID list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	GroupIds []*float64 `json:"groupIds,omitempty" tf:"group_ids,omitempty"`
 
 	// Contact notification required 0= No 1= Yes.
@@ -405,6 +416,7 @@ type UserNoticesParameters struct {
 	// Notification Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
 	// Notification Channel List EMAIL=Mail SMS=SMS CALL=Telephone WECHAT=WeChat RTX=Enterprise WeChat.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	NoticeWay []*string `json:"noticeWay" tf:"notice_way,omitempty"`
 
 	// Call type SYNC= Simultaneous call CIRCLE= Round call If this parameter is not specified, the default value is round call.
@@ -430,6 +442,7 @@ type UserNoticesParameters struct {
 	// Telephone polling list.
 	// Telephone polling list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	PhoneOrder []*float64 `json:"phoneOrder,omitempty" tf:"phone_order,omitempty"`
 
 	// Recipient Type USER=User GROUP=User Group.
@@ -445,11 +458,13 @@ type UserNoticesParameters struct {
 	// User UID List.
 	// User UID List.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	UserIds []*float64 `json:"userIds,omitempty" tf:"user_ids,omitempty"`
 
 	// Notification period 1-7 indicates Monday to Sunday.
 	// Notification period 1-7 indicates Monday to Sunday.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Weekday []*float64 `json:"weekday,omitempty" tf:"weekday,omitempty"`
 }
 
@@ -477,13 +492,14 @@ type AlarmNoticeStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // AlarmNotice is the Schema for the AlarmNotices API. Provides a alarm notice resource for monitor.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type AlarmNotice struct {
 	metav1.TypeMeta   `json:",inline"`

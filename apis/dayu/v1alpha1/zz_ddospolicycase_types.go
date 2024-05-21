@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,6 +17,7 @@ type DdosPolicyCaseInitParameters struct {
 
 	// App protocol set of the DDoS policy case.
 	// App protocol set of the DDoS policy case.
+	// +listType=set
 	AppProtocols []*string `json:"appProtocols,omitempty" tf:"app_protocols,omitempty"`
 
 	// App type of the DDoS policy case. Valid values: WEB, GAME, APP and OTHER.
@@ -73,6 +70,7 @@ type DdosPolicyCaseInitParameters struct {
 
 	// Platform set of the DDoS policy case.
 	// Platform set of the DDoS policy case.
+	// +listType=set
 	PlatformTypes []*string `json:"platformTypes,omitempty" tf:"platform_types,omitempty"`
 
 	// Type of the resource that the DDoS policy case works for. Valid values: bgpip, bgp and bgp-multip.
@@ -105,6 +103,7 @@ type DdosPolicyCaseInitParameters struct {
 
 	// Web API url set.
 	// Web API url set.
+	// +listType=set
 	WebAPIUrls []*string `json:"webApiUrls,omitempty" tf:"web_api_urls,omitempty"`
 }
 
@@ -112,6 +111,7 @@ type DdosPolicyCaseObservation struct {
 
 	// App protocol set of the DDoS policy case.
 	// App protocol set of the DDoS policy case.
+	// +listType=set
 	AppProtocols []*string `json:"appProtocols,omitempty" tf:"app_protocols,omitempty"`
 
 	// App type of the DDoS policy case. Valid values: WEB, GAME, APP and OTHER.
@@ -171,6 +171,7 @@ type DdosPolicyCaseObservation struct {
 
 	// Platform set of the DDoS policy case.
 	// Platform set of the DDoS policy case.
+	// +listType=set
 	PlatformTypes []*string `json:"platformTypes,omitempty" tf:"platform_types,omitempty"`
 
 	// Type of the resource that the DDoS policy case works for. Valid values: bgpip, bgp and bgp-multip.
@@ -207,6 +208,7 @@ type DdosPolicyCaseObservation struct {
 
 	// Web API url set.
 	// Web API url set.
+	// +listType=set
 	WebAPIUrls []*string `json:"webApiUrls,omitempty" tf:"web_api_urls,omitempty"`
 }
 
@@ -215,6 +217,7 @@ type DdosPolicyCaseParameters struct {
 	// App protocol set of the DDoS policy case.
 	// App protocol set of the DDoS policy case.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AppProtocols []*string `json:"appProtocols,omitempty" tf:"app_protocols,omitempty"`
 
 	// App type of the DDoS policy case. Valid values: WEB, GAME, APP and OTHER.
@@ -280,6 +283,7 @@ type DdosPolicyCaseParameters struct {
 	// Platform set of the DDoS policy case.
 	// Platform set of the DDoS policy case.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	PlatformTypes []*string `json:"platformTypes,omitempty" tf:"platform_types,omitempty"`
 
 	// Type of the resource that the DDoS policy case works for. Valid values: bgpip, bgp and bgp-multip.
@@ -320,6 +324,7 @@ type DdosPolicyCaseParameters struct {
 	// Web API url set.
 	// Web API url set.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	WebAPIUrls []*string `json:"webApiUrls,omitempty" tf:"web_api_urls,omitempty"`
 }
 
@@ -347,13 +352,14 @@ type DdosPolicyCaseStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // DdosPolicyCase is the Schema for the DdosPolicyCases API. Use this resource to create dayu DDoS policy case
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type DdosPolicyCase struct {
 	metav1.TypeMeta   `json:",inline"`

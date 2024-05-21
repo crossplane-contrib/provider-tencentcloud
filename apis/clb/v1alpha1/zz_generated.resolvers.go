@@ -68,6 +68,54 @@ func (mg *Attachment) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.RuleID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RuleIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClbID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClbIDRef,
+		Selector:     mg.Spec.InitProvider.ClbIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClbID")
+	}
+	mg.Spec.InitProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ListenerIDRef,
+		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerList{},
+			Managed: &Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
+	}
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RuleID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RuleIDRef,
+		Selector:     mg.Spec.InitProvider.RuleIDSelector,
+		To: reference.To{
+			List:    &ListenerRuleList{},
+			Managed: &ListenerRule{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RuleID")
+	}
+	mg.Spec.InitProvider.RuleID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RuleIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -110,6 +158,38 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SubnetIDRef,
+		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.SubnetList{},
+			Managed: &v1alpha1.Subnet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
+	}
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.VPCList{},
+			Managed: &v1alpha1.VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -135,6 +215,22 @@ func (mg *Listener) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClbID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClbIDRef,
+		Selector:     mg.Spec.InitProvider.ClbIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClbID")
+	}
+	mg.Spec.InitProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClbIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -178,6 +274,38 @@ func (mg *ListenerRule) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ListenerIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClbID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClbIDRef,
+		Selector:     mg.Spec.InitProvider.ClbIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClbID")
+	}
+	mg.Spec.InitProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ListenerIDRef,
+		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerList{},
+			Managed: &Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
+	}
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -203,6 +331,22 @@ func (mg *LogTopic) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.LogSetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.LogSetIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LogSetID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.LogSetIDRef,
+		Selector:     mg.Spec.InitProvider.LogSetIDSelector,
+		To: reference.To{
+			List:    &LogSetList{},
+			Managed: &LogSet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.LogSetID")
+	}
+	mg.Spec.InitProvider.LogSetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.LogSetIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -294,6 +438,86 @@ func (mg *Redirection) ResolveReferences(ctx context.Context, c client.Reader) e
 	mg.Spec.ForProvider.TargetRuleID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.TargetRuleIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClbID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClbIDRef,
+		Selector:     mg.Spec.InitProvider.ClbIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClbID")
+	}
+	mg.Spec.InitProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SourceListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SourceListenerIDRef,
+		Selector:     mg.Spec.InitProvider.SourceListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerList{},
+			Managed: &Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SourceListenerID")
+	}
+	mg.Spec.InitProvider.SourceListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SourceListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SourceRuleID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SourceRuleIDRef,
+		Selector:     mg.Spec.InitProvider.SourceRuleIDSelector,
+		To: reference.To{
+			List:    &ListenerRuleList{},
+			Managed: &ListenerRule{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SourceRuleID")
+	}
+	mg.Spec.InitProvider.SourceRuleID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SourceRuleIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TargetListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.TargetListenerIDRef,
+		Selector:     mg.Spec.InitProvider.TargetListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerList{},
+			Managed: &Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TargetListenerID")
+	}
+	mg.Spec.InitProvider.TargetListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TargetListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TargetRuleID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.TargetRuleIDRef,
+		Selector:     mg.Spec.InitProvider.TargetRuleIDSelector,
+		To: reference.To{
+			List:    &ListenerRuleList{},
+			Managed: &ListenerRule{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TargetRuleID")
+	}
+	mg.Spec.InitProvider.TargetRuleID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TargetRuleIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -319,6 +543,22 @@ func (mg *SnatIp) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClbID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClbIDRef,
+		Selector:     mg.Spec.InitProvider.ClbIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClbID")
+	}
+	mg.Spec.InitProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClbIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -394,6 +634,70 @@ func (mg *TargetGroupAttachment) ResolveReferences(ctx context.Context, c client
 	mg.Spec.ForProvider.TargetGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.TargetGroupIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClbID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClbIDRef,
+		Selector:     mg.Spec.InitProvider.ClbIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClbID")
+	}
+	mg.Spec.InitProvider.ClbID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClbIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ListenerIDRef,
+		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerList{},
+			Managed: &Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
+	}
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RuleID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RuleIDRef,
+		Selector:     mg.Spec.InitProvider.RuleIDSelector,
+		To: reference.To{
+			List:    &ListenerRuleList{},
+			Managed: &ListenerRule{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RuleID")
+	}
+	mg.Spec.InitProvider.RuleID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RuleIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TargetGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.TargetGroupIDRef,
+		Selector:     mg.Spec.InitProvider.TargetGroupIDSelector,
+		To: reference.To{
+			List:    &TargetGroupList{},
+			Managed: &TargetGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TargetGroupID")
+	}
+	mg.Spec.InitProvider.TargetGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TargetGroupIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -419,6 +723,22 @@ func (mg *TargetGroupInstanceAttachment) ResolveReferences(ctx context.Context, 
 	}
 	mg.Spec.ForProvider.TargetGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.TargetGroupIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TargetGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.TargetGroupIDRef,
+		Selector:     mg.Spec.InitProvider.TargetGroupIDSelector,
+		To: reference.To{
+			List:    &TargetGroupList{},
+			Managed: &TargetGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TargetGroupID")
+	}
+	mg.Spec.InitProvider.TargetGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TargetGroupIDRef = rsp.ResolvedReference
 
 	return nil
 }

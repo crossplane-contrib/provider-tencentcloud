@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -602,6 +598,19 @@ type StorageMountConfsParameters struct {
 
 type WorkloadInitParameters struct {
 
+	// application ID.
+	// application ID.
+	// +crossplane:generate:reference:type=Application
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
 	// cpu.
 	// cpu.
 	CPUSpec *float64 `json:"cpuSpec,omitempty" tf:"cpu_spec,omitempty"`
@@ -621,6 +630,19 @@ type WorkloadInitParameters struct {
 	// .
 	// .
 	EnvConf []EnvConfInitParameters `json:"envConf,omitempty" tf:"env_conf,omitempty"`
+
+	// environment ID.
+	// environment ID.
+	// +crossplane:generate:reference:type=Environment
+	EnvironmentID *string `json:"environmentId,omitempty" tf:"environment_id,omitempty"`
+
+	// Reference to a Environment to populate environmentId.
+	// +kubebuilder:validation:Optional
+	EnvironmentIDRef *v1.Reference `json:"environmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Environment to populate environmentId.
+	// +kubebuilder:validation:Optional
+	EnvironmentIDSelector *v1.Selector `json:"environmentIdSelector,omitempty" tf:"-"`
 
 	// repository name.
 	// repository name.
@@ -660,6 +682,7 @@ type WorkloadInitParameters struct {
 
 	// security groups.
 	// security groups.
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// .
@@ -750,6 +773,7 @@ type WorkloadObservation struct {
 
 	// security groups.
 	// security groups.
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// .
@@ -872,6 +896,7 @@ type WorkloadParameters struct {
 	// security groups.
 	// security groups.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// .
@@ -919,13 +944,14 @@ type WorkloadStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Workload is the Schema for the Workloads API. Provides a resource to create a tem workload
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Workload struct {
 	metav1.TypeMeta   `json:",inline"`

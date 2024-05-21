@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -49,6 +45,7 @@ type OidcSSOInitParameters struct {
 
 	// Authorize the request Scope. openid; email; profile; Authorization request information scope. The default is required openid.
 	// Authorize the request Scope. openid; email; profile; Authorization request information scope. The default is required openid.
+	// +listType=set
 	Scope []*string `json:"scope,omitempty" tf:"scope,omitempty"`
 }
 
@@ -87,6 +84,7 @@ type OidcSSOObservation struct {
 
 	// Authorize the request Scope. openid; email; profile; Authorization request information scope. The default is required openid.
 	// Authorize the request Scope. openid; email; profile; Authorization request information scope. The default is required openid.
+	// +listType=set
 	Scope []*string `json:"scope,omitempty" tf:"scope,omitempty"`
 }
 
@@ -130,6 +128,7 @@ type OidcSSOParameters struct {
 	// Authorize the request Scope. openid; email; profile; Authorization request information scope. The default is required openid.
 	// Authorize the request Scope. openid; email; profile; Authorization request information scope. The default is required openid.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Scope []*string `json:"scope,omitempty" tf:"scope,omitempty"`
 }
 
@@ -157,13 +156,14 @@ type OidcSSOStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // OidcSSO is the Schema for the OidcSSOs API. Provides a resource to create a CAM-OIDC-SSO.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type OidcSSO struct {
 	metav1.TypeMeta   `json:",inline"`

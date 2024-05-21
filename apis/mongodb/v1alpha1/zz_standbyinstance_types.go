@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -31,6 +27,19 @@ type StandbyInstanceInitParameters struct {
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
+	// Indicates the main instance ID of standby instances.
+	// Indicates the main instance ID of standby instances.
+	// +crossplane:generate:reference:type=Instance
+	FatherInstanceID *string `json:"fatherInstanceId,omitempty" tf:"father_instance_id,omitempty"`
+
+	// Reference to a Instance to populate fatherInstanceId.
+	// +kubebuilder:validation:Optional
+	FatherInstanceIDRef *v1.Reference `json:"fatherInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate fatherInstanceId.
+	// +kubebuilder:validation:Optional
+	FatherInstanceIDSelector *v1.Selector `json:"fatherInstanceIdSelector,omitempty" tf:"-"`
+
 	// Indicates the region of main instance.
 	// Indicates the region of main instance.
 	FatherInstanceRegion *string `json:"fatherInstanceRegion,omitempty" tf:"father_instance_region,omitempty"`
@@ -53,6 +62,7 @@ type StandbyInstanceInitParameters struct {
 
 	// ID of the security group.
 	// ID of the security group.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// ID of the subnet within this VPC. The value is required if vpc_id is set.
@@ -61,6 +71,7 @@ type StandbyInstanceInitParameters struct {
 
 	// The tags of the Mongodb. Key name project is system reserved and can't be used.
 	// The tags of the Mongodb. Key name `project` is system reserved and can't be used.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the VPC.
@@ -127,6 +138,7 @@ type StandbyInstanceObservation struct {
 
 	// ID of the security group.
 	// ID of the security group.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Status of the Mongodb instance, and available values include pending initialization(expressed with 0),  processing(expressed with 1), running(expressed with 2) and expired(expressed with -2).
@@ -139,6 +151,7 @@ type StandbyInstanceObservation struct {
 
 	// The tags of the Mongodb. Key name project is system reserved and can't be used.
 	// The tags of the Mongodb. Key name `project` is system reserved and can't be used.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the VPC.
@@ -217,6 +230,7 @@ type StandbyInstanceParameters struct {
 	// ID of the security group.
 	// ID of the security group.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// ID of the subnet within this VPC. The value is required if vpc_id is set.
@@ -227,6 +241,7 @@ type StandbyInstanceParameters struct {
 	// The tags of the Mongodb. Key name project is system reserved and can't be used.
 	// The tags of the Mongodb. Key name `project` is system reserved and can't be used.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the VPC.
@@ -264,13 +279,14 @@ type StandbyInstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // StandbyInstance is the Schema for the StandbyInstances API. Provide a resource to create a Mongodb standby instance.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type StandbyInstance struct {
 	metav1.TypeMeta   `json:",inline"`

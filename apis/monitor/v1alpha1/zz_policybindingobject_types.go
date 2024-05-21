@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -48,6 +44,19 @@ type PolicyBindingObjectInitParameters struct {
 	// A list objects. Each element contains the following attributes:
 	// A list objects. Each element contains the following attributes:
 	Dimensions []DimensionsInitParameters `json:"dimensions,omitempty" tf:"dimensions,omitempty"`
+
+	// Alarm policy ID for binding objects.
+	// Alarm policy ID for binding objects.
+	// +crossplane:generate:reference:type=AlarmPolicy
+	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
+
+	// Reference to a AlarmPolicy to populate policyId.
+	// +kubebuilder:validation:Optional
+	PolicyIDRef *v1.Reference `json:"policyIdRef,omitempty" tf:"-"`
+
+	// Selector for a AlarmPolicy to populate policyId.
+	// +kubebuilder:validation:Optional
+	PolicyIDSelector *v1.Selector `json:"policyIdSelector,omitempty" tf:"-"`
 }
 
 type PolicyBindingObjectObservation struct {
@@ -110,13 +119,14 @@ type PolicyBindingObjectStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // PolicyBindingObject is the Schema for the PolicyBindingObjects API. Provides a resource for bind objects to a alarm policy resource.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type PolicyBindingObject struct {
 	metav1.TypeMeta   `json:",inline"`

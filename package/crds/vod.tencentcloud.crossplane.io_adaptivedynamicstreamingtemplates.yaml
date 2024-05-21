@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: adaptivedynamicstreamingtemplates.vod.tencentcloud.crossplane.io
 spec:
   group: vod.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           API. Provide a resource to create a VOD adaptive dynamic streaming template.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -55,13 +60,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -69,621 +75,404 @@ spec:
               forProvider:
                 properties:
                   comment:
-                    description: 'Template description. Length limit: 256 characters.
-                      Template description. Length limit: 256 characters.'
+                    description: |-
+                      Template description. Length limit: 256 characters.
+                      Template description. Length limit: 256 characters.
                     type: string
                   disableHigherVideoBitrate:
-                    description: 'Whether to prohibit transcoding video from low bitrate
-                      to high bitrate. Valid values: false,true. false: no, true:
-                      yes. Default value: false. Whether to prohibit transcoding video
-                      from low bitrate to high bitrate. Valid values: `false`,`true`.
-                      `false`: no, `true`: yes. Default value: `false`.'
+                    description: |-
+                      Whether to prohibit transcoding video from low bitrate to high bitrate. Valid values: false,true. false: no, true: yes. Default value: false.
+                      Whether to prohibit transcoding video from low bitrate to high bitrate. Valid values: `false`,`true`. `false`: no, `true`: yes. Default value: `false`.
                     type: boolean
                   disableHigherVideoResolution:
-                    description: 'Whether to prohibit transcoding from low resolution
-                      to high resolution. Valid values: false,true. false: no, true:
-                      yes. Default value: false. Whether to prohibit transcoding from
-                      low resolution to high resolution. Valid values: `false`,`true`.
-                      `false`: no, `true`: yes. Default value: `false`.'
+                    description: |-
+                      Whether to prohibit transcoding from low resolution to high resolution. Valid values: false,true. false: no, true: yes. Default value: false.
+                      Whether to prohibit transcoding from low resolution to high resolution. Valid values: `false`,`true`. `false`: no, `true`: yes. Default value: `false`.
                     type: boolean
                   drmType:
-                    description: 'DRM scheme type. Valid values: SimpleAES. If this
-                      field is an empty string, DRM will not be performed on the video.
-                      DRM scheme type. Valid values: `SimpleAES`. If this field is
-                      an empty string, DRM will not be performed on the video.'
+                    description: |-
+                      DRM scheme type. Valid values: SimpleAES. If this field is an empty string, DRM will not be performed on the video.
+                      DRM scheme type. Valid values: `SimpleAES`. If this field is an empty string, DRM will not be performed on the video.
                     type: string
                   format:
-                    description: 'Adaptive bitstream format. Valid values: HLS. Adaptive
-                      bitstream format. Valid values: `HLS`.'
+                    description: |-
+                      Adaptive bitstream format. Valid values: HLS.
+                      Adaptive bitstream format. Valid values: `HLS`.
                     type: string
                   name:
-                    description: 'Template name. Length limit: 64 characters. Template
-                      name. Length limit: 64 characters.'
+                    description: |-
+                      Template name. Length limit: 64 characters.
+                      Template name. Length limit: 64 characters.
                     type: string
                   segmentType:
-                    description: 'Segment type, valid when Format is HLS, optional
-                      values: Segment type, valid when Format is HLS, optional values:
-                      - ts: ts segment; - fmp4: fmp4 segment; Default value: ts.'
+                    description: |-
+                      Segment type, valid when Format is HLS, optional values:
+                      Segment type, valid when Format is HLS, optional values:
+                      - ts: ts segment;
+                      - fmp4: fmp4 segment;
+                      Default value: ts.
                     type: string
                   streamInfo:
-                    description: 'List of AdaptiveStreamTemplate parameter information
-                      of output substream for adaptive bitrate streaming. Up to 10
-                      substreams can be output. Note: the frame rate of all substreams
-                      must be the same; otherwise, the frame rate of the first substream
-                      will be used as the output frame rate. List of AdaptiveStreamTemplate
-                      parameter information of output substream for adaptive bitrate
-                      streaming. Up to 10 substreams can be output. Note: the frame
-                      rate of all substreams must be the same; otherwise, the frame
-                      rate of the first substream will be used as the output frame
-                      rate.'
+                    description: |-
+                      List of AdaptiveStreamTemplate parameter information of output substream for adaptive bitrate streaming. Up to 10 substreams can be output. Note: the frame rate of all substreams must be the same; otherwise, the frame rate of the first substream will be used as the output frame rate.
+                      List of AdaptiveStreamTemplate parameter information of output substream for adaptive bitrate streaming. Up to 10 substreams can be output. Note: the frame rate of all substreams must be the same; otherwise, the frame rate of the first substream will be used as the output frame rate.
                     items:
                       properties:
                         audio:
-                          description: Audio parameter information. Audio parameter
-                            information.
+                          description: |-
+                            Audio parameter information.
+                            Audio parameter information.
                           items:
                             properties:
                               audioChannel:
-                                description: 'Audio channel system. Valid values:
-                                  mono, dual, stereo. Default value: dual. Audio channel
-                                  system. Valid values: mono, dual, stereo. Default
-                                  value: dual.'
+                                description: |-
+                                  Audio channel system. Valid values: mono, dual, stereo. Default value: dual.
+                                  Audio channel system. Valid values: mono, dual, stereo. Default value: dual.
                                 type: string
                               bitrate:
-                                description: 'Audio stream bitrate in Kbps. Value
-                                  range: 0 and [26, 256]. If the value is 0, the bitrate
-                                  of the audio stream will be the same as that of
-                                  the original audio. Audio stream bitrate in Kbps.
-                                  Value range: `0` and `[26, 256]`. If the value is
-                                  `0`, the bitrate of the audio stream will be the
-                                  same as that of the original audio.'
+                                description: |-
+                                  Audio stream bitrate in Kbps. Value range: 0 and [26, 256]. If the value is 0, the bitrate of the audio stream will be the same as that of the original audio.
+                                  Audio stream bitrate in Kbps. Value range: `0` and `[26, 256]`. If the value is `0`, the bitrate of the audio stream will be the same as that of the original audio.
                                 type: number
                               codec:
-                                description: 'Audio stream encoder. Valid value are:
-                                  libfdk_aac and libmp3lame. while libfdk_aac is recommended.
-                                  Audio stream encoder. Valid value are: `libfdk_aac`
-                                  and `libmp3lame`. while `libfdk_aac` is recommended.'
+                                description: |-
+                                  Audio stream encoder. Valid value are: libfdk_aac and libmp3lame. while libfdk_aac is recommended.
+                                  Audio stream encoder. Valid value are: `libfdk_aac` and `libmp3lame`. while `libfdk_aac` is recommended.
                                 type: string
                               sampleRate:
-                                description: 'Audio stream sample rate. Valid values:
-                                  32000, 44100, 48000Hz. Audio stream sample rate.
-                                  Valid values: `32000`, `44100`, `48000`Hz.'
+                                description: |-
+                                  Audio stream sample rate. Valid values: 32000, 44100, 48000Hz.
+                                  Audio stream sample rate. Valid values: `32000`, `44100`, `48000`Hz.
                                 type: number
                             type: object
                           type: array
                         removeAudio:
-                          description: 'Whether to remove audio stream. Valid values:
-                            false: no, true: yes. false by default. Whether to remove
-                            audio stream. Valid values: `false`: no, `true`: yes.
-                            `false` by default.'
+                          description: |-
+                            Whether to remove audio stream. Valid values: false: no, true: yes. false by default.
+                            Whether to remove audio stream. Valid values: `false`: no, `true`: yes. `false` by default.
                           type: boolean
                         removeVideo:
-                          description: 'Whether to remove video stream. Valid values:
-                            false: no, true: yes. false by default. Whether to remove
-                            video stream. Valid values: `false`: no, `true`: yes.
-                            `false` by default.'
+                          description: |-
+                            Whether to remove video stream. Valid values: false: no, true: yes. false by default.
+                            Whether to remove video stream. Valid values: `false`: no, `true`: yes. `false` by default.
                           type: boolean
                         tehdConfig:
-                          description: Extremely fast HD transcoding parameters. Extremely
-                            fast HD transcoding parameters.
+                          description: |-
+                            Extremely fast HD transcoding parameters.
+                            Extremely fast HD transcoding parameters.
                           items:
                             properties:
                               maxVideoBitrate:
-                                description: Video bitrate limit, which is valid when
-                                  Type specifies extreme speed HD type. If you leave
-                                  it empty or enter 0, there is no video bitrate limit.
-                                  Video bitrate limit, which is valid when Type specifies
-                                  extreme speed HD type. If you leave it empty or
-                                  enter 0, there is no video bitrate limit.
+                                description: |-
+                                  Video bitrate limit, which is valid when Type specifies extreme speed HD type. If you leave it empty or enter 0, there is no video bitrate limit.
+                                  Video bitrate limit, which is valid when Type specifies extreme speed HD type. If you leave it empty or enter 0, there is no video bitrate limit.
                                 type: number
                               type:
-                                description: 'Extreme high-speed HD type, available
-                                  values: Extreme high-speed HD type, available values:
-                                  - TEHD-100: super high definition-100th; - OFF:
-                                  turn off Ultra High definition.'
+                                description: |-
+                                  Extreme high-speed HD type, available values:
+                                  Extreme high-speed HD type, available values:
+                                  - TEHD-100: super high definition-100th;
+                                  - OFF: turn off Ultra High definition.
                                 type: string
                             type: object
                           type: array
                         video:
-                          description: Video parameter information. Video parameter
-                            information.
+                          description: |-
+                            Video parameter information.
+                            Video parameter information.
                           items:
                             properties:
                               bitrate:
-                                description: 'Audio stream bitrate in Kbps. Value
-                                  range: 0 and [26, 256]. If the value is 0, the bitrate
-                                  of the audio stream will be the same as that of
-                                  the original audio. Bitrate of video stream in Kbps.
-                                  Value range: `0` and `[128, 35000]`. If the value
-                                  is `0`, the bitrate of the video will be the same
-                                  as that of the source video.'
+                                description: |-
+                                  Audio stream bitrate in Kbps. Value range: 0 and [26, 256]. If the value is 0, the bitrate of the audio stream will be the same as that of the original audio.
+                                  Bitrate of video stream in Kbps. Value range: `0` and `[128, 35000]`. If the value is `0`, the bitrate of the video will be the same as that of the source video.
                                 type: number
                               codec:
-                                description: 'Audio stream encoder. Valid value are:
-                                  libfdk_aac and libmp3lame. while libfdk_aac is recommended.
-                                  Video stream encoder. Valid values: `libx264`,`libx265`,`av1`.
-                                  `libx264`: H.264, `libx265`: H.265, `av1`: AOMedia
-                                  Video 1. Currently, a resolution within 640x480
-                                  must be specified for `H.265`. and the `av1` container
-                                  only supports mp4.'
+                                description: |-
+                                  Audio stream encoder. Valid value are: libfdk_aac and libmp3lame. while libfdk_aac is recommended.
+                                  Video stream encoder. Valid values: `libx264`,`libx265`,`av1`. `libx264`: H.264, `libx265`: H.265, `av1`: AOMedia Video 1. Currently, a resolution within 640x480 must be specified for `H.265`. and the `av1` container only supports mp4.
                                 type: string
                               codecTag:
-                                description: 'Encoding label, valid only if the encoding
-                                  format of the video stream is H.265 encoding. Available
-                                  values: Encoding label, valid only if the encoding
-                                  format of the video stream is H.265 encoding. Available
-                                  values: - hvc1: stands for hvc1 tag; - hev1: stands
-                                  for the hev1 tag; Default value: hvc1.'
+                                description: |-
+                                  Encoding label, valid only if the encoding format of the video stream is H.265 encoding. Available values:
+                                  Encoding label, valid only if the encoding format of the video stream is H.265 encoding. Available values:
+                                  - hvc1: stands for hvc1 tag;
+                                  - hev1: stands for the hev1 tag;
+                                  Default value: hvc1.
                                 type: string
                               fillType:
-                                description: 'Fill type. Fill refers to the way of
-                                  processing a screenshot when its aspect ratio is
-                                  different from that of the source video. The following
-                                  fill types are supported: stretch: stretch. The
-                                  screenshot will be stretched frame by frame to match
-                                  the aspect ratio of the source video, which may
-                                  make the screenshot shorter or longer; black: fill
-                                  with black. This option retains the aspect ratio
-                                  of the source video for the screenshot and fills
-                                  the unmatched area with black color blocks. Default
-                                  value: black. Note: this field may return null,
-                                  indicating that no valid values can be obtained.
-                                  Fill type. Fill refers to the way of processing
-                                  a screenshot when its aspect ratio is different
-                                  from that of the source video. The following fill
-                                  types are supported: `stretch`: stretch. The screenshot
-                                  will be stretched frame by frame to match the aspect
-                                  ratio of the source video, which may make the screenshot
-                                  shorter or longer; `black`: fill with black. This
-                                  option retains the aspect ratio of the source video
-                                  for the screenshot and fills the unmatched area
-                                  with black color blocks. Default value: black. Note:
-                                  this field may return null, indicating that no valid
-                                  values can be obtained.'
+                                description: |-
+                                  Fill type. Fill refers to the way of processing a screenshot when its aspect ratio is different from that of the source video. The following fill types are supported: stretch: stretch. The screenshot will be stretched frame by frame to match the aspect ratio of the source video, which may make the screenshot shorter or longer; black: fill with black. This option retains the aspect ratio of the source video for the screenshot and fills the unmatched area with black color blocks. Default value: black. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Fill type. Fill refers to the way of processing a screenshot when its aspect ratio is different from that of the source video. The following fill types are supported: `stretch`: stretch. The screenshot will be stretched frame by frame to match the aspect ratio of the source video, which may make the screenshot shorter or longer; `black`: fill with black. This option retains the aspect ratio of the source video for the screenshot and fills the unmatched area with black color blocks. Default value: black. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: string
                               fps:
-                                description: 'Video frame rate in Hz. Value range:
-                                  [0, 60]. If the value is 0, the frame rate will
-                                  be the same as that of the source video. Video frame
-                                  rate in Hz. Value range: `[0, 60]`. If the value
-                                  is `0`, the frame rate will be the same as that
-                                  of the source video.'
+                                description: |-
+                                  Video frame rate in Hz. Value range: [0, 60]. If the value is 0, the frame rate will be the same as that of the source video.
+                                  Video frame rate in Hz. Value range: `[0, 60]`. If the value is `0`, the frame rate will be the same as that of the source video.
                                 type: number
                               gop:
-                                description: 'Interval between Keyframe I frames,
-                                  value range: 0 and [1, 100000], unit: number of
-                                  frames. When you fill in 0 or leave it empty, the
-                                  gop length is automatically set. Interval between
-                                  Keyframe I frames, value range: 0 and [1, 100000],
-                                  unit: number of frames. When you fill in 0 or leave
-                                  it empty, the gop length is automatically set.'
+                                description: |-
+                                  Interval between Keyframe I frames, value range: 0 and [1, 100000], unit: number of frames. When you fill in 0 or leave it empty, the gop length is automatically set.
+                                  Interval between Keyframe I frames, value range: 0 and [1, 100000], unit: number of frames. When you fill in 0 or leave it empty, the gop length is automatically set.
                                 type: number
                               height:
-                                description: 'Maximum value of the height (or short
-                                  side) of a video stream in px. Value range: 0 and
-                                  [128, 4096]. If both width and height are 0, the
-                                  resolution will be the same as that of the source
-                                  video; If width is 0, but height is not 0, width
-                                  will be proportionally scaled; If width is not 0,
-                                  but height is 0, height will be proportionally scaled;
-                                  If both width and height are not 0, the custom resolution
-                                  will be used. Default value: 0. Note: this field
-                                  may return null, indicating that no valid values
-                                  can be obtained. Maximum value of the height (or
-                                  short side) of a video stream in px. Value range:
-                                  `0` and `[128, 4096]`. If both `width` and `height`
-                                  are `0`, the resolution will be the same as that
-                                  of the source video; If `width` is `0`, but `height`
-                                  is not `0`, `width` will be proportionally scaled;
-                                  If `width` is not `0`, but `height` is `0`, `height`
-                                  will be proportionally scaled; If both `width` and
-                                  `height` are not `0`, the custom resolution will
-                                  be used. Default value: `0`. Note: this field may
-                                  return null, indicating that no valid values can
-                                  be obtained.'
+                                description: |-
+                                  Maximum value of the height (or short side) of a video stream in px. Value range: 0 and [128, 4096]. If both width and height are 0, the resolution will be the same as that of the source video; If width is 0, but height is not 0, width will be proportionally scaled; If width is not 0, but height is 0, height will be proportionally scaled; If both width and height are not 0, the custom resolution will be used. Default value: 0. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Maximum value of the height (or short side) of a video stream in px. Value range: `0` and `[128, 4096]`. If both `width` and `height` are `0`, the resolution will be the same as that of the source video; If `width` is `0`, but `height` is not `0`, `width` will be proportionally scaled; If `width` is not `0`, but `height` is `0`, `height` will be proportionally scaled; If both `width` and `height` are not `0`, the custom resolution will be used. Default value: `0`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: number
                               preserveHdrSwitch:
-                                description: 'Whether the transcoding output still
-                                  maintains HDR when the original video is HDR (High
-                                  Dynamic Range). Value range: Whether the transcoding
-                                  output still maintains HDR when the original video
-                                  is HDR (High Dynamic Range). Value range: - ON:
-                                  if the original file is HDR, the transcoding output
-                                  remains HDR;, otherwise the transcoding output is
-                                  SDR (Standard Dynamic Range); - OFF: regardless
-                                  of whether the original file is HDR or SDR, the
-                                  transcoding output is SDR; Default value: OFF.'
+                                description: |-
+                                  Whether the transcoding output still maintains HDR when the original video is HDR (High Dynamic Range). Value range:
+                                  Whether the transcoding output still maintains HDR when the original video is HDR (High Dynamic Range). Value range:
+                                  - ON: if the original file is HDR, the transcoding output remains HDR;, otherwise the transcoding output is SDR (Standard Dynamic Range);
+                                  - OFF: regardless of whether the original file is HDR or SDR, the transcoding output is SDR;
+                                  Default value: OFF.
                                 type: string
                               resolutionAdaptive:
-                                description: 'Resolution adaption. Valid values: true,false.
-                                  true: enabled. In this case, width represents the
-                                  long side of a video, while height the short side;
-                                  false: disabled. In this case, width represents
-                                  the width of a video, while height the height. Default
-                                  value: true. Note: this field may return null, indicating
-                                  that no valid values can be obtained. Resolution
-                                  adaption. Valid values: `true`,`false`. `true`:
-                                  enabled. In this case, `width` represents the long
-                                  side of a video, while `height` the short side;
-                                  `false`: disabled. In this case, `width` represents
-                                  the width of a video, while `height` the height.
-                                  Default value: `true`. Note: this field may return
-                                  null, indicating that no valid values can be obtained.'
+                                description: |-
+                                  Resolution adaption. Valid values: true,false. true: enabled. In this case, width represents the long side of a video, while height the short side; false: disabled. In this case, width represents the width of a video, while height the height. Default value: true. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Resolution adaption. Valid values: `true`,`false`. `true`: enabled. In this case, `width` represents the long side of a video, while `height` the short side; `false`: disabled. In this case, `width` represents the width of a video, while `height` the height. Default value: `true`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: boolean
                               vcrf:
-                                description: 'Video constant bit rate control factor,
-                                  value range is [1,51]. Note: Video constant bit
-                                  rate control factor, value range is [1,51]. Note:
-                                  - If this parameter is specified, the bitrate control
-                                  method of CRF will be used for transcoding (the
-                                  video bitrate will no longer take effect); - This
-                                  field is required when the video stream encoding
-                                  format is H.266. The recommended value is 28; -
-                                  If there are no special requirements, it is not
-                                  recommended to specify this parameter.'
+                                description: |-
+                                  Video constant bit rate control factor, value range is [1,51].
+                                  Note:
+                                  Video constant bit rate control factor, value range is [1,51].
+                                  Note:
+                                  - If this parameter is specified, the bitrate control method of CRF will be used for transcoding (the video bitrate will no longer take effect);
+                                  - This field is required when the video stream encoding format is H.266. The recommended value is 28;
+                                  - If there are no special requirements, it is not recommended to specify this parameter.
                                 type: number
                               width:
-                                description: 'Maximum value of the width (or long
-                                  side) of a video stream in px. Value range: 0 and
-                                  [128, 4096]. If both width and height are 0, the
-                                  resolution will be the same as that of the source
-                                  video; If width is 0, but height is not 0, width
-                                  will be proportionally scaled; If width is not 0,
-                                  but height is 0, height will be proportionally scaled;
-                                  If both width and height are not 0, the custom resolution
-                                  will be used. Default value: 0. Note: this field
-                                  may return null, indicating that no valid values
-                                  can be obtained. Maximum value of the width (or
-                                  long side) of a video stream in px. Value range:
-                                  `0` and `[128, 4096]`. If both `width` and `height`
-                                  are `0`, the resolution will be the same as that
-                                  of the source video; If `width` is `0`, but `height`
-                                  is not `0`, `width` will be proportionally scaled;
-                                  If `width` is not `0`, but `height` is `0`, `height`
-                                  will be proportionally scaled; If both `width` and
-                                  `height` are not `0`, the custom resolution will
-                                  be used. Default value: `0`. Note: this field may
-                                  return null, indicating that no valid values can
-                                  be obtained.'
+                                description: |-
+                                  Maximum value of the width (or long side) of a video stream in px. Value range: 0 and [128, 4096]. If both width and height are 0, the resolution will be the same as that of the source video; If width is 0, but height is not 0, width will be proportionally scaled; If width is not 0, but height is 0, height will be proportionally scaled; If both width and height are not 0, the custom resolution will be used. Default value: 0. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Maximum value of the width (or long side) of a video stream in px. Value range: `0` and `[128, 4096]`. If both `width` and `height` are `0`, the resolution will be the same as that of the source video; If `width` is `0`, but `height` is not `0`, `width` will be proportionally scaled; If `width` is not `0`, but `height` is `0`, `height` will be proportionally scaled; If both `width` and `height` are not `0`, the custom resolution will be used. Default value: `0`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
                   subAppId:
-                    description: The VOD application ID. For customers who activate
-                      VOD service from December 25, 2023, if they want to access resources
-                      in a VOD application (whether it's the default application or
-                      a newly created one), they must fill in this field with the
-                      application ID. The VOD [application](https://intl.cloud.tencent.com/document/product/266/14574)
-                      ID. For customers who activate VOD service from December 25,
-                      2023, if they want to access resources in a VOD application
-                      (whether it's the default application or a newly created one),
-                      they must fill in this field with the application ID.
+                    description: |-
+                      The VOD application ID. For customers who activate VOD service from December 25, 2023, if they want to access resources in a VOD application (whether it's the default application or a newly created one), they must fill in this field with the application ID.
+                      The VOD [application](https://intl.cloud.tencent.com/document/product/266/14574) ID. For customers who activate VOD service from December 25, 2023, if they want to access resources in a VOD application (whether it's the default application or a newly created one), they must fill in this field with the application ID.
                     type: number
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   comment:
-                    description: 'Template description. Length limit: 256 characters.
-                      Template description. Length limit: 256 characters.'
+                    description: |-
+                      Template description. Length limit: 256 characters.
+                      Template description. Length limit: 256 characters.
                     type: string
                   disableHigherVideoBitrate:
-                    description: 'Whether to prohibit transcoding video from low bitrate
-                      to high bitrate. Valid values: false,true. false: no, true:
-                      yes. Default value: false. Whether to prohibit transcoding video
-                      from low bitrate to high bitrate. Valid values: `false`,`true`.
-                      `false`: no, `true`: yes. Default value: `false`.'
+                    description: |-
+                      Whether to prohibit transcoding video from low bitrate to high bitrate. Valid values: false,true. false: no, true: yes. Default value: false.
+                      Whether to prohibit transcoding video from low bitrate to high bitrate. Valid values: `false`,`true`. `false`: no, `true`: yes. Default value: `false`.
                     type: boolean
                   disableHigherVideoResolution:
-                    description: 'Whether to prohibit transcoding from low resolution
-                      to high resolution. Valid values: false,true. false: no, true:
-                      yes. Default value: false. Whether to prohibit transcoding from
-                      low resolution to high resolution. Valid values: `false`,`true`.
-                      `false`: no, `true`: yes. Default value: `false`.'
+                    description: |-
+                      Whether to prohibit transcoding from low resolution to high resolution. Valid values: false,true. false: no, true: yes. Default value: false.
+                      Whether to prohibit transcoding from low resolution to high resolution. Valid values: `false`,`true`. `false`: no, `true`: yes. Default value: `false`.
                     type: boolean
                   drmType:
-                    description: 'DRM scheme type. Valid values: SimpleAES. If this
-                      field is an empty string, DRM will not be performed on the video.
-                      DRM scheme type. Valid values: `SimpleAES`. If this field is
-                      an empty string, DRM will not be performed on the video.'
+                    description: |-
+                      DRM scheme type. Valid values: SimpleAES. If this field is an empty string, DRM will not be performed on the video.
+                      DRM scheme type. Valid values: `SimpleAES`. If this field is an empty string, DRM will not be performed on the video.
                     type: string
                   format:
-                    description: 'Adaptive bitstream format. Valid values: HLS. Adaptive
-                      bitstream format. Valid values: `HLS`.'
+                    description: |-
+                      Adaptive bitstream format. Valid values: HLS.
+                      Adaptive bitstream format. Valid values: `HLS`.
                     type: string
                   name:
-                    description: 'Template name. Length limit: 64 characters. Template
-                      name. Length limit: 64 characters.'
+                    description: |-
+                      Template name. Length limit: 64 characters.
+                      Template name. Length limit: 64 characters.
                     type: string
                   segmentType:
-                    description: 'Segment type, valid when Format is HLS, optional
-                      values: Segment type, valid when Format is HLS, optional values:
-                      - ts: ts segment; - fmp4: fmp4 segment; Default value: ts.'
+                    description: |-
+                      Segment type, valid when Format is HLS, optional values:
+                      Segment type, valid when Format is HLS, optional values:
+                      - ts: ts segment;
+                      - fmp4: fmp4 segment;
+                      Default value: ts.
                     type: string
                   streamInfo:
-                    description: 'List of AdaptiveStreamTemplate parameter information
-                      of output substream for adaptive bitrate streaming. Up to 10
-                      substreams can be output. Note: the frame rate of all substreams
-                      must be the same; otherwise, the frame rate of the first substream
-                      will be used as the output frame rate. List of AdaptiveStreamTemplate
-                      parameter information of output substream for adaptive bitrate
-                      streaming. Up to 10 substreams can be output. Note: the frame
-                      rate of all substreams must be the same; otherwise, the frame
-                      rate of the first substream will be used as the output frame
-                      rate.'
+                    description: |-
+                      List of AdaptiveStreamTemplate parameter information of output substream for adaptive bitrate streaming. Up to 10 substreams can be output. Note: the frame rate of all substreams must be the same; otherwise, the frame rate of the first substream will be used as the output frame rate.
+                      List of AdaptiveStreamTemplate parameter information of output substream for adaptive bitrate streaming. Up to 10 substreams can be output. Note: the frame rate of all substreams must be the same; otherwise, the frame rate of the first substream will be used as the output frame rate.
                     items:
                       properties:
                         audio:
-                          description: Audio parameter information. Audio parameter
-                            information.
+                          description: |-
+                            Audio parameter information.
+                            Audio parameter information.
                           items:
                             properties:
                               audioChannel:
-                                description: 'Audio channel system. Valid values:
-                                  mono, dual, stereo. Default value: dual. Audio channel
-                                  system. Valid values: mono, dual, stereo. Default
-                                  value: dual.'
+                                description: |-
+                                  Audio channel system. Valid values: mono, dual, stereo. Default value: dual.
+                                  Audio channel system. Valid values: mono, dual, stereo. Default value: dual.
                                 type: string
                               bitrate:
-                                description: 'Audio stream bitrate in Kbps. Value
-                                  range: 0 and [26, 256]. If the value is 0, the bitrate
-                                  of the audio stream will be the same as that of
-                                  the original audio. Audio stream bitrate in Kbps.
-                                  Value range: `0` and `[26, 256]`. If the value is
-                                  `0`, the bitrate of the audio stream will be the
-                                  same as that of the original audio.'
+                                description: |-
+                                  Audio stream bitrate in Kbps. Value range: 0 and [26, 256]. If the value is 0, the bitrate of the audio stream will be the same as that of the original audio.
+                                  Audio stream bitrate in Kbps. Value range: `0` and `[26, 256]`. If the value is `0`, the bitrate of the audio stream will be the same as that of the original audio.
                                 type: number
                               codec:
-                                description: 'Audio stream encoder. Valid value are:
-                                  libfdk_aac and libmp3lame. while libfdk_aac is recommended.
-                                  Audio stream encoder. Valid value are: `libfdk_aac`
-                                  and `libmp3lame`. while `libfdk_aac` is recommended.'
+                                description: |-
+                                  Audio stream encoder. Valid value are: libfdk_aac and libmp3lame. while libfdk_aac is recommended.
+                                  Audio stream encoder. Valid value are: `libfdk_aac` and `libmp3lame`. while `libfdk_aac` is recommended.
                                 type: string
                               sampleRate:
-                                description: 'Audio stream sample rate. Valid values:
-                                  32000, 44100, 48000Hz. Audio stream sample rate.
-                                  Valid values: `32000`, `44100`, `48000`Hz.'
+                                description: |-
+                                  Audio stream sample rate. Valid values: 32000, 44100, 48000Hz.
+                                  Audio stream sample rate. Valid values: `32000`, `44100`, `48000`Hz.
                                 type: number
                             type: object
                           type: array
                         removeAudio:
-                          description: 'Whether to remove audio stream. Valid values:
-                            false: no, true: yes. false by default. Whether to remove
-                            audio stream. Valid values: `false`: no, `true`: yes.
-                            `false` by default.'
+                          description: |-
+                            Whether to remove audio stream. Valid values: false: no, true: yes. false by default.
+                            Whether to remove audio stream. Valid values: `false`: no, `true`: yes. `false` by default.
                           type: boolean
                         removeVideo:
-                          description: 'Whether to remove video stream. Valid values:
-                            false: no, true: yes. false by default. Whether to remove
-                            video stream. Valid values: `false`: no, `true`: yes.
-                            `false` by default.'
+                          description: |-
+                            Whether to remove video stream. Valid values: false: no, true: yes. false by default.
+                            Whether to remove video stream. Valid values: `false`: no, `true`: yes. `false` by default.
                           type: boolean
                         tehdConfig:
-                          description: Extremely fast HD transcoding parameters. Extremely
-                            fast HD transcoding parameters.
+                          description: |-
+                            Extremely fast HD transcoding parameters.
+                            Extremely fast HD transcoding parameters.
                           items:
                             properties:
                               maxVideoBitrate:
-                                description: Video bitrate limit, which is valid when
-                                  Type specifies extreme speed HD type. If you leave
-                                  it empty or enter 0, there is no video bitrate limit.
-                                  Video bitrate limit, which is valid when Type specifies
-                                  extreme speed HD type. If you leave it empty or
-                                  enter 0, there is no video bitrate limit.
+                                description: |-
+                                  Video bitrate limit, which is valid when Type specifies extreme speed HD type. If you leave it empty or enter 0, there is no video bitrate limit.
+                                  Video bitrate limit, which is valid when Type specifies extreme speed HD type. If you leave it empty or enter 0, there is no video bitrate limit.
                                 type: number
                               type:
-                                description: 'Extreme high-speed HD type, available
-                                  values: Extreme high-speed HD type, available values:
-                                  - TEHD-100: super high definition-100th; - OFF:
-                                  turn off Ultra High definition.'
+                                description: |-
+                                  Extreme high-speed HD type, available values:
+                                  Extreme high-speed HD type, available values:
+                                  - TEHD-100: super high definition-100th;
+                                  - OFF: turn off Ultra High definition.
                                 type: string
                             type: object
                           type: array
                         video:
-                          description: Video parameter information. Video parameter
-                            information.
+                          description: |-
+                            Video parameter information.
+                            Video parameter information.
                           items:
                             properties:
                               bitrate:
-                                description: 'Audio stream bitrate in Kbps. Value
-                                  range: 0 and [26, 256]. If the value is 0, the bitrate
-                                  of the audio stream will be the same as that of
-                                  the original audio. Bitrate of video stream in Kbps.
-                                  Value range: `0` and `[128, 35000]`. If the value
-                                  is `0`, the bitrate of the video will be the same
-                                  as that of the source video.'
+                                description: |-
+                                  Audio stream bitrate in Kbps. Value range: 0 and [26, 256]. If the value is 0, the bitrate of the audio stream will be the same as that of the original audio.
+                                  Bitrate of video stream in Kbps. Value range: `0` and `[128, 35000]`. If the value is `0`, the bitrate of the video will be the same as that of the source video.
                                 type: number
                               codec:
-                                description: 'Audio stream encoder. Valid value are:
-                                  libfdk_aac and libmp3lame. while libfdk_aac is recommended.
-                                  Video stream encoder. Valid values: `libx264`,`libx265`,`av1`.
-                                  `libx264`: H.264, `libx265`: H.265, `av1`: AOMedia
-                                  Video 1. Currently, a resolution within 640x480
-                                  must be specified for `H.265`. and the `av1` container
-                                  only supports mp4.'
+                                description: |-
+                                  Audio stream encoder. Valid value are: libfdk_aac and libmp3lame. while libfdk_aac is recommended.
+                                  Video stream encoder. Valid values: `libx264`,`libx265`,`av1`. `libx264`: H.264, `libx265`: H.265, `av1`: AOMedia Video 1. Currently, a resolution within 640x480 must be specified for `H.265`. and the `av1` container only supports mp4.
                                 type: string
                               codecTag:
-                                description: 'Encoding label, valid only if the encoding
-                                  format of the video stream is H.265 encoding. Available
-                                  values: Encoding label, valid only if the encoding
-                                  format of the video stream is H.265 encoding. Available
-                                  values: - hvc1: stands for hvc1 tag; - hev1: stands
-                                  for the hev1 tag; Default value: hvc1.'
+                                description: |-
+                                  Encoding label, valid only if the encoding format of the video stream is H.265 encoding. Available values:
+                                  Encoding label, valid only if the encoding format of the video stream is H.265 encoding. Available values:
+                                  - hvc1: stands for hvc1 tag;
+                                  - hev1: stands for the hev1 tag;
+                                  Default value: hvc1.
                                 type: string
                               fillType:
-                                description: 'Fill type. Fill refers to the way of
-                                  processing a screenshot when its aspect ratio is
-                                  different from that of the source video. The following
-                                  fill types are supported: stretch: stretch. The
-                                  screenshot will be stretched frame by frame to match
-                                  the aspect ratio of the source video, which may
-                                  make the screenshot shorter or longer; black: fill
-                                  with black. This option retains the aspect ratio
-                                  of the source video for the screenshot and fills
-                                  the unmatched area with black color blocks. Default
-                                  value: black. Note: this field may return null,
-                                  indicating that no valid values can be obtained.
-                                  Fill type. Fill refers to the way of processing
-                                  a screenshot when its aspect ratio is different
-                                  from that of the source video. The following fill
-                                  types are supported: `stretch`: stretch. The screenshot
-                                  will be stretched frame by frame to match the aspect
-                                  ratio of the source video, which may make the screenshot
-                                  shorter or longer; `black`: fill with black. This
-                                  option retains the aspect ratio of the source video
-                                  for the screenshot and fills the unmatched area
-                                  with black color blocks. Default value: black. Note:
-                                  this field may return null, indicating that no valid
-                                  values can be obtained.'
+                                description: |-
+                                  Fill type. Fill refers to the way of processing a screenshot when its aspect ratio is different from that of the source video. The following fill types are supported: stretch: stretch. The screenshot will be stretched frame by frame to match the aspect ratio of the source video, which may make the screenshot shorter or longer; black: fill with black. This option retains the aspect ratio of the source video for the screenshot and fills the unmatched area with black color blocks. Default value: black. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Fill type. Fill refers to the way of processing a screenshot when its aspect ratio is different from that of the source video. The following fill types are supported: `stretch`: stretch. The screenshot will be stretched frame by frame to match the aspect ratio of the source video, which may make the screenshot shorter or longer; `black`: fill with black. This option retains the aspect ratio of the source video for the screenshot and fills the unmatched area with black color blocks. Default value: black. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: string
                               fps:
-                                description: 'Video frame rate in Hz. Value range:
-                                  [0, 60]. If the value is 0, the frame rate will
-                                  be the same as that of the source video. Video frame
-                                  rate in Hz. Value range: `[0, 60]`. If the value
-                                  is `0`, the frame rate will be the same as that
-                                  of the source video.'
+                                description: |-
+                                  Video frame rate in Hz. Value range: [0, 60]. If the value is 0, the frame rate will be the same as that of the source video.
+                                  Video frame rate in Hz. Value range: `[0, 60]`. If the value is `0`, the frame rate will be the same as that of the source video.
                                 type: number
                               gop:
-                                description: 'Interval between Keyframe I frames,
-                                  value range: 0 and [1, 100000], unit: number of
-                                  frames. When you fill in 0 or leave it empty, the
-                                  gop length is automatically set. Interval between
-                                  Keyframe I frames, value range: 0 and [1, 100000],
-                                  unit: number of frames. When you fill in 0 or leave
-                                  it empty, the gop length is automatically set.'
+                                description: |-
+                                  Interval between Keyframe I frames, value range: 0 and [1, 100000], unit: number of frames. When you fill in 0 or leave it empty, the gop length is automatically set.
+                                  Interval between Keyframe I frames, value range: 0 and [1, 100000], unit: number of frames. When you fill in 0 or leave it empty, the gop length is automatically set.
                                 type: number
                               height:
-                                description: 'Maximum value of the height (or short
-                                  side) of a video stream in px. Value range: 0 and
-                                  [128, 4096]. If both width and height are 0, the
-                                  resolution will be the same as that of the source
-                                  video; If width is 0, but height is not 0, width
-                                  will be proportionally scaled; If width is not 0,
-                                  but height is 0, height will be proportionally scaled;
-                                  If both width and height are not 0, the custom resolution
-                                  will be used. Default value: 0. Note: this field
-                                  may return null, indicating that no valid values
-                                  can be obtained. Maximum value of the height (or
-                                  short side) of a video stream in px. Value range:
-                                  `0` and `[128, 4096]`. If both `width` and `height`
-                                  are `0`, the resolution will be the same as that
-                                  of the source video; If `width` is `0`, but `height`
-                                  is not `0`, `width` will be proportionally scaled;
-                                  If `width` is not `0`, but `height` is `0`, `height`
-                                  will be proportionally scaled; If both `width` and
-                                  `height` are not `0`, the custom resolution will
-                                  be used. Default value: `0`. Note: this field may
-                                  return null, indicating that no valid values can
-                                  be obtained.'
+                                description: |-
+                                  Maximum value of the height (or short side) of a video stream in px. Value range: 0 and [128, 4096]. If both width and height are 0, the resolution will be the same as that of the source video; If width is 0, but height is not 0, width will be proportionally scaled; If width is not 0, but height is 0, height will be proportionally scaled; If both width and height are not 0, the custom resolution will be used. Default value: 0. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Maximum value of the height (or short side) of a video stream in px. Value range: `0` and `[128, 4096]`. If both `width` and `height` are `0`, the resolution will be the same as that of the source video; If `width` is `0`, but `height` is not `0`, `width` will be proportionally scaled; If `width` is not `0`, but `height` is `0`, `height` will be proportionally scaled; If both `width` and `height` are not `0`, the custom resolution will be used. Default value: `0`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: number
                               preserveHdrSwitch:
-                                description: 'Whether the transcoding output still
-                                  maintains HDR when the original video is HDR (High
-                                  Dynamic Range). Value range: Whether the transcoding
-                                  output still maintains HDR when the original video
-                                  is HDR (High Dynamic Range). Value range: - ON:
-                                  if the original file is HDR, the transcoding output
-                                  remains HDR;, otherwise the transcoding output is
-                                  SDR (Standard Dynamic Range); - OFF: regardless
-                                  of whether the original file is HDR or SDR, the
-                                  transcoding output is SDR; Default value: OFF.'
+                                description: |-
+                                  Whether the transcoding output still maintains HDR when the original video is HDR (High Dynamic Range). Value range:
+                                  Whether the transcoding output still maintains HDR when the original video is HDR (High Dynamic Range). Value range:
+                                  - ON: if the original file is HDR, the transcoding output remains HDR;, otherwise the transcoding output is SDR (Standard Dynamic Range);
+                                  - OFF: regardless of whether the original file is HDR or SDR, the transcoding output is SDR;
+                                  Default value: OFF.
                                 type: string
                               resolutionAdaptive:
-                                description: 'Resolution adaption. Valid values: true,false.
-                                  true: enabled. In this case, width represents the
-                                  long side of a video, while height the short side;
-                                  false: disabled. In this case, width represents
-                                  the width of a video, while height the height. Default
-                                  value: true. Note: this field may return null, indicating
-                                  that no valid values can be obtained. Resolution
-                                  adaption. Valid values: `true`,`false`. `true`:
-                                  enabled. In this case, `width` represents the long
-                                  side of a video, while `height` the short side;
-                                  `false`: disabled. In this case, `width` represents
-                                  the width of a video, while `height` the height.
-                                  Default value: `true`. Note: this field may return
-                                  null, indicating that no valid values can be obtained.'
+                                description: |-
+                                  Resolution adaption. Valid values: true,false. true: enabled. In this case, width represents the long side of a video, while height the short side; false: disabled. In this case, width represents the width of a video, while height the height. Default value: true. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Resolution adaption. Valid values: `true`,`false`. `true`: enabled. In this case, `width` represents the long side of a video, while `height` the short side; `false`: disabled. In this case, `width` represents the width of a video, while `height` the height. Default value: `true`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: boolean
                               vcrf:
-                                description: 'Video constant bit rate control factor,
-                                  value range is [1,51]. Note: Video constant bit
-                                  rate control factor, value range is [1,51]. Note:
-                                  - If this parameter is specified, the bitrate control
-                                  method of CRF will be used for transcoding (the
-                                  video bitrate will no longer take effect); - This
-                                  field is required when the video stream encoding
-                                  format is H.266. The recommended value is 28; -
-                                  If there are no special requirements, it is not
-                                  recommended to specify this parameter.'
+                                description: |-
+                                  Video constant bit rate control factor, value range is [1,51].
+                                  Note:
+                                  Video constant bit rate control factor, value range is [1,51].
+                                  Note:
+                                  - If this parameter is specified, the bitrate control method of CRF will be used for transcoding (the video bitrate will no longer take effect);
+                                  - This field is required when the video stream encoding format is H.266. The recommended value is 28;
+                                  - If there are no special requirements, it is not recommended to specify this parameter.
                                 type: number
                               width:
-                                description: 'Maximum value of the width (or long
-                                  side) of a video stream in px. Value range: 0 and
-                                  [128, 4096]. If both width and height are 0, the
-                                  resolution will be the same as that of the source
-                                  video; If width is 0, but height is not 0, width
-                                  will be proportionally scaled; If width is not 0,
-                                  but height is 0, height will be proportionally scaled;
-                                  If both width and height are not 0, the custom resolution
-                                  will be used. Default value: 0. Note: this field
-                                  may return null, indicating that no valid values
-                                  can be obtained. Maximum value of the width (or
-                                  long side) of a video stream in px. Value range:
-                                  `0` and `[128, 4096]`. If both `width` and `height`
-                                  are `0`, the resolution will be the same as that
-                                  of the source video; If `width` is `0`, but `height`
-                                  is not `0`, `width` will be proportionally scaled;
-                                  If `width` is not `0`, but `height` is `0`, `height`
-                                  will be proportionally scaled; If both `width` and
-                                  `height` are not `0`, the custom resolution will
-                                  be used. Default value: `0`. Note: this field may
-                                  return null, indicating that no valid values can
-                                  be obtained.'
+                                description: |-
+                                  Maximum value of the width (or long side) of a video stream in px. Value range: 0 and [128, 4096]. If both width and height are 0, the resolution will be the same as that of the source video; If width is 0, but height is not 0, width will be proportionally scaled; If width is not 0, but height is 0, height will be proportionally scaled; If both width and height are not 0, the custom resolution will be used. Default value: 0. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Maximum value of the width (or long side) of a video stream in px. Value range: `0` and `[128, 4096]`. If both `width` and `height` are `0`, the resolution will be the same as that of the source video; If `width` is `0`, but `height` is not `0`, `width` will be proportionally scaled; If `width` is not `0`, but `height` is `0`, `height` will be proportionally scaled; If both `width` and `height` are not `0`, the custom resolution will be used. Default value: `0`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
                   subAppId:
-                    description: The VOD application ID. For customers who activate
-                      VOD service from December 25, 2023, if they want to access resources
-                      in a VOD application (whether it's the default application or
-                      a newly created one), they must fill in this field with the
-                      application ID. The VOD [application](https://intl.cloud.tencent.com/document/product/266/14574)
-                      ID. For customers who activate VOD service from December 25,
-                      2023, if they want to access resources in a VOD application
-                      (whether it's the default application or a newly created one),
-                      they must fill in this field with the application ID.
+                    description: |-
+                      The VOD application ID. For customers who activate VOD service from December 25, 2023, if they want to access resources in a VOD application (whether it's the default application or a newly created one), they must fill in this field with the application ID.
+                      The VOD [application](https://intl.cloud.tencent.com/document/product/266/14574) ID. For customers who activate VOD service from December 25, 2023, if they want to access resources in a VOD application (whether it's the default application or a newly created one), they must fill in this field with the application ID.
                     type: number
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -696,9 +485,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -708,21 +498,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -732,17 +522,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -752,21 +544,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -781,21 +573,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -806,14 +599,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -848,307 +642,199 @@ spec:
               atProvider:
                 properties:
                   comment:
-                    description: 'Template description. Length limit: 256 characters.
-                      Template description. Length limit: 256 characters.'
+                    description: |-
+                      Template description. Length limit: 256 characters.
+                      Template description. Length limit: 256 characters.
                     type: string
                   createTime:
-                    description: Creation time of template in ISO date format. Creation
-                      time of template in ISO date format.
+                    description: |-
+                      Creation time of template in ISO date format.
+                      Creation time of template in ISO date format.
                     type: string
                   disableHigherVideoBitrate:
-                    description: 'Whether to prohibit transcoding video from low bitrate
-                      to high bitrate. Valid values: false,true. false: no, true:
-                      yes. Default value: false. Whether to prohibit transcoding video
-                      from low bitrate to high bitrate. Valid values: `false`,`true`.
-                      `false`: no, `true`: yes. Default value: `false`.'
+                    description: |-
+                      Whether to prohibit transcoding video from low bitrate to high bitrate. Valid values: false,true. false: no, true: yes. Default value: false.
+                      Whether to prohibit transcoding video from low bitrate to high bitrate. Valid values: `false`,`true`. `false`: no, `true`: yes. Default value: `false`.
                     type: boolean
                   disableHigherVideoResolution:
-                    description: 'Whether to prohibit transcoding from low resolution
-                      to high resolution. Valid values: false,true. false: no, true:
-                      yes. Default value: false. Whether to prohibit transcoding from
-                      low resolution to high resolution. Valid values: `false`,`true`.
-                      `false`: no, `true`: yes. Default value: `false`.'
+                    description: |-
+                      Whether to prohibit transcoding from low resolution to high resolution. Valid values: false,true. false: no, true: yes. Default value: false.
+                      Whether to prohibit transcoding from low resolution to high resolution. Valid values: `false`,`true`. `false`: no, `true`: yes. Default value: `false`.
                     type: boolean
                   drmType:
-                    description: 'DRM scheme type. Valid values: SimpleAES. If this
-                      field is an empty string, DRM will not be performed on the video.
-                      DRM scheme type. Valid values: `SimpleAES`. If this field is
-                      an empty string, DRM will not be performed on the video.'
+                    description: |-
+                      DRM scheme type. Valid values: SimpleAES. If this field is an empty string, DRM will not be performed on the video.
+                      DRM scheme type. Valid values: `SimpleAES`. If this field is an empty string, DRM will not be performed on the video.
                     type: string
                   format:
-                    description: 'Adaptive bitstream format. Valid values: HLS. Adaptive
-                      bitstream format. Valid values: `HLS`.'
+                    description: |-
+                      Adaptive bitstream format. Valid values: HLS.
+                      Adaptive bitstream format. Valid values: `HLS`.
                     type: string
                   id:
                     description: ID of the resource.
                     type: string
                   name:
-                    description: 'Template name. Length limit: 64 characters. Template
-                      name. Length limit: 64 characters.'
+                    description: |-
+                      Template name. Length limit: 64 characters.
+                      Template name. Length limit: 64 characters.
                     type: string
                   segmentType:
-                    description: 'Segment type, valid when Format is HLS, optional
-                      values: Segment type, valid when Format is HLS, optional values:
-                      - ts: ts segment; - fmp4: fmp4 segment; Default value: ts.'
+                    description: |-
+                      Segment type, valid when Format is HLS, optional values:
+                      Segment type, valid when Format is HLS, optional values:
+                      - ts: ts segment;
+                      - fmp4: fmp4 segment;
+                      Default value: ts.
                     type: string
                   streamInfo:
-                    description: 'List of AdaptiveStreamTemplate parameter information
-                      of output substream for adaptive bitrate streaming. Up to 10
-                      substreams can be output. Note: the frame rate of all substreams
-                      must be the same; otherwise, the frame rate of the first substream
-                      will be used as the output frame rate. List of AdaptiveStreamTemplate
-                      parameter information of output substream for adaptive bitrate
-                      streaming. Up to 10 substreams can be output. Note: the frame
-                      rate of all substreams must be the same; otherwise, the frame
-                      rate of the first substream will be used as the output frame
-                      rate.'
+                    description: |-
+                      List of AdaptiveStreamTemplate parameter information of output substream for adaptive bitrate streaming. Up to 10 substreams can be output. Note: the frame rate of all substreams must be the same; otherwise, the frame rate of the first substream will be used as the output frame rate.
+                      List of AdaptiveStreamTemplate parameter information of output substream for adaptive bitrate streaming. Up to 10 substreams can be output. Note: the frame rate of all substreams must be the same; otherwise, the frame rate of the first substream will be used as the output frame rate.
                     items:
                       properties:
                         audio:
-                          description: Audio parameter information. Audio parameter
-                            information.
+                          description: |-
+                            Audio parameter information.
+                            Audio parameter information.
                           items:
                             properties:
                               audioChannel:
-                                description: 'Audio channel system. Valid values:
-                                  mono, dual, stereo. Default value: dual. Audio channel
-                                  system. Valid values: mono, dual, stereo. Default
-                                  value: dual.'
+                                description: |-
+                                  Audio channel system. Valid values: mono, dual, stereo. Default value: dual.
+                                  Audio channel system. Valid values: mono, dual, stereo. Default value: dual.
                                 type: string
                               bitrate:
-                                description: 'Audio stream bitrate in Kbps. Value
-                                  range: 0 and [26, 256]. If the value is 0, the bitrate
-                                  of the audio stream will be the same as that of
-                                  the original audio. Audio stream bitrate in Kbps.
-                                  Value range: `0` and `[26, 256]`. If the value is
-                                  `0`, the bitrate of the audio stream will be the
-                                  same as that of the original audio.'
+                                description: |-
+                                  Audio stream bitrate in Kbps. Value range: 0 and [26, 256]. If the value is 0, the bitrate of the audio stream will be the same as that of the original audio.
+                                  Audio stream bitrate in Kbps. Value range: `0` and `[26, 256]`. If the value is `0`, the bitrate of the audio stream will be the same as that of the original audio.
                                 type: number
                               codec:
-                                description: 'Audio stream encoder. Valid value are:
-                                  libfdk_aac and libmp3lame. while libfdk_aac is recommended.
-                                  Audio stream encoder. Valid value are: `libfdk_aac`
-                                  and `libmp3lame`. while `libfdk_aac` is recommended.'
+                                description: |-
+                                  Audio stream encoder. Valid value are: libfdk_aac and libmp3lame. while libfdk_aac is recommended.
+                                  Audio stream encoder. Valid value are: `libfdk_aac` and `libmp3lame`. while `libfdk_aac` is recommended.
                                 type: string
                               sampleRate:
-                                description: 'Audio stream sample rate. Valid values:
-                                  32000, 44100, 48000Hz. Audio stream sample rate.
-                                  Valid values: `32000`, `44100`, `48000`Hz.'
+                                description: |-
+                                  Audio stream sample rate. Valid values: 32000, 44100, 48000Hz.
+                                  Audio stream sample rate. Valid values: `32000`, `44100`, `48000`Hz.
                                 type: number
                             type: object
                           type: array
                         removeAudio:
-                          description: 'Whether to remove audio stream. Valid values:
-                            false: no, true: yes. false by default. Whether to remove
-                            audio stream. Valid values: `false`: no, `true`: yes.
-                            `false` by default.'
+                          description: |-
+                            Whether to remove audio stream. Valid values: false: no, true: yes. false by default.
+                            Whether to remove audio stream. Valid values: `false`: no, `true`: yes. `false` by default.
                           type: boolean
                         removeVideo:
-                          description: 'Whether to remove video stream. Valid values:
-                            false: no, true: yes. false by default. Whether to remove
-                            video stream. Valid values: `false`: no, `true`: yes.
-                            `false` by default.'
+                          description: |-
+                            Whether to remove video stream. Valid values: false: no, true: yes. false by default.
+                            Whether to remove video stream. Valid values: `false`: no, `true`: yes. `false` by default.
                           type: boolean
                         tehdConfig:
-                          description: Extremely fast HD transcoding parameters. Extremely
-                            fast HD transcoding parameters.
+                          description: |-
+                            Extremely fast HD transcoding parameters.
+                            Extremely fast HD transcoding parameters.
                           items:
                             properties:
                               maxVideoBitrate:
-                                description: Video bitrate limit, which is valid when
-                                  Type specifies extreme speed HD type. If you leave
-                                  it empty or enter 0, there is no video bitrate limit.
-                                  Video bitrate limit, which is valid when Type specifies
-                                  extreme speed HD type. If you leave it empty or
-                                  enter 0, there is no video bitrate limit.
+                                description: |-
+                                  Video bitrate limit, which is valid when Type specifies extreme speed HD type. If you leave it empty or enter 0, there is no video bitrate limit.
+                                  Video bitrate limit, which is valid when Type specifies extreme speed HD type. If you leave it empty or enter 0, there is no video bitrate limit.
                                 type: number
                               type:
-                                description: 'Extreme high-speed HD type, available
-                                  values: Extreme high-speed HD type, available values:
-                                  - TEHD-100: super high definition-100th; - OFF:
-                                  turn off Ultra High definition.'
+                                description: |-
+                                  Extreme high-speed HD type, available values:
+                                  Extreme high-speed HD type, available values:
+                                  - TEHD-100: super high definition-100th;
+                                  - OFF: turn off Ultra High definition.
                                 type: string
                             type: object
                           type: array
                         video:
-                          description: Video parameter information. Video parameter
-                            information.
+                          description: |-
+                            Video parameter information.
+                            Video parameter information.
                           items:
                             properties:
                               bitrate:
-                                description: 'Audio stream bitrate in Kbps. Value
-                                  range: 0 and [26, 256]. If the value is 0, the bitrate
-                                  of the audio stream will be the same as that of
-                                  the original audio. Bitrate of video stream in Kbps.
-                                  Value range: `0` and `[128, 35000]`. If the value
-                                  is `0`, the bitrate of the video will be the same
-                                  as that of the source video.'
+                                description: |-
+                                  Audio stream bitrate in Kbps. Value range: 0 and [26, 256]. If the value is 0, the bitrate of the audio stream will be the same as that of the original audio.
+                                  Bitrate of video stream in Kbps. Value range: `0` and `[128, 35000]`. If the value is `0`, the bitrate of the video will be the same as that of the source video.
                                 type: number
                               codec:
-                                description: 'Audio stream encoder. Valid value are:
-                                  libfdk_aac and libmp3lame. while libfdk_aac is recommended.
-                                  Video stream encoder. Valid values: `libx264`,`libx265`,`av1`.
-                                  `libx264`: H.264, `libx265`: H.265, `av1`: AOMedia
-                                  Video 1. Currently, a resolution within 640x480
-                                  must be specified for `H.265`. and the `av1` container
-                                  only supports mp4.'
+                                description: |-
+                                  Audio stream encoder. Valid value are: libfdk_aac and libmp3lame. while libfdk_aac is recommended.
+                                  Video stream encoder. Valid values: `libx264`,`libx265`,`av1`. `libx264`: H.264, `libx265`: H.265, `av1`: AOMedia Video 1. Currently, a resolution within 640x480 must be specified for `H.265`. and the `av1` container only supports mp4.
                                 type: string
                               codecTag:
-                                description: 'Encoding label, valid only if the encoding
-                                  format of the video stream is H.265 encoding. Available
-                                  values: Encoding label, valid only if the encoding
-                                  format of the video stream is H.265 encoding. Available
-                                  values: - hvc1: stands for hvc1 tag; - hev1: stands
-                                  for the hev1 tag; Default value: hvc1.'
+                                description: |-
+                                  Encoding label, valid only if the encoding format of the video stream is H.265 encoding. Available values:
+                                  Encoding label, valid only if the encoding format of the video stream is H.265 encoding. Available values:
+                                  - hvc1: stands for hvc1 tag;
+                                  - hev1: stands for the hev1 tag;
+                                  Default value: hvc1.
                                 type: string
                               fillType:
-                                description: 'Fill type. Fill refers to the way of
-                                  processing a screenshot when its aspect ratio is
-                                  different from that of the source video. The following
-                                  fill types are supported: stretch: stretch. The
-                                  screenshot will be stretched frame by frame to match
-                                  the aspect ratio of the source video, which may
-                                  make the screenshot shorter or longer; black: fill
-                                  with black. This option retains the aspect ratio
-                                  of the source video for the screenshot and fills
-                                  the unmatched area with black color blocks. Default
-                                  value: black. Note: this field may return null,
-                                  indicating that no valid values can be obtained.
-                                  Fill type. Fill refers to the way of processing
-                                  a screenshot when its aspect ratio is different
-                                  from that of the source video. The following fill
-                                  types are supported: `stretch`: stretch. The screenshot
-                                  will be stretched frame by frame to match the aspect
-                                  ratio of the source video, which may make the screenshot
-                                  shorter or longer; `black`: fill with black. This
-                                  option retains the aspect ratio of the source video
-                                  for the screenshot and fills the unmatched area
-                                  with black color blocks. Default value: black. Note:
-                                  this field may return null, indicating that no valid
-                                  values can be obtained.'
+                                description: |-
+                                  Fill type. Fill refers to the way of processing a screenshot when its aspect ratio is different from that of the source video. The following fill types are supported: stretch: stretch. The screenshot will be stretched frame by frame to match the aspect ratio of the source video, which may make the screenshot shorter or longer; black: fill with black. This option retains the aspect ratio of the source video for the screenshot and fills the unmatched area with black color blocks. Default value: black. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Fill type. Fill refers to the way of processing a screenshot when its aspect ratio is different from that of the source video. The following fill types are supported: `stretch`: stretch. The screenshot will be stretched frame by frame to match the aspect ratio of the source video, which may make the screenshot shorter or longer; `black`: fill with black. This option retains the aspect ratio of the source video for the screenshot and fills the unmatched area with black color blocks. Default value: black. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: string
                               fps:
-                                description: 'Video frame rate in Hz. Value range:
-                                  [0, 60]. If the value is 0, the frame rate will
-                                  be the same as that of the source video. Video frame
-                                  rate in Hz. Value range: `[0, 60]`. If the value
-                                  is `0`, the frame rate will be the same as that
-                                  of the source video.'
+                                description: |-
+                                  Video frame rate in Hz. Value range: [0, 60]. If the value is 0, the frame rate will be the same as that of the source video.
+                                  Video frame rate in Hz. Value range: `[0, 60]`. If the value is `0`, the frame rate will be the same as that of the source video.
                                 type: number
                               gop:
-                                description: 'Interval between Keyframe I frames,
-                                  value range: 0 and [1, 100000], unit: number of
-                                  frames. When you fill in 0 or leave it empty, the
-                                  gop length is automatically set. Interval between
-                                  Keyframe I frames, value range: 0 and [1, 100000],
-                                  unit: number of frames. When you fill in 0 or leave
-                                  it empty, the gop length is automatically set.'
+                                description: |-
+                                  Interval between Keyframe I frames, value range: 0 and [1, 100000], unit: number of frames. When you fill in 0 or leave it empty, the gop length is automatically set.
+                                  Interval between Keyframe I frames, value range: 0 and [1, 100000], unit: number of frames. When you fill in 0 or leave it empty, the gop length is automatically set.
                                 type: number
                               height:
-                                description: 'Maximum value of the height (or short
-                                  side) of a video stream in px. Value range: 0 and
-                                  [128, 4096]. If both width and height are 0, the
-                                  resolution will be the same as that of the source
-                                  video; If width is 0, but height is not 0, width
-                                  will be proportionally scaled; If width is not 0,
-                                  but height is 0, height will be proportionally scaled;
-                                  If both width and height are not 0, the custom resolution
-                                  will be used. Default value: 0. Note: this field
-                                  may return null, indicating that no valid values
-                                  can be obtained. Maximum value of the height (or
-                                  short side) of a video stream in px. Value range:
-                                  `0` and `[128, 4096]`. If both `width` and `height`
-                                  are `0`, the resolution will be the same as that
-                                  of the source video; If `width` is `0`, but `height`
-                                  is not `0`, `width` will be proportionally scaled;
-                                  If `width` is not `0`, but `height` is `0`, `height`
-                                  will be proportionally scaled; If both `width` and
-                                  `height` are not `0`, the custom resolution will
-                                  be used. Default value: `0`. Note: this field may
-                                  return null, indicating that no valid values can
-                                  be obtained.'
+                                description: |-
+                                  Maximum value of the height (or short side) of a video stream in px. Value range: 0 and [128, 4096]. If both width and height are 0, the resolution will be the same as that of the source video; If width is 0, but height is not 0, width will be proportionally scaled; If width is not 0, but height is 0, height will be proportionally scaled; If both width and height are not 0, the custom resolution will be used. Default value: 0. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Maximum value of the height (or short side) of a video stream in px. Value range: `0` and `[128, 4096]`. If both `width` and `height` are `0`, the resolution will be the same as that of the source video; If `width` is `0`, but `height` is not `0`, `width` will be proportionally scaled; If `width` is not `0`, but `height` is `0`, `height` will be proportionally scaled; If both `width` and `height` are not `0`, the custom resolution will be used. Default value: `0`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: number
                               preserveHdrSwitch:
-                                description: 'Whether the transcoding output still
-                                  maintains HDR when the original video is HDR (High
-                                  Dynamic Range). Value range: Whether the transcoding
-                                  output still maintains HDR when the original video
-                                  is HDR (High Dynamic Range). Value range: - ON:
-                                  if the original file is HDR, the transcoding output
-                                  remains HDR;, otherwise the transcoding output is
-                                  SDR (Standard Dynamic Range); - OFF: regardless
-                                  of whether the original file is HDR or SDR, the
-                                  transcoding output is SDR; Default value: OFF.'
+                                description: |-
+                                  Whether the transcoding output still maintains HDR when the original video is HDR (High Dynamic Range). Value range:
+                                  Whether the transcoding output still maintains HDR when the original video is HDR (High Dynamic Range). Value range:
+                                  - ON: if the original file is HDR, the transcoding output remains HDR;, otherwise the transcoding output is SDR (Standard Dynamic Range);
+                                  - OFF: regardless of whether the original file is HDR or SDR, the transcoding output is SDR;
+                                  Default value: OFF.
                                 type: string
                               resolutionAdaptive:
-                                description: 'Resolution adaption. Valid values: true,false.
-                                  true: enabled. In this case, width represents the
-                                  long side of a video, while height the short side;
-                                  false: disabled. In this case, width represents
-                                  the width of a video, while height the height. Default
-                                  value: true. Note: this field may return null, indicating
-                                  that no valid values can be obtained. Resolution
-                                  adaption. Valid values: `true`,`false`. `true`:
-                                  enabled. In this case, `width` represents the long
-                                  side of a video, while `height` the short side;
-                                  `false`: disabled. In this case, `width` represents
-                                  the width of a video, while `height` the height.
-                                  Default value: `true`. Note: this field may return
-                                  null, indicating that no valid values can be obtained.'
+                                description: |-
+                                  Resolution adaption. Valid values: true,false. true: enabled. In this case, width represents the long side of a video, while height the short side; false: disabled. In this case, width represents the width of a video, while height the height. Default value: true. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Resolution adaption. Valid values: `true`,`false`. `true`: enabled. In this case, `width` represents the long side of a video, while `height` the short side; `false`: disabled. In this case, `width` represents the width of a video, while `height` the height. Default value: `true`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: boolean
                               vcrf:
-                                description: 'Video constant bit rate control factor,
-                                  value range is [1,51]. Note: Video constant bit
-                                  rate control factor, value range is [1,51]. Note:
-                                  - If this parameter is specified, the bitrate control
-                                  method of CRF will be used for transcoding (the
-                                  video bitrate will no longer take effect); - This
-                                  field is required when the video stream encoding
-                                  format is H.266. The recommended value is 28; -
-                                  If there are no special requirements, it is not
-                                  recommended to specify this parameter.'
+                                description: |-
+                                  Video constant bit rate control factor, value range is [1,51].
+                                  Note:
+                                  Video constant bit rate control factor, value range is [1,51].
+                                  Note:
+                                  - If this parameter is specified, the bitrate control method of CRF will be used for transcoding (the video bitrate will no longer take effect);
+                                  - This field is required when the video stream encoding format is H.266. The recommended value is 28;
+                                  - If there are no special requirements, it is not recommended to specify this parameter.
                                 type: number
                               width:
-                                description: 'Maximum value of the width (or long
-                                  side) of a video stream in px. Value range: 0 and
-                                  [128, 4096]. If both width and height are 0, the
-                                  resolution will be the same as that of the source
-                                  video; If width is 0, but height is not 0, width
-                                  will be proportionally scaled; If width is not 0,
-                                  but height is 0, height will be proportionally scaled;
-                                  If both width and height are not 0, the custom resolution
-                                  will be used. Default value: 0. Note: this field
-                                  may return null, indicating that no valid values
-                                  can be obtained. Maximum value of the width (or
-                                  long side) of a video stream in px. Value range:
-                                  `0` and `[128, 4096]`. If both `width` and `height`
-                                  are `0`, the resolution will be the same as that
-                                  of the source video; If `width` is `0`, but `height`
-                                  is not `0`, `width` will be proportionally scaled;
-                                  If `width` is not `0`, but `height` is `0`, `height`
-                                  will be proportionally scaled; If both `width` and
-                                  `height` are not `0`, the custom resolution will
-                                  be used. Default value: `0`. Note: this field may
-                                  return null, indicating that no valid values can
-                                  be obtained.'
+                                description: |-
+                                  Maximum value of the width (or long side) of a video stream in px. Value range: 0 and [128, 4096]. If both width and height are 0, the resolution will be the same as that of the source video; If width is 0, but height is not 0, width will be proportionally scaled; If width is not 0, but height is 0, height will be proportionally scaled; If both width and height are not 0, the custom resolution will be used. Default value: 0. Note: this field may return null, indicating that no valid values can be obtained.
+                                  Maximum value of the width (or long side) of a video stream in px. Value range: `0` and `[128, 4096]`. If both `width` and `height` are `0`, the resolution will be the same as that of the source video; If `width` is `0`, but `height` is not `0`, `width` will be proportionally scaled; If `width` is not `0`, but `height` is `0`, `height` will be proportionally scaled; If both `width` and `height` are not `0`, the custom resolution will be used. Default value: `0`. Note: this field may return null, indicating that no valid values can be obtained.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
                   subAppId:
-                    description: The VOD application ID. For customers who activate
-                      VOD service from December 25, 2023, if they want to access resources
-                      in a VOD application (whether it's the default application or
-                      a newly created one), they must fill in this field with the
-                      application ID. The VOD [application](https://intl.cloud.tencent.com/document/product/266/14574)
-                      ID. For customers who activate VOD service from December 25,
-                      2023, if they want to access resources in a VOD application
-                      (whether it's the default application or a newly created one),
-                      they must fill in this field with the application ID.
+                    description: |-
+                      The VOD application ID. For customers who activate VOD service from December 25, 2023, if they want to access resources in a VOD application (whether it's the default application or a newly created one), they must fill in this field with the application ID.
+                      The VOD [application](https://intl.cloud.tencent.com/document/product/266/14574) ID. For customers who activate VOD service from December 25, 2023, if they want to access resources in a VOD application (whether it's the default application or a newly created one), they must fill in this field with the application ID.
                     type: number
                   updateTime:
-                    description: Last modified time of template in ISO date format.
+                    description: |-
+                      Last modified time of template in ISO date format.
                       Last modified time of template in ISO date format.
                     type: string
                 type: object
@@ -1158,13 +844,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -1175,8 +863,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

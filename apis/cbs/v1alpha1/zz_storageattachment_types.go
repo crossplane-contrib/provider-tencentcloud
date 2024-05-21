@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type StorageAttachmentInitParameters struct {
+
+	// ID of the CVM instance.
+	// ID of the CVM instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in cvm to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in cvm to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
+
+	// ID of the mounted CBS.
+	// ID of the mounted CBS.
+	// +crossplane:generate:reference:type=Storage
+	StorageID *string `json:"storageId,omitempty" tf:"storage_id,omitempty"`
+
+	// Reference to a Storage to populate storageId.
+	// +kubebuilder:validation:Optional
+	StorageIDRef *v1.Reference `json:"storageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Storage to populate storageId.
+	// +kubebuilder:validation:Optional
+	StorageIDSelector *v1.Selector `json:"storageIdSelector,omitempty" tf:"-"`
 }
 
 type StorageAttachmentObservation struct {
@@ -89,13 +111,14 @@ type StorageAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // StorageAttachment is the Schema for the StorageAttachments API. Provides a CBS storage attachment resource.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type StorageAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

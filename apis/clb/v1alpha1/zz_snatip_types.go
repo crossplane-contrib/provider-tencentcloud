@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -53,6 +49,19 @@ type IpsParameters struct {
 }
 
 type SnatIpInitParameters struct {
+
+	// CLB instance ID.
+	// CLB instance ID.
+	// +crossplane:generate:reference:type=Instance
+	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
+
+	// Reference to a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDRef *v1.Reference `json:"clbIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
 	// Snat IP address config.
 	// Snat IP address config.
@@ -119,13 +128,14 @@ type SnatIpStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SnatIp is the Schema for the SnatIps API. Provide a resource to create a SnatIp of CLB instance.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type SnatIp struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -26,6 +22,19 @@ type SecurityGroupLiteRuleInitParameters struct {
 	// Ingress rules set. A rule must match the following format: [action]#[source]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'source' can be an IP address network, segment, security group ID and Address Template ID. The 'port' valid format is 80, 80,443, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP, ALL and ppm(g?)-xxxxxxxx. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
 	// Ingress rules set. A rule must match the following format: [action]#[source]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'source' can be an IP address network, segment, security group ID and Address Template ID. The 'port' valid format is `80`, `80,443`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP`, `ALL` and `ppm(g?)-xxxxxxxx`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
 	Ingress []*string `json:"ingress,omitempty" tf:"ingress,omitempty"`
+
+	// ID of the security group.
+	// ID of the security group.
+	// +crossplane:generate:reference:type=SecurityGroup
+	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
+
+	// Reference to a SecurityGroup to populate securityGroupId.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDRef *v1.Reference `json:"securityGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup to populate securityGroupId.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 }
 
 type SecurityGroupLiteRuleObservation struct {
@@ -97,13 +106,14 @@ type SecurityGroupLiteRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SecurityGroupLiteRule is the Schema for the SecurityGroupLiteRules API. Provide a resource to create security group some lite rules quickly.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type SecurityGroupLiteRule struct {
 	metav1.TypeMeta   `json:",inline"`

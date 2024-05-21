@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -33,10 +29,12 @@ type ApplicationProxyRuleInitParameters struct {
 
 	// Origin site information: When OriginType is custom, it indicates one or more origin sites, such as ['8.8.8.8', '9.9.9.9'] or OriginValue=['test.com']; When OriginType is origins, there is required to be one and only one element, representing the origin site group ID, such as ['origin-537f5b41-162a-11ed-abaa-525400c5da15'].
 	// Origin site information: When `OriginType` is `custom`, it indicates one or more origin sites, such as `['8.8.8.8', '9.9.9.9']` or `OriginValue=['test.com']`; When `OriginType` is `origins`, there is required to be one and only one element, representing the origin site group ID, such as `['origin-537f5b41-162a-11ed-abaa-525400c5da15']`.
+	// +listType=set
 	OriginValue []*string `json:"originValue,omitempty" tf:"origin_value,omitempty"`
 
 	// Valid values: 80 means port 80; 81-90 means port range 81-90.
 	// Valid values: `80` means port 80; `81-90` means port range 81-90.
+	// +listType=set
 	Port []*string `json:"port,omitempty" tf:"port,omitempty"`
 
 	// Protocol. Valid values: TCP, UDP.
@@ -54,6 +52,19 @@ type ApplicationProxyRuleInitParameters struct {
 	// Status, the values are: online: enabled; offline: deactivated; progress: being deployed; stopping: being deactivated; fail: deployment failure/deactivation failure.
 	// Status, the values are: `online`: enabled; `offline`: deactivated; `progress`: being deployed; `stopping`: being deactivated; `fail`: deployment failure/deactivation failure.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Site ID.
+	// Site ID.
+	// +crossplane:generate:reference:type=Zone
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type ApplicationProxyRuleObservation struct {
@@ -75,10 +86,12 @@ type ApplicationProxyRuleObservation struct {
 
 	// Origin site information: When OriginType is custom, it indicates one or more origin sites, such as ['8.8.8.8', '9.9.9.9'] or OriginValue=['test.com']; When OriginType is origins, there is required to be one and only one element, representing the origin site group ID, such as ['origin-537f5b41-162a-11ed-abaa-525400c5da15'].
 	// Origin site information: When `OriginType` is `custom`, it indicates one or more origin sites, such as `['8.8.8.8', '9.9.9.9']` or `OriginValue=['test.com']`; When `OriginType` is `origins`, there is required to be one and only one element, representing the origin site group ID, such as `['origin-537f5b41-162a-11ed-abaa-525400c5da15']`.
+	// +listType=set
 	OriginValue []*string `json:"originValue,omitempty" tf:"origin_value,omitempty"`
 
 	// Valid values: 80 means port 80; 81-90 means port range 81-90.
 	// Valid values: `80` means port 80; `81-90` means port range 81-90.
+	// +listType=set
 	Port []*string `json:"port,omitempty" tf:"port,omitempty"`
 
 	// Protocol. Valid values: TCP, UDP.
@@ -126,11 +139,13 @@ type ApplicationProxyRuleParameters struct {
 	// Origin site information: When OriginType is custom, it indicates one or more origin sites, such as ['8.8.8.8', '9.9.9.9'] or OriginValue=['test.com']; When OriginType is origins, there is required to be one and only one element, representing the origin site group ID, such as ['origin-537f5b41-162a-11ed-abaa-525400c5da15'].
 	// Origin site information: When `OriginType` is `custom`, it indicates one or more origin sites, such as `['8.8.8.8', '9.9.9.9']` or `OriginValue=['test.com']`; When `OriginType` is `origins`, there is required to be one and only one element, representing the origin site group ID, such as `['origin-537f5b41-162a-11ed-abaa-525400c5da15']`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	OriginValue []*string `json:"originValue,omitempty" tf:"origin_value,omitempty"`
 
 	// Valid values: 80 means port 80; 81-90 means port range 81-90.
 	// Valid values: `80` means port 80; `81-90` means port range 81-90.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Port []*string `json:"port,omitempty" tf:"port,omitempty"`
 
 	// Protocol. Valid values: TCP, UDP.
@@ -192,13 +207,14 @@ type ApplicationProxyRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ApplicationProxyRule is the Schema for the ApplicationProxyRules API. Provides a resource to create a teo application_proxy_rule
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ApplicationProxyRule struct {
 	metav1.TypeMeta   `json:",inline"`

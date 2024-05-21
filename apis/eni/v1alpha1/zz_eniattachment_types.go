@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type EniAttachmentInitParameters struct {
+
+	// ID of the ENI.
+	// ID of the ENI.
+	// +crossplane:generate:reference:type=Eni
+	EniID *string `json:"eniId,omitempty" tf:"eni_id,omitempty"`
+
+	// Reference to a Eni to populate eniId.
+	// +kubebuilder:validation:Optional
+	EniIDRef *v1.Reference `json:"eniIdRef,omitempty" tf:"-"`
+
+	// Selector for a Eni to populate eniId.
+	// +kubebuilder:validation:Optional
+	EniIDSelector *v1.Selector `json:"eniIdSelector,omitempty" tf:"-"`
+
+	// ID of the instance which bind the ENI.
+	// ID of the instance which bind the ENI.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in cvm to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in cvm to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 }
 
 type EniAttachmentObservation struct {
@@ -89,13 +111,14 @@ type EniAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // EniAttachment is the Schema for the EniAttachments API. Provides a resource to detailed information of attached backend server to an ENI.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type EniAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

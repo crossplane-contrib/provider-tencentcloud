@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -33,6 +29,7 @@ type Layer7ListenerInitParameters struct {
 
 	// ID list of the client certificate. Set only when auth_type is specified as mutual authentication. NOTES: Only supports listeners of HTTPS protocol.
 	// ID list of the client certificate. Set only when `auth_type` is specified as mutual authentication. NOTES: Only supports listeners of `HTTPS` protocol.
+	// +listType=set
 	ClientCertificateIds []*string `json:"clientCertificateIds,omitempty" tf:"client_certificate_ids,omitempty"`
 
 	// Protocol type of the forwarding. Valid value: HTTP and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
@@ -50,6 +47,19 @@ type Layer7ListenerInitParameters struct {
 	// Protocol of the layer7 listener. Valid value: HTTP and HTTPS.
 	// Protocol of the layer7 listener. Valid value: `HTTP` and `HTTPS`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// ID of the GAAP proxy.
+	// ID of the GAAP proxy.
+	// +crossplane:generate:reference:type=Proxy
+	ProxyID *string `json:"proxyId,omitempty" tf:"proxy_id,omitempty"`
+
+	// Reference to a Proxy to populate proxyId.
+	// +kubebuilder:validation:Optional
+	ProxyIDRef *v1.Reference `json:"proxyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Proxy to populate proxyId.
+	// +kubebuilder:validation:Optional
+	ProxyIDSelector *v1.Selector `json:"proxyIdSelector,omitempty" tf:"-"`
 }
 
 type Layer7ListenerObservation struct {
@@ -68,6 +78,7 @@ type Layer7ListenerObservation struct {
 
 	// ID list of the client certificate. Set only when auth_type is specified as mutual authentication. NOTES: Only supports listeners of HTTPS protocol.
 	// ID list of the client certificate. Set only when `auth_type` is specified as mutual authentication. NOTES: Only supports listeners of `HTTPS` protocol.
+	// +listType=set
 	ClientCertificateIds []*string `json:"clientCertificateIds,omitempty" tf:"client_certificate_ids,omitempty"`
 
 	// Creation time of the layer7 listener.
@@ -122,6 +133,7 @@ type Layer7ListenerParameters struct {
 	// ID list of the client certificate. Set only when auth_type is specified as mutual authentication. NOTES: Only supports listeners of HTTPS protocol.
 	// ID list of the client certificate. Set only when `auth_type` is specified as mutual authentication. NOTES: Only supports listeners of `HTTPS` protocol.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ClientCertificateIds []*string `json:"clientCertificateIds,omitempty" tf:"client_certificate_ids,omitempty"`
 
 	// Protocol type of the forwarding. Valid value: HTTP and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
@@ -183,13 +195,14 @@ type Layer7ListenerStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Layer7Listener is the Schema for the Layer7Listeners API. Provides a resource to create a layer7 listener of GAAP.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Layer7Listener struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -209,15 +205,43 @@ type InstanceInitParameters struct {
 
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
 	Storage *float64 `json:"storage,omitempty" tf:"storage,omitempty"`
 
+	// ID of subnet.
+	// ID of subnet.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// The available tags within this postgresql.
 	// The available tags within this postgresql.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of VPC.
+	// ID of VPC.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
 	// Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
@@ -343,6 +367,7 @@ type InstanceObservation struct {
 
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
@@ -355,6 +380,7 @@ type InstanceObservation struct {
 
 	// The available tags within this postgresql.
 	// The available tags within this postgresql.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Uid of the postgresql instance.
@@ -495,6 +521,7 @@ type InstanceParameters struct {
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
@@ -519,6 +546,7 @@ type InstanceParameters struct {
 	// The available tags within this postgresql.
 	// The available tags within this postgresql.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of VPC.
@@ -565,13 +593,14 @@ type InstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Instance is the Schema for the Instances API. Use this resource to create postgresql instance.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`

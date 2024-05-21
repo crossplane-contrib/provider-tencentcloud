@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -226,6 +222,19 @@ type ApiInitParameters struct {
 	// Scf websocket transfer function version. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
 	// Scf websocket transfer function version. It takes effect when the current end type is WEBSOCKET and the backend type is SCF.
 	ServiceConfigWebsocketTransportFunctionQualifier *string `json:"serviceConfigWebsocketTransportFunctionQualifier,omitempty" tf:"service_config_websocket_transport_function_qualifier,omitempty"`
+
+	// The unique ID of the service where the API is located. Refer to resource tencentcloud_api_gateway_service.
+	// The unique ID of the service where the API is located. Refer to resource `tencentcloud_api_gateway_service`.
+	// +crossplane:generate:reference:type=Service
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v1.Reference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
 
 	// The backend service parameters of the API.
 	// The backend service parameters of the API.
@@ -1621,13 +1630,14 @@ type ApiStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Api is the Schema for the Apis API. Use this resource to create API of API gateway.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Api struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: instances.clb.tencentcloud.crossplane.io
 spec:
   group: clb.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           to create a CLB instance.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,135 +74,114 @@ spec:
               forProvider:
                 properties:
                   addressIpVersion:
-                    description: IP version, only applicable to open CLB. Valid values
-                      are ipv4, ipv6 and IPv6FullChain. IP version, only applicable
-                      to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
+                    description: |-
+                      IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
+                      IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
                     type: string
                   bandwidthPackageId:
-                    description: Bandwidth package id. If set, the internet_charge_type
-                      must be BANDWIDTH_PACKAGE. Bandwidth package id. If set, the
-                      `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
+                    description: |-
+                      Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
+                      Bandwidth package id. If set, the `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
                     type: string
                   clbName:
-                    description: Name of the CLB. The name can only contain Chinese
-                      characters, English letters, numbers, underscore and hyphen
-                      '-'. Name of the CLB. The name can only contain Chinese characters,
-                      English letters, numbers, underscore and hyphen '-'.
+                    description: |-
+                      Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
+                      Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
                   deleteProtect:
-                    description: Whether to enable delete protection. Whether to enable
-                      delete protection.
+                    description: |-
+                      Whether to enable delete protection.
+                      Whether to enable delete protection.
                     type: boolean
                   dynamicVip:
-                    description: If create dynamic vip CLB instance, true or false.
+                    description: |-
+                      If create dynamic vip CLB instance, true or false.
                       If create dynamic vip CLB instance, `true` or `false`.
                     type: boolean
                   internetBandwidthMaxOut:
-                    description: Max bandwidth out, only applicable to open CLB. Valid
-                      value ranges is [1, 2048]. Unit is MB. Max bandwidth out, only
-                      applicable to open CLB. Valid value ranges is [1, 2048]. Unit
-                      is MB.
+                    description: |-
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
                     type: number
                   internetChargeType:
-                    description: Internet charge type, only applicable to open CLB.
-                      Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR
-                      and BANDWIDTH_PACKAGE. Internet charge type, only applicable
-                      to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`.
+                    description: |-
+                      Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
+                      Internet charge type, only applicable to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
                     type: string
                   loadBalancerPassToTarget:
-                    description: Whether the target allow flow come from clb. If value
-                      is true, only check security group of clb, or check both clb
-                      and backend instance security group. Whether the target allow
-                      flow come from clb. If value is true, only check security group
-                      of clb, or check both clb and backend instance security group.
+                    description: |-
+                      Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.
+                      Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.
                     type: boolean
                   logSetId:
-                    description: The id of log set. The id of log set.
+                    description: |-
+                      The id of log set.
+                      The id of log set.
                     type: string
                   logTopicId:
-                    description: The id of log topic. The id of log topic.
+                    description: |-
+                      The id of log topic.
+                      The id of log topic.
                     type: string
                   masterZoneId:
-                    description: Setting master zone id of cross available zone disaster
-                      recovery, only applicable to open CLB. Setting master zone id
-                      of cross available zone disaster recovery, only applicable to
-                      open CLB.
+                    description: |-
+                      Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.
+                      Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.
                     type: string
                   networkType:
-                    description: 'Type of CLB instance. Valid values: OPEN and INTERNAL.
-                      Type of CLB instance. Valid values: `OPEN` and `INTERNAL`.'
+                    description: |-
+                      Type of CLB instance. Valid values: OPEN and INTERNAL.
+                      Type of CLB instance. Valid values: `OPEN` and `INTERNAL`.
                     type: string
                   projectId:
-                    description: ID of the project within the CLB instance, 0 - Default
-                      Project. ID of the project within the CLB instance, `0` - Default
-                      Project.
+                    description: |-
+                      ID of the project within the CLB instance, 0 - Default Project.
+                      ID of the project within the CLB instance, `0` - Default Project.
                     type: number
                   securityGroups:
-                    description: Security groups of the CLB instance. Supports both
-                      OPEN and INTERNAL CLBs. Security groups of the CLB instance.
-                      Supports both `OPEN` and `INTERNAL` CLBs.
+                    description: |-
+                      Security groups of the CLB instance. Supports both OPEN and INTERNAL CLBs.
+                      Security groups of the CLB instance. Supports both `OPEN` and `INTERNAL` CLBs.
                     items:
                       type: string
                     type: array
                   slaType:
-                    description: 'This parameter is required to create LCU-supported
-                      instances. Values:SLA: Super Large 4. When you have activated
-                      Super Large models, SLA refers to Super Large 4; clb.c2.medium:
-                      Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced
-                      1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2;
-                      clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For
-                      more details, see Instance Specifications. This parameter is
-                      required to create LCU-supported instances. Values:`SLA`: Super
-                      Large 4. When you have activated Super Large models, `SLA` refers
-                      to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`:
-                      Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super
-                      Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super
-                      Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see
-                      [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).'
+                    description: |-
+                      This parameter is required to create LCU-supported instances. Values:SLA: Super Large 4. When you have activated Super Large models, SLA refers to Super Large 4; clb.c2.medium: Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced 1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2; clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For more details, see Instance Specifications.
+                      This parameter is required to create LCU-supported instances. Values:`SLA`: Super Large 4. When you have activated Super Large models, `SLA` refers to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`: Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).
                     type: string
                   slaveZoneId:
-                    description: Setting slave zone id of cross available zone disaster
-                      recovery, only applicable to open CLB. this zone will undertake
-                      traffic when the master is down. Setting slave zone id of cross
-                      available zone disaster recovery, only applicable to open CLB.
-                      this zone will undertake traffic when the master is down.
+                    description: |-
+                      Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.
+                      Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.
                     type: string
                   snatIps:
-                    description: 'Snat Ip List, required with snat_pro=true. NOTE:
-                      This argument cannot be read and modified here because dynamic
-                      ip is untraceable, please import resource tencentcloud_clb_snat_ip
-                      to handle fixed ips. Snat Ip List, required with `snat_pro=true`.
-                      NOTE: This argument cannot be read and modified here because
-                      dynamic ip is untraceable, please import resource `tencentcloud_clb_snat_ip`
-                      to handle fixed ips.'
+                    description: |-
+                      Snat Ip List, required with snat_pro=true. NOTE: This argument cannot be read and modified here because dynamic ip is untraceable, please import resource tencentcloud_clb_snat_ip to handle fixed ips.
+                      Snat Ip List, required with `snat_pro=true`. NOTE: This argument cannot be read and modified here because dynamic ip is untraceable, please import resource `tencentcloud_clb_snat_ip` to handle fixed ips.
                     items:
                       properties:
                         ip:
-                          description: Snat IP address, If set to empty will auto
-                            allocated. Snat IP address, If set to empty will auto
-                            allocated.
+                          description: |-
+                            Snat IP address, If set to empty will auto allocated.
+                            Snat IP address, If set to empty will auto allocated.
                           type: string
                         subnetId:
-                          description: In the case of purchasing a INTERNAL clb instance,
-                            the subnet id must be specified. The VIP of the INTERNAL
-                            clb instance will be generated from this subnet. Snat
-                            subnet ID.
+                          description: |-
+                            In the case of purchasing a INTERNAL clb instance, the subnet id must be specified. The VIP of the INTERNAL clb instance will be generated from this subnet.
+                            Snat subnet ID.
                           type: string
                       type: object
                     type: array
                   snatPro:
-                    description: Indicates whether Binding IPs of other VPCs feature
-                      switch. Indicates whether Binding IPs of other VPCs feature
-                      switch.
+                    description: |-
+                      Indicates whether Binding IPs of other VPCs feature switch.
+                      Indicates whether Binding IPs of other VPCs feature switch.
                     type: boolean
                   subnetId:
-                    description: In the case of purchasing a INTERNAL clb instance,
-                      the subnet id must be specified. The VIP of the INTERNAL clb
-                      instance will be generated from this subnet. In the case of
-                      purchasing a `INTERNAL` clb instance, the subnet id must be
-                      specified. The VIP of the `INTERNAL` clb instance will be generated
-                      from this subnet.
+                    description: |-
+                      In the case of purchasing a INTERNAL clb instance, the subnet id must be specified. The VIP of the INTERNAL clb instance will be generated from this subnet.
+                      In the case of purchasing a `INTERNAL` clb instance, the subnet id must be specified. The VIP of the `INTERNAL` clb instance will be generated from this subnet.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -209,21 +194,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -236,8 +221,9 @@ spec:
                     description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -250,21 +236,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -274,44 +260,35 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: The available tags within this CLB. The available
-                      tags within this CLB.
+                    description: |-
+                      The available tags within this CLB.
+                      The available tags within this CLB.
                     type: object
+                    x-kubernetes-map-type: granular
                   targetRegionInfoRegion:
-                    description: Region information of backend services are attached
-                      the CLB instance. Only supports OPEN CLBs. Region information
-                      of backend services are attached the CLB instance. Only supports
-                      `OPEN` CLBs.
+                    description: |-
+                      Region information of backend services are attached the CLB instance. Only supports OPEN CLBs.
+                      Region information of backend services are attached the CLB instance. Only supports `OPEN` CLBs.
                     type: string
                   targetRegionInfoVpcId:
-                    description: Vpc information of backend services are attached
-                      the CLB instance. Only supports OPEN CLBs. Vpc information of
-                      backend services are attached the CLB instance. Only supports
-                      `OPEN` CLBs.
+                    description: |-
+                      Vpc information of backend services are attached the CLB instance. Only supports OPEN CLBs.
+                      Vpc information of backend services are attached the CLB instance. Only supports `OPEN` CLBs.
                     type: string
                   vip:
-                    description: Specifies the VIP for the application of a CLB instance.
-                      This parameter is optional. If you do not specify this parameter,
-                      the system automatically assigns a value for the parameter.
-                      IPv4 and IPv6 CLB instances support this parameter, but IPv6
-                      NAT64 CLB instances do not. Specifies the VIP for the application
-                      of a CLB instance. This parameter is optional. If you do not
-                      specify this parameter, the system automatically assigns a value
-                      for the parameter. IPv4 and IPv6 CLB instances support this
-                      parameter, but IPv6 NAT64 CLB instances do not.
+                    description: |-
+                      Specifies the VIP for the application of a CLB instance. This parameter is optional. If you do not specify this parameter, the system automatically assigns a value for the parameter. IPv4 and IPv6 CLB instances support this parameter, but IPv6 NAT64 CLB instances do not.
+                      Specifies the VIP for the application of a CLB instance. This parameter is optional. If you do not specify this parameter, the system automatically assigns a value for the parameter. IPv4 and IPv6 CLB instances support this parameter, but IPv6 NAT64 CLB instances do not.
                     type: string
                   vipIsp:
-                    description: Network operator, only applicable to open CLB. Valid
-                      values are CMCC(China Mobile), CTCC(Telecom), CUCC(China Unicom)
-                      and BGP. If this ISP is specified, network billing method can
-                      only use the bandwidth package billing (BANDWIDTH_PACKAGE).
-                      Network operator, only applicable to open CLB. Valid values
-                      are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom)
-                      and `BGP`. If this ISP is specified, network billing method
-                      can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+                    description: |-
+                      Network operator, only applicable to open CLB. Valid values are CMCC(China Mobile), CTCC(Telecom), CUCC(China Unicom) and BGP. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+                      Network operator, only applicable to open CLB. Valid values are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom) and `BGP`. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
                     type: string
                   vpcId:
-                    description: VPC ID of the CLB. VPC ID of the CLB.
+                    description: |-
+                      VPC ID of the CLB.
+                      VPC ID of the CLB.
                     type: string
                   vpcIdRef:
                     description: Reference to a VPC in vpc to populate vpcId.
@@ -324,21 +301,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -351,8 +328,9 @@ spec:
                     description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -365,21 +343,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -387,205 +365,339 @@ spec:
                         type: object
                     type: object
                   zoneId:
-                    description: Available zone id, only applicable to open CLB. Available
-                      zone id, only applicable to open CLB.
+                    description: |-
+                      Available zone id, only applicable to open CLB.
+                      Available zone id, only applicable to open CLB.
                     type: string
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   addressIpVersion:
-                    description: IP version, only applicable to open CLB. Valid values
-                      are ipv4, ipv6 and IPv6FullChain. IP version, only applicable
-                      to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
+                    description: |-
+                      IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
+                      IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
                     type: string
                   bandwidthPackageId:
-                    description: Bandwidth package id. If set, the internet_charge_type
-                      must be BANDWIDTH_PACKAGE. Bandwidth package id. If set, the
-                      `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
+                    description: |-
+                      Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
+                      Bandwidth package id. If set, the `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
                     type: string
                   clbName:
-                    description: Name of the CLB. The name can only contain Chinese
-                      characters, English letters, numbers, underscore and hyphen
-                      '-'. Name of the CLB. The name can only contain Chinese characters,
-                      English letters, numbers, underscore and hyphen '-'.
+                    description: |-
+                      Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
+                      Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
                   deleteProtect:
-                    description: Whether to enable delete protection. Whether to enable
-                      delete protection.
+                    description: |-
+                      Whether to enable delete protection.
+                      Whether to enable delete protection.
                     type: boolean
                   dynamicVip:
-                    description: If create dynamic vip CLB instance, true or false.
+                    description: |-
+                      If create dynamic vip CLB instance, true or false.
                       If create dynamic vip CLB instance, `true` or `false`.
                     type: boolean
                   internetBandwidthMaxOut:
-                    description: Max bandwidth out, only applicable to open CLB. Valid
-                      value ranges is [1, 2048]. Unit is MB. Max bandwidth out, only
-                      applicable to open CLB. Valid value ranges is [1, 2048]. Unit
-                      is MB.
+                    description: |-
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
                     type: number
                   internetChargeType:
-                    description: Internet charge type, only applicable to open CLB.
-                      Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR
-                      and BANDWIDTH_PACKAGE. Internet charge type, only applicable
-                      to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`.
+                    description: |-
+                      Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
+                      Internet charge type, only applicable to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
                     type: string
                   loadBalancerPassToTarget:
-                    description: Whether the target allow flow come from clb. If value
-                      is true, only check security group of clb, or check both clb
-                      and backend instance security group. Whether the target allow
-                      flow come from clb. If value is true, only check security group
-                      of clb, or check both clb and backend instance security group.
+                    description: |-
+                      Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.
+                      Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.
                     type: boolean
                   logSetId:
-                    description: The id of log set. The id of log set.
+                    description: |-
+                      The id of log set.
+                      The id of log set.
                     type: string
                   logTopicId:
-                    description: The id of log topic. The id of log topic.
+                    description: |-
+                      The id of log topic.
+                      The id of log topic.
                     type: string
                   masterZoneId:
-                    description: Setting master zone id of cross available zone disaster
-                      recovery, only applicable to open CLB. Setting master zone id
-                      of cross available zone disaster recovery, only applicable to
-                      open CLB.
+                    description: |-
+                      Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.
+                      Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.
                     type: string
                   networkType:
-                    description: 'Type of CLB instance. Valid values: OPEN and INTERNAL.
-                      Type of CLB instance. Valid values: `OPEN` and `INTERNAL`.'
+                    description: |-
+                      Type of CLB instance. Valid values: OPEN and INTERNAL.
+                      Type of CLB instance. Valid values: `OPEN` and `INTERNAL`.
                     type: string
                   projectId:
-                    description: ID of the project within the CLB instance, 0 - Default
-                      Project. ID of the project within the CLB instance, `0` - Default
-                      Project.
+                    description: |-
+                      ID of the project within the CLB instance, 0 - Default Project.
+                      ID of the project within the CLB instance, `0` - Default Project.
                     type: number
                   securityGroups:
-                    description: Security groups of the CLB instance. Supports both
-                      OPEN and INTERNAL CLBs. Security groups of the CLB instance.
-                      Supports both `OPEN` and `INTERNAL` CLBs.
+                    description: |-
+                      Security groups of the CLB instance. Supports both OPEN and INTERNAL CLBs.
+                      Security groups of the CLB instance. Supports both `OPEN` and `INTERNAL` CLBs.
                     items:
                       type: string
                     type: array
                   slaType:
-                    description: 'This parameter is required to create LCU-supported
-                      instances. Values:SLA: Super Large 4. When you have activated
-                      Super Large models, SLA refers to Super Large 4; clb.c2.medium:
-                      Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced
-                      1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2;
-                      clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For
-                      more details, see Instance Specifications. This parameter is
-                      required to create LCU-supported instances. Values:`SLA`: Super
-                      Large 4. When you have activated Super Large models, `SLA` refers
-                      to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`:
-                      Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super
-                      Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super
-                      Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see
-                      [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).'
+                    description: |-
+                      This parameter is required to create LCU-supported instances. Values:SLA: Super Large 4. When you have activated Super Large models, SLA refers to Super Large 4; clb.c2.medium: Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced 1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2; clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For more details, see Instance Specifications.
+                      This parameter is required to create LCU-supported instances. Values:`SLA`: Super Large 4. When you have activated Super Large models, `SLA` refers to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`: Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).
                     type: string
                   slaveZoneId:
-                    description: Setting slave zone id of cross available zone disaster
-                      recovery, only applicable to open CLB. this zone will undertake
-                      traffic when the master is down. Setting slave zone id of cross
-                      available zone disaster recovery, only applicable to open CLB.
-                      this zone will undertake traffic when the master is down.
+                    description: |-
+                      Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.
+                      Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.
                     type: string
                   snatIps:
-                    description: 'Snat Ip List, required with snat_pro=true. NOTE:
-                      This argument cannot be read and modified here because dynamic
-                      ip is untraceable, please import resource tencentcloud_clb_snat_ip
-                      to handle fixed ips. Snat Ip List, required with `snat_pro=true`.
-                      NOTE: This argument cannot be read and modified here because
-                      dynamic ip is untraceable, please import resource `tencentcloud_clb_snat_ip`
-                      to handle fixed ips.'
+                    description: |-
+                      Snat Ip List, required with snat_pro=true. NOTE: This argument cannot be read and modified here because dynamic ip is untraceable, please import resource tencentcloud_clb_snat_ip to handle fixed ips.
+                      Snat Ip List, required with `snat_pro=true`. NOTE: This argument cannot be read and modified here because dynamic ip is untraceable, please import resource `tencentcloud_clb_snat_ip` to handle fixed ips.
                     items:
                       properties:
                         ip:
-                          description: Snat IP address, If set to empty will auto
-                            allocated. Snat IP address, If set to empty will auto
-                            allocated.
+                          description: |-
+                            Snat IP address, If set to empty will auto allocated.
+                            Snat IP address, If set to empty will auto allocated.
                           type: string
                         subnetId:
-                          description: In the case of purchasing a INTERNAL clb instance,
-                            the subnet id must be specified. The VIP of the INTERNAL
-                            clb instance will be generated from this subnet. Snat
-                            subnet ID.
+                          description: |-
+                            In the case of purchasing a INTERNAL clb instance, the subnet id must be specified. The VIP of the INTERNAL clb instance will be generated from this subnet.
+                            Snat subnet ID.
                           type: string
                       type: object
                     type: array
                   snatPro:
-                    description: Indicates whether Binding IPs of other VPCs feature
-                      switch. Indicates whether Binding IPs of other VPCs feature
-                      switch.
+                    description: |-
+                      Indicates whether Binding IPs of other VPCs feature switch.
+                      Indicates whether Binding IPs of other VPCs feature switch.
                     type: boolean
+                  subnetId:
+                    description: |-
+                      In the case of purchasing a INTERNAL clb instance, the subnet id must be specified. The VIP of the INTERNAL clb instance will be generated from this subnet.
+                      In the case of purchasing a `INTERNAL` clb instance, the subnet id must be specified. The VIP of the `INTERNAL` clb instance will be generated from this subnet.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in vpc to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in vpc to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   tags:
                     additionalProperties:
                       type: string
-                    description: The available tags within this CLB. The available
-                      tags within this CLB.
+                    description: |-
+                      The available tags within this CLB.
+                      The available tags within this CLB.
                     type: object
+                    x-kubernetes-map-type: granular
                   targetRegionInfoRegion:
-                    description: Region information of backend services are attached
-                      the CLB instance. Only supports OPEN CLBs. Region information
-                      of backend services are attached the CLB instance. Only supports
-                      `OPEN` CLBs.
+                    description: |-
+                      Region information of backend services are attached the CLB instance. Only supports OPEN CLBs.
+                      Region information of backend services are attached the CLB instance. Only supports `OPEN` CLBs.
                     type: string
                   targetRegionInfoVpcId:
-                    description: Vpc information of backend services are attached
-                      the CLB instance. Only supports OPEN CLBs. Vpc information of
-                      backend services are attached the CLB instance. Only supports
-                      `OPEN` CLBs.
+                    description: |-
+                      Vpc information of backend services are attached the CLB instance. Only supports OPEN CLBs.
+                      Vpc information of backend services are attached the CLB instance. Only supports `OPEN` CLBs.
                     type: string
                   vip:
-                    description: Specifies the VIP for the application of a CLB instance.
-                      This parameter is optional. If you do not specify this parameter,
-                      the system automatically assigns a value for the parameter.
-                      IPv4 and IPv6 CLB instances support this parameter, but IPv6
-                      NAT64 CLB instances do not. Specifies the VIP for the application
-                      of a CLB instance. This parameter is optional. If you do not
-                      specify this parameter, the system automatically assigns a value
-                      for the parameter. IPv4 and IPv6 CLB instances support this
-                      parameter, but IPv6 NAT64 CLB instances do not.
+                    description: |-
+                      Specifies the VIP for the application of a CLB instance. This parameter is optional. If you do not specify this parameter, the system automatically assigns a value for the parameter. IPv4 and IPv6 CLB instances support this parameter, but IPv6 NAT64 CLB instances do not.
+                      Specifies the VIP for the application of a CLB instance. This parameter is optional. If you do not specify this parameter, the system automatically assigns a value for the parameter. IPv4 and IPv6 CLB instances support this parameter, but IPv6 NAT64 CLB instances do not.
                     type: string
                   vipIsp:
-                    description: Network operator, only applicable to open CLB. Valid
-                      values are CMCC(China Mobile), CTCC(Telecom), CUCC(China Unicom)
-                      and BGP. If this ISP is specified, network billing method can
-                      only use the bandwidth package billing (BANDWIDTH_PACKAGE).
-                      Network operator, only applicable to open CLB. Valid values
-                      are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom)
-                      and `BGP`. If this ISP is specified, network billing method
-                      can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+                    description: |-
+                      Network operator, only applicable to open CLB. Valid values are CMCC(China Mobile), CTCC(Telecom), CUCC(China Unicom) and BGP. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+                      Network operator, only applicable to open CLB. Valid values are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom) and `BGP`. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
                     type: string
+                  vpcId:
+                    description: |-
+                      VPC ID of the CLB.
+                      VPC ID of the CLB.
+                    type: string
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   zoneId:
-                    description: Available zone id, only applicable to open CLB. Available
-                      zone id, only applicable to open CLB.
+                    description: |-
+                      Available zone id, only applicable to open CLB.
+                      Available zone id, only applicable to open CLB.
                     type: string
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -598,9 +710,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -610,21 +723,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -634,17 +747,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -654,21 +769,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -683,21 +798,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -708,14 +824,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -745,194 +862,167 @@ spec:
               atProvider:
                 properties:
                   addressIpVersion:
-                    description: IP version, only applicable to open CLB. Valid values
-                      are ipv4, ipv6 and IPv6FullChain. IP version, only applicable
-                      to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
+                    description: |-
+                      IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
+                      IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
                     type: string
                   bandwidthPackageId:
-                    description: Bandwidth package id. If set, the internet_charge_type
-                      must be BANDWIDTH_PACKAGE. Bandwidth package id. If set, the
-                      `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
+                    description: |-
+                      Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
+                      Bandwidth package id. If set, the `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
                     type: string
                   clbName:
-                    description: Name of the CLB. The name can only contain Chinese
-                      characters, English letters, numbers, underscore and hyphen
-                      '-'. Name of the CLB. The name can only contain Chinese characters,
-                      English letters, numbers, underscore and hyphen '-'.
+                    description: |-
+                      Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
+                      Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
                   clbVips:
-                    description: The virtual service address table of the CLB. The
-                      virtual service address table of the CLB.
+                    description: |-
+                      The virtual service address table of the CLB.
+                      The virtual service address table of the CLB.
                     items:
                       type: string
                     type: array
                   deleteProtect:
-                    description: Whether to enable delete protection. Whether to enable
-                      delete protection.
+                    description: |-
+                      Whether to enable delete protection.
+                      Whether to enable delete protection.
                     type: boolean
                   domain:
-                    description: Domain name of the CLB instance. Domain name of the
-                      CLB instance.
+                    description: |-
+                      Domain name of the CLB instance.
+                      Domain name of the CLB instance.
                     type: string
                   dynamicVip:
-                    description: If create dynamic vip CLB instance, true or false.
+                    description: |-
+                      If create dynamic vip CLB instance, true or false.
                       If create dynamic vip CLB instance, `true` or `false`.
                     type: boolean
                   id:
                     description: ID of the resource.
                     type: string
                   internetBandwidthMaxOut:
-                    description: Max bandwidth out, only applicable to open CLB. Valid
-                      value ranges is [1, 2048]. Unit is MB. Max bandwidth out, only
-                      applicable to open CLB. Valid value ranges is [1, 2048]. Unit
-                      is MB.
+                    description: |-
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
                     type: number
                   internetChargeType:
-                    description: Internet charge type, only applicable to open CLB.
-                      Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR
-                      and BANDWIDTH_PACKAGE. Internet charge type, only applicable
-                      to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`.
+                    description: |-
+                      Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
+                      Internet charge type, only applicable to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
                     type: string
                   loadBalancerPassToTarget:
-                    description: Whether the target allow flow come from clb. If value
-                      is true, only check security group of clb, or check both clb
-                      and backend instance security group. Whether the target allow
-                      flow come from clb. If value is true, only check security group
-                      of clb, or check both clb and backend instance security group.
+                    description: |-
+                      Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.
+                      Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.
                     type: boolean
                   logSetId:
-                    description: The id of log set. The id of log set.
+                    description: |-
+                      The id of log set.
+                      The id of log set.
                     type: string
                   logTopicId:
-                    description: The id of log topic. The id of log topic.
+                    description: |-
+                      The id of log topic.
+                      The id of log topic.
                     type: string
                   masterZoneId:
-                    description: Setting master zone id of cross available zone disaster
-                      recovery, only applicable to open CLB. Setting master zone id
-                      of cross available zone disaster recovery, only applicable to
-                      open CLB.
+                    description: |-
+                      Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.
+                      Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.
                     type: string
                   networkType:
-                    description: 'Type of CLB instance. Valid values: OPEN and INTERNAL.
-                      Type of CLB instance. Valid values: `OPEN` and `INTERNAL`.'
+                    description: |-
+                      Type of CLB instance. Valid values: OPEN and INTERNAL.
+                      Type of CLB instance. Valid values: `OPEN` and `INTERNAL`.
                     type: string
                   projectId:
-                    description: ID of the project within the CLB instance, 0 - Default
-                      Project. ID of the project within the CLB instance, `0` - Default
-                      Project.
+                    description: |-
+                      ID of the project within the CLB instance, 0 - Default Project.
+                      ID of the project within the CLB instance, `0` - Default Project.
                     type: number
                   securityGroups:
-                    description: Security groups of the CLB instance. Supports both
-                      OPEN and INTERNAL CLBs. Security groups of the CLB instance.
-                      Supports both `OPEN` and `INTERNAL` CLBs.
+                    description: |-
+                      Security groups of the CLB instance. Supports both OPEN and INTERNAL CLBs.
+                      Security groups of the CLB instance. Supports both `OPEN` and `INTERNAL` CLBs.
                     items:
                       type: string
                     type: array
                   slaType:
-                    description: 'This parameter is required to create LCU-supported
-                      instances. Values:SLA: Super Large 4. When you have activated
-                      Super Large models, SLA refers to Super Large 4; clb.c2.medium:
-                      Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced
-                      1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2;
-                      clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For
-                      more details, see Instance Specifications. This parameter is
-                      required to create LCU-supported instances. Values:`SLA`: Super
-                      Large 4. When you have activated Super Large models, `SLA` refers
-                      to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`:
-                      Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super
-                      Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super
-                      Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see
-                      [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).'
+                    description: |-
+                      This parameter is required to create LCU-supported instances. Values:SLA: Super Large 4. When you have activated Super Large models, SLA refers to Super Large 4; clb.c2.medium: Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced 1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2; clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For more details, see Instance Specifications.
+                      This parameter is required to create LCU-supported instances. Values:`SLA`: Super Large 4. When you have activated Super Large models, `SLA` refers to Super Large 4; `clb.c2.medium`: Standard; `clb.c3.small`: Advanced 1; `clb.c3.medium`: Advanced 1; `clb.c4.small`: Super Large 1; `clb.c4.medium`: Super Large 2; `clb.c4.large`: Super Large 3; `clb.c4.xlarge`: Super Large 4. For more details, see [Instance Specifications](https://intl.cloud.tencent.com/document/product/214/84689?from_cn_redirect=1).
                     type: string
                   slaveZoneId:
-                    description: Setting slave zone id of cross available zone disaster
-                      recovery, only applicable to open CLB. this zone will undertake
-                      traffic when the master is down. Setting slave zone id of cross
-                      available zone disaster recovery, only applicable to open CLB.
-                      this zone will undertake traffic when the master is down.
+                    description: |-
+                      Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.
+                      Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.
                     type: string
                   snatIps:
-                    description: 'Snat Ip List, required with snat_pro=true. NOTE:
-                      This argument cannot be read and modified here because dynamic
-                      ip is untraceable, please import resource tencentcloud_clb_snat_ip
-                      to handle fixed ips. Snat Ip List, required with `snat_pro=true`.
-                      NOTE: This argument cannot be read and modified here because
-                      dynamic ip is untraceable, please import resource `tencentcloud_clb_snat_ip`
-                      to handle fixed ips.'
+                    description: |-
+                      Snat Ip List, required with snat_pro=true. NOTE: This argument cannot be read and modified here because dynamic ip is untraceable, please import resource tencentcloud_clb_snat_ip to handle fixed ips.
+                      Snat Ip List, required with `snat_pro=true`. NOTE: This argument cannot be read and modified here because dynamic ip is untraceable, please import resource `tencentcloud_clb_snat_ip` to handle fixed ips.
                     items:
                       properties:
                         ip:
-                          description: Snat IP address, If set to empty will auto
-                            allocated. Snat IP address, If set to empty will auto
-                            allocated.
+                          description: |-
+                            Snat IP address, If set to empty will auto allocated.
+                            Snat IP address, If set to empty will auto allocated.
                           type: string
                         subnetId:
-                          description: In the case of purchasing a INTERNAL clb instance,
-                            the subnet id must be specified. The VIP of the INTERNAL
-                            clb instance will be generated from this subnet. Snat
-                            subnet ID.
+                          description: |-
+                            In the case of purchasing a INTERNAL clb instance, the subnet id must be specified. The VIP of the INTERNAL clb instance will be generated from this subnet.
+                            Snat subnet ID.
                           type: string
                       type: object
                     type: array
                   snatPro:
-                    description: Indicates whether Binding IPs of other VPCs feature
-                      switch. Indicates whether Binding IPs of other VPCs feature
-                      switch.
+                    description: |-
+                      Indicates whether Binding IPs of other VPCs feature switch.
+                      Indicates whether Binding IPs of other VPCs feature switch.
                     type: boolean
                   subnetId:
-                    description: In the case of purchasing a INTERNAL clb instance,
-                      the subnet id must be specified. The VIP of the INTERNAL clb
-                      instance will be generated from this subnet. In the case of
-                      purchasing a `INTERNAL` clb instance, the subnet id must be
-                      specified. The VIP of the `INTERNAL` clb instance will be generated
-                      from this subnet.
+                    description: |-
+                      In the case of purchasing a INTERNAL clb instance, the subnet id must be specified. The VIP of the INTERNAL clb instance will be generated from this subnet.
+                      In the case of purchasing a `INTERNAL` clb instance, the subnet id must be specified. The VIP of the `INTERNAL` clb instance will be generated from this subnet.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: The available tags within this CLB. The available
-                      tags within this CLB.
+                    description: |-
+                      The available tags within this CLB.
+                      The available tags within this CLB.
                     type: object
+                    x-kubernetes-map-type: granular
                   targetRegionInfoRegion:
-                    description: Region information of backend services are attached
-                      the CLB instance. Only supports OPEN CLBs. Region information
-                      of backend services are attached the CLB instance. Only supports
-                      `OPEN` CLBs.
+                    description: |-
+                      Region information of backend services are attached the CLB instance. Only supports OPEN CLBs.
+                      Region information of backend services are attached the CLB instance. Only supports `OPEN` CLBs.
                     type: string
                   targetRegionInfoVpcId:
-                    description: Vpc information of backend services are attached
-                      the CLB instance. Only supports OPEN CLBs. Vpc information of
-                      backend services are attached the CLB instance. Only supports
-                      `OPEN` CLBs.
+                    description: |-
+                      Vpc information of backend services are attached the CLB instance. Only supports OPEN CLBs.
+                      Vpc information of backend services are attached the CLB instance. Only supports `OPEN` CLBs.
                     type: string
                   vip:
-                    description: Specifies the VIP for the application of a CLB instance.
-                      This parameter is optional. If you do not specify this parameter,
-                      the system automatically assigns a value for the parameter.
-                      IPv4 and IPv6 CLB instances support this parameter, but IPv6
-                      NAT64 CLB instances do not. Specifies the VIP for the application
-                      of a CLB instance. This parameter is optional. If you do not
-                      specify this parameter, the system automatically assigns a value
-                      for the parameter. IPv4 and IPv6 CLB instances support this
-                      parameter, but IPv6 NAT64 CLB instances do not.
+                    description: |-
+                      Specifies the VIP for the application of a CLB instance. This parameter is optional. If you do not specify this parameter, the system automatically assigns a value for the parameter. IPv4 and IPv6 CLB instances support this parameter, but IPv6 NAT64 CLB instances do not.
+                      Specifies the VIP for the application of a CLB instance. This parameter is optional. If you do not specify this parameter, the system automatically assigns a value for the parameter. IPv4 and IPv6 CLB instances support this parameter, but IPv6 NAT64 CLB instances do not.
                     type: string
                   vipIsp:
-                    description: Network operator, only applicable to open CLB. Valid
-                      values are CMCC(China Mobile), CTCC(Telecom), CUCC(China Unicom)
-                      and BGP. If this ISP is specified, network billing method can
-                      only use the bandwidth package billing (BANDWIDTH_PACKAGE).
-                      Network operator, only applicable to open CLB. Valid values
-                      are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom)
-                      and `BGP`. If this ISP is specified, network billing method
-                      can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+                    description: |-
+                      Network operator, only applicable to open CLB. Valid values are CMCC(China Mobile), CTCC(Telecom), CUCC(China Unicom) and BGP. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
+                      Network operator, only applicable to open CLB. Valid values are `CMCC`(China Mobile), `CTCC`(Telecom), `CUCC`(China Unicom) and `BGP`. If this ISP is specified, network billing method can only use the bandwidth package billing (BANDWIDTH_PACKAGE).
                     type: string
                   vpcId:
-                    description: VPC ID of the CLB. VPC ID of the CLB.
+                    description: |-
+                      VPC ID of the CLB.
+                      VPC ID of the CLB.
                     type: string
                   zoneId:
-                    description: Available zone id, only applicable to open CLB. Available
-                      zone id, only applicable to open CLB.
+                    description: |-
+                      Available zone id, only applicable to open CLB.
+                      Available zone id, only applicable to open CLB.
                     type: string
                 type: object
               conditions:
@@ -941,13 +1031,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -958,8 +1050,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

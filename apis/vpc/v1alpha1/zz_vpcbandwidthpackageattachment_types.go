@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type VPCBandwidthPackageAttachmentInitParameters struct {
+
+	// Bandwidth package unique ID, in the form of bwp-xxxx.
+	// Bandwidth package unique ID, in the form of `bwp-xxxx`.
+	// +crossplane:generate:reference:type=VPCBandwidthPackage
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// Reference to a VPCBandwidthPackage to populate bandwidthPackageId.
+	// +kubebuilder:validation:Optional
+	BandwidthPackageIDRef *v1.Reference `json:"bandwidthPackageIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPCBandwidthPackage to populate bandwidthPackageId.
+	// +kubebuilder:validation:Optional
+	BandwidthPackageIDSelector *v1.Selector `json:"bandwidthPackageIdSelector,omitempty" tf:"-"`
 
 	// Bandwidth packet type, currently supports BGP type, indicating that the internal resource is BGP IP.
 	// Bandwidth packet type, currently supports `BGP` type, indicating that the internal resource is BGP IP.
@@ -123,13 +132,14 @@ type VPCBandwidthPackageAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VPCBandwidthPackageAttachment is the Schema for the VPCBandwidthPackageAttachments API. Provides a resource to create a vpc bandwidth_package_attachment
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type VPCBandwidthPackageAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

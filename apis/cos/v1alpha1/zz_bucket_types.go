@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -119,6 +115,7 @@ type BucketInitParameters struct {
 
 	// The tags of a bucket.
 	// The tags of a bucket.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Enable bucket versioning. NOTE: The multi_az feature is true for the current bucket, cannot disable version control.
@@ -217,6 +214,7 @@ type BucketObservation struct {
 
 	// The tags of a bucket.
 	// The tags of a bucket.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Enable bucket versioning. NOTE: The multi_az feature is true for the current bucket, cannot disable version control.
@@ -328,6 +326,7 @@ type BucketParameters struct {
 	// The tags of a bucket.
 	// The tags of a bucket.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Enable bucket versioning. NOTE: The multi_az feature is true for the current bucket, cannot disable version control.
@@ -672,10 +671,12 @@ type OriginPullRulesInitParameters struct {
 
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// Specifies the custom headers that you can add for COS to access your origin server.
+	// +mapType=granular
 	CustomHTTPHeaders map[string]*string `json:"customHttpHeaders,omitempty" tf:"custom_http_headers,omitempty"`
 
 	// Specifies the pass through headers when accessing the origin server.
 	// Specifies the pass through headers when accessing the origin server.
+	// +listType=set
 	FollowHTTPHeaders []*string `json:"followHttpHeaders,omitempty" tf:"follow_http_headers,omitempty"`
 
 	// Specifies whether to pass through COS request query string when accessing the origin server.
@@ -711,10 +712,12 @@ type OriginPullRulesObservation struct {
 
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// Specifies the custom headers that you can add for COS to access your origin server.
+	// +mapType=granular
 	CustomHTTPHeaders map[string]*string `json:"customHttpHeaders,omitempty" tf:"custom_http_headers,omitempty"`
 
 	// Specifies the pass through headers when accessing the origin server.
 	// Specifies the pass through headers when accessing the origin server.
+	// +listType=set
 	FollowHTTPHeaders []*string `json:"followHttpHeaders,omitempty" tf:"follow_http_headers,omitempty"`
 
 	// Specifies whether to pass through COS request query string when accessing the origin server.
@@ -751,11 +754,13 @@ type OriginPullRulesParameters struct {
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	CustomHTTPHeaders map[string]*string `json:"customHttpHeaders,omitempty" tf:"custom_http_headers,omitempty"`
 
 	// Specifies the pass through headers when accessing the origin server.
 	// Specifies the pass through headers when accessing the origin server.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	FollowHTTPHeaders []*string `json:"followHttpHeaders,omitempty" tf:"follow_http_headers,omitempty"`
 
 	// Specifies whether to pass through COS request query string when accessing the origin server.
@@ -978,13 +983,14 @@ type BucketStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Bucket is the Schema for the Buckets API. Provides a COS resource to create a COS bucket and set its attributes.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Bucket struct {
 	metav1.TypeMeta   `json:",inline"`

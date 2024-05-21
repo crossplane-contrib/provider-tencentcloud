@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,9 +15,48 @@ import (
 
 type StrategyAttachmentInitParameters struct {
 
+	// The API that needs to be bound.
+	// The API that needs to be bound.
+	// +crossplane:generate:reference:type=Api
+	BindAPIID *string `json:"bindApiId,omitempty" tf:"bind_api_id,omitempty"`
+
+	// Reference to a Api to populate bindApiId.
+	// +kubebuilder:validation:Optional
+	BindAPIIDRef *v1.Reference `json:"bindApiIdRef,omitempty" tf:"-"`
+
+	// Selector for a Api to populate bindApiId.
+	// +kubebuilder:validation:Optional
+	BindAPIIDSelector *v1.Selector `json:"bindApiIdSelector,omitempty" tf:"-"`
+
 	// The environment of the strategy association. Valid values: test, release, prepub.
 	// The environment of the strategy association. Valid values: `test`, `release`, `prepub`.
 	EnvironmentName *string `json:"environmentName,omitempty" tf:"environment_name,omitempty"`
+
+	// The ID of the API gateway service.
+	// The ID of the API gateway service.
+	// +crossplane:generate:reference:type=Service
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v1.Reference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
+
+	// The ID of the API gateway strategy.
+	// The ID of the API gateway strategy.
+	// +crossplane:generate:reference:type=IpStrategy
+	StrategyID *string `json:"strategyId,omitempty" tf:"strategy_id,omitempty"`
+
+	// Reference to a IpStrategy to populate strategyId.
+	// +kubebuilder:validation:Optional
+	StrategyIDRef *v1.Reference `json:"strategyIdRef,omitempty" tf:"-"`
+
+	// Selector for a IpStrategy to populate strategyId.
+	// +kubebuilder:validation:Optional
+	StrategyIDSelector *v1.Selector `json:"strategyIdSelector,omitempty" tf:"-"`
 }
 
 type StrategyAttachmentObservation struct {
@@ -120,13 +155,14 @@ type StrategyAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // StrategyAttachment is the Schema for the StrategyAttachments API. Use this resource to create IP strategy attachment of API gateway.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type StrategyAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

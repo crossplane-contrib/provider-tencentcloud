@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: instances.cvm.tencentcloud.crossplane.io
 spec:
   group: cvm.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           instance resource.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,269 +74,177 @@ spec:
               forProvider:
                 properties:
                   allocatePublicIp:
-                    description: Associate a public IP address with an instance in
-                      a VPC or Classic. Boolean value, Default is false. Associate
-                      a public IP address with an instance in a VPC or Classic. Boolean
-                      value, Default is false.
+                    description: |-
+                      Associate a public IP address with an instance in a VPC or Classic. Boolean value, Default is false.
+                      Associate a public IP address with an instance in a VPC or Classic. Boolean value, Default is false.
                     type: boolean
                   availabilityZone:
-                    description: The available zone for the CVM instance. The available
-                      zone for the CVM instance.
+                    description: |-
+                      The available zone for the CVM instance.
+                      The available zone for the CVM instance.
                     type: string
                   bandwidthPackageId:
-                    description: bandwidth package id. if user is standard user, then
-                      the bandwidth_package_id is needed, or default has bandwidth_package_id.
-                      bandwidth package id. if user is standard user, then the bandwidth_package_id
-                      is needed, or default has bandwidth_package_id.
+                    description: |-
+                      bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+                      bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
                     type: string
                   camRoleName:
-                    description: CAM role name authorized to access. CAM role name
-                      authorized to access.
+                    description: |-
+                      CAM role name authorized to access.
+                      CAM role name authorized to access.
                     type: string
                   cdhHostId:
-                    description: 'Id of cdh instance. Note: it only works when instance_charge_type
-                      is set to CDHPAID. Id of cdh instance. Note: it only works when
-                      instance_charge_type is set to `CDHPAID`.'
+                    description: |-
+                      Id of cdh instance. Note: it only works when instance_charge_type is set to CDHPAID.
+                      Id of cdh instance. Note: it only works when instance_charge_type is set to `CDHPAID`.
                     type: string
                   cdhInstanceType:
-                    description: 'Type of instance created on cdh, the value of this
-                      parameter is in the format of CDH_XCXG based on the number of
-                      CPU cores and memory capacity. Note: it only works when instance_charge_type
-                      is set to CDHPAID. Type of instance created on cdh, the value
-                      of this parameter is in the format of CDH_XCXG based on the
-                      number of CPU cores and memory capacity. Note: it only works
-                      when instance_charge_type is set to `CDHPAID`.'
+                    description: |-
+                      Type of instance created on cdh, the value of this parameter is in the format of CDH_XCXG based on the number of CPU cores and memory capacity. Note: it only works when instance_charge_type is set to CDHPAID.
+                      Type of instance created on cdh, the value of this parameter is in the format of CDH_XCXG based on the number of CPU cores and memory capacity. Note: it only works when instance_charge_type is set to `CDHPAID`.
                     type: string
                   dataDisks:
-                    description: Settings for data disks. Settings for data disks.
+                    description: |-
+                      Settings for data disks.
+                      Settings for data disks.
                     items:
                       properties:
                         dataDiskId:
-                          description: Data disk ID used to initialize the data disk.
-                            When data disk type is LOCAL_BASIC and LOCAL_SSD, disk
-                            id is not supported. Data disk ID used to initialize the
-                            data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
-                            disk id is not supported.
+                          description: |-
+                            Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
+                            Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                           type: string
                         dataDiskSize:
-                          description: Size of the data disk, and unit is GB. Size
-                            of the data disk, and unit is GB.
+                          description: |-
+                            Size of the data disk, and unit is GB.
+                            Size of the data disk, and unit is GB.
                           type: number
                         dataDiskSnapshotId:
-                          description: Snapshot ID of the data disk. The selected
-                            data disk snapshot size must be smaller than the data
-                            disk size. Snapshot ID of the data disk. The selected
-                            data disk snapshot size must be smaller than the data
-                            disk size.
+                          description: |-
+                            Snapshot ID of the data disk. The selected data disk snapshot size must be smaller than the data disk size.
+                            Snapshot ID of the data disk. The selected data disk snapshot size must be smaller than the data disk size.
                           type: string
                         dataDiskType:
-                          description: 'Data disk type. For more information about
-                            limits on different data disk types, see Storage Overview.
-                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
-                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
-                            InstanceType, LOCAL_PRO: local HDD disk, specified in
-                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
-                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
-                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
-                            SSD. Data disk type. For more information about limits
-                            on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
-                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
-                            InstanceType, LOCAL_PRO: local HDD disk, specified in
-                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
-                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
-                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
-                            SSD.'
+                          description: |-
+                            Data disk type. For more information about limits on different data disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
+                            Data disk type. For more information about limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
                           type: string
                         deleteWithInstance:
-                          description: Decides whether the disk is deleted with instance(only
-                            applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk
-                            with POSTPAID_BY_HOUR instance), default is true. Decides
-                            whether the disk is deleted with instance(only applied
-                            to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk
-                            with `POSTPAID_BY_HOUR` instance), default is true.
+                          description: |-
+                            Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with POSTPAID_BY_HOUR instance), default is true.
+                            Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `POSTPAID_BY_HOUR` instance), default is true.
                           type: boolean
                         encrypt:
-                          description: Decides whether the disk is encrypted. Default
-                            is false. Decides whether the disk is encrypted. Default
-                            is `false`.
+                          description: |-
+                            Decides whether the disk is encrypted. Default is false.
+                            Decides whether the disk is encrypted. Default is `false`.
                           type: boolean
                         throughputPerformance:
-                          description: Add extra performance to the data disk. Only
-                            works when disk type is CLOUD_TSSD or CLOUD_HSSD. Add
-                            extra performance to the data disk. Only works when disk
-                            type is `CLOUD_TSSD` or `CLOUD_HSSD`.
+                          description: |-
+                            Add extra performance to the data disk. Only works when disk type is CLOUD_TSSD or CLOUD_HSSD.
+                            Add extra performance to the data disk. Only works when disk type is `CLOUD_TSSD` or `CLOUD_HSSD`.
                           type: number
                       type: object
                     type: array
                   disableApiTermination:
-                    description: Whether the termination protection is enabled. Default
-                      is false. If set true, which means that this instance can not
-                      be deleted by an API action. Whether the termination protection
-                      is enabled. Default is `false`. If set true, which means that
-                      this instance can not be deleted by an API action.
+                    description: |-
+                      Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
+                      Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
                     type: boolean
                   disableMonitorService:
-                    description: Disable enhance service for monitor, it is enabled
-                      by default. When this options is set, monitor agent won't be
-                      installed. Modifying will cause the instance reset. Disable
-                      enhance service for monitor, it is enabled by default. When
-                      this options is set, monitor agent won't be installed. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   disableSecurityService:
-                    description: Disable enhance service for security, it is enabled
-                      by default. When this options is set, security agent won't be
-                      installed. Modifying will cause the instance reset. Disable
-                      enhance service for security, it is enabled by default. When
-                      this options is set, security agent won't be installed. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   forceDelete:
-                    description: 'Indicate whether to force delete the instance. Default
-                      is false. If set true, the instance will be permanently deleted
-                      instead of being moved into the recycle bin. Note: only works
-                      for PREPAID instance. Indicate whether to force delete the instance.
-                      Default is `false`. If set true, the instance will be permanently
-                      deleted instead of being moved into the recycle bin. Note: only
-                      works for `PREPAID` instance.'
+                    description: |-
+                      Indicate whether to force delete the instance. Default is false. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for PREPAID instance.
+                      Indicate whether to force delete the instance. Default is `false`. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for `PREPAID` instance.
                     type: boolean
                   hostname:
-                    description: 'The hostname of the instance. Windows instance:
-                      The name should be a combination of 2 to 15 characters comprised
-                      of letters (case insensitive), numbers, and hyphens (-). Period
-                      (.) is not supported, and the name cannot be a string of pure
-                      numbers. Other types (such as Linux) of instances: The name
-                      should be a combination of 2 to 60 characters, supporting multiple
-                      periods (.). The piece between two periods is composed of letters
-                      (case insensitive), numbers, and hyphens (-). Modifying will
-                      cause the instance reset. The hostname of the instance. Windows
-                      instance: The name should be a combination of 2 to 15 characters
-                      comprised of letters (case insensitive), numbers, and hyphens
-                      (-). Period (.) is not supported, and the name cannot be a string
-                      of pure numbers. Other types (such as Linux) of instances: The
-                      name should be a combination of 2 to 60 characters, supporting
-                      multiple periods (.). The piece between two periods is composed
-                      of letters (case insensitive), numbers, and hyphens (-). Modifying
-                      will cause the instance reset.'
+                    description: |-
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
                     type: string
                   imageId:
-                    description: The image to use for the instance. Changing image_id
-                      will cause the instance reset. The image to use for the instance.
-                      Changing `image_id` will cause the instance reset.
+                    description: |-
+                      The image to use for the instance. Changing image_id will cause the instance reset.
+                      The image to use for the instance. Changing `image_id` will cause the instance reset.
                     type: string
                   instanceChargeType:
-                    description: 'The charge type of instance. Valid values are PREPAID,
-                      POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default
-                      is POSTPAID_BY_HOUR. Note: TencentCloud International only supports
-                      POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow
-                      to delete before expired. SPOTPAID instance must set spot_instance_type
-                      and spot_max_price at the same time. CDHPAID instance must set
-                      cdh_instance_type and cdh_host_id. The charge type of instance.
-                      Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`,
-                      `CDHPAID` and `CDCPAID`. The default is `POSTPAID_BY_HOUR`.
-                      Note: TencentCloud International only supports `POSTPAID_BY_HOUR`
-                      and `CDHPAID`. `PREPAID` instance may not allow to delete before
-                      expired. `SPOTPAID` instance must set `spot_instance_type` and
-                      `spot_max_price` at the same time. `CDHPAID` instance must set
-                      `cdh_instance_type` and `cdh_host_id`.'
+                    description: |-
+                      The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow to delete before expired. SPOTPAID instance must set spot_instance_type and spot_max_price at the same time. CDHPAID instance must set cdh_instance_type and cdh_host_id.
+                      The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDHPAID` and `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR` and `CDHPAID`. `PREPAID` instance may not allow to delete before expired. `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time. `CDHPAID` instance must set `cdh_instance_type` and `cdh_host_id`.
                     type: string
                   instanceChargeTypePrepaidPeriod:
-                    description: 'The tenancy (time unit is month) of the prepaid
-                      instance, NOTE: it only works when instance_charge_type is set
-                      to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                      11, 12, 24, 36, 48, 60. The tenancy (time unit is month) of
-                      the prepaid instance, NOTE: it only works when instance_charge_type
-                      is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`,
-                      `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`, `48`, `60`.'
+                    description: |-
+                      The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60.
+                      The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`, `48`, `60`.
                     type: number
                   instanceChargeTypePrepaidRenewFlag:
-                    description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
-                      notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
-                      notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
-                      neither notify upon expiration nor renew automatically. Default
-                      value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified
-                      as NOTIFY_AND_AUTO_RENEW, the instance will be automatically
-                      renewed on a monthly basis if the account balance is sufficient.
-                      NOTE: it only works when instance_charge_type is set to PREPAID.
-                      Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
-                      upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
-                      notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
-                      neither notify upon expiration nor renew automatically. Default
-                      value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
-                      as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically
-                      renewed on a monthly basis if the account balance is sufficient.
-                      NOTE: it only works when instance_charge_type is set to `PREPAID`.'
+                    description: |-
+                      Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
+                      Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
                     type: string
                   instanceCount:
-                    description: 'It has been deprecated from version 1.59.18. Use
-                      built-in count instead. The number of instances to be purchased.
-                      Value range:[1,100]; default value: 1. The number of instances
-                      to be purchased. Value range:[1,100]; default value: 1.'
+                    description: |-
+                      It has been deprecated from version 1.59.18. Use built-in count instead. The number of instances to be purchased. Value range:[1,100]; default value: 1.
+                      The number of instances to be purchased. Value range:[1,100]; default value: 1.
                     type: number
                   instanceName:
-                    description: The name of the instance. The name of the instance.
+                    description: |-
+                      The name of the instance.
+                      The name of the instance.
                     type: string
                   instanceType:
-                    description: The type of the instance. The type of the instance.
+                    description: |-
+                      The type of the instance.
+                      The type of the instance.
                     type: string
                   internetChargeType:
-                    description: Internet charge type of the instance, Valid values
-                      are BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR
-                      and BANDWIDTH_PACKAGE. If not set, internet charge type are
-                      consistent with the cvm charge type by default. This value takes
-                      NO Effect when changing and does not need to be set when allocate_public_ip
-                      is false. Internet charge type of the instance, Valid values
-                      are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`. If not set, internet charge type are
-                      consistent with the cvm charge type by default. This value takes
-                      NO Effect when changing and does not need to be set when `allocate_public_ip`
-                      is false.
+                    description: |-
+                      Internet charge type of the instance, Valid values are BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when allocate_public_ip is false.
+                      Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when `allocate_public_ip` is false.
                     type: string
                   internetMaxBandwidthOut:
-                    description: Maximum outgoing bandwidth to the public network,
-                      measured in Mbps (Mega bits per second). This value does not
-                      need to be set when allocate_public_ip is false. Maximum outgoing
-                      bandwidth to the public network, measured in Mbps (Mega bits
-                      per second). This value does not need to be set when `allocate_public_ip`
-                      is false.
+                    description: |-
+                      Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when allocate_public_ip is false.
+                      Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
                     type: number
                   keepImageLogin:
-                    description: Whether to keep image login or not, default is false.
-                      When the image type is private or shared or imported, this parameter
-                      can be set true. Modifying will cause the instance reset. Whether
-                      to keep image login or not, default is `false`. When the image
-                      type is private or shared or imported, this parameter can be
-                      set `true`. Modifying will cause the instance reset.
+                    description: |-
+                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
+                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
                     type: boolean
                   keyIds:
-                    description: The key pair to use for the instance, it looks like
-                      skey-16jig7tx. Modifying will cause the instance reset. The
-                      key pair to use for the instance, it looks like `skey-16jig7tx`.
-                      Modifying will cause the instance reset.
+                    description: |-
+                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   keyName:
-                    description: Please use key_ids instead. The key pair to use for
-                      the instance, it looks like skey-16jig7tx. Modifying will cause
-                      the instance reset. The key pair to use for the instance, it
-                      looks like `skey-16jig7tx`. Modifying will cause the instance
-                      reset.
+                    description: |-
+                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
                     type: string
                   orderlySecurityGroups:
-                    description: A list of orderly security group IDs to associate
-                      with. A list of orderly security group IDs to associate with.
+                    description: |-
+                      A list of orderly security group IDs to associate with.
+                      A list of orderly security group IDs to associate with.
                     items:
                       type: string
                     type: array
                   passwordSecretRef:
-                    description: Password for the instance. In order for the new password
-                      to take effect, the instance will be restarted after the password
-                      change. Modifying will cause the instance reset. Password for
-                      the instance. In order for the new password to take effect,
-                      the instance will be restarted after the password change. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
+                      Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
                     properties:
                       key:
                         description: The key to select.
@@ -347,57 +261,52 @@ spec:
                     - namespace
                     type: object
                   placementGroupId:
-                    description: The ID of a placement group. The ID of a placement
-                      group.
+                    description: |-
+                      The ID of a placement group.
+                      The ID of a placement group.
                     type: string
                   privateIp:
-                    description: The private IP to be assigned to this instance, must
-                      be in the provided subnet and available. The private IP to be
-                      assigned to this instance, must be in the provided subnet and
-                      available.
+                    description: |-
+                      The private IP to be assigned to this instance, must be in the provided subnet and available.
+                      The private IP to be assigned to this instance, must be in the provided subnet and available.
                     type: string
                   projectId:
-                    description: The project the instance belongs to, default to 0.
+                    description: |-
+                      The project the instance belongs to, default to 0.
                       The project the instance belongs to, default to 0.
                     type: number
                   runningFlag:
-                    description: Set instance to running or stop. Default value is
-                      true, the instance will shutdown when this flag is false. Set
-                      instance to running or stop. Default value is true, the instance
-                      will shutdown when this flag is false.
+                    description: |-
+                      Set instance to running or stop. Default value is true, the instance will shutdown when this flag is false.
+                      Set instance to running or stop. Default value is true, the instance will shutdown when this flag is false.
                     type: boolean
                   securityGroups:
-                    description: It will be deprecated. Use orderly_security_groups
-                      instead. A list of security group IDs to associate with. A list
-                      of security group IDs to associate with.
+                    description: |-
+                      It will be deprecated. Use orderly_security_groups instead. A list of security group IDs to associate with.
+                      A list of security group IDs to associate with.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   spotInstanceType:
-                    description: 'Type of spot instance, only support ONE-TIME now.
-                      Note: it only works when instance_charge_type is set to SPOTPAID.
-                      Type of spot instance, only support `ONE-TIME` now. Note: it
-                      only works when instance_charge_type is set to `SPOTPAID`.'
+                    description: |-
+                      Type of spot instance, only support ONE-TIME now. Note: it only works when instance_charge_type is set to SPOTPAID.
+                      Type of spot instance, only support `ONE-TIME` now. Note: it only works when instance_charge_type is set to `SPOTPAID`.
                     type: string
                   spotMaxPrice:
-                    description: 'Max price of a spot instance, is the format of decimal
-                      string, for example "0.50". Note: it only works when instance_charge_type
-                      is set to SPOTPAID. Max price of a spot instance, is the format
-                      of decimal string, for example "0.50". Note: it only works when
-                      instance_charge_type is set to `SPOTPAID`.'
+                    description: |-
+                      Max price of a spot instance, is the format of decimal string, for example "0.50". Note: it only works when instance_charge_type is set to SPOTPAID.
+                      Max price of a spot instance, is the format of decimal string, for example "0.50". Note: it only works when instance_charge_type is set to `SPOTPAID`.
                     type: string
                   stoppedMode:
-                    description: 'Billing method of a pay-as-you-go instance after
-                      shutdown. Available values: KEEP_CHARGING,STOP_CHARGING. Default
-                      KEEP_CHARGING. Billing method of a pay-as-you-go instance after
-                      shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`.
-                      Default `KEEP_CHARGING`.'
+                    description: |-
+                      Billing method of a pay-as-you-go instance after shutdown. Available values: KEEP_CHARGING,STOP_CHARGING. Default KEEP_CHARGING.
+                      Billing method of a pay-as-you-go instance after shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`. Default `KEEP_CHARGING`.
                     type: string
                   subnetId:
-                    description: The ID of a VPC subnet. If you want to create instances
-                      in a VPC network, this parameter must be set. The ID of a VPC
-                      subnet. If you want to create instances in a VPC network, this
-                      parameter must be set.
+                    description: |-
+                      The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+                      The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -410,21 +319,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -437,8 +346,9 @@ spec:
                     description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -451,21 +361,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -473,52 +383,37 @@ spec:
                         type: object
                     type: object
                   systemDiskSize:
-                    description: Size of the system disk. unit is GB, Default is 50GB.
-                      If modified, the instance may force stop. Size of the system
-                      disk. unit is GB, Default is 50GB. If modified, the instance
-                      may force stop.
+                    description: |-
+                      Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
+                      Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
                     type: number
                   systemDiskType:
-                    description: 'System disk type. For more information on limits
-                      of system disk types, see Storage Overview. Valid values: LOCAL_BASIC:
-                      local disk, LOCAL_SSD: local SSD disk, CLOUD_BASIC: cloud disk,
-                      CLOUD_SSD: cloud SSD disk, CLOUD_PREMIUM: Premium Cloud Storage,
-                      CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD:
-                      Tremendous SSD. NOTE: If modified, the instance may force stop.
-                      System disk type. For more information on limits of system disk
-                      types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                      Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local
-                      SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD
-                      disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`:
-                      Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous
-                      SSD. NOTE: If modified, the instance may force stop.'
+                    description: |-
+                      System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_BASIC: cloud disk, CLOUD_SSD: cloud SSD disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD. NOTE: If modified, the instance may force stop.
+                      System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`: Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous SSD. NOTE: If modified, the instance may force stop.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: A mapping of tags to assign to the resource. For
-                      tag limits, please refer to Use Limits. A mapping of tags to
-                      assign to the resource. For tag limits, please refer to [Use
-                      Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                    description: |-
+                      A mapping of tags to assign to the resource. For tag limits, please refer to Use Limits.
+                      A mapping of tags to assign to the resource. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
                     type: object
+                    x-kubernetes-map-type: granular
                   userData:
-                    description: The user data to be injected into this instance.
-                      Must be base64 encoded and up to 16 KB. The user data to be
-                      injected into this instance. Must be base64 encoded and up to
-                      16 KB.
+                    description: |-
+                      The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
+                      The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
                     type: string
                   userDataRaw:
-                    description: The user data to be injected into this instance,
-                      in plain text. Conflicts with user_data. Up to 16 KB after base64
-                      encoded. The user data to be injected into this instance, in
-                      plain text. Conflicts with `user_data`. Up to 16 KB after base64
-                      encoded.
+                    description: |-
+                      The user data to be injected into this instance, in plain text. Conflicts with user_data. Up to 16 KB after base64 encoded.
+                      The user data to be injected into this instance, in plain text. Conflicts with `user_data`. Up to 16 KB after base64 encoded.
                     type: string
                   vpcId:
-                    description: The ID of a VPC network. If you want to create instances
-                      in a VPC network, this parameter must be set. The ID of a VPC
-                      network. If you want to create instances in a VPC network, this
-                      parameter must be set.
+                    description: |-
+                      The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+                      The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
                     type: string
                   vpcIdRef:
                     description: Reference to a VPC in vpc to populate vpcId.
@@ -531,21 +426,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -558,8 +453,9 @@ spec:
                     description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -572,21 +468,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -595,380 +491,434 @@ spec:
                     type: object
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   allocatePublicIp:
-                    description: Associate a public IP address with an instance in
-                      a VPC or Classic. Boolean value, Default is false. Associate
-                      a public IP address with an instance in a VPC or Classic. Boolean
-                      value, Default is false.
+                    description: |-
+                      Associate a public IP address with an instance in a VPC or Classic. Boolean value, Default is false.
+                      Associate a public IP address with an instance in a VPC or Classic. Boolean value, Default is false.
                     type: boolean
                   availabilityZone:
-                    description: The available zone for the CVM instance. The available
-                      zone for the CVM instance.
+                    description: |-
+                      The available zone for the CVM instance.
+                      The available zone for the CVM instance.
                     type: string
                   bandwidthPackageId:
-                    description: bandwidth package id. if user is standard user, then
-                      the bandwidth_package_id is needed, or default has bandwidth_package_id.
-                      bandwidth package id. if user is standard user, then the bandwidth_package_id
-                      is needed, or default has bandwidth_package_id.
+                    description: |-
+                      bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+                      bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
                     type: string
                   camRoleName:
-                    description: CAM role name authorized to access. CAM role name
-                      authorized to access.
+                    description: |-
+                      CAM role name authorized to access.
+                      CAM role name authorized to access.
                     type: string
                   cdhHostId:
-                    description: 'Id of cdh instance. Note: it only works when instance_charge_type
-                      is set to CDHPAID. Id of cdh instance. Note: it only works when
-                      instance_charge_type is set to `CDHPAID`.'
+                    description: |-
+                      Id of cdh instance. Note: it only works when instance_charge_type is set to CDHPAID.
+                      Id of cdh instance. Note: it only works when instance_charge_type is set to `CDHPAID`.
                     type: string
                   cdhInstanceType:
-                    description: 'Type of instance created on cdh, the value of this
-                      parameter is in the format of CDH_XCXG based on the number of
-                      CPU cores and memory capacity. Note: it only works when instance_charge_type
-                      is set to CDHPAID. Type of instance created on cdh, the value
-                      of this parameter is in the format of CDH_XCXG based on the
-                      number of CPU cores and memory capacity. Note: it only works
-                      when instance_charge_type is set to `CDHPAID`.'
+                    description: |-
+                      Type of instance created on cdh, the value of this parameter is in the format of CDH_XCXG based on the number of CPU cores and memory capacity. Note: it only works when instance_charge_type is set to CDHPAID.
+                      Type of instance created on cdh, the value of this parameter is in the format of CDH_XCXG based on the number of CPU cores and memory capacity. Note: it only works when instance_charge_type is set to `CDHPAID`.
                     type: string
                   dataDisks:
-                    description: Settings for data disks. Settings for data disks.
+                    description: |-
+                      Settings for data disks.
+                      Settings for data disks.
                     items:
                       properties:
                         dataDiskId:
-                          description: Data disk ID used to initialize the data disk.
-                            When data disk type is LOCAL_BASIC and LOCAL_SSD, disk
-                            id is not supported. Data disk ID used to initialize the
-                            data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
-                            disk id is not supported.
+                          description: |-
+                            Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
+                            Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                           type: string
                         dataDiskSize:
-                          description: Size of the data disk, and unit is GB. Size
-                            of the data disk, and unit is GB.
+                          description: |-
+                            Size of the data disk, and unit is GB.
+                            Size of the data disk, and unit is GB.
                           type: number
                         dataDiskSnapshotId:
-                          description: Snapshot ID of the data disk. The selected
-                            data disk snapshot size must be smaller than the data
-                            disk size. Snapshot ID of the data disk. The selected
-                            data disk snapshot size must be smaller than the data
-                            disk size.
+                          description: |-
+                            Snapshot ID of the data disk. The selected data disk snapshot size must be smaller than the data disk size.
+                            Snapshot ID of the data disk. The selected data disk snapshot size must be smaller than the data disk size.
                           type: string
                         dataDiskType:
-                          description: 'Data disk type. For more information about
-                            limits on different data disk types, see Storage Overview.
-                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
-                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
-                            InstanceType, LOCAL_PRO: local HDD disk, specified in
-                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
-                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
-                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
-                            SSD. Data disk type. For more information about limits
-                            on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
-                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
-                            InstanceType, LOCAL_PRO: local HDD disk, specified in
-                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
-                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
-                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
-                            SSD.'
+                          description: |-
+                            Data disk type. For more information about limits on different data disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
+                            Data disk type. For more information about limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
                           type: string
                         deleteWithInstance:
-                          description: Decides whether the disk is deleted with instance(only
-                            applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk
-                            with POSTPAID_BY_HOUR instance), default is true. Decides
-                            whether the disk is deleted with instance(only applied
-                            to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk
-                            with `POSTPAID_BY_HOUR` instance), default is true.
+                          description: |-
+                            Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with POSTPAID_BY_HOUR instance), default is true.
+                            Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `POSTPAID_BY_HOUR` instance), default is true.
                           type: boolean
                         encrypt:
-                          description: Decides whether the disk is encrypted. Default
-                            is false. Decides whether the disk is encrypted. Default
-                            is `false`.
+                          description: |-
+                            Decides whether the disk is encrypted. Default is false.
+                            Decides whether the disk is encrypted. Default is `false`.
                           type: boolean
                         throughputPerformance:
-                          description: Add extra performance to the data disk. Only
-                            works when disk type is CLOUD_TSSD or CLOUD_HSSD. Add
-                            extra performance to the data disk. Only works when disk
-                            type is `CLOUD_TSSD` or `CLOUD_HSSD`.
+                          description: |-
+                            Add extra performance to the data disk. Only works when disk type is CLOUD_TSSD or CLOUD_HSSD.
+                            Add extra performance to the data disk. Only works when disk type is `CLOUD_TSSD` or `CLOUD_HSSD`.
                           type: number
                       type: object
                     type: array
                   disableApiTermination:
-                    description: Whether the termination protection is enabled. Default
-                      is false. If set true, which means that this instance can not
-                      be deleted by an API action. Whether the termination protection
-                      is enabled. Default is `false`. If set true, which means that
-                      this instance can not be deleted by an API action.
+                    description: |-
+                      Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
+                      Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
                     type: boolean
                   disableMonitorService:
-                    description: Disable enhance service for monitor, it is enabled
-                      by default. When this options is set, monitor agent won't be
-                      installed. Modifying will cause the instance reset. Disable
-                      enhance service for monitor, it is enabled by default. When
-                      this options is set, monitor agent won't be installed. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   disableSecurityService:
-                    description: Disable enhance service for security, it is enabled
-                      by default. When this options is set, security agent won't be
-                      installed. Modifying will cause the instance reset. Disable
-                      enhance service for security, it is enabled by default. When
-                      this options is set, security agent won't be installed. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   forceDelete:
-                    description: 'Indicate whether to force delete the instance. Default
-                      is false. If set true, the instance will be permanently deleted
-                      instead of being moved into the recycle bin. Note: only works
-                      for PREPAID instance. Indicate whether to force delete the instance.
-                      Default is `false`. If set true, the instance will be permanently
-                      deleted instead of being moved into the recycle bin. Note: only
-                      works for `PREPAID` instance.'
+                    description: |-
+                      Indicate whether to force delete the instance. Default is false. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for PREPAID instance.
+                      Indicate whether to force delete the instance. Default is `false`. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for `PREPAID` instance.
                     type: boolean
                   hostname:
-                    description: 'The hostname of the instance. Windows instance:
-                      The name should be a combination of 2 to 15 characters comprised
-                      of letters (case insensitive), numbers, and hyphens (-). Period
-                      (.) is not supported, and the name cannot be a string of pure
-                      numbers. Other types (such as Linux) of instances: The name
-                      should be a combination of 2 to 60 characters, supporting multiple
-                      periods (.). The piece between two periods is composed of letters
-                      (case insensitive), numbers, and hyphens (-). Modifying will
-                      cause the instance reset. The hostname of the instance. Windows
-                      instance: The name should be a combination of 2 to 15 characters
-                      comprised of letters (case insensitive), numbers, and hyphens
-                      (-). Period (.) is not supported, and the name cannot be a string
-                      of pure numbers. Other types (such as Linux) of instances: The
-                      name should be a combination of 2 to 60 characters, supporting
-                      multiple periods (.). The piece between two periods is composed
-                      of letters (case insensitive), numbers, and hyphens (-). Modifying
-                      will cause the instance reset.'
+                    description: |-
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
                     type: string
                   imageId:
-                    description: The image to use for the instance. Changing image_id
-                      will cause the instance reset. The image to use for the instance.
-                      Changing `image_id` will cause the instance reset.
+                    description: |-
+                      The image to use for the instance. Changing image_id will cause the instance reset.
+                      The image to use for the instance. Changing `image_id` will cause the instance reset.
                     type: string
                   instanceChargeType:
-                    description: 'The charge type of instance. Valid values are PREPAID,
-                      POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default
-                      is POSTPAID_BY_HOUR. Note: TencentCloud International only supports
-                      POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow
-                      to delete before expired. SPOTPAID instance must set spot_instance_type
-                      and spot_max_price at the same time. CDHPAID instance must set
-                      cdh_instance_type and cdh_host_id. The charge type of instance.
-                      Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`,
-                      `CDHPAID` and `CDCPAID`. The default is `POSTPAID_BY_HOUR`.
-                      Note: TencentCloud International only supports `POSTPAID_BY_HOUR`
-                      and `CDHPAID`. `PREPAID` instance may not allow to delete before
-                      expired. `SPOTPAID` instance must set `spot_instance_type` and
-                      `spot_max_price` at the same time. `CDHPAID` instance must set
-                      `cdh_instance_type` and `cdh_host_id`.'
+                    description: |-
+                      The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow to delete before expired. SPOTPAID instance must set spot_instance_type and spot_max_price at the same time. CDHPAID instance must set cdh_instance_type and cdh_host_id.
+                      The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDHPAID` and `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR` and `CDHPAID`. `PREPAID` instance may not allow to delete before expired. `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time. `CDHPAID` instance must set `cdh_instance_type` and `cdh_host_id`.
                     type: string
                   instanceChargeTypePrepaidPeriod:
-                    description: 'The tenancy (time unit is month) of the prepaid
-                      instance, NOTE: it only works when instance_charge_type is set
-                      to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                      11, 12, 24, 36, 48, 60. The tenancy (time unit is month) of
-                      the prepaid instance, NOTE: it only works when instance_charge_type
-                      is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`,
-                      `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`, `48`, `60`.'
+                    description: |-
+                      The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60.
+                      The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`, `48`, `60`.
                     type: number
                   instanceChargeTypePrepaidRenewFlag:
-                    description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
-                      notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
-                      notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
-                      neither notify upon expiration nor renew automatically. Default
-                      value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified
-                      as NOTIFY_AND_AUTO_RENEW, the instance will be automatically
-                      renewed on a monthly basis if the account balance is sufficient.
-                      NOTE: it only works when instance_charge_type is set to PREPAID.
-                      Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
-                      upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
-                      notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
-                      neither notify upon expiration nor renew automatically. Default
-                      value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
-                      as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically
-                      renewed on a monthly basis if the account balance is sufficient.
-                      NOTE: it only works when instance_charge_type is set to `PREPAID`.'
+                    description: |-
+                      Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
+                      Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
                     type: string
                   instanceCount:
-                    description: 'It has been deprecated from version 1.59.18. Use
-                      built-in count instead. The number of instances to be purchased.
-                      Value range:[1,100]; default value: 1. The number of instances
-                      to be purchased. Value range:[1,100]; default value: 1.'
+                    description: |-
+                      It has been deprecated from version 1.59.18. Use built-in count instead. The number of instances to be purchased. Value range:[1,100]; default value: 1.
+                      The number of instances to be purchased. Value range:[1,100]; default value: 1.
                     type: number
                   instanceName:
-                    description: The name of the instance. The name of the instance.
+                    description: |-
+                      The name of the instance.
+                      The name of the instance.
                     type: string
                   instanceType:
-                    description: The type of the instance. The type of the instance.
+                    description: |-
+                      The type of the instance.
+                      The type of the instance.
                     type: string
                   internetChargeType:
-                    description: Internet charge type of the instance, Valid values
-                      are BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR
-                      and BANDWIDTH_PACKAGE. If not set, internet charge type are
-                      consistent with the cvm charge type by default. This value takes
-                      NO Effect when changing and does not need to be set when allocate_public_ip
-                      is false. Internet charge type of the instance, Valid values
-                      are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`. If not set, internet charge type are
-                      consistent with the cvm charge type by default. This value takes
-                      NO Effect when changing and does not need to be set when `allocate_public_ip`
-                      is false.
+                    description: |-
+                      Internet charge type of the instance, Valid values are BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when allocate_public_ip is false.
+                      Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when `allocate_public_ip` is false.
                     type: string
                   internetMaxBandwidthOut:
-                    description: Maximum outgoing bandwidth to the public network,
-                      measured in Mbps (Mega bits per second). This value does not
-                      need to be set when allocate_public_ip is false. Maximum outgoing
-                      bandwidth to the public network, measured in Mbps (Mega bits
-                      per second). This value does not need to be set when `allocate_public_ip`
-                      is false.
+                    description: |-
+                      Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when allocate_public_ip is false.
+                      Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
                     type: number
                   keepImageLogin:
-                    description: Whether to keep image login or not, default is false.
-                      When the image type is private or shared or imported, this parameter
-                      can be set true. Modifying will cause the instance reset. Whether
-                      to keep image login or not, default is `false`. When the image
-                      type is private or shared or imported, this parameter can be
-                      set `true`. Modifying will cause the instance reset.
+                    description: |-
+                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
+                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
                     type: boolean
                   keyIds:
-                    description: The key pair to use for the instance, it looks like
-                      skey-16jig7tx. Modifying will cause the instance reset. The
-                      key pair to use for the instance, it looks like `skey-16jig7tx`.
-                      Modifying will cause the instance reset.
+                    description: |-
+                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   keyName:
-                    description: Please use key_ids instead. The key pair to use for
-                      the instance, it looks like skey-16jig7tx. Modifying will cause
-                      the instance reset. The key pair to use for the instance, it
-                      looks like `skey-16jig7tx`. Modifying will cause the instance
-                      reset.
+                    description: |-
+                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
                     type: string
                   orderlySecurityGroups:
-                    description: A list of orderly security group IDs to associate
-                      with. A list of orderly security group IDs to associate with.
+                    description: |-
+                      A list of orderly security group IDs to associate with.
+                      A list of orderly security group IDs to associate with.
                     items:
                       type: string
                     type: array
                   placementGroupId:
-                    description: The ID of a placement group. The ID of a placement
-                      group.
+                    description: |-
+                      The ID of a placement group.
+                      The ID of a placement group.
                     type: string
                   privateIp:
-                    description: The private IP to be assigned to this instance, must
-                      be in the provided subnet and available. The private IP to be
-                      assigned to this instance, must be in the provided subnet and
-                      available.
+                    description: |-
+                      The private IP to be assigned to this instance, must be in the provided subnet and available.
+                      The private IP to be assigned to this instance, must be in the provided subnet and available.
                     type: string
                   projectId:
-                    description: The project the instance belongs to, default to 0.
+                    description: |-
+                      The project the instance belongs to, default to 0.
                       The project the instance belongs to, default to 0.
                     type: number
                   runningFlag:
-                    description: Set instance to running or stop. Default value is
-                      true, the instance will shutdown when this flag is false. Set
-                      instance to running or stop. Default value is true, the instance
-                      will shutdown when this flag is false.
+                    description: |-
+                      Set instance to running or stop. Default value is true, the instance will shutdown when this flag is false.
+                      Set instance to running or stop. Default value is true, the instance will shutdown when this flag is false.
                     type: boolean
                   securityGroups:
-                    description: It will be deprecated. Use orderly_security_groups
-                      instead. A list of security group IDs to associate with. A list
-                      of security group IDs to associate with.
+                    description: |-
+                      It will be deprecated. Use orderly_security_groups instead. A list of security group IDs to associate with.
+                      A list of security group IDs to associate with.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   spotInstanceType:
-                    description: 'Type of spot instance, only support ONE-TIME now.
-                      Note: it only works when instance_charge_type is set to SPOTPAID.
-                      Type of spot instance, only support `ONE-TIME` now. Note: it
-                      only works when instance_charge_type is set to `SPOTPAID`.'
+                    description: |-
+                      Type of spot instance, only support ONE-TIME now. Note: it only works when instance_charge_type is set to SPOTPAID.
+                      Type of spot instance, only support `ONE-TIME` now. Note: it only works when instance_charge_type is set to `SPOTPAID`.
                     type: string
                   spotMaxPrice:
-                    description: 'Max price of a spot instance, is the format of decimal
-                      string, for example "0.50". Note: it only works when instance_charge_type
-                      is set to SPOTPAID. Max price of a spot instance, is the format
-                      of decimal string, for example "0.50". Note: it only works when
-                      instance_charge_type is set to `SPOTPAID`.'
+                    description: |-
+                      Max price of a spot instance, is the format of decimal string, for example "0.50". Note: it only works when instance_charge_type is set to SPOTPAID.
+                      Max price of a spot instance, is the format of decimal string, for example "0.50". Note: it only works when instance_charge_type is set to `SPOTPAID`.
                     type: string
                   stoppedMode:
-                    description: 'Billing method of a pay-as-you-go instance after
-                      shutdown. Available values: KEEP_CHARGING,STOP_CHARGING. Default
-                      KEEP_CHARGING. Billing method of a pay-as-you-go instance after
-                      shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`.
-                      Default `KEEP_CHARGING`.'
+                    description: |-
+                      Billing method of a pay-as-you-go instance after shutdown. Available values: KEEP_CHARGING,STOP_CHARGING. Default KEEP_CHARGING.
+                      Billing method of a pay-as-you-go instance after shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`. Default `KEEP_CHARGING`.
                     type: string
+                  subnetId:
+                    description: |-
+                      The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+                      The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in vpc to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in vpc to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   systemDiskSize:
-                    description: Size of the system disk. unit is GB, Default is 50GB.
-                      If modified, the instance may force stop. Size of the system
-                      disk. unit is GB, Default is 50GB. If modified, the instance
-                      may force stop.
+                    description: |-
+                      Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
+                      Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
                     type: number
                   systemDiskType:
-                    description: 'System disk type. For more information on limits
-                      of system disk types, see Storage Overview. Valid values: LOCAL_BASIC:
-                      local disk, LOCAL_SSD: local SSD disk, CLOUD_BASIC: cloud disk,
-                      CLOUD_SSD: cloud SSD disk, CLOUD_PREMIUM: Premium Cloud Storage,
-                      CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD:
-                      Tremendous SSD. NOTE: If modified, the instance may force stop.
-                      System disk type. For more information on limits of system disk
-                      types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                      Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local
-                      SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD
-                      disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`:
-                      Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous
-                      SSD. NOTE: If modified, the instance may force stop.'
+                    description: |-
+                      System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_BASIC: cloud disk, CLOUD_SSD: cloud SSD disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD. NOTE: If modified, the instance may force stop.
+                      System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`: Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous SSD. NOTE: If modified, the instance may force stop.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: A mapping of tags to assign to the resource. For
-                      tag limits, please refer to Use Limits. A mapping of tags to
-                      assign to the resource. For tag limits, please refer to [Use
-                      Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                    description: |-
+                      A mapping of tags to assign to the resource. For tag limits, please refer to Use Limits.
+                      A mapping of tags to assign to the resource. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
                     type: object
+                    x-kubernetes-map-type: granular
                   userData:
-                    description: The user data to be injected into this instance.
-                      Must be base64 encoded and up to 16 KB. The user data to be
-                      injected into this instance. Must be base64 encoded and up to
-                      16 KB.
+                    description: |-
+                      The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
+                      The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
                     type: string
                   userDataRaw:
-                    description: The user data to be injected into this instance,
-                      in plain text. Conflicts with user_data. Up to 16 KB after base64
-                      encoded. The user data to be injected into this instance, in
-                      plain text. Conflicts with `user_data`. Up to 16 KB after base64
-                      encoded.
+                    description: |-
+                      The user data to be injected into this instance, in plain text. Conflicts with user_data. Up to 16 KB after base64 encoded.
+                      The user data to be injected into this instance, in plain text. Conflicts with `user_data`. Up to 16 KB after base64 encoded.
                     type: string
+                  vpcId:
+                    description: |-
+                      The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+                      The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+                    type: string
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -981,9 +931,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -993,21 +944,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -1017,17 +968,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -1037,21 +990,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -1066,21 +1019,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -1091,14 +1045,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -1128,401 +1083,301 @@ spec:
               atProvider:
                 properties:
                   allocatePublicIp:
-                    description: Associate a public IP address with an instance in
-                      a VPC or Classic. Boolean value, Default is false. Associate
-                      a public IP address with an instance in a VPC or Classic. Boolean
-                      value, Default is false.
+                    description: |-
+                      Associate a public IP address with an instance in a VPC or Classic. Boolean value, Default is false.
+                      Associate a public IP address with an instance in a VPC or Classic. Boolean value, Default is false.
                     type: boolean
                   availabilityZone:
-                    description: The available zone for the CVM instance. The available
-                      zone for the CVM instance.
+                    description: |-
+                      The available zone for the CVM instance.
+                      The available zone for the CVM instance.
                     type: string
                   bandwidthPackageId:
-                    description: bandwidth package id. if user is standard user, then
-                      the bandwidth_package_id is needed, or default has bandwidth_package_id.
-                      bandwidth package id. if user is standard user, then the bandwidth_package_id
-                      is needed, or default has bandwidth_package_id.
+                    description: |-
+                      bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+                      bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
                     type: string
                   camRoleName:
-                    description: CAM role name authorized to access. CAM role name
-                      authorized to access.
+                    description: |-
+                      CAM role name authorized to access.
+                      CAM role name authorized to access.
                     type: string
                   cdhHostId:
-                    description: 'Id of cdh instance. Note: it only works when instance_charge_type
-                      is set to CDHPAID. Id of cdh instance. Note: it only works when
-                      instance_charge_type is set to `CDHPAID`.'
+                    description: |-
+                      Id of cdh instance. Note: it only works when instance_charge_type is set to CDHPAID.
+                      Id of cdh instance. Note: it only works when instance_charge_type is set to `CDHPAID`.
                     type: string
                   cdhInstanceType:
-                    description: 'Type of instance created on cdh, the value of this
-                      parameter is in the format of CDH_XCXG based on the number of
-                      CPU cores and memory capacity. Note: it only works when instance_charge_type
-                      is set to CDHPAID. Type of instance created on cdh, the value
-                      of this parameter is in the format of CDH_XCXG based on the
-                      number of CPU cores and memory capacity. Note: it only works
-                      when instance_charge_type is set to `CDHPAID`.'
+                    description: |-
+                      Type of instance created on cdh, the value of this parameter is in the format of CDH_XCXG based on the number of CPU cores and memory capacity. Note: it only works when instance_charge_type is set to CDHPAID.
+                      Type of instance created on cdh, the value of this parameter is in the format of CDH_XCXG based on the number of CPU cores and memory capacity. Note: it only works when instance_charge_type is set to `CDHPAID`.
                     type: string
                   cpu:
-                    description: The number of CPU cores of the instance. The number
-                      of CPU cores of the instance.
+                    description: |-
+                      The number of CPU cores of the instance.
+                      The number of CPU cores of the instance.
                     type: number
                   createTime:
-                    description: Create time of the instance. Create time of the instance.
+                    description: |-
+                      Create time of the instance.
+                      Create time of the instance.
                     type: string
                   dataDisks:
-                    description: Settings for data disks. Settings for data disks.
+                    description: |-
+                      Settings for data disks.
+                      Settings for data disks.
                     items:
                       properties:
                         dataDiskId:
-                          description: Data disk ID used to initialize the data disk.
-                            When data disk type is LOCAL_BASIC and LOCAL_SSD, disk
-                            id is not supported. Data disk ID used to initialize the
-                            data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`,
-                            disk id is not supported.
+                          description: |-
+                            Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
+                            Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                           type: string
                         dataDiskSize:
-                          description: Size of the data disk, and unit is GB. Size
-                            of the data disk, and unit is GB.
+                          description: |-
+                            Size of the data disk, and unit is GB.
+                            Size of the data disk, and unit is GB.
                           type: number
                         dataDiskSnapshotId:
-                          description: Snapshot ID of the data disk. The selected
-                            data disk snapshot size must be smaller than the data
-                            disk size. Snapshot ID of the data disk. The selected
-                            data disk snapshot size must be smaller than the data
-                            disk size.
+                          description: |-
+                            Snapshot ID of the data disk. The selected data disk snapshot size must be smaller than the data disk size.
+                            Snapshot ID of the data disk. The selected data disk snapshot size must be smaller than the data disk size.
                           type: string
                         dataDiskType:
-                          description: 'Data disk type. For more information about
-                            limits on different data disk types, see Storage Overview.
-                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
-                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
-                            InstanceType, LOCAL_PRO: local HDD disk, specified in
-                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
-                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
-                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
-                            SSD. Data disk type. For more information about limits
-                            on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                            Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local
-                            SSD disk, LOCAL_NVME: local NVME disk, specified in the
-                            InstanceType, LOCAL_PRO: local HDD disk, specified in
-                            the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM:
-                            Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced
-                            SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced
-                            SSD.'
+                          description: |-
+                            Data disk type. For more information about limits on different data disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
+                            Data disk type. For more information about limits on different data disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, LOCAL_NVME: local NVME disk, specified in the InstanceType, LOCAL_PRO: local HDD disk, specified in the InstanceType, CLOUD_BASIC: HDD cloud disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, CLOUD_BSSD: Balanced SSD.
                           type: string
                         deleteWithInstance:
-                          description: Decides whether the disk is deleted with instance(only
-                            applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk
-                            with POSTPAID_BY_HOUR instance), default is true. Decides
-                            whether the disk is deleted with instance(only applied
-                            to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk
-                            with `POSTPAID_BY_HOUR` instance), default is true.
+                          description: |-
+                            Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with POSTPAID_BY_HOUR instance), default is true.
+                            Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `POSTPAID_BY_HOUR` instance), default is true.
                           type: boolean
                         encrypt:
-                          description: Decides whether the disk is encrypted. Default
-                            is false. Decides whether the disk is encrypted. Default
-                            is `false`.
+                          description: |-
+                            Decides whether the disk is encrypted. Default is false.
+                            Decides whether the disk is encrypted. Default is `false`.
                           type: boolean
                         throughputPerformance:
-                          description: Add extra performance to the data disk. Only
-                            works when disk type is CLOUD_TSSD or CLOUD_HSSD. Add
-                            extra performance to the data disk. Only works when disk
-                            type is `CLOUD_TSSD` or `CLOUD_HSSD`.
+                          description: |-
+                            Add extra performance to the data disk. Only works when disk type is CLOUD_TSSD or CLOUD_HSSD.
+                            Add extra performance to the data disk. Only works when disk type is `CLOUD_TSSD` or `CLOUD_HSSD`.
                           type: number
                       type: object
                     type: array
                   disableApiTermination:
-                    description: Whether the termination protection is enabled. Default
-                      is false. If set true, which means that this instance can not
-                      be deleted by an API action. Whether the termination protection
-                      is enabled. Default is `false`. If set true, which means that
-                      this instance can not be deleted by an API action.
+                    description: |-
+                      Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
+                      Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
                     type: boolean
                   disableMonitorService:
-                    description: Disable enhance service for monitor, it is enabled
-                      by default. When this options is set, monitor agent won't be
-                      installed. Modifying will cause the instance reset. Disable
-                      enhance service for monitor, it is enabled by default. When
-                      this options is set, monitor agent won't be installed. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   disableSecurityService:
-                    description: Disable enhance service for security, it is enabled
-                      by default. When this options is set, security agent won't be
-                      installed. Modifying will cause the instance reset. Disable
-                      enhance service for security, it is enabled by default. When
-                      this options is set, security agent won't be installed. Modifying
-                      will cause the instance reset.
+                    description: |-
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   expiredTime:
-                    description: Expired time of the instance. Expired time of the
-                      instance.
+                    description: |-
+                      Expired time of the instance.
+                      Expired time of the instance.
                     type: string
                   forceDelete:
-                    description: 'Indicate whether to force delete the instance. Default
-                      is false. If set true, the instance will be permanently deleted
-                      instead of being moved into the recycle bin. Note: only works
-                      for PREPAID instance. Indicate whether to force delete the instance.
-                      Default is `false`. If set true, the instance will be permanently
-                      deleted instead of being moved into the recycle bin. Note: only
-                      works for `PREPAID` instance.'
+                    description: |-
+                      Indicate whether to force delete the instance. Default is false. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for PREPAID instance.
+                      Indicate whether to force delete the instance. Default is `false`. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for `PREPAID` instance.
                     type: boolean
                   hostname:
-                    description: 'The hostname of the instance. Windows instance:
-                      The name should be a combination of 2 to 15 characters comprised
-                      of letters (case insensitive), numbers, and hyphens (-). Period
-                      (.) is not supported, and the name cannot be a string of pure
-                      numbers. Other types (such as Linux) of instances: The name
-                      should be a combination of 2 to 60 characters, supporting multiple
-                      periods (.). The piece between two periods is composed of letters
-                      (case insensitive), numbers, and hyphens (-). Modifying will
-                      cause the instance reset. The hostname of the instance. Windows
-                      instance: The name should be a combination of 2 to 15 characters
-                      comprised of letters (case insensitive), numbers, and hyphens
-                      (-). Period (.) is not supported, and the name cannot be a string
-                      of pure numbers. Other types (such as Linux) of instances: The
-                      name should be a combination of 2 to 60 characters, supporting
-                      multiple periods (.). The piece between two periods is composed
-                      of letters (case insensitive), numbers, and hyphens (-). Modifying
-                      will cause the instance reset.'
+                    description: |-
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
                     type: string
                   id:
                     description: ID of the resource.
                     type: string
                   imageId:
-                    description: The image to use for the instance. Changing image_id
-                      will cause the instance reset. The image to use for the instance.
-                      Changing `image_id` will cause the instance reset.
+                    description: |-
+                      The image to use for the instance. Changing image_id will cause the instance reset.
+                      The image to use for the instance. Changing `image_id` will cause the instance reset.
                     type: string
                   instanceChargeType:
-                    description: 'The charge type of instance. Valid values are PREPAID,
-                      POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default
-                      is POSTPAID_BY_HOUR. Note: TencentCloud International only supports
-                      POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow
-                      to delete before expired. SPOTPAID instance must set spot_instance_type
-                      and spot_max_price at the same time. CDHPAID instance must set
-                      cdh_instance_type and cdh_host_id. The charge type of instance.
-                      Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`,
-                      `CDHPAID` and `CDCPAID`. The default is `POSTPAID_BY_HOUR`.
-                      Note: TencentCloud International only supports `POSTPAID_BY_HOUR`
-                      and `CDHPAID`. `PREPAID` instance may not allow to delete before
-                      expired. `SPOTPAID` instance must set `spot_instance_type` and
-                      `spot_max_price` at the same time. `CDHPAID` instance must set
-                      `cdh_instance_type` and `cdh_host_id`.'
+                    description: |-
+                      The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow to delete before expired. SPOTPAID instance must set spot_instance_type and spot_max_price at the same time. CDHPAID instance must set cdh_instance_type and cdh_host_id.
+                      The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDHPAID` and `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR` and `CDHPAID`. `PREPAID` instance may not allow to delete before expired. `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time. `CDHPAID` instance must set `cdh_instance_type` and `cdh_host_id`.
                     type: string
                   instanceChargeTypePrepaidPeriod:
-                    description: 'The tenancy (time unit is month) of the prepaid
-                      instance, NOTE: it only works when instance_charge_type is set
-                      to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                      11, 12, 24, 36, 48, 60. The tenancy (time unit is month) of
-                      the prepaid instance, NOTE: it only works when instance_charge_type
-                      is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`,
-                      `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`, `48`, `60`.'
+                    description: |-
+                      The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60.
+                      The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`, `48`, `60`.
                     type: number
                   instanceChargeTypePrepaidRenewFlag:
-                    description: 'Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW:
-                      notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW:
-                      notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW:
-                      neither notify upon expiration nor renew automatically. Default
-                      value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified
-                      as NOTIFY_AND_AUTO_RENEW, the instance will be automatically
-                      renewed on a monthly basis if the account balance is sufficient.
-                      NOTE: it only works when instance_charge_type is set to PREPAID.
-                      Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify
-                      upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`:
-                      notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`:
-                      neither notify upon expiration nor renew automatically. Default
-                      value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified
-                      as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically
-                      renewed on a monthly basis if the account balance is sufficient.
-                      NOTE: it only works when instance_charge_type is set to `PREPAID`.'
+                    description: |-
+                      Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
+                      Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
                     type: string
                   instanceCount:
-                    description: 'It has been deprecated from version 1.59.18. Use
-                      built-in count instead. The number of instances to be purchased.
-                      Value range:[1,100]; default value: 1. The number of instances
-                      to be purchased. Value range:[1,100]; default value: 1.'
+                    description: |-
+                      It has been deprecated from version 1.59.18. Use built-in count instead. The number of instances to be purchased. Value range:[1,100]; default value: 1.
+                      The number of instances to be purchased. Value range:[1,100]; default value: 1.
                     type: number
                   instanceName:
-                    description: The name of the instance. The name of the instance.
+                    description: |-
+                      The name of the instance.
+                      The name of the instance.
                     type: string
                   instanceStatus:
-                    description: Current status of the instance. Current status of
-                      the instance.
+                    description: |-
+                      Current status of the instance.
+                      Current status of the instance.
                     type: string
                   instanceType:
-                    description: The type of the instance. The type of the instance.
+                    description: |-
+                      The type of the instance.
+                      The type of the instance.
                     type: string
                   internetChargeType:
-                    description: Internet charge type of the instance, Valid values
-                      are BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR
-                      and BANDWIDTH_PACKAGE. If not set, internet charge type are
-                      consistent with the cvm charge type by default. This value takes
-                      NO Effect when changing and does not need to be set when allocate_public_ip
-                      is false. Internet charge type of the instance, Valid values
-                      are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR`
-                      and `BANDWIDTH_PACKAGE`. If not set, internet charge type are
-                      consistent with the cvm charge type by default. This value takes
-                      NO Effect when changing and does not need to be set when `allocate_public_ip`
-                      is false.
+                    description: |-
+                      Internet charge type of the instance, Valid values are BANDWIDTH_PREPAID, TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when allocate_public_ip is false.
+                      Internet charge type of the instance, Valid values are `BANDWIDTH_PREPAID`, `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`. If not set, internet charge type are consistent with the cvm charge type by default. This value takes NO Effect when changing and does not need to be set when `allocate_public_ip` is false.
                     type: string
                   internetMaxBandwidthOut:
-                    description: Maximum outgoing bandwidth to the public network,
-                      measured in Mbps (Mega bits per second). This value does not
-                      need to be set when allocate_public_ip is false. Maximum outgoing
-                      bandwidth to the public network, measured in Mbps (Mega bits
-                      per second). This value does not need to be set when `allocate_public_ip`
-                      is false.
+                    description: |-
+                      Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when allocate_public_ip is false.
+                      Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
                     type: number
                   keepImageLogin:
-                    description: Whether to keep image login or not, default is false.
-                      When the image type is private or shared or imported, this parameter
-                      can be set true. Modifying will cause the instance reset. Whether
-                      to keep image login or not, default is `false`. When the image
-                      type is private or shared or imported, this parameter can be
-                      set `true`. Modifying will cause the instance reset.
+                    description: |-
+                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
+                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
                     type: boolean
                   keyIds:
-                    description: The key pair to use for the instance, it looks like
-                      skey-16jig7tx. Modifying will cause the instance reset. The
-                      key pair to use for the instance, it looks like `skey-16jig7tx`.
-                      Modifying will cause the instance reset.
+                    description: |-
+                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   keyName:
-                    description: Please use key_ids instead. The key pair to use for
-                      the instance, it looks like skey-16jig7tx. Modifying will cause
-                      the instance reset. The key pair to use for the instance, it
-                      looks like `skey-16jig7tx`. Modifying will cause the instance
-                      reset.
+                    description: |-
+                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
                     type: string
                   memory:
-                    description: Instance memory capacity, unit in GB. Instance memory
-                      capacity, unit in GB.
+                    description: |-
+                      Instance memory capacity, unit in GB.
+                      Instance memory capacity, unit in GB.
                     type: number
                   orderlySecurityGroups:
-                    description: A list of orderly security group IDs to associate
-                      with. A list of orderly security group IDs to associate with.
+                    description: |-
+                      A list of orderly security group IDs to associate with.
+                      A list of orderly security group IDs to associate with.
                     items:
                       type: string
                     type: array
                   osName:
-                    description: Instance os name. Instance os name.
+                    description: |-
+                      Instance os name.
+                      Instance os name.
                     type: string
                   placementGroupId:
-                    description: The ID of a placement group. The ID of a placement
-                      group.
+                    description: |-
+                      The ID of a placement group.
+                      The ID of a placement group.
                     type: string
                   privateIp:
-                    description: The private IP to be assigned to this instance, must
-                      be in the provided subnet and available. The private IP to be
-                      assigned to this instance, must be in the provided subnet and
-                      available.
+                    description: |-
+                      The private IP to be assigned to this instance, must be in the provided subnet and available.
+                      The private IP to be assigned to this instance, must be in the provided subnet and available.
                     type: string
                   projectId:
-                    description: The project the instance belongs to, default to 0.
+                    description: |-
+                      The project the instance belongs to, default to 0.
                       The project the instance belongs to, default to 0.
                     type: number
                   publicIp:
-                    description: Public IP of the instance. Public IP of the instance.
+                    description: |-
+                      Public IP of the instance.
+                      Public IP of the instance.
                     type: string
                   runningFlag:
-                    description: Set instance to running or stop. Default value is
-                      true, the instance will shutdown when this flag is false. Set
-                      instance to running or stop. Default value is true, the instance
-                      will shutdown when this flag is false.
+                    description: |-
+                      Set instance to running or stop. Default value is true, the instance will shutdown when this flag is false.
+                      Set instance to running or stop. Default value is true, the instance will shutdown when this flag is false.
                     type: boolean
                   securityGroups:
-                    description: It will be deprecated. Use orderly_security_groups
-                      instead. A list of security group IDs to associate with. A list
-                      of security group IDs to associate with.
+                    description: |-
+                      It will be deprecated. Use orderly_security_groups instead. A list of security group IDs to associate with.
+                      A list of security group IDs to associate with.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   spotInstanceType:
-                    description: 'Type of spot instance, only support ONE-TIME now.
-                      Note: it only works when instance_charge_type is set to SPOTPAID.
-                      Type of spot instance, only support `ONE-TIME` now. Note: it
-                      only works when instance_charge_type is set to `SPOTPAID`.'
+                    description: |-
+                      Type of spot instance, only support ONE-TIME now. Note: it only works when instance_charge_type is set to SPOTPAID.
+                      Type of spot instance, only support `ONE-TIME` now. Note: it only works when instance_charge_type is set to `SPOTPAID`.
                     type: string
                   spotMaxPrice:
-                    description: 'Max price of a spot instance, is the format of decimal
-                      string, for example "0.50". Note: it only works when instance_charge_type
-                      is set to SPOTPAID. Max price of a spot instance, is the format
-                      of decimal string, for example "0.50". Note: it only works when
-                      instance_charge_type is set to `SPOTPAID`.'
+                    description: |-
+                      Max price of a spot instance, is the format of decimal string, for example "0.50". Note: it only works when instance_charge_type is set to SPOTPAID.
+                      Max price of a spot instance, is the format of decimal string, for example "0.50". Note: it only works when instance_charge_type is set to `SPOTPAID`.
                     type: string
                   stoppedMode:
-                    description: 'Billing method of a pay-as-you-go instance after
-                      shutdown. Available values: KEEP_CHARGING,STOP_CHARGING. Default
-                      KEEP_CHARGING. Billing method of a pay-as-you-go instance after
-                      shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`.
-                      Default `KEEP_CHARGING`.'
+                    description: |-
+                      Billing method of a pay-as-you-go instance after shutdown. Available values: KEEP_CHARGING,STOP_CHARGING. Default KEEP_CHARGING.
+                      Billing method of a pay-as-you-go instance after shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`. Default `KEEP_CHARGING`.
                     type: string
                   subnetId:
-                    description: The ID of a VPC subnet. If you want to create instances
-                      in a VPC network, this parameter must be set. The ID of a VPC
-                      subnet. If you want to create instances in a VPC network, this
-                      parameter must be set.
+                    description: |-
+                      The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+                      The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
                     type: string
                   systemDiskId:
-                    description: System disk snapshot ID used to initialize the system
-                      disk. When system disk type is LOCAL_BASIC and LOCAL_SSD, disk
-                      id is not supported. System disk snapshot ID used to initialize
-                      the system disk. When system disk type is `LOCAL_BASIC` and
-                      `LOCAL_SSD`, disk id is not supported.
+                    description: |-
+                      System disk snapshot ID used to initialize the system disk. When system disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
+                      System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                     type: string
                   systemDiskSize:
-                    description: Size of the system disk. unit is GB, Default is 50GB.
-                      If modified, the instance may force stop. Size of the system
-                      disk. unit is GB, Default is 50GB. If modified, the instance
-                      may force stop.
+                    description: |-
+                      Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
+                      Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
                     type: number
                   systemDiskType:
-                    description: 'System disk type. For more information on limits
-                      of system disk types, see Storage Overview. Valid values: LOCAL_BASIC:
-                      local disk, LOCAL_SSD: local SSD disk, CLOUD_BASIC: cloud disk,
-                      CLOUD_SSD: cloud SSD disk, CLOUD_PREMIUM: Premium Cloud Storage,
-                      CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD:
-                      Tremendous SSD. NOTE: If modified, the instance may force stop.
-                      System disk type. For more information on limits of system disk
-                      types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952).
-                      Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local
-                      SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD
-                      disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`:
-                      Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous
-                      SSD. NOTE: If modified, the instance may force stop.'
+                    description: |-
+                      System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_BASIC: cloud disk, CLOUD_SSD: cloud SSD disk, CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD. NOTE: If modified, the instance may force stop.
+                      System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_BASIC`: cloud disk, `CLOUD_SSD`: cloud SSD disk, `CLOUD_PREMIUM`: Premium Cloud Storage, `CLOUD_BSSD`: Basic SSD, `CLOUD_HSSD`: Enhanced SSD, `CLOUD_TSSD`: Tremendous SSD. NOTE: If modified, the instance may force stop.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: A mapping of tags to assign to the resource. For
-                      tag limits, please refer to Use Limits. A mapping of tags to
-                      assign to the resource. For tag limits, please refer to [Use
-                      Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+                    description: |-
+                      A mapping of tags to assign to the resource. For tag limits, please refer to Use Limits.
+                      A mapping of tags to assign to the resource. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
                     type: object
+                    x-kubernetes-map-type: granular
                   userData:
-                    description: The user data to be injected into this instance.
-                      Must be base64 encoded and up to 16 KB. The user data to be
-                      injected into this instance. Must be base64 encoded and up to
-                      16 KB.
+                    description: |-
+                      The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
+                      The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
                     type: string
                   userDataRaw:
-                    description: The user data to be injected into this instance,
-                      in plain text. Conflicts with user_data. Up to 16 KB after base64
-                      encoded. The user data to be injected into this instance, in
-                      plain text. Conflicts with `user_data`. Up to 16 KB after base64
-                      encoded.
+                    description: |-
+                      The user data to be injected into this instance, in plain text. Conflicts with user_data. Up to 16 KB after base64 encoded.
+                      The user data to be injected into this instance, in plain text. Conflicts with `user_data`. Up to 16 KB after base64 encoded.
                     type: string
                   uuid:
-                    description: Globally unique ID of the instance. Globally unique
-                      ID of the instance.
+                    description: |-
+                      Globally unique ID of the instance.
+                      Globally unique ID of the instance.
                     type: string
                   vpcId:
-                    description: The ID of a VPC network. If you want to create instances
-                      in a VPC network, this parameter must be set. The ID of a VPC
-                      network. If you want to create instances in a VPC network, this
-                      parameter must be set.
+                    description: |-
+                      The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+                      The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
                     type: string
                 type: object
               conditions:
@@ -1531,13 +1386,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -1548,8 +1405,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

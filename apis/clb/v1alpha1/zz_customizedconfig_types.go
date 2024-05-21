@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -29,6 +25,7 @@ type CustomizedConfigInitParameters struct {
 
 	// List of LoadBalancer Ids.
 	// List of LoadBalancer Ids.
+	// +listType=set
 	LoadBalancerIds []*string `json:"loadBalancerIds,omitempty" tf:"load_balancer_ids,omitempty"`
 }
 
@@ -51,6 +48,7 @@ type CustomizedConfigObservation struct {
 
 	// List of LoadBalancer Ids.
 	// List of LoadBalancer Ids.
+	// +listType=set
 	LoadBalancerIds []*string `json:"loadBalancerIds,omitempty" tf:"load_balancer_ids,omitempty"`
 
 	// Update time of Customized Config.
@@ -73,6 +71,7 @@ type CustomizedConfigParameters struct {
 	// List of LoadBalancer Ids.
 	// List of LoadBalancer Ids.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	LoadBalancerIds []*string `json:"loadBalancerIds,omitempty" tf:"load_balancer_ids,omitempty"`
 }
 
@@ -100,13 +99,14 @@ type CustomizedConfigStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // CustomizedConfig is the Schema for the CustomizedConfigs API. Provides a resource to create a CLB customized config.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type CustomizedConfig struct {
 	metav1.TypeMeta   `json:",inline"`

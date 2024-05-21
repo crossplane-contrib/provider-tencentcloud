@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -61,6 +57,7 @@ type DcxInitParameters struct {
 
 	// Static route, the network address of the user IDC. It can be modified after setting but cannot be deleted. AN unable field within BGP.
 	// Static route, the network address of the user IDC. It can be modified after setting but cannot be deleted. AN unable field within BGP.
+	// +listType=set
 	RouteFilterPrefixes []*string `json:"routeFilterPrefixes,omitempty" tf:"route_filter_prefixes,omitempty"`
 
 	// Type of the route, and available values include BGP and STATIC. The default value is BGP.
@@ -131,6 +128,7 @@ type DcxObservation struct {
 
 	// Static route, the network address of the user IDC. It can be modified after setting but cannot be deleted. AN unable field within BGP.
 	// Static route, the network address of the user IDC. It can be modified after setting but cannot be deleted. AN unable field within BGP.
+	// +listType=set
 	RouteFilterPrefixes []*string `json:"routeFilterPrefixes,omitempty" tf:"route_filter_prefixes,omitempty"`
 
 	// Type of the route, and available values include BGP and STATIC. The default value is BGP.
@@ -209,6 +207,7 @@ type DcxParameters struct {
 	// Static route, the network address of the user IDC. It can be modified after setting but cannot be deleted. AN unable field within BGP.
 	// Static route, the network address of the user IDC. It can be modified after setting but cannot be deleted. AN unable field within BGP.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	RouteFilterPrefixes []*string `json:"routeFilterPrefixes,omitempty" tf:"route_filter_prefixes,omitempty"`
 
 	// Type of the route, and available values include BGP and STATIC. The default value is BGP.
@@ -256,13 +255,14 @@ type DcxStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Dcx is the Schema for the Dcxs API. Provides a resource to creating dedicated tunnels instances.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Dcx struct {
 	metav1.TypeMeta   `json:",inline"`

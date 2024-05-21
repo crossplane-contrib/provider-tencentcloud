@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -30,6 +26,19 @@ type ListenerRuleInitParameters struct {
 	// Type of certificate. Valid values: UNIDIRECTIONAL, MUTUAL. NOTES: Only supports listeners of HTTPS protocol.
 	// Type of certificate. Valid values: `UNIDIRECTIONAL`, `MUTUAL`. NOTES: Only supports listeners of HTTPS protocol.
 	CertificateSSLMode *string `json:"certificateSslMode,omitempty" tf:"certificate_ssl_mode,omitempty"`
+
+	// ID of CLB instance.
+	// ID of CLB instance.
+	// +crossplane:generate:reference:type=Instance
+	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
+
+	// Reference to a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDRef *v1.Reference `json:"clbIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
 	// Domain name of the listener rule.
 	// Domain name of the listener rule.
@@ -82,6 +91,19 @@ type ListenerRuleInitParameters struct {
 	// Indicate to apply HTTP2.0 protocol or not.
 	// Indicate to apply HTTP2.0 protocol or not.
 	Http2Switch *bool `json:"http2Switch,omitempty" tf:"http2_switch,omitempty"`
+
+	// ID of CLB listener.
+	// ID of CLB listener.
+	// +crossplane:generate:reference:type=Listener
+	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Reference to a Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDRef *v1.Reference `json:"listenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
 
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
@@ -366,13 +388,14 @@ type ListenerRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ListenerRule is the Schema for the ListenerRules API. Provides a resource to create a CLB listener rule.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ListenerRule struct {
 	metav1.TypeMeta   `json:",inline"`
