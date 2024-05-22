@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: storeconfigs.tencentcloud.tencentcloud.crossplane.io
+  name: storeconfigs.tencentcloud.crossplane.io
 spec:
-  group: tencentcloud.tencentcloud.crossplane.io
+  group: tencentcloud.crossplane.io
   names:
     categories:
     - crossplane
