@@ -35,6 +35,22 @@ func (mg *AppConfig) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.EnvironmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.EnvironmentIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvironmentID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.EnvironmentIDRef,
+		Selector:     mg.Spec.InitProvider.EnvironmentIDSelector,
+		To: reference.To{
+			List:    &EnvironmentList{},
+			Managed: &Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EnvironmentID")
+	}
+	mg.Spec.InitProvider.EnvironmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EnvironmentIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -92,6 +108,54 @@ func (mg *LogConfig) ResolveReferences(ctx context.Context, c client.Reader) err
 	}
 	mg.Spec.ForProvider.WorkloadID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.WorkloadIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationID")
+	}
+	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvironmentID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.EnvironmentIDRef,
+		Selector:     mg.Spec.InitProvider.EnvironmentIDSelector,
+		To: reference.To{
+			List:    &EnvironmentList{},
+			Managed: &Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EnvironmentID")
+	}
+	mg.Spec.InitProvider.EnvironmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EnvironmentIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.WorkloadID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.WorkloadIDRef,
+		Selector:     mg.Spec.InitProvider.WorkloadIDSelector,
+		To: reference.To{
+			List:    &WorkloadList{},
+			Managed: &Workload{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.WorkloadID")
+	}
+	mg.Spec.InitProvider.WorkloadID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.WorkloadIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -151,6 +215,54 @@ func (mg *ScaleRule) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.WorkloadID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.WorkloadIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationID")
+	}
+	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvironmentID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.EnvironmentIDRef,
+		Selector:     mg.Spec.InitProvider.EnvironmentIDSelector,
+		To: reference.To{
+			List:    &EnvironmentList{},
+			Managed: &Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EnvironmentID")
+	}
+	mg.Spec.InitProvider.EnvironmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EnvironmentIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.WorkloadID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.WorkloadIDRef,
+		Selector:     mg.Spec.InitProvider.WorkloadIDSelector,
+		To: reference.To{
+			List:    &WorkloadList{},
+			Managed: &Workload{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.WorkloadID")
+	}
+	mg.Spec.InitProvider.WorkloadID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.WorkloadIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -192,6 +304,38 @@ func (mg *Workload) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.EnvironmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.EnvironmentIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationID")
+	}
+	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EnvironmentID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.EnvironmentIDRef,
+		Selector:     mg.Spec.InitProvider.EnvironmentIDSelector,
+		To: reference.To{
+			List:    &EnvironmentList{},
+			Managed: &Environment{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EnvironmentID")
+	}
+	mg.Spec.InitProvider.EnvironmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EnvironmentIDRef = rsp.ResolvedReference
 
 	return nil
 }

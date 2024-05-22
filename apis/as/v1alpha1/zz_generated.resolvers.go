@@ -35,6 +35,22 @@ func (mg *Attachment) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ScalingGroupIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ScalingGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ScalingGroupIDRef,
+		Selector:     mg.Spec.InitProvider.ScalingGroupIDSelector,
+		To: reference.To{
+			List:    &ScalingGroupList{},
+			Managed: &ScalingGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ScalingGroupID")
+	}
+	mg.Spec.InitProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ScalingGroupIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -60,6 +76,22 @@ func (mg *LifecycleHook) ResolveReferences(ctx context.Context, c client.Reader)
 	}
 	mg.Spec.ForProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ScalingGroupIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ScalingGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ScalingGroupIDRef,
+		Selector:     mg.Spec.InitProvider.ScalingGroupIDSelector,
+		To: reference.To{
+			List:    &ScalingGroupList{},
+			Managed: &ScalingGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ScalingGroupID")
+	}
+	mg.Spec.InitProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ScalingGroupIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -87,6 +119,22 @@ func (mg *Notification) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ScalingGroupIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ScalingGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ScalingGroupIDRef,
+		Selector:     mg.Spec.InitProvider.ScalingGroupIDSelector,
+		To: reference.To{
+			List:    &ScalingGroupList{},
+			Managed: &ScalingGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ScalingGroupID")
+	}
+	mg.Spec.InitProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ScalingGroupIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -112,6 +160,22 @@ func (mg *ScalingGroup) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.ConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ConfigurationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ConfigurationID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ConfigurationIDRef,
+		Selector:     mg.Spec.InitProvider.ConfigurationIDSelector,
+		To: reference.To{
+			List:    &ScalingConfigList{},
+			Managed: &ScalingConfig{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ConfigurationID")
+	}
+	mg.Spec.InitProvider.ConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ConfigurationIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -139,6 +203,22 @@ func (mg *ScalingPolicy) ResolveReferences(ctx context.Context, c client.Reader)
 	mg.Spec.ForProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ScalingGroupIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ScalingGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ScalingGroupIDRef,
+		Selector:     mg.Spec.InitProvider.ScalingGroupIDSelector,
+		To: reference.To{
+			List:    &ScalingGroupList{},
+			Managed: &ScalingGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ScalingGroupID")
+	}
+	mg.Spec.InitProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ScalingGroupIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -164,6 +244,22 @@ func (mg *Schedule) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ScalingGroupIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ScalingGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ScalingGroupIDRef,
+		Selector:     mg.Spec.InitProvider.ScalingGroupIDSelector,
+		To: reference.To{
+			List:    &ScalingGroupList{},
+			Managed: &ScalingGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ScalingGroupID")
+	}
+	mg.Spec.InitProvider.ScalingGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ScalingGroupIDRef = rsp.ResolvedReference
 
 	return nil
 }

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -209,6 +205,7 @@ type InstanceInitParameters struct {
 
 	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
 	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// +listType=set
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
 	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
@@ -237,6 +234,7 @@ type InstanceInitParameters struct {
 
 	// It will be deprecated. Use orderly_security_groups instead. A list of security group IDs to associate with.
 	// A list of security group IDs to associate with.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Type of spot instance, only support ONE-TIME now. Note: it only works when instance_charge_type is set to SPOTPAID.
@@ -251,6 +249,19 @@ type InstanceInitParameters struct {
 	// Billing method of a pay-as-you-go instance after shutdown. Available values: `KEEP_CHARGING`,`STOP_CHARGING`. Default `KEEP_CHARGING`.
 	StoppedMode *string `json:"stoppedMode,omitempty" tf:"stopped_mode,omitempty"`
 
+	// The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+	// The ID of a VPC subnet. If you want to create instances in a VPC network, this parameter must be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
@@ -261,6 +272,7 @@ type InstanceInitParameters struct {
 
 	// A mapping of tags to assign to the resource. For tag limits, please refer to Use Limits.
 	// A mapping of tags to assign to the resource. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
@@ -270,6 +282,19 @@ type InstanceInitParameters struct {
 	// The user data to be injected into this instance, in plain text. Conflicts with user_data. Up to 16 KB after base64 encoded.
 	// The user data to be injected into this instance, in plain text. Conflicts with `user_data`. Up to 16 KB after base64 encoded.
 	UserDataRaw *string `json:"userDataRaw,omitempty" tf:"user_data_raw,omitempty"`
+
+	// The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+	// The ID of a VPC network. If you want to create instances in a VPC network, this parameter must be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 type InstanceObservation struct {
@@ -383,6 +408,7 @@ type InstanceObservation struct {
 
 	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
 	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// +listType=set
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
 	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
@@ -423,6 +449,7 @@ type InstanceObservation struct {
 
 	// It will be deprecated. Use orderly_security_groups instead. A list of security group IDs to associate with.
 	// A list of security group IDs to associate with.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Type of spot instance, only support ONE-TIME now. Note: it only works when instance_charge_type is set to SPOTPAID.
@@ -455,6 +482,7 @@ type InstanceObservation struct {
 
 	// A mapping of tags to assign to the resource. For tag limits, please refer to Use Limits.
 	// A mapping of tags to assign to the resource. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Globally unique ID of the instance.
@@ -589,6 +617,7 @@ type InstanceParameters struct {
 	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
 	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
 	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
@@ -629,6 +658,7 @@ type InstanceParameters struct {
 	// It will be deprecated. Use orderly_security_groups instead. A list of security group IDs to associate with.
 	// A list of security group IDs to associate with.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Type of spot instance, only support ONE-TIME now. Note: it only works when instance_charge_type is set to SPOTPAID.
@@ -673,6 +703,7 @@ type InstanceParameters struct {
 	// A mapping of tags to assign to the resource. For tag limits, please refer to Use Limits.
 	// A mapping of tags to assign to the resource. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The user data to be injected into this instance. Must be base64 encoded and up to 16 KB.
@@ -724,13 +755,14 @@ type InstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Instance is the Schema for the Instances API. Provides a CVM instance resource.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -29,6 +25,7 @@ type VPCInitParameters struct {
 
 	// The DNS server list of the VPC. And you can specify 0 to 5 servers to this list.
 	// The DNS server list of the VPC. And you can specify 0 to 5 servers to this list.
+	// +listType=set
 	DNSServers []*string `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
 	// Indicates whether VPC multicast is enabled. The default value is 'true'.
@@ -41,6 +38,7 @@ type VPCInitParameters struct {
 
 	// Tags of the VPC.
 	// Tags of the VPC.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -60,6 +58,7 @@ type VPCObservation struct {
 
 	// The DNS server list of the VPC. And you can specify 0 to 5 servers to this list.
 	// The DNS server list of the VPC. And you can specify 0 to 5 servers to this list.
+	// +listType=set
 	DNSServers []*string `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
 	// Default route table id, which created automatically after VPC create.
@@ -87,6 +86,7 @@ type VPCObservation struct {
 
 	// Tags of the VPC.
 	// Tags of the VPC.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -105,6 +105,7 @@ type VPCParameters struct {
 	// The DNS server list of the VPC. And you can specify 0 to 5 servers to this list.
 	// The DNS server list of the VPC. And you can specify 0 to 5 servers to this list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	DNSServers []*string `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
 	// Indicates whether VPC multicast is enabled. The default value is 'true'.
@@ -120,6 +121,7 @@ type VPCParameters struct {
 	// Tags of the VPC.
 	// Tags of the VPC.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -147,13 +149,14 @@ type VPCStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VPC is the Schema for the VPCs API. Provide a resource to create a VPC.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type VPC struct {
 	metav1.TypeMeta   `json:",inline"`

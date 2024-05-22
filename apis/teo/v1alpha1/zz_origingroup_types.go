@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -34,6 +30,19 @@ type OriginGroupInitParameters struct {
 	// Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
 	// Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
 	OriginType *string `json:"originType,omitempty" tf:"origin_type,omitempty"`
+
+	// Site ID.
+	// Site ID.
+	// +crossplane:generate:reference:type=Zone
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type OriginGroupObservation struct {
@@ -111,6 +120,7 @@ type OriginRecordsInitParameters struct {
 
 	// Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
 	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
+	// +listType=set
 	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
 
 	// Port of the origin site. Valid value range: 1-65535.
@@ -138,6 +148,7 @@ type OriginRecordsObservation struct {
 
 	// Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
 	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
+	// +listType=set
 	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
 
 	// Port of the origin site. Valid value range: 1-65535.
@@ -170,6 +181,7 @@ type OriginRecordsParameters struct {
 	// Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
 	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
 
 	// Port of the origin site. Valid value range: 1-65535.
@@ -257,13 +269,14 @@ type OriginGroupStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // OriginGroup is the Schema for the OriginGroups API. Provides a resource to create a teo origin_group
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type OriginGroup struct {
 	metav1.TypeMeta   `json:",inline"`

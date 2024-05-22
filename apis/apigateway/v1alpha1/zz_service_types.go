@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -57,6 +53,7 @@ type ServiceInitParameters struct {
 
 	// Network type list, which is used to specify the supported network types. Valid values: INNER, OUTER. INNER indicates access over private network, and OUTER indicates access over public network.
 	// Network type list, which is used to specify the supported network types. Valid values: `INNER`, `OUTER`. `INNER` indicates access over private network, and `OUTER` indicates access over public network.
+	// +listType=set
 	NetType []*string `json:"netType,omitempty" tf:"net_type,omitempty"`
 
 	// API QPS value. Enter a positive number to limit the API query rate per second QPS.
@@ -81,6 +78,7 @@ type ServiceInitParameters struct {
 
 	// Tag description list.
 	// Tag description list.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// API QPS value. Enter a positive number to limit the API query rate per second QPS.
@@ -135,6 +133,7 @@ type ServiceObservation struct {
 
 	// Network type list, which is used to specify the supported network types. Valid values: INNER, OUTER. INNER indicates access over private network, and OUTER indicates access over public network.
 	// Network type list, which is used to specify the supported network types. Valid values: `INNER`, `OUTER`. `INNER` indicates access over private network, and `OUTER` indicates access over public network.
+	// +listType=set
 	NetType []*string `json:"netType,omitempty" tf:"net_type,omitempty"`
 
 	// Public network access subdomain name.
@@ -163,6 +162,7 @@ type ServiceObservation struct {
 
 	// Tag description list.
 	// Tag description list.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// API QPS value. Enter a positive number to limit the API query rate per second QPS.
@@ -198,6 +198,7 @@ type ServiceParameters struct {
 	// Network type list, which is used to specify the supported network types. Valid values: INNER, OUTER. INNER indicates access over private network, and OUTER indicates access over public network.
 	// Network type list, which is used to specify the supported network types. Valid values: `INNER`, `OUTER`. `INNER` indicates access over private network, and `OUTER` indicates access over public network.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	NetType []*string `json:"netType,omitempty" tf:"net_type,omitempty"`
 
 	// API QPS value. Enter a positive number to limit the API query rate per second QPS.
@@ -228,6 +229,7 @@ type ServiceParameters struct {
 	// Tag description list.
 	// Tag description list.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// API QPS value. Enter a positive number to limit the API query rate per second QPS.
@@ -286,13 +288,14 @@ type ServiceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Service is the Schema for the Services API. Use this resource to create API gateway service.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Service struct {
 	metav1.TypeMeta   `json:",inline"`

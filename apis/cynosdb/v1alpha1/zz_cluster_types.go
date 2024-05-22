@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -73,6 +69,7 @@ type ClusterInitParameters struct {
 
 	// Weekdays for maintenance. ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] by default.
 	// Weekdays for maintenance. `["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` by default.
+	// +listType=set
 	InstanceMaintainWeekdays []*string `json:"instanceMaintainWeekdays,omitempty" tf:"instance_maintain_weekdays,omitempty"`
 
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
@@ -131,9 +128,36 @@ type ClusterInitParameters struct {
 	// Cluster storage billing mode, pay-as-you-go: `0`-yearly/monthly: `1`-The default is pay-as-you-go. When the DbType is MYSQL, when the cluster computing billing mode is post-paid (including DbMode is SERVERLESS), the storage billing mode can only be billing by volume; rollback and cloning do not support yearly subscriptions monthly storage.
 	StoragePayMode *float64 `json:"storagePayMode,omitempty" tf:"storage_pay_mode,omitempty"`
 
+	// ID of the subnet within this VPC.
+	// ID of the subnet within this VPC.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// The tags of the CynosDB cluster.
 	// The tags of the CynosDB cluster.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of the VPC.
+	// ID of the VPC.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 type ClusterObservation struct {
@@ -211,6 +235,7 @@ type ClusterObservation struct {
 
 	// Weekdays for maintenance. ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] by default.
 	// Weekdays for maintenance. `["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` by default.
+	// +listType=set
 	InstanceMaintainWeekdays []*string `json:"instanceMaintainWeekdays,omitempty" tf:"instance_maintain_weekdays,omitempty"`
 
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
@@ -319,6 +344,7 @@ type ClusterObservation struct {
 
 	// The tags of the CynosDB cluster.
 	// The tags of the CynosDB cluster.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the VPC.
@@ -396,6 +422,7 @@ type ClusterParameters struct {
 	// Weekdays for maintenance. ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] by default.
 	// Weekdays for maintenance. `["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]` by default.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	InstanceMaintainWeekdays []*string `json:"instanceMaintainWeekdays,omitempty" tf:"instance_maintain_weekdays,omitempty"`
 
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
@@ -490,6 +517,7 @@ type ClusterParameters struct {
 	// The tags of the CynosDB cluster.
 	// The tags of the CynosDB cluster.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the VPC.
@@ -639,13 +667,14 @@ type ClusterStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Cluster is the Schema for the Clusters API. Provide a resource to create a CynosDB cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`

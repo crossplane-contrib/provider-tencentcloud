@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -46,6 +42,19 @@ type Layer4ListenerInitParameters struct {
 	// Protocol of the layer4 listener. Valid value: TCP and UDP.
 	// Protocol of the layer4 listener. Valid value: `TCP` and `UDP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// ID of the GAAP proxy.
+	// ID of the GAAP proxy.
+	// +crossplane:generate:reference:type=Proxy
+	ProxyID *string `json:"proxyId,omitempty" tf:"proxy_id,omitempty"`
+
+	// Reference to a Proxy to populate proxyId.
+	// +kubebuilder:validation:Optional
+	ProxyIDRef *v1.Reference `json:"proxyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Proxy to populate proxyId.
+	// +kubebuilder:validation:Optional
+	ProxyIDSelector *v1.Selector `json:"proxyIdSelector,omitempty" tf:"-"`
 
 	// An information list of GAAP realserver.
 	// An information list of GAAP realserver.
@@ -270,13 +279,14 @@ type Layer4ListenerStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Layer4Listener is the Schema for the Layer4Listeners API. Provides a resource to create a layer4 listener of GAAP.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Layer4Listener struct {
 	metav1.TypeMeta   `json:",inline"`

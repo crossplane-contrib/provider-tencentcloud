@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: paycertificates.ssl.tencentcloud.crossplane.io
 spec:
   group: ssl.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           a resource to create a payment SSL.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,515 +74,384 @@ spec:
               forProvider:
                 properties:
                   alias:
-                    description: Remark name. Remark name.
+                    description: |-
+                      Remark name.
+                      Remark name.
                     type: string
                   confirmLetter:
-                    description: 'The base64-encoded certificate confirmation file
-                      should be in jpg, jpeg, png, pdf, and the size should be between
-                      1kb and 1.4M. Note: it only works when product_id is set to
-                      8, 9 or 10. The base64-encoded certificate confirmation file
-                      should be in jpg, jpeg, png, pdf, and the size should be between
-                      1kb and 1.4M. Note: it only works when product_id is set to
-                      8, 9 or 10.'
+                    description: |-
+                      The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
+                      The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
                     type: string
                   domainNum:
-                    description: Number of domain names included in the certificate.
+                    description: |-
+                      Number of domain names included in the certificate.
                       Number of domain names included in the certificate.
                     type: number
                   dvAuths:
-                    description: DV certification information. DV certification information.
+                    description: |-
+                      DV certification information.
+                      DV certification information.
                     items:
                       type: object
                     type: array
                   information:
-                    description: Certificate information. Certificate information.
+                    description: |-
+                      Certificate information.
+                      Certificate information.
                     items:
                       properties:
                         adminEmail:
-                          description: The administrator's email address. The administrator's
-                            email address.
+                          description: |-
+                            The administrator's email address.
+                            The administrator's email address.
                           type: string
                         adminFirstName:
-                          description: The first name of the administrator. The first
-                            name of the administrator.
+                          description: |-
+                            The first name of the administrator.
+                            The first name of the administrator.
                           type: string
                         adminLastName:
-                          description: The last name of the administrator. The last
-                            name of the administrator.
+                          description: |-
+                            The last name of the administrator.
+                            The last name of the administrator.
                           type: string
                         adminPhoneNum:
-                          description: Manager mobile phone number. Manager mobile
-                            phone number.
+                          description: |-
+                            Manager mobile phone number.
+                            Manager mobile phone number.
                           type: string
                         adminPosition:
-                          description: Manager position. Manager position.
+                          description: |-
+                            Manager position.
+                            Manager position.
                           type: string
                         certificateDomain:
-                          description: Domain name for binding certificate. Domain
-                            name for binding certificate.
+                          description: |-
+                            Domain name for binding certificate.
+                            Domain name for binding certificate.
                           type: string
                         contactEmail:
-                          description: Contact email address. Contact email address.
+                          description: |-
+                            Contact email address.
+                            Contact email address.
                           type: string
                         contactFirstName:
-                          description: Contact first name. Contact first name.
+                          description: |-
+                            Contact first name.
+                            Contact first name.
                           type: string
                         contactLastName:
-                          description: Contact last name. Contact last name.
+                          description: |-
+                            Contact last name.
+                            Contact last name.
                           type: string
                         contactNumber:
-                          description: Contact phone number. Contact phone number.
+                          description: |-
+                            Contact phone number.
+                            Contact phone number.
                           type: string
                         contactPosition:
-                          description: Contact position. Contact position.
+                          description: |-
+                            Contact position.
+                            Contact position.
                           type: string
                         csrContent:
-                          description: CSR content uploaded. CSR content uploaded.
+                          description: |-
+                            CSR content uploaded.
+                            CSR content uploaded.
                           type: string
                         csrType:
-                          description: 'CSR generation method. Valid values: online,
-                            parse. online means online generation, parse means manual
-                            upload. CSR generation method. Valid values: `online`,
-                            `parse`. `online` means online generation, `parse` means
-                            manual upload.'
+                          description: |-
+                            CSR generation method. Valid values: online, parse. online means online generation, parse means manual upload.
+                            CSR generation method. Valid values: `online`, `parse`. `online` means online generation, `parse` means manual upload.
                           type: string
                         domainList:
-                          description: Array of uploaded domain names, multi-domain
-                            certificates can be uploaded. Array of uploaded domain
-                            names, multi-domain certificates can be uploaded.
+                          description: |-
+                            Array of uploaded domain names, multi-domain certificates can be uploaded.
+                            Array of uploaded domain names, multi-domain certificates can be uploaded.
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         keyPassword:
-                          description: Private key password. Private key password.
+                          description: |-
+                            Private key password.
+                            Private key password.
                           type: string
                         organizationAddress:
-                          description: Company address. Company address.
+                          description: |-
+                            Company address.
+                            Company address.
                           type: string
                         organizationCity:
-                          description: Company city. Company city.
+                          description: |-
+                            Company city.
+                            Company city.
                           type: string
                         organizationCountry:
-                          description: 'Country name, such as China: CN. Country name,
-                            such as China: CN.'
+                          description: |-
+                            Country name, such as China: CN.
+                            Country name, such as China: CN.
                           type: string
                         organizationDivision:
-                          description: Department name. Department name.
+                          description: |-
+                            Department name.
+                            Department name.
                           type: string
                         organizationName:
-                          description: Company name. Company name.
+                          description: |-
+                            Company name.
+                            Company name.
                           type: string
                         organizationRegion:
-                          description: The province where the company is located.
+                          description: |-
+                            The province where the company is located.
                             The province where the company is located.
                           type: string
                         phoneAreaCode:
-                          description: Company landline area code. Company landline
-                            area code.
+                          description: |-
+                            Company landline area code.
+                            Company landline area code.
                           type: string
                         phoneNumber:
-                          description: Company landline number. Company landline number.
+                          description: |-
+                            Company landline number.
+                            Company landline number.
                           type: string
                         postalCode:
-                          description: Company postal code. Company postal code.
+                          description: |-
+                            Company postal code.
+                            Company postal code.
                           type: string
                         verifyType:
-                          description: 'Certificate verification method. Valid values:
-                            DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification,
-                            this verification type is only supported for domain names
-                            resolved by Tencent Cloud and the resolution status is
-                            normal, DNS means manual DNS verification, FILE means
-                            file verification. Certificate verification method. Valid
-                            values: `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic
-                            DNS verification, this verification type is only supported
-                            for domain names resolved by Tencent Cloud and the resolution
-                            status is normal, `DNS` means manual DNS verification,
-                            `FILE` means file verification.'
+                          description: |-
+                            Certificate verification method. Valid values: DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, DNS means manual DNS verification, FILE means file verification.
+                            Certificate verification method. Valid values: `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, `DNS` means manual DNS verification, `FILE` means file verification.
                           type: string
                       type: object
                     type: array
                   productId:
-                    description: 'Certificate commodity ID. Valid value ranges: (3~42).
-                      3 means SecureSite enhanced Enterprise Edition (EV Pro), 4 means
-                      SecureSite enhanced (EV), 5 means SecureSite Enterprise Professional
-                      Edition (OV Pro), 6 means SecureSite Enterprise (OV), 7 means
-                      SecureSite Enterprise Type (OV) wildcard, 8 means Geotrust enhanced
-                      (EV), 9 means Geotrust enterprise (OV), 10 means Geotrust enterprise
-                      (OV) wildcard, 11 means TrustAsia domain type multi-domain SSL
-                      certificate, 12 means TrustAsia domain type ( DV) wildcard,
-                      13 means TrustAsia enterprise wildcard (OV) SSL certificate
-                      (D3), 14 means TrustAsia enterprise (OV) SSL certificate (D3),
-                      15 means TrustAsia enterprise multi-domain (OV) SSL certificate
-                      (D3), 16 means TrustAsia Enhanced (EV) SSL Certificate (D3),
-                      17 means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate
-                      (D3), 18 means GlobalSign Enterprise (OV) SSL Certificate, 19
-                      means GlobalSign Enterprise Wildcard (OV) SSL Certificate, 20
-                      means GlobalSign Enhanced (EV) SSL Certificate, 21 means TrustAsia
-                      Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3),
-                      22 means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate,
-                      23 means GlobalSign Enterprise Multiple Wildcard Domain name
-                      (OV) SSL certificate, 24 means GlobalSign enhanced multi-domain
-                      (EV) SSL certificate, 25 means Wotrus domain type certificate,
-                      26 means Wotrus domain type multi-domain certificate, 27 means
-                      Wotrus domain type wildcard certificate, 28 means Wotrus enterprise
-                      type certificate, 29 means Wotrus enterprise multi-domain certificate,
-                      30 means Wotrus enterprise wildcard certificate, 31 means Wotrus
-                      enhanced certificate, 32 means Wotrus enhanced multi-domain
-                      certificate, 33 means WoTrus National Secret Domain name Certificate,
-                      34 means WoTrus National Secret Domain name Certificate (multiple
-                      domain names), 35 WoTrus National Secret Domain name Certificate
-                      (wildcard), 37 means WoTrus State Secret Enterprise Certificate,
-                      38 means WoTrus State Secret Enterprise Certificate (multiple
-                      domain names), 39 means WoTrus State Secret Enterprise Certificate
-                      (wildcard), 40 means WoTrus National secret enhanced certificate,
-                      41 means WoTrus National Secret enhanced Certificate (multiple
-                      domain names), 42 means TrustAsia- Domain name Certificate (wildcard
-                      multiple domain names), 43 means DNSPod Enterprise (OV) SSL
-                      Certificate, 44 means DNSPod- Enterprise (OV) wildcard SSL certificate,
-                      45 means DNSPod Enterprise (OV) Multi-domain name SSL Certificate,
-                      46 means DNSPod enhanced (EV) SSL certificate, 47 means DNSPod
-                      enhanced (EV) multi-domain name SSL certificate, 48 means DNSPod
-                      Domain name Type (DV) SSL Certificate, 49 means DNSPod Domain
-                      name Type (DV) wildcard SSL certificate, 50 means DNSPod domain
-                      name type (DV) multi-domain name SSL certificate, 51 means DNSPod
-                      (State Secret) Enterprise (OV) SSL certificate, 52 DNSPod (National
-                      Secret) Enterprise (OV) wildcard SSL certificate, 53 means DNSPod
-                      (National Secret) Enterprise (OV) multi-domain SSL certificate,
-                      54 means DNSPod (National Secret) Domain Name (DV) SSL certificate,
-                      55 means DNSPod (National Secret) Domain Name Type (DV) wildcard
-                      SSL certificate, 56 means DNSPod (National Secret) Domain Name
-                      Type (DV) multi-domain SSL certificate. Certificate commodity
-                      ID. Valid value ranges: (3~42). `3` means SecureSite enhanced
-                      Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV),
-                      `5` means SecureSite Enterprise Professional Edition (OV Pro),
-                      `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise
-                      Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means
-                      Geotrust enterprise (OV), `10` means Geotrust enterprise (OV)
-                      wildcard, `11` means TrustAsia domain type multi-domain SSL
-                      certificate, `12` means TrustAsia domain type ( DV) wildcard,
-                      `13` means TrustAsia enterprise wildcard (OV) SSL certificate
-                      (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3),
-                      `15` means TrustAsia enterprise multi-domain (OV) SSL certificate
-                      (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3),
-                      `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate
-                      (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate,
-                      `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate,
-                      `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means
-                      TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate
-                      (D3), `22` means GlobalSign Enterprise Multiple Domain (OV)
-                      SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard
-                      Domain name (OV) SSL certificate, `24` means GlobalSign enhanced
-                      multi-domain (EV) SSL certificate, `25` means Wotrus domain
-                      type certificate, `26` means Wotrus domain type multi-domain
-                      certificate, `27` means Wotrus domain type wildcard certificate,
-                      `28` means Wotrus enterprise type certificate, `29` means Wotrus
-                      enterprise multi-domain certificate, `30` means Wotrus enterprise
-                      wildcard certificate, `31` means Wotrus enhanced certificate,
-                      `32` means Wotrus enhanced multi-domain certificate, `33` means
-                      WoTrus National Secret Domain name Certificate, `34` means WoTrus
-                      National Secret Domain name Certificate (multiple domain names),
-                      `35` WoTrus National Secret Domain name Certificate (wildcard),
-                      `37` means WoTrus State Secret Enterprise Certificate, `38`
-                      means WoTrus State Secret Enterprise Certificate (multiple domain
-                      names), `39` means WoTrus State Secret Enterprise Certificate
-                      (wildcard), `40` means WoTrus National secret enhanced certificate,
-                      `41` means WoTrus National Secret enhanced Certificate (multiple
-                      domain names), `42` means TrustAsia- Domain name Certificate
-                      (wildcard multiple domain names), `43` means DNSPod Enterprise
-                      (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard
-                      SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain
-                      name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate,
-                      `47` means DNSPod enhanced (EV) multi-domain name SSL certificate,
-                      `48` means DNSPod Domain name Type (DV) SSL Certificate, `49`
-                      means DNSPod Domain name Type (DV) wildcard SSL certificate,
-                      `50` means DNSPod domain name type (DV) multi-domain name SSL
-                      certificate, `51` means DNSPod (State Secret) Enterprise (OV)
-                      SSL certificate, `52` DNSPod (National Secret) Enterprise (OV)
-                      wildcard SSL certificate, `53` means DNSPod (National Secret)
-                      Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod
-                      (National Secret) Domain Name (DV) SSL certificate, `55` means
-                      DNSPod (National Secret) Domain Name Type (DV) wildcard SSL
-                      certificate, `56` means DNSPod (National Secret) Domain Name
-                      Type (DV) multi-domain SSL certificate.'
+                    description: |-
+                      Certificate commodity ID. Valid value ranges: (3~42). 3 means SecureSite enhanced Enterprise Edition (EV Pro), 4 means SecureSite enhanced (EV), 5 means SecureSite Enterprise Professional Edition (OV Pro), 6 means SecureSite Enterprise (OV), 7 means SecureSite Enterprise Type (OV) wildcard, 8 means Geotrust enhanced (EV), 9 means Geotrust enterprise (OV), 10 means Geotrust enterprise (OV) wildcard, 11 means TrustAsia domain type multi-domain SSL certificate, 12 means TrustAsia domain type ( DV) wildcard, 13 means TrustAsia enterprise wildcard (OV) SSL certificate (D3), 14 means TrustAsia enterprise (OV) SSL certificate (D3), 15 means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), 16 means TrustAsia Enhanced (EV) SSL Certificate (D3), 17 means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), 18 means GlobalSign Enterprise (OV) SSL Certificate, 19 means GlobalSign Enterprise Wildcard (OV) SSL Certificate, 20 means GlobalSign Enhanced (EV) SSL Certificate, 21 means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), 22 means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, 23 means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, 24 means GlobalSign enhanced multi-domain (EV) SSL certificate, 25 means Wotrus domain type certificate, 26 means Wotrus domain type multi-domain certificate, 27 means Wotrus domain type wildcard certificate, 28 means Wotrus enterprise type certificate, 29 means Wotrus enterprise multi-domain certificate, 30 means Wotrus enterprise wildcard certificate, 31 means Wotrus enhanced certificate, 32 means Wotrus enhanced multi-domain certificate, 33 means WoTrus National Secret Domain name Certificate, 34 means WoTrus National Secret Domain name Certificate (multiple domain names), 35 WoTrus National Secret Domain name Certificate (wildcard), 37 means WoTrus State Secret Enterprise Certificate, 38 means WoTrus State Secret Enterprise Certificate (multiple domain names), 39 means WoTrus State Secret Enterprise Certificate (wildcard), 40 means WoTrus National secret enhanced certificate, 41 means WoTrus National Secret enhanced Certificate (multiple domain names), 42 means TrustAsia- Domain name Certificate (wildcard multiple domain names), 43 means DNSPod Enterprise (OV) SSL Certificate, 44 means DNSPod- Enterprise (OV) wildcard SSL certificate, 45 means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, 46 means DNSPod enhanced (EV) SSL certificate, 47 means DNSPod enhanced (EV) multi-domain name SSL certificate, 48 means DNSPod Domain name Type (DV) SSL Certificate, 49 means DNSPod Domain name Type (DV) wildcard SSL certificate, 50 means DNSPod domain name type (DV) multi-domain name SSL certificate, 51 means DNSPod (State Secret) Enterprise (OV) SSL certificate, 52 DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, 53 means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, 54 means DNSPod (National Secret) Domain Name (DV) SSL certificate, 55 means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, 56 means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
+                      Certificate commodity ID. Valid value ranges: (3~42). `3` means SecureSite enhanced Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV), `5` means SecureSite Enterprise Professional Edition (OV Pro), `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means Geotrust enterprise (OV), `10` means Geotrust enterprise (OV) wildcard, `11` means TrustAsia domain type multi-domain SSL certificate, `12` means TrustAsia domain type ( DV) wildcard, `13` means TrustAsia enterprise wildcard (OV) SSL certificate (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3), `15` means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3), `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate, `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate, `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), `22` means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, `24` means GlobalSign enhanced multi-domain (EV) SSL certificate, `25` means Wotrus domain type certificate, `26` means Wotrus domain type multi-domain certificate, `27` means Wotrus domain type wildcard certificate, `28` means Wotrus enterprise type certificate, `29` means Wotrus enterprise multi-domain certificate, `30` means Wotrus enterprise wildcard certificate, `31` means Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain certificate, `33` means WoTrus National Secret Domain name Certificate, `34` means WoTrus National Secret Domain name Certificate (multiple domain names), `35` WoTrus National Secret Domain name Certificate (wildcard), `37` means WoTrus State Secret Enterprise Certificate, `38` means WoTrus State Secret Enterprise Certificate (multiple domain names), `39` means WoTrus State Secret Enterprise Certificate (wildcard), `40` means WoTrus National secret enhanced certificate, `41` means WoTrus National Secret enhanced Certificate (multiple domain names), `42` means TrustAsia- Domain name Certificate (wildcard multiple domain names), `43` means DNSPod Enterprise (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate, `47` means DNSPod enhanced (EV) multi-domain name SSL certificate, `48` means DNSPod Domain name Type (DV) SSL Certificate, `49` means DNSPod Domain name Type (DV) wildcard SSL certificate, `50` means DNSPod domain name type (DV) multi-domain name SSL certificate, `51` means DNSPod (State Secret) Enterprise (OV) SSL certificate, `52` DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, `53` means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod (National Secret) Domain Name (DV) SSL certificate, `55` means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, `56` means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
                     type: number
                   projectId:
-                    description: The ID of project. The ID of project.
+                    description: |-
+                      The ID of project.
+                      The ID of project.
                     type: number
                   timeSpan:
-                    description: Certificate period, currently only supports 1 year
-                      certificate purchase. Certificate period, currently only supports
-                      1 year certificate purchase.
+                    description: |-
+                      Certificate period, currently only supports 1 year certificate purchase.
+                      Certificate period, currently only supports 1 year certificate purchase.
                     type: number
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   alias:
-                    description: Remark name. Remark name.
+                    description: |-
+                      Remark name.
+                      Remark name.
                     type: string
                   confirmLetter:
-                    description: 'The base64-encoded certificate confirmation file
-                      should be in jpg, jpeg, png, pdf, and the size should be between
-                      1kb and 1.4M. Note: it only works when product_id is set to
-                      8, 9 or 10. The base64-encoded certificate confirmation file
-                      should be in jpg, jpeg, png, pdf, and the size should be between
-                      1kb and 1.4M. Note: it only works when product_id is set to
-                      8, 9 or 10.'
+                    description: |-
+                      The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
+                      The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
                     type: string
                   domainNum:
-                    description: Number of domain names included in the certificate.
+                    description: |-
+                      Number of domain names included in the certificate.
                       Number of domain names included in the certificate.
                     type: number
                   dvAuths:
-                    description: DV certification information. DV certification information.
+                    description: |-
+                      DV certification information.
+                      DV certification information.
                     items:
                       type: object
                     type: array
                   information:
-                    description: Certificate information. Certificate information.
+                    description: |-
+                      Certificate information.
+                      Certificate information.
                     items:
                       properties:
                         adminEmail:
-                          description: The administrator's email address. The administrator's
-                            email address.
+                          description: |-
+                            The administrator's email address.
+                            The administrator's email address.
                           type: string
                         adminFirstName:
-                          description: The first name of the administrator. The first
-                            name of the administrator.
+                          description: |-
+                            The first name of the administrator.
+                            The first name of the administrator.
                           type: string
                         adminLastName:
-                          description: The last name of the administrator. The last
-                            name of the administrator.
+                          description: |-
+                            The last name of the administrator.
+                            The last name of the administrator.
                           type: string
                         adminPhoneNum:
-                          description: Manager mobile phone number. Manager mobile
-                            phone number.
+                          description: |-
+                            Manager mobile phone number.
+                            Manager mobile phone number.
                           type: string
                         adminPosition:
-                          description: Manager position. Manager position.
+                          description: |-
+                            Manager position.
+                            Manager position.
                           type: string
                         certificateDomain:
-                          description: Domain name for binding certificate. Domain
-                            name for binding certificate.
+                          description: |-
+                            Domain name for binding certificate.
+                            Domain name for binding certificate.
                           type: string
                         contactEmail:
-                          description: Contact email address. Contact email address.
+                          description: |-
+                            Contact email address.
+                            Contact email address.
                           type: string
                         contactFirstName:
-                          description: Contact first name. Contact first name.
+                          description: |-
+                            Contact first name.
+                            Contact first name.
                           type: string
                         contactLastName:
-                          description: Contact last name. Contact last name.
+                          description: |-
+                            Contact last name.
+                            Contact last name.
                           type: string
                         contactNumber:
-                          description: Contact phone number. Contact phone number.
+                          description: |-
+                            Contact phone number.
+                            Contact phone number.
                           type: string
                         contactPosition:
-                          description: Contact position. Contact position.
+                          description: |-
+                            Contact position.
+                            Contact position.
                           type: string
                         csrContent:
-                          description: CSR content uploaded. CSR content uploaded.
+                          description: |-
+                            CSR content uploaded.
+                            CSR content uploaded.
                           type: string
                         csrType:
-                          description: 'CSR generation method. Valid values: online,
-                            parse. online means online generation, parse means manual
-                            upload. CSR generation method. Valid values: `online`,
-                            `parse`. `online` means online generation, `parse` means
-                            manual upload.'
+                          description: |-
+                            CSR generation method. Valid values: online, parse. online means online generation, parse means manual upload.
+                            CSR generation method. Valid values: `online`, `parse`. `online` means online generation, `parse` means manual upload.
                           type: string
                         domainList:
-                          description: Array of uploaded domain names, multi-domain
-                            certificates can be uploaded. Array of uploaded domain
-                            names, multi-domain certificates can be uploaded.
+                          description: |-
+                            Array of uploaded domain names, multi-domain certificates can be uploaded.
+                            Array of uploaded domain names, multi-domain certificates can be uploaded.
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         keyPassword:
-                          description: Private key password. Private key password.
+                          description: |-
+                            Private key password.
+                            Private key password.
                           type: string
                         organizationAddress:
-                          description: Company address. Company address.
+                          description: |-
+                            Company address.
+                            Company address.
                           type: string
                         organizationCity:
-                          description: Company city. Company city.
+                          description: |-
+                            Company city.
+                            Company city.
                           type: string
                         organizationCountry:
-                          description: 'Country name, such as China: CN. Country name,
-                            such as China: CN.'
+                          description: |-
+                            Country name, such as China: CN.
+                            Country name, such as China: CN.
                           type: string
                         organizationDivision:
-                          description: Department name. Department name.
+                          description: |-
+                            Department name.
+                            Department name.
                           type: string
                         organizationName:
-                          description: Company name. Company name.
+                          description: |-
+                            Company name.
+                            Company name.
                           type: string
                         organizationRegion:
-                          description: The province where the company is located.
+                          description: |-
+                            The province where the company is located.
                             The province where the company is located.
                           type: string
                         phoneAreaCode:
-                          description: Company landline area code. Company landline
-                            area code.
+                          description: |-
+                            Company landline area code.
+                            Company landline area code.
                           type: string
                         phoneNumber:
-                          description: Company landline number. Company landline number.
+                          description: |-
+                            Company landline number.
+                            Company landline number.
                           type: string
                         postalCode:
-                          description: Company postal code. Company postal code.
+                          description: |-
+                            Company postal code.
+                            Company postal code.
                           type: string
                         verifyType:
-                          description: 'Certificate verification method. Valid values:
-                            DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification,
-                            this verification type is only supported for domain names
-                            resolved by Tencent Cloud and the resolution status is
-                            normal, DNS means manual DNS verification, FILE means
-                            file verification. Certificate verification method. Valid
-                            values: `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic
-                            DNS verification, this verification type is only supported
-                            for domain names resolved by Tencent Cloud and the resolution
-                            status is normal, `DNS` means manual DNS verification,
-                            `FILE` means file verification.'
+                          description: |-
+                            Certificate verification method. Valid values: DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, DNS means manual DNS verification, FILE means file verification.
+                            Certificate verification method. Valid values: `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, `DNS` means manual DNS verification, `FILE` means file verification.
                           type: string
                       type: object
                     type: array
                   productId:
-                    description: 'Certificate commodity ID. Valid value ranges: (3~42).
-                      3 means SecureSite enhanced Enterprise Edition (EV Pro), 4 means
-                      SecureSite enhanced (EV), 5 means SecureSite Enterprise Professional
-                      Edition (OV Pro), 6 means SecureSite Enterprise (OV), 7 means
-                      SecureSite Enterprise Type (OV) wildcard, 8 means Geotrust enhanced
-                      (EV), 9 means Geotrust enterprise (OV), 10 means Geotrust enterprise
-                      (OV) wildcard, 11 means TrustAsia domain type multi-domain SSL
-                      certificate, 12 means TrustAsia domain type ( DV) wildcard,
-                      13 means TrustAsia enterprise wildcard (OV) SSL certificate
-                      (D3), 14 means TrustAsia enterprise (OV) SSL certificate (D3),
-                      15 means TrustAsia enterprise multi-domain (OV) SSL certificate
-                      (D3), 16 means TrustAsia Enhanced (EV) SSL Certificate (D3),
-                      17 means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate
-                      (D3), 18 means GlobalSign Enterprise (OV) SSL Certificate, 19
-                      means GlobalSign Enterprise Wildcard (OV) SSL Certificate, 20
-                      means GlobalSign Enhanced (EV) SSL Certificate, 21 means TrustAsia
-                      Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3),
-                      22 means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate,
-                      23 means GlobalSign Enterprise Multiple Wildcard Domain name
-                      (OV) SSL certificate, 24 means GlobalSign enhanced multi-domain
-                      (EV) SSL certificate, 25 means Wotrus domain type certificate,
-                      26 means Wotrus domain type multi-domain certificate, 27 means
-                      Wotrus domain type wildcard certificate, 28 means Wotrus enterprise
-                      type certificate, 29 means Wotrus enterprise multi-domain certificate,
-                      30 means Wotrus enterprise wildcard certificate, 31 means Wotrus
-                      enhanced certificate, 32 means Wotrus enhanced multi-domain
-                      certificate, 33 means WoTrus National Secret Domain name Certificate,
-                      34 means WoTrus National Secret Domain name Certificate (multiple
-                      domain names), 35 WoTrus National Secret Domain name Certificate
-                      (wildcard), 37 means WoTrus State Secret Enterprise Certificate,
-                      38 means WoTrus State Secret Enterprise Certificate (multiple
-                      domain names), 39 means WoTrus State Secret Enterprise Certificate
-                      (wildcard), 40 means WoTrus National secret enhanced certificate,
-                      41 means WoTrus National Secret enhanced Certificate (multiple
-                      domain names), 42 means TrustAsia- Domain name Certificate (wildcard
-                      multiple domain names), 43 means DNSPod Enterprise (OV) SSL
-                      Certificate, 44 means DNSPod- Enterprise (OV) wildcard SSL certificate,
-                      45 means DNSPod Enterprise (OV) Multi-domain name SSL Certificate,
-                      46 means DNSPod enhanced (EV) SSL certificate, 47 means DNSPod
-                      enhanced (EV) multi-domain name SSL certificate, 48 means DNSPod
-                      Domain name Type (DV) SSL Certificate, 49 means DNSPod Domain
-                      name Type (DV) wildcard SSL certificate, 50 means DNSPod domain
-                      name type (DV) multi-domain name SSL certificate, 51 means DNSPod
-                      (State Secret) Enterprise (OV) SSL certificate, 52 DNSPod (National
-                      Secret) Enterprise (OV) wildcard SSL certificate, 53 means DNSPod
-                      (National Secret) Enterprise (OV) multi-domain SSL certificate,
-                      54 means DNSPod (National Secret) Domain Name (DV) SSL certificate,
-                      55 means DNSPod (National Secret) Domain Name Type (DV) wildcard
-                      SSL certificate, 56 means DNSPod (National Secret) Domain Name
-                      Type (DV) multi-domain SSL certificate. Certificate commodity
-                      ID. Valid value ranges: (3~42). `3` means SecureSite enhanced
-                      Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV),
-                      `5` means SecureSite Enterprise Professional Edition (OV Pro),
-                      `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise
-                      Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means
-                      Geotrust enterprise (OV), `10` means Geotrust enterprise (OV)
-                      wildcard, `11` means TrustAsia domain type multi-domain SSL
-                      certificate, `12` means TrustAsia domain type ( DV) wildcard,
-                      `13` means TrustAsia enterprise wildcard (OV) SSL certificate
-                      (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3),
-                      `15` means TrustAsia enterprise multi-domain (OV) SSL certificate
-                      (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3),
-                      `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate
-                      (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate,
-                      `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate,
-                      `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means
-                      TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate
-                      (D3), `22` means GlobalSign Enterprise Multiple Domain (OV)
-                      SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard
-                      Domain name (OV) SSL certificate, `24` means GlobalSign enhanced
-                      multi-domain (EV) SSL certificate, `25` means Wotrus domain
-                      type certificate, `26` means Wotrus domain type multi-domain
-                      certificate, `27` means Wotrus domain type wildcard certificate,
-                      `28` means Wotrus enterprise type certificate, `29` means Wotrus
-                      enterprise multi-domain certificate, `30` means Wotrus enterprise
-                      wildcard certificate, `31` means Wotrus enhanced certificate,
-                      `32` means Wotrus enhanced multi-domain certificate, `33` means
-                      WoTrus National Secret Domain name Certificate, `34` means WoTrus
-                      National Secret Domain name Certificate (multiple domain names),
-                      `35` WoTrus National Secret Domain name Certificate (wildcard),
-                      `37` means WoTrus State Secret Enterprise Certificate, `38`
-                      means WoTrus State Secret Enterprise Certificate (multiple domain
-                      names), `39` means WoTrus State Secret Enterprise Certificate
-                      (wildcard), `40` means WoTrus National secret enhanced certificate,
-                      `41` means WoTrus National Secret enhanced Certificate (multiple
-                      domain names), `42` means TrustAsia- Domain name Certificate
-                      (wildcard multiple domain names), `43` means DNSPod Enterprise
-                      (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard
-                      SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain
-                      name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate,
-                      `47` means DNSPod enhanced (EV) multi-domain name SSL certificate,
-                      `48` means DNSPod Domain name Type (DV) SSL Certificate, `49`
-                      means DNSPod Domain name Type (DV) wildcard SSL certificate,
-                      `50` means DNSPod domain name type (DV) multi-domain name SSL
-                      certificate, `51` means DNSPod (State Secret) Enterprise (OV)
-                      SSL certificate, `52` DNSPod (National Secret) Enterprise (OV)
-                      wildcard SSL certificate, `53` means DNSPod (National Secret)
-                      Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod
-                      (National Secret) Domain Name (DV) SSL certificate, `55` means
-                      DNSPod (National Secret) Domain Name Type (DV) wildcard SSL
-                      certificate, `56` means DNSPod (National Secret) Domain Name
-                      Type (DV) multi-domain SSL certificate.'
+                    description: |-
+                      Certificate commodity ID. Valid value ranges: (3~42). 3 means SecureSite enhanced Enterprise Edition (EV Pro), 4 means SecureSite enhanced (EV), 5 means SecureSite Enterprise Professional Edition (OV Pro), 6 means SecureSite Enterprise (OV), 7 means SecureSite Enterprise Type (OV) wildcard, 8 means Geotrust enhanced (EV), 9 means Geotrust enterprise (OV), 10 means Geotrust enterprise (OV) wildcard, 11 means TrustAsia domain type multi-domain SSL certificate, 12 means TrustAsia domain type ( DV) wildcard, 13 means TrustAsia enterprise wildcard (OV) SSL certificate (D3), 14 means TrustAsia enterprise (OV) SSL certificate (D3), 15 means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), 16 means TrustAsia Enhanced (EV) SSL Certificate (D3), 17 means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), 18 means GlobalSign Enterprise (OV) SSL Certificate, 19 means GlobalSign Enterprise Wildcard (OV) SSL Certificate, 20 means GlobalSign Enhanced (EV) SSL Certificate, 21 means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), 22 means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, 23 means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, 24 means GlobalSign enhanced multi-domain (EV) SSL certificate, 25 means Wotrus domain type certificate, 26 means Wotrus domain type multi-domain certificate, 27 means Wotrus domain type wildcard certificate, 28 means Wotrus enterprise type certificate, 29 means Wotrus enterprise multi-domain certificate, 30 means Wotrus enterprise wildcard certificate, 31 means Wotrus enhanced certificate, 32 means Wotrus enhanced multi-domain certificate, 33 means WoTrus National Secret Domain name Certificate, 34 means WoTrus National Secret Domain name Certificate (multiple domain names), 35 WoTrus National Secret Domain name Certificate (wildcard), 37 means WoTrus State Secret Enterprise Certificate, 38 means WoTrus State Secret Enterprise Certificate (multiple domain names), 39 means WoTrus State Secret Enterprise Certificate (wildcard), 40 means WoTrus National secret enhanced certificate, 41 means WoTrus National Secret enhanced Certificate (multiple domain names), 42 means TrustAsia- Domain name Certificate (wildcard multiple domain names), 43 means DNSPod Enterprise (OV) SSL Certificate, 44 means DNSPod- Enterprise (OV) wildcard SSL certificate, 45 means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, 46 means DNSPod enhanced (EV) SSL certificate, 47 means DNSPod enhanced (EV) multi-domain name SSL certificate, 48 means DNSPod Domain name Type (DV) SSL Certificate, 49 means DNSPod Domain name Type (DV) wildcard SSL certificate, 50 means DNSPod domain name type (DV) multi-domain name SSL certificate, 51 means DNSPod (State Secret) Enterprise (OV) SSL certificate, 52 DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, 53 means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, 54 means DNSPod (National Secret) Domain Name (DV) SSL certificate, 55 means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, 56 means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
+                      Certificate commodity ID. Valid value ranges: (3~42). `3` means SecureSite enhanced Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV), `5` means SecureSite Enterprise Professional Edition (OV Pro), `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means Geotrust enterprise (OV), `10` means Geotrust enterprise (OV) wildcard, `11` means TrustAsia domain type multi-domain SSL certificate, `12` means TrustAsia domain type ( DV) wildcard, `13` means TrustAsia enterprise wildcard (OV) SSL certificate (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3), `15` means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3), `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate, `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate, `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), `22` means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, `24` means GlobalSign enhanced multi-domain (EV) SSL certificate, `25` means Wotrus domain type certificate, `26` means Wotrus domain type multi-domain certificate, `27` means Wotrus domain type wildcard certificate, `28` means Wotrus enterprise type certificate, `29` means Wotrus enterprise multi-domain certificate, `30` means Wotrus enterprise wildcard certificate, `31` means Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain certificate, `33` means WoTrus National Secret Domain name Certificate, `34` means WoTrus National Secret Domain name Certificate (multiple domain names), `35` WoTrus National Secret Domain name Certificate (wildcard), `37` means WoTrus State Secret Enterprise Certificate, `38` means WoTrus State Secret Enterprise Certificate (multiple domain names), `39` means WoTrus State Secret Enterprise Certificate (wildcard), `40` means WoTrus National secret enhanced certificate, `41` means WoTrus National Secret enhanced Certificate (multiple domain names), `42` means TrustAsia- Domain name Certificate (wildcard multiple domain names), `43` means DNSPod Enterprise (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate, `47` means DNSPod enhanced (EV) multi-domain name SSL certificate, `48` means DNSPod Domain name Type (DV) SSL Certificate, `49` means DNSPod Domain name Type (DV) wildcard SSL certificate, `50` means DNSPod domain name type (DV) multi-domain name SSL certificate, `51` means DNSPod (State Secret) Enterprise (OV) SSL certificate, `52` DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, `53` means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod (National Secret) Domain Name (DV) SSL certificate, `55` means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, `56` means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
                     type: number
                   projectId:
-                    description: The ID of project. The ID of project.
+                    description: |-
+                      The ID of project.
+                      The ID of project.
                     type: number
                   timeSpan:
-                    description: Certificate period, currently only supports 1 year
-                      certificate purchase. Certificate period, currently only supports
-                      1 year certificate purchase.
+                    description: |-
+                      Certificate period, currently only supports 1 year certificate purchase.
+                      Certificate period, currently only supports 1 year certificate purchase.
                     type: number
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -589,9 +464,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -601,21 +477,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -625,17 +501,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -645,21 +523,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -674,21 +552,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -699,14 +578,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -740,26 +620,29 @@ spec:
               atProvider:
                 properties:
                   alias:
-                    description: Remark name. Remark name.
+                    description: |-
+                      Remark name.
+                      Remark name.
                     type: string
                   certificateId:
-                    description: Returned certificate ID. Returned certificate ID.
+                    description: |-
+                      Returned certificate ID.
+                      Returned certificate ID.
                     type: string
                   confirmLetter:
-                    description: 'The base64-encoded certificate confirmation file
-                      should be in jpg, jpeg, png, pdf, and the size should be between
-                      1kb and 1.4M. Note: it only works when product_id is set to
-                      8, 9 or 10. The base64-encoded certificate confirmation file
-                      should be in jpg, jpeg, png, pdf, and the size should be between
-                      1kb and 1.4M. Note: it only works when product_id is set to
-                      8, 9 or 10.'
+                    description: |-
+                      The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
+                      The base64-encoded certificate confirmation file should be in jpg, jpeg, png, pdf, and the size should be between 1kb and 1.4M. Note: it only works when product_id is set to 8, 9 or 10.
                     type: string
                   domainNum:
-                    description: Number of domain names included in the certificate.
+                    description: |-
+                      Number of domain names included in the certificate.
                       Number of domain names included in the certificate.
                     type: number
                   dvAuths:
-                    description: DV certification information. DV certification information.
+                    description: |-
+                      DV certification information.
+                      DV certification information.
                     items:
                       properties:
                         dvAuthKey:
@@ -769,12 +652,9 @@ spec:
                           description: DV authentication value.
                           type: string
                         dvAuthVerifyType:
-                          description: 'Certificate verification method. Valid values:
-                            DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification,
-                            this verification type is only supported for domain names
-                            resolved by Tencent Cloud and the resolution status is
-                            normal, DNS means manual DNS verification, FILE means
-                            file verification. DV authentication type.'
+                          description: |-
+                            Certificate verification method. Valid values: DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, DNS means manual DNS verification, FILE means file verification.
+                            DV authentication type.
                           type: string
                       type: object
                     type: array
@@ -782,229 +662,165 @@ spec:
                     description: ID of the resource.
                     type: string
                   information:
-                    description: Certificate information. Certificate information.
+                    description: |-
+                      Certificate information.
+                      Certificate information.
                     items:
                       properties:
                         adminEmail:
-                          description: The administrator's email address. The administrator's
-                            email address.
+                          description: |-
+                            The administrator's email address.
+                            The administrator's email address.
                           type: string
                         adminFirstName:
-                          description: The first name of the administrator. The first
-                            name of the administrator.
+                          description: |-
+                            The first name of the administrator.
+                            The first name of the administrator.
                           type: string
                         adminLastName:
-                          description: The last name of the administrator. The last
-                            name of the administrator.
+                          description: |-
+                            The last name of the administrator.
+                            The last name of the administrator.
                           type: string
                         adminPhoneNum:
-                          description: Manager mobile phone number. Manager mobile
-                            phone number.
+                          description: |-
+                            Manager mobile phone number.
+                            Manager mobile phone number.
                           type: string
                         adminPosition:
-                          description: Manager position. Manager position.
+                          description: |-
+                            Manager position.
+                            Manager position.
                           type: string
                         certificateDomain:
-                          description: Domain name for binding certificate. Domain
-                            name for binding certificate.
+                          description: |-
+                            Domain name for binding certificate.
+                            Domain name for binding certificate.
                           type: string
                         contactEmail:
-                          description: Contact email address. Contact email address.
+                          description: |-
+                            Contact email address.
+                            Contact email address.
                           type: string
                         contactFirstName:
-                          description: Contact first name. Contact first name.
+                          description: |-
+                            Contact first name.
+                            Contact first name.
                           type: string
                         contactLastName:
-                          description: Contact last name. Contact last name.
+                          description: |-
+                            Contact last name.
+                            Contact last name.
                           type: string
                         contactNumber:
-                          description: Contact phone number. Contact phone number.
+                          description: |-
+                            Contact phone number.
+                            Contact phone number.
                           type: string
                         contactPosition:
-                          description: Contact position. Contact position.
+                          description: |-
+                            Contact position.
+                            Contact position.
                           type: string
                         csrContent:
-                          description: CSR content uploaded. CSR content uploaded.
+                          description: |-
+                            CSR content uploaded.
+                            CSR content uploaded.
                           type: string
                         csrType:
-                          description: 'CSR generation method. Valid values: online,
-                            parse. online means online generation, parse means manual
-                            upload. CSR generation method. Valid values: `online`,
-                            `parse`. `online` means online generation, `parse` means
-                            manual upload.'
+                          description: |-
+                            CSR generation method. Valid values: online, parse. online means online generation, parse means manual upload.
+                            CSR generation method. Valid values: `online`, `parse`. `online` means online generation, `parse` means manual upload.
                           type: string
                         domainList:
-                          description: Array of uploaded domain names, multi-domain
-                            certificates can be uploaded. Array of uploaded domain
-                            names, multi-domain certificates can be uploaded.
+                          description: |-
+                            Array of uploaded domain names, multi-domain certificates can be uploaded.
+                            Array of uploaded domain names, multi-domain certificates can be uploaded.
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         keyPassword:
-                          description: Private key password. Private key password.
+                          description: |-
+                            Private key password.
+                            Private key password.
                           type: string
                         organizationAddress:
-                          description: Company address. Company address.
+                          description: |-
+                            Company address.
+                            Company address.
                           type: string
                         organizationCity:
-                          description: Company city. Company city.
+                          description: |-
+                            Company city.
+                            Company city.
                           type: string
                         organizationCountry:
-                          description: 'Country name, such as China: CN. Country name,
-                            such as China: CN.'
+                          description: |-
+                            Country name, such as China: CN.
+                            Country name, such as China: CN.
                           type: string
                         organizationDivision:
-                          description: Department name. Department name.
+                          description: |-
+                            Department name.
+                            Department name.
                           type: string
                         organizationName:
-                          description: Company name. Company name.
+                          description: |-
+                            Company name.
+                            Company name.
                           type: string
                         organizationRegion:
-                          description: The province where the company is located.
+                          description: |-
+                            The province where the company is located.
                             The province where the company is located.
                           type: string
                         phoneAreaCode:
-                          description: Company landline area code. Company landline
-                            area code.
+                          description: |-
+                            Company landline area code.
+                            Company landline area code.
                           type: string
                         phoneNumber:
-                          description: Company landline number. Company landline number.
+                          description: |-
+                            Company landline number.
+                            Company landline number.
                           type: string
                         postalCode:
-                          description: Company postal code. Company postal code.
+                          description: |-
+                            Company postal code.
+                            Company postal code.
                           type: string
                         verifyType:
-                          description: 'Certificate verification method. Valid values:
-                            DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification,
-                            this verification type is only supported for domain names
-                            resolved by Tencent Cloud and the resolution status is
-                            normal, DNS means manual DNS verification, FILE means
-                            file verification. Certificate verification method. Valid
-                            values: `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic
-                            DNS verification, this verification type is only supported
-                            for domain names resolved by Tencent Cloud and the resolution
-                            status is normal, `DNS` means manual DNS verification,
-                            `FILE` means file verification.'
+                          description: |-
+                            Certificate verification method. Valid values: DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, DNS means manual DNS verification, FILE means file verification.
+                            Certificate verification method. Valid values: `DNS_AUTO`, `DNS`, `FILE`. `DNS_AUTO` means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, `DNS` means manual DNS verification, `FILE` means file verification.
                           type: string
                       type: object
                     type: array
                   orderId:
-                    description: Order ID returned. Order ID returned.
+                    description: |-
+                      Order ID returned.
+                      Order ID returned.
                     type: string
                   productId:
-                    description: 'Certificate commodity ID. Valid value ranges: (3~42).
-                      3 means SecureSite enhanced Enterprise Edition (EV Pro), 4 means
-                      SecureSite enhanced (EV), 5 means SecureSite Enterprise Professional
-                      Edition (OV Pro), 6 means SecureSite Enterprise (OV), 7 means
-                      SecureSite Enterprise Type (OV) wildcard, 8 means Geotrust enhanced
-                      (EV), 9 means Geotrust enterprise (OV), 10 means Geotrust enterprise
-                      (OV) wildcard, 11 means TrustAsia domain type multi-domain SSL
-                      certificate, 12 means TrustAsia domain type ( DV) wildcard,
-                      13 means TrustAsia enterprise wildcard (OV) SSL certificate
-                      (D3), 14 means TrustAsia enterprise (OV) SSL certificate (D3),
-                      15 means TrustAsia enterprise multi-domain (OV) SSL certificate
-                      (D3), 16 means TrustAsia Enhanced (EV) SSL Certificate (D3),
-                      17 means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate
-                      (D3), 18 means GlobalSign Enterprise (OV) SSL Certificate, 19
-                      means GlobalSign Enterprise Wildcard (OV) SSL Certificate, 20
-                      means GlobalSign Enhanced (EV) SSL Certificate, 21 means TrustAsia
-                      Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3),
-                      22 means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate,
-                      23 means GlobalSign Enterprise Multiple Wildcard Domain name
-                      (OV) SSL certificate, 24 means GlobalSign enhanced multi-domain
-                      (EV) SSL certificate, 25 means Wotrus domain type certificate,
-                      26 means Wotrus domain type multi-domain certificate, 27 means
-                      Wotrus domain type wildcard certificate, 28 means Wotrus enterprise
-                      type certificate, 29 means Wotrus enterprise multi-domain certificate,
-                      30 means Wotrus enterprise wildcard certificate, 31 means Wotrus
-                      enhanced certificate, 32 means Wotrus enhanced multi-domain
-                      certificate, 33 means WoTrus National Secret Domain name Certificate,
-                      34 means WoTrus National Secret Domain name Certificate (multiple
-                      domain names), 35 WoTrus National Secret Domain name Certificate
-                      (wildcard), 37 means WoTrus State Secret Enterprise Certificate,
-                      38 means WoTrus State Secret Enterprise Certificate (multiple
-                      domain names), 39 means WoTrus State Secret Enterprise Certificate
-                      (wildcard), 40 means WoTrus National secret enhanced certificate,
-                      41 means WoTrus National Secret enhanced Certificate (multiple
-                      domain names), 42 means TrustAsia- Domain name Certificate (wildcard
-                      multiple domain names), 43 means DNSPod Enterprise (OV) SSL
-                      Certificate, 44 means DNSPod- Enterprise (OV) wildcard SSL certificate,
-                      45 means DNSPod Enterprise (OV) Multi-domain name SSL Certificate,
-                      46 means DNSPod enhanced (EV) SSL certificate, 47 means DNSPod
-                      enhanced (EV) multi-domain name SSL certificate, 48 means DNSPod
-                      Domain name Type (DV) SSL Certificate, 49 means DNSPod Domain
-                      name Type (DV) wildcard SSL certificate, 50 means DNSPod domain
-                      name type (DV) multi-domain name SSL certificate, 51 means DNSPod
-                      (State Secret) Enterprise (OV) SSL certificate, 52 DNSPod (National
-                      Secret) Enterprise (OV) wildcard SSL certificate, 53 means DNSPod
-                      (National Secret) Enterprise (OV) multi-domain SSL certificate,
-                      54 means DNSPod (National Secret) Domain Name (DV) SSL certificate,
-                      55 means DNSPod (National Secret) Domain Name Type (DV) wildcard
-                      SSL certificate, 56 means DNSPod (National Secret) Domain Name
-                      Type (DV) multi-domain SSL certificate. Certificate commodity
-                      ID. Valid value ranges: (3~42). `3` means SecureSite enhanced
-                      Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV),
-                      `5` means SecureSite Enterprise Professional Edition (OV Pro),
-                      `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise
-                      Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means
-                      Geotrust enterprise (OV), `10` means Geotrust enterprise (OV)
-                      wildcard, `11` means TrustAsia domain type multi-domain SSL
-                      certificate, `12` means TrustAsia domain type ( DV) wildcard,
-                      `13` means TrustAsia enterprise wildcard (OV) SSL certificate
-                      (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3),
-                      `15` means TrustAsia enterprise multi-domain (OV) SSL certificate
-                      (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3),
-                      `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate
-                      (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate,
-                      `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate,
-                      `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means
-                      TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate
-                      (D3), `22` means GlobalSign Enterprise Multiple Domain (OV)
-                      SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard
-                      Domain name (OV) SSL certificate, `24` means GlobalSign enhanced
-                      multi-domain (EV) SSL certificate, `25` means Wotrus domain
-                      type certificate, `26` means Wotrus domain type multi-domain
-                      certificate, `27` means Wotrus domain type wildcard certificate,
-                      `28` means Wotrus enterprise type certificate, `29` means Wotrus
-                      enterprise multi-domain certificate, `30` means Wotrus enterprise
-                      wildcard certificate, `31` means Wotrus enhanced certificate,
-                      `32` means Wotrus enhanced multi-domain certificate, `33` means
-                      WoTrus National Secret Domain name Certificate, `34` means WoTrus
-                      National Secret Domain name Certificate (multiple domain names),
-                      `35` WoTrus National Secret Domain name Certificate (wildcard),
-                      `37` means WoTrus State Secret Enterprise Certificate, `38`
-                      means WoTrus State Secret Enterprise Certificate (multiple domain
-                      names), `39` means WoTrus State Secret Enterprise Certificate
-                      (wildcard), `40` means WoTrus National secret enhanced certificate,
-                      `41` means WoTrus National Secret enhanced Certificate (multiple
-                      domain names), `42` means TrustAsia- Domain name Certificate
-                      (wildcard multiple domain names), `43` means DNSPod Enterprise
-                      (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard
-                      SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain
-                      name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate,
-                      `47` means DNSPod enhanced (EV) multi-domain name SSL certificate,
-                      `48` means DNSPod Domain name Type (DV) SSL Certificate, `49`
-                      means DNSPod Domain name Type (DV) wildcard SSL certificate,
-                      `50` means DNSPod domain name type (DV) multi-domain name SSL
-                      certificate, `51` means DNSPod (State Secret) Enterprise (OV)
-                      SSL certificate, `52` DNSPod (National Secret) Enterprise (OV)
-                      wildcard SSL certificate, `53` means DNSPod (National Secret)
-                      Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod
-                      (National Secret) Domain Name (DV) SSL certificate, `55` means
-                      DNSPod (National Secret) Domain Name Type (DV) wildcard SSL
-                      certificate, `56` means DNSPod (National Secret) Domain Name
-                      Type (DV) multi-domain SSL certificate.'
+                    description: |-
+                      Certificate commodity ID. Valid value ranges: (3~42). 3 means SecureSite enhanced Enterprise Edition (EV Pro), 4 means SecureSite enhanced (EV), 5 means SecureSite Enterprise Professional Edition (OV Pro), 6 means SecureSite Enterprise (OV), 7 means SecureSite Enterprise Type (OV) wildcard, 8 means Geotrust enhanced (EV), 9 means Geotrust enterprise (OV), 10 means Geotrust enterprise (OV) wildcard, 11 means TrustAsia domain type multi-domain SSL certificate, 12 means TrustAsia domain type ( DV) wildcard, 13 means TrustAsia enterprise wildcard (OV) SSL certificate (D3), 14 means TrustAsia enterprise (OV) SSL certificate (D3), 15 means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), 16 means TrustAsia Enhanced (EV) SSL Certificate (D3), 17 means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), 18 means GlobalSign Enterprise (OV) SSL Certificate, 19 means GlobalSign Enterprise Wildcard (OV) SSL Certificate, 20 means GlobalSign Enhanced (EV) SSL Certificate, 21 means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), 22 means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, 23 means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, 24 means GlobalSign enhanced multi-domain (EV) SSL certificate, 25 means Wotrus domain type certificate, 26 means Wotrus domain type multi-domain certificate, 27 means Wotrus domain type wildcard certificate, 28 means Wotrus enterprise type certificate, 29 means Wotrus enterprise multi-domain certificate, 30 means Wotrus enterprise wildcard certificate, 31 means Wotrus enhanced certificate, 32 means Wotrus enhanced multi-domain certificate, 33 means WoTrus National Secret Domain name Certificate, 34 means WoTrus National Secret Domain name Certificate (multiple domain names), 35 WoTrus National Secret Domain name Certificate (wildcard), 37 means WoTrus State Secret Enterprise Certificate, 38 means WoTrus State Secret Enterprise Certificate (multiple domain names), 39 means WoTrus State Secret Enterprise Certificate (wildcard), 40 means WoTrus National secret enhanced certificate, 41 means WoTrus National Secret enhanced Certificate (multiple domain names), 42 means TrustAsia- Domain name Certificate (wildcard multiple domain names), 43 means DNSPod Enterprise (OV) SSL Certificate, 44 means DNSPod- Enterprise (OV) wildcard SSL certificate, 45 means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, 46 means DNSPod enhanced (EV) SSL certificate, 47 means DNSPod enhanced (EV) multi-domain name SSL certificate, 48 means DNSPod Domain name Type (DV) SSL Certificate, 49 means DNSPod Domain name Type (DV) wildcard SSL certificate, 50 means DNSPod domain name type (DV) multi-domain name SSL certificate, 51 means DNSPod (State Secret) Enterprise (OV) SSL certificate, 52 DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, 53 means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, 54 means DNSPod (National Secret) Domain Name (DV) SSL certificate, 55 means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, 56 means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
+                      Certificate commodity ID. Valid value ranges: (3~42). `3` means SecureSite enhanced Enterprise Edition (EV Pro), `4` means SecureSite enhanced (EV), `5` means SecureSite Enterprise Professional Edition (OV Pro), `6` means SecureSite Enterprise (OV), `7` means SecureSite Enterprise Type (OV) wildcard, `8` means Geotrust enhanced (EV), `9` means Geotrust enterprise (OV), `10` means Geotrust enterprise (OV) wildcard, `11` means TrustAsia domain type multi-domain SSL certificate, `12` means TrustAsia domain type ( DV) wildcard, `13` means TrustAsia enterprise wildcard (OV) SSL certificate (D3), `14` means TrustAsia enterprise (OV) SSL certificate (D3), `15` means TrustAsia enterprise multi-domain (OV) SSL certificate (D3), `16` means TrustAsia Enhanced (EV) SSL Certificate (D3), `17` means TrustAsia Enhanced Multiple Domain (EV) SSL Certificate (D3), `18` means GlobalSign Enterprise (OV) SSL Certificate, `19` means GlobalSign Enterprise Wildcard (OV) SSL Certificate, `20` means GlobalSign Enhanced (EV) SSL Certificate, `21` means TrustAsia Enterprise Wildcard Multiple Domain (OV) SSL Certificate (D3), `22` means GlobalSign Enterprise Multiple Domain (OV) SSL Certificate, `23` means GlobalSign Enterprise Multiple Wildcard Domain name (OV) SSL certificate, `24` means GlobalSign enhanced multi-domain (EV) SSL certificate, `25` means Wotrus domain type certificate, `26` means Wotrus domain type multi-domain certificate, `27` means Wotrus domain type wildcard certificate, `28` means Wotrus enterprise type certificate, `29` means Wotrus enterprise multi-domain certificate, `30` means Wotrus enterprise wildcard certificate, `31` means Wotrus enhanced certificate, `32` means Wotrus enhanced multi-domain certificate, `33` means WoTrus National Secret Domain name Certificate, `34` means WoTrus National Secret Domain name Certificate (multiple domain names), `35` WoTrus National Secret Domain name Certificate (wildcard), `37` means WoTrus State Secret Enterprise Certificate, `38` means WoTrus State Secret Enterprise Certificate (multiple domain names), `39` means WoTrus State Secret Enterprise Certificate (wildcard), `40` means WoTrus National secret enhanced certificate, `41` means WoTrus National Secret enhanced Certificate (multiple domain names), `42` means TrustAsia- Domain name Certificate (wildcard multiple domain names), `43` means DNSPod Enterprise (OV) SSL Certificate, `44` means DNSPod- Enterprise (OV) wildcard SSL certificate, `45` means DNSPod Enterprise (OV) Multi-domain name SSL Certificate, `46` means DNSPod enhanced (EV) SSL certificate, `47` means DNSPod enhanced (EV) multi-domain name SSL certificate, `48` means DNSPod Domain name Type (DV) SSL Certificate, `49` means DNSPod Domain name Type (DV) wildcard SSL certificate, `50` means DNSPod domain name type (DV) multi-domain name SSL certificate, `51` means DNSPod (State Secret) Enterprise (OV) SSL certificate, `52` DNSPod (National Secret) Enterprise (OV) wildcard SSL certificate, `53` means DNSPod (National Secret) Enterprise (OV) multi-domain SSL certificate, `54` means DNSPod (National Secret) Domain Name (DV) SSL certificate, `55` means DNSPod (National Secret) Domain Name Type (DV) wildcard SSL certificate, `56` means DNSPod (National Secret) Domain Name Type (DV) multi-domain SSL certificate.
                     type: number
                   projectId:
-                    description: The ID of project. The ID of project.
+                    description: |-
+                      The ID of project.
+                      The ID of project.
                     type: number
                   status:
-                    description: SSL certificate status. SSL certificate status.
+                    description: |-
+                      SSL certificate status.
+                      SSL certificate status.
                     type: number
                   timeSpan:
-                    description: Certificate period, currently only supports 1 year
-                      certificate purchase. Certificate period, currently only supports
-                      1 year certificate purchase.
+                    description: |-
+                      Certificate period, currently only supports 1 year certificate purchase.
+                      Certificate period, currently only supports 1 year certificate purchase.
                     type: number
                 type: object
               conditions:
@@ -1013,13 +829,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -1030,8 +848,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

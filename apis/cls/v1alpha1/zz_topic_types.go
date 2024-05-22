@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -31,6 +27,19 @@ type TopicInitParameters struct {
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
 
+	// Logset ID.
+	// Logset ID.
+	// +crossplane:generate:reference:type=Logset
+	LogsetID *string `json:"logsetId,omitempty" tf:"logset_id,omitempty"`
+
+	// Reference to a Logset to populate logsetId.
+	// +kubebuilder:validation:Optional
+	LogsetIDRef *v1.Reference `json:"logsetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Logset to populate logsetId.
+	// +kubebuilder:validation:Optional
+	LogsetIDSelector *v1.Selector `json:"logsetIdSelector,omitempty" tf:"-"`
+
 	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
 	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
 	MaxSplitPartitions *float64 `json:"maxSplitPartitions,omitempty" tf:"max_split_partitions,omitempty"`
@@ -49,6 +58,7 @@ type TopicInitParameters struct {
 
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Log topic name.
@@ -95,6 +105,7 @@ type TopicObservation struct {
 
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Log topic name.
@@ -156,6 +167,7 @@ type TopicParameters struct {
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Log topic name.
@@ -188,13 +200,14 @@ type TopicStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Topic is the Schema for the Topics API. Provides a resource to create a cls topic.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Topic struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,9 +15,35 @@ import (
 
 type ClusterAttachmentInitParameters struct {
 
+	// ID of the cluster.
+	// ID of the cluster.
+	// +crossplane:generate:reference:type=Cluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
 	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
 	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// ID of the CVM instance, this cvm will reinstall the system.
+	// ID of the CVM instance, this cvm will reinstall the system.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in cvm to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in cvm to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The key pair to use for the instance, it looks like skey-16jig7tx, it should be set if password not set.
 	// The key pair to use for the instance, it looks like skey-16jig7tx, it should be set if `password` not set.
@@ -29,6 +51,7 @@ type ClusterAttachmentInitParameters struct {
 
 	// Labels of tke attachment exits CVM.
 	// Labels of tke attachment exits CVM.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
@@ -67,10 +90,12 @@ type ClusterAttachmentObservation struct {
 
 	// Labels of tke attachment exits CVM.
 	// Labels of tke attachment exits CVM.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// A list of security group IDs after attach to cluster.
 	// A list of security group IDs after attach to cluster.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// State of the node.
@@ -133,6 +158,7 @@ type ClusterAttachmentParameters struct {
 	// Labels of tke attachment exits CVM.
 	// Labels of tke attachment exits CVM.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Password to access, should be set if key_ids not set.
@@ -373,18 +399,22 @@ type GpuArgsInitParameters struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -396,18 +426,22 @@ type GpuArgsObservation struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -420,21 +454,25 @@ type GpuArgsParameters struct {
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -534,18 +572,22 @@ type WorkerConfigOverridesGpuArgsInitParameters struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -557,18 +599,22 @@ type WorkerConfigOverridesGpuArgsObservation struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -581,21 +627,25 @@ type WorkerConfigOverridesGpuArgsParameters struct {
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -754,13 +804,14 @@ type ClusterAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClusterAttachment is the Schema for the ClusterAttachments API. Provide a resource to attach an existing  cvm to kubernetes cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ClusterAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

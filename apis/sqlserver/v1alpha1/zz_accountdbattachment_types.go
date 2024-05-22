@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -26,6 +22,19 @@ type AccountDBAttachmentInitParameters struct {
 	// SQL Server DB name.
 	// SQL Server DB name.
 	DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
+
+	// SQL Server instance ID that the account belongs to.
+	// SQL Server instance ID that the account belongs to.
+	// +crossplane:generate:reference:type=Instance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// Privilege of the account on DB. Valid values: ReadOnly, ReadWrite.
 	// Privilege of the account on DB. Valid values: `ReadOnly`, `ReadWrite`.
@@ -110,13 +119,14 @@ type AccountDBAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // AccountDBAttachment is the Schema for the AccountDBAttachments API. Use this resource to create SQL Server account DB attachment
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type AccountDBAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

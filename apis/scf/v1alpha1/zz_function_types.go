@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -163,6 +159,7 @@ type FunctionInitParameters struct {
 
 	// Environment of the SCF function.
 	// Environment of the SCF function.
+	// +mapType=granular
 	Environment map[string]*string `json:"environment,omitempty" tf:"environment,omitempty"`
 
 	// Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
@@ -215,6 +212,7 @@ type FunctionInitParameters struct {
 
 	// Tags of the SCF function.
 	// Tags of the SCF function.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Timeout of the SCF function, unit is second. Default 3. Available value is 1-900.
@@ -302,6 +300,7 @@ type FunctionObservation struct {
 
 	// Environment of the SCF function.
 	// Environment of the SCF function.
+	// +mapType=granular
 	Environment map[string]*string `json:"environment,omitempty" tf:"environment,omitempty"`
 
 	// SCF function code error code.
@@ -385,6 +384,7 @@ type FunctionObservation struct {
 
 	// Tags of the SCF function.
 	// Tags of the SCF function.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Timeout of the SCF function, unit is second. Default 3. Available value is 1-900.
@@ -472,6 +472,7 @@ type FunctionParameters struct {
 	// Environment of the SCF function.
 	// Environment of the SCF function.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Environment map[string]*string `json:"environment,omitempty" tf:"environment,omitempty"`
 
 	// Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
@@ -537,6 +538,7 @@ type FunctionParameters struct {
 	// Tags of the SCF function.
 	// Tags of the SCF function.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Timeout of the SCF function, unit is second. Default 3. Available value is 1-900.
@@ -848,13 +850,14 @@ type FunctionStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Function is the Schema for the Functions API. Provide a resource to create a SCF function.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Function struct {
 	metav1.TypeMeta   `json:",inline"`

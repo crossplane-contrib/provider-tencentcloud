@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -38,6 +34,19 @@ type ScheduleInitParameters struct {
 	// The time when recurring future actions will start. Start time is specified by the user following the Unix cron syntax format. And this argument should be set with end_time together.
 	// The time when recurring future actions will start. Start time is specified by the user following the Unix cron syntax format. And this argument should be set with end_time together.
 	Recurrence *string `json:"recurrence,omitempty" tf:"recurrence,omitempty"`
+
+	// ID of a scaling group.
+	// ID of a scaling group.
+	// +crossplane:generate:reference:type=ScalingGroup
+	ScalingGroupID *string `json:"scalingGroupId,omitempty" tf:"scaling_group_id,omitempty"`
+
+	// Reference to a ScalingGroup to populate scalingGroupId.
+	// +kubebuilder:validation:Optional
+	ScalingGroupIDRef *v1.Reference `json:"scalingGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a ScalingGroup to populate scalingGroupId.
+	// +kubebuilder:validation:Optional
+	ScalingGroupIDSelector *v1.Selector `json:"scalingGroupIdSelector,omitempty" tf:"-"`
 
 	// The name of this scaling action.
 	// The name of this scaling action.
@@ -162,13 +171,14 @@ type ScheduleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Schedule is the Schema for the Schedules API. Provides a resource for an AS (Auto scaling) schedule.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Schedule struct {
 	metav1.TypeMeta   `json:",inline"`

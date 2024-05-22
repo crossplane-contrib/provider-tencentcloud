@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type TableInitParameters struct {
+
+	// ID of the TcaplusDB cluster to which the table belongs.
+	// ID of the TcaplusDB cluster to which the table belongs.
+	// +crossplane:generate:reference:type=Cluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// Description of the TcaplusDB table.
 	// Description of the TcaplusDB table.
@@ -50,6 +59,19 @@ type TableInitParameters struct {
 	// Type of the TcaplusDB table. Valid values are GENERIC and LIST.
 	// Type of the TcaplusDB table. Valid values are `GENERIC` and `LIST`.
 	TableType *string `json:"tableType,omitempty" tf:"table_type,omitempty"`
+
+	// ID of the table group to which the table belongs.
+	// ID of the table group to which the table belongs.
+	// +crossplane:generate:reference:type=TableGroup
+	TablegroupID *string `json:"tablegroupId,omitempty" tf:"tablegroup_id,omitempty"`
+
+	// Reference to a TableGroup to populate tablegroupId.
+	// +kubebuilder:validation:Optional
+	TablegroupIDRef *v1.Reference `json:"tablegroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a TableGroup to populate tablegroupId.
+	// +kubebuilder:validation:Optional
+	TablegroupIDSelector *v1.Selector `json:"tablegroupIdSelector,omitempty" tf:"-"`
 }
 
 type TableObservation struct {
@@ -209,13 +231,14 @@ type TableStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Table is the Schema for the Tables API. Use this resource to create TcaplusDB table.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Table struct {
 	metav1.TypeMeta   `json:",inline"`

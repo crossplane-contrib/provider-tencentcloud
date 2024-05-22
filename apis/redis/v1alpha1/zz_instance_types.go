@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -93,6 +89,7 @@ type InstanceInitParameters struct {
 
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Specifies which subnet the instance should belong to. When the operation_network is changeVpc or changeBaseToVpc, this parameter needs to be configured.
@@ -101,6 +98,7 @@ type InstanceInitParameters struct {
 
 	// Instance tags.
 	// Instance tags.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// It has been deprecated from version 1.33.1. Please use 'type_id' instead. Instance type. Available values: cluster_ckv,cluster_redis5.0,cluster_redis,master_slave_ckv,master_slave_redis4.0,master_slave_redis5.0,master_slave_redis,standalone_redis, specific region support specific types, need to refer data tencentcloud_redis_zone_config.
@@ -207,6 +205,7 @@ type InstanceObservation struct {
 
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Current status of an instance, maybe: init, processing, online, isolate and todelete.
@@ -219,6 +218,7 @@ type InstanceObservation struct {
 
 	// Instance tags.
 	// Instance tags.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// It has been deprecated from version 1.33.1. Please use 'type_id' instead. Instance type. Available values: cluster_ckv,cluster_redis5.0,cluster_redis,master_slave_ckv,master_slave_redis4.0,master_slave_redis5.0,master_slave_redis,standalone_redis, specific region support specific types, need to refer data tencentcloud_redis_zone_config.
@@ -338,6 +338,7 @@ type InstanceParameters struct {
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// ID of security group. If both vpc_id and subnet_id are not set, this argument should not be set either.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Specifies which subnet the instance should belong to. When the operation_network is changeVpc or changeBaseToVpc, this parameter needs to be configured.
@@ -348,6 +349,7 @@ type InstanceParameters struct {
 	// Instance tags.
 	// Instance tags.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// It has been deprecated from version 1.33.1. Please use 'type_id' instead. Instance type. Available values: cluster_ckv,cluster_redis5.0,cluster_redis,master_slave_ckv,master_slave_redis4.0,master_slave_redis5.0,master_slave_redis,standalone_redis, specific region support specific types, need to refer data tencentcloud_redis_zone_config.
@@ -413,13 +415,14 @@ type InstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Instance is the Schema for the Instances API. Provides a resource to create a Redis instance and set its attributes.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`

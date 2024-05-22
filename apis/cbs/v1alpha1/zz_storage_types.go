@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -73,6 +69,7 @@ type StorageInitParameters struct {
 
 	// The available tags within this CBS.
 	// The available tags within this CBS.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Add extra performance to the data disk. Only works when disk type is CLOUD_TSSD or CLOUD_HSSD.
@@ -147,6 +144,7 @@ type StorageObservation struct {
 
 	// The available tags within this CBS.
 	// The available tags within this CBS.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Add extra performance to the data disk. Only works when disk type is CLOUD_TSSD or CLOUD_HSSD.
@@ -224,6 +222,7 @@ type StorageParameters struct {
 	// The available tags within this CBS.
 	// The available tags within this CBS.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Add extra performance to the data disk. Only works when disk type is CLOUD_TSSD or CLOUD_HSSD.
@@ -256,13 +255,14 @@ type StorageStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Storage is the Schema for the Storages API. Provides a resource to create a CBS.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Storage struct {
 	metav1.TypeMeta   `json:",inline"`

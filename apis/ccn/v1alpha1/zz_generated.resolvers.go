@@ -35,5 +35,21 @@ func (mg *BandwidthLimit) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
 	return nil
 }

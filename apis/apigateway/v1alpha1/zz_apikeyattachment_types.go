@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type ApiKeyAttachmentInitParameters struct {
+
+	// ID of API key.
+	// ID of API key.
+	// +crossplane:generate:reference:type=ApiKey
+	APIKeyID *string `json:"apiKeyId,omitempty" tf:"api_key_id,omitempty"`
+
+	// Reference to a ApiKey to populate apiKeyId.
+	// +kubebuilder:validation:Optional
+	APIKeyIDRef *v1.Reference `json:"apiKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a ApiKey to populate apiKeyId.
+	// +kubebuilder:validation:Optional
+	APIKeyIDSelector *v1.Selector `json:"apiKeyIdSelector,omitempty" tf:"-"`
+
+	// ID of the usage plan.
+	// ID of the usage plan.
+	// +crossplane:generate:reference:type=UsagePlan
+	UsagePlanID *string `json:"usagePlanId,omitempty" tf:"usage_plan_id,omitempty"`
+
+	// Reference to a UsagePlan to populate usagePlanId.
+	// +kubebuilder:validation:Optional
+	UsagePlanIDRef *v1.Reference `json:"usagePlanIdRef,omitempty" tf:"-"`
+
+	// Selector for a UsagePlan to populate usagePlanId.
+	// +kubebuilder:validation:Optional
+	UsagePlanIDSelector *v1.Selector `json:"usagePlanIdSelector,omitempty" tf:"-"`
 }
 
 type ApiKeyAttachmentObservation struct {
@@ -89,13 +111,14 @@ type ApiKeyAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ApiKeyAttachment is the Schema for the ApiKeyAttachments API. Use this resource to API gateway attach access key to usage plan.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ApiKeyAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

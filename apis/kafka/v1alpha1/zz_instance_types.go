@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -200,8 +196,22 @@ type InstanceInitParameters struct {
 	// Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
 	SpecificationsType *string `json:"specificationsType,omitempty" tf:"specifications_type,omitempty"`
 
+	// Subnet id, it will be basic network if not set.
+	// Subnet id, it will be basic network if not set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// Tag set of instance.
 	// Tag set of instance.
+	// +mapType=granular
 	TagSet map[string]*string `json:"tagSet,omitempty" tf:"tag_set,omitempty"`
 
 	// It has been deprecated from version 1.78.5, because it do not support change. Use tag_set instead. Tags of instance. Partition size, the professional version does not need tag.
@@ -214,12 +224,26 @@ type InstanceInitParameters struct {
 	// - 2: High-speed transformer.
 	UpgradeStrategy *float64 `json:"upgradeStrategy,omitempty" tf:"upgrade_strategy,omitempty"`
 
+	// Vpc id, it will be basic network if not set.
+	// Vpc id, it will be basic network if not set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
+
 	// Available zone id.
 	// Available zone id.
 	ZoneID *float64 `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 
 	// List of available zone id. NOTE: this argument must set together with multi_zone_flag.
 	// List of available zone id. NOTE: this argument must set together with `multi_zone_flag`.
+	// +listType=set
 	ZoneIds []*float64 `json:"zoneIds,omitempty" tf:"zone_ids,omitempty"`
 }
 
@@ -306,6 +330,7 @@ type InstanceObservation struct {
 
 	// Tag set of instance.
 	// Tag set of instance.
+	// +mapType=granular
 	TagSet map[string]*string `json:"tagSet,omitempty" tf:"tag_set,omitempty"`
 
 	// It has been deprecated from version 1.78.5, because it do not support change. Use tag_set instead. Tags of instance. Partition size, the professional version does not need tag.
@@ -336,6 +361,7 @@ type InstanceObservation struct {
 
 	// List of available zone id. NOTE: this argument must set together with multi_zone_flag.
 	// List of available zone id. NOTE: this argument must set together with `multi_zone_flag`.
+	// +listType=set
 	ZoneIds []*float64 `json:"zoneIds,omitempty" tf:"zone_ids,omitempty"`
 }
 
@@ -448,6 +474,7 @@ type InstanceParameters struct {
 	// Tag set of instance.
 	// Tag set of instance.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	TagSet map[string]*string `json:"tagSet,omitempty" tf:"tag_set,omitempty"`
 
 	// It has been deprecated from version 1.78.5, because it do not support change. Use tag_set instead. Tags of instance. Partition size, the professional version does not need tag.
@@ -484,6 +511,7 @@ type InstanceParameters struct {
 	// List of available zone id. NOTE: this argument must set together with multi_zone_flag.
 	// List of available zone id. NOTE: this argument must set together with `multi_zone_flag`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ZoneIds []*float64 `json:"zoneIds,omitempty" tf:"zone_ids,omitempty"`
 }
 
@@ -546,13 +574,14 @@ type InstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Instance is the Schema for the Instances API. Use this resource to create ckafka instance.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`

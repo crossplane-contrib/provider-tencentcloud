@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type GroupPolicyAttachmentInitParameters struct {
+
+	// ID of the attached CAM group.
+	// ID of the attached CAM group.
+	// +crossplane:generate:reference:type=Group
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Reference to a Group to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
+
+	// ID of the policy.
+	// ID of the policy.
+	// +crossplane:generate:reference:type=Policy
+	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
+
+	// Reference to a Policy to populate policyId.
+	// +kubebuilder:validation:Optional
+	PolicyIDRef *v1.Reference `json:"policyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy to populate policyId.
+	// +kubebuilder:validation:Optional
+	PolicyIDSelector *v1.Selector `json:"policyIdSelector,omitempty" tf:"-"`
 }
 
 type GroupPolicyAttachmentObservation struct {
@@ -105,13 +127,14 @@ type GroupPolicyAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // GroupPolicyAttachment is the Schema for the GroupPolicyAttachments API. Provides a resource to create a CAM group policy attachment.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type GroupPolicyAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

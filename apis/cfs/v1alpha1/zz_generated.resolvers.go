@@ -36,6 +36,22 @@ func (mg *AccessRule) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.AccessGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AccessGroupIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.AccessGroupIDRef,
+		Selector:     mg.Spec.InitProvider.AccessGroupIDSelector,
+		To: reference.To{
+			List:    &AccessGroupList{},
+			Managed: &AccessGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessGroupID")
+	}
+	mg.Spec.InitProvider.AccessGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessGroupIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -93,6 +109,54 @@ func (mg *FileSystem) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.AccessGroupIDRef,
+		Selector:     mg.Spec.InitProvider.AccessGroupIDSelector,
+		To: reference.To{
+			List:    &AccessGroupList{},
+			Managed: &AccessGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessGroupID")
+	}
+	mg.Spec.InitProvider.AccessGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessGroupIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SubnetIDRef,
+		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.SubnetList{},
+			Managed: &v1alpha1.Subnet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
+	}
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.VPCList{},
+			Managed: &v1alpha1.VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
 
 	return nil
 }

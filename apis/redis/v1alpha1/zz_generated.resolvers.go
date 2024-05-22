@@ -35,5 +35,21 @@ func (mg *BackupConfig) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.RedisID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RedisIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RedisID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RedisIDRef,
+		Selector:     mg.Spec.InitProvider.RedisIDSelector,
+		To: reference.To{
+			List:    &InstanceList{},
+			Managed: &Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RedisID")
+	}
+	mg.Spec.InitProvider.RedisID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RedisIDRef = rsp.ResolvedReference
+
 	return nil
 }

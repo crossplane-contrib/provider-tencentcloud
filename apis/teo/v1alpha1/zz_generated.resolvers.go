@@ -35,6 +35,22 @@ func (mg *ApplicationProxyRule) ResolveReferences(ctx context.Context, c client.
 	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ZoneIDRef,
+		Selector:     mg.Spec.InitProvider.ZoneIDSelector,
+		To: reference.To{
+			List:    &ZoneList{},
+			Managed: &Zone{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
+	}
+	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -60,6 +76,22 @@ func (mg *OriginGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 	}
 	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ZoneIDRef,
+		Selector:     mg.Spec.InitProvider.ZoneIDSelector,
+		To: reference.To{
+			List:    &ZoneList{},
+			Managed: &Zone{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
+	}
+	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -87,6 +119,22 @@ func (mg *RuleEngine) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ZoneIDRef,
+		Selector:     mg.Spec.InitProvider.ZoneIDSelector,
+		To: reference.To{
+			List:    &ZoneList{},
+			Managed: &Zone{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
+	}
+	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -112,6 +160,22 @@ func (mg *ZoneSetting) ResolveReferences(ctx context.Context, c client.Reader) e
 	}
 	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ZoneIDRef,
+		Selector:     mg.Spec.InitProvider.ZoneIDSelector,
+		To: reference.To{
+			List:    &ZoneList{},
+			Managed: &Zone{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
+	}
+	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
 
 	return nil
 }

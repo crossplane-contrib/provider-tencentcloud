@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type LogTopicInitParameters struct {
+
+	// Log topic of CLB instance.
+	// Log topic of CLB instance.
+	// +crossplane:generate:reference:type=LogSet
+	LogSetID *string `json:"logSetId,omitempty" tf:"log_set_id,omitempty"`
+
+	// Reference to a LogSet to populate logSetId.
+	// +kubebuilder:validation:Optional
+	LogSetIDRef *v1.Reference `json:"logSetIdRef,omitempty" tf:"-"`
+
+	// Selector for a LogSet to populate logSetId.
+	// +kubebuilder:validation:Optional
+	LogSetIDSelector *v1.Selector `json:"logSetIdSelector,omitempty" tf:"-"`
 
 	// Log topic of CLB instance.
 	// Log topic of CLB instance.
@@ -92,13 +101,14 @@ type LogTopicStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // LogTopic is the Schema for the LogTopics API. Provides a resource to create a CLB instance topic.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type LogTopic struct {
 	metav1.TypeMeta   `json:",inline"`

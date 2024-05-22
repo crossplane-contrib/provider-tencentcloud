@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,6 +15,19 @@ import (
 
 type IdlInitParameters struct {
 
+	// ID of the TcaplusDB cluster to which the table group belongs.
+	// ID of the TcaplusDB cluster to which the table group belongs.
+	// +crossplane:generate:reference:type=Cluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
 	// IDL file content of the TcaplusDB table.
 	// IDL file content of the TcaplusDB table.
 	FileContent *string `json:"fileContent,omitempty" tf:"file_content,omitempty"`
@@ -34,6 +43,19 @@ type IdlInitParameters struct {
 	// Type of the IDL file. Valid values are PROTO and TDR.
 	// Type of the IDL file. Valid values are PROTO and TDR.
 	FileType *string `json:"fileType,omitempty" tf:"file_type,omitempty"`
+
+	// ID of the table group to which the IDL file belongs.
+	// ID of the table group to which the IDL file belongs.
+	// +crossplane:generate:reference:type=TableGroup
+	TablegroupID *string `json:"tablegroupId,omitempty" tf:"tablegroup_id,omitempty"`
+
+	// Reference to a TableGroup to populate tablegroupId.
+	// +kubebuilder:validation:Optional
+	TablegroupIDRef *v1.Reference `json:"tablegroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a TableGroup to populate tablegroupId.
+	// +kubebuilder:validation:Optional
+	TablegroupIDSelector *v1.Selector `json:"tablegroupIdSelector,omitempty" tf:"-"`
 }
 
 type IdlObservation struct {
@@ -175,13 +197,14 @@ type IdlStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Idl is the Schema for the Idls API. Use this resource to create TcaplusDB IDL file.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Idl struct {
 	metav1.TypeMeta   `json:",inline"`

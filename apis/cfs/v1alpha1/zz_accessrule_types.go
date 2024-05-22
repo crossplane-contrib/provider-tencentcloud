@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type AccessRuleInitParameters struct {
+
+	// ID of a access group.
+	// ID of a access group.
+	// +crossplane:generate:reference:type=AccessGroup
+	AccessGroupID *string `json:"accessGroupId,omitempty" tf:"access_group_id,omitempty"`
+
+	// Reference to a AccessGroup to populate accessGroupId.
+	// +kubebuilder:validation:Optional
+	AccessGroupIDRef *v1.Reference `json:"accessGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a AccessGroup to populate accessGroupId.
+	// +kubebuilder:validation:Optional
+	AccessGroupIDSelector *v1.Selector `json:"accessGroupIdSelector,omitempty" tf:"-"`
 
 	// A single IP or a single IP address range such as 10.1.10.11 or 10.10.1.0/24 indicates that all IPs are allowed. Please note that the IP entered should be CVM's private IP.
 	// A single IP or a single IP address range such as 10.1.10.11 or 10.10.1.0/24 indicates that all IPs are allowed. Please note that the IP entered should be CVM's private IP.
@@ -123,13 +132,14 @@ type AccessRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // AccessRule is the Schema for the AccessRules API. Provides a resource to create a CFS access rule.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type AccessRule struct {
 	metav1.TypeMeta   `json:",inline"`

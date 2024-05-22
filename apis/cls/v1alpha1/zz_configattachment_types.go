@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type ConfigAttachmentInitParameters struct {
+
+	// Collection configuration id.
+	// Collection configuration id.
+	// +crossplane:generate:reference:type=Config
+	ConfigID *string `json:"configId,omitempty" tf:"config_id,omitempty"`
+
+	// Reference to a Config to populate configId.
+	// +kubebuilder:validation:Optional
+	ConfigIDRef *v1.Reference `json:"configIdRef,omitempty" tf:"-"`
+
+	// Selector for a Config to populate configId.
+	// +kubebuilder:validation:Optional
+	ConfigIDSelector *v1.Selector `json:"configIdSelector,omitempty" tf:"-"`
+
+	// Machine group id.
+	// Machine group id.
+	// +crossplane:generate:reference:type=MachineGroup
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Reference to a MachineGroup to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+
+	// Selector for a MachineGroup to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
 }
 
 type ConfigAttachmentObservation struct {
@@ -89,13 +111,14 @@ type ConfigAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ConfigAttachment is the Schema for the ConfigAttachments API. Provides a resource to create a cls config attachment
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ConfigAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

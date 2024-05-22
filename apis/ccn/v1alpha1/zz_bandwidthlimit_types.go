@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -22,6 +18,19 @@ type BandwidthLimitInitParameters struct {
 	// Limitation of bandwidth. Default is 0.
 	// Limitation of bandwidth. Default is `0`.
 	BandwidthLimit *float64 `json:"bandwidthLimit,omitempty" tf:"bandwidth_limit,omitempty"`
+
+	// ID of the CCN.
+	// ID of the CCN.
+	// +crossplane:generate:reference:type=CCN
+	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
+
+	// Reference to a CCN to populate ccnId.
+	// +kubebuilder:validation:Optional
+	CcnIDRef *v1.Reference `json:"ccnIdRef,omitempty" tf:"-"`
+
+	// Selector for a CCN to populate ccnId.
+	// +kubebuilder:validation:Optional
+	CcnIDSelector *v1.Selector `json:"ccnIdSelector,omitempty" tf:"-"`
 
 	// Destination area restriction. If the CCN rate limit type is OUTER_REGION_LIMIT, this value does not need to be set.
 	// Destination area restriction. If the `CCN` rate limit type is `OUTER_REGION_LIMIT`, this value does not need to be set.
@@ -110,13 +119,14 @@ type BandwidthLimitStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // BandwidthLimit is the Schema for the BandwidthLimits API. Provides a resource to limit CCN bandwidth.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type BandwidthLimit struct {
 	metav1.TypeMeta   `json:",inline"`

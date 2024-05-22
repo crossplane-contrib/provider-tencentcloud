@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,8 +15,22 @@ import (
 
 type UsagePlanAttachmentInitParameters struct {
 
+	// ID of the API. This parameter will be required when bind_type is API.
+	// ID of the API. This parameter will be required when `bind_type` is `API`.
+	// +crossplane:generate:reference:type=Api
+	APIID *string `json:"apiId,omitempty" tf:"api_id,omitempty"`
+
+	// Reference to a Api to populate apiId.
+	// +kubebuilder:validation:Optional
+	APIIDRef *v1.Reference `json:"apiIdRef,omitempty" tf:"-"`
+
+	// Selector for a Api to populate apiId.
+	// +kubebuilder:validation:Optional
+	APIIDSelector *v1.Selector `json:"apiIdSelector,omitempty" tf:"-"`
+
 	// Array of key IDs to be bound.
 	// Array of key IDs to be bound.
+	// +listType=set
 	AccessKeyIds []*string `json:"accessKeyIds,omitempty" tf:"access_key_ids,omitempty"`
 
 	// Binding type. Valid values: API, SERVICE. Default value is SERVICE.
@@ -30,6 +40,32 @@ type UsagePlanAttachmentInitParameters struct {
 	// The environment to be bound. Valid values: test, prepub, release.
 	// The environment to be bound. Valid values: `test`, `prepub`, `release`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// ID of the service.
+	// ID of the service.
+	// +crossplane:generate:reference:type=Service
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v1.Reference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
+
+	// ID of the usage plan.
+	// ID of the usage plan.
+	// +crossplane:generate:reference:type=UsagePlan
+	UsagePlanID *string `json:"usagePlanId,omitempty" tf:"usage_plan_id,omitempty"`
+
+	// Reference to a UsagePlan to populate usagePlanId.
+	// +kubebuilder:validation:Optional
+	UsagePlanIDRef *v1.Reference `json:"usagePlanIdRef,omitempty" tf:"-"`
+
+	// Selector for a UsagePlan to populate usagePlanId.
+	// +kubebuilder:validation:Optional
+	UsagePlanIDSelector *v1.Selector `json:"usagePlanIdSelector,omitempty" tf:"-"`
 }
 
 type UsagePlanAttachmentObservation struct {
@@ -40,6 +76,7 @@ type UsagePlanAttachmentObservation struct {
 
 	// Array of key IDs to be bound.
 	// Array of key IDs to be bound.
+	// +listType=set
 	AccessKeyIds []*string `json:"accessKeyIds,omitempty" tf:"access_key_ids,omitempty"`
 
 	// Binding type. Valid values: API, SERVICE. Default value is SERVICE.
@@ -81,6 +118,7 @@ type UsagePlanAttachmentParameters struct {
 	// Array of key IDs to be bound.
 	// Array of key IDs to be bound.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AccessKeyIds []*string `json:"accessKeyIds,omitempty" tf:"access_key_ids,omitempty"`
 
 	// Binding type. Valid values: API, SERVICE. Default value is SERVICE.
@@ -146,13 +184,14 @@ type UsagePlanAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // UsagePlanAttachment is the Schema for the UsagePlanAttachments API. Use this resource to attach API gateway usage plan to service.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type UsagePlanAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

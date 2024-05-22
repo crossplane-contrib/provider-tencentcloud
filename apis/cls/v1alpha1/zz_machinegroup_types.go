@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -37,6 +33,7 @@ type MachineGroupInitParameters struct {
 
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Update end time. We recommend you update LogListener during off-peak hours.
@@ -71,6 +68,7 @@ type MachineGroupObservation struct {
 
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Update end time. We recommend you update LogListener during off-peak hours.
@@ -107,6 +105,7 @@ type MachineGroupParameters struct {
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Update end time. We recommend you update LogListener during off-peak hours.
@@ -179,13 +178,14 @@ type MachineGroupStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // MachineGroup is the Schema for the MachineGroups API. Provides a resource to create a cls machine group.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type MachineGroup struct {
 	metav1.TypeMeta   `json:",inline"`

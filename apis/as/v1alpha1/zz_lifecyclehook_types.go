@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -50,6 +46,19 @@ type LifecycleHookInitParameters struct {
 	// For CMQ_TOPIC type, a name of topic must be set.
 	// For CMQ_TOPIC type, a name of topic must be set.
 	NotificationTopicName *string `json:"notificationTopicName,omitempty" tf:"notification_topic_name,omitempty"`
+
+	// ID of a scaling group.
+	// ID of a scaling group.
+	// +crossplane:generate:reference:type=ScalingGroup
+	ScalingGroupID *string `json:"scalingGroupId,omitempty" tf:"scaling_group_id,omitempty"`
+
+	// Reference to a ScalingGroup to populate scalingGroupId.
+	// +kubebuilder:validation:Optional
+	ScalingGroupIDRef *v1.Reference `json:"scalingGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a ScalingGroup to populate scalingGroupId.
+	// +kubebuilder:validation:Optional
+	ScalingGroupIDSelector *v1.Selector `json:"scalingGroupIdSelector,omitempty" tf:"-"`
 }
 
 type LifecycleHookObservation struct {
@@ -175,13 +184,14 @@ type LifecycleHookStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // LifecycleHook is the Schema for the LifecycleHooks API. Provides a resource for an AS (Auto scaling) lifecycle hook.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type LifecycleHook struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -38,6 +34,19 @@ type RouteTableEntryInitParameters struct {
 	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
 	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
+
+	// ID of routing table to which this entry belongs.
+	// ID of routing table to which this entry belongs.
+	// +crossplane:generate:reference:type=RouteTable
+	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 }
 
 type RouteTableEntryObservation struct {
@@ -136,13 +145,14 @@ type RouteTableEntryStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // RouteTableEntry is the Schema for the RouteTableEntrys API. Provides a resource to create an entry of a routing table.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type RouteTableEntry struct {
 	metav1.TypeMeta   `json:",inline"`

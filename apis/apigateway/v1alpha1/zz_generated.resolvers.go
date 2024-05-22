@@ -35,6 +35,22 @@ func (mg *Api) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceIDSelector,
+		To: reference.To{
+			List:    &ServiceList{},
+			Managed: &Service{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceID")
+	}
+	mg.Spec.InitProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -77,6 +93,38 @@ func (mg *ApiKeyAttachment) ResolveReferences(ctx context.Context, c client.Read
 	mg.Spec.ForProvider.UsagePlanID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.UsagePlanIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.APIKeyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.APIKeyIDRef,
+		Selector:     mg.Spec.InitProvider.APIKeyIDSelector,
+		To: reference.To{
+			List:    &ApiKeyList{},
+			Managed: &ApiKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.APIKeyID")
+	}
+	mg.Spec.InitProvider.APIKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.APIKeyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.UsagePlanID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.UsagePlanIDRef,
+		Selector:     mg.Spec.InitProvider.UsagePlanIDSelector,
+		To: reference.To{
+			List:    &UsagePlanList{},
+			Managed: &UsagePlan{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.UsagePlanID")
+	}
+	mg.Spec.InitProvider.UsagePlanID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.UsagePlanIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -102,6 +150,22 @@ func (mg *CustomDomain) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceIDSelector,
+		To: reference.To{
+			List:    &ServiceList{},
+			Managed: &Service{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceID")
+	}
+	mg.Spec.InitProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -129,6 +193,22 @@ func (mg *IpStrategy) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceIDSelector,
+		To: reference.To{
+			List:    &ServiceList{},
+			Managed: &Service{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceID")
+	}
+	mg.Spec.InitProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -154,6 +234,22 @@ func (mg *ServiceRelease) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.ForProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceIDSelector,
+		To: reference.To{
+			List:    &ServiceList{},
+			Managed: &Service{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceID")
+	}
+	mg.Spec.InitProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -213,6 +309,54 @@ func (mg *StrategyAttachment) ResolveReferences(ctx context.Context, c client.Re
 	mg.Spec.ForProvider.StrategyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.StrategyIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BindAPIID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.BindAPIIDRef,
+		Selector:     mg.Spec.InitProvider.BindAPIIDSelector,
+		To: reference.To{
+			List:    &ApiList{},
+			Managed: &Api{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.BindAPIID")
+	}
+	mg.Spec.InitProvider.BindAPIID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BindAPIIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceIDSelector,
+		To: reference.To{
+			List:    &ServiceList{},
+			Managed: &Service{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceID")
+	}
+	mg.Spec.InitProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.StrategyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.StrategyIDRef,
+		Selector:     mg.Spec.InitProvider.StrategyIDSelector,
+		To: reference.To{
+			List:    &IpStrategyList{},
+			Managed: &IpStrategy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.StrategyID")
+	}
+	mg.Spec.InitProvider.StrategyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.StrategyIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -270,6 +414,54 @@ func (mg *UsagePlanAttachment) ResolveReferences(ctx context.Context, c client.R
 	}
 	mg.Spec.ForProvider.UsagePlanID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.UsagePlanIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.APIID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.APIIDRef,
+		Selector:     mg.Spec.InitProvider.APIIDSelector,
+		To: reference.To{
+			List:    &ApiList{},
+			Managed: &Api{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.APIID")
+	}
+	mg.Spec.InitProvider.APIID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.APIIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceIDSelector,
+		To: reference.To{
+			List:    &ServiceList{},
+			Managed: &Service{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceID")
+	}
+	mg.Spec.InitProvider.ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.UsagePlanID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.UsagePlanIDRef,
+		Selector:     mg.Spec.InitProvider.UsagePlanIDSelector,
+		To: reference.To{
+			List:    &UsagePlanList{},
+			Managed: &UsagePlan{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.UsagePlanID")
+	}
+	mg.Spec.InitProvider.UsagePlanID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.UsagePlanIDRef = rsp.ResolvedReference
 
 	return nil
 }

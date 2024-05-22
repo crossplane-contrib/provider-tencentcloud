@@ -35,6 +35,22 @@ func (mg *AddressTemplateGroup) ResolveReferences(ctx context.Context, c client.
 	mg.Spec.ForProvider.TemplateIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.TemplateIdsRefs = mrsp.ResolvedReferences
 
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.TemplateIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.InitProvider.TemplateIdsRefs,
+		Selector:      mg.Spec.InitProvider.TemplateIdsSelector,
+		To: reference.To{
+			List:    &AddressTemplateList{},
+			Managed: &AddressTemplate{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TemplateIds")
+	}
+	mg.Spec.InitProvider.TemplateIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.TemplateIdsRefs = mrsp.ResolvedReferences
+
 	return nil
 }
 
@@ -77,6 +93,38 @@ func (mg *Dnat) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NATID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.NATIDRef,
+		Selector:     mg.Spec.InitProvider.NATIDSelector,
+		To: reference.To{
+			List:    &NatGatewayList{},
+			Managed: &NatGateway{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NATID")
+	}
+	mg.Spec.InitProvider.NATID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NATIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -102,6 +150,22 @@ func (mg *EipAssociation) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.ForProvider.EIPID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.EIPIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EIPID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.EIPIDRef,
+		Selector:     mg.Spec.InitProvider.EIPIDSelector,
+		To: reference.To{
+			List:    &EipList{},
+			Managed: &Eip{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.EIPID")
+	}
+	mg.Spec.InitProvider.EIPID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EIPIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -145,6 +209,38 @@ func (mg *HaVip) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SubnetIDRef,
+		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
+		To: reference.To{
+			List:    &SubnetList{},
+			Managed: &Subnet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
+	}
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -170,6 +266,22 @@ func (mg *NatGateway) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -197,6 +309,22 @@ func (mg *NatGatewaySnat) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SubnetIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SubnetIDRef,
+		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
+		To: reference.To{
+			List:    &SubnetList{},
+			Managed: &Subnet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
+	}
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -222,6 +350,22 @@ func (mg *ProtocolTemplateGroup) ResolveReferences(ctx context.Context, c client
 	}
 	mg.Spec.ForProvider.TemplateIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.TemplateIdsRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.TemplateIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.InitProvider.TemplateIdsRefs,
+		Selector:      mg.Spec.InitProvider.TemplateIdsSelector,
+		To: reference.To{
+			List:    &ProtocolTemplateList{},
+			Managed: &ProtocolTemplate{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TemplateIds")
+	}
+	mg.Spec.InitProvider.TemplateIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.TemplateIdsRefs = mrsp.ResolvedReferences
 
 	return nil
 }
@@ -265,6 +409,38 @@ func (mg *RouteEntry) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RouteTableIDRef,
+		Selector:     mg.Spec.InitProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RouteTableID")
+	}
+	mg.Spec.InitProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -290,6 +466,22 @@ func (mg *RouteTable) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -317,6 +509,22 @@ func (mg *RouteTableEntry) ResolveReferences(ctx context.Context, c client.Reade
 	mg.Spec.ForProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RouteTableIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RouteTableIDRef,
+		Selector:     mg.Spec.InitProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RouteTableID")
+	}
+	mg.Spec.InitProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouteTableIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -342,6 +550,22 @@ func (mg *SecurityGroupLiteRule) ResolveReferences(ctx context.Context, c client
 	}
 	mg.Spec.ForProvider.SecurityGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SecurityGroupIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecurityGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SecurityGroupIDRef,
+		Selector:     mg.Spec.InitProvider.SecurityGroupIDSelector,
+		To: reference.To{
+			List:    &SecurityGroupList{},
+			Managed: &SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityGroupID")
+	}
+	mg.Spec.InitProvider.SecurityGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SecurityGroupIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -369,6 +593,22 @@ func (mg *SecurityGroupRule) ResolveReferences(ctx context.Context, c client.Rea
 	mg.Spec.ForProvider.SecurityGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SecurityGroupIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecurityGroupID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SecurityGroupIDRef,
+		Selector:     mg.Spec.InitProvider.SecurityGroupIDSelector,
+		To: reference.To{
+			List:    &SecurityGroupList{},
+			Managed: &SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityGroupID")
+	}
+	mg.Spec.InitProvider.SecurityGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SecurityGroupIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -394,6 +634,22 @@ func (mg *Subnet) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -421,6 +677,22 @@ func (mg *VPCAcl) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -446,6 +718,22 @@ func (mg *VPCBandwidthPackageAttachment) ResolveReferences(ctx context.Context, 
 	}
 	mg.Spec.ForProvider.BandwidthPackageID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.BandwidthPackageIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BandwidthPackageID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.BandwidthPackageIDRef,
+		Selector:     mg.Spec.InitProvider.BandwidthPackageIDSelector,
+		To: reference.To{
+			List:    &VPCBandwidthPackageList{},
+			Managed: &VPCBandwidthPackage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.BandwidthPackageID")
+	}
+	mg.Spec.InitProvider.BandwidthPackageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BandwidthPackageIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -505,6 +793,54 @@ func (mg *VPNConnection) ResolveReferences(ctx context.Context, c client.Reader)
 	mg.Spec.ForProvider.VPNGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPNGatewayIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CustomerGatewayID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CustomerGatewayIDRef,
+		Selector:     mg.Spec.InitProvider.CustomerGatewayIDSelector,
+		To: reference.To{
+			List:    &VPNCustomerGatewayList{},
+			Managed: &VPNCustomerGateway{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CustomerGatewayID")
+	}
+	mg.Spec.InitProvider.CustomerGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CustomerGatewayIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPNGatewayID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPNGatewayIDRef,
+		Selector:     mg.Spec.InitProvider.VPNGatewayIDSelector,
+		To: reference.To{
+			List:    &VPNGatewayList{},
+			Managed: &VPNGateway{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPNGatewayID")
+	}
+	mg.Spec.InitProvider.VPNGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPNGatewayIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -530,6 +866,22 @@ func (mg *VPNGateway) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.ForProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPCIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPCID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPCIDRef,
+		Selector:     mg.Spec.InitProvider.VPCIDSelector,
+		To: reference.To{
+			List:    &VPCList{},
+			Managed: &VPC{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPCID")
+	}
+	mg.Spec.InitProvider.VPCID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPCIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -557,6 +909,22 @@ func (mg *VPNGatewayRoute) ResolveReferences(ctx context.Context, c client.Reade
 	mg.Spec.ForProvider.VPNGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPNGatewayIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPNGatewayID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPNGatewayIDRef,
+		Selector:     mg.Spec.InitProvider.VPNGatewayIDSelector,
+		To: reference.To{
+			List:    &VPNGatewayList{},
+			Managed: &VPNGateway{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPNGatewayID")
+	}
+	mg.Spec.InitProvider.VPNGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPNGatewayIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -582,6 +950,22 @@ func (mg *VPNSSLServer) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.VPNGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VPNGatewayIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VPNGatewayID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.VPNGatewayIDRef,
+		Selector:     mg.Spec.InitProvider.VPNGatewayIDSelector,
+		To: reference.To{
+			List:    &VPNGatewayList{},
+			Managed: &VPNGateway{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VPNGatewayID")
+	}
+	mg.Spec.InitProvider.VPNGatewayID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VPNGatewayIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -624,6 +1008,38 @@ func (mg *VPVAclAttachment) ResolveReferences(ctx context.Context, c client.Read
 	}
 	mg.Spec.ForProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SubnetIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ACLID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ACLIDRef,
+		Selector:     mg.Spec.InitProvider.ACLIDSelector,
+		To: reference.To{
+			List:    &VPCAclList{},
+			Managed: &VPCAcl{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ACLID")
+	}
+	mg.Spec.InitProvider.ACLID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ACLIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SubnetIDRef,
+		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
+		To: reference.To{
+			List:    &SubnetList{},
+			Managed: &Subnet{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
+	}
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
 
 	return nil
 }

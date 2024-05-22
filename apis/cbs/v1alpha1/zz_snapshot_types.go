@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -23,8 +19,22 @@ type SnapshotInitParameters struct {
 	// Name of the snapshot.
 	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
 
+	// ID of the the CBS which this snapshot created from.
+	// ID of the the CBS which this snapshot created from.
+	// +crossplane:generate:reference:type=Storage
+	StorageID *string `json:"storageId,omitempty" tf:"storage_id,omitempty"`
+
+	// Reference to a Storage to populate storageId.
+	// +kubebuilder:validation:Optional
+	StorageIDRef *v1.Reference `json:"storageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Storage to populate storageId.
+	// +kubebuilder:validation:Optional
+	StorageIDSelector *v1.Selector `json:"storageIdSelector,omitempty" tf:"-"`
+
 	// cbs snapshot do not support tag now. The available tags within this CBS Snapshot.
 	// The available tags within this CBS Snapshot.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -63,6 +73,7 @@ type SnapshotObservation struct {
 
 	// cbs snapshot do not support tag now. The available tags within this CBS Snapshot.
 	// The available tags within this CBS Snapshot.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -90,6 +101,7 @@ type SnapshotParameters struct {
 	// cbs snapshot do not support tag now. The available tags within this CBS Snapshot.
 	// The available tags within this CBS Snapshot.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -117,13 +129,14 @@ type SnapshotStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Snapshot is the Schema for the Snapshots API. Provides a resource to create a CBS snapshot.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`

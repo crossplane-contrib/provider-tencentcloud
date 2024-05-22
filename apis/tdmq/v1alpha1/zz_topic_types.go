@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,32 @@ import (
 )
 
 type TopicInitParameters struct {
+
+	// The Dedicated Cluster Id.
+	// The Dedicated Cluster Id.
+	// +crossplane:generate:reference:type=Instance
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Instance to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
+	// The name of tdmq namespace.
+	// The name of tdmq namespace.
+	// +crossplane:generate:reference:type=TdmqNamespace
+	EnvironID *string `json:"environId,omitempty" tf:"environ_id,omitempty"`
+
+	// Reference to a TdmqNamespace to populate environId.
+	// +kubebuilder:validation:Optional
+	EnvironIDRef *v1.Reference `json:"environIdRef,omitempty" tf:"-"`
+
+	// Selector for a TdmqNamespace to populate environId.
+	// +kubebuilder:validation:Optional
+	EnvironIDSelector *v1.Selector `json:"environIdSelector,omitempty" tf:"-"`
 
 	// The partitions of topic.
 	// The partitions of topic.
@@ -149,13 +171,14 @@ type TopicStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Topic is the Schema for the Topics API. Provide a resource to create a TDMQ topic.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Topic struct {
 	metav1.TypeMeta   `json:",inline"`

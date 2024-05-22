@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -67,6 +63,19 @@ type NotificationAlertManagerParameters struct {
 
 type TmpTkeGlobalNotificationInitParameters struct {
 
+	// Instance Id.
+	// Instance Id.
+	// +crossplane:generate:reference:type=TmpInstance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a TmpInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a TmpInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
+
 	// Alarm notification channels.
 	// Alarm notification channels.
 	Notification []TmpTkeGlobalNotificationNotificationInitParameters `json:"notification,omitempty" tf:"notification,omitempty"`
@@ -84,6 +93,7 @@ type TmpTkeGlobalNotificationNotificationInitParameters struct {
 
 	// Alarm notification method, Valid values: SMS, EMAIL, CALL, WECHAT.
 	// Alarm notification method, Valid values: `SMS`, `EMAIL`, `CALL`, `WECHAT`.
+	// +listType=set
 	NotifyWay []*string `json:"notifyWay,omitempty" tf:"notify_way,omitempty"`
 
 	// Phone Alarm Reach Notification, NotifyWay is CALL, and this parameter is used.
@@ -104,10 +114,12 @@ type TmpTkeGlobalNotificationNotificationInitParameters struct {
 
 	// Phone alert sequence, NotifyWay is CALL, and this parameter is used.
 	// Phone alert sequence, NotifyWay is `CALL`, and this parameter is used.
+	// +listType=set
 	PhoneNotifyOrder []*float64 `json:"phoneNotifyOrder,omitempty" tf:"phone_notify_order,omitempty"`
 
 	// Alarm receiving group(user group).
 	// Alarm receiving group(user group).
+	// +listType=set
 	ReceiverGroups []*string `json:"receiverGroups,omitempty" tf:"receiver_groups,omitempty"`
 
 	// Convergence time.
@@ -143,6 +155,7 @@ type TmpTkeGlobalNotificationNotificationObservation struct {
 
 	// Alarm notification method, Valid values: SMS, EMAIL, CALL, WECHAT.
 	// Alarm notification method, Valid values: `SMS`, `EMAIL`, `CALL`, `WECHAT`.
+	// +listType=set
 	NotifyWay []*string `json:"notifyWay,omitempty" tf:"notify_way,omitempty"`
 
 	// Phone Alarm Reach Notification, NotifyWay is CALL, and this parameter is used.
@@ -163,10 +176,12 @@ type TmpTkeGlobalNotificationNotificationObservation struct {
 
 	// Phone alert sequence, NotifyWay is CALL, and this parameter is used.
 	// Phone alert sequence, NotifyWay is `CALL`, and this parameter is used.
+	// +listType=set
 	PhoneNotifyOrder []*float64 `json:"phoneNotifyOrder,omitempty" tf:"phone_notify_order,omitempty"`
 
 	// Alarm receiving group(user group).
 	// Alarm receiving group(user group).
+	// +listType=set
 	ReceiverGroups []*string `json:"receiverGroups,omitempty" tf:"receiver_groups,omitempty"`
 
 	// Convergence time.
@@ -205,6 +220,7 @@ type TmpTkeGlobalNotificationNotificationParameters struct {
 	// Alarm notification method, Valid values: SMS, EMAIL, CALL, WECHAT.
 	// Alarm notification method, Valid values: `SMS`, `EMAIL`, `CALL`, `WECHAT`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	NotifyWay []*string `json:"notifyWay,omitempty" tf:"notify_way,omitempty"`
 
 	// Phone Alarm Reach Notification, NotifyWay is CALL, and this parameter is used.
@@ -230,11 +246,13 @@ type TmpTkeGlobalNotificationNotificationParameters struct {
 	// Phone alert sequence, NotifyWay is CALL, and this parameter is used.
 	// Phone alert sequence, NotifyWay is `CALL`, and this parameter is used.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	PhoneNotifyOrder []*float64 `json:"phoneNotifyOrder,omitempty" tf:"phone_notify_order,omitempty"`
 
 	// Alarm receiving group(user group).
 	// Alarm receiving group(user group).
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ReceiverGroups []*string `json:"receiverGroups,omitempty" tf:"receiver_groups,omitempty"`
 
 	// Convergence time.
@@ -323,13 +341,14 @@ type TmpTkeGlobalNotificationStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TmpTkeGlobalNotification is the Schema for the TmpTkeGlobalNotifications API. Provides a resource to create a tmp tke global notification
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type TmpTkeGlobalNotification struct {
 	metav1.TypeMeta   `json:",inline"`

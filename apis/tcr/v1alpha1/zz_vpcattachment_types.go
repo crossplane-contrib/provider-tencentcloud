@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -27,6 +23,19 @@ type VpcAttachmentInitParameters struct {
 	// Whether to enable vpc domain dns. Default value is `false`.
 	EnableVPCDomainDNS *bool `json:"enableVpcDomainDns,omitempty" tf:"enable_vpc_domain_dns,omitempty"`
 
+	// ID of the TCR instance.
+	// ID of the TCR instance.
+	// +crossplane:generate:reference:type=Instance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
+
 	// this argument was deprecated, use region_name instead. ID of region. Conflict with region_name, can not be set at the same time.
 	// ID of region. Conflict with region_name, can not be set at the same time.
 	RegionID *float64 `json:"regionId,omitempty" tf:"region_id,omitempty"`
@@ -34,6 +43,32 @@ type VpcAttachmentInitParameters struct {
 	// Name of region. Conflict with region_id, can not be set at the same time.
 	// Name of region. Conflict with region_id, can not be set at the same time.
 	RegionName *string `json:"regionName,omitempty" tf:"region_name,omitempty"`
+
+	// ID of subnet.
+	// ID of subnet.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// ID of VPC.
+	// ID of VPC.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 type VpcAttachmentObservation struct {
@@ -167,13 +202,14 @@ type VpcAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VpcAttachment is the Schema for the VpcAttachments API. Use this resource to attach tcr instance with the vpc and subnet network.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type VpcAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -22,6 +18,20 @@ type ProtocolTemplateGroupInitParameters struct {
 	// Name of the protocol template group.
 	// Name of the protocol template group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Service template ID list.
+	// Service template ID list.
+	// +crossplane:generate:reference:type=ProtocolTemplate
+	// +listType=set
+	TemplateIds []*string `json:"templateIds,omitempty" tf:"template_ids,omitempty"`
+
+	// References to ProtocolTemplate to populate templateIds.
+	// +kubebuilder:validation:Optional
+	TemplateIdsRefs []v1.Reference `json:"templateIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of ProtocolTemplate to populate templateIds.
+	// +kubebuilder:validation:Optional
+	TemplateIdsSelector *v1.Selector `json:"templateIdsSelector,omitempty" tf:"-"`
 }
 
 type ProtocolTemplateGroupObservation struct {
@@ -35,6 +45,7 @@ type ProtocolTemplateGroupObservation struct {
 
 	// Service template ID list.
 	// Service template ID list.
+	// +listType=set
 	TemplateIds []*string `json:"templateIds,omitempty" tf:"template_ids,omitempty"`
 }
 
@@ -49,6 +60,7 @@ type ProtocolTemplateGroupParameters struct {
 	// Service template ID list.
 	// +crossplane:generate:reference:type=ProtocolTemplate
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	TemplateIds []*string `json:"templateIds,omitempty" tf:"template_ids,omitempty"`
 
 	// References to ProtocolTemplate to populate templateIds.
@@ -84,13 +96,14 @@ type ProtocolTemplateGroupStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ProtocolTemplateGroup is the Schema for the ProtocolTemplateGroups API. Provides a resource to manage protocol template group.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ProtocolTemplateGroup struct {
 	metav1.TypeMeta   `json:",inline"`

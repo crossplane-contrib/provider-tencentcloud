@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,10 +17,12 @@ type EsACLInitParameters struct {
 
 	// Blacklist of kibana access.
 	// Blacklist of kibana access.
+	// +listType=set
 	BlackList []*string `json:"blackList,omitempty" tf:"black_list,omitempty"`
 
 	// Whitelist of kibana access.
 	// Whitelist of kibana access.
+	// +listType=set
 	WhiteList []*string `json:"whiteList,omitempty" tf:"white_list,omitempty"`
 }
 
@@ -32,10 +30,12 @@ type EsACLObservation struct {
 
 	// Blacklist of kibana access.
 	// Blacklist of kibana access.
+	// +listType=set
 	BlackList []*string `json:"blackList,omitempty" tf:"black_list,omitempty"`
 
 	// Whitelist of kibana access.
 	// Whitelist of kibana access.
+	// +listType=set
 	WhiteList []*string `json:"whiteList,omitempty" tf:"white_list,omitempty"`
 }
 
@@ -44,11 +44,13 @@ type EsACLParameters struct {
 	// Blacklist of kibana access.
 	// Blacklist of kibana access.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	BlackList []*string `json:"blackList,omitempty" tf:"black_list,omitempty"`
 
 	// Whitelist of kibana access.
 	// Whitelist of kibana access.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	WhiteList []*string `json:"whiteList,omitempty" tf:"white_list,omitempty"`
 }
 
@@ -98,9 +100,36 @@ type InstanceInitParameters struct {
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
 	RenewFlag *string `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// A mapping of tags to assign to the instance. For tag limits, please refer to Use Limits.
 	// A mapping of tags to assign to the instance. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// The ID of a VPC network.
+	// The ID of a VPC network.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
 	// Version of the instance. Valid values are 5.6.4, 6.4.3, 6.8.2, 7.5.1 and 7.10.1.
 	// Version of the instance. Valid values are `5.6.4`, `6.4.3`, `6.8.2`, `7.5.1` and `7.10.1`.
@@ -186,6 +215,7 @@ type InstanceObservation struct {
 
 	// A mapping of tags to assign to the instance. For tag limits, please refer to Use Limits.
 	// A mapping of tags to assign to the instance. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The ID of a VPC network.
@@ -280,6 +310,7 @@ type InstanceParameters struct {
 	// A mapping of tags to assign to the instance. For tag limits, please refer to Use Limits.
 	// A mapping of tags to assign to the instance. For tag limits, please refer to [Use Limits](https://intl.cloud.tencent.com/document/product/651/13354).
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The ID of a VPC network.
@@ -488,13 +519,14 @@ type InstanceStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Instance is the Schema for the Instances API. Provides an elasticsearch instance resource.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`

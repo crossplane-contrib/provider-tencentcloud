@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -104,6 +100,19 @@ type IndexInitParameters struct {
 	// Whether to take effect. Default value: true.
 	// Whether to take effect. Default value: true.
 	Status *bool `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Log topic ID.
+	// Log topic ID.
+	// +crossplane:generate:reference:type=Topic
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+
+	// Reference to a Topic to populate topicId.
+	// +kubebuilder:validation:Optional
+	TopicIDRef *v1.Reference `json:"topicIdRef,omitempty" tf:"-"`
+
+	// Selector for a Topic to populate topicId.
+	// +kubebuilder:validation:Optional
+	TopicIDSelector *v1.Selector `json:"topicIdSelector,omitempty" tf:"-"`
 }
 
 type IndexObservation struct {
@@ -516,13 +525,14 @@ type IndexStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Index is the Schema for the Indexs API. Provides a resource to create a cls index.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Index struct {
 	metav1.TypeMeta   `json:",inline"`

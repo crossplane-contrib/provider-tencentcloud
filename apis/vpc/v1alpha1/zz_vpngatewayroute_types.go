@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -38,6 +34,19 @@ type VPNGatewayRouteInitParameters struct {
 	// Status. Valid values: ENABLE and DISABLE.
 	// Status. Valid values: ENABLE and DISABLE.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// VPN gateway ID.
+	// VPN gateway ID.
+	// +crossplane:generate:reference:type=VPNGateway
+	VPNGatewayID *string `json:"vpnGatewayId,omitempty" tf:"vpn_gateway_id,omitempty"`
+
+	// Reference to a VPNGateway to populate vpnGatewayId.
+	// +kubebuilder:validation:Optional
+	VPNGatewayIDRef *v1.Reference `json:"vpnGatewayIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPNGateway to populate vpnGatewayId.
+	// +kubebuilder:validation:Optional
+	VPNGatewayIDSelector *v1.Selector `json:"vpnGatewayIdSelector,omitempty" tf:"-"`
 }
 
 type VPNGatewayRouteObservation struct {
@@ -152,13 +161,14 @@ type VPNGatewayRouteStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VPNGatewayRoute is the Schema for the VPNGatewayRoutes API. Provides a resource to create a VPN gateway route.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type VPNGatewayRoute struct {
 	metav1.TypeMeta   `json:",inline"`

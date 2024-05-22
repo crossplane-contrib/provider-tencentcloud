@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: functions.scf.tencentcloud.crossplane.io
 spec:
   group: scf.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           to create a SCF function.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,599 +74,580 @@ spec:
               forProvider:
                 properties:
                   asyncRunEnable:
-                    description: Whether SCF function asynchronous attribute is enabled.
-                      TRUE is open, FALSE is close. Whether SCF function asynchronous
-                      attribute is enabled. `TRUE` is open, `FALSE` is close.
+                    description: |-
+                      Whether SCF function asynchronous attribute is enabled. TRUE is open, FALSE is close.
+                      Whether SCF function asynchronous attribute is enabled. `TRUE` is open, `FALSE` is close.
                     type: string
                   cfsConfig:
-                    description: List of CFS configurations. List of CFS configurations.
+                    description: |-
+                      List of CFS configurations.
+                      List of CFS configurations.
                     items:
                       properties:
                         cfsId:
-                          description: File system instance ID. File system instance
-                            ID.
+                          description: |-
+                            File system instance ID.
+                            File system instance ID.
                           type: string
                         localMountDir:
-                          description: Local mount directory. Local mount directory.
+                          description: |-
+                            Local mount directory.
+                            Local mount directory.
                           type: string
                         mountInsId:
-                          description: File system mount instance ID. File system
-                            mount instance ID.
+                          description: |-
+                            File system mount instance ID.
+                            File system mount instance ID.
                           type: string
                         remoteMountDir:
-                          description: Remote mount directory. Remote mount directory.
+                          description: |-
+                            Remote mount directory.
+                            Remote mount directory.
                           type: string
                         userGroupId:
-                          description: ID of user group. ID of user group.
+                          description: |-
+                            ID of user group.
+                            ID of user group.
                           type: string
                         userId:
-                          description: ID of user. ID of user.
+                          description: |-
+                            ID of user.
+                            ID of user.
                           type: string
                       type: object
                     type: array
                   clsLogsetId:
-                    description: cls logset id of the SCF function. cls logset id
-                      of the SCF function.
+                    description: |-
+                      cls logset id of the SCF function.
+                      cls logset id of the SCF function.
                     type: string
                   clsTopicId:
-                    description: cls topic id of the SCF function. cls topic id of
-                      the SCF function.
+                    description: |-
+                      cls topic id of the SCF function.
+                      cls topic id of the SCF function.
                     type: string
                   cosBucketName:
-                    description: Cos bucket name of the SCF function, such as cos-1234567890,
-                      conflict with zip_file. Cos bucket name of the SCF function,
-                      such as `cos-1234567890`, conflict with `zip_file`.
+                    description: |-
+                      Cos bucket name of the SCF function, such as cos-1234567890, conflict with zip_file.
+                      Cos bucket name of the SCF function, such as `cos-1234567890`, conflict with `zip_file`.
                     type: string
                   cosBucketRegion:
-                    description: Cos bucket region of the SCF function, conflict with
-                      zip_file. Cos bucket region of the SCF function, conflict with
-                      `zip_file`.
+                    description: |-
+                      Cos bucket region of the SCF function, conflict with zip_file.
+                      Cos bucket region of the SCF function, conflict with `zip_file`.
                     type: string
                   cosObjectName:
-                    description: Cos object name of the SCF function, should have
-                      suffix .zip or .jar, conflict with zip_file. Cos object name
-                      of the SCF function, should have suffix `.zip` or `.jar`, conflict
-                      with `zip_file`.
+                    description: |-
+                      Cos object name of the SCF function, should have suffix .zip or .jar, conflict with zip_file.
+                      Cos object name of the SCF function, should have suffix `.zip` or `.jar`, conflict with `zip_file`.
                     type: string
                   description:
-                    description: Description of the SCF function. Description supports
-                      English letters, numbers, spaces, commas, newlines, periods
-                      and Chinese, the maximum length is 1000. Description of the
-                      SCF function. Description supports English letters, numbers,
-                      spaces, commas, newlines, periods and Chinese, the maximum length
-                      is 1000.
+                    description: |-
+                      Description of the SCF function. Description supports English letters, numbers, spaces, commas, newlines, periods and Chinese, the maximum length is 1000.
+                      Description of the SCF function. Description supports English letters, numbers, spaces, commas, newlines, periods and Chinese, the maximum length is 1000.
                     type: string
                   dnsCache:
-                    description: Whether to enable Dns caching capability, only the
-                      EVENT function is supported. Default is false. Whether to enable
-                      Dns caching capability, only the EVENT function is supported.
-                      Default is false.
+                    description: |-
+                      Whether to enable Dns caching capability, only the EVENT function is supported. Default is false.
+                      Whether to enable Dns caching capability, only the EVENT function is supported. Default is false.
                     type: boolean
                   enableEipConfig:
-                    description: Indicates whether EIP config set to ENABLE when enable_public_net
-                      was true. Default false. Indicates whether EIP config set to
-                      `ENABLE` when `enable_public_net` was true. Default `false`.
+                    description: |-
+                      Indicates whether EIP config set to ENABLE when enable_public_net was true. Default false.
+                      Indicates whether EIP config set to `ENABLE` when `enable_public_net` was true. Default `false`.
                     type: boolean
                   enablePublicNet:
-                    description: 'Indicates whether public net config enabled. Default
-                      false. NOTE: only vpc_id specified can disable public net config.
-                      Indicates whether public net config enabled. Default `false`.
-                      NOTE: only `vpc_id` specified can disable public net config.'
+                    description: |-
+                      Indicates whether public net config enabled. Default false. NOTE: only vpc_id specified can disable public net config.
+                      Indicates whether public net config enabled. Default `false`. NOTE: only `vpc_id` specified can disable public net config.
                     type: boolean
                   environment:
                     additionalProperties:
                       type: string
-                    description: Environment of the SCF function. Environment of the
-                      SCF function.
+                    description: |-
+                      Environment of the SCF function.
+                      Environment of the SCF function.
                     type: object
+                    x-kubernetes-map-type: granular
                   funcType:
-                    description: Function type. The default value is Event. Enter
-                      Event if you need to create a trigger function. Enter HTTP if
-                      you need to create an HTTP function service. Function type.
-                      The default value is Event. Enter Event if you need to create
-                      a trigger function. Enter HTTP if you need to create an HTTP
-                      function service.
+                    description: |-
+                      Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
+                      Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
                     type: string
                   handler:
-                    description: Handler of the SCF function. The format of name is
-                      <filename>.<method_name>, and it supports 26 English letters,
-                      numbers, connectors, and underscores, it should start with a
-                      letter. The last character cannot be - or _. Available length
-                      is 2-60. Handler of the SCF function. The format of name is
-                      `<filename>.<method_name>`, and it supports 26 English letters,
-                      numbers, connectors, and underscores, it should start with a
-                      letter. The last character cannot be `-` or `_`. Available length
-                      is 2-60.
+                    description: |-
+                      Handler of the SCF function. The format of name is <filename>.<method_name>, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                      Handler of the SCF function. The format of name is `<filename>.<method_name>`, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
                     type: string
                   imageConfig:
-                    description: Image of the SCF function, conflict with cos_bucket_name,
-                      cos_object_name, cos_bucket_region, zip_file. Image of the SCF
-                      function, conflict with `cos_bucket_name`, `cos_object_name`,
-                      `cos_bucket_region`, `zip_file`.
+                    description: |-
+                      Image of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region, zip_file.
+                      Image of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`, `zip_file`.
                     items:
                       properties:
                         args:
-                          description: the parameters of command. the parameters of
-                            command.
+                          description: |-
+                            the parameters of command.
+                            the parameters of command.
                           type: string
                         command:
-                          description: The command of entrypoint. The command of entrypoint.
+                          description: |-
+                            The command of entrypoint.
+                            The command of entrypoint.
                           type: string
                         containerImageAccelerate:
-                          description: Image accelerate switch. Image accelerate switch.
+                          description: |-
+                            Image accelerate switch.
+                            Image accelerate switch.
                           type: boolean
                         entryPoint:
-                          description: The entrypoint of app. The entrypoint of app.
+                          description: |-
+                            The entrypoint of app.
+                            The entrypoint of app.
                           type: string
                         imagePort:
-                          description: Image function port setting. Default is 9000,
-                            -1 indicates no port mirroring function. Other value ranges
-                            0 ~ 65535. Image function port setting. Default is `9000`,
-                            -1 indicates no port mirroring function. Other value ranges
-                            0 ~ 65535.
+                          description: |-
+                            Image function port setting. Default is 9000, -1 indicates no port mirroring function. Other value ranges 0 ~ 65535.
+                            Image function port setting. Default is `9000`, -1 indicates no port mirroring function. Other value ranges 0 ~ 65535.
                           type: number
                         imageType:
-                          description: The image type. personal or enterprise. The
-                            image type. personal or enterprise.
+                          description: |-
+                            The image type. personal or enterprise.
+                            The image type. personal or enterprise.
                           type: string
                         imageUri:
-                          description: The uri of image. The uri of image.
+                          description: |-
+                            The uri of image.
+                            The uri of image.
                           type: string
                         registryId:
-                          description: The registry id of TCR. When image type is
-                            enterprise, it must be set. The registry id of TCR. When
-                            image type is enterprise, it must be set.
+                          description: |-
+                            The registry id of TCR. When image type is enterprise, it must be set.
+                            The registry id of TCR. When image type is enterprise, it must be set.
                           type: string
                       type: object
                     type: array
                   intranetConfig:
-                    description: Intranet access configuration. Intranet access configuration.
+                    description: |-
+                      Intranet access configuration.
+                      Intranet access configuration.
                     items:
                       properties:
                         ipFixed:
-                          description: Whether to enable fixed intranet IP, ENABLE
-                            is enabled, DISABLE is disabled. Whether to enable fixed
-                            intranet IP, ENABLE is enabled, DISABLE is disabled.
+                          description: |-
+                            Whether to enable fixed intranet IP, ENABLE is enabled, DISABLE is disabled.
+                            Whether to enable fixed intranet IP, ENABLE is enabled, DISABLE is disabled.
                           type: string
                       type: object
                     type: array
                   l5Enable:
-                    description: Enable L5 for SCF function, default is false. Enable
-                      L5 for SCF function, default is `false`.
+                    description: |-
+                      Enable L5 for SCF function, default is false.
+                      Enable L5 for SCF function, default is `false`.
                     type: boolean
                   layers:
-                    description: The list of association layers. The list of association
-                      layers.
+                    description: |-
+                      The list of association layers.
+                      The list of association layers.
                     items:
                       properties:
                         layerName:
-                          description: The name of Layer. The name of Layer.
+                          description: |-
+                            The name of Layer.
+                            The name of Layer.
                           type: string
                         layerVersion:
-                          description: The version of layer. The version of layer.
+                          description: |-
+                            The version of layer.
+                            The version of layer.
                           type: number
                       type: object
                     type: array
                   memSize:
-                    description: Memory size of the SCF function, unit is MB. The
-                      default is 128MB. The ladder is 128M. Memory size of the SCF
-                      function, unit is MB. The default is `128`MB. The ladder is
-                      128M.
+                    description: |-
+                      Memory size of the SCF function, unit is MB. The default is 128MB. The ladder is 128M.
+                      Memory size of the SCF function, unit is MB. The default is `128`MB. The ladder is 128M.
                     type: number
                   name:
-                    description: Name of the SCF function. Name supports 26 English
-                      letters, numbers, connectors, and underscores, it should start
-                      with a letter. The last character cannot be - or _. Available
-                      length is 2-60. Name of the SCF function. Name supports 26 English
-                      letters, numbers, connectors, and underscores, it should start
-                      with a letter. The last character cannot be `-` or `_`. Available
-                      length is 2-60.
+                    description: |-
+                      Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                      Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
                     type: string
                   namespace:
-                    description: Namespace of the SCF function, default is default.
+                    description: |-
+                      Namespace of the SCF function, default is default.
                       Namespace of the SCF function, default is `default`.
                     type: string
                   role:
-                    description: Role of the SCF function. Role of the SCF function.
+                    description: |-
+                      Role of the SCF function.
+                      Role of the SCF function.
                     type: string
                   runtime:
-                    description: Runtime of the SCF function, only supports Python2.7,
-                      Python3.6, Nodejs6.10, Nodejs8.9, Nodejs10.15, Nodejs12.16,
-                      Php5.2, Php7.4, Go1, Java8, and CustomRuntime, default is Python2.7.
-                      Runtime of the SCF function, only supports `Python2.7`, `Python3.6`,
-                      `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `Nodejs12.16`, `Php5.2`,
-                      `Php7.4`, `Go1`, `Java8`, and `CustomRuntime`, default is `Python2.7`.
+                    description: |-
+                      Runtime of the SCF function, only supports Python2.7, Python3.6, Nodejs6.10, Nodejs8.9, Nodejs10.15, Nodejs12.16, Php5.2, Php7.4, Go1, Java8, and CustomRuntime, default is Python2.7.
+                      Runtime of the SCF function, only supports `Python2.7`, `Python3.6`, `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `Nodejs12.16`, `Php5.2`, `Php7.4`, `Go1`, `Java8`, and `CustomRuntime`, default is `Python2.7`.
                     type: string
                   subnetId:
-                    description: Subnet ID of the SCF function. Subnet ID of the SCF
-                      function.
+                    description: |-
+                      Subnet ID of the SCF function.
+                      Subnet ID of the SCF function.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tags of the SCF function. Tags of the SCF function.
+                    description: |-
+                      Tags of the SCF function.
+                      Tags of the SCF function.
                     type: object
+                    x-kubernetes-map-type: granular
                   timeout:
-                    description: Timeout of the SCF function, unit is second. Default
-                      3. Available value is 1-900. Timeout of the SCF function, unit
-                      is second. Default `3`. Available value is 1-900.
+                    description: |-
+                      Timeout of the SCF function, unit is second. Default 3. Available value is 1-900.
+                      Timeout of the SCF function, unit is second. Default `3`. Available value is 1-900.
                     type: number
                   triggers:
-                    description: 'Trigger list of the SCF function, note that if you
-                      modify the trigger list, all existing triggers will be deleted,
-                      and then create triggers in the new list. Each element contains
-                      the following attributes: Trigger list of the SCF function,
-                      note that if you modify the trigger list, all existing triggers
-                      will be deleted, and then create triggers in the new list. Each
-                      element contains the following attributes:'
+                    description: |-
+                      Trigger list of the SCF function, note that if you modify the trigger list, all existing triggers will be deleted, and then create triggers in the new list. Each element contains the following attributes:
+                      Trigger list of the SCF function, note that if you modify the trigger list, all existing triggers will be deleted, and then create triggers in the new list. Each element contains the following attributes:
                     items:
                       properties:
                         cosRegion:
-                          description: Region of cos bucket. if type is cos, cos_region
-                            is required. Region of cos bucket. if `type` is `cos`,
-                            `cos_region` is required.
+                          description: |-
+                            Region of cos bucket. if type is cos, cos_region is required.
+                            Region of cos bucket. if `type` is `cos`, `cos_region` is required.
                           type: string
                         name:
-                          description: Name of the SCF function. Name supports 26
-                            English letters, numbers, connectors, and underscores,
-                            it should start with a letter. The last character cannot
-                            be - or _. Available length is 2-60. Name of the SCF function
-                            trigger, if `type` is `ckafka`, the format of name must
-                            be `<ckafkaInstanceId>-<topicId>`; if `type` is `cos`,
-                            the name is cos bucket id, other In any case, it can be
-                            combined arbitrarily. It can only contain English letters,
-                            numbers, connectors and underscores. The maximum length
-                            is 100.
+                          description: |-
+                            Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                            Name of the SCF function trigger, if `type` is `ckafka`, the format of name must be `<ckafkaInstanceId>-<topicId>`; if `type` is `cos`, the name is cos bucket id, other In any case, it can be combined arbitrarily. It can only contain English letters, numbers, connectors and underscores. The maximum length is 100.
                           type: string
                         triggerDesc:
-                          description: TriggerDesc of the SCF function trigger, parameter
-                            format of timer is linux cron expression; parameter of
-                            cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}},
-                            where bucketUrl is cos bucket , event is the cos event
-                            trigger, Prefix is the corresponding file prefix filter
-                            condition, Suffix is the suffix filter condition, if not
-                            need filter condition can not pass; cmq type does not
-                            pass this parameter; ckafka type parameter format is json
-                            string {"maxMsgNum":"1","offset":"latest"}; apigw type
-                            parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
-                            TriggerDesc of the SCF function trigger, parameter format
-                            of `timer` is linux cron expression; parameter of `cos`
-                            type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`,
-                            where `bucketUrl` is cos bucket (optional), `event` is
-                            the cos event trigger, `Prefix` is the corresponding file
-                            prefix filter condition, `Suffix` is the suffix filter
-                            condition, if not need filter condition can not pass;
-                            `cmq` type does not pass this parameter; `ckafka` type
-                            parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`;
-                            `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
+                          description: |-
+                            TriggerDesc of the SCF function trigger, parameter format of timer is linux cron expression; parameter of cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}, where bucketUrl is cos bucket , event is the cos event trigger, Prefix is the corresponding file prefix filter condition, Suffix is the suffix filter condition, if not need filter condition can not pass; cmq type does not pass this parameter; ckafka type parameter format is json string {"maxMsgNum":"1","offset":"latest"}; apigw type parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
+                            TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
                           type: string
                         type:
-                          description: Type of the SCF function trigger, support cos,
-                            cmq, timer, ckafka, apigw. Type of the SCF function trigger,
-                            support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
+                          description: |-
+                            Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
+                            Type of the SCF function trigger, support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
                           type: string
                       type: object
                     type: array
                   vpcId:
-                    description: VPC ID of the SCF function. VPC ID of the SCF function.
+                    description: |-
+                      VPC ID of the SCF function.
+                      VPC ID of the SCF function.
                     type: string
                   zipFile:
-                    description: Zip file of the SCF function, conflict with cos_bucket_name,
-                      cos_object_name, cos_bucket_region. Zip file of the SCF function,
-                      conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`.
+                    description: |-
+                      Zip file of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region.
+                      Zip file of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`.
                     type: string
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   asyncRunEnable:
-                    description: Whether SCF function asynchronous attribute is enabled.
-                      TRUE is open, FALSE is close. Whether SCF function asynchronous
-                      attribute is enabled. `TRUE` is open, `FALSE` is close.
+                    description: |-
+                      Whether SCF function asynchronous attribute is enabled. TRUE is open, FALSE is close.
+                      Whether SCF function asynchronous attribute is enabled. `TRUE` is open, `FALSE` is close.
                     type: string
                   cfsConfig:
-                    description: List of CFS configurations. List of CFS configurations.
+                    description: |-
+                      List of CFS configurations.
+                      List of CFS configurations.
                     items:
                       properties:
                         cfsId:
-                          description: File system instance ID. File system instance
-                            ID.
+                          description: |-
+                            File system instance ID.
+                            File system instance ID.
                           type: string
                         localMountDir:
-                          description: Local mount directory. Local mount directory.
+                          description: |-
+                            Local mount directory.
+                            Local mount directory.
                           type: string
                         mountInsId:
-                          description: File system mount instance ID. File system
-                            mount instance ID.
+                          description: |-
+                            File system mount instance ID.
+                            File system mount instance ID.
                           type: string
                         remoteMountDir:
-                          description: Remote mount directory. Remote mount directory.
+                          description: |-
+                            Remote mount directory.
+                            Remote mount directory.
                           type: string
                         userGroupId:
-                          description: ID of user group. ID of user group.
+                          description: |-
+                            ID of user group.
+                            ID of user group.
                           type: string
                         userId:
-                          description: ID of user. ID of user.
+                          description: |-
+                            ID of user.
+                            ID of user.
                           type: string
                       type: object
                     type: array
                   clsLogsetId:
-                    description: cls logset id of the SCF function. cls logset id
-                      of the SCF function.
+                    description: |-
+                      cls logset id of the SCF function.
+                      cls logset id of the SCF function.
                     type: string
                   clsTopicId:
-                    description: cls topic id of the SCF function. cls topic id of
-                      the SCF function.
+                    description: |-
+                      cls topic id of the SCF function.
+                      cls topic id of the SCF function.
                     type: string
                   cosBucketName:
-                    description: Cos bucket name of the SCF function, such as cos-1234567890,
-                      conflict with zip_file. Cos bucket name of the SCF function,
-                      such as `cos-1234567890`, conflict with `zip_file`.
+                    description: |-
+                      Cos bucket name of the SCF function, such as cos-1234567890, conflict with zip_file.
+                      Cos bucket name of the SCF function, such as `cos-1234567890`, conflict with `zip_file`.
                     type: string
                   cosBucketRegion:
-                    description: Cos bucket region of the SCF function, conflict with
-                      zip_file. Cos bucket region of the SCF function, conflict with
-                      `zip_file`.
+                    description: |-
+                      Cos bucket region of the SCF function, conflict with zip_file.
+                      Cos bucket region of the SCF function, conflict with `zip_file`.
                     type: string
                   cosObjectName:
-                    description: Cos object name of the SCF function, should have
-                      suffix .zip or .jar, conflict with zip_file. Cos object name
-                      of the SCF function, should have suffix `.zip` or `.jar`, conflict
-                      with `zip_file`.
+                    description: |-
+                      Cos object name of the SCF function, should have suffix .zip or .jar, conflict with zip_file.
+                      Cos object name of the SCF function, should have suffix `.zip` or `.jar`, conflict with `zip_file`.
                     type: string
                   description:
-                    description: Description of the SCF function. Description supports
-                      English letters, numbers, spaces, commas, newlines, periods
-                      and Chinese, the maximum length is 1000. Description of the
-                      SCF function. Description supports English letters, numbers,
-                      spaces, commas, newlines, periods and Chinese, the maximum length
-                      is 1000.
+                    description: |-
+                      Description of the SCF function. Description supports English letters, numbers, spaces, commas, newlines, periods and Chinese, the maximum length is 1000.
+                      Description of the SCF function. Description supports English letters, numbers, spaces, commas, newlines, periods and Chinese, the maximum length is 1000.
                     type: string
                   dnsCache:
-                    description: Whether to enable Dns caching capability, only the
-                      EVENT function is supported. Default is false. Whether to enable
-                      Dns caching capability, only the EVENT function is supported.
-                      Default is false.
+                    description: |-
+                      Whether to enable Dns caching capability, only the EVENT function is supported. Default is false.
+                      Whether to enable Dns caching capability, only the EVENT function is supported. Default is false.
                     type: boolean
                   enableEipConfig:
-                    description: Indicates whether EIP config set to ENABLE when enable_public_net
-                      was true. Default false. Indicates whether EIP config set to
-                      `ENABLE` when `enable_public_net` was true. Default `false`.
+                    description: |-
+                      Indicates whether EIP config set to ENABLE when enable_public_net was true. Default false.
+                      Indicates whether EIP config set to `ENABLE` when `enable_public_net` was true. Default `false`.
                     type: boolean
                   enablePublicNet:
-                    description: 'Indicates whether public net config enabled. Default
-                      false. NOTE: only vpc_id specified can disable public net config.
-                      Indicates whether public net config enabled. Default `false`.
-                      NOTE: only `vpc_id` specified can disable public net config.'
+                    description: |-
+                      Indicates whether public net config enabled. Default false. NOTE: only vpc_id specified can disable public net config.
+                      Indicates whether public net config enabled. Default `false`. NOTE: only `vpc_id` specified can disable public net config.
                     type: boolean
                   environment:
                     additionalProperties:
                       type: string
-                    description: Environment of the SCF function. Environment of the
-                      SCF function.
+                    description: |-
+                      Environment of the SCF function.
+                      Environment of the SCF function.
                     type: object
+                    x-kubernetes-map-type: granular
                   funcType:
-                    description: Function type. The default value is Event. Enter
-                      Event if you need to create a trigger function. Enter HTTP if
-                      you need to create an HTTP function service. Function type.
-                      The default value is Event. Enter Event if you need to create
-                      a trigger function. Enter HTTP if you need to create an HTTP
-                      function service.
+                    description: |-
+                      Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
+                      Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
                     type: string
                   handler:
-                    description: Handler of the SCF function. The format of name is
-                      <filename>.<method_name>, and it supports 26 English letters,
-                      numbers, connectors, and underscores, it should start with a
-                      letter. The last character cannot be - or _. Available length
-                      is 2-60. Handler of the SCF function. The format of name is
-                      `<filename>.<method_name>`, and it supports 26 English letters,
-                      numbers, connectors, and underscores, it should start with a
-                      letter. The last character cannot be `-` or `_`. Available length
-                      is 2-60.
+                    description: |-
+                      Handler of the SCF function. The format of name is <filename>.<method_name>, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                      Handler of the SCF function. The format of name is `<filename>.<method_name>`, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
                     type: string
                   imageConfig:
-                    description: Image of the SCF function, conflict with cos_bucket_name,
-                      cos_object_name, cos_bucket_region, zip_file. Image of the SCF
-                      function, conflict with `cos_bucket_name`, `cos_object_name`,
-                      `cos_bucket_region`, `zip_file`.
+                    description: |-
+                      Image of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region, zip_file.
+                      Image of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`, `zip_file`.
                     items:
                       properties:
                         args:
-                          description: the parameters of command. the parameters of
-                            command.
+                          description: |-
+                            the parameters of command.
+                            the parameters of command.
                           type: string
                         command:
-                          description: The command of entrypoint. The command of entrypoint.
+                          description: |-
+                            The command of entrypoint.
+                            The command of entrypoint.
                           type: string
                         containerImageAccelerate:
-                          description: Image accelerate switch. Image accelerate switch.
+                          description: |-
+                            Image accelerate switch.
+                            Image accelerate switch.
                           type: boolean
                         entryPoint:
-                          description: The entrypoint of app. The entrypoint of app.
+                          description: |-
+                            The entrypoint of app.
+                            The entrypoint of app.
                           type: string
                         imagePort:
-                          description: Image function port setting. Default is 9000,
-                            -1 indicates no port mirroring function. Other value ranges
-                            0 ~ 65535. Image function port setting. Default is `9000`,
-                            -1 indicates no port mirroring function. Other value ranges
-                            0 ~ 65535.
+                          description: |-
+                            Image function port setting. Default is 9000, -1 indicates no port mirroring function. Other value ranges 0 ~ 65535.
+                            Image function port setting. Default is `9000`, -1 indicates no port mirroring function. Other value ranges 0 ~ 65535.
                           type: number
                         imageType:
-                          description: The image type. personal or enterprise. The
-                            image type. personal or enterprise.
+                          description: |-
+                            The image type. personal or enterprise.
+                            The image type. personal or enterprise.
                           type: string
                         imageUri:
-                          description: The uri of image. The uri of image.
+                          description: |-
+                            The uri of image.
+                            The uri of image.
                           type: string
                         registryId:
-                          description: The registry id of TCR. When image type is
-                            enterprise, it must be set. The registry id of TCR. When
-                            image type is enterprise, it must be set.
+                          description: |-
+                            The registry id of TCR. When image type is enterprise, it must be set.
+                            The registry id of TCR. When image type is enterprise, it must be set.
                           type: string
                       type: object
                     type: array
                   intranetConfig:
-                    description: Intranet access configuration. Intranet access configuration.
+                    description: |-
+                      Intranet access configuration.
+                      Intranet access configuration.
                     items:
                       properties:
                         ipFixed:
-                          description: Whether to enable fixed intranet IP, ENABLE
-                            is enabled, DISABLE is disabled. Whether to enable fixed
-                            intranet IP, ENABLE is enabled, DISABLE is disabled.
+                          description: |-
+                            Whether to enable fixed intranet IP, ENABLE is enabled, DISABLE is disabled.
+                            Whether to enable fixed intranet IP, ENABLE is enabled, DISABLE is disabled.
                           type: string
                       type: object
                     type: array
                   l5Enable:
-                    description: Enable L5 for SCF function, default is false. Enable
-                      L5 for SCF function, default is `false`.
+                    description: |-
+                      Enable L5 for SCF function, default is false.
+                      Enable L5 for SCF function, default is `false`.
                     type: boolean
                   layers:
-                    description: The list of association layers. The list of association
-                      layers.
+                    description: |-
+                      The list of association layers.
+                      The list of association layers.
                     items:
                       properties:
                         layerName:
-                          description: The name of Layer. The name of Layer.
+                          description: |-
+                            The name of Layer.
+                            The name of Layer.
                           type: string
                         layerVersion:
-                          description: The version of layer. The version of layer.
+                          description: |-
+                            The version of layer.
+                            The version of layer.
                           type: number
                       type: object
                     type: array
                   memSize:
-                    description: Memory size of the SCF function, unit is MB. The
-                      default is 128MB. The ladder is 128M. Memory size of the SCF
-                      function, unit is MB. The default is `128`MB. The ladder is
-                      128M.
+                    description: |-
+                      Memory size of the SCF function, unit is MB. The default is 128MB. The ladder is 128M.
+                      Memory size of the SCF function, unit is MB. The default is `128`MB. The ladder is 128M.
                     type: number
                   name:
-                    description: Name of the SCF function. Name supports 26 English
-                      letters, numbers, connectors, and underscores, it should start
-                      with a letter. The last character cannot be - or _. Available
-                      length is 2-60. Name of the SCF function. Name supports 26 English
-                      letters, numbers, connectors, and underscores, it should start
-                      with a letter. The last character cannot be `-` or `_`. Available
-                      length is 2-60.
+                    description: |-
+                      Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                      Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
                     type: string
                   namespace:
-                    description: Namespace of the SCF function, default is default.
+                    description: |-
+                      Namespace of the SCF function, default is default.
                       Namespace of the SCF function, default is `default`.
                     type: string
                   role:
-                    description: Role of the SCF function. Role of the SCF function.
+                    description: |-
+                      Role of the SCF function.
+                      Role of the SCF function.
                     type: string
                   runtime:
-                    description: Runtime of the SCF function, only supports Python2.7,
-                      Python3.6, Nodejs6.10, Nodejs8.9, Nodejs10.15, Nodejs12.16,
-                      Php5.2, Php7.4, Go1, Java8, and CustomRuntime, default is Python2.7.
-                      Runtime of the SCF function, only supports `Python2.7`, `Python3.6`,
-                      `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `Nodejs12.16`, `Php5.2`,
-                      `Php7.4`, `Go1`, `Java8`, and `CustomRuntime`, default is `Python2.7`.
+                    description: |-
+                      Runtime of the SCF function, only supports Python2.7, Python3.6, Nodejs6.10, Nodejs8.9, Nodejs10.15, Nodejs12.16, Php5.2, Php7.4, Go1, Java8, and CustomRuntime, default is Python2.7.
+                      Runtime of the SCF function, only supports `Python2.7`, `Python3.6`, `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `Nodejs12.16`, `Php5.2`, `Php7.4`, `Go1`, `Java8`, and `CustomRuntime`, default is `Python2.7`.
                     type: string
                   subnetId:
-                    description: Subnet ID of the SCF function. Subnet ID of the SCF
-                      function.
+                    description: |-
+                      Subnet ID of the SCF function.
+                      Subnet ID of the SCF function.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tags of the SCF function. Tags of the SCF function.
+                    description: |-
+                      Tags of the SCF function.
+                      Tags of the SCF function.
                     type: object
+                    x-kubernetes-map-type: granular
                   timeout:
-                    description: Timeout of the SCF function, unit is second. Default
-                      3. Available value is 1-900. Timeout of the SCF function, unit
-                      is second. Default `3`. Available value is 1-900.
+                    description: |-
+                      Timeout of the SCF function, unit is second. Default 3. Available value is 1-900.
+                      Timeout of the SCF function, unit is second. Default `3`. Available value is 1-900.
                     type: number
                   triggers:
-                    description: 'Trigger list of the SCF function, note that if you
-                      modify the trigger list, all existing triggers will be deleted,
-                      and then create triggers in the new list. Each element contains
-                      the following attributes: Trigger list of the SCF function,
-                      note that if you modify the trigger list, all existing triggers
-                      will be deleted, and then create triggers in the new list. Each
-                      element contains the following attributes:'
+                    description: |-
+                      Trigger list of the SCF function, note that if you modify the trigger list, all existing triggers will be deleted, and then create triggers in the new list. Each element contains the following attributes:
+                      Trigger list of the SCF function, note that if you modify the trigger list, all existing triggers will be deleted, and then create triggers in the new list. Each element contains the following attributes:
                     items:
                       properties:
                         cosRegion:
-                          description: Region of cos bucket. if type is cos, cos_region
-                            is required. Region of cos bucket. if `type` is `cos`,
-                            `cos_region` is required.
+                          description: |-
+                            Region of cos bucket. if type is cos, cos_region is required.
+                            Region of cos bucket. if `type` is `cos`, `cos_region` is required.
                           type: string
                         name:
-                          description: Name of the SCF function. Name supports 26
-                            English letters, numbers, connectors, and underscores,
-                            it should start with a letter. The last character cannot
-                            be - or _. Available length is 2-60. Name of the SCF function
-                            trigger, if `type` is `ckafka`, the format of name must
-                            be `<ckafkaInstanceId>-<topicId>`; if `type` is `cos`,
-                            the name is cos bucket id, other In any case, it can be
-                            combined arbitrarily. It can only contain English letters,
-                            numbers, connectors and underscores. The maximum length
-                            is 100.
+                          description: |-
+                            Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                            Name of the SCF function trigger, if `type` is `ckafka`, the format of name must be `<ckafkaInstanceId>-<topicId>`; if `type` is `cos`, the name is cos bucket id, other In any case, it can be combined arbitrarily. It can only contain English letters, numbers, connectors and underscores. The maximum length is 100.
                           type: string
                         triggerDesc:
-                          description: TriggerDesc of the SCF function trigger, parameter
-                            format of timer is linux cron expression; parameter of
-                            cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}},
-                            where bucketUrl is cos bucket , event is the cos event
-                            trigger, Prefix is the corresponding file prefix filter
-                            condition, Suffix is the suffix filter condition, if not
-                            need filter condition can not pass; cmq type does not
-                            pass this parameter; ckafka type parameter format is json
-                            string {"maxMsgNum":"1","offset":"latest"}; apigw type
-                            parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
-                            TriggerDesc of the SCF function trigger, parameter format
-                            of `timer` is linux cron expression; parameter of `cos`
-                            type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`,
-                            where `bucketUrl` is cos bucket (optional), `event` is
-                            the cos event trigger, `Prefix` is the corresponding file
-                            prefix filter condition, `Suffix` is the suffix filter
-                            condition, if not need filter condition can not pass;
-                            `cmq` type does not pass this parameter; `ckafka` type
-                            parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`;
-                            `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
+                          description: |-
+                            TriggerDesc of the SCF function trigger, parameter format of timer is linux cron expression; parameter of cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}, where bucketUrl is cos bucket , event is the cos event trigger, Prefix is the corresponding file prefix filter condition, Suffix is the suffix filter condition, if not need filter condition can not pass; cmq type does not pass this parameter; ckafka type parameter format is json string {"maxMsgNum":"1","offset":"latest"}; apigw type parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
+                            TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
                           type: string
                         type:
-                          description: Type of the SCF function trigger, support cos,
-                            cmq, timer, ckafka, apigw. Type of the SCF function trigger,
-                            support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
+                          description: |-
+                            Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
+                            Type of the SCF function trigger, support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
                           type: string
                       type: object
                     type: array
                   vpcId:
-                    description: VPC ID of the SCF function. VPC ID of the SCF function.
+                    description: |-
+                      VPC ID of the SCF function.
+                      VPC ID of the SCF function.
                     type: string
                   zipFile:
-                    description: Zip file of the SCF function, conflict with cos_bucket_name,
-                      cos_object_name, cos_bucket_region. Zip file of the SCF function,
-                      conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`.
+                    description: |-
+                      Zip file of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region.
+                      Zip file of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`.
                     type: string
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -673,9 +660,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -685,21 +673,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -709,17 +697,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -729,21 +719,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -758,21 +748,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -783,14 +774,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -816,202 +808,226 @@ spec:
               atProvider:
                 properties:
                   asyncRunEnable:
-                    description: Whether SCF function asynchronous attribute is enabled.
-                      TRUE is open, FALSE is close. Whether SCF function asynchronous
-                      attribute is enabled. `TRUE` is open, `FALSE` is close.
+                    description: |-
+                      Whether SCF function asynchronous attribute is enabled. TRUE is open, FALSE is close.
+                      Whether SCF function asynchronous attribute is enabled. `TRUE` is open, `FALSE` is close.
                     type: string
                   cfsConfig:
-                    description: List of CFS configurations. List of CFS configurations.
+                    description: |-
+                      List of CFS configurations.
+                      List of CFS configurations.
                     items:
                       properties:
                         cfsId:
-                          description: File system instance ID. File system instance
-                            ID.
+                          description: |-
+                            File system instance ID.
+                            File system instance ID.
                           type: string
                         ipAddress:
                           description: (Readonly) File system ip address.
                           type: string
                         localMountDir:
-                          description: Local mount directory. Local mount directory.
+                          description: |-
+                            Local mount directory.
+                            Local mount directory.
                           type: string
                         mountInsId:
-                          description: File system mount instance ID. File system
-                            mount instance ID.
+                          description: |-
+                            File system mount instance ID.
+                            File system mount instance ID.
                           type: string
                         mountSubnetId:
-                          description: Subnet ID of the SCF function. (Readonly) File
-                            system subnet ID.
+                          description: |-
+                            Subnet ID of the SCF function.
+                            (Readonly) File system subnet ID.
                           type: string
                         mountVpcId:
-                          description: VPC ID of the SCF function. (Readonly) File
-                            system virtual private network ID.
+                          description: |-
+                            VPC ID of the SCF function.
+                            (Readonly) File system virtual private network ID.
                           type: string
                         remoteMountDir:
-                          description: Remote mount directory. Remote mount directory.
+                          description: |-
+                            Remote mount directory.
+                            Remote mount directory.
                           type: string
                         userGroupId:
-                          description: ID of user group. ID of user group.
+                          description: |-
+                            ID of user group.
+                            ID of user group.
                           type: string
                         userId:
-                          description: ID of user. ID of user.
+                          description: |-
+                            ID of user.
+                            ID of user.
                           type: string
                       type: object
                     type: array
                   clsLogsetId:
-                    description: cls logset id of the SCF function. cls logset id
-                      of the SCF function.
+                    description: |-
+                      cls logset id of the SCF function.
+                      cls logset id of the SCF function.
                     type: string
                   clsTopicId:
-                    description: cls topic id of the SCF function. cls topic id of
-                      the SCF function.
+                    description: |-
+                      cls topic id of the SCF function.
+                      cls topic id of the SCF function.
                     type: string
                   codeError:
-                    description: SCF function code error message. SCF function code
-                      error message.
+                    description: |-
+                      SCF function code error message.
+                      SCF function code error message.
                     type: string
                   codeResult:
-                    description: SCF function code is correct. SCF function code is
-                      correct.
+                    description: |-
+                      SCF function code is correct.
+                      SCF function code is correct.
                     type: string
                   codeSize:
-                    description: SCF function code size, unit is M. SCF function code
-                      size, unit is M.
+                    description: |-
+                      SCF function code size, unit is M.
+                      SCF function code size, unit is M.
                     type: number
                   cosBucketName:
-                    description: Cos bucket name of the SCF function, such as cos-1234567890,
-                      conflict with zip_file. Cos bucket name of the SCF function,
-                      such as `cos-1234567890`, conflict with `zip_file`.
+                    description: |-
+                      Cos bucket name of the SCF function, such as cos-1234567890, conflict with zip_file.
+                      Cos bucket name of the SCF function, such as `cos-1234567890`, conflict with `zip_file`.
                     type: string
                   cosBucketRegion:
-                    description: Cos bucket region of the SCF function, conflict with
-                      zip_file. Cos bucket region of the SCF function, conflict with
-                      `zip_file`.
+                    description: |-
+                      Cos bucket region of the SCF function, conflict with zip_file.
+                      Cos bucket region of the SCF function, conflict with `zip_file`.
                     type: string
                   cosObjectName:
-                    description: Cos object name of the SCF function, should have
-                      suffix .zip or .jar, conflict with zip_file. Cos object name
-                      of the SCF function, should have suffix `.zip` or `.jar`, conflict
-                      with `zip_file`.
+                    description: |-
+                      Cos object name of the SCF function, should have suffix .zip or .jar, conflict with zip_file.
+                      Cos object name of the SCF function, should have suffix `.zip` or `.jar`, conflict with `zip_file`.
                     type: string
                   description:
-                    description: Description of the SCF function. Description supports
-                      English letters, numbers, spaces, commas, newlines, periods
-                      and Chinese, the maximum length is 1000. Description of the
-                      SCF function. Description supports English letters, numbers,
-                      spaces, commas, newlines, periods and Chinese, the maximum length
-                      is 1000.
+                    description: |-
+                      Description of the SCF function. Description supports English letters, numbers, spaces, commas, newlines, periods and Chinese, the maximum length is 1000.
+                      Description of the SCF function. Description supports English letters, numbers, spaces, commas, newlines, periods and Chinese, the maximum length is 1000.
                     type: string
                   dnsCache:
-                    description: Whether to enable Dns caching capability, only the
-                      EVENT function is supported. Default is false. Whether to enable
-                      Dns caching capability, only the EVENT function is supported.
-                      Default is false.
+                    description: |-
+                      Whether to enable Dns caching capability, only the EVENT function is supported. Default is false.
+                      Whether to enable Dns caching capability, only the EVENT function is supported. Default is false.
                     type: boolean
                   eipFixed:
-                    description: Whether EIP is a fixed IP. Whether EIP is a fixed
-                      IP.
+                    description: |-
+                      Whether EIP is a fixed IP.
+                      Whether EIP is a fixed IP.
                     type: boolean
                   eips:
-                    description: SCF function EIP list. SCF function EIP list.
+                    description: |-
+                      SCF function EIP list.
+                      SCF function EIP list.
                     items:
                       type: string
                     type: array
                   enableEipConfig:
-                    description: Indicates whether EIP config set to ENABLE when enable_public_net
-                      was true. Default false. Indicates whether EIP config set to
-                      `ENABLE` when `enable_public_net` was true. Default `false`.
+                    description: |-
+                      Indicates whether EIP config set to ENABLE when enable_public_net was true. Default false.
+                      Indicates whether EIP config set to `ENABLE` when `enable_public_net` was true. Default `false`.
                     type: boolean
                   enablePublicNet:
-                    description: 'Indicates whether public net config enabled. Default
-                      false. NOTE: only vpc_id specified can disable public net config.
-                      Indicates whether public net config enabled. Default `false`.
-                      NOTE: only `vpc_id` specified can disable public net config.'
+                    description: |-
+                      Indicates whether public net config enabled. Default false. NOTE: only vpc_id specified can disable public net config.
+                      Indicates whether public net config enabled. Default `false`. NOTE: only `vpc_id` specified can disable public net config.
                     type: boolean
                   environment:
                     additionalProperties:
                       type: string
-                    description: Environment of the SCF function. Environment of the
-                      SCF function.
+                    description: |-
+                      Environment of the SCF function.
+                      Environment of the SCF function.
                     type: object
+                    x-kubernetes-map-type: granular
                   errNo:
-                    description: SCF function code error code. SCF function code error
-                      code.
+                    description: |-
+                      SCF function code error code.
+                      SCF function code error code.
                     type: number
                   funcType:
-                    description: Function type. The default value is Event. Enter
-                      Event if you need to create a trigger function. Enter HTTP if
-                      you need to create an HTTP function service. Function type.
-                      The default value is Event. Enter Event if you need to create
-                      a trigger function. Enter HTTP if you need to create an HTTP
-                      function service.
+                    description: |-
+                      Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
+                      Function type. The default value is Event. Enter Event if you need to create a trigger function. Enter HTTP if you need to create an HTTP function service.
                     type: string
                   functionId:
-                    description: function ID. function ID.
+                    description: |-
+                      function ID.
+                      function ID.
                     type: string
                   handler:
-                    description: Handler of the SCF function. The format of name is
-                      <filename>.<method_name>, and it supports 26 English letters,
-                      numbers, connectors, and underscores, it should start with a
-                      letter. The last character cannot be - or _. Available length
-                      is 2-60. Handler of the SCF function. The format of name is
-                      `<filename>.<method_name>`, and it supports 26 English letters,
-                      numbers, connectors, and underscores, it should start with a
-                      letter. The last character cannot be `-` or `_`. Available length
-                      is 2-60.
+                    description: |-
+                      Handler of the SCF function. The format of name is <filename>.<method_name>, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                      Handler of the SCF function. The format of name is `<filename>.<method_name>`, and it supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
                     type: string
                   host:
-                    description: SCF function domain name. SCF function domain name.
+                    description: |-
+                      SCF function domain name.
+                      SCF function domain name.
                     type: string
                   id:
                     description: ID of the resource.
                     type: string
                   imageConfig:
-                    description: Image of the SCF function, conflict with cos_bucket_name,
-                      cos_object_name, cos_bucket_region, zip_file. Image of the SCF
-                      function, conflict with `cos_bucket_name`, `cos_object_name`,
-                      `cos_bucket_region`, `zip_file`.
+                    description: |-
+                      Image of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region, zip_file.
+                      Image of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`, `zip_file`.
                     items:
                       properties:
                         args:
-                          description: the parameters of command. the parameters of
-                            command.
+                          description: |-
+                            the parameters of command.
+                            the parameters of command.
                           type: string
                         command:
-                          description: The command of entrypoint. The command of entrypoint.
+                          description: |-
+                            The command of entrypoint.
+                            The command of entrypoint.
                           type: string
                         containerImageAccelerate:
-                          description: Image accelerate switch. Image accelerate switch.
+                          description: |-
+                            Image accelerate switch.
+                            Image accelerate switch.
                           type: boolean
                         entryPoint:
-                          description: The entrypoint of app. The entrypoint of app.
+                          description: |-
+                            The entrypoint of app.
+                            The entrypoint of app.
                           type: string
                         imagePort:
-                          description: Image function port setting. Default is 9000,
-                            -1 indicates no port mirroring function. Other value ranges
-                            0 ~ 65535. Image function port setting. Default is `9000`,
-                            -1 indicates no port mirroring function. Other value ranges
-                            0 ~ 65535.
+                          description: |-
+                            Image function port setting. Default is 9000, -1 indicates no port mirroring function. Other value ranges 0 ~ 65535.
+                            Image function port setting. Default is `9000`, -1 indicates no port mirroring function. Other value ranges 0 ~ 65535.
                           type: number
                         imageType:
-                          description: The image type. personal or enterprise. The
-                            image type. personal or enterprise.
+                          description: |-
+                            The image type. personal or enterprise.
+                            The image type. personal or enterprise.
                           type: string
                         imageUri:
-                          description: The uri of image. The uri of image.
+                          description: |-
+                            The uri of image.
+                            The uri of image.
                           type: string
                         registryId:
-                          description: The registry id of TCR. When image type is
-                            enterprise, it must be set. The registry id of TCR. When
-                            image type is enterprise, it must be set.
+                          description: |-
+                            The registry id of TCR. When image type is enterprise, it must be set.
+                            The registry id of TCR. When image type is enterprise, it must be set.
                           type: string
                       type: object
                     type: array
                   installDependency:
-                    description: Whether to automatically install dependencies. Whether
-                      to automatically install dependencies.
+                    description: |-
+                      Whether to automatically install dependencies.
+                      Whether to automatically install dependencies.
                     type: boolean
                   intranetConfig:
-                    description: Intranet access configuration. Intranet access configuration.
+                    description: |-
+                      Intranet access configuration.
+                      Intranet access configuration.
                     items:
                       properties:
                         ipAddress:
@@ -1021,87 +1037,97 @@ spec:
                             type: string
                           type: array
                         ipFixed:
-                          description: Whether to enable fixed intranet IP, ENABLE
-                            is enabled, DISABLE is disabled. Whether to enable fixed
-                            intranet IP, ENABLE is enabled, DISABLE is disabled.
+                          description: |-
+                            Whether to enable fixed intranet IP, ENABLE is enabled, DISABLE is disabled.
+                            Whether to enable fixed intranet IP, ENABLE is enabled, DISABLE is disabled.
                           type: string
                       type: object
                     type: array
                   l5Enable:
-                    description: Enable L5 for SCF function, default is false. Enable
-                      L5 for SCF function, default is `false`.
+                    description: |-
+                      Enable L5 for SCF function, default is false.
+                      Enable L5 for SCF function, default is `false`.
                     type: boolean
                   layers:
-                    description: The list of association layers. The list of association
-                      layers.
+                    description: |-
+                      The list of association layers.
+                      The list of association layers.
                     items:
                       properties:
                         layerName:
-                          description: The name of Layer. The name of Layer.
+                          description: |-
+                            The name of Layer.
+                            The name of Layer.
                           type: string
                         layerVersion:
-                          description: The version of layer. The version of layer.
+                          description: |-
+                            The version of layer.
+                            The version of layer.
                           type: number
                       type: object
                     type: array
                   memSize:
-                    description: Memory size of the SCF function, unit is MB. The
-                      default is 128MB. The ladder is 128M. Memory size of the SCF
-                      function, unit is MB. The default is `128`MB. The ladder is
-                      128M.
+                    description: |-
+                      Memory size of the SCF function, unit is MB. The default is 128MB. The ladder is 128M.
+                      Memory size of the SCF function, unit is MB. The default is `128`MB. The ladder is 128M.
                     type: number
                   modifyTime:
-                    description: SCF function last modified time. SCF function last
-                      modified time.
+                    description: |-
+                      SCF function last modified time.
+                      SCF function last modified time.
                     type: string
                   name:
-                    description: Name of the SCF function. Name supports 26 English
-                      letters, numbers, connectors, and underscores, it should start
-                      with a letter. The last character cannot be - or _. Available
-                      length is 2-60. Name of the SCF function. Name supports 26 English
-                      letters, numbers, connectors, and underscores, it should start
-                      with a letter. The last character cannot be `-` or `_`. Available
-                      length is 2-60.
+                    description: |-
+                      Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                      Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be `-` or `_`. Available length is 2-60.
                     type: string
                   namespace:
-                    description: Namespace of the SCF function, default is default.
+                    description: |-
+                      Namespace of the SCF function, default is default.
                       Namespace of the SCF function, default is `default`.
                     type: string
                   role:
-                    description: Role of the SCF function. Role of the SCF function.
+                    description: |-
+                      Role of the SCF function.
+                      Role of the SCF function.
                     type: string
                   runtime:
-                    description: Runtime of the SCF function, only supports Python2.7,
-                      Python3.6, Nodejs6.10, Nodejs8.9, Nodejs10.15, Nodejs12.16,
-                      Php5.2, Php7.4, Go1, Java8, and CustomRuntime, default is Python2.7.
-                      Runtime of the SCF function, only supports `Python2.7`, `Python3.6`,
-                      `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `Nodejs12.16`, `Php5.2`,
-                      `Php7.4`, `Go1`, `Java8`, and `CustomRuntime`, default is `Python2.7`.
+                    description: |-
+                      Runtime of the SCF function, only supports Python2.7, Python3.6, Nodejs6.10, Nodejs8.9, Nodejs10.15, Nodejs12.16, Php5.2, Php7.4, Go1, Java8, and CustomRuntime, default is Python2.7.
+                      Runtime of the SCF function, only supports `Python2.7`, `Python3.6`, `Nodejs6.10`, `Nodejs8.9`, `Nodejs10.15`, `Nodejs12.16`, `Php5.2`, `Php7.4`, `Go1`, `Java8`, and `CustomRuntime`, default is `Python2.7`.
                     type: string
                   status:
-                    description: SCF function status. SCF function status.
+                    description: |-
+                      SCF function status.
+                      SCF function status.
                     type: string
                   statusDesc:
-                    description: SCF status description. SCF status description.
+                    description: |-
+                      SCF status description.
+                      SCF status description.
                     type: string
                   subnetId:
-                    description: Subnet ID of the SCF function. Subnet ID of the SCF
-                      function.
+                    description: |-
+                      Subnet ID of the SCF function.
+                      Subnet ID of the SCF function.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Tags of the SCF function. Tags of the SCF function.
+                    description: |-
+                      Tags of the SCF function.
+                      Tags of the SCF function.
                     type: object
+                    x-kubernetes-map-type: granular
                   timeout:
-                    description: Timeout of the SCF function, unit is second. Default
-                      3. Available value is 1-900. Timeout of the SCF function, unit
-                      is second. Default `3`. Available value is 1-900.
+                    description: |-
+                      Timeout of the SCF function, unit is second. Default 3. Available value is 1-900.
+                      Timeout of the SCF function, unit is second. Default `3`. Available value is 1-900.
                     type: number
                   triggerInfo:
-                    description: 'SCF trigger details list. Each element contains
-                      the following attributes: SCF trigger details list. Each element
-                      contains the following attributes:'
+                    description: |-
+                      SCF trigger details list. Each element contains the following attributes:
+                      SCF trigger details list. Each element contains the following attributes:
                     items:
                       properties:
                         createTime:
@@ -1141,71 +1167,47 @@ spec:
                       type: object
                     type: array
                   triggers:
-                    description: 'Trigger list of the SCF function, note that if you
-                      modify the trigger list, all existing triggers will be deleted,
-                      and then create triggers in the new list. Each element contains
-                      the following attributes: Trigger list of the SCF function,
-                      note that if you modify the trigger list, all existing triggers
-                      will be deleted, and then create triggers in the new list. Each
-                      element contains the following attributes:'
+                    description: |-
+                      Trigger list of the SCF function, note that if you modify the trigger list, all existing triggers will be deleted, and then create triggers in the new list. Each element contains the following attributes:
+                      Trigger list of the SCF function, note that if you modify the trigger list, all existing triggers will be deleted, and then create triggers in the new list. Each element contains the following attributes:
                     items:
                       properties:
                         cosRegion:
-                          description: Region of cos bucket. if type is cos, cos_region
-                            is required. Region of cos bucket. if `type` is `cos`,
-                            `cos_region` is required.
+                          description: |-
+                            Region of cos bucket. if type is cos, cos_region is required.
+                            Region of cos bucket. if `type` is `cos`, `cos_region` is required.
                           type: string
                         name:
-                          description: Name of the SCF function. Name supports 26
-                            English letters, numbers, connectors, and underscores,
-                            it should start with a letter. The last character cannot
-                            be - or _. Available length is 2-60. Name of the SCF function
-                            trigger, if `type` is `ckafka`, the format of name must
-                            be `<ckafkaInstanceId>-<topicId>`; if `type` is `cos`,
-                            the name is cos bucket id, other In any case, it can be
-                            combined arbitrarily. It can only contain English letters,
-                            numbers, connectors and underscores. The maximum length
-                            is 100.
+                          description: |-
+                            Name of the SCF function. Name supports 26 English letters, numbers, connectors, and underscores, it should start with a letter. The last character cannot be - or _. Available length is 2-60.
+                            Name of the SCF function trigger, if `type` is `ckafka`, the format of name must be `<ckafkaInstanceId>-<topicId>`; if `type` is `cos`, the name is cos bucket id, other In any case, it can be combined arbitrarily. It can only contain English letters, numbers, connectors and underscores. The maximum length is 100.
                           type: string
                         triggerDesc:
-                          description: TriggerDesc of the SCF function trigger, parameter
-                            format of timer is linux cron expression; parameter of
-                            cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}},
-                            where bucketUrl is cos bucket , event is the cos event
-                            trigger, Prefix is the corresponding file prefix filter
-                            condition, Suffix is the suffix filter condition, if not
-                            need filter condition can not pass; cmq type does not
-                            pass this parameter; ckafka type parameter format is json
-                            string {"maxMsgNum":"1","offset":"latest"}; apigw type
-                            parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
-                            TriggerDesc of the SCF function trigger, parameter format
-                            of `timer` is linux cron expression; parameter of `cos`
-                            type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`,
-                            where `bucketUrl` is cos bucket (optional), `event` is
-                            the cos event trigger, `Prefix` is the corresponding file
-                            prefix filter condition, `Suffix` is the suffix filter
-                            condition, if not need filter condition can not pass;
-                            `cmq` type does not pass this parameter; `ckafka` type
-                            parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`;
-                            `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
+                          description: |-
+                            TriggerDesc of the SCF function trigger, parameter format of timer is linux cron expression; parameter of cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}, where bucketUrl is cos bucket , event is the cos event trigger, Prefix is the corresponding file prefix filter condition, Suffix is the suffix filter condition, if not need filter condition can not pass; cmq type does not pass this parameter; ckafka type parameter format is json string {"maxMsgNum":"1","offset":"latest"}; apigw type parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
+                            TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
                           type: string
                         type:
-                          description: Type of the SCF function trigger, support cos,
-                            cmq, timer, ckafka, apigw. Type of the SCF function trigger,
-                            support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
+                          description: |-
+                            Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
+                            Type of the SCF function trigger, support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
                           type: string
                       type: object
                     type: array
                   vip:
-                    description: SCF function vip. SCF function vip.
+                    description: |-
+                      SCF function vip.
+                      SCF function vip.
                     type: string
                   vpcId:
-                    description: VPC ID of the SCF function. VPC ID of the SCF function.
+                    description: |-
+                      VPC ID of the SCF function.
+                      VPC ID of the SCF function.
                     type: string
                   zipFile:
-                    description: Zip file of the SCF function, conflict with cos_bucket_name,
-                      cos_object_name, cos_bucket_region. Zip file of the SCF function,
-                      conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`.
+                    description: |-
+                      Zip file of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region.
+                      Zip file of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`.
                     type: string
                 type: object
               conditions:
@@ -1214,13 +1216,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -1231,8 +1235,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

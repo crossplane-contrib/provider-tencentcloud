@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,6 +17,7 @@ type NatGatewayInitParameters struct {
 
 	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
 	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
 	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100.
@@ -45,7 +42,21 @@ type NatGatewayInitParameters struct {
 
 	// The available tags within this NAT gateway.
 	// The available tags within this NAT gateway.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of the vpc.
+	// ID of the vpc.
+	// +crossplane:generate:reference:type=VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
 	// The availability zone, such as ap-guangzhou-3.
 	// The availability zone, such as `ap-guangzhou-3`.
@@ -56,6 +67,7 @@ type NatGatewayObservation struct {
 
 	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
 	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
 	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100.
@@ -87,6 +99,7 @@ type NatGatewayObservation struct {
 
 	// The available tags within this NAT gateway.
 	// The available tags within this NAT gateway.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the vpc.
@@ -103,6 +116,7 @@ type NatGatewayParameters struct {
 	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
 	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
 	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100.
@@ -133,6 +147,7 @@ type NatGatewayParameters struct {
 	// The available tags within this NAT gateway.
 	// The available tags within this NAT gateway.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of the vpc.
@@ -179,13 +194,14 @@ type NatGatewayStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // NatGateway is the Schema for the NatGateways API. Provides a resource to create a NAT gateway.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type NatGateway struct {
 	metav1.TypeMeta   `json:",inline"`

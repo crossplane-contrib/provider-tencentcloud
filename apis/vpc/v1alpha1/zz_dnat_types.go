@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -31,6 +27,19 @@ type DnatInitParameters struct {
 	// Port of the EIP.
 	ElasticPort *string `json:"elasticPort,omitempty" tf:"elastic_port,omitempty"`
 
+	// ID of the NAT gateway.
+	// ID of the NAT gateway.
+	// +crossplane:generate:reference:type=NatGateway
+	NATID *string `json:"natId,omitempty" tf:"nat_id,omitempty"`
+
+	// Reference to a NatGateway to populate natId.
+	// +kubebuilder:validation:Optional
+	NATIDRef *v1.Reference `json:"natIdRef,omitempty" tf:"-"`
+
+	// Selector for a NatGateway to populate natId.
+	// +kubebuilder:validation:Optional
+	NATIDSelector *v1.Selector `json:"natIdSelector,omitempty" tf:"-"`
+
 	// Network address of the backend service.
 	// Network address of the backend service.
 	PrivateIP *string `json:"privateIp,omitempty" tf:"private_ip,omitempty"`
@@ -42,6 +51,19 @@ type DnatInitParameters struct {
 	// Type of the network protocol. Valid value: TCP and UDP.
 	// Type of the network protocol. Valid value: `TCP` and `UDP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// ID of the VPC.
+	// ID of the VPC.
+	// +crossplane:generate:reference:type=VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 type DnatObservation struct {
@@ -167,13 +189,14 @@ type DnatStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Dnat is the Schema for the Dnats API. Provides a resource to create a NAT forwarding.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Dnat struct {
 	metav1.TypeMeta   `json:",inline"`

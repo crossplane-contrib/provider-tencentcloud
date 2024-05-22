@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -235,6 +231,7 @@ type CompressionInitParameters struct {
 
 	// Compression algorithms to select. Valid values: brotli, gzip.
 	// Compression algorithms to select. Valid values: `brotli`, `gzip`.
+	// +listType=set
 	Algorithms []*string `json:"algorithms,omitempty" tf:"algorithms,omitempty"`
 
 	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
@@ -246,6 +243,7 @@ type CompressionObservation struct {
 
 	// Compression algorithms to select. Valid values: brotli, gzip.
 	// Compression algorithms to select. Valid values: `brotli`, `gzip`.
+	// +listType=set
 	Algorithms []*string `json:"algorithms,omitempty" tf:"algorithms,omitempty"`
 
 	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
@@ -258,6 +256,7 @@ type CompressionParameters struct {
 	// Compression algorithms to select. Valid values: brotli, gzip.
 	// Compression algorithms to select. Valid values: `brotli`, `gzip`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Algorithms []*string `json:"algorithms,omitempty" tf:"algorithms,omitempty"`
 
 	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
@@ -339,6 +338,7 @@ type HTTPSInitParameters struct {
 
 	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	TLSVersion []*string `json:"tlsVersion,omitempty" tf:"tls_version,omitempty"`
 }
 
@@ -358,6 +358,7 @@ type HTTPSObservation struct {
 
 	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	TLSVersion []*string `json:"tlsVersion,omitempty" tf:"tls_version,omitempty"`
 }
 
@@ -381,6 +382,7 @@ type HTTPSParameters struct {
 	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	TLSVersion []*string `json:"tlsVersion,omitempty" tf:"tls_version,omitempty"`
 }
 
@@ -550,6 +552,7 @@ type OriginInitParameters struct {
 
 	// Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	BackupOrigins []*string `json:"backupOrigins,omitempty" tf:"backup_origins,omitempty"`
 
 	// Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
@@ -562,6 +565,7 @@ type OriginInitParameters struct {
 
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	Origins []*string `json:"origins,omitempty" tf:"origins,omitempty"`
 }
 
@@ -569,6 +573,7 @@ type OriginObservation struct {
 
 	// Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	BackupOrigins []*string `json:"backupOrigins,omitempty" tf:"backup_origins,omitempty"`
 
 	// Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
@@ -581,6 +586,7 @@ type OriginObservation struct {
 
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	Origins []*string `json:"origins,omitempty" tf:"origins,omitempty"`
 }
 
@@ -589,6 +595,7 @@ type OriginParameters struct {
 	// Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	BackupOrigins []*string `json:"backupOrigins,omitempty" tf:"backup_origins,omitempty"`
 
 	// Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
@@ -604,6 +611,7 @@ type OriginParameters struct {
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Origins []*string `json:"origins,omitempty" tf:"origins,omitempty"`
 }
 
@@ -654,6 +662,7 @@ type QueryStringInitParameters struct {
 
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -669,6 +678,7 @@ type QueryStringObservation struct {
 
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
+	// +listType=set
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -687,6 +697,7 @@ type QueryStringParameters struct {
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -856,6 +867,19 @@ type ZoneSettingInitParameters struct {
 	// WebSocket configuration.
 	// WebSocket configuration.
 	WebSocket []WebSocketInitParameters `json:"webSocket,omitempty" tf:"web_socket,omitempty"`
+
+	// Site ID.
+	// Site ID.
+	// +crossplane:generate:reference:type=Zone
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type ZoneSettingObservation struct {
@@ -1057,13 +1081,14 @@ type ZoneSettingStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ZoneSetting is the Schema for the ZoneSettings API. Provides a resource to create a teo zone_setting
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ZoneSetting struct {
 	metav1.TypeMeta   `json:",inline"`

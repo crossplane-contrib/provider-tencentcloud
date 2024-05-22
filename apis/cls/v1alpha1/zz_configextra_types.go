@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -72,6 +68,7 @@ type ConfigExtraExtractRuleInitParameters struct {
 
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
+	// +listType=set
 	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
 
 	// Full log matching rule, which is valid only if log_type is fullregex_log.
@@ -115,6 +112,7 @@ type ConfigExtraExtractRuleObservation struct {
 
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
+	// +listType=set
 	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
 
 	// Full log matching rule, which is valid only if log_type is fullregex_log.
@@ -163,6 +161,7 @@ type ConfigExtraExtractRuleParameters struct {
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
 	// Key name of each extracted field. An empty key indicates to discard the field. This parameter is valid only if log_type is delimiter_log. json_log logs use the key of JSON itself.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
 
 	// Full log matching rule, which is valid only if log_type is fullregex_log.
@@ -219,6 +218,7 @@ type ConfigExtraInitParameters struct {
 
 	// Binding group ids.
 	// Binding group ids.
+	// +listType=set
 	GroupIds []*string `json:"groupIds,omitempty" tf:"group_ids,omitempty"`
 
 	// Node file config info.
@@ -233,6 +233,19 @@ type ConfigExtraInitParameters struct {
 	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
 	LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
 
+	// Logset Id.
+	// Logset Id.
+	// +crossplane:generate:reference:type=Logset
+	LogsetID *string `json:"logsetId,omitempty" tf:"logset_id,omitempty"`
+
+	// Reference to a Logset to populate logsetId.
+	// +kubebuilder:validation:Optional
+	LogsetIDRef *v1.Reference `json:"logsetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Logset to populate logsetId.
+	// +kubebuilder:validation:Optional
+	LogsetIDSelector *v1.Selector `json:"logsetIdSelector,omitempty" tf:"-"`
+
 	// Logset Name.
 	// Logset Name.
 	LogsetName *string `json:"logsetName,omitempty" tf:"logset_name,omitempty"`
@@ -240,6 +253,19 @@ type ConfigExtraInitParameters struct {
 	// Collection configuration name.
 	// Collection configuration name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Log topic ID (TopicId) of collection configuration.
+	// Log topic ID (TopicId) of collection configuration.
+	// +crossplane:generate:reference:type=Topic
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+
+	// Reference to a Topic to populate topicId.
+	// +kubebuilder:validation:Optional
+	TopicIDRef *v1.Reference `json:"topicIdRef,omitempty" tf:"-"`
+
+	// Selector for a Topic to populate topicId.
+	// +kubebuilder:validation:Optional
+	TopicIDSelector *v1.Selector `json:"topicIdSelector,omitempty" tf:"-"`
 
 	// Topic Name.
 	// Topic Name.
@@ -282,6 +308,7 @@ type ConfigExtraObservation struct {
 
 	// Binding group ids.
 	// Binding group ids.
+	// +listType=set
 	GroupIds []*string `json:"groupIds,omitempty" tf:"group_ids,omitempty"`
 
 	// Node file config info.
@@ -363,6 +390,7 @@ type ConfigExtraParameters struct {
 	// Binding group ids.
 	// Binding group ids.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	GroupIds []*string `json:"groupIds,omitempty" tf:"group_ids,omitempty"`
 
 	// Node file config info.
@@ -442,6 +470,7 @@ type ContainerFileInitParameters struct {
 
 	// Pod label to be excluded.
 	// Pod label to be excluded.
+	// +listType=set
 	ExcludeLabels []*string `json:"excludeLabels,omitempty" tf:"exclude_labels,omitempty"`
 
 	// Namespaces to be excluded, separated by separators, such as A, B.
@@ -454,6 +483,7 @@ type ContainerFileInitParameters struct {
 
 	// Pod label info.
 	// Pod label info.
+	// +listType=set
 	IncludeLabels []*string `json:"includeLabels,omitempty" tf:"include_labels,omitempty"`
 
 	// Log Path.
@@ -477,6 +507,7 @@ type ContainerFileObservation struct {
 
 	// Pod label to be excluded.
 	// Pod label to be excluded.
+	// +listType=set
 	ExcludeLabels []*string `json:"excludeLabels,omitempty" tf:"exclude_labels,omitempty"`
 
 	// Namespaces to be excluded, separated by separators, such as A, B.
@@ -489,6 +520,7 @@ type ContainerFileObservation struct {
 
 	// Pod label info.
 	// Pod label info.
+	// +listType=set
 	IncludeLabels []*string `json:"includeLabels,omitempty" tf:"include_labels,omitempty"`
 
 	// Log Path.
@@ -514,6 +546,7 @@ type ContainerFileParameters struct {
 	// Pod label to be excluded.
 	// Pod label to be excluded.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ExcludeLabels []*string `json:"excludeLabels,omitempty" tf:"exclude_labels,omitempty"`
 
 	// Namespaces to be excluded, separated by separators, such as A, B.
@@ -529,6 +562,7 @@ type ContainerFileParameters struct {
 	// Pod label info.
 	// Pod label info.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	IncludeLabels []*string `json:"includeLabels,omitempty" tf:"include_labels,omitempty"`
 
 	// Log Path.
@@ -555,6 +589,7 @@ type ContainerStdoutInitParameters struct {
 
 	// Pod label to be excluded.
 	// Pod label to be excluded.
+	// +listType=set
 	ExcludeLabels []*string `json:"excludeLabels,omitempty" tf:"exclude_labels,omitempty"`
 
 	// Namespaces to be excluded, separated by separators, such as A, B.
@@ -563,6 +598,7 @@ type ContainerStdoutInitParameters struct {
 
 	// Pod label info.
 	// Pod label info.
+	// +listType=set
 	IncludeLabels []*string `json:"includeLabels,omitempty" tf:"include_labels,omitempty"`
 
 	// Namespace. There can be multiple namespaces, separated by separators, such as A, B.
@@ -582,6 +618,7 @@ type ContainerStdoutObservation struct {
 
 	// Pod label to be excluded.
 	// Pod label to be excluded.
+	// +listType=set
 	ExcludeLabels []*string `json:"excludeLabels,omitempty" tf:"exclude_labels,omitempty"`
 
 	// Namespaces to be excluded, separated by separators, such as A, B.
@@ -590,6 +627,7 @@ type ContainerStdoutObservation struct {
 
 	// Pod label info.
 	// Pod label info.
+	// +listType=set
 	IncludeLabels []*string `json:"includeLabels,omitempty" tf:"include_labels,omitempty"`
 
 	// Namespace. There can be multiple namespaces, separated by separators, such as A, B.
@@ -611,6 +649,7 @@ type ContainerStdoutParameters struct {
 	// Pod label to be excluded.
 	// Pod label to be excluded.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ExcludeLabels []*string `json:"excludeLabels,omitempty" tf:"exclude_labels,omitempty"`
 
 	// Namespaces to be excluded, separated by separators, such as A, B.
@@ -621,6 +660,7 @@ type ContainerStdoutParameters struct {
 	// Pod label info.
 	// Pod label info.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	IncludeLabels []*string `json:"includeLabels,omitempty" tf:"include_labels,omitempty"`
 
 	// Namespace. There can be multiple namespaces, separated by separators, such as A, B.
@@ -673,6 +713,7 @@ type HostFileInitParameters struct {
 
 	// Metadata info.
 	// Metadata info.
+	// +listType=set
 	CustomLabels []*string `json:"customLabels,omitempty" tf:"custom_labels,omitempty"`
 
 	// log name.
@@ -688,6 +729,7 @@ type HostFileObservation struct {
 
 	// Metadata info.
 	// Metadata info.
+	// +listType=set
 	CustomLabels []*string `json:"customLabels,omitempty" tf:"custom_labels,omitempty"`
 
 	// log name.
@@ -704,6 +746,7 @@ type HostFileParameters struct {
 	// Metadata info.
 	// Metadata info.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	CustomLabels []*string `json:"customLabels,omitempty" tf:"custom_labels,omitempty"`
 
 	// log name.
@@ -863,13 +906,14 @@ type ConfigExtraStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ConfigExtra is the Schema for the ConfigExtras API. Provides a resource to create a cls config extra
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ConfigExtra struct {
 	metav1.TypeMeta   `json:",inline"`

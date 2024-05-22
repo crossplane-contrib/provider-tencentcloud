@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,6 +17,7 @@ type DdosPolicyInitParameters struct {
 
 	// Black IP list.
 	// Black IP list.
+	// +listType=set
 	BlackIps []*string `json:"blackIps,omitempty" tf:"black_ips,omitempty"`
 
 	// Option list of abnormal check of the DDos policy, should set at least one policy.
@@ -49,6 +46,7 @@ type DdosPolicyInitParameters struct {
 
 	// White IP list.
 	// White IP list.
+	// +listType=set
 	WhiteIps []*string `json:"whiteIps,omitempty" tf:"white_ips,omitempty"`
 }
 
@@ -56,6 +54,7 @@ type DdosPolicyObservation struct {
 
 	// Black IP list.
 	// Black IP list.
+	// +listType=set
 	BlackIps []*string `json:"blackIps,omitempty" tf:"black_ips,omitempty"`
 
 	// Create time of the DDoS policy.
@@ -103,6 +102,7 @@ type DdosPolicyObservation struct {
 
 	// White IP list.
 	// White IP list.
+	// +listType=set
 	WhiteIps []*string `json:"whiteIps,omitempty" tf:"white_ips,omitempty"`
 }
 
@@ -111,6 +111,7 @@ type DdosPolicyParameters struct {
 	// Black IP list.
 	// Black IP list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	BlackIps []*string `json:"blackIps,omitempty" tf:"black_ips,omitempty"`
 
 	// Option list of abnormal check of the DDos policy, should set at least one policy.
@@ -146,6 +147,7 @@ type DdosPolicyParameters struct {
 	// White IP list.
 	// White IP list.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	WhiteIps []*string `json:"whiteIps,omitempty" tf:"white_ips,omitempty"`
 }
 
@@ -789,13 +791,14 @@ type DdosPolicyStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // DdosPolicy is the Schema for the DdosPolicys API. Use this resource to create dayu DDoS policy
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type DdosPolicy struct {
 	metav1.TypeMeta   `json:",inline"`

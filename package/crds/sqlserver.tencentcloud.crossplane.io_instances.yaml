@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: instances.sqlserver.tencentcloud.crossplane.io
 spec:
   group: sqlserver.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           to create SQL Server instance
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,100 +74,95 @@ spec:
               forProvider:
                 properties:
                   autoRenew:
-                    description: Automatic renewal sign. 0 for normal renewal, 1 for
-                      automatic renewal (Default). Only valid when purchasing a prepaid
-                      instance. Automatic renewal sign. 0 for normal renewal, 1 for
-                      automatic renewal (Default). Only valid when purchasing a prepaid
-                      instance.
+                    description: |-
+                      Automatic renewal sign. 0 for normal renewal, 1 for automatic renewal (Default). Only valid when purchasing a prepaid instance.
+                      Automatic renewal sign. 0 for normal renewal, 1 for automatic renewal (Default). Only valid when purchasing a prepaid instance.
                     type: number
                   autoVoucher:
-                    description: Whether to use the voucher automatically; 1 for yes,
-                      0 for no, the default is 0. Whether to use the voucher automatically;
-                      1 for yes, 0 for no, the default is 0.
+                    description: |-
+                      Whether to use the voucher automatically; 1 for yes, 0 for no, the default is 0.
+                      Whether to use the voucher automatically; 1 for yes, 0 for no, the default is 0.
                     type: number
                   availabilityZone:
-                    description: Availability zone. Availability zone.
+                    description: |-
+                      Availability zone.
+                      Availability zone.
                     type: string
                   chargeType:
-                    description: Pay type of the SQL Server instance. Available values
-                      PREPAID, POSTPAID_BY_HOUR. Pay type of the SQL Server instance.
-                      Available values `PREPAID`, `POSTPAID_BY_HOUR`.
+                    description: |-
+                      Pay type of the SQL Server instance. Available values PREPAID, POSTPAID_BY_HOUR.
+                      Pay type of the SQL Server instance. Available values `PREPAID`, `POSTPAID_BY_HOUR`.
                     type: string
                   engineVersion:
-                    description: Version of the SQL Server database engine. Allowed
-                      values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server
-                      2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL
-                      Server 2016 Standard) and 2017(SQL Server 2017 Enterprise).
-                      Default is 2008R2. Version of the SQL Server database engine.
-                      Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL
-                      Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise),
-                      `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017
-                      Enterprise). Default is `2008R2`.
+                    description: |-
+                      Version of the SQL Server database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
+                      Version of the SQL Server database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
                     type: string
                   haType:
-                    description: Instance type. DUAL (dual-server high availability),
-                      CLUSTER (cluster). Default is DUAL. Instance type. `DUAL` (dual-server
-                      high availability), `CLUSTER` (cluster). Default is `DUAL`.
+                    description: |-
+                      Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+                      Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
                     type: string
                   maintenanceStartTime:
-                    description: Start time of the maintenance in one day, format
-                      like HH:mm. Start time of the maintenance in one day, format
-                      like `HH:mm`.
+                    description: |-
+                      Start time of the maintenance in one day, format like HH:mm.
+                      Start time of the maintenance in one day, format like `HH:mm`.
                     type: string
                   maintenanceTimeSpan:
-                    description: The timespan of maintenance in one day, unit is hour.
+                    description: |-
+                      The timespan of maintenance in one day, unit is hour.
                       The timespan of maintenance in one day, unit is hour.
                     type: number
                   maintenanceWeekSet:
-                    description: A list of integer indicates weekly maintenance. For
-                      example, [2,7] presents do weekly maintenance on every Tuesday
-                      and Sunday. A list of integer indicates weekly maintenance.
-                      For example, [2,7] presents do weekly maintenance on every Tuesday
-                      and Sunday.
+                    description: |-
+                      A list of integer indicates weekly maintenance. For example, [2,7] presents do weekly maintenance on every Tuesday and Sunday.
+                      A list of integer indicates weekly maintenance. For example, [2,7] presents do weekly maintenance on every Tuesday and Sunday.
                     items:
                       type: number
                     type: array
+                    x-kubernetes-list-type: set
                   memory:
-                    description: Memory size (in GB). Allowed value must be larger
-                      than memory that data source tencentcloud_sqlserver_specinfos
-                      provides. Memory size (in GB). Allowed value must be larger
-                      than `memory` that data source `tencentcloud_sqlserver_specinfos`
-                      provides.
+                    description: |-
+                      Memory size (in GB). Allowed value must be larger than memory that data source tencentcloud_sqlserver_specinfos provides.
+                      Memory size (in GB). Allowed value must be larger than `memory` that data source `tencentcloud_sqlserver_specinfos` provides.
                     type: number
                   multiZones:
-                    description: Indicate whether to deploy across availability zones.
+                    description: |-
+                      Indicate whether to deploy across availability zones.
                       Indicate whether to deploy across availability zones.
                     type: boolean
                   name:
-                    description: Name of the SQL Server instance. Name of the SQL
-                      Server instance.
+                    description: |-
+                      Name of the SQL Server instance.
+                      Name of the SQL Server instance.
                     type: string
                   period:
-                    description: Purchase instance period in month. The value does
-                      not exceed 48. Purchase instance period in month. The value
-                      does not exceed 48.
+                    description: |-
+                      Purchase instance period in month. The value does not exceed 48.
+                      Purchase instance period in month. The value does not exceed 48.
                     type: number
                   projectId:
-                    description: Project ID, default value is 0. Project ID, default
-                      value is 0.
+                    description: |-
+                      Project ID, default value is 0.
+                      Project ID, default value is 0.
                     type: number
                   securityGroups:
-                    description: Security group bound to the instance. Security group
-                      bound to the instance.
+                    description: |-
+                      Security group bound to the instance.
+                      Security group bound to the instance.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   storage:
-                    description: Disk size (in GB). Allowed value must be a multiple
-                      of 10. The storage must be set with the limit of storage_min
-                      and storage_max which data source tencentcloud_sqlserver_specinfos
-                      provides. Disk size (in GB). Allowed value must be a multiple
-                      of 10. The storage must be set with the limit of `storage_min`
-                      and `storage_max` which data source `tencentcloud_sqlserver_specinfos`
-                      provides.
+                    description: |-
+                      Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_sqlserver_specinfos provides.
+                      Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_sqlserver_specinfos` provides.
                     type: number
                   subnetId:
-                    description: ID of subnet. ID of subnet.
+                    description: |-
+                      ID of subnet.
+                      ID of subnet.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -174,21 +175,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -201,8 +202,9 @@ spec:
                     description: Selector for a Subnet in vpc to populate subnetId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -215,21 +217,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -239,17 +241,23 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
-                    description: The tags of the SQL Server. The tags of the SQL Server.
+                    description: |-
+                      The tags of the SQL Server.
+                      The tags of the SQL Server.
                     type: object
+                    x-kubernetes-map-type: granular
                   voucherIds:
-                    description: An array of voucher IDs, currently only one can be
-                      used for a single order. An array of voucher IDs, currently
-                      only one can be used for a single order.
+                    description: |-
+                      An array of voucher IDs, currently only one can be used for a single order.
+                      An array of voucher IDs, currently only one can be used for a single order.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   vpcId:
-                    description: ID of VPC. ID of VPC.
+                    description: |-
+                      ID of VPC.
+                      ID of VPC.
                     type: string
                   vpcIdRef:
                     description: Reference to a VPC in vpc to populate vpcId.
@@ -262,21 +270,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -289,8 +297,9 @@ spec:
                     description: Selector for a VPC in vpc to populate vpcId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -303,21 +312,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -325,154 +334,308 @@ spec:
                         type: object
                     type: object
                   waitSwitch:
-                    description: 'It has been deprecated from version 1.81.2. The
-                      way to execute the allocation. Supported values include: 0 -
-                      execute immediately, 1 - execute in maintenance window. The
-                      way to execute the allocation. Supported values include: 0 -
-                      execute immediately, 1 - execute in maintenance window.'
+                    description: |-
+                      It has been deprecated from version 1.81.2. The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
+                      The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
                     type: number
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   autoRenew:
-                    description: Automatic renewal sign. 0 for normal renewal, 1 for
-                      automatic renewal (Default). Only valid when purchasing a prepaid
-                      instance. Automatic renewal sign. 0 for normal renewal, 1 for
-                      automatic renewal (Default). Only valid when purchasing a prepaid
-                      instance.
+                    description: |-
+                      Automatic renewal sign. 0 for normal renewal, 1 for automatic renewal (Default). Only valid when purchasing a prepaid instance.
+                      Automatic renewal sign. 0 for normal renewal, 1 for automatic renewal (Default). Only valid when purchasing a prepaid instance.
                     type: number
                   autoVoucher:
-                    description: Whether to use the voucher automatically; 1 for yes,
-                      0 for no, the default is 0. Whether to use the voucher automatically;
-                      1 for yes, 0 for no, the default is 0.
+                    description: |-
+                      Whether to use the voucher automatically; 1 for yes, 0 for no, the default is 0.
+                      Whether to use the voucher automatically; 1 for yes, 0 for no, the default is 0.
                     type: number
                   availabilityZone:
-                    description: Availability zone. Availability zone.
+                    description: |-
+                      Availability zone.
+                      Availability zone.
                     type: string
                   chargeType:
-                    description: Pay type of the SQL Server instance. Available values
-                      PREPAID, POSTPAID_BY_HOUR. Pay type of the SQL Server instance.
-                      Available values `PREPAID`, `POSTPAID_BY_HOUR`.
+                    description: |-
+                      Pay type of the SQL Server instance. Available values PREPAID, POSTPAID_BY_HOUR.
+                      Pay type of the SQL Server instance. Available values `PREPAID`, `POSTPAID_BY_HOUR`.
                     type: string
                   engineVersion:
-                    description: Version of the SQL Server database engine. Allowed
-                      values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server
-                      2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL
-                      Server 2016 Standard) and 2017(SQL Server 2017 Enterprise).
-                      Default is 2008R2. Version of the SQL Server database engine.
-                      Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL
-                      Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise),
-                      `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017
-                      Enterprise). Default is `2008R2`.
+                    description: |-
+                      Version of the SQL Server database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
+                      Version of the SQL Server database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
                     type: string
                   haType:
-                    description: Instance type. DUAL (dual-server high availability),
-                      CLUSTER (cluster). Default is DUAL. Instance type. `DUAL` (dual-server
-                      high availability), `CLUSTER` (cluster). Default is `DUAL`.
+                    description: |-
+                      Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+                      Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
                     type: string
                   maintenanceStartTime:
-                    description: Start time of the maintenance in one day, format
-                      like HH:mm. Start time of the maintenance in one day, format
-                      like `HH:mm`.
+                    description: |-
+                      Start time of the maintenance in one day, format like HH:mm.
+                      Start time of the maintenance in one day, format like `HH:mm`.
                     type: string
                   maintenanceTimeSpan:
-                    description: The timespan of maintenance in one day, unit is hour.
+                    description: |-
+                      The timespan of maintenance in one day, unit is hour.
                       The timespan of maintenance in one day, unit is hour.
                     type: number
                   maintenanceWeekSet:
-                    description: A list of integer indicates weekly maintenance. For
-                      example, [2,7] presents do weekly maintenance on every Tuesday
-                      and Sunday. A list of integer indicates weekly maintenance.
-                      For example, [2,7] presents do weekly maintenance on every Tuesday
-                      and Sunday.
+                    description: |-
+                      A list of integer indicates weekly maintenance. For example, [2,7] presents do weekly maintenance on every Tuesday and Sunday.
+                      A list of integer indicates weekly maintenance. For example, [2,7] presents do weekly maintenance on every Tuesday and Sunday.
                     items:
                       type: number
                     type: array
+                    x-kubernetes-list-type: set
                   memory:
-                    description: Memory size (in GB). Allowed value must be larger
-                      than memory that data source tencentcloud_sqlserver_specinfos
-                      provides. Memory size (in GB). Allowed value must be larger
-                      than `memory` that data source `tencentcloud_sqlserver_specinfos`
-                      provides.
+                    description: |-
+                      Memory size (in GB). Allowed value must be larger than memory that data source tencentcloud_sqlserver_specinfos provides.
+                      Memory size (in GB). Allowed value must be larger than `memory` that data source `tencentcloud_sqlserver_specinfos` provides.
                     type: number
                   multiZones:
-                    description: Indicate whether to deploy across availability zones.
+                    description: |-
+                      Indicate whether to deploy across availability zones.
                       Indicate whether to deploy across availability zones.
                     type: boolean
                   name:
-                    description: Name of the SQL Server instance. Name of the SQL
-                      Server instance.
+                    description: |-
+                      Name of the SQL Server instance.
+                      Name of the SQL Server instance.
                     type: string
                   period:
-                    description: Purchase instance period in month. The value does
-                      not exceed 48. Purchase instance period in month. The value
-                      does not exceed 48.
+                    description: |-
+                      Purchase instance period in month. The value does not exceed 48.
+                      Purchase instance period in month. The value does not exceed 48.
                     type: number
                   projectId:
-                    description: Project ID, default value is 0. Project ID, default
-                      value is 0.
+                    description: |-
+                      Project ID, default value is 0.
+                      Project ID, default value is 0.
                     type: number
                   securityGroups:
-                    description: Security group bound to the instance. Security group
-                      bound to the instance.
+                    description: |-
+                      Security group bound to the instance.
+                      Security group bound to the instance.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   storage:
-                    description: Disk size (in GB). Allowed value must be a multiple
-                      of 10. The storage must be set with the limit of storage_min
-                      and storage_max which data source tencentcloud_sqlserver_specinfos
-                      provides. Disk size (in GB). Allowed value must be a multiple
-                      of 10. The storage must be set with the limit of `storage_min`
-                      and `storage_max` which data source `tencentcloud_sqlserver_specinfos`
-                      provides.
+                    description: |-
+                      Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_sqlserver_specinfos provides.
+                      Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_sqlserver_specinfos` provides.
                     type: number
+                  subnetId:
+                    description: |-
+                      ID of subnet.
+                      ID of subnet.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in vpc to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in vpc to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   tags:
                     additionalProperties:
                       type: string
-                    description: The tags of the SQL Server. The tags of the SQL Server.
+                    description: |-
+                      The tags of the SQL Server.
+                      The tags of the SQL Server.
                     type: object
+                    x-kubernetes-map-type: granular
                   voucherIds:
-                    description: An array of voucher IDs, currently only one can be
-                      used for a single order. An array of voucher IDs, currently
-                      only one can be used for a single order.
+                    description: |-
+                      An array of voucher IDs, currently only one can be used for a single order.
+                      An array of voucher IDs, currently only one can be used for a single order.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
+                  vpcId:
+                    description: |-
+                      ID of VPC.
+                      ID of VPC.
+                    type: string
+                  vpcIdRef:
+                    description: Reference to a VPC in vpc to populate vpcId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vpcIdSelector:
+                    description: Selector for a VPC in vpc to populate vpcId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   waitSwitch:
-                    description: 'It has been deprecated from version 1.81.2. The
-                      way to execute the allocation. Supported values include: 0 -
-                      execute immediately, 1 - execute in maintenance window. The
-                      way to execute the allocation. Supported values include: 0 -
-                      execute immediately, 1 - execute in maintenance window.'
+                    description: |-
+                      It has been deprecated from version 1.81.2. The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
+                      The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
                     type: number
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -485,9 +648,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -497,21 +661,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -521,17 +685,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -541,21 +707,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -570,21 +736,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -595,14 +762,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -636,153 +804,149 @@ spec:
               atProvider:
                 properties:
                   autoRenew:
-                    description: Automatic renewal sign. 0 for normal renewal, 1 for
-                      automatic renewal (Default). Only valid when purchasing a prepaid
-                      instance. Automatic renewal sign. 0 for normal renewal, 1 for
-                      automatic renewal (Default). Only valid when purchasing a prepaid
-                      instance.
+                    description: |-
+                      Automatic renewal sign. 0 for normal renewal, 1 for automatic renewal (Default). Only valid when purchasing a prepaid instance.
+                      Automatic renewal sign. 0 for normal renewal, 1 for automatic renewal (Default). Only valid when purchasing a prepaid instance.
                     type: number
                   autoVoucher:
-                    description: Whether to use the voucher automatically; 1 for yes,
-                      0 for no, the default is 0. Whether to use the voucher automatically;
-                      1 for yes, 0 for no, the default is 0.
+                    description: |-
+                      Whether to use the voucher automatically; 1 for yes, 0 for no, the default is 0.
+                      Whether to use the voucher automatically; 1 for yes, 0 for no, the default is 0.
                     type: number
                   availabilityZone:
-                    description: Availability zone. Availability zone.
+                    description: |-
+                      Availability zone.
+                      Availability zone.
                     type: string
                   chargeType:
-                    description: Pay type of the SQL Server instance. Available values
-                      PREPAID, POSTPAID_BY_HOUR. Pay type of the SQL Server instance.
-                      Available values `PREPAID`, `POSTPAID_BY_HOUR`.
+                    description: |-
+                      Pay type of the SQL Server instance. Available values PREPAID, POSTPAID_BY_HOUR.
+                      Pay type of the SQL Server instance. Available values `PREPAID`, `POSTPAID_BY_HOUR`.
                     type: string
                   createTime:
-                    description: Create time of the SQL Server instance. Create time
-                      of the SQL Server instance.
+                    description: |-
+                      Create time of the SQL Server instance.
+                      Create time of the SQL Server instance.
                     type: string
                   engineVersion:
-                    description: Version of the SQL Server database engine. Allowed
-                      values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server
-                      2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL
-                      Server 2016 Standard) and 2017(SQL Server 2017 Enterprise).
-                      Default is 2008R2. Version of the SQL Server database engine.
-                      Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL
-                      Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise),
-                      `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017
-                      Enterprise). Default is `2008R2`.
+                    description: |-
+                      Version of the SQL Server database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
+                      Version of the SQL Server database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
                     type: string
                   haType:
-                    description: Instance type. DUAL (dual-server high availability),
-                      CLUSTER (cluster). Default is DUAL. Instance type. `DUAL` (dual-server
-                      high availability), `CLUSTER` (cluster). Default is `DUAL`.
+                    description: |-
+                      Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+                      Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
                     type: string
                   id:
                     description: ID of the resource.
                     type: string
                   maintenanceStartTime:
-                    description: Start time of the maintenance in one day, format
-                      like HH:mm. Start time of the maintenance in one day, format
-                      like `HH:mm`.
+                    description: |-
+                      Start time of the maintenance in one day, format like HH:mm.
+                      Start time of the maintenance in one day, format like `HH:mm`.
                     type: string
                   maintenanceTimeSpan:
-                    description: The timespan of maintenance in one day, unit is hour.
+                    description: |-
+                      The timespan of maintenance in one day, unit is hour.
                       The timespan of maintenance in one day, unit is hour.
                     type: number
                   maintenanceWeekSet:
-                    description: A list of integer indicates weekly maintenance. For
-                      example, [2,7] presents do weekly maintenance on every Tuesday
-                      and Sunday. A list of integer indicates weekly maintenance.
-                      For example, [2,7] presents do weekly maintenance on every Tuesday
-                      and Sunday.
+                    description: |-
+                      A list of integer indicates weekly maintenance. For example, [2,7] presents do weekly maintenance on every Tuesday and Sunday.
+                      A list of integer indicates weekly maintenance. For example, [2,7] presents do weekly maintenance on every Tuesday and Sunday.
                     items:
                       type: number
                     type: array
+                    x-kubernetes-list-type: set
                   memory:
-                    description: Memory size (in GB). Allowed value must be larger
-                      than memory that data source tencentcloud_sqlserver_specinfos
-                      provides. Memory size (in GB). Allowed value must be larger
-                      than `memory` that data source `tencentcloud_sqlserver_specinfos`
-                      provides.
+                    description: |-
+                      Memory size (in GB). Allowed value must be larger than memory that data source tencentcloud_sqlserver_specinfos provides.
+                      Memory size (in GB). Allowed value must be larger than `memory` that data source `tencentcloud_sqlserver_specinfos` provides.
                     type: number
                   multiZones:
-                    description: Indicate whether to deploy across availability zones.
+                    description: |-
+                      Indicate whether to deploy across availability zones.
                       Indicate whether to deploy across availability zones.
                     type: boolean
                   name:
-                    description: Name of the SQL Server instance. Name of the SQL
-                      Server instance.
+                    description: |-
+                      Name of the SQL Server instance.
+                      Name of the SQL Server instance.
                     type: string
                   period:
-                    description: Purchase instance period in month. The value does
-                      not exceed 48. Purchase instance period in month. The value
-                      does not exceed 48.
+                    description: |-
+                      Purchase instance period in month. The value does not exceed 48.
+                      Purchase instance period in month. The value does not exceed 48.
                     type: number
                   projectId:
-                    description: Project ID, default value is 0. Project ID, default
-                      value is 0.
+                    description: |-
+                      Project ID, default value is 0.
+                      Project ID, default value is 0.
                     type: number
                   roFlag:
-                    description: Readonly flag. RO (read-only instance), MASTER (primary
-                      instance with read-only instances). If it is left empty, it
-                      refers to an instance which is not read-only and has no RO group.
-                      Readonly flag. `RO` (read-only instance), `MASTER` (primary
-                      instance with read-only instances). If it is left empty, it
-                      refers to an instance which is not read-only and has no RO group.
+                    description: |-
+                      Readonly flag. RO (read-only instance), MASTER (primary instance with read-only instances). If it is left empty, it refers to an instance which is not read-only and has no RO group.
+                      Readonly flag. `RO` (read-only instance), `MASTER` (primary instance with read-only instances). If it is left empty, it refers to an instance which is not read-only and has no RO group.
                     type: string
                   securityGroups:
-                    description: Security group bound to the instance. Security group
-                      bound to the instance.
+                    description: |-
+                      Security group bound to the instance.
+                      Security group bound to the instance.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   status:
-                    description: Status of the SQL Server instance. 1 for applying,
-                      2 for running, 3 for running with limit, 4 for isolated, 5 for
-                      recycling, 6 for recycled, 7 for running with task, 8 for off-line,
-                      9 for expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
-                      Status of the SQL Server instance. 1 for applying, 2 for running,
-                      3 for running with limit, 4 for isolated, 5 for recycling, 6
-                      for recycled, 7 for running with task, 8 for off-line, 9 for
-                      expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
+                    description: |-
+                      Status of the SQL Server instance. 1 for applying, 2 for running, 3 for running with limit, 4 for isolated, 5 for recycling, 6 for recycled, 7 for running with task, 8 for off-line, 9 for expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
+                      Status of the SQL Server instance. 1 for applying, 2 for running, 3 for running with limit, 4 for isolated, 5 for recycling, 6 for recycled, 7 for running with task, 8 for off-line, 9 for expanding, 10 for migrating, 11 for readonly, 12 for rebooting.
                     type: number
                   storage:
-                    description: Disk size (in GB). Allowed value must be a multiple
-                      of 10. The storage must be set with the limit of storage_min
-                      and storage_max which data source tencentcloud_sqlserver_specinfos
-                      provides. Disk size (in GB). Allowed value must be a multiple
-                      of 10. The storage must be set with the limit of `storage_min`
-                      and `storage_max` which data source `tencentcloud_sqlserver_specinfos`
-                      provides.
+                    description: |-
+                      Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_sqlserver_specinfos provides.
+                      Disk size (in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_sqlserver_specinfos` provides.
                     type: number
                   subnetId:
-                    description: ID of subnet. ID of subnet.
+                    description: |-
+                      ID of subnet.
+                      ID of subnet.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: The tags of the SQL Server. The tags of the SQL Server.
+                    description: |-
+                      The tags of the SQL Server.
+                      The tags of the SQL Server.
                     type: object
+                    x-kubernetes-map-type: granular
                   vip:
-                    description: IP for private access. IP for private access.
+                    description: |-
+                      IP for private access.
+                      IP for private access.
                     type: string
                   voucherIds:
-                    description: An array of voucher IDs, currently only one can be
-                      used for a single order. An array of voucher IDs, currently
-                      only one can be used for a single order.
+                    description: |-
+                      An array of voucher IDs, currently only one can be used for a single order.
+                      An array of voucher IDs, currently only one can be used for a single order.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   vpcId:
-                    description: ID of VPC. ID of VPC.
+                    description: |-
+                      ID of VPC.
+                      ID of VPC.
                     type: string
                   vport:
-                    description: Port for private access. Port for private access.
+                    description: |-
+                      Port for private access.
+                      Port for private access.
                     type: number
                   waitSwitch:
-                    description: 'It has been deprecated from version 1.81.2. The
-                      way to execute the allocation. Supported values include: 0 -
-                      execute immediately, 1 - execute in maintenance window. The
-                      way to execute the allocation. Supported values include: 0 -
-                      execute immediately, 1 - execute in maintenance window.'
+                    description: |-
+                      It has been deprecated from version 1.81.2. The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
+                      The way to execute the allocation. Supported values include: 0 - execute immediately, 1 - execute in maintenance window.
                     type: number
                 type: object
               conditions:
@@ -791,13 +955,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -808,8 +974,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

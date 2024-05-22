@@ -35,6 +35,22 @@ func (mg *HttpDomain) ResolveReferences(ctx context.Context, c client.Reader) er
 	mg.Spec.ForProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ListenerIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ListenerIDRef,
+		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &Layer7ListenerList{},
+			Managed: &Layer7Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
+	}
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -60,6 +76,22 @@ func (mg *HttpRule) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ListenerIDRef,
+		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &Layer7ListenerList{},
+			Managed: &Layer7Listener{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
+	}
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -87,6 +119,22 @@ func (mg *Layer4Listener) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.ProxyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProxyIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProxyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ProxyIDRef,
+		Selector:     mg.Spec.InitProvider.ProxyIDSelector,
+		To: reference.To{
+			List:    &ProxyList{},
+			Managed: &Proxy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ProxyID")
+	}
+	mg.Spec.InitProvider.ProxyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProxyIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -112,6 +160,22 @@ func (mg *Layer7Listener) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.ForProvider.ProxyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProxyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProxyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ProxyIDRef,
+		Selector:     mg.Spec.InitProvider.ProxyIDSelector,
+		To: reference.To{
+			List:    &ProxyList{},
+			Managed: &Proxy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ProxyID")
+	}
+	mg.Spec.InitProvider.ProxyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProxyIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -139,6 +203,22 @@ func (mg *SecurityPolicy) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.ProxyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProxyIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProxyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ProxyIDRef,
+		Selector:     mg.Spec.InitProvider.ProxyIDSelector,
+		To: reference.To{
+			List:    &ProxyList{},
+			Managed: &Proxy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ProxyID")
+	}
+	mg.Spec.InitProvider.ProxyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProxyIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -164,6 +244,22 @@ func (mg *SecurityRule) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PolicyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PolicyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.PolicyIDRef,
+		Selector:     mg.Spec.InitProvider.PolicyIDSelector,
+		To: reference.To{
+			List:    &SecurityPolicyList{},
+			Managed: &SecurityPolicy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PolicyID")
+	}
+	mg.Spec.InitProvider.PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PolicyIDRef = rsp.ResolvedReference
 
 	return nil
 }

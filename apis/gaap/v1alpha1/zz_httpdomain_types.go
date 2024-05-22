@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -37,6 +33,7 @@ type HttpDomainInitParameters struct {
 
 	// ID list of the poly client certificate.
 	// ID list of the poly client certificate.
+	// +listType=set
 	ClientCertificateIds []*string `json:"clientCertificateIds,omitempty" tf:"client_certificate_ids,omitempty"`
 
 	// Forward domain of the layer7 listener.
@@ -50,6 +47,19 @@ type HttpDomainInitParameters struct {
 	// ID of the SSL certificate.
 	// ID of the SSL certificate.
 	GaapAuthID *string `json:"gaapAuthId,omitempty" tf:"gaap_auth_id,omitempty"`
+
+	// ID of the layer7 listener.
+	// ID of the layer7 listener.
+	// +crossplane:generate:reference:type=Layer7Listener
+	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Reference to a Layer7Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDRef *v1.Reference `json:"listenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a Layer7Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
 
 	// Indicates whether realserver authentication is enable, default value is false.
 	// Indicates whether realserver authentication is enable, default value is `false`.
@@ -65,6 +75,7 @@ type HttpDomainInitParameters struct {
 
 	// CA certificate ID list of the realserver.
 	// CA certificate ID list of the realserver.
+	// +listType=set
 	RealserverCertificateIds []*string `json:"realserverCertificateIds,omitempty" tf:"realserver_certificate_ids,omitempty"`
 }
 
@@ -88,6 +99,7 @@ type HttpDomainObservation struct {
 
 	// ID list of the poly client certificate.
 	// ID list of the poly client certificate.
+	// +listType=set
 	ClientCertificateIds []*string `json:"clientCertificateIds,omitempty" tf:"client_certificate_ids,omitempty"`
 
 	// Forward domain of the layer7 listener.
@@ -123,6 +135,7 @@ type HttpDomainObservation struct {
 
 	// CA certificate ID list of the realserver.
 	// CA certificate ID list of the realserver.
+	// +listType=set
 	RealserverCertificateIds []*string `json:"realserverCertificateIds,omitempty" tf:"realserver_certificate_ids,omitempty"`
 }
 
@@ -151,6 +164,7 @@ type HttpDomainParameters struct {
 	// ID list of the poly client certificate.
 	// ID list of the poly client certificate.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ClientCertificateIds []*string `json:"clientCertificateIds,omitempty" tf:"client_certificate_ids,omitempty"`
 
 	// Forward domain of the layer7 listener.
@@ -200,6 +214,7 @@ type HttpDomainParameters struct {
 	// CA certificate ID list of the realserver.
 	// CA certificate ID list of the realserver.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	RealserverCertificateIds []*string `json:"realserverCertificateIds,omitempty" tf:"realserver_certificate_ids,omitempty"`
 }
 
@@ -227,13 +242,14 @@ type HttpDomainStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // HttpDomain is the Schema for the HttpDomains API. Provides a resource to create a forward domain of layer7 listener.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type HttpDomain struct {
 	metav1.TypeMeta   `json:",inline"`

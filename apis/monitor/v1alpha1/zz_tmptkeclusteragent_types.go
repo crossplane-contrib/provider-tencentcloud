@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -260,6 +256,19 @@ type TmpTkeClusterAgentInitParameters struct {
 	// agent list.
 	// agent list.
 	Agents []AgentsInitParameters `json:"agents,omitempty" tf:"agents,omitempty"`
+
+	// Instance Id.
+	// Instance Id.
+	// +crossplane:generate:reference:type=TmpInstance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a TmpInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a TmpInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 }
 
 type TmpTkeClusterAgentObservation struct {
@@ -370,13 +379,14 @@ type TmpTkeClusterAgentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TmpTkeClusterAgent is the Schema for the TmpTkeClusterAgents API. Provides a resource to create a tmp tke cluster agent
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type TmpTkeClusterAgent struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,45 @@ import (
 )
 
 type AttachmentInitParameters struct {
+
+	// ID of the CLB.
+	// ID of the CLB.
+	// +crossplane:generate:reference:type=Instance
+	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
+
+	// Reference to a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDRef *v1.Reference `json:"clbIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
+
+	// ID of the CLB listener.
+	// ID of the CLB listener.
+	// +crossplane:generate:reference:type=Listener
+	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Reference to a Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDRef *v1.Reference `json:"listenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
+
+	// ID of the CLB listener rule. Only supports listeners of HTTPS and HTTP protocol.
+	// ID of the CLB listener rule. Only supports listeners of `HTTPS` and `HTTP` protocol.
+	// +crossplane:generate:reference:type=ListenerRule
+	RuleID *string `json:"ruleId,omitempty" tf:"rule_id,omitempty"`
+
+	// Reference to a ListenerRule to populate ruleId.
+	// +kubebuilder:validation:Optional
+	RuleIDRef *v1.Reference `json:"ruleIdRef,omitempty" tf:"-"`
+
+	// Selector for a ListenerRule to populate ruleId.
+	// +kubebuilder:validation:Optional
+	RuleIDSelector *v1.Selector `json:"ruleIdSelector,omitempty" tf:"-"`
 
 	// Information of the backends to be attached.
 	// Information of the backends to be attached.
@@ -185,13 +220,14 @@ type AttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Attachment is the Schema for the Attachments API. Provides a resource to create a CLB attachment.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Attachment struct {
 	metav1.TypeMeta   `json:",inline"`

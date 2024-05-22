@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -45,11 +41,25 @@ type HttpRuleInitParameters struct {
 
 	// Return code of confirmed normal. Valid value: 100, 200, 300, 400 and 500.
 	// Return code of confirmed normal. Valid value: `100`, `200`, `300`, `400` and `500`.
+	// +listType=set
 	HealthCheckStatusCodes []*float64 `json:"healthCheckStatusCodes,omitempty" tf:"health_check_status_codes,omitempty"`
 
 	// Interval of the health check, default value is 5s.
 	// Interval of the health check, default value is 5s.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
+
+	// ID of the layer7 listener.
+	// ID of the layer7 listener.
+	// +crossplane:generate:reference:type=Layer7Listener
+	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Reference to a Layer7Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDRef *v1.Reference `json:"listenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a Layer7Listener to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
 
 	// Path of the forward rule. Maximum length is 80.
 	// Path of the forward rule. Maximum length is 80.
@@ -104,6 +114,7 @@ type HttpRuleObservation struct {
 
 	// Return code of confirmed normal. Valid value: 100, 200, 300, 400 and 500.
 	// Return code of confirmed normal. Valid value: `100`, `200`, `300`, `400` and `500`.
+	// +listType=set
 	HealthCheckStatusCodes []*float64 `json:"healthCheckStatusCodes,omitempty" tf:"health_check_status_codes,omitempty"`
 
 	// ID of the GAAP realserver.
@@ -177,6 +188,7 @@ type HttpRuleParameters struct {
 	// Return code of confirmed normal. Valid value: 100, 200, 300, 400 and 500.
 	// Return code of confirmed normal. Valid value: `100`, `200`, `300`, `400` and `500`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	HealthCheckStatusCodes []*float64 `json:"healthCheckStatusCodes,omitempty" tf:"health_check_status_codes,omitempty"`
 
 	// Interval of the health check, default value is 5s.
@@ -314,13 +326,14 @@ type HttpRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // HttpRule is the Schema for the HttpRules API. Provides a resource to create a forward rule of layer7 listener.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type HttpRule struct {
 	metav1.TypeMeta   `json:",inline"`

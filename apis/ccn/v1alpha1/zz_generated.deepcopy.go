@@ -314,6 +314,21 @@ func (in *BandwidthLimitInitParameters) DeepCopyInto(out *BandwidthLimitInitPara
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CcnID != nil {
+		in, out := &in.CcnID, &out.CcnID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CcnIDRef != nil {
+		in, out := &in.CcnIDRef, &out.CcnIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CcnIDSelector != nil {
+		in, out := &in.CcnIDSelector, &out.CcnIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DstRegion != nil {
 		in, out := &in.DstRegion, &out.DstRegion
 		*out = new(string)

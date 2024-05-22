@@ -36,6 +36,22 @@ func (mg *Snapshot) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mg.Spec.ForProvider.StorageID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.StorageIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.StorageID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.StorageIDRef,
+		Selector:     mg.Spec.InitProvider.StorageIDSelector,
+		To: reference.To{
+			List:    &StorageList{},
+			Managed: &Storage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.StorageID")
+	}
+	mg.Spec.InitProvider.StorageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.StorageIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -78,6 +94,38 @@ func (mg *SnapshotPolicyAttachment) ResolveReferences(ctx context.Context, c cli
 	mg.Spec.ForProvider.StorageID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.StorageIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SnapshotPolicyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SnapshotPolicyIDRef,
+		Selector:     mg.Spec.InitProvider.SnapshotPolicyIDSelector,
+		To: reference.To{
+			List:    &SnapshotPolicyList{},
+			Managed: &SnapshotPolicy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SnapshotPolicyID")
+	}
+	mg.Spec.InitProvider.SnapshotPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SnapshotPolicyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.StorageID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.StorageIDRef,
+		Selector:     mg.Spec.InitProvider.StorageIDSelector,
+		To: reference.To{
+			List:    &StorageList{},
+			Managed: &Storage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.StorageID")
+	}
+	mg.Spec.InitProvider.StorageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.StorageIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -119,6 +167,38 @@ func (mg *StorageAttachment) ResolveReferences(ctx context.Context, c client.Rea
 	}
 	mg.Spec.ForProvider.StorageID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.StorageIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.InstanceIDRef,
+		Selector:     mg.Spec.InitProvider.InstanceIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.InstanceList{},
+			Managed: &v1alpha1.Instance{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstanceID")
+	}
+	mg.Spec.InitProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstanceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.StorageID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.StorageIDRef,
+		Selector:     mg.Spec.InitProvider.StorageIDSelector,
+		To: reference.To{
+			List:    &StorageList{},
+			Managed: &Storage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.StorageID")
+	}
+	mg.Spec.InitProvider.StorageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.StorageIDRef = rsp.ResolvedReference
 
 	return nil
 }

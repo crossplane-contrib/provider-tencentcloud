@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,9 +15,35 @@ import (
 
 type LogConfigInitParameters struct {
 
+	// application ID.
+	// application ID.
+	// +crossplane:generate:reference:type=Application
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
 	// regex pattern.
 	// regex pattern.
 	BeginningRegex *string `json:"beginningRegex,omitempty" tf:"beginning_regex,omitempty"`
+
+	// environment ID.
+	// environment ID.
+	// +crossplane:generate:reference:type=Environment
+	EnvironmentID *string `json:"environmentId,omitempty" tf:"environment_id,omitempty"`
+
+	// Reference to a Environment to populate environmentId.
+	// +kubebuilder:validation:Optional
+	EnvironmentIDRef *v1.Reference `json:"environmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Environment to populate environmentId.
+	// +kubebuilder:validation:Optional
+	EnvironmentIDSelector *v1.Selector `json:"environmentIdSelector,omitempty" tf:"-"`
 
 	// file name pattern if container_file.
 	// file name pattern if container_file.
@@ -50,6 +72,19 @@ type LogConfigInitParameters struct {
 	// topic.
 	// topic.
 	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+
+	// application ID, which is combined by environment ID and application ID, like en-o5edaepv#app-3j29aa2p.
+	// application ID, which is combined by environment ID and application ID, like `en-o5edaepv#app-3j29aa2p`.
+	// +crossplane:generate:reference:type=Workload
+	WorkloadID *string `json:"workloadId,omitempty" tf:"workload_id,omitempty"`
+
+	// Reference to a Workload to populate workloadId.
+	// +kubebuilder:validation:Optional
+	WorkloadIDRef *v1.Reference `json:"workloadIdRef,omitempty" tf:"-"`
+
+	// Selector for a Workload to populate workloadId.
+	// +kubebuilder:validation:Optional
+	WorkloadIDSelector *v1.Selector `json:"workloadIdSelector,omitempty" tf:"-"`
 }
 
 type LogConfigObservation struct {
@@ -211,13 +246,14 @@ type LogConfigStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // LogConfig is the Schema for the LogConfigs API. Provides a resource to create a tem logConfig
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type LogConfig struct {
 	metav1.TypeMeta   `json:",inline"`

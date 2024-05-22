@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -19,6 +15,19 @@ import (
 
 type RedirectionInitParameters struct {
 
+	// ID of CLB instance.
+	// ID of CLB instance.
+	// +crossplane:generate:reference:type=Instance
+	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
+
+	// Reference to a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDRef *v1.Reference `json:"clbIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
+
 	// Indicates whether delete all auto redirection. Default is false. It will take effect only when this redirection is auto-rewrite and this auto-rewrite auto redirected more than one rules. All the auto-rewrite relations will be deleted when this parameter set true.
 	// Indicates whether delete all auto redirection. Default is `false`. It will take effect only when this redirection is auto-rewrite and this auto-rewrite auto redirected more than one rules. All the auto-rewrite relations will be deleted when this parameter set true.
 	DeleteAllAutoRewrite *bool `json:"deleteAllAutoRewrite,omitempty" tf:"delete_all_auto_rewrite,omitempty"`
@@ -26,6 +35,58 @@ type RedirectionInitParameters struct {
 	// Indicates whether automatic forwarding is enable, default is false. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
 	// Indicates whether automatic forwarding is enable, default is `false`. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
 	IsAutoRewrite *bool `json:"isAutoRewrite,omitempty" tf:"is_auto_rewrite,omitempty"`
+
+	// ID of source listener.
+	// ID of source listener.
+	// +crossplane:generate:reference:type=Listener
+	SourceListenerID *string `json:"sourceListenerId,omitempty" tf:"source_listener_id,omitempty"`
+
+	// Reference to a Listener to populate sourceListenerId.
+	// +kubebuilder:validation:Optional
+	SourceListenerIDRef *v1.Reference `json:"sourceListenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a Listener to populate sourceListenerId.
+	// +kubebuilder:validation:Optional
+	SourceListenerIDSelector *v1.Selector `json:"sourceListenerIdSelector,omitempty" tf:"-"`
+
+	// Rule ID of source listener.
+	// Rule ID of source listener.
+	// +crossplane:generate:reference:type=ListenerRule
+	SourceRuleID *string `json:"sourceRuleId,omitempty" tf:"source_rule_id,omitempty"`
+
+	// Reference to a ListenerRule to populate sourceRuleId.
+	// +kubebuilder:validation:Optional
+	SourceRuleIDRef *v1.Reference `json:"sourceRuleIdRef,omitempty" tf:"-"`
+
+	// Selector for a ListenerRule to populate sourceRuleId.
+	// +kubebuilder:validation:Optional
+	SourceRuleIDSelector *v1.Selector `json:"sourceRuleIdSelector,omitempty" tf:"-"`
+
+	// ID of source listener.
+	// ID of source listener.
+	// +crossplane:generate:reference:type=Listener
+	TargetListenerID *string `json:"targetListenerId,omitempty" tf:"target_listener_id,omitempty"`
+
+	// Reference to a Listener to populate targetListenerId.
+	// +kubebuilder:validation:Optional
+	TargetListenerIDRef *v1.Reference `json:"targetListenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a Listener to populate targetListenerId.
+	// +kubebuilder:validation:Optional
+	TargetListenerIDSelector *v1.Selector `json:"targetListenerIdSelector,omitempty" tf:"-"`
+
+	// Rule ID of target listener.
+	// Rule ID of target listener.
+	// +crossplane:generate:reference:type=ListenerRule
+	TargetRuleID *string `json:"targetRuleId,omitempty" tf:"target_rule_id,omitempty"`
+
+	// Reference to a ListenerRule to populate targetRuleId.
+	// +kubebuilder:validation:Optional
+	TargetRuleIDRef *v1.Reference `json:"targetRuleIdRef,omitempty" tf:"-"`
+
+	// Selector for a ListenerRule to populate targetRuleId.
+	// +kubebuilder:validation:Optional
+	TargetRuleIDSelector *v1.Selector `json:"targetRuleIdSelector,omitempty" tf:"-"`
 }
 
 type RedirectionObservation struct {
@@ -169,13 +230,14 @@ type RedirectionStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Redirection is the Schema for the Redirections API. Provides a resource to create a CLB redirection.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Redirection struct {
 	metav1.TypeMeta   `json:",inline"`

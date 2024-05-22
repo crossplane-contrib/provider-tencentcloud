@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: ddospolicies.dayu.tencentcloud.crossplane.io
 spec:
   group: dayu.tencentcloud.crossplane.io
@@ -38,14 +38,19 @@ spec:
           to create dayu DDoS policy
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,278 +74,268 @@ spec:
               forProvider:
                 properties:
                   blackIps:
-                    description: Black IP list. Black IP list.
+                    description: |-
+                      Black IP list.
+                      Black IP list.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   dropOptions:
-                    description: Option list of abnormal check of the DDos policy,
-                      should set at least one policy. Option list of abnormal check
-                      of the DDos policy, should set at least one policy.
+                    description: |-
+                      Option list of abnormal check of the DDos policy, should set at least one policy.
+                      Option list of abnormal check of the DDos policy, should set at least one policy.
                     items:
                       properties:
                         badConnThreshold:
-                          description: 'The number of new connections based on destination
-                            IP that trigger suppression of connections. Valid value
-                            ranges: (0~4294967295). The number of new connections
-                            based on destination IP that trigger suppression of connections.
-                            Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The number of new connections based on destination IP that trigger suppression of connections. Valid value ranges: (0~4294967295).
+                            The number of new connections based on destination IP that trigger suppression of connections. Valid value ranges: (0~4294967295).
                           type: number
                         checkSyncConn:
-                          description: Indicate whether to check null connection or
-                            not. Indicate whether to check null connection or not.
+                          description: |-
+                            Indicate whether to check null connection or not.
+                            Indicate whether to check null connection or not.
                           type: boolean
                         connTimeout:
-                          description: 'Connection timeout of abnormal connection
-                            check. Valid value ranges: (0~65535). Connection timeout
-                            of abnormal connection check. Valid value ranges: (0~65535).'
+                          description: |-
+                            Connection timeout of abnormal connection check. Valid value ranges: (0~65535).
+                            Connection timeout of abnormal connection check. Valid value ranges: (0~65535).
                           type: number
                         dConnLimit:
-                          description: 'The limit of concurrent connections based
-                            on destination IP. Valid value ranges: (0~4294967295).
-                            The limit of concurrent connections based on destination
-                            IP. Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of concurrent connections based on destination IP. Valid value ranges: (0~4294967295).
+                            The limit of concurrent connections based on destination IP. Valid value ranges: (0~4294967295).
                           type: number
                         dNewLimit:
-                          description: 'The limit of new connections based on destination
-                            IP. Valid value ranges: (0~4294967295). The limit of new
-                            connections based on destination IP. Valid value ranges:
-                            (0~4294967295).'
+                          description: |-
+                            The limit of new connections based on destination IP. Valid value ranges: (0~4294967295).
+                            The limit of new connections based on destination IP. Valid value ranges: (0~4294967295).
                           type: number
                         dropAbroad:
-                          description: Indicate whether to drop abroad traffic or
-                            not. Indicate whether to drop abroad traffic or not.
+                          description: |-
+                            Indicate whether to drop abroad traffic or not.
+                            Indicate whether to drop abroad traffic or not.
                           type: boolean
                         dropIcmp:
-                          description: Indicate whether to drop ICMP protocol or not.
+                          description: |-
+                            Indicate whether to drop ICMP protocol or not.
                             Indicate whether to drop ICMP protocol or not.
                           type: boolean
                         dropOther:
-                          description: Indicate whether to drop other protocols(exclude
-                            TCP/UDP/ICMP) or not. Indicate whether to drop other protocols(exclude
-                            TCP/UDP/ICMP) or not.
+                          description: |-
+                            Indicate whether to drop other protocols(exclude TCP/UDP/ICMP) or not.
+                            Indicate whether to drop other protocols(exclude TCP/UDP/ICMP) or not.
                           type: boolean
                         dropTcp:
-                          description: Indicate whether to drop TCP protocol or not.
+                          description: |-
+                            Indicate whether to drop TCP protocol or not.
                             Indicate whether to drop TCP protocol or not.
                           type: boolean
                         dropUdp:
-                          description: Indicate to drop UDP protocol or not. Indicate
-                            to drop UDP protocol or not.
+                          description: |-
+                            Indicate to drop UDP protocol or not.
+                            Indicate to drop UDP protocol or not.
                           type: boolean
                         icmpMbpsLimit:
-                          description: 'The limit of ICMP traffic rate. Valid value
-                            ranges: (0~4294967295)(Mbps). The limit of ICMP traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of ICMP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of ICMP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         nullConnEnable:
-                          description: Indicate to enable null connection or not.
+                          description: |-
+                            Indicate to enable null connection or not.
                             Indicate to enable null connection or not.
                           type: boolean
                         otherMbpsLimit:
-                          description: 'The limit of other protocols(exclude TCP/UDP/ICMP)
-                            traffic rate. Valid value ranges: (0~4294967295)(Mbps).
-                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         sConnLimit:
-                          description: 'The limit of concurrent connections based
-                            on source IP. Valid value ranges: (0~4294967295). The
-                            limit of concurrent connections based on source IP. Valid
-                            value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of concurrent connections based on source IP. Valid value ranges: (0~4294967295).
+                            The limit of concurrent connections based on source IP. Valid value ranges: (0~4294967295).
                           type: number
                         sNewLimit:
-                          description: 'The limit of new connections based on source
-                            IP. Valid value ranges: (0~4294967295). The limit of new
-                            connections based on source IP. Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of new connections based on source IP. Valid value ranges: (0~4294967295).
+                            The limit of new connections based on source IP. Valid value ranges: (0~4294967295).
                           type: number
                         synLimit:
-                          description: 'The limit of syn of abnormal connection check.
-                            Valid value ranges: (0~100). The limit of syn of abnormal
-                            connection check. Valid value ranges: (0~100).'
+                          description: |-
+                            The limit of syn of abnormal connection check. Valid value ranges: (0~100).
+                            The limit of syn of abnormal connection check. Valid value ranges: (0~100).
                           type: number
                         synRate:
-                          description: 'The percentage of syn in ack of abnormal connection
-                            check. Valid value ranges: (0~100). The percentage of
-                            syn in ack of abnormal connection check. Valid value ranges:
-                            (0~100).'
+                          description: |-
+                            The percentage of syn in ack of abnormal connection check. Valid value ranges: (0~100).
+                            The percentage of syn in ack of abnormal connection check. Valid value ranges: (0~100).
                           type: number
                         tcpMbpsLimit:
-                          description: 'The limit of TCP traffic. Valid value ranges:
-                            (0~4294967295)(Mbps). The limit of TCP traffic. Valid
-                            value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of TCP traffic. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of TCP traffic. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         udpMbpsLimit:
-                          description: 'The limit of UDP traffic rate. Valid value
-                            ranges: (0~4294967295)(Mbps). The limit of UDP traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of UDP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of UDP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                       type: object
                     type: array
                   name:
-                    description: Name of the DDoS policy. Length should between 1
-                      and 32. Name of the DDoS policy. Length should between 1 and
-                      32.
+                    description: |-
+                      Name of the DDoS policy. Length should between 1 and 32.
+                      Name of the DDoS policy. Length should between 1 and 32.
                     type: string
                   packetFilters:
-                    description: Message filter options list. Message filter options
-                      list.
+                    description: |-
+                      Message filter options list.
+                      Message filter options list.
                     items:
                       properties:
                         action:
-                          description: 'Action of port to take. Valid values: drop,
-                            drop_black,drop_rst,drop_black_rst,transmit.drop(drop
-                            the packet), drop_black(drop the packet and black the
-                            ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop
-                            the packet, black the ip and disconnect),transmit(transmit
-                            the packet). Action of port to take. Valid values: `drop`,
-                            `drop_black`,`drop_rst`,`drop_black_rst`,`transmit`.`drop`(drop
-                            the packet), `drop_black`(drop the packet and black the
-                            ip),`drop_rst`(drop the packet and disconnect),`drop_black_rst`(drop
-                            the packet, black the ip and disconnect),`transmit`(transmit
-                            the packet).'
+                          description: |-
+                            Action of port to take. Valid values: drop, drop_black,drop_rst,drop_black_rst,transmit.drop(drop the packet), drop_black(drop the packet and black the ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop the packet, black the ip and disconnect),transmit(transmit the packet).
+                            Action of port to take. Valid values: `drop`, `drop_black`,`drop_rst`,`drop_black_rst`,`transmit`.`drop`(drop the packet), `drop_black`(drop the packet and black the ip),`drop_rst`(drop the packet and disconnect),`drop_black_rst`(drop the packet, black the ip and disconnect),`transmit`(transmit the packet).
                           type: string
                         dEndPort:
-                          description: 'End port of the destination. Valid value ranges:
-                            (0~65535). It must be greater than d_start_port. End port
-                            of the destination. Valid value ranges: (0~65535). It
-                            must be greater than `d_start_port`.'
+                          description: |-
+                            End port of the destination. Valid value ranges: (0~65535). It must be greater than d_start_port.
+                            End port of the destination. Valid value ranges: (0~65535). It must be greater than `d_start_port`.
                           type: number
                         dStartPort:
-                          description: 'Start port of the destination. Valid value
-                            ranges: (0~65535). Start port of the destination. Valid
-                            value ranges: (0~65535).'
+                          description: |-
+                            Start port of the destination. Valid value ranges: (0~65535).
+                            Start port of the destination. Valid value ranges: (0~65535).
                           type: number
                         depth:
-                          description: 'The depth of match. Valid value ranges: (0~1500).
-                            The depth of match. Valid value ranges: (0~1500).'
+                          description: |-
+                            The depth of match. Valid value ranges: (0~1500).
+                            The depth of match. Valid value ranges: (0~1500).
                           type: number
                         isInclude:
-                          description: Indicate whether to include the key word/regular
-                            expression or not. Indicate whether to include the key
-                            word/regular expression or not.
+                          description: |-
+                            Indicate whether to include the key word/regular expression or not.
+                            Indicate whether to include the key word/regular expression or not.
                           type: boolean
                         matchBegin:
-                          description: Indicate whether to check load or not, begin_l5
-                            means to match and no_match means not. Indicate whether
-                            to check load or not, `begin_l5` means to match and `no_match`
-                            means not.
+                          description: |-
+                            Indicate whether to check load or not, begin_l5 means to match and no_match means not.
+                            Indicate whether to check load or not, `begin_l5` means to match and `no_match` means not.
                           type: string
                         matchStr:
-                          description: The key word or regular expression. The key
-                            word or regular expression.
+                          description: |-
+                            The key word or regular expression.
+                            The key word or regular expression.
                           type: string
                         matchType:
-                          description: 'Match type. Valid values: sunday and pcre.
-                            sunday means key word match while pcre means regular match.
-                            Match type. Valid values: `sunday` and `pcre`. `sunday`
-                            means key word match while `pcre` means regular match.'
+                          description: |-
+                            Match type. Valid values: sunday and pcre. sunday means key word match while pcre means regular match.
+                            Match type. Valid values: `sunday` and `pcre`. `sunday` means key word match while `pcre` means regular match.
                           type: string
                         offset:
-                          description: 'The offset of match. Valid value ranges: (0~1500).
-                            The offset of match. Valid value ranges: (0~1500).'
+                          description: |-
+                            The offset of match. Valid value ranges: (0~1500).
+                            The offset of match. Valid value ranges: (0~1500).
                           type: number
                         pktLengthMax:
-                          description: 'The max length of the packet. Valid value
-                            ranges: (0~1500)(Mbps). It must be greater than pkt_length_min.
-                            The max length of the packet. Valid value ranges: (0~1500)(Mbps).
-                            It must be greater than `pkt_length_min`.'
+                          description: |-
+                            The max length of the packet. Valid value ranges: (0~1500)(Mbps). It must be greater than pkt_length_min.
+                            The max length of the packet. Valid value ranges: (0~1500)(Mbps). It must be greater than `pkt_length_min`.
                           type: number
                         pktLengthMin:
-                          description: 'The minimum length of the packet. Valid value
-                            ranges: (0~1500)(Mbps). The minimum length of the packet.
-                            Valid value ranges: (0~1500)(Mbps).'
+                          description: |-
+                            The minimum length of the packet. Valid value ranges: (0~1500)(Mbps).
+                            The minimum length of the packet. Valid value ranges: (0~1500)(Mbps).
                           type: number
                         protocol:
-                          description: 'Protocol. Valid values: tcp, udp, icmp, all.
-                            Protocol. Valid values: `tcp`, `udp`, `icmp`, `all`.'
+                          description: |-
+                            Protocol. Valid values: tcp, udp, icmp, all.
+                            Protocol. Valid values: `tcp`, `udp`, `icmp`, `all`.
                           type: string
                         sEndPort:
-                          description: 'End port of the source. Valid value ranges:
-                            (0~65535). It must be greater than s_start_port. End port
-                            of the source. Valid value ranges: (0~65535). It must
-                            be greater than `s_start_port`.'
+                          description: |-
+                            End port of the source. Valid value ranges: (0~65535). It must be greater than s_start_port.
+                            End port of the source. Valid value ranges: (0~65535). It must be greater than `s_start_port`.
                           type: number
                         sStartPort:
-                          description: 'Start port of the source. Valid value ranges:
-                            (0~65535). Start port of the source. Valid value ranges:
-                            (0~65535).'
+                          description: |-
+                            Start port of the source. Valid value ranges: (0~65535).
+                            Start port of the source. Valid value ranges: (0~65535).
                           type: number
                       type: object
                     type: array
                   portFilters:
-                    description: Port limits of abnormal check of the DDos policy.
+                    description: |-
+                      Port limits of abnormal check of the DDos policy.
                       Port limits of abnormal check of the DDos policy.
                     items:
                       properties:
                         action:
-                          description: 'Action of port to take. Valid values: drop,
-                            drop_black,drop_rst,drop_black_rst,transmit.drop(drop
-                            the packet), drop_black(drop the packet and black the
-                            ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop
-                            the packet, black the ip and disconnect),transmit(transmit
-                            the packet). Action of port to take. Valid values: `drop`,
-                            `transmit`.'
+                          description: |-
+                            Action of port to take. Valid values: drop, drop_black,drop_rst,drop_black_rst,transmit.drop(drop the packet), drop_black(drop the packet and black the ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop the packet, black the ip and disconnect),transmit(transmit the packet).
+                            Action of port to take. Valid values: `drop`, `transmit`.
                           type: string
                         endPort:
-                          description: 'End port. Valid value ranges: (0~65535). It
-                            must be greater than start_port. End port. Valid value
-                            ranges: (0~65535). It must be greater than `start_port`.'
+                          description: |-
+                            End port. Valid value ranges: (0~65535). It must be greater than start_port.
+                            End port. Valid value ranges: (0~65535). It must be greater than `start_port`.
                           type: number
                         kind:
-                          description: 'The type of forbidden port. Valid values:
-                            0, 1, 2. 0 for destination ports make effect, 1 for source
-                            ports make effect. 2 for both destination and source ports.
-                            The type of forbidden port. Valid values: `0`, `1`, `2`.
-                            `0` for destination ports make effect, `1` for source
-                            ports make effect. `2` for both destination and source
-                            ports.'
+                          description: |-
+                            The type of forbidden port. Valid values: 0, 1, 2. 0 for destination ports make effect, 1 for source ports make effect. 2 for both destination and source ports.
+                            The type of forbidden port. Valid values: `0`, `1`, `2`. `0` for destination ports make effect, `1` for source ports make effect. `2` for both destination and source ports.
                           type: number
                         protocol:
-                          description: 'Protocol. Valid values: tcp, udp, icmp, all.
-                            Protocol. Valid values are `tcp`, `udp`, `icmp`, `all`.'
+                          description: |-
+                            Protocol. Valid values: tcp, udp, icmp, all.
+                            Protocol. Valid values are `tcp`, `udp`, `icmp`, `all`.
                           type: string
                         startPort:
-                          description: 'Start port. Valid value ranges: (0~65535).
-                            Start port. Valid value ranges: (0~65535).'
+                          description: |-
+                            Start port. Valid value ranges: (0~65535).
+                            Start port. Valid value ranges: (0~65535).
                           type: number
                       type: object
                     type: array
                   resourceType:
-                    description: 'Type of the resource that the DDoS policy works
-                      for. Valid values: bgpip, bgp, bgp-multip and net. Type of the
-                      resource that the DDoS policy works for. Valid values: `bgpip`,
-                      `bgp`, `bgp-multip` and `net`.'
+                    description: |-
+                      Type of the resource that the DDoS policy works for. Valid values: bgpip, bgp, bgp-multip and net.
+                      Type of the resource that the DDoS policy works for. Valid values: `bgpip`, `bgp`, `bgp-multip` and `net`.
                     type: string
                   watermarkFilters:
-                    description: Watermark policy options, and only support one watermark
-                      policy at most. Watermark policy options, and only support one
-                      watermark policy at most.
+                    description: |-
+                      Watermark policy options, and only support one watermark policy at most.
+                      Watermark policy options, and only support one watermark policy at most.
                     items:
                       properties:
                         autoRemove:
-                          description: Indicate whether to auto-remove the watermark
-                            or not. Indicate whether to auto-remove the watermark
-                            or not.
+                          description: |-
+                            Indicate whether to auto-remove the watermark or not.
+                            Indicate whether to auto-remove the watermark or not.
                           type: boolean
                         offset:
-                          description: 'The offset of match. Valid value ranges: (0~1500).
-                            The offset of watermark. Valid value ranges: (0~1500).'
+                          description: |-
+                            The offset of match. Valid value ranges: (0~1500).
+                            The offset of watermark. Valid value ranges: (0~1500).
                           type: number
                         openSwitch:
-                          description: Indicate whether to open watermark or not.
-                            It muse be set true when any field of watermark was set.
-                            Indicate whether to open watermark or not. It muse be
-                            set `true` when any field of watermark was set.
+                          description: |-
+                            Indicate whether to open watermark or not. It muse be set true when any field of watermark was set.
+                            Indicate whether to open watermark or not. It muse be set `true` when any field of watermark was set.
                           type: boolean
                         tcpPortList:
-                          description: Port range of TCP, the format is like 2000-3000.
+                          description: |-
+                            Port range of TCP, the format is like 2000-3000.
                             Port range of TCP, the format is like `2000-3000`.
                           items:
                             type: string
                           type: array
                         udpPortList:
-                          description: Port range of TCP, the format is like 2000-3000.
+                          description: |-
+                            Port range of TCP, the format is like 2000-3000.
                             Port range of TCP, the format is like `2000-3000`.
                           items:
                             type: string
@@ -347,296 +343,290 @@ spec:
                       type: object
                     type: array
                   whiteIps:
-                    description: White IP list. White IP list.
+                    description: |-
+                      White IP list.
+                      White IP list.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   blackIps:
-                    description: Black IP list. Black IP list.
+                    description: |-
+                      Black IP list.
+                      Black IP list.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   dropOptions:
-                    description: Option list of abnormal check of the DDos policy,
-                      should set at least one policy. Option list of abnormal check
-                      of the DDos policy, should set at least one policy.
+                    description: |-
+                      Option list of abnormal check of the DDos policy, should set at least one policy.
+                      Option list of abnormal check of the DDos policy, should set at least one policy.
                     items:
                       properties:
                         badConnThreshold:
-                          description: 'The number of new connections based on destination
-                            IP that trigger suppression of connections. Valid value
-                            ranges: (0~4294967295). The number of new connections
-                            based on destination IP that trigger suppression of connections.
-                            Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The number of new connections based on destination IP that trigger suppression of connections. Valid value ranges: (0~4294967295).
+                            The number of new connections based on destination IP that trigger suppression of connections. Valid value ranges: (0~4294967295).
                           type: number
                         checkSyncConn:
-                          description: Indicate whether to check null connection or
-                            not. Indicate whether to check null connection or not.
+                          description: |-
+                            Indicate whether to check null connection or not.
+                            Indicate whether to check null connection or not.
                           type: boolean
                         connTimeout:
-                          description: 'Connection timeout of abnormal connection
-                            check. Valid value ranges: (0~65535). Connection timeout
-                            of abnormal connection check. Valid value ranges: (0~65535).'
+                          description: |-
+                            Connection timeout of abnormal connection check. Valid value ranges: (0~65535).
+                            Connection timeout of abnormal connection check. Valid value ranges: (0~65535).
                           type: number
                         dConnLimit:
-                          description: 'The limit of concurrent connections based
-                            on destination IP. Valid value ranges: (0~4294967295).
-                            The limit of concurrent connections based on destination
-                            IP. Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of concurrent connections based on destination IP. Valid value ranges: (0~4294967295).
+                            The limit of concurrent connections based on destination IP. Valid value ranges: (0~4294967295).
                           type: number
                         dNewLimit:
-                          description: 'The limit of new connections based on destination
-                            IP. Valid value ranges: (0~4294967295). The limit of new
-                            connections based on destination IP. Valid value ranges:
-                            (0~4294967295).'
+                          description: |-
+                            The limit of new connections based on destination IP. Valid value ranges: (0~4294967295).
+                            The limit of new connections based on destination IP. Valid value ranges: (0~4294967295).
                           type: number
                         dropAbroad:
-                          description: Indicate whether to drop abroad traffic or
-                            not. Indicate whether to drop abroad traffic or not.
+                          description: |-
+                            Indicate whether to drop abroad traffic or not.
+                            Indicate whether to drop abroad traffic or not.
                           type: boolean
                         dropIcmp:
-                          description: Indicate whether to drop ICMP protocol or not.
+                          description: |-
+                            Indicate whether to drop ICMP protocol or not.
                             Indicate whether to drop ICMP protocol or not.
                           type: boolean
                         dropOther:
-                          description: Indicate whether to drop other protocols(exclude
-                            TCP/UDP/ICMP) or not. Indicate whether to drop other protocols(exclude
-                            TCP/UDP/ICMP) or not.
+                          description: |-
+                            Indicate whether to drop other protocols(exclude TCP/UDP/ICMP) or not.
+                            Indicate whether to drop other protocols(exclude TCP/UDP/ICMP) or not.
                           type: boolean
                         dropTcp:
-                          description: Indicate whether to drop TCP protocol or not.
+                          description: |-
+                            Indicate whether to drop TCP protocol or not.
                             Indicate whether to drop TCP protocol or not.
                           type: boolean
                         dropUdp:
-                          description: Indicate to drop UDP protocol or not. Indicate
-                            to drop UDP protocol or not.
+                          description: |-
+                            Indicate to drop UDP protocol or not.
+                            Indicate to drop UDP protocol or not.
                           type: boolean
                         icmpMbpsLimit:
-                          description: 'The limit of ICMP traffic rate. Valid value
-                            ranges: (0~4294967295)(Mbps). The limit of ICMP traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of ICMP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of ICMP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         nullConnEnable:
-                          description: Indicate to enable null connection or not.
+                          description: |-
+                            Indicate to enable null connection or not.
                             Indicate to enable null connection or not.
                           type: boolean
                         otherMbpsLimit:
-                          description: 'The limit of other protocols(exclude TCP/UDP/ICMP)
-                            traffic rate. Valid value ranges: (0~4294967295)(Mbps).
-                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         sConnLimit:
-                          description: 'The limit of concurrent connections based
-                            on source IP. Valid value ranges: (0~4294967295). The
-                            limit of concurrent connections based on source IP. Valid
-                            value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of concurrent connections based on source IP. Valid value ranges: (0~4294967295).
+                            The limit of concurrent connections based on source IP. Valid value ranges: (0~4294967295).
                           type: number
                         sNewLimit:
-                          description: 'The limit of new connections based on source
-                            IP. Valid value ranges: (0~4294967295). The limit of new
-                            connections based on source IP. Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of new connections based on source IP. Valid value ranges: (0~4294967295).
+                            The limit of new connections based on source IP. Valid value ranges: (0~4294967295).
                           type: number
                         synLimit:
-                          description: 'The limit of syn of abnormal connection check.
-                            Valid value ranges: (0~100). The limit of syn of abnormal
-                            connection check. Valid value ranges: (0~100).'
+                          description: |-
+                            The limit of syn of abnormal connection check. Valid value ranges: (0~100).
+                            The limit of syn of abnormal connection check. Valid value ranges: (0~100).
                           type: number
                         synRate:
-                          description: 'The percentage of syn in ack of abnormal connection
-                            check. Valid value ranges: (0~100). The percentage of
-                            syn in ack of abnormal connection check. Valid value ranges:
-                            (0~100).'
+                          description: |-
+                            The percentage of syn in ack of abnormal connection check. Valid value ranges: (0~100).
+                            The percentage of syn in ack of abnormal connection check. Valid value ranges: (0~100).
                           type: number
                         tcpMbpsLimit:
-                          description: 'The limit of TCP traffic. Valid value ranges:
-                            (0~4294967295)(Mbps). The limit of TCP traffic. Valid
-                            value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of TCP traffic. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of TCP traffic. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         udpMbpsLimit:
-                          description: 'The limit of UDP traffic rate. Valid value
-                            ranges: (0~4294967295)(Mbps). The limit of UDP traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of UDP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of UDP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                       type: object
                     type: array
                   name:
-                    description: Name of the DDoS policy. Length should between 1
-                      and 32. Name of the DDoS policy. Length should between 1 and
-                      32.
+                    description: |-
+                      Name of the DDoS policy. Length should between 1 and 32.
+                      Name of the DDoS policy. Length should between 1 and 32.
                     type: string
                   packetFilters:
-                    description: Message filter options list. Message filter options
-                      list.
+                    description: |-
+                      Message filter options list.
+                      Message filter options list.
                     items:
                       properties:
                         action:
-                          description: 'Action of port to take. Valid values: drop,
-                            drop_black,drop_rst,drop_black_rst,transmit.drop(drop
-                            the packet), drop_black(drop the packet and black the
-                            ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop
-                            the packet, black the ip and disconnect),transmit(transmit
-                            the packet). Action of port to take. Valid values: `drop`,
-                            `drop_black`,`drop_rst`,`drop_black_rst`,`transmit`.`drop`(drop
-                            the packet), `drop_black`(drop the packet and black the
-                            ip),`drop_rst`(drop the packet and disconnect),`drop_black_rst`(drop
-                            the packet, black the ip and disconnect),`transmit`(transmit
-                            the packet).'
+                          description: |-
+                            Action of port to take. Valid values: drop, drop_black,drop_rst,drop_black_rst,transmit.drop(drop the packet), drop_black(drop the packet and black the ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop the packet, black the ip and disconnect),transmit(transmit the packet).
+                            Action of port to take. Valid values: `drop`, `drop_black`,`drop_rst`,`drop_black_rst`,`transmit`.`drop`(drop the packet), `drop_black`(drop the packet and black the ip),`drop_rst`(drop the packet and disconnect),`drop_black_rst`(drop the packet, black the ip and disconnect),`transmit`(transmit the packet).
                           type: string
                         dEndPort:
-                          description: 'End port of the destination. Valid value ranges:
-                            (0~65535). It must be greater than d_start_port. End port
-                            of the destination. Valid value ranges: (0~65535). It
-                            must be greater than `d_start_port`.'
+                          description: |-
+                            End port of the destination. Valid value ranges: (0~65535). It must be greater than d_start_port.
+                            End port of the destination. Valid value ranges: (0~65535). It must be greater than `d_start_port`.
                           type: number
                         dStartPort:
-                          description: 'Start port of the destination. Valid value
-                            ranges: (0~65535). Start port of the destination. Valid
-                            value ranges: (0~65535).'
+                          description: |-
+                            Start port of the destination. Valid value ranges: (0~65535).
+                            Start port of the destination. Valid value ranges: (0~65535).
                           type: number
                         depth:
-                          description: 'The depth of match. Valid value ranges: (0~1500).
-                            The depth of match. Valid value ranges: (0~1500).'
+                          description: |-
+                            The depth of match. Valid value ranges: (0~1500).
+                            The depth of match. Valid value ranges: (0~1500).
                           type: number
                         isInclude:
-                          description: Indicate whether to include the key word/regular
-                            expression or not. Indicate whether to include the key
-                            word/regular expression or not.
+                          description: |-
+                            Indicate whether to include the key word/regular expression or not.
+                            Indicate whether to include the key word/regular expression or not.
                           type: boolean
                         matchBegin:
-                          description: Indicate whether to check load or not, begin_l5
-                            means to match and no_match means not. Indicate whether
-                            to check load or not, `begin_l5` means to match and `no_match`
-                            means not.
+                          description: |-
+                            Indicate whether to check load or not, begin_l5 means to match and no_match means not.
+                            Indicate whether to check load or not, `begin_l5` means to match and `no_match` means not.
                           type: string
                         matchStr:
-                          description: The key word or regular expression. The key
-                            word or regular expression.
+                          description: |-
+                            The key word or regular expression.
+                            The key word or regular expression.
                           type: string
                         matchType:
-                          description: 'Match type. Valid values: sunday and pcre.
-                            sunday means key word match while pcre means regular match.
-                            Match type. Valid values: `sunday` and `pcre`. `sunday`
-                            means key word match while `pcre` means regular match.'
+                          description: |-
+                            Match type. Valid values: sunday and pcre. sunday means key word match while pcre means regular match.
+                            Match type. Valid values: `sunday` and `pcre`. `sunday` means key word match while `pcre` means regular match.
                           type: string
                         offset:
-                          description: 'The offset of match. Valid value ranges: (0~1500).
-                            The offset of match. Valid value ranges: (0~1500).'
+                          description: |-
+                            The offset of match. Valid value ranges: (0~1500).
+                            The offset of match. Valid value ranges: (0~1500).
                           type: number
                         pktLengthMax:
-                          description: 'The max length of the packet. Valid value
-                            ranges: (0~1500)(Mbps). It must be greater than pkt_length_min.
-                            The max length of the packet. Valid value ranges: (0~1500)(Mbps).
-                            It must be greater than `pkt_length_min`.'
+                          description: |-
+                            The max length of the packet. Valid value ranges: (0~1500)(Mbps). It must be greater than pkt_length_min.
+                            The max length of the packet. Valid value ranges: (0~1500)(Mbps). It must be greater than `pkt_length_min`.
                           type: number
                         pktLengthMin:
-                          description: 'The minimum length of the packet. Valid value
-                            ranges: (0~1500)(Mbps). The minimum length of the packet.
-                            Valid value ranges: (0~1500)(Mbps).'
+                          description: |-
+                            The minimum length of the packet. Valid value ranges: (0~1500)(Mbps).
+                            The minimum length of the packet. Valid value ranges: (0~1500)(Mbps).
                           type: number
                         protocol:
-                          description: 'Protocol. Valid values: tcp, udp, icmp, all.
-                            Protocol. Valid values: `tcp`, `udp`, `icmp`, `all`.'
+                          description: |-
+                            Protocol. Valid values: tcp, udp, icmp, all.
+                            Protocol. Valid values: `tcp`, `udp`, `icmp`, `all`.
                           type: string
                         sEndPort:
-                          description: 'End port of the source. Valid value ranges:
-                            (0~65535). It must be greater than s_start_port. End port
-                            of the source. Valid value ranges: (0~65535). It must
-                            be greater than `s_start_port`.'
+                          description: |-
+                            End port of the source. Valid value ranges: (0~65535). It must be greater than s_start_port.
+                            End port of the source. Valid value ranges: (0~65535). It must be greater than `s_start_port`.
                           type: number
                         sStartPort:
-                          description: 'Start port of the source. Valid value ranges:
-                            (0~65535). Start port of the source. Valid value ranges:
-                            (0~65535).'
+                          description: |-
+                            Start port of the source. Valid value ranges: (0~65535).
+                            Start port of the source. Valid value ranges: (0~65535).
                           type: number
                       type: object
                     type: array
                   portFilters:
-                    description: Port limits of abnormal check of the DDos policy.
+                    description: |-
+                      Port limits of abnormal check of the DDos policy.
                       Port limits of abnormal check of the DDos policy.
                     items:
                       properties:
                         action:
-                          description: 'Action of port to take. Valid values: drop,
-                            drop_black,drop_rst,drop_black_rst,transmit.drop(drop
-                            the packet), drop_black(drop the packet and black the
-                            ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop
-                            the packet, black the ip and disconnect),transmit(transmit
-                            the packet). Action of port to take. Valid values: `drop`,
-                            `transmit`.'
+                          description: |-
+                            Action of port to take. Valid values: drop, drop_black,drop_rst,drop_black_rst,transmit.drop(drop the packet), drop_black(drop the packet and black the ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop the packet, black the ip and disconnect),transmit(transmit the packet).
+                            Action of port to take. Valid values: `drop`, `transmit`.
                           type: string
                         endPort:
-                          description: 'End port. Valid value ranges: (0~65535). It
-                            must be greater than start_port. End port. Valid value
-                            ranges: (0~65535). It must be greater than `start_port`.'
+                          description: |-
+                            End port. Valid value ranges: (0~65535). It must be greater than start_port.
+                            End port. Valid value ranges: (0~65535). It must be greater than `start_port`.
                           type: number
                         kind:
-                          description: 'The type of forbidden port. Valid values:
-                            0, 1, 2. 0 for destination ports make effect, 1 for source
-                            ports make effect. 2 for both destination and source ports.
-                            The type of forbidden port. Valid values: `0`, `1`, `2`.
-                            `0` for destination ports make effect, `1` for source
-                            ports make effect. `2` for both destination and source
-                            ports.'
+                          description: |-
+                            The type of forbidden port. Valid values: 0, 1, 2. 0 for destination ports make effect, 1 for source ports make effect. 2 for both destination and source ports.
+                            The type of forbidden port. Valid values: `0`, `1`, `2`. `0` for destination ports make effect, `1` for source ports make effect. `2` for both destination and source ports.
                           type: number
                         protocol:
-                          description: 'Protocol. Valid values: tcp, udp, icmp, all.
-                            Protocol. Valid values are `tcp`, `udp`, `icmp`, `all`.'
+                          description: |-
+                            Protocol. Valid values: tcp, udp, icmp, all.
+                            Protocol. Valid values are `tcp`, `udp`, `icmp`, `all`.
                           type: string
                         startPort:
-                          description: 'Start port. Valid value ranges: (0~65535).
-                            Start port. Valid value ranges: (0~65535).'
+                          description: |-
+                            Start port. Valid value ranges: (0~65535).
+                            Start port. Valid value ranges: (0~65535).
                           type: number
                       type: object
                     type: array
                   resourceType:
-                    description: 'Type of the resource that the DDoS policy works
-                      for. Valid values: bgpip, bgp, bgp-multip and net. Type of the
-                      resource that the DDoS policy works for. Valid values: `bgpip`,
-                      `bgp`, `bgp-multip` and `net`.'
+                    description: |-
+                      Type of the resource that the DDoS policy works for. Valid values: bgpip, bgp, bgp-multip and net.
+                      Type of the resource that the DDoS policy works for. Valid values: `bgpip`, `bgp`, `bgp-multip` and `net`.
                     type: string
                   watermarkFilters:
-                    description: Watermark policy options, and only support one watermark
-                      policy at most. Watermark policy options, and only support one
-                      watermark policy at most.
+                    description: |-
+                      Watermark policy options, and only support one watermark policy at most.
+                      Watermark policy options, and only support one watermark policy at most.
                     items:
                       properties:
                         autoRemove:
-                          description: Indicate whether to auto-remove the watermark
-                            or not. Indicate whether to auto-remove the watermark
-                            or not.
+                          description: |-
+                            Indicate whether to auto-remove the watermark or not.
+                            Indicate whether to auto-remove the watermark or not.
                           type: boolean
                         offset:
-                          description: 'The offset of match. Valid value ranges: (0~1500).
-                            The offset of watermark. Valid value ranges: (0~1500).'
+                          description: |-
+                            The offset of match. Valid value ranges: (0~1500).
+                            The offset of watermark. Valid value ranges: (0~1500).
                           type: number
                         openSwitch:
-                          description: Indicate whether to open watermark or not.
-                            It muse be set true when any field of watermark was set.
-                            Indicate whether to open watermark or not. It muse be
-                            set `true` when any field of watermark was set.
+                          description: |-
+                            Indicate whether to open watermark or not. It muse be set true when any field of watermark was set.
+                            Indicate whether to open watermark or not. It muse be set `true` when any field of watermark was set.
                           type: boolean
                         tcpPortList:
-                          description: Port range of TCP, the format is like 2000-3000.
+                          description: |-
+                            Port range of TCP, the format is like 2000-3000.
                             Port range of TCP, the format is like `2000-3000`.
                           items:
                             type: string
                           type: array
                         udpPortList:
-                          description: Port range of TCP, the format is like 2000-3000.
+                          description: |-
+                            Port range of TCP, the format is like 2000-3000.
                             Port range of TCP, the format is like `2000-3000`.
                           items:
                             type: string
@@ -644,27 +634,32 @@ spec:
                       type: object
                     type: array
                   whiteIps:
-                    description: White IP list. White IP list.
+                    description: |-
+                      White IP list.
+                      White IP list.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -677,9 +672,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -689,21 +685,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -713,17 +709,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -733,21 +731,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -762,21 +760,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -787,14 +786,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -828,115 +828,118 @@ spec:
               atProvider:
                 properties:
                   blackIps:
-                    description: Black IP list. Black IP list.
+                    description: |-
+                      Black IP list.
+                      Black IP list.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   createTime:
-                    description: Create time of the DDoS policy. Create time of the
-                      DDoS policy.
+                    description: |-
+                      Create time of the DDoS policy.
+                      Create time of the DDoS policy.
                     type: string
                   dropOptions:
-                    description: Option list of abnormal check of the DDos policy,
-                      should set at least one policy. Option list of abnormal check
-                      of the DDos policy, should set at least one policy.
+                    description: |-
+                      Option list of abnormal check of the DDos policy, should set at least one policy.
+                      Option list of abnormal check of the DDos policy, should set at least one policy.
                     items:
                       properties:
                         badConnThreshold:
-                          description: 'The number of new connections based on destination
-                            IP that trigger suppression of connections. Valid value
-                            ranges: (0~4294967295). The number of new connections
-                            based on destination IP that trigger suppression of connections.
-                            Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The number of new connections based on destination IP that trigger suppression of connections. Valid value ranges: (0~4294967295).
+                            The number of new connections based on destination IP that trigger suppression of connections. Valid value ranges: (0~4294967295).
                           type: number
                         checkSyncConn:
-                          description: Indicate whether to check null connection or
-                            not. Indicate whether to check null connection or not.
+                          description: |-
+                            Indicate whether to check null connection or not.
+                            Indicate whether to check null connection or not.
                           type: boolean
                         connTimeout:
-                          description: 'Connection timeout of abnormal connection
-                            check. Valid value ranges: (0~65535). Connection timeout
-                            of abnormal connection check. Valid value ranges: (0~65535).'
+                          description: |-
+                            Connection timeout of abnormal connection check. Valid value ranges: (0~65535).
+                            Connection timeout of abnormal connection check. Valid value ranges: (0~65535).
                           type: number
                         dConnLimit:
-                          description: 'The limit of concurrent connections based
-                            on destination IP. Valid value ranges: (0~4294967295).
-                            The limit of concurrent connections based on destination
-                            IP. Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of concurrent connections based on destination IP. Valid value ranges: (0~4294967295).
+                            The limit of concurrent connections based on destination IP. Valid value ranges: (0~4294967295).
                           type: number
                         dNewLimit:
-                          description: 'The limit of new connections based on destination
-                            IP. Valid value ranges: (0~4294967295). The limit of new
-                            connections based on destination IP. Valid value ranges:
-                            (0~4294967295).'
+                          description: |-
+                            The limit of new connections based on destination IP. Valid value ranges: (0~4294967295).
+                            The limit of new connections based on destination IP. Valid value ranges: (0~4294967295).
                           type: number
                         dropAbroad:
-                          description: Indicate whether to drop abroad traffic or
-                            not. Indicate whether to drop abroad traffic or not.
+                          description: |-
+                            Indicate whether to drop abroad traffic or not.
+                            Indicate whether to drop abroad traffic or not.
                           type: boolean
                         dropIcmp:
-                          description: Indicate whether to drop ICMP protocol or not.
+                          description: |-
+                            Indicate whether to drop ICMP protocol or not.
                             Indicate whether to drop ICMP protocol or not.
                           type: boolean
                         dropOther:
-                          description: Indicate whether to drop other protocols(exclude
-                            TCP/UDP/ICMP) or not. Indicate whether to drop other protocols(exclude
-                            TCP/UDP/ICMP) or not.
+                          description: |-
+                            Indicate whether to drop other protocols(exclude TCP/UDP/ICMP) or not.
+                            Indicate whether to drop other protocols(exclude TCP/UDP/ICMP) or not.
                           type: boolean
                         dropTcp:
-                          description: Indicate whether to drop TCP protocol or not.
+                          description: |-
+                            Indicate whether to drop TCP protocol or not.
                             Indicate whether to drop TCP protocol or not.
                           type: boolean
                         dropUdp:
-                          description: Indicate to drop UDP protocol or not. Indicate
-                            to drop UDP protocol or not.
+                          description: |-
+                            Indicate to drop UDP protocol or not.
+                            Indicate to drop UDP protocol or not.
                           type: boolean
                         icmpMbpsLimit:
-                          description: 'The limit of ICMP traffic rate. Valid value
-                            ranges: (0~4294967295)(Mbps). The limit of ICMP traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of ICMP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of ICMP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         nullConnEnable:
-                          description: Indicate to enable null connection or not.
+                          description: |-
+                            Indicate to enable null connection or not.
                             Indicate to enable null connection or not.
                           type: boolean
                         otherMbpsLimit:
-                          description: 'The limit of other protocols(exclude TCP/UDP/ICMP)
-                            traffic rate. Valid value ranges: (0~4294967295)(Mbps).
-                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of other protocols(exclude TCP/UDP/ICMP) traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         sConnLimit:
-                          description: 'The limit of concurrent connections based
-                            on source IP. Valid value ranges: (0~4294967295). The
-                            limit of concurrent connections based on source IP. Valid
-                            value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of concurrent connections based on source IP. Valid value ranges: (0~4294967295).
+                            The limit of concurrent connections based on source IP. Valid value ranges: (0~4294967295).
                           type: number
                         sNewLimit:
-                          description: 'The limit of new connections based on source
-                            IP. Valid value ranges: (0~4294967295). The limit of new
-                            connections based on source IP. Valid value ranges: (0~4294967295).'
+                          description: |-
+                            The limit of new connections based on source IP. Valid value ranges: (0~4294967295).
+                            The limit of new connections based on source IP. Valid value ranges: (0~4294967295).
                           type: number
                         synLimit:
-                          description: 'The limit of syn of abnormal connection check.
-                            Valid value ranges: (0~100). The limit of syn of abnormal
-                            connection check. Valid value ranges: (0~100).'
+                          description: |-
+                            The limit of syn of abnormal connection check. Valid value ranges: (0~100).
+                            The limit of syn of abnormal connection check. Valid value ranges: (0~100).
                           type: number
                         synRate:
-                          description: 'The percentage of syn in ack of abnormal connection
-                            check. Valid value ranges: (0~100). The percentage of
-                            syn in ack of abnormal connection check. Valid value ranges:
-                            (0~100).'
+                          description: |-
+                            The percentage of syn in ack of abnormal connection check. Valid value ranges: (0~100).
+                            The percentage of syn in ack of abnormal connection check. Valid value ranges: (0~100).
                           type: number
                         tcpMbpsLimit:
-                          description: 'The limit of TCP traffic. Valid value ranges:
-                            (0~4294967295)(Mbps). The limit of TCP traffic. Valid
-                            value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of TCP traffic. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of TCP traffic. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                         udpMbpsLimit:
-                          description: 'The limit of UDP traffic rate. Valid value
-                            ranges: (0~4294967295)(Mbps). The limit of UDP traffic
-                            rate. Valid value ranges: (0~4294967295)(Mbps).'
+                          description: |-
+                            The limit of UDP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
+                            The limit of UDP traffic rate. Valid value ranges: (0~4294967295)(Mbps).
                           type: number
                       type: object
                     type: array
@@ -944,176 +947,167 @@ spec:
                     description: ID of the resource.
                     type: string
                   name:
-                    description: Name of the DDoS policy. Length should between 1
-                      and 32. Name of the DDoS policy. Length should between 1 and
-                      32.
+                    description: |-
+                      Name of the DDoS policy. Length should between 1 and 32.
+                      Name of the DDoS policy. Length should between 1 and 32.
                     type: string
                   packetFilters:
-                    description: Message filter options list. Message filter options
-                      list.
+                    description: |-
+                      Message filter options list.
+                      Message filter options list.
                     items:
                       properties:
                         action:
-                          description: 'Action of port to take. Valid values: drop,
-                            drop_black,drop_rst,drop_black_rst,transmit.drop(drop
-                            the packet), drop_black(drop the packet and black the
-                            ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop
-                            the packet, black the ip and disconnect),transmit(transmit
-                            the packet). Action of port to take. Valid values: `drop`,
-                            `drop_black`,`drop_rst`,`drop_black_rst`,`transmit`.`drop`(drop
-                            the packet), `drop_black`(drop the packet and black the
-                            ip),`drop_rst`(drop the packet and disconnect),`drop_black_rst`(drop
-                            the packet, black the ip and disconnect),`transmit`(transmit
-                            the packet).'
+                          description: |-
+                            Action of port to take. Valid values: drop, drop_black,drop_rst,drop_black_rst,transmit.drop(drop the packet), drop_black(drop the packet and black the ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop the packet, black the ip and disconnect),transmit(transmit the packet).
+                            Action of port to take. Valid values: `drop`, `drop_black`,`drop_rst`,`drop_black_rst`,`transmit`.`drop`(drop the packet), `drop_black`(drop the packet and black the ip),`drop_rst`(drop the packet and disconnect),`drop_black_rst`(drop the packet, black the ip and disconnect),`transmit`(transmit the packet).
                           type: string
                         dEndPort:
-                          description: 'End port of the destination. Valid value ranges:
-                            (0~65535). It must be greater than d_start_port. End port
-                            of the destination. Valid value ranges: (0~65535). It
-                            must be greater than `d_start_port`.'
+                          description: |-
+                            End port of the destination. Valid value ranges: (0~65535). It must be greater than d_start_port.
+                            End port of the destination. Valid value ranges: (0~65535). It must be greater than `d_start_port`.
                           type: number
                         dStartPort:
-                          description: 'Start port of the destination. Valid value
-                            ranges: (0~65535). Start port of the destination. Valid
-                            value ranges: (0~65535).'
+                          description: |-
+                            Start port of the destination. Valid value ranges: (0~65535).
+                            Start port of the destination. Valid value ranges: (0~65535).
                           type: number
                         depth:
-                          description: 'The depth of match. Valid value ranges: (0~1500).
-                            The depth of match. Valid value ranges: (0~1500).'
+                          description: |-
+                            The depth of match. Valid value ranges: (0~1500).
+                            The depth of match. Valid value ranges: (0~1500).
                           type: number
                         isInclude:
-                          description: Indicate whether to include the key word/regular
-                            expression or not. Indicate whether to include the key
-                            word/regular expression or not.
+                          description: |-
+                            Indicate whether to include the key word/regular expression or not.
+                            Indicate whether to include the key word/regular expression or not.
                           type: boolean
                         matchBegin:
-                          description: Indicate whether to check load or not, begin_l5
-                            means to match and no_match means not. Indicate whether
-                            to check load or not, `begin_l5` means to match and `no_match`
-                            means not.
+                          description: |-
+                            Indicate whether to check load or not, begin_l5 means to match and no_match means not.
+                            Indicate whether to check load or not, `begin_l5` means to match and `no_match` means not.
                           type: string
                         matchStr:
-                          description: The key word or regular expression. The key
-                            word or regular expression.
+                          description: |-
+                            The key word or regular expression.
+                            The key word or regular expression.
                           type: string
                         matchType:
-                          description: 'Match type. Valid values: sunday and pcre.
-                            sunday means key word match while pcre means regular match.
-                            Match type. Valid values: `sunday` and `pcre`. `sunday`
-                            means key word match while `pcre` means regular match.'
+                          description: |-
+                            Match type. Valid values: sunday and pcre. sunday means key word match while pcre means regular match.
+                            Match type. Valid values: `sunday` and `pcre`. `sunday` means key word match while `pcre` means regular match.
                           type: string
                         offset:
-                          description: 'The offset of match. Valid value ranges: (0~1500).
-                            The offset of match. Valid value ranges: (0~1500).'
+                          description: |-
+                            The offset of match. Valid value ranges: (0~1500).
+                            The offset of match. Valid value ranges: (0~1500).
                           type: number
                         pktLengthMax:
-                          description: 'The max length of the packet. Valid value
-                            ranges: (0~1500)(Mbps). It must be greater than pkt_length_min.
-                            The max length of the packet. Valid value ranges: (0~1500)(Mbps).
-                            It must be greater than `pkt_length_min`.'
+                          description: |-
+                            The max length of the packet. Valid value ranges: (0~1500)(Mbps). It must be greater than pkt_length_min.
+                            The max length of the packet. Valid value ranges: (0~1500)(Mbps). It must be greater than `pkt_length_min`.
                           type: number
                         pktLengthMin:
-                          description: 'The minimum length of the packet. Valid value
-                            ranges: (0~1500)(Mbps). The minimum length of the packet.
-                            Valid value ranges: (0~1500)(Mbps).'
+                          description: |-
+                            The minimum length of the packet. Valid value ranges: (0~1500)(Mbps).
+                            The minimum length of the packet. Valid value ranges: (0~1500)(Mbps).
                           type: number
                         protocol:
-                          description: 'Protocol. Valid values: tcp, udp, icmp, all.
-                            Protocol. Valid values: `tcp`, `udp`, `icmp`, `all`.'
+                          description: |-
+                            Protocol. Valid values: tcp, udp, icmp, all.
+                            Protocol. Valid values: `tcp`, `udp`, `icmp`, `all`.
                           type: string
                         sEndPort:
-                          description: 'End port of the source. Valid value ranges:
-                            (0~65535). It must be greater than s_start_port. End port
-                            of the source. Valid value ranges: (0~65535). It must
-                            be greater than `s_start_port`.'
+                          description: |-
+                            End port of the source. Valid value ranges: (0~65535). It must be greater than s_start_port.
+                            End port of the source. Valid value ranges: (0~65535). It must be greater than `s_start_port`.
                           type: number
                         sStartPort:
-                          description: 'Start port of the source. Valid value ranges:
-                            (0~65535). Start port of the source. Valid value ranges:
-                            (0~65535).'
+                          description: |-
+                            Start port of the source. Valid value ranges: (0~65535).
+                            Start port of the source. Valid value ranges: (0~65535).
                           type: number
                       type: object
                     type: array
                   policyId:
-                    description: Id of policy. Id of policy.
+                    description: |-
+                      Id of policy.
+                      Id of policy.
                     type: string
                   portFilters:
-                    description: Port limits of abnormal check of the DDos policy.
+                    description: |-
+                      Port limits of abnormal check of the DDos policy.
                       Port limits of abnormal check of the DDos policy.
                     items:
                       properties:
                         action:
-                          description: 'Action of port to take. Valid values: drop,
-                            drop_black,drop_rst,drop_black_rst,transmit.drop(drop
-                            the packet), drop_black(drop the packet and black the
-                            ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop
-                            the packet, black the ip and disconnect),transmit(transmit
-                            the packet). Action of port to take. Valid values: `drop`,
-                            `transmit`.'
+                          description: |-
+                            Action of port to take. Valid values: drop, drop_black,drop_rst,drop_black_rst,transmit.drop(drop the packet), drop_black(drop the packet and black the ip),drop_rst(drop the packet and disconnect),drop_black_rst(drop the packet, black the ip and disconnect),transmit(transmit the packet).
+                            Action of port to take. Valid values: `drop`, `transmit`.
                           type: string
                         endPort:
-                          description: 'End port. Valid value ranges: (0~65535). It
-                            must be greater than start_port. End port. Valid value
-                            ranges: (0~65535). It must be greater than `start_port`.'
+                          description: |-
+                            End port. Valid value ranges: (0~65535). It must be greater than start_port.
+                            End port. Valid value ranges: (0~65535). It must be greater than `start_port`.
                           type: number
                         kind:
-                          description: 'The type of forbidden port. Valid values:
-                            0, 1, 2. 0 for destination ports make effect, 1 for source
-                            ports make effect. 2 for both destination and source ports.
-                            The type of forbidden port. Valid values: `0`, `1`, `2`.
-                            `0` for destination ports make effect, `1` for source
-                            ports make effect. `2` for both destination and source
-                            ports.'
+                          description: |-
+                            The type of forbidden port. Valid values: 0, 1, 2. 0 for destination ports make effect, 1 for source ports make effect. 2 for both destination and source ports.
+                            The type of forbidden port. Valid values: `0`, `1`, `2`. `0` for destination ports make effect, `1` for source ports make effect. `2` for both destination and source ports.
                           type: number
                         protocol:
-                          description: 'Protocol. Valid values: tcp, udp, icmp, all.
-                            Protocol. Valid values are `tcp`, `udp`, `icmp`, `all`.'
+                          description: |-
+                            Protocol. Valid values: tcp, udp, icmp, all.
+                            Protocol. Valid values are `tcp`, `udp`, `icmp`, `all`.
                           type: string
                         startPort:
-                          description: 'Start port. Valid value ranges: (0~65535).
-                            Start port. Valid value ranges: (0~65535).'
+                          description: |-
+                            Start port. Valid value ranges: (0~65535).
+                            Start port. Valid value ranges: (0~65535).
                           type: number
                       type: object
                     type: array
                   resourceType:
-                    description: 'Type of the resource that the DDoS policy works
-                      for. Valid values: bgpip, bgp, bgp-multip and net. Type of the
-                      resource that the DDoS policy works for. Valid values: `bgpip`,
-                      `bgp`, `bgp-multip` and `net`.'
+                    description: |-
+                      Type of the resource that the DDoS policy works for. Valid values: bgpip, bgp, bgp-multip and net.
+                      Type of the resource that the DDoS policy works for. Valid values: `bgpip`, `bgp`, `bgp-multip` and `net`.
                     type: string
                   sceneId:
-                    description: Id of policy case that the DDoS policy works for.
+                    description: |-
+                      Id of policy case that the DDoS policy works for.
                       Id of policy case that the DDoS policy works for.
                     type: string
                   watermarkFilters:
-                    description: Watermark policy options, and only support one watermark
-                      policy at most. Watermark policy options, and only support one
-                      watermark policy at most.
+                    description: |-
+                      Watermark policy options, and only support one watermark policy at most.
+                      Watermark policy options, and only support one watermark policy at most.
                     items:
                       properties:
                         autoRemove:
-                          description: Indicate whether to auto-remove the watermark
-                            or not. Indicate whether to auto-remove the watermark
-                            or not.
+                          description: |-
+                            Indicate whether to auto-remove the watermark or not.
+                            Indicate whether to auto-remove the watermark or not.
                           type: boolean
                         offset:
-                          description: 'The offset of match. Valid value ranges: (0~1500).
-                            The offset of watermark. Valid value ranges: (0~1500).'
+                          description: |-
+                            The offset of match. Valid value ranges: (0~1500).
+                            The offset of watermark. Valid value ranges: (0~1500).
                           type: number
                         openSwitch:
-                          description: Indicate whether to open watermark or not.
-                            It muse be set true when any field of watermark was set.
-                            Indicate whether to open watermark or not. It muse be
-                            set `true` when any field of watermark was set.
+                          description: |-
+                            Indicate whether to open watermark or not. It muse be set true when any field of watermark was set.
+                            Indicate whether to open watermark or not. It muse be set `true` when any field of watermark was set.
                           type: boolean
                         tcpPortList:
-                          description: Port range of TCP, the format is like 2000-3000.
+                          description: |-
+                            Port range of TCP, the format is like 2000-3000.
                             Port range of TCP, the format is like `2000-3000`.
                           items:
                             type: string
                           type: array
                         udpPortList:
-                          description: Port range of TCP, the format is like 2000-3000.
+                          description: |-
+                            Port range of TCP, the format is like 2000-3000.
                             Port range of TCP, the format is like `2000-3000`.
                           items:
                             type: string
@@ -1121,7 +1115,9 @@ spec:
                       type: object
                     type: array
                   watermarkKey:
-                    description: Watermark content. Watermark content.
+                    description: |-
+                      Watermark content.
+                      Watermark content.
                     items:
                       properties:
                         content:
@@ -1140,10 +1136,13 @@ spec:
                       type: object
                     type: array
                   whiteIps:
-                    description: White IP list. White IP list.
+                    description: |-
+                      White IP list.
+                      White IP list.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -1151,13 +1150,15 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
                     reason:
                       description: A Reason for this condition's last transition from
@@ -1168,8 +1169,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime

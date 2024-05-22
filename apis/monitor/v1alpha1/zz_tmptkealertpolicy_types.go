@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -290,6 +286,7 @@ type NotificationInitParameters struct {
 
 	// Alarm notification method. At present, there are SMS, EMAIL, CALL, WECHAT methods.
 	// Alarm notification method. At present, there are SMS, EMAIL, CALL, WECHAT methods.
+	// +listType=set
 	NotifyWay []*string `json:"notifyWay,omitempty" tf:"notify_way,omitempty"`
 
 	// Telephone alerts reach notifications.
@@ -310,10 +307,12 @@ type NotificationInitParameters struct {
 
 	// Telephone alarm sequence.
 	// Telephone alarm sequence.
+	// +listType=set
 	PhoneNotifyOrder []*float64 `json:"phoneNotifyOrder,omitempty" tf:"phone_notify_order,omitempty"`
 
 	// Alert Receiving Group (User Group).
 	// Alert Receiving Group (User Group).
+	// +listType=set
 	ReceiverGroups []*string `json:"receiverGroups,omitempty" tf:"receiver_groups,omitempty"`
 
 	// Convergence time.
@@ -349,6 +348,7 @@ type NotificationObservation struct {
 
 	// Alarm notification method. At present, there are SMS, EMAIL, CALL, WECHAT methods.
 	// Alarm notification method. At present, there are SMS, EMAIL, CALL, WECHAT methods.
+	// +listType=set
 	NotifyWay []*string `json:"notifyWay,omitempty" tf:"notify_way,omitempty"`
 
 	// Telephone alerts reach notifications.
@@ -369,10 +369,12 @@ type NotificationObservation struct {
 
 	// Telephone alarm sequence.
 	// Telephone alarm sequence.
+	// +listType=set
 	PhoneNotifyOrder []*float64 `json:"phoneNotifyOrder,omitempty" tf:"phone_notify_order,omitempty"`
 
 	// Alert Receiving Group (User Group).
 	// Alert Receiving Group (User Group).
+	// +listType=set
 	ReceiverGroups []*string `json:"receiverGroups,omitempty" tf:"receiver_groups,omitempty"`
 
 	// Convergence time.
@@ -411,6 +413,7 @@ type NotificationParameters struct {
 	// Alarm notification method. At present, there are SMS, EMAIL, CALL, WECHAT methods.
 	// Alarm notification method. At present, there are SMS, EMAIL, CALL, WECHAT methods.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	NotifyWay []*string `json:"notifyWay,omitempty" tf:"notify_way,omitempty"`
 
 	// Telephone alerts reach notifications.
@@ -436,11 +439,13 @@ type NotificationParameters struct {
 	// Telephone alarm sequence.
 	// Telephone alarm sequence.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	PhoneNotifyOrder []*float64 `json:"phoneNotifyOrder,omitempty" tf:"phone_notify_order,omitempty"`
 
 	// Alert Receiving Group (User Group).
 	// Alert Receiving Group (User Group).
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ReceiverGroups []*string `json:"receiverGroups,omitempty" tf:"receiver_groups,omitempty"`
 
 	// Convergence time.
@@ -544,6 +549,19 @@ type TmpTkeAlertPolicyInitParameters struct {
 	// Alarm notification channels.
 	// Alarm notification channels.
 	AlertRule []AlertRuleInitParameters `json:"alertRule,omitempty" tf:"alert_rule,omitempty"`
+
+	// Instance Id.
+	// Instance Id.
+	// +crossplane:generate:reference:type=TmpInstance
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a TmpInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a TmpInstance to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 }
 
 type TmpTkeAlertPolicyObservation struct {
@@ -606,13 +624,14 @@ type TmpTkeAlertPolicyStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TmpTkeAlertPolicy is the Schema for the TmpTkeAlertPolicys API. Provides a resource to create a tke tmpAlertPolicy
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type TmpTkeAlertPolicy struct {
 	metav1.TypeMeta   `json:",inline"`

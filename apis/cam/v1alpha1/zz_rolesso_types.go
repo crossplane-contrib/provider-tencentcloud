@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,6 +17,7 @@ type RoleSSOInitParameters struct {
 
 	// Client ids.
 	// Client ids.
+	// +listType=set
 	ClientIds []*string `json:"clientIds,omitempty" tf:"client_ids,omitempty"`
 
 	// The description of resource.
@@ -44,6 +41,7 @@ type RoleSSOObservation struct {
 
 	// Client ids.
 	// Client ids.
+	// +listType=set
 	ClientIds []*string `json:"clientIds,omitempty" tf:"client_ids,omitempty"`
 
 	// The description of resource.
@@ -71,6 +69,7 @@ type RoleSSOParameters struct {
 	// Client ids.
 	// Client ids.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ClientIds []*string `json:"clientIds,omitempty" tf:"client_ids,omitempty"`
 
 	// The description of resource.
@@ -118,13 +117,14 @@ type RoleSSOStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // RoleSSO is the Schema for the RoleSSOs API. Provides a resource to create a CAM-ROLE-SSO (Only support OIDC).
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type RoleSSO struct {
 	metav1.TypeMeta   `json:",inline"`

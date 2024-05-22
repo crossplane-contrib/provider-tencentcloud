@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -30,6 +26,19 @@ type ListenerInitParameters struct {
 	// Type of certificate. Valid values: UNIDIRECTIONAL, MUTUAL. NOTES: Only supports listeners of HTTPS and TCP_SSL protocol and must be set when it is available.
 	// Type of certificate. Valid values: `UNIDIRECTIONAL`, `MUTUAL`. NOTES: Only supports listeners of `HTTPS` and `TCP_SSL` protocol and must be set when it is available.
 	CertificateSSLMode *string `json:"certificateSslMode,omitempty" tf:"certificate_ssl_mode,omitempty"`
+
+	// ID of the CLB.
+	// ID of the CLB.
+	// +crossplane:generate:reference:type=Instance
+	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
+
+	// Reference to a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDRef *v1.Reference `json:"clbIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance to populate clbId.
+	// +kubebuilder:validation:Optional
+	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
 	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the Ports parameter, which is used to specify the start port. If you want to try the port range feature, please submit a ticket.
 	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
@@ -452,13 +461,14 @@ type ListenerStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Listener is the Schema for the Listeners API. Provides a resource to create a CLB listener.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type Listener struct {
 	metav1.TypeMeta   `json:",inline"`

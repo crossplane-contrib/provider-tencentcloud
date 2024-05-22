@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -30,6 +26,19 @@ type ServiceReleaseInitParameters struct {
 	// The release version.
 	// The release version.
 	ReleaseVersion *string `json:"releaseVersion,omitempty" tf:"release_version,omitempty"`
+
+	// ID of API gateway service.
+	// ID of API gateway service.
+	// +crossplane:generate:reference:type=Service
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v1.Reference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Service to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
 }
 
 type ServiceReleaseObservation struct {
@@ -110,13 +119,14 @@ type ServiceReleaseStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ServiceRelease is the Schema for the ServiceReleases API. Use this resource to create API gateway service release.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type ServiceRelease struct {
 	metav1.TypeMeta   `json:",inline"`

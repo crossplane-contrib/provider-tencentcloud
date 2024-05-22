@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -21,6 +17,7 @@ type AuthAttachmentInitParameters struct {
 
 	// Creating ClientId of the identity provider.
 	// Creating ClientId of the identity provider.
+	// +listType=set
 	AutoCreateClientID []*string `json:"autoCreateClientId,omitempty" tf:"auto_create_client_id,omitempty"`
 
 	// If set to true, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
@@ -34,6 +31,19 @@ type AuthAttachmentInitParameters struct {
 	// Creating the PodIdentityWebhook component. if auto_create_oidc_config is true, this field must set true.
 	// Creating the PodIdentityWebhook component. if `auto_create_oidc_config` is true, this field must set true.
 	AutoInstallPodIdentityWebhookAddon *bool `json:"autoInstallPodIdentityWebhookAddon,omitempty" tf:"auto_install_pod_identity_webhook_addon,omitempty"`
+
+	// ID of clusters.
+	// ID of clusters.
+	// +crossplane:generate:reference:type=Cluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field.
 	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field.
@@ -52,6 +62,7 @@ type AuthAttachmentObservation struct {
 
 	// Creating ClientId of the identity provider.
 	// Creating ClientId of the identity provider.
+	// +listType=set
 	AutoCreateClientID []*string `json:"autoCreateClientId,omitempty" tf:"auto_create_client_id,omitempty"`
 
 	// If set to true, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
@@ -99,6 +110,7 @@ type AuthAttachmentParameters struct {
 	// Creating ClientId of the identity provider.
 	// Creating ClientId of the identity provider.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AutoCreateClientID []*string `json:"autoCreateClientId,omitempty" tf:"auto_create_client_id,omitempty"`
 
 	// If set to true, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
@@ -170,13 +182,14 @@ type AuthAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // AuthAttachment is the Schema for the AuthAttachments API. Provide a resource to configure kubernetes cluster authentication info.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type AuthAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

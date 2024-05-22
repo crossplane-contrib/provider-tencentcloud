@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type FileSystemInitParameters struct {
+
+	// ID of a access group.
+	// ID of a access group.
+	// +crossplane:generate:reference:type=AccessGroup
+	AccessGroupID *string `json:"accessGroupId,omitempty" tf:"access_group_id,omitempty"`
+
+	// Reference to a AccessGroup to populate accessGroupId.
+	// +kubebuilder:validation:Optional
+	AccessGroupIDRef *v1.Reference `json:"accessGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a AccessGroup to populate accessGroupId.
+	// +kubebuilder:validation:Optional
+	AccessGroupIDSelector *v1.Selector `json:"accessGroupIdSelector,omitempty" tf:"-"`
 
 	// The available zone that the file system locates at.
 	// The available zone that the file system locates at.
@@ -55,9 +64,36 @@ type FileSystemInitParameters struct {
 	// Storage type of the file system. Valid values: `SD` (Standard), `HP` (High-Performance), `TB` (Standard Turbo), and `TP` (High-Performance Turbo). Default value: `SD`.
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
+	// ID of a subnet.
+	// ID of a subnet.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// Instance tags.
 	// Instance tags.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// ID of a VPC network.
+	// ID of a VPC network.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 }
 
 type FileSystemObservation struct {
@@ -119,6 +155,7 @@ type FileSystemObservation struct {
 
 	// Instance tags.
 	// Instance tags.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of a VPC network.
@@ -204,6 +241,7 @@ type FileSystemParameters struct {
 	// Instance tags.
 	// Instance tags.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ID of a VPC network.
@@ -245,13 +283,14 @@ type FileSystemStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // FileSystem is the Schema for the FileSystems API. Provides a resource to create a cloud file system(CFS).
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type FileSystem struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -30,6 +26,19 @@ type SecurityRuleInitParameters struct {
 	// Name of the security policy rule. Maximum length is 30.
 	// Name of the security policy rule. Maximum length is 30.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the security policy.
+	// ID of the security policy.
+	// +crossplane:generate:reference:type=SecurityPolicy
+	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
+
+	// Reference to a SecurityPolicy to populate policyId.
+	// +kubebuilder:validation:Optional
+	PolicyIDRef *v1.Reference `json:"policyIdRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityPolicy to populate policyId.
+	// +kubebuilder:validation:Optional
+	PolicyIDSelector *v1.Selector `json:"policyIdSelector,omitempty" tf:"-"`
 
 	// Target port. Default value is ALL. Valid examples: 80, 80,443 and 3306-20000.
 	// Target port. Default value is `ALL`. Valid examples: `80`, `80,443` and `3306-20000`.
@@ -136,13 +145,14 @@ type SecurityRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SecurityRule is the Schema for the SecurityRules API. Provides a resource to create a security policy rule.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type SecurityRule struct {
 	metav1.TypeMeta   `json:",inline"`

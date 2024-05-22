@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -135,6 +131,19 @@ type TmpTkeTemplateAttachmentInitParameters struct {
 	// Sync target details.
 	// Sync target details.
 	Targets []TargetsInitParameters `json:"targets,omitempty" tf:"targets,omitempty"`
+
+	// The ID of the template, which is used for the outgoing reference.
+	// The ID of the template, which is used for the outgoing reference.
+	// +crossplane:generate:reference:type=TmpTkeTemplate
+	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
+
+	// Reference to a TmpTkeTemplate to populate templateId.
+	// +kubebuilder:validation:Optional
+	TemplateIDRef *v1.Reference `json:"templateIdRef,omitempty" tf:"-"`
+
+	// Selector for a TmpTkeTemplate to populate templateId.
+	// +kubebuilder:validation:Optional
+	TemplateIDSelector *v1.Selector `json:"templateIdSelector,omitempty" tf:"-"`
 }
 
 type TmpTkeTemplateAttachmentObservation struct {
@@ -197,13 +206,14 @@ type TmpTkeTemplateAttachmentStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TmpTkeTemplateAttachment is the Schema for the TmpTkeTemplateAttachments API. Provides a resource to create a tmp tke template attachment
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type TmpTkeTemplateAttachment struct {
 	metav1.TypeMeta   `json:",inline"`

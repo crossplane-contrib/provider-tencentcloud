@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -180,6 +176,7 @@ type AutoScalingConfigInitParameters struct {
 
 	// The order of elements in this field cannot be guaranteed. Use orderly_security_group_ids instead. Security groups to which a CVM instance belongs.
 	// Security groups to which a CVM instance belongs.
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// Type of spot instance, only support one-time now. Note: it only works when instance_charge_type is set to SPOTPAID.
@@ -275,6 +272,7 @@ type AutoScalingConfigObservation struct {
 
 	// The order of elements in this field cannot be guaranteed. Use orderly_security_group_ids instead. Security groups to which a CVM instance belongs.
 	// Security groups to which a CVM instance belongs.
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// Type of spot instance, only support one-time now. Note: it only works when instance_charge_type is set to SPOTPAID.
@@ -394,6 +392,7 @@ type AutoScalingConfigParameters struct {
 	// The order of elements in this field cannot be guaranteed. Use orderly_security_group_ids instead. Security groups to which a CVM instance belongs.
 	// Security groups to which a CVM instance belongs.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// Type of spot instance, only support one-time now. Note: it only works when instance_charge_type is set to SPOTPAID.
@@ -508,18 +507,22 @@ type NodeConfigGpuArgsInitParameters struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -531,18 +534,22 @@ type NodeConfigGpuArgsObservation struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -555,21 +562,25 @@ type NodeConfigGpuArgsParameters struct {
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
 
 	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
 	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
 
 	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
 	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
 
 	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
 
 	// Whether to enable MIG.
@@ -736,6 +747,7 @@ type NodePoolInitParameters struct {
 
 	// Labels of kubernetes node pool created nodes. The label key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
 	// Labels of kubernetes node pool created nodes. The label key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Maximum number of node.
@@ -788,6 +800,7 @@ type NodePoolInitParameters struct {
 
 	// Node pool tag specifications, will passthroughs to the scaling instances.
 	// Node pool tag specifications, will passthroughs to the scaling instances.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Taints of kubernetes node pool created nodes.
@@ -801,6 +814,19 @@ type NodePoolInitParameters struct {
 	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
 	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
+
+	// ID of VPC network.
+	// ID of VPC network.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
+	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Reference to a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDRef *v1.Reference `json:"vpcIdRef,omitempty" tf:"-"`
+
+	// Selector for a VPC in vpc to populate vpcId.
+	// +kubebuilder:validation:Optional
+	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
 	// List of auto scaling group available zones, for Basic network it is required.
 	// List of auto scaling group available zones, for Basic network it is required.
@@ -850,6 +876,7 @@ type NodePoolObservation struct {
 
 	// Labels of kubernetes node pool created nodes. The label key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
 	// Labels of kubernetes node pool created nodes. The label key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The launch config ID.
@@ -918,6 +945,7 @@ type NodePoolObservation struct {
 
 	// Node pool tag specifications, will passthroughs to the scaling instances.
 	// Node pool tag specifications, will passthroughs to the scaling instances.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Taints of kubernetes node pool created nodes.
@@ -981,6 +1009,7 @@ type NodePoolParameters struct {
 	// Labels of kubernetes node pool created nodes. The label key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
 	// Labels of kubernetes node pool created nodes. The label key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Maximum number of node.
@@ -1046,6 +1075,7 @@ type NodePoolParameters struct {
 	// Node pool tag specifications, will passthroughs to the scaling instances.
 	// Node pool tag specifications, will passthroughs to the scaling instances.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Taints of kubernetes node pool created nodes.
@@ -1155,13 +1185,14 @@ type NodePoolStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // NodePool is the Schema for the NodePools API. Provide a resource to create an auto scaling group for kubernetes cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,tencentcloud}
 type NodePool struct {
 	metav1.TypeMeta   `json:",inline"`
