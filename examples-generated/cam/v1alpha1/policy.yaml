@@ -24,3 +24,4 @@ spec:
           }
         ]
       }
+    name: tf_cam_policy_name

@@ -83,6 +83,11 @@ spec:
                       Document of the CAM policy. The syntax refers to CAM POLICY. The elements in JSON claimed supporting two types as string and array only support type array; 2.
                       Document of the CAM policy. The syntax refers to [CAM POLICY](https://intl.cloud.tencent.com/document/product/598/10604). The elements in JSON claimed supporting two types as `string` and `array` only support type `array`; 2.
                     type: string
+                  name:
+                    description: |-
+                      Name of CAM policy.
+                      Name of CAM policy.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -106,6 +111,11 @@ spec:
                     description: |-
                       Document of the CAM policy. The syntax refers to CAM POLICY. The elements in JSON claimed supporting two types as string and array only support type array; 2.
                       Document of the CAM policy. The syntax refers to [CAM POLICY](https://intl.cloud.tencent.com/document/product/598/10604). The elements in JSON claimed supporting two types as `string` and `array` only support type `array`; 2.
+                    type: string
+                  name:
+                    description: |-
+                      Name of CAM policy.
+                      Name of CAM policy.
                     type: string
                 type: object
               managementPolicies:
@@ -280,6 +290,10 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.document)
                 || (has(self.initProvider) && has(self.initProvider.document))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
           status:
             description: PolicyStatus defines the observed state of Policy.
             properties:
@@ -302,6 +316,11 @@ spec:
                     type: string
                   id:
                     description: ID of the resource.
+                    type: string
+                  name:
+                    description: |-
+                      Name of CAM policy.
+                      Name of CAM policy.
                     type: string
                   type:
                     description: |-

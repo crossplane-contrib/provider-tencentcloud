@@ -34,7 +34,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// cam
 	"tencentcloud_cam_role_by_name":                   config.NameAsIdentifier,
 	"tencentcloud_cam_role_sso":                       config.IdentifierFromProvider,
-	"tencentcloud_cam_policy_by_name":                 config.NameAsIdentifier,
+	"tencentcloud_cam_policy_by_name":                 config.IdentifierFromProvider,
 	"tencentcloud_cam_role_policy_attachment_by_name": config.IdentifierFromProvider,
 	"tencentcloud_cam_oidc_sso":                       config.IdentifierFromProvider,
 	"tencentcloud_cam_group":                          config.IdentifierFromProvider,
