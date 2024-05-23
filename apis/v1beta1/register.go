@@ -14,7 +14,7 @@ import (
 // Package type metadata.
 const (
 	Group   = "tencentcloud.crossplane.io"
-	Version = "v1beta1"
+	Version = "v1alpha1"
 )
 
 var (
