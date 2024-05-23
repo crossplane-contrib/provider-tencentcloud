@@ -5,12 +5,27 @@ is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 Tencentcloud API.
 
+<div>
+  <p>
+    <a href="https://cloud.tencent.com">
+        <img src=".github/01_Tcloud_logo_Eng.png" alt="logo" title="Terraform" height="69">
+    </a>
+    <br>
+    <i>Tencent Infrastructure Automation for Crossplane.</i>
+    <br>
+  </p>
+</div>
+
+* Wechat Group:
+
+    <img src=".github/02_Tcloud_wechat.jpg" width="200"/>
+
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/crossplane-contrib/provider-tencentcloud):
 ```
-up ctp provider install crossplane-contrib/provider-tencentcloud:v0.1.0
+up ctp provider install crossplane-contrib/provider-tencentcloud:latest
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,7 +36,7 @@ kind: Provider
 metadata:
   name: provider-tencentcloud
 spec:
-  package: crossplane-contrib/provider-tencentcloud:v0.1.0
+  package: crossplane-contrib/provider-tencentcloud:latest
 EOF
 ```
 
