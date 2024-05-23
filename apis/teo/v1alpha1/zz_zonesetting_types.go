@@ -15,48 +15,47 @@ import (
 
 type CacheCacheInitParameters struct {
 
-	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
-	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings.
+	// Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings.
+	// Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
 	CacheTime *float64 `json:"cacheTime,omitempty" tf:"cache_time,omitempty"`
 
-	// Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	IgnoreCacheControl *string `json:"ignoreCacheControl,omitempty" tf:"ignore_cache_control,omitempty"`
-
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Cache configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type CacheCacheObservation struct {
 
-	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
-	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings.
+	// Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings.
+	// Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
 	CacheTime *float64 `json:"cacheTime,omitempty" tf:"cache_time,omitempty"`
 
-	// Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	IgnoreCacheControl *string `json:"ignoreCacheControl,omitempty" tf:"ignore_cache_control,omitempty"`
-
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Cache configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type CacheCacheParameters struct {
 
-	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
-	// Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings.
+	// Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+	// Cache expiration time settings.
+	// Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	CacheTime *float64 `json:"cacheTime,omitempty" tf:"cache_time,omitempty"`
 
-	// Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// +kubebuilder:validation:Optional
-	IgnoreCacheControl *string `json:"ignoreCacheControl,omitempty" tf:"ignore_cache_control,omitempty"`
-
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Cache configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
@@ -78,8 +77,10 @@ type CacheInitParameters struct {
 
 type CacheKeyInitParameters struct {
 
-	// Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to enable full-path cache.- `on`: Enable full-path cache (i.e., disable Ignore Query String).- `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable full-path cache.
+	// Specifies whether to enable full-path cache.
+	// - `on`: Enable full-path cache (i.e., disable Ignore Query String).
+	// - `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
 	FullURLCache *string `json:"fullUrlCache,omitempty" tf:"full_url_cache,omitempty"`
 
 	// Specifies whether the cache key is case-sensitive. Note: This field may return null, indicating that no valid value can be obtained.
@@ -93,8 +94,10 @@ type CacheKeyInitParameters struct {
 
 type CacheKeyObservation struct {
 
-	// Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to enable full-path cache.- `on`: Enable full-path cache (i.e., disable Ignore Query String).- `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable full-path cache.
+	// Specifies whether to enable full-path cache.
+	// - `on`: Enable full-path cache (i.e., disable Ignore Query String).
+	// - `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
 	FullURLCache *string `json:"fullUrlCache,omitempty" tf:"full_url_cache,omitempty"`
 
 	// Specifies whether the cache key is case-sensitive. Note: This field may return null, indicating that no valid value can be obtained.
@@ -108,8 +111,10 @@ type CacheKeyObservation struct {
 
 type CacheKeyParameters struct {
 
-	// Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to enable full-path cache.- `on`: Enable full-path cache (i.e., disable Ignore Query String).- `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable full-path cache.
+	// Specifies whether to enable full-path cache.
+	// - `on`: Enable full-path cache (i.e., disable Ignore Query String).
+	// - `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	FullURLCache *string `json:"fullUrlCache,omitempty" tf:"full_url_cache,omitempty"`
 
@@ -163,8 +168,10 @@ type CachePrefreshInitParameters struct {
 	// Percentage of cache time before try to prefresh. Valid value range: 1-99.
 	Percent *float64 `json:"percent,omitempty" tf:"percent,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable cache prefresh.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -174,8 +181,10 @@ type CachePrefreshObservation struct {
 	// Percentage of cache time before try to prefresh. Valid value range: 1-99.
 	Percent *float64 `json:"percent,omitempty" tf:"percent,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable cache prefresh.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -186,8 +195,10 @@ type CachePrefreshParameters struct {
 	// +kubebuilder:validation:Optional
 	Percent *float64 `json:"percent,omitempty" tf:"percent,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable cache prefresh.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
@@ -198,8 +209,10 @@ type ClientIPHeaderInitParameters struct {
 	// Name of the origin-pull client IP request header. Note: This field may return null, indicating that no valid value can be obtained.
 	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable client IP header.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable client IP header.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -209,8 +222,10 @@ type ClientIPHeaderObservation struct {
 	// Name of the origin-pull client IP request header. Note: This field may return null, indicating that no valid value can be obtained.
 	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable client IP header.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable client IP header.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -221,8 +236,10 @@ type ClientIPHeaderParameters struct {
 	// +kubebuilder:validation:Optional
 	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable client IP header.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable client IP header.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
@@ -234,8 +251,10 @@ type CompressionInitParameters struct {
 	// +listType=set
 	Algorithms []*string `json:"algorithms,omitempty" tf:"algorithms,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable Smart compression.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable Smart compression.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -246,8 +265,10 @@ type CompressionObservation struct {
 	// +listType=set
 	Algorithms []*string `json:"algorithms,omitempty" tf:"algorithms,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable Smart compression.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable Smart compression.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -259,65 +280,85 @@ type CompressionParameters struct {
 	// +listType=set
 	Algorithms []*string `json:"algorithms,omitempty" tf:"algorithms,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable Smart compression.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable Smart compression.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type FollowOriginInitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to follow the origin server configuration.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to follow the origin server configuration.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type FollowOriginObservation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to follow the origin server configuration.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to follow the origin server configuration.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type FollowOriginParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to follow the origin server configuration.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to follow the origin server configuration.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type ForceRedirectInitParameters struct {
 
-	// Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
-	// Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
+	// Redirection status code.
+	// Redirection status code.
+	// - 301
+	// - 302 Note: This field may return null, indicating that no valid value can be obtained.
 	RedirectStatusCode *float64 `json:"redirectStatusCode,omitempty" tf:"redirect_status_code,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable force redirect.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable force redirect.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type ForceRedirectObservation struct {
 
-	// Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
-	// Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
+	// Redirection status code.
+	// Redirection status code.
+	// - 301
+	// - 302 Note: This field may return null, indicating that no valid value can be obtained.
 	RedirectStatusCode *float64 `json:"redirectStatusCode,omitempty" tf:"redirect_status_code,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable force redirect.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable force redirect.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type ForceRedirectParameters struct {
 
-	// Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
-	// Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
+	// Redirection status code.
+	// Redirection status code.
+	// - 301
+	// - 302 Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	RedirectStatusCode *float64 `json:"redirectStatusCode,omitempty" tf:"redirect_status_code,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable force redirect.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable force redirect.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
@@ -328,16 +369,23 @@ type HTTPSInitParameters struct {
 	// HSTS Configuration. Note: This field may return null, indicating that no valid value can be obtained.
 	Hsts []HstsInitParameters `json:"hsts,omitempty" tf:"hsts,omitempty"`
 
-	// HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// HTTP2 configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// HTTP2 configuration switch.
+	// HTTP2 configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Http2 *string `json:"http2,omitempty" tf:"http2,omitempty"`
 
-	// OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
-	// OCSP configuration switch.- `on`: Enable.- `off`: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
+	// OCSP configuration switch.
+	// OCSP configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable.
+	// It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
 	OcspStapling *string `json:"ocspStapling,omitempty" tf:"ocsp_stapling,omitempty"`
 
-	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
-	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+	// Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.
+	// Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// +listType=set
 	TLSVersion []*string `json:"tlsVersion,omitempty" tf:"tls_version,omitempty"`
 }
@@ -348,16 +396,23 @@ type HTTPSObservation struct {
 	// HSTS Configuration. Note: This field may return null, indicating that no valid value can be obtained.
 	Hsts []HstsObservation `json:"hsts,omitempty" tf:"hsts,omitempty"`
 
-	// HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// HTTP2 configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// HTTP2 configuration switch.
+	// HTTP2 configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Http2 *string `json:"http2,omitempty" tf:"http2,omitempty"`
 
-	// OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
-	// OCSP configuration switch.- `on`: Enable.- `off`: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
+	// OCSP configuration switch.
+	// OCSP configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable.
+	// It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
 	OcspStapling *string `json:"ocspStapling,omitempty" tf:"ocsp_stapling,omitempty"`
 
-	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
-	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+	// Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.
+	// Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// +listType=set
 	TLSVersion []*string `json:"tlsVersion,omitempty" tf:"tls_version,omitempty"`
 }
@@ -369,18 +424,25 @@ type HTTPSParameters struct {
 	// +kubebuilder:validation:Optional
 	Hsts []HstsParameters `json:"hsts,omitempty" tf:"hsts,omitempty"`
 
-	// HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-	// HTTP2 configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// HTTP2 configuration switch.
+	// HTTP2 configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Http2 *string `json:"http2,omitempty" tf:"http2,omitempty"`
 
-	// OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
-	// OCSP configuration switch.- `on`: Enable.- `off`: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
+	// OCSP configuration switch.
+	// OCSP configuration switch.
+	// - `on`: Enable.
+	// - `off`: Disable.
+	// It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	OcspStapling *string `json:"ocspStapling,omitempty" tf:"ocsp_stapling,omitempty"`
 
-	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
-	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+	// Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+	// TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.
+	// Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	TLSVersion []*string `json:"tlsVersion,omitempty" tf:"tls_version,omitempty"`
@@ -400,8 +462,9 @@ type HstsInitParameters struct {
 	// Specifies whether to preload. Valid values: `on` and `off`. Note: This field may return null, indicating that no valid value can be obtained.
 	Preload *string `json:"preload,omitempty" tf:"preload,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// - `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -419,8 +482,9 @@ type HstsObservation struct {
 	// Specifies whether to preload. Valid values: `on` and `off`. Note: This field may return null, indicating that no valid value can be obtained.
 	Preload *string `json:"preload,omitempty" tf:"preload,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// - `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -441,30 +505,34 @@ type HstsParameters struct {
 	// +kubebuilder:validation:Optional
 	Preload *string `json:"preload,omitempty" tf:"preload,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// - `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type IPv6InitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// - `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type IPv6Observation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// - `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type IPv6Parameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// - `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
@@ -472,7 +540,10 @@ type IPv6Parameters struct {
 type MaxAgeInitParameters struct {
 
 	// Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to follow the max cache age of the origin server.
+	// - `on`: Enable.
+	// - `off`: Disable.
+	// If it's on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
 	FollowOrigin *string `json:"followOrigin,omitempty" tf:"follow_origin,omitempty"`
 
 	// Specifies the max age of the cache (in seconds). The maximum value is 365 days. Note: the value 0 means not to cache. Note: This field may return null, indicating that no valid value can be obtained.
@@ -483,7 +554,10 @@ type MaxAgeInitParameters struct {
 type MaxAgeObservation struct {
 
 	// Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to follow the max cache age of the origin server.
+	// - `on`: Enable.
+	// - `off`: Disable.
+	// If it's on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
 	FollowOrigin *string `json:"followOrigin,omitempty" tf:"follow_origin,omitempty"`
 
 	// Specifies the max age of the cache (in seconds). The maximum value is 365 days. Note: the value 0 means not to cache. Note: This field may return null, indicating that no valid value can be obtained.
@@ -494,7 +568,10 @@ type MaxAgeObservation struct {
 type MaxAgeParameters struct {
 
 	// Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.
-	// Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to follow the max cache age of the origin server.
+	// - `on`: Enable.
+	// - `off`: Disable.
+	// If it's on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	FollowOrigin *string `json:"followOrigin,omitempty" tf:"follow_origin,omitempty"`
 
@@ -506,44 +583,56 @@ type MaxAgeParameters struct {
 
 type NoCacheInitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to cache the configuration.
+	// - `on`: Do not cache.
+	// - `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type NoCacheObservation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to cache the configuration.
+	// - `on`: Do not cache.
+	// - `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type NoCacheParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to cache the configuration.
+	// - `on`: Do not cache.
+	// - `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type OfflineCacheInitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable offline cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable offline cache.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type OfflineCacheObservation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable offline cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable offline cache.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type OfflineCacheParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable offline cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable offline cache.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
@@ -555,12 +644,11 @@ type OriginInitParameters struct {
 	// +listType=set
 	BackupOrigins []*string `json:"backupOrigins,omitempty" tf:"backup_origins,omitempty"`
 
-	// Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
-	// Whether access private cos bucket is allowed when `OriginType` is cos. Note: This field may return null, indicating that no valid value can be obtained.
-	CosPrivateAccess *string `json:"cosPrivateAccess,omitempty" tf:"cos_private_access,omitempty"`
-
-	// Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
-	// Origin-pull protocol.- `http`: Switch HTTPS requests to HTTP.- `follow`: Follow the protocol of the request.- `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
+	// Origin-pull protocol.
+	// Origin-pull protocol.
+	// - `http`: Switch HTTPS requests to HTTP.
+	// - `follow`: Follow the protocol of the request.
+	// - `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
 	OriginPullProtocol *string `json:"originPullProtocol,omitempty" tf:"origin_pull_protocol,omitempty"`
 
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
@@ -576,12 +664,11 @@ type OriginObservation struct {
 	// +listType=set
 	BackupOrigins []*string `json:"backupOrigins,omitempty" tf:"backup_origins,omitempty"`
 
-	// Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
-	// Whether access private cos bucket is allowed when `OriginType` is cos. Note: This field may return null, indicating that no valid value can be obtained.
-	CosPrivateAccess *string `json:"cosPrivateAccess,omitempty" tf:"cos_private_access,omitempty"`
-
-	// Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
-	// Origin-pull protocol.- `http`: Switch HTTPS requests to HTTP.- `follow`: Follow the protocol of the request.- `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
+	// Origin-pull protocol.
+	// Origin-pull protocol.
+	// - `http`: Switch HTTPS requests to HTTP.
+	// - `follow`: Follow the protocol of the request.
+	// - `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
 	OriginPullProtocol *string `json:"originPullProtocol,omitempty" tf:"origin_pull_protocol,omitempty"`
 
 	// Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.
@@ -598,13 +685,11 @@ type OriginParameters struct {
 	// +listType=set
 	BackupOrigins []*string `json:"backupOrigins,omitempty" tf:"backup_origins,omitempty"`
 
-	// Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
-	// Whether access private cos bucket is allowed when `OriginType` is cos. Note: This field may return null, indicating that no valid value can be obtained.
-	// +kubebuilder:validation:Optional
-	CosPrivateAccess *string `json:"cosPrivateAccess,omitempty" tf:"cos_private_access,omitempty"`
-
-	// Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
-	// Origin-pull protocol.- `http`: Switch HTTPS requests to HTTP.- `follow`: Follow the protocol of the request.- `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
+	// Origin-pull protocol.
+	// Origin-pull protocol.
+	// - `http`: Switch HTTPS requests to HTTP.
+	// - `follow`: Follow the protocol of the request.
+	// - `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	OriginPullProtocol *string `json:"originPullProtocol,omitempty" tf:"origin_pull_protocol,omitempty"`
 
@@ -621,8 +706,10 @@ type PostMaxSizeInitParameters struct {
 	// Maximum size. Value range: 1-500 MB. Note: This field may return null, indicating that no valid value can be obtained.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable custom setting of the maximum file size.- `on`: Enable. You can set a custom max size.- `off`: Disable. In this case, the max size defaults to 32 MB.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable custom setting of the maximum file size.
+	// - `on`: Enable. You can set a custom max size.
+	// - `off`: Disable. In this case, the max size defaults to 32 MB.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -632,8 +719,10 @@ type PostMaxSizeObservation struct {
 	// Maximum size. Value range: 1-500 MB. Note: This field may return null, indicating that no valid value can be obtained.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable custom setting of the maximum file size.- `on`: Enable. You can set a custom max size.- `off`: Disable. In this case, the max size defaults to 32 MB.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable custom setting of the maximum file size.
+	// - `on`: Enable. You can set a custom max size.
+	// - `off`: Disable. In this case, the max size defaults to 32 MB.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
@@ -644,20 +733,25 @@ type PostMaxSizeParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Specifies whether to enable custom setting of the maximum file size.- `on`: Enable. You can set a custom max size.- `off`: Disable. In this case, the max size defaults to 32 MB.
+	// Specifies whether to enable cache prefresh.
+	// Specifies whether to enable custom setting of the maximum file size.
+	// - `on`: Enable. You can set a custom max size.
+	// - `off`: Disable. In this case, the max size defaults to 32 MB.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type QueryStringInitParameters struct {
 
-	// - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
-	// - `includeCustom`: Include the specified query strings.- `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
+	// - includeCustom: Include the specified query strings.
+	// - `includeCustom`: Include the specified query strings.
+	// - `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to use QueryString as part of CacheKey.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to use QueryString as part of CacheKey.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
@@ -668,12 +762,15 @@ type QueryStringInitParameters struct {
 
 type QueryStringObservation struct {
 
-	// - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
-	// - `includeCustom`: Include the specified query strings.- `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
+	// - includeCustom: Include the specified query strings.
+	// - `includeCustom`: Include the specified query strings.
+	// - `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to use QueryString as part of CacheKey.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to use QueryString as part of CacheKey.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 
 	// Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.
@@ -684,13 +781,16 @@ type QueryStringObservation struct {
 
 type QueryStringParameters struct {
 
-	// - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
-	// - `includeCustom`: Include the specified query strings.- `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
+	// - includeCustom: Include the specified query strings.
+	// - `includeCustom`: Include the specified query strings.
+	// - `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to use QueryString as part of CacheKey.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+	// Specifies whether to enable cache prefresh.
+	// Whether to use QueryString as part of CacheKey.
+	// - `on`: Enable.
+	// - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 
@@ -703,74 +803,92 @@ type QueryStringParameters struct {
 
 type QuicInitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable QUIC.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable QUIC.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type QuicObservation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable QUIC.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable QUIC.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type QuicParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable QUIC.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable QUIC.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type SmartRoutingInitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable smart acceleration.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable smart acceleration.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type SmartRoutingObservation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable smart acceleration.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable smart acceleration.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type SmartRoutingParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable smart acceleration.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable smart acceleration.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type UpstreamHttp2InitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable HTTP2 origin-pull.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable HTTP2 origin-pull.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type UpstreamHttp2Observation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable HTTP2 origin-pull.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable HTTP2 origin-pull.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 }
 
 type UpstreamHttp2Parameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable HTTP2 origin-pull.- `on`: Enable.- `off`: Disable.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable HTTP2 origin-pull.
+	// - `on`: Enable.
+	// - `off`: Disable.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 }
 
 type WebSocketInitParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable custom WebSocket timeout setting. When it's off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 
 	// Sets timeout period in seconds. Maximum value: 120.
@@ -780,8 +898,8 @@ type WebSocketInitParameters struct {
 
 type WebSocketObservation struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable custom WebSocket timeout setting. When it's off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
 	Switch *string `json:"switch,omitempty" tf:"switch,omitempty"`
 
 	// Sets timeout period in seconds. Maximum value: 120.
@@ -791,8 +909,8 @@ type WebSocketObservation struct {
 
 type WebSocketParameters struct {
 
-	// Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-	// Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+	// Specifies whether to enable cache prefresh.
+	// Whether to enable custom WebSocket timeout setting. When it's off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
 	// +kubebuilder:validation:Optional
 	Switch *string `json:"switch" tf:"switch,omitempty"`
 

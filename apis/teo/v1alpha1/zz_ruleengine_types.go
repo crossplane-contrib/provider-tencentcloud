@@ -15,122 +15,154 @@ import (
 
 type ActionsCodeActionInitParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Operation parameter.
 	Parameters []CodeActionParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type ActionsCodeActionObservation struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Operation parameter.
 	Parameters []CodeActionParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type ActionsCodeActionParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Operation parameter.
 	// +kubebuilder:validation:Optional
 	Parameters []CodeActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
 type ActionsInitParameters struct {
 
-	// Define a code action.
-	// Define a code action.
+	// Feature operation with a status code. Features of this type include:
+	// Feature operation with a status code. Features of this type include:
+	// - `ErrorPage`: Custom error page.
+	// - `StatusCodeCache`: Status code cache TTL.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	CodeAction []CodeActionInitParameters `json:"codeAction,omitempty" tf:"code_action,omitempty"`
 
-	// Define a normal action.
-	// Define a normal action.
+	// Common operation. Values:
+	// Common operation. Values:
+	// - `AccessUrlRedirect`: Access URL rewrite.
+	// - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+	// - `QUIC`: QUIC.
+	// - `WebSocket`: WebSocket.
+	// - `VideoSeek`: Video dragging.
+	// - `Authentication`: Token authentication.
+	// - `CacheKey`: Custom cache key.
+	// - `Cache`: Node cache TTL.
+	// - `MaxAge`: Browser cache TTL.
+	// - `OfflineCache`: Offline cache.
+	// - `SmartRouting`: Smart acceleration.
+	// - `RangeOriginPull`: Range GETs.
+	// - `UpstreamHttp2`: HTTP/2 forwarding.
+	// - `HostHeader`: Host header rewrite.
+	// - `ForceRedirect`: Force HTTPS.
+	// - `OriginPullProtocol`: Origin-pull HTTPS.
+	// - `CachePrefresh`: Cache prefresh.
+	// - `Compression`: Smart compression.
+	// - `Hsts`.
+	// - `ClientIpHeader`.
+	// - `SslTlsSecureConf`.
+	// - `OcspStapling`.
+	// - `Http2`: HTTP/2 access.
+	// - `UpstreamFollowRedirect`: Follow origin redirect.
+	// - `Origin`: Origin.
+	// Note: This field may return `null`, indicating that no valid value can be obtained.
 	NormalAction []NormalActionInitParameters `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
 
-	// Define a rewrite action.
-	// Define a rewrite action.
+	// Feature operation with a request/response header. Features of this type include:
+	// Feature operation with a request/response header. Features of this type include:
+	// - `RequestHeader`: HTTP request header modification.
+	// - `ResponseHeader`: HTTP response header modification.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	RewriteAction []RewriteActionInitParameters `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
 type ActionsNormalActionInitParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []ActionsNormalActionParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type ActionsNormalActionObservation struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []ActionsNormalActionParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type ActionsNormalActionParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	// +kubebuilder:validation:Optional
 	Parameters []ActionsNormalActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
 type ActionsNormalActionParametersInitParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ActionsNormalActionParametersObservation struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ActionsNormalActionParametersParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
@@ -138,118 +170,191 @@ type ActionsNormalActionParametersParameters struct {
 
 type ActionsObservation struct {
 
-	// Define a code action.
-	// Define a code action.
+	// Feature operation with a status code. Features of this type include:
+	// Feature operation with a status code. Features of this type include:
+	// - `ErrorPage`: Custom error page.
+	// - `StatusCodeCache`: Status code cache TTL.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	CodeAction []CodeActionObservation `json:"codeAction,omitempty" tf:"code_action,omitempty"`
 
-	// Define a normal action.
-	// Define a normal action.
+	// Common operation. Values:
+	// Common operation. Values:
+	// - `AccessUrlRedirect`: Access URL rewrite.
+	// - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+	// - `QUIC`: QUIC.
+	// - `WebSocket`: WebSocket.
+	// - `VideoSeek`: Video dragging.
+	// - `Authentication`: Token authentication.
+	// - `CacheKey`: Custom cache key.
+	// - `Cache`: Node cache TTL.
+	// - `MaxAge`: Browser cache TTL.
+	// - `OfflineCache`: Offline cache.
+	// - `SmartRouting`: Smart acceleration.
+	// - `RangeOriginPull`: Range GETs.
+	// - `UpstreamHttp2`: HTTP/2 forwarding.
+	// - `HostHeader`: Host header rewrite.
+	// - `ForceRedirect`: Force HTTPS.
+	// - `OriginPullProtocol`: Origin-pull HTTPS.
+	// - `CachePrefresh`: Cache prefresh.
+	// - `Compression`: Smart compression.
+	// - `Hsts`.
+	// - `ClientIpHeader`.
+	// - `SslTlsSecureConf`.
+	// - `OcspStapling`.
+	// - `Http2`: HTTP/2 access.
+	// - `UpstreamFollowRedirect`: Follow origin redirect.
+	// - `Origin`: Origin.
+	// Note: This field may return `null`, indicating that no valid value can be obtained.
 	NormalAction []NormalActionObservation `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
 
-	// Define a rewrite action.
-	// Define a rewrite action.
+	// Feature operation with a request/response header. Features of this type include:
+	// Feature operation with a request/response header. Features of this type include:
+	// - `RequestHeader`: HTTP request header modification.
+	// - `ResponseHeader`: HTTP response header modification.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	RewriteAction []RewriteActionObservation `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
 type ActionsParameters struct {
 
-	// Define a code action.
-	// Define a code action.
+	// Feature operation with a status code. Features of this type include:
+	// Feature operation with a status code. Features of this type include:
+	// - `ErrorPage`: Custom error page.
+	// - `StatusCodeCache`: Status code cache TTL.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	// +kubebuilder:validation:Optional
 	CodeAction []CodeActionParameters `json:"codeAction,omitempty" tf:"code_action,omitempty"`
 
-	// Define a normal action.
-	// Define a normal action.
+	// Common operation. Values:
+	// Common operation. Values:
+	// - `AccessUrlRedirect`: Access URL rewrite.
+	// - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+	// - `QUIC`: QUIC.
+	// - `WebSocket`: WebSocket.
+	// - `VideoSeek`: Video dragging.
+	// - `Authentication`: Token authentication.
+	// - `CacheKey`: Custom cache key.
+	// - `Cache`: Node cache TTL.
+	// - `MaxAge`: Browser cache TTL.
+	// - `OfflineCache`: Offline cache.
+	// - `SmartRouting`: Smart acceleration.
+	// - `RangeOriginPull`: Range GETs.
+	// - `UpstreamHttp2`: HTTP/2 forwarding.
+	// - `HostHeader`: Host header rewrite.
+	// - `ForceRedirect`: Force HTTPS.
+	// - `OriginPullProtocol`: Origin-pull HTTPS.
+	// - `CachePrefresh`: Cache prefresh.
+	// - `Compression`: Smart compression.
+	// - `Hsts`.
+	// - `ClientIpHeader`.
+	// - `SslTlsSecureConf`.
+	// - `OcspStapling`.
+	// - `Http2`: HTTP/2 access.
+	// - `UpstreamFollowRedirect`: Follow origin redirect.
+	// - `Origin`: Origin.
+	// Note: This field may return `null`, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	NormalAction []NormalActionParameters `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
 
-	// Define a rewrite action.
-	// Define a rewrite action.
+	// Feature operation with a request/response header. Features of this type include:
+	// Feature operation with a request/response header. Features of this type include:
+	// - `RequestHeader`: HTTP request header modification.
+	// - `ResponseHeader`: HTTP response header modification.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	// +kubebuilder:validation:Optional
 	RewriteAction []RewriteActionParameters `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
 type ActionsRewriteActionInitParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []ActionsRewriteActionParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type ActionsRewriteActionObservation struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []ActionsRewriteActionParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type ActionsRewriteActionParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	// +kubebuilder:validation:Optional
 	Parameters []ActionsRewriteActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
 type ActionsRewriteActionParametersInitParameters struct {
 
-	// Action name.
-	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+	// - add: Add the HTTP header.
+	// - set: Rewrite the HTTP header.
+	// - del: Delete the HTTP header.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Target HEADER name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// Parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ActionsRewriteActionParametersObservation struct {
 
-	// Action name.
-	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+	// - add: Add the HTTP header.
+	// - set: Rewrite the HTTP header.
+	// - del: Delete the HTTP header.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Target HEADER name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// Parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ActionsRewriteActionParametersParameters struct {
 
-	// Action name.
-	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+	// - add: Add the HTTP header.
+	// - set: Rewrite the HTTP header.
+	// - del: Delete the HTTP header.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Target HEADER name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// Parameter value.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
@@ -257,162 +362,231 @@ type ActionsRewriteActionParametersParameters struct {
 
 type AndInitParameters struct {
 
-	// Whether to ignore the case of the parameter value, the default value is false.
-	// Whether to ignore the case of the parameter value, the default value is false.
+	// Whether the parameter value is case insensitive. Default value: false.
+	// Whether the parameter value is case insensitive. Default value: false.
 	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+	// - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+	// - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition operator. Valid values are equal, notequal.
-	// Condition operator. Valid values are `equal`, `notequal`.
+	// Operator. Valid values:
+	// Operator. Valid values:
+	// - `equals`: Equals.
+	// - `notEquals`: Does not equal.
+	// - `exist`: Exists.
+	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
-	// Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// The match type. Values:
+	// The match type. Values:
+	// - `filename`: File name.
+	// - `extension`: File extension.
+	// - `host`: Host.
+	// - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+	// - `url`: Partial URL under the current site.
+	// - `client_country`: Country/Region of the client.
+	// - `query_string`: Query string in the request URL.
+	// - `request_header`: HTTP request header.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
-	// Condition Value.
-	// Condition Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+	// - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+	// - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+	// - When `Target=all`, it indicates any site request.
+	// - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+	// - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+	// - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+	// - When `Target=client_country`, enter the ISO-3166 country/region code.
+	// - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+	// - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type AndObservation struct {
 
-	// Whether to ignore the case of the parameter value, the default value is false.
-	// Whether to ignore the case of the parameter value, the default value is false.
+	// Whether the parameter value is case insensitive. Default value: false.
+	// Whether the parameter value is case insensitive. Default value: false.
 	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+	// - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+	// - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition operator. Valid values are equal, notequal.
-	// Condition operator. Valid values are `equal`, `notequal`.
+	// Operator. Valid values:
+	// Operator. Valid values:
+	// - `equals`: Equals.
+	// - `notEquals`: Does not equal.
+	// - `exist`: Exists.
+	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
-	// Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// The match type. Values:
+	// The match type. Values:
+	// - `filename`: File name.
+	// - `extension`: File extension.
+	// - `host`: Host.
+	// - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+	// - `url`: Partial URL under the current site.
+	// - `client_country`: Country/Region of the client.
+	// - `query_string`: Query string in the request URL.
+	// - `request_header`: HTTP request header.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
-	// Condition Value.
-	// Condition Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+	// - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+	// - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+	// - When `Target=all`, it indicates any site request.
+	// - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+	// - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+	// - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+	// - When `Target=client_country`, enter the ISO-3166 country/region code.
+	// - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+	// - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type AndParameters struct {
 
-	// Whether to ignore the case of the parameter value, the default value is false.
-	// Whether to ignore the case of the parameter value, the default value is false.
+	// Whether the parameter value is case insensitive. Default value: false.
+	// Whether the parameter value is case insensitive. Default value: false.
 	// +kubebuilder:validation:Optional
 	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+	// - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+	// - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition operator. Valid values are equal, notequal.
-	// Condition operator. Valid values are `equal`, `notequal`.
+	// Operator. Valid values:
+	// Operator. Valid values:
+	// - `equals`: Equals.
+	// - `notEquals`: Does not equal.
+	// - `exist`: Exists.
+	// - `notexist`: Does not exist.
 	// +kubebuilder:validation:Optional
 	Operator *string `json:"operator" tf:"operator,omitempty"`
 
-	// Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// The match type. Values:
+	// The match type. Values:
+	// - `filename`: File name.
+	// - `extension`: File extension.
+	// - `host`: Host.
+	// - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+	// - `url`: Partial URL under the current site.
+	// - `client_country`: Country/Region of the client.
+	// - `query_string`: Query string in the request URL.
+	// - `request_header`: HTTP request header.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target" tf:"target,omitempty"`
 
-	// Condition Value.
-	// Condition Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+	// - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+	// - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+	// - When `Target=all`, it indicates any site request.
+	// - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+	// - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+	// - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+	// - When `Target=client_country`, enter the ISO-3166 country/region code.
+	// - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+	// - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +kubebuilder:validation:Optional
 	// +listType=set
-	Values []*string `json:"values" tf:"values,omitempty"`
+	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type CodeActionInitParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Operation parameter.
 	Parameters []ParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type CodeActionObservation struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Operation parameter.
 	Parameters []ParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type CodeActionParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Operation parameter.
 	// +kubebuilder:validation:Optional
 	Parameters []ParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
 type CodeActionParametersInitParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// HTTP status code to use.
-	// HTTP status code to use.
+	// The status code.
+	// The status code.
 	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type CodeActionParametersObservation struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// HTTP status code to use.
-	// HTTP status code to use.
+	// The status code.
+	// The status code.
 	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type CodeActionParametersParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// HTTP status code to use.
-	// HTTP status code to use.
+	// The status code.
+	// The status code.
 	// +kubebuilder:validation:Optional
 	StatusCode *float64 `json:"statusCode" tf:"status_code,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
@@ -420,72 +594,72 @@ type CodeActionParametersParameters struct {
 
 type NormalActionInitParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []NormalActionParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type NormalActionObservation struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []NormalActionParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type NormalActionParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	// +kubebuilder:validation:Optional
 	Parameters []NormalActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
 type NormalActionParametersInitParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type NormalActionParametersObservation struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type NormalActionParametersParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
@@ -493,79 +667,145 @@ type NormalActionParametersParameters struct {
 
 type OrAndInitParameters struct {
 
-	// Whether to ignore the case of the parameter value, the default value is false.
-	// Whether to ignore the case of the parameter value, the default value is false.
+	// Whether the parameter value is case insensitive. Default value: false.
+	// Whether the parameter value is case insensitive. Default value: false.
 	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+	// - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+	// - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition operator. Valid values are equal, notequal.
-	// Condition operator. Valid values are `equal`, `notequal`.
+	// Operator. Valid values:
+	// Operator. Valid values:
+	// - `equals`: Equals.
+	// - `notEquals`: Does not equal.
+	// - `exist`: Exists.
+	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
-	// Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// The match type. Values:
+	// The match type. Values:
+	// - `filename`: File name.
+	// - `extension`: File extension.
+	// - `host`: Host.
+	// - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+	// - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
+	// - `query_string`: Query string in the request URL.
+	// - `request_header`: HTTP request header.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
-	// Condition Value.
-	// Condition Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+	// - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+	// - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+	// - When `Target=all`, it indicates any site request.
+	// - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+	// - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+	// - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+	// - When `Target=client_country`, enter the ISO-3166 country/region code.
+	// - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+	// - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type OrAndObservation struct {
 
-	// Whether to ignore the case of the parameter value, the default value is false.
-	// Whether to ignore the case of the parameter value, the default value is false.
+	// Whether the parameter value is case insensitive. Default value: false.
+	// Whether the parameter value is case insensitive. Default value: false.
 	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+	// - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+	// - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition operator. Valid values are equal, notequal.
-	// Condition operator. Valid values are `equal`, `notequal`.
+	// Operator. Valid values:
+	// Operator. Valid values:
+	// - `equals`: Equals.
+	// - `notEquals`: Does not equal.
+	// - `exist`: Exists.
+	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
-	// Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// The match type. Values:
+	// The match type. Values:
+	// - `filename`: File name.
+	// - `extension`: File extension.
+	// - `host`: Host.
+	// - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+	// - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
+	// - `query_string`: Query string in the request URL.
+	// - `request_header`: HTTP request header.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
-	// Condition Value.
-	// Condition Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+	// - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+	// - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+	// - When `Target=all`, it indicates any site request.
+	// - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+	// - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+	// - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+	// - When `Target=client_country`, enter the ISO-3166 country/region code.
+	// - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+	// - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type OrAndParameters struct {
 
-	// Whether to ignore the case of the parameter value, the default value is false.
-	// Whether to ignore the case of the parameter value, the default value is false.
+	// Whether the parameter value is case insensitive. Default value: false.
+	// Whether the parameter value is case insensitive. Default value: false.
 	// +kubebuilder:validation:Optional
 	IgnoreCase *bool `json:"ignoreCase,omitempty" tf:"ignore_case,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+	// - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+	// - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition operator. Valid values are equal, notequal.
-	// Condition operator. Valid values are `equal`, `notequal`.
+	// Operator. Valid values:
+	// Operator. Valid values:
+	// - `equals`: Equals.
+	// - `notEquals`: Does not equal.
+	// - `exist`: Exists.
+	// - `notexist`: Does not exist.
 	// +kubebuilder:validation:Optional
 	Operator *string `json:"operator" tf:"operator,omitempty"`
 
-	// Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-	// Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+	// The match type. Values:
+	// The match type. Values:
+	// - `filename`: File name.
+	// - `extension`: File extension.
+	// - `host`: Host.
+	// - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+	// - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
+	// - `query_string`: Query string in the request URL.
+	// - `request_header`: HTTP request header.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target" tf:"target,omitempty"`
 
-	// Condition Value.
-	// Condition Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+	// - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+	// - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+	// - When `Target=all`, it indicates any site request.
+	// - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+	// - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+	// - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+	// - When `Target=client_country`, enter the ISO-3166 country/region code.
+	// - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+	// - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
 	// +kubebuilder:validation:Optional
 	// +listType=set
-	Values []*string `json:"values" tf:"values,omitempty"`
+	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type OrInitParameters struct {
@@ -592,50 +832,50 @@ type OrParameters struct {
 
 type ParametersInitParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// HTTP status code to use.
-	// HTTP status code to use.
+	// The status code.
+	// The status code.
 	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ParametersObservation struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// HTTP status code to use.
-	// HTTP status code to use.
+	// The status code.
+	// The status code.
 	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ParametersParameters struct {
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Parameter Name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// HTTP status code to use.
-	// HTTP status code to use.
+	// The status code.
+	// The status code.
 	// +kubebuilder:validation:Optional
 	StatusCode *float64 `json:"statusCode" tf:"status_code,omitempty"`
 
-	// Condition Value.
-	// Parameter Values.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// The parameter value.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
@@ -643,85 +883,94 @@ type ParametersParameters struct {
 
 type RewriteActionInitParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []RewriteActionParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type RewriteActionObservation struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	Parameters []RewriteActionParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 }
 
 type RewriteActionParameters struct {
 
-	// Action name.
-	// Action name.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// Action parameters.
-	// Action parameters.
+	// Operation parameter.
+	// Parameter.
 	// +kubebuilder:validation:Optional
 	Parameters []RewriteActionParametersParameters `json:"parameters" tf:"parameters,omitempty"`
 }
 
 type RewriteActionParametersInitParameters struct {
 
-	// Action name.
-	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+	// - add: Add the HTTP header.
+	// - set: Rewrite the HTTP header.
+	// - del: Delete the HTTP header.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Target HEADER name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// Parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type RewriteActionParametersObservation struct {
 
-	// Action name.
-	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+	// - add: Add the HTTP header.
+	// - set: Rewrite the HTTP header.
+	// - del: Delete the HTTP header.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Target HEADER name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// Parameter value.
 	// +listType=set
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type RewriteActionParametersParameters struct {
 
-	// Action name.
-	// Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+	// Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+	// Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+	// - add: Add the HTTP header.
+	// - set: Rewrite the HTTP header.
+	// - del: Delete the HTTP header.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-	// Target HEADER name.
+	// The parameter name of the match type. This field is required only when Target=query_string/request_header.
+	// Parameter name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Condition Value.
-	// Parameter Value.
+	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+	// Parameter value.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Values []*string `json:"values" tf:"values,omitempty"`
@@ -737,8 +986,10 @@ type RuleEngineInitParameters struct {
 	// Rule items list.
 	Rules []RulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
 
-	// Rule status. Values: enable: Enabled; disable: Disabled.
-	// Rule status. Values: `enable`: Enabled; `disable`: Disabled.
+	// Rule status. Values:
+	// Rule status. Values:
+	// - `enable`: Enabled.
+	// - `disable`: Disabled.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// rule tag list.
@@ -777,8 +1028,10 @@ type RuleEngineObservation struct {
 	// Rule items list.
 	Rules []RulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
 
-	// Rule status. Values: enable: Enabled; disable: Disabled.
-	// Rule status. Values: `enable`: Enabled; `disable`: Disabled.
+	// Rule status. Values:
+	// Rule status. Values:
+	// - `enable`: Enabled.
+	// - `disable`: Disabled.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// rule tag list.
@@ -803,8 +1056,10 @@ type RuleEngineParameters struct {
 	// +kubebuilder:validation:Optional
 	Rules []RulesParameters `json:"rules,omitempty" tf:"rules,omitempty"`
 
-	// Rule status. Values: enable: Enabled; disable: Disabled.
-	// Rule status. Values: `enable`: Enabled; `disable`: Disabled.
+	// Rule status. Values:
+	// Rule status. Values:
+	// - `enable`: Enabled.
+	// - `disable`: Disabled.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -831,118 +1086,217 @@ type RuleEngineParameters struct {
 
 type RulesActionsInitParameters struct {
 
-	// Define a code action.
-	// Define a code action.
+	// Feature operation with a status code. Features of this type include:
+	// Feature operation with a status code. Features of this type include:
+	// - `ErrorPage`: Custom error page.
+	// - `StatusCodeCache`: Status code cache TTL.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	CodeAction []ActionsCodeActionInitParameters `json:"codeAction,omitempty" tf:"code_action,omitempty"`
 
-	// Define a normal action.
-	// Define a normal action.
+	// Common operation. Values:
+	// Common operation. Values:
+	// - `AccessUrlRedirect`: Access URL rewrite.
+	// - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+	// - `QUIC`: QUIC.
+	// - `WebSocket`: WebSocket.
+	// - `VideoSeek`: Video dragging.
+	// - `Authentication`: Token authentication.
+	// - `CacheKey`: Custom cache key.
+	// - `Cache`: Node cache TTL.
+	// - `MaxAge`: Browser cache TTL.
+	// - `OfflineCache`: Offline cache.
+	// - `SmartRouting`: Smart acceleration.
+	// - `RangeOriginPull`: Range GETs.
+	// - `UpstreamHttp2`: HTTP/2 forwarding.
+	// - `HostHeader`: Host header rewrite.
+	// - `ForceRedirect`: Force HTTPS.
+	// - `OriginPullProtocol`: Origin-pull HTTPS.
+	// - `CachePrefresh`: Cache prefresh.
+	// - `Compression`: Smart compression.
+	// - `Hsts`.
+	// - `ClientIpHeader`.
+	// - `SslTlsSecureConf`.
+	// - `OcspStapling`.
+	// - `Http2`: HTTP/2 access.
+	// - `UpstreamFollowRedirect`: Follow origin redirect.
+	// - `Origin`: Origin.
+	// Note: This field may return `null`, indicating that no valid value can be obtained.
 	NormalAction []ActionsNormalActionInitParameters `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
 
-	// Define a rewrite action.
-	// Define a rewrite action.
+	// Feature operation with a request/response header. Features of this type include:
+	// Feature operation with a request/response header. Features of this type include:
+	// - `RequestHeader`: HTTP request header modification.
+	// - `ResponseHeader`: HTTP response header modification.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	RewriteAction []ActionsRewriteActionInitParameters `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
 type RulesActionsObservation struct {
 
-	// Define a code action.
-	// Define a code action.
+	// Feature operation with a status code. Features of this type include:
+	// Feature operation with a status code. Features of this type include:
+	// - `ErrorPage`: Custom error page.
+	// - `StatusCodeCache`: Status code cache TTL.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	CodeAction []ActionsCodeActionObservation `json:"codeAction,omitempty" tf:"code_action,omitempty"`
 
-	// Define a normal action.
-	// Define a normal action.
+	// Common operation. Values:
+	// Common operation. Values:
+	// - `AccessUrlRedirect`: Access URL rewrite.
+	// - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+	// - `QUIC`: QUIC.
+	// - `WebSocket`: WebSocket.
+	// - `VideoSeek`: Video dragging.
+	// - `Authentication`: Token authentication.
+	// - `CacheKey`: Custom cache key.
+	// - `Cache`: Node cache TTL.
+	// - `MaxAge`: Browser cache TTL.
+	// - `OfflineCache`: Offline cache.
+	// - `SmartRouting`: Smart acceleration.
+	// - `RangeOriginPull`: Range GETs.
+	// - `UpstreamHttp2`: HTTP/2 forwarding.
+	// - `HostHeader`: Host header rewrite.
+	// - `ForceRedirect`: Force HTTPS.
+	// - `OriginPullProtocol`: Origin-pull HTTPS.
+	// - `CachePrefresh`: Cache prefresh.
+	// - `Compression`: Smart compression.
+	// - `Hsts`.
+	// - `ClientIpHeader`.
+	// - `SslTlsSecureConf`.
+	// - `OcspStapling`.
+	// - `Http2`: HTTP/2 access.
+	// - `UpstreamFollowRedirect`: Follow origin redirect.
+	// - `Origin`: Origin.
+	// Note: This field may return `null`, indicating that no valid value can be obtained.
 	NormalAction []ActionsNormalActionObservation `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
 
-	// Define a rewrite action.
-	// Define a rewrite action.
+	// Feature operation with a request/response header. Features of this type include:
+	// Feature operation with a request/response header. Features of this type include:
+	// - `RequestHeader`: HTTP request header modification.
+	// - `ResponseHeader`: HTTP response header modification.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	RewriteAction []ActionsRewriteActionObservation `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
 type RulesActionsParameters struct {
 
-	// Define a code action.
-	// Define a code action.
+	// Feature operation with a status code. Features of this type include:
+	// Feature operation with a status code. Features of this type include:
+	// - `ErrorPage`: Custom error page.
+	// - `StatusCodeCache`: Status code cache TTL.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	// +kubebuilder:validation:Optional
 	CodeAction []ActionsCodeActionParameters `json:"codeAction,omitempty" tf:"code_action,omitempty"`
 
-	// Define a normal action.
-	// Define a normal action.
+	// Common operation. Values:
+	// Common operation. Values:
+	// - `AccessUrlRedirect`: Access URL rewrite.
+	// - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+	// - `QUIC`: QUIC.
+	// - `WebSocket`: WebSocket.
+	// - `VideoSeek`: Video dragging.
+	// - `Authentication`: Token authentication.
+	// - `CacheKey`: Custom cache key.
+	// - `Cache`: Node cache TTL.
+	// - `MaxAge`: Browser cache TTL.
+	// - `OfflineCache`: Offline cache.
+	// - `SmartRouting`: Smart acceleration.
+	// - `RangeOriginPull`: Range GETs.
+	// - `UpstreamHttp2`: HTTP/2 forwarding.
+	// - `HostHeader`: Host header rewrite.
+	// - `ForceRedirect`: Force HTTPS.
+	// - `OriginPullProtocol`: Origin-pull HTTPS.
+	// - `CachePrefresh`: Cache prefresh.
+	// - `Compression`: Smart compression.
+	// - `Hsts`.
+	// - `ClientIpHeader`.
+	// - `SslTlsSecureConf`.
+	// - `OcspStapling`.
+	// - `Http2`: HTTP/2 access.
+	// - `UpstreamFollowRedirect`: Follow origin redirect.
+	// - `Origin`: Origin.
+	// Note: This field may return `null`, indicating that no valid value can be obtained.
 	// +kubebuilder:validation:Optional
 	NormalAction []ActionsNormalActionParameters `json:"normalAction,omitempty" tf:"normal_action,omitempty"`
 
-	// Define a rewrite action.
-	// Define a rewrite action.
+	// Feature operation with a request/response header. Features of this type include:
+	// Feature operation with a request/response header. Features of this type include:
+	// - `RequestHeader`: HTTP request header modification.
+	// - `ResponseHeader`: HTTP response header modification.
+	// Note: This field may return null, indicating that no valid values can be obtained.
 	// +kubebuilder:validation:Optional
 	RewriteAction []ActionsRewriteActionParameters `json:"rewriteAction,omitempty" tf:"rewrite_action,omitempty"`
 }
 
 type RulesInitParameters struct {
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The feature to be executed.
+	// Feature to be executed.
 	Actions []ActionsInitParameters `json:"actions,omitempty" tf:"actions,omitempty"`
 
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
 	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
 	Or []OrInitParameters `json:"or,omitempty" tf:"or,omitempty"`
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The nested rule.
+	// The nested rule.
 	SubRules []SubRulesInitParameters `json:"subRules,omitempty" tf:"sub_rules,omitempty"`
 }
 
 type RulesObservation struct {
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The feature to be executed.
+	// Feature to be executed.
 	Actions []ActionsObservation `json:"actions,omitempty" tf:"actions,omitempty"`
 
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
 	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
 	Or []OrObservation `json:"or,omitempty" tf:"or,omitempty"`
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The nested rule.
+	// The nested rule.
 	SubRules []SubRulesObservation `json:"subRules,omitempty" tf:"sub_rules,omitempty"`
 }
 
 type RulesOrInitParameters struct {
 
 	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
-	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+	// Rule engine condition. This condition will be considered met if all items in the array are met.
 	And []OrAndInitParameters `json:"and,omitempty" tf:"and,omitempty"`
 }
 
 type RulesOrObservation struct {
 
 	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
-	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+	// Rule engine condition. This condition will be considered met if all items in the array are met.
 	And []OrAndObservation `json:"and,omitempty" tf:"and,omitempty"`
 }
 
 type RulesOrParameters struct {
 
 	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
-	// AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+	// Rule engine condition. This condition will be considered met if all items in the array are met.
 	// +kubebuilder:validation:Optional
 	And []OrAndParameters `json:"and" tf:"and,omitempty"`
 }
 
 type RulesParameters struct {
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The feature to be executed.
+	// Feature to be executed.
 	// +kubebuilder:validation:Optional
 	Actions []ActionsParameters `json:"actions" tf:"actions,omitempty"`
 
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
 	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
 	// +kubebuilder:validation:Optional
 	Or []OrParameters `json:"or" tf:"or,omitempty"`
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The nested rule.
+	// The nested rule.
 	// +kubebuilder:validation:Optional
 	SubRules []SubRulesParameters `json:"subRules,omitempty" tf:"sub_rules,omitempty"`
 }
@@ -950,11 +1304,11 @@ type RulesParameters struct {
 type SubRulesInitParameters struct {
 
 	// Rule items list.
-	// Rule items list.
+	// Nested rule settings.
 	Rules []SubRulesRulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
 
 	// rule tag list.
-	// rule tag list.
+	// Tag of the rule.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
@@ -962,11 +1316,11 @@ type SubRulesInitParameters struct {
 type SubRulesObservation struct {
 
 	// Rule items list.
-	// Rule items list.
+	// Nested rule settings.
 	Rules []SubRulesRulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
 
 	// rule tag list.
-	// rule tag list.
+	// Tag of the rule.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
@@ -974,12 +1328,12 @@ type SubRulesObservation struct {
 type SubRulesParameters struct {
 
 	// Rule items list.
-	// Rule items list.
+	// Nested rule settings.
 	// +kubebuilder:validation:Optional
 	Rules []SubRulesRulesParameters `json:"rules" tf:"rules,omitempty"`
 
 	// rule tag list.
-	// rule tag list.
+	// Tag of the rule.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -987,35 +1341,41 @@ type SubRulesParameters struct {
 
 type SubRulesRulesInitParameters struct {
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The feature to be executed.
+	// The feature to be executed.
 	Actions []RulesActionsInitParameters `json:"actions,omitempty" tf:"actions,omitempty"`
 
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
 	Or []RulesOrInitParameters `json:"or,omitempty" tf:"or,omitempty"`
 }
 
 type SubRulesRulesObservation struct {
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The feature to be executed.
+	// The feature to be executed.
 	Actions []RulesActionsObservation `json:"actions,omitempty" tf:"actions,omitempty"`
 
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
 	Or []RulesOrObservation `json:"or,omitempty" tf:"or,omitempty"`
 }
 
 type SubRulesRulesParameters struct {
 
-	// Actions list of the rule. See details in data source rule_engine_setting.
-	// Actions list of the rule. See details in data source `rule_engine_setting`.
+	// The feature to be executed.
+	// The feature to be executed.
 	// +kubebuilder:validation:Optional
 	Actions []RulesActionsParameters `json:"actions" tf:"actions,omitempty"`
 
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
-	// OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
+	// The condition that determines if a feature should run.
+	// Note: If any condition in the array is met, the feature will run.
 	// +kubebuilder:validation:Optional
 	Or []RulesOrParameters `json:"or" tf:"or,omitempty"`
 }

@@ -4,19 +4,20 @@ metadata:
   annotations:
     meta.upbound.io/example-id: teo/v1alpha1/origingroup
   labels:
-    testing.upbound.io/example-name: origin_group
-  name: origin-group
+    testing.upbound.io/example-name: basic
+  name: basic
 spec:
   forProvider:
-    configurationType: weight
-    originGroupName: test-group
-    originRecords:
-    - area: []
-      port: 8080
-      private: false
-      record: 150.109.8.1
+    name: keep-group-1
+    records:
+    - private: true
+      privateParameters:
+      - name: SecretAccessKey
+        value: test
+      record: tf-teo.xyz
+      type: IP_DOMAIN
       weight: 100
-    originType: self
+    type: GENERAL
     zoneIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

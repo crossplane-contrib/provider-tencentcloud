@@ -49,8 +49,11 @@ type ZoneInitParameters struct {
 	// Alias site identifier. Limit the input to a combination of numbers, English, - and _, within 20 characters. For details, refer to the alias site identifier. If there is no such usage scenario, leave this field empty.
 	AliasZoneName *string `json:"aliasZoneName,omitempty" tf:"alias_zone_name,omitempty"`
 
-	// When the type value is partial or full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the type value is noDomainAccess, please leave this value empty. Valid values: global: Global availability zone; mainland: Chinese mainland availability zone; overseas: Global availability zone (excluding Chinese mainland).
-	// When the `type` value is `partial` or `full`, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is `overseas` if not filled in. When the `type` value is `noDomainAccess`, please leave this value empty. Valid values: `global`: Global availability zone; `mainland`: Chinese mainland availability zone; `overseas`: Global availability zone (excluding Chinese mainland).
+	// When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:
+	// When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:
+	// - global: Global availability zone.
+	// - mainland: Chinese mainland availability zone.
+	// - overseas: Global availability zone (excluding Chinese mainland).
 	Area *string `json:"area,omitempty" tf:"area,omitempty"`
 
 	// Indicates whether the site is disabled.
@@ -66,8 +69,8 @@ type ZoneInitParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in. Valid values: partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-	// Site access type. The value of this parameter is as follows, and the default is `partial` if not filled in. Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`: No domain access.
+	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
@@ -81,8 +84,11 @@ type ZoneObservation struct {
 	// Alias site identifier. Limit the input to a combination of numbers, English, - and _, within 20 characters. For details, refer to the alias site identifier. If there is no such usage scenario, leave this field empty.
 	AliasZoneName *string `json:"aliasZoneName,omitempty" tf:"alias_zone_name,omitempty"`
 
-	// When the type value is partial or full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the type value is noDomainAccess, please leave this value empty. Valid values: global: Global availability zone; mainland: Chinese mainland availability zone; overseas: Global availability zone (excluding Chinese mainland).
-	// When the `type` value is `partial` or `full`, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is `overseas` if not filled in. When the `type` value is `noDomainAccess`, please leave this value empty. Valid values: `global`: Global availability zone; `mainland`: Chinese mainland availability zone; `overseas`: Global availability zone (excluding Chinese mainland).
+	// When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:
+	// When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:
+	// - global: Global availability zone.
+	// - mainland: Chinese mainland availability zone.
+	// - overseas: Global availability zone (excluding Chinese mainland).
 	Area *string `json:"area,omitempty" tf:"area,omitempty"`
 
 	// ID of the resource.
@@ -113,8 +119,8 @@ type ZoneObservation struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in. Valid values: partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-	// Site access type. The value of this parameter is as follows, and the default is `partial` if not filled in. Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`: No domain access.
+	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
@@ -129,8 +135,11 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	AliasZoneName *string `json:"aliasZoneName,omitempty" tf:"alias_zone_name,omitempty"`
 
-	// When the type value is partial or full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the type value is noDomainAccess, please leave this value empty. Valid values: global: Global availability zone; mainland: Chinese mainland availability zone; overseas: Global availability zone (excluding Chinese mainland).
-	// When the `type` value is `partial` or `full`, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is `overseas` if not filled in. When the `type` value is `noDomainAccess`, please leave this value empty. Valid values: `global`: Global availability zone; `mainland`: Chinese mainland availability zone; `overseas`: Global availability zone (excluding Chinese mainland).
+	// When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:
+	// When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:
+	// - global: Global availability zone.
+	// - mainland: Chinese mainland availability zone.
+	// - overseas: Global availability zone (excluding Chinese mainland).
 	// +kubebuilder:validation:Optional
 	Area *string `json:"area,omitempty" tf:"area,omitempty"`
 
@@ -150,8 +159,8 @@ type ZoneParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in. Valid values: partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-	// Site access type. The value of this parameter is as follows, and the default is `partial` if not filled in. Valid values: `partial`: CNAME access; `full`: NS access; `noDomainAccess`: No domain access.
+	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 

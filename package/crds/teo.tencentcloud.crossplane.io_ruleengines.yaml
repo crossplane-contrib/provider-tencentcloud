@@ -86,41 +86,44 @@ spec:
                       properties:
                         actions:
                           description: |-
-                            Actions list of the rule. See details in data source rule_engine_setting.
-                            Actions list of the rule. See details in data source `rule_engine_setting`.
+                            The feature to be executed.
+                            Feature to be executed.
                           items:
                             properties:
                               codeAction:
                                 description: |-
-                                  Define a code action.
-                                  Define a code action.
+                                  Feature operation with a status code. Features of this type include:
+                                  Feature operation with a status code. Features of this type include:
+                                  - `ErrorPage`: Custom error page.
+                                  - `StatusCodeCache`: Status code cache TTL.
+                                  Note: This field may return null, indicating that no valid values can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Operation parameter.
                                       items:
                                         properties:
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Parameter Name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                             type: string
                                           statusCode:
                                             description: |-
-                                              HTTP status code to use.
-                                              HTTP status code to use.
+                                              The status code.
+                                              The status code.
                                             type: number
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Values.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              The parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -131,30 +134,56 @@ spec:
                                 type: array
                               normalAction:
                                 description: |-
-                                  Define a normal action.
-                                  Define a normal action.
+                                  Common operation. Values:
+                                  Common operation. Values:
+                                  - `AccessUrlRedirect`: Access URL rewrite.
+                                  - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+                                  - `QUIC`: QUIC.
+                                  - `WebSocket`: WebSocket.
+                                  - `VideoSeek`: Video dragging.
+                                  - `Authentication`: Token authentication.
+                                  - `CacheKey`: Custom cache key.
+                                  - `Cache`: Node cache TTL.
+                                  - `MaxAge`: Browser cache TTL.
+                                  - `OfflineCache`: Offline cache.
+                                  - `SmartRouting`: Smart acceleration.
+                                  - `RangeOriginPull`: Range GETs.
+                                  - `UpstreamHttp2`: HTTP/2 forwarding.
+                                  - `HostHeader`: Host header rewrite.
+                                  - `ForceRedirect`: Force HTTPS.
+                                  - `OriginPullProtocol`: Origin-pull HTTPS.
+                                  - `CachePrefresh`: Cache prefresh.
+                                  - `Compression`: Smart compression.
+                                  - `Hsts`.
+                                  - `ClientIpHeader`.
+                                  - `SslTlsSecureConf`.
+                                  - `OcspStapling`.
+                                  - `Http2`: HTTP/2 access.
+                                  - `UpstreamFollowRedirect`: Follow origin redirect.
+                                  - `Origin`: Origin.
+                                  Note: This field may return `null`, indicating that no valid value can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Parameter.
                                       items:
                                         properties:
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Parameter Name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                             type: string
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Values.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              The parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -165,35 +194,41 @@ spec:
                                 type: array
                               rewriteAction:
                                 description: |-
-                                  Define a rewrite action.
-                                  Define a rewrite action.
+                                  Feature operation with a request/response header. Features of this type include:
+                                  Feature operation with a request/response header. Features of this type include:
+                                  - `RequestHeader`: HTTP request header modification.
+                                  - `ResponseHeader`: HTTP response header modification.
+                                  Note: This field may return null, indicating that no valid values can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Parameter.
                                       items:
                                         properties:
                                           action:
                                             description: |-
-                                              Action name.
-                                              Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+                                              Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                              Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+                                              - add: Add the HTTP header.
+                                              - set: Rewrite the HTTP header.
+                                              - del: Delete the HTTP header.
                                             type: string
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Target HEADER name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              Parameter name.
                                             type: string
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Value.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              Parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -206,7 +241,8 @@ spec:
                           type: array
                         or:
                           description: |-
-                            OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+                            The condition that determines if a feature should run.
+                            Note: If any condition in the array is met, the feature will run.
                             OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
                           items:
                             properties:
@@ -218,28 +254,51 @@ spec:
                                   properties:
                                     ignoreCase:
                                       description: |-
-                                        Whether to ignore the case of the parameter value, the default value is false.
-                                        Whether to ignore the case of the parameter value, the default value is false.
+                                        Whether the parameter value is case insensitive. Default value: false.
+                                        Whether the parameter value is case insensitive. Default value: false.
                                       type: boolean
                                     name:
                                       description: |-
-                                        The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                        The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+                                        The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                        The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+                                        - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+                                        - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                       type: string
                                     operator:
                                       description: |-
-                                        Condition operator. Valid values are equal, notequal.
-                                        Condition operator. Valid values are `equal`, `notequal`.
+                                        Operator. Valid values:
+                                        Operator. Valid values:
+                                        - `equals`: Equals.
+                                        - `notEquals`: Does not equal.
+                                        - `exist`: Exists.
+                                        - `notexist`: Does not exist.
                                       type: string
                                     target:
                                       description: |-
-                                        Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-                                        Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+                                        The match type. Values:
+                                        The match type. Values:
+                                        - `filename`: File name.
+                                        - `extension`: File extension.
+                                        - `host`: Host.
+                                        - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+                                        - `url`: Partial URL under the current site.
+                                        - `client_country`: Country/Region of the client.
+                                        - `query_string`: Query string in the request URL.
+                                        - `request_header`: HTTP request header.
                                       type: string
                                     values:
                                       description: |-
-                                        Condition Value.
-                                        Condition Value.
+                                        The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                        The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+                                        - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+                                        - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+                                        - When `Target=all`, it indicates any site request.
+                                        - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+                                        - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+                                        - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+                                        - When `Target=client_country`, enter the ISO-3166 country/region code.
+                                        - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+                                        - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                       items:
                                         type: string
                                       type: array
@@ -250,53 +309,56 @@ spec:
                           type: array
                         subRules:
                           description: |-
-                            Actions list of the rule. See details in data source rule_engine_setting.
-                            Actions list of the rule. See details in data source `rule_engine_setting`.
+                            The nested rule.
+                            The nested rule.
                           items:
                             properties:
                               rules:
                                 description: |-
                                   Rule items list.
-                                  Rule items list.
+                                  Nested rule settings.
                                 items:
                                   properties:
                                     actions:
                                       description: |-
-                                        Actions list of the rule. See details in data source rule_engine_setting.
-                                        Actions list of the rule. See details in data source `rule_engine_setting`.
+                                        The feature to be executed.
+                                        The feature to be executed.
                                       items:
                                         properties:
                                           codeAction:
                                             description: |-
-                                              Define a code action.
-                                              Define a code action.
+                                              Feature operation with a status code. Features of this type include:
+                                              Feature operation with a status code. Features of this type include:
+                                              - `ErrorPage`: Custom error page.
+                                              - `StatusCodeCache`: Status code cache TTL.
+                                              Note: This field may return null, indicating that no valid values can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Operation parameter.
                                                   items:
                                                     properties:
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Parameter Name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                                         type: string
                                                       statusCode:
                                                         description: |-
-                                                          HTTP status code to use.
-                                                          HTTP status code to use.
+                                                          The status code.
+                                                          The status code.
                                                         type: number
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Values.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          The parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -307,30 +369,56 @@ spec:
                                             type: array
                                           normalAction:
                                             description: |-
-                                              Define a normal action.
-                                              Define a normal action.
+                                              Common operation. Values:
+                                              Common operation. Values:
+                                              - `AccessUrlRedirect`: Access URL rewrite.
+                                              - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+                                              - `QUIC`: QUIC.
+                                              - `WebSocket`: WebSocket.
+                                              - `VideoSeek`: Video dragging.
+                                              - `Authentication`: Token authentication.
+                                              - `CacheKey`: Custom cache key.
+                                              - `Cache`: Node cache TTL.
+                                              - `MaxAge`: Browser cache TTL.
+                                              - `OfflineCache`: Offline cache.
+                                              - `SmartRouting`: Smart acceleration.
+                                              - `RangeOriginPull`: Range GETs.
+                                              - `UpstreamHttp2`: HTTP/2 forwarding.
+                                              - `HostHeader`: Host header rewrite.
+                                              - `ForceRedirect`: Force HTTPS.
+                                              - `OriginPullProtocol`: Origin-pull HTTPS.
+                                              - `CachePrefresh`: Cache prefresh.
+                                              - `Compression`: Smart compression.
+                                              - `Hsts`.
+                                              - `ClientIpHeader`.
+                                              - `SslTlsSecureConf`.
+                                              - `OcspStapling`.
+                                              - `Http2`: HTTP/2 access.
+                                              - `UpstreamFollowRedirect`: Follow origin redirect.
+                                              - `Origin`: Origin.
+                                              Note: This field may return `null`, indicating that no valid value can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Parameter.
                                                   items:
                                                     properties:
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Parameter Name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                                         type: string
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Values.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          The parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -341,35 +429,41 @@ spec:
                                             type: array
                                           rewriteAction:
                                             description: |-
-                                              Define a rewrite action.
-                                              Define a rewrite action.
+                                              Feature operation with a request/response header. Features of this type include:
+                                              Feature operation with a request/response header. Features of this type include:
+                                              - `RequestHeader`: HTTP request header modification.
+                                              - `ResponseHeader`: HTTP response header modification.
+                                              Note: This field may return null, indicating that no valid values can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Parameter.
                                                   items:
                                                     properties:
                                                       action:
                                                         description: |-
-                                                          Action name.
-                                                          Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+                                                          Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                          Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+                                                          - add: Add the HTTP header.
+                                                          - set: Rewrite the HTTP header.
+                                                          - del: Delete the HTTP header.
                                                         type: string
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Target HEADER name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          Parameter name.
                                                         type: string
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Value.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          Parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -382,40 +476,64 @@ spec:
                                       type: array
                                     or:
                                       description: |-
-                                        OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
-                                        OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+                                        The condition that determines if a feature should run.
+                                        Note: If any condition in the array is met, the feature will run.
+                                        The condition that determines if a feature should run.
+                                        Note: If any condition in the array is met, the feature will run.
                                       items:
                                         properties:
                                           and:
                                             description: |-
                                               AND Conditions list of the rule. Rule would be triggered if all conditions are true.
-                                              AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+                                              Rule engine condition. This condition will be considered met if all items in the array are met.
                                             items:
                                               properties:
                                                 ignoreCase:
                                                   description: |-
-                                                    Whether to ignore the case of the parameter value, the default value is false.
-                                                    Whether to ignore the case of the parameter value, the default value is false.
+                                                    Whether the parameter value is case insensitive. Default value: false.
+                                                    Whether the parameter value is case insensitive. Default value: false.
                                                   type: boolean
                                                 name:
                                                   description: |-
-                                                    The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                    The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+                                                    The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                    The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+                                                    - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+                                                    - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                                   type: string
                                                 operator:
                                                   description: |-
-                                                    Condition operator. Valid values are equal, notequal.
-                                                    Condition operator. Valid values are `equal`, `notequal`.
+                                                    Operator. Valid values:
+                                                    Operator. Valid values:
+                                                    - `equals`: Equals.
+                                                    - `notEquals`: Does not equal.
+                                                    - `exist`: Exists.
+                                                    - `notexist`: Does not exist.
                                                   type: string
                                                 target:
                                                   description: |-
-                                                    Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-                                                    Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+                                                    The match type. Values:
+                                                    The match type. Values:
+                                                    - `filename`: File name.
+                                                    - `extension`: File extension.
+                                                    - `host`: Host.
+                                                    - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+                                                    - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
+                                                    - `query_string`: Query string in the request URL.
+                                                    - `request_header`: HTTP request header.
                                                   type: string
                                                 values:
                                                   description: |-
-                                                    Condition Value.
-                                                    Condition Value.
+                                                    The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                    The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+                                                    - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+                                                    - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+                                                    - When `Target=all`, it indicates any site request.
+                                                    - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+                                                    - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+                                                    - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+                                                    - When `Target=client_country`, enter the ISO-3166 country/region code.
+                                                    - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+                                                    - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                                   items:
                                                     type: string
                                                   type: array
@@ -429,7 +547,7 @@ spec:
                               tags:
                                 description: |-
                                   rule tag list.
-                                  rule tag list.
+                                  Tag of the rule.
                                 items:
                                   type: string
                                 type: array
@@ -440,8 +558,10 @@ spec:
                     type: array
                   status:
                     description: |-
-                      Rule status. Values: enable: Enabled; disable: Disabled.
-                      Rule status. Values: `enable`: Enabled; `disable`: Disabled.
+                      Rule status. Values:
+                      Rule status. Values:
+                      - `enable`: Enabled.
+                      - `disable`: Disabled.
                     type: string
                   tags:
                     description: |-
@@ -557,41 +677,44 @@ spec:
                       properties:
                         actions:
                           description: |-
-                            Actions list of the rule. See details in data source rule_engine_setting.
-                            Actions list of the rule. See details in data source `rule_engine_setting`.
+                            The feature to be executed.
+                            Feature to be executed.
                           items:
                             properties:
                               codeAction:
                                 description: |-
-                                  Define a code action.
-                                  Define a code action.
+                                  Feature operation with a status code. Features of this type include:
+                                  Feature operation with a status code. Features of this type include:
+                                  - `ErrorPage`: Custom error page.
+                                  - `StatusCodeCache`: Status code cache TTL.
+                                  Note: This field may return null, indicating that no valid values can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Operation parameter.
                                       items:
                                         properties:
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Parameter Name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                             type: string
                                           statusCode:
                                             description: |-
-                                              HTTP status code to use.
-                                              HTTP status code to use.
+                                              The status code.
+                                              The status code.
                                             type: number
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Values.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              The parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -602,30 +725,56 @@ spec:
                                 type: array
                               normalAction:
                                 description: |-
-                                  Define a normal action.
-                                  Define a normal action.
+                                  Common operation. Values:
+                                  Common operation. Values:
+                                  - `AccessUrlRedirect`: Access URL rewrite.
+                                  - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+                                  - `QUIC`: QUIC.
+                                  - `WebSocket`: WebSocket.
+                                  - `VideoSeek`: Video dragging.
+                                  - `Authentication`: Token authentication.
+                                  - `CacheKey`: Custom cache key.
+                                  - `Cache`: Node cache TTL.
+                                  - `MaxAge`: Browser cache TTL.
+                                  - `OfflineCache`: Offline cache.
+                                  - `SmartRouting`: Smart acceleration.
+                                  - `RangeOriginPull`: Range GETs.
+                                  - `UpstreamHttp2`: HTTP/2 forwarding.
+                                  - `HostHeader`: Host header rewrite.
+                                  - `ForceRedirect`: Force HTTPS.
+                                  - `OriginPullProtocol`: Origin-pull HTTPS.
+                                  - `CachePrefresh`: Cache prefresh.
+                                  - `Compression`: Smart compression.
+                                  - `Hsts`.
+                                  - `ClientIpHeader`.
+                                  - `SslTlsSecureConf`.
+                                  - `OcspStapling`.
+                                  - `Http2`: HTTP/2 access.
+                                  - `UpstreamFollowRedirect`: Follow origin redirect.
+                                  - `Origin`: Origin.
+                                  Note: This field may return `null`, indicating that no valid value can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Parameter.
                                       items:
                                         properties:
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Parameter Name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                             type: string
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Values.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              The parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -636,35 +785,41 @@ spec:
                                 type: array
                               rewriteAction:
                                 description: |-
-                                  Define a rewrite action.
-                                  Define a rewrite action.
+                                  Feature operation with a request/response header. Features of this type include:
+                                  Feature operation with a request/response header. Features of this type include:
+                                  - `RequestHeader`: HTTP request header modification.
+                                  - `ResponseHeader`: HTTP response header modification.
+                                  Note: This field may return null, indicating that no valid values can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Parameter.
                                       items:
                                         properties:
                                           action:
                                             description: |-
-                                              Action name.
-                                              Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+                                              Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                              Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+                                              - add: Add the HTTP header.
+                                              - set: Rewrite the HTTP header.
+                                              - del: Delete the HTTP header.
                                             type: string
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Target HEADER name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              Parameter name.
                                             type: string
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Value.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              Parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -677,7 +832,8 @@ spec:
                           type: array
                         or:
                           description: |-
-                            OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+                            The condition that determines if a feature should run.
+                            Note: If any condition in the array is met, the feature will run.
                             OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
                           items:
                             properties:
@@ -689,28 +845,51 @@ spec:
                                   properties:
                                     ignoreCase:
                                       description: |-
-                                        Whether to ignore the case of the parameter value, the default value is false.
-                                        Whether to ignore the case of the parameter value, the default value is false.
+                                        Whether the parameter value is case insensitive. Default value: false.
+                                        Whether the parameter value is case insensitive. Default value: false.
                                       type: boolean
                                     name:
                                       description: |-
-                                        The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                        The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+                                        The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                        The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+                                        - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+                                        - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                       type: string
                                     operator:
                                       description: |-
-                                        Condition operator. Valid values are equal, notequal.
-                                        Condition operator. Valid values are `equal`, `notequal`.
+                                        Operator. Valid values:
+                                        Operator. Valid values:
+                                        - `equals`: Equals.
+                                        - `notEquals`: Does not equal.
+                                        - `exist`: Exists.
+                                        - `notexist`: Does not exist.
                                       type: string
                                     target:
                                       description: |-
-                                        Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-                                        Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+                                        The match type. Values:
+                                        The match type. Values:
+                                        - `filename`: File name.
+                                        - `extension`: File extension.
+                                        - `host`: Host.
+                                        - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+                                        - `url`: Partial URL under the current site.
+                                        - `client_country`: Country/Region of the client.
+                                        - `query_string`: Query string in the request URL.
+                                        - `request_header`: HTTP request header.
                                       type: string
                                     values:
                                       description: |-
-                                        Condition Value.
-                                        Condition Value.
+                                        The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                        The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+                                        - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+                                        - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+                                        - When `Target=all`, it indicates any site request.
+                                        - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+                                        - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+                                        - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+                                        - When `Target=client_country`, enter the ISO-3166 country/region code.
+                                        - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+                                        - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                       items:
                                         type: string
                                       type: array
@@ -721,53 +900,56 @@ spec:
                           type: array
                         subRules:
                           description: |-
-                            Actions list of the rule. See details in data source rule_engine_setting.
-                            Actions list of the rule. See details in data source `rule_engine_setting`.
+                            The nested rule.
+                            The nested rule.
                           items:
                             properties:
                               rules:
                                 description: |-
                                   Rule items list.
-                                  Rule items list.
+                                  Nested rule settings.
                                 items:
                                   properties:
                                     actions:
                                       description: |-
-                                        Actions list of the rule. See details in data source rule_engine_setting.
-                                        Actions list of the rule. See details in data source `rule_engine_setting`.
+                                        The feature to be executed.
+                                        The feature to be executed.
                                       items:
                                         properties:
                                           codeAction:
                                             description: |-
-                                              Define a code action.
-                                              Define a code action.
+                                              Feature operation with a status code. Features of this type include:
+                                              Feature operation with a status code. Features of this type include:
+                                              - `ErrorPage`: Custom error page.
+                                              - `StatusCodeCache`: Status code cache TTL.
+                                              Note: This field may return null, indicating that no valid values can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Operation parameter.
                                                   items:
                                                     properties:
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Parameter Name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                                         type: string
                                                       statusCode:
                                                         description: |-
-                                                          HTTP status code to use.
-                                                          HTTP status code to use.
+                                                          The status code.
+                                                          The status code.
                                                         type: number
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Values.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          The parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -778,30 +960,56 @@ spec:
                                             type: array
                                           normalAction:
                                             description: |-
-                                              Define a normal action.
-                                              Define a normal action.
+                                              Common operation. Values:
+                                              Common operation. Values:
+                                              - `AccessUrlRedirect`: Access URL rewrite.
+                                              - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+                                              - `QUIC`: QUIC.
+                                              - `WebSocket`: WebSocket.
+                                              - `VideoSeek`: Video dragging.
+                                              - `Authentication`: Token authentication.
+                                              - `CacheKey`: Custom cache key.
+                                              - `Cache`: Node cache TTL.
+                                              - `MaxAge`: Browser cache TTL.
+                                              - `OfflineCache`: Offline cache.
+                                              - `SmartRouting`: Smart acceleration.
+                                              - `RangeOriginPull`: Range GETs.
+                                              - `UpstreamHttp2`: HTTP/2 forwarding.
+                                              - `HostHeader`: Host header rewrite.
+                                              - `ForceRedirect`: Force HTTPS.
+                                              - `OriginPullProtocol`: Origin-pull HTTPS.
+                                              - `CachePrefresh`: Cache prefresh.
+                                              - `Compression`: Smart compression.
+                                              - `Hsts`.
+                                              - `ClientIpHeader`.
+                                              - `SslTlsSecureConf`.
+                                              - `OcspStapling`.
+                                              - `Http2`: HTTP/2 access.
+                                              - `UpstreamFollowRedirect`: Follow origin redirect.
+                                              - `Origin`: Origin.
+                                              Note: This field may return `null`, indicating that no valid value can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Parameter.
                                                   items:
                                                     properties:
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Parameter Name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                                         type: string
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Values.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          The parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -812,35 +1020,41 @@ spec:
                                             type: array
                                           rewriteAction:
                                             description: |-
-                                              Define a rewrite action.
-                                              Define a rewrite action.
+                                              Feature operation with a request/response header. Features of this type include:
+                                              Feature operation with a request/response header. Features of this type include:
+                                              - `RequestHeader`: HTTP request header modification.
+                                              - `ResponseHeader`: HTTP response header modification.
+                                              Note: This field may return null, indicating that no valid values can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Parameter.
                                                   items:
                                                     properties:
                                                       action:
                                                         description: |-
-                                                          Action name.
-                                                          Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+                                                          Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                          Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+                                                          - add: Add the HTTP header.
+                                                          - set: Rewrite the HTTP header.
+                                                          - del: Delete the HTTP header.
                                                         type: string
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Target HEADER name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          Parameter name.
                                                         type: string
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Value.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          Parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -853,40 +1067,64 @@ spec:
                                       type: array
                                     or:
                                       description: |-
-                                        OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
-                                        OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+                                        The condition that determines if a feature should run.
+                                        Note: If any condition in the array is met, the feature will run.
+                                        The condition that determines if a feature should run.
+                                        Note: If any condition in the array is met, the feature will run.
                                       items:
                                         properties:
                                           and:
                                             description: |-
                                               AND Conditions list of the rule. Rule would be triggered if all conditions are true.
-                                              AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+                                              Rule engine condition. This condition will be considered met if all items in the array are met.
                                             items:
                                               properties:
                                                 ignoreCase:
                                                   description: |-
-                                                    Whether to ignore the case of the parameter value, the default value is false.
-                                                    Whether to ignore the case of the parameter value, the default value is false.
+                                                    Whether the parameter value is case insensitive. Default value: false.
+                                                    Whether the parameter value is case insensitive. Default value: false.
                                                   type: boolean
                                                 name:
                                                   description: |-
-                                                    The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                    The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+                                                    The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                    The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+                                                    - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+                                                    - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                                   type: string
                                                 operator:
                                                   description: |-
-                                                    Condition operator. Valid values are equal, notequal.
-                                                    Condition operator. Valid values are `equal`, `notequal`.
+                                                    Operator. Valid values:
+                                                    Operator. Valid values:
+                                                    - `equals`: Equals.
+                                                    - `notEquals`: Does not equal.
+                                                    - `exist`: Exists.
+                                                    - `notexist`: Does not exist.
                                                   type: string
                                                 target:
                                                   description: |-
-                                                    Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-                                                    Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+                                                    The match type. Values:
+                                                    The match type. Values:
+                                                    - `filename`: File name.
+                                                    - `extension`: File extension.
+                                                    - `host`: Host.
+                                                    - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+                                                    - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
+                                                    - `query_string`: Query string in the request URL.
+                                                    - `request_header`: HTTP request header.
                                                   type: string
                                                 values:
                                                   description: |-
-                                                    Condition Value.
-                                                    Condition Value.
+                                                    The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                    The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+                                                    - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+                                                    - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+                                                    - When `Target=all`, it indicates any site request.
+                                                    - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+                                                    - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+                                                    - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+                                                    - When `Target=client_country`, enter the ISO-3166 country/region code.
+                                                    - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+                                                    - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                                   items:
                                                     type: string
                                                   type: array
@@ -900,7 +1138,7 @@ spec:
                               tags:
                                 description: |-
                                   rule tag list.
-                                  rule tag list.
+                                  Tag of the rule.
                                 items:
                                   type: string
                                 type: array
@@ -911,8 +1149,10 @@ spec:
                     type: array
                   status:
                     description: |-
-                      Rule status. Values: enable: Enabled; disable: Disabled.
-                      Rule status. Values: `enable`: Enabled; `disable`: Disabled.
+                      Rule status. Values:
+                      Rule status. Values:
+                      - `enable`: Enabled.
+                      - `disable`: Disabled.
                     type: string
                   tags:
                     description: |-
@@ -1208,41 +1448,44 @@ spec:
                       properties:
                         actions:
                           description: |-
-                            Actions list of the rule. See details in data source rule_engine_setting.
-                            Actions list of the rule. See details in data source `rule_engine_setting`.
+                            The feature to be executed.
+                            Feature to be executed.
                           items:
                             properties:
                               codeAction:
                                 description: |-
-                                  Define a code action.
-                                  Define a code action.
+                                  Feature operation with a status code. Features of this type include:
+                                  Feature operation with a status code. Features of this type include:
+                                  - `ErrorPage`: Custom error page.
+                                  - `StatusCodeCache`: Status code cache TTL.
+                                  Note: This field may return null, indicating that no valid values can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Operation parameter.
                                       items:
                                         properties:
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Parameter Name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                             type: string
                                           statusCode:
                                             description: |-
-                                              HTTP status code to use.
-                                              HTTP status code to use.
+                                              The status code.
+                                              The status code.
                                             type: number
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Values.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              The parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -1253,30 +1496,56 @@ spec:
                                 type: array
                               normalAction:
                                 description: |-
-                                  Define a normal action.
-                                  Define a normal action.
+                                  Common operation. Values:
+                                  Common operation. Values:
+                                  - `AccessUrlRedirect`: Access URL rewrite.
+                                  - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+                                  - `QUIC`: QUIC.
+                                  - `WebSocket`: WebSocket.
+                                  - `VideoSeek`: Video dragging.
+                                  - `Authentication`: Token authentication.
+                                  - `CacheKey`: Custom cache key.
+                                  - `Cache`: Node cache TTL.
+                                  - `MaxAge`: Browser cache TTL.
+                                  - `OfflineCache`: Offline cache.
+                                  - `SmartRouting`: Smart acceleration.
+                                  - `RangeOriginPull`: Range GETs.
+                                  - `UpstreamHttp2`: HTTP/2 forwarding.
+                                  - `HostHeader`: Host header rewrite.
+                                  - `ForceRedirect`: Force HTTPS.
+                                  - `OriginPullProtocol`: Origin-pull HTTPS.
+                                  - `CachePrefresh`: Cache prefresh.
+                                  - `Compression`: Smart compression.
+                                  - `Hsts`.
+                                  - `ClientIpHeader`.
+                                  - `SslTlsSecureConf`.
+                                  - `OcspStapling`.
+                                  - `Http2`: HTTP/2 access.
+                                  - `UpstreamFollowRedirect`: Follow origin redirect.
+                                  - `Origin`: Origin.
+                                  Note: This field may return `null`, indicating that no valid value can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Parameter.
                                       items:
                                         properties:
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Parameter Name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                             type: string
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Values.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              The parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -1287,35 +1556,41 @@ spec:
                                 type: array
                               rewriteAction:
                                 description: |-
-                                  Define a rewrite action.
-                                  Define a rewrite action.
+                                  Feature operation with a request/response header. Features of this type include:
+                                  Feature operation with a request/response header. Features of this type include:
+                                  - `RequestHeader`: HTTP request header modification.
+                                  - `ResponseHeader`: HTTP response header modification.
+                                  Note: This field may return null, indicating that no valid values can be obtained.
                                 items:
                                   properties:
                                     action:
                                       description: |-
-                                        Action name.
-                                        Action name.
+                                        Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                        Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                       type: string
                                     parameters:
                                       description: |-
-                                        Action parameters.
-                                        Action parameters.
+                                        Operation parameter.
+                                        Parameter.
                                       items:
                                         properties:
                                           action:
                                             description: |-
-                                              Action name.
-                                              Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+                                              Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                              Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+                                              - add: Add the HTTP header.
+                                              - set: Rewrite the HTTP header.
+                                              - del: Delete the HTTP header.
                                             type: string
                                           name:
                                             description: |-
-                                              The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                              Target HEADER name.
+                                              The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                              Parameter name.
                                             type: string
                                           values:
                                             description: |-
-                                              Condition Value.
-                                              Parameter Value.
+                                              The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                              Parameter value.
                                             items:
                                               type: string
                                             type: array
@@ -1328,7 +1603,8 @@ spec:
                           type: array
                         or:
                           description: |-
-                            OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+                            The condition that determines if a feature should run.
+                            Note: If any condition in the array is met, the feature will run.
                             OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
                           items:
                             properties:
@@ -1340,28 +1616,51 @@ spec:
                                   properties:
                                     ignoreCase:
                                       description: |-
-                                        Whether to ignore the case of the parameter value, the default value is false.
-                                        Whether to ignore the case of the parameter value, the default value is false.
+                                        Whether the parameter value is case insensitive. Default value: false.
+                                        Whether the parameter value is case insensitive. Default value: false.
                                       type: boolean
                                     name:
                                       description: |-
-                                        The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                        The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+                                        The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                        The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+                                        - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+                                        - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                       type: string
                                     operator:
                                       description: |-
-                                        Condition operator. Valid values are equal, notequal.
-                                        Condition operator. Valid values are `equal`, `notequal`.
+                                        Operator. Valid values:
+                                        Operator. Valid values:
+                                        - `equals`: Equals.
+                                        - `notEquals`: Does not equal.
+                                        - `exist`: Exists.
+                                        - `notexist`: Does not exist.
                                       type: string
                                     target:
                                       description: |-
-                                        Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-                                        Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+                                        The match type. Values:
+                                        The match type. Values:
+                                        - `filename`: File name.
+                                        - `extension`: File extension.
+                                        - `host`: Host.
+                                        - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+                                        - `url`: Partial URL under the current site.
+                                        - `client_country`: Country/Region of the client.
+                                        - `query_string`: Query string in the request URL.
+                                        - `request_header`: HTTP request header.
                                       type: string
                                     values:
                                       description: |-
-                                        Condition Value.
-                                        Condition Value.
+                                        The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                        The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+                                        - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+                                        - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+                                        - When `Target=all`, it indicates any site request.
+                                        - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+                                        - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+                                        - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+                                        - When `Target=client_country`, enter the ISO-3166 country/region code.
+                                        - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+                                        - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                       items:
                                         type: string
                                       type: array
@@ -1372,53 +1671,56 @@ spec:
                           type: array
                         subRules:
                           description: |-
-                            Actions list of the rule. See details in data source rule_engine_setting.
-                            Actions list of the rule. See details in data source `rule_engine_setting`.
+                            The nested rule.
+                            The nested rule.
                           items:
                             properties:
                               rules:
                                 description: |-
                                   Rule items list.
-                                  Rule items list.
+                                  Nested rule settings.
                                 items:
                                   properties:
                                     actions:
                                       description: |-
-                                        Actions list of the rule. See details in data source rule_engine_setting.
-                                        Actions list of the rule. See details in data source `rule_engine_setting`.
+                                        The feature to be executed.
+                                        The feature to be executed.
                                       items:
                                         properties:
                                           codeAction:
                                             description: |-
-                                              Define a code action.
-                                              Define a code action.
+                                              Feature operation with a status code. Features of this type include:
+                                              Feature operation with a status code. Features of this type include:
+                                              - `ErrorPage`: Custom error page.
+                                              - `StatusCodeCache`: Status code cache TTL.
+                                              Note: This field may return null, indicating that no valid values can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Operation parameter.
                                                   items:
                                                     properties:
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Parameter Name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          The parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                                         type: string
                                                       statusCode:
                                                         description: |-
-                                                          HTTP status code to use.
-                                                          HTTP status code to use.
+                                                          The status code.
+                                                          The status code.
                                                         type: number
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Values.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          The parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -1429,30 +1731,56 @@ spec:
                                             type: array
                                           normalAction:
                                             description: |-
-                                              Define a normal action.
-                                              Define a normal action.
+                                              Common operation. Values:
+                                              Common operation. Values:
+                                              - `AccessUrlRedirect`: Access URL rewrite.
+                                              - `UpstreamUrlRedirect`: Origin-pull URL rewrite.
+                                              - `QUIC`: QUIC.
+                                              - `WebSocket`: WebSocket.
+                                              - `VideoSeek`: Video dragging.
+                                              - `Authentication`: Token authentication.
+                                              - `CacheKey`: Custom cache key.
+                                              - `Cache`: Node cache TTL.
+                                              - `MaxAge`: Browser cache TTL.
+                                              - `OfflineCache`: Offline cache.
+                                              - `SmartRouting`: Smart acceleration.
+                                              - `RangeOriginPull`: Range GETs.
+                                              - `UpstreamHttp2`: HTTP/2 forwarding.
+                                              - `HostHeader`: Host header rewrite.
+                                              - `ForceRedirect`: Force HTTPS.
+                                              - `OriginPullProtocol`: Origin-pull HTTPS.
+                                              - `CachePrefresh`: Cache prefresh.
+                                              - `Compression`: Smart compression.
+                                              - `Hsts`.
+                                              - `ClientIpHeader`.
+                                              - `SslTlsSecureConf`.
+                                              - `OcspStapling`.
+                                              - `Http2`: HTTP/2 access.
+                                              - `UpstreamFollowRedirect`: Follow origin redirect.
+                                              - `Origin`: Origin.
+                                              Note: This field may return `null`, indicating that no valid value can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Parameter.
                                                   items:
                                                     properties:
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Parameter Name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          Parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name.
                                                         type: string
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Values.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          The parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -1463,35 +1791,41 @@ spec:
                                             type: array
                                           rewriteAction:
                                             description: |-
-                                              Define a rewrite action.
-                                              Define a rewrite action.
+                                              Feature operation with a request/response header. Features of this type include:
+                                              Feature operation with a request/response header. Features of this type include:
+                                              - `RequestHeader`: HTTP request header modification.
+                                              - `ResponseHeader`: HTTP response header modification.
+                                              Note: This field may return null, indicating that no valid values can be obtained.
                                             items:
                                               properties:
                                                 action:
                                                   description: |-
-                                                    Action name.
-                                                    Action name.
+                                                    Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                    Feature name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the feature name.
                                                   type: string
                                                 parameters:
                                                   description: |-
-                                                    Action parameters.
-                                                    Action parameters.
+                                                    Operation parameter.
+                                                    Parameter.
                                                   items:
                                                     properties:
                                                       action:
                                                         description: |-
-                                                          Action name.
-                                                          Action to take on the HEADER. Valid values: `add`, `del`, `set`.
+                                                          Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.
+                                                          Feature parameter name. You can call the [DescribeRulesSetting](https://tcloud4api.woa.com/document/product/1657/79433?!preview&!document=1) API to view the requirements for entering the parameter name, which has three values:
+                                                          - add: Add the HTTP header.
+                                                          - set: Rewrite the HTTP header.
+                                                          - del: Delete the HTTP header.
                                                         type: string
                                                       name:
                                                         description: |-
-                                                          The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                          Target HEADER name.
+                                                          The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                          Parameter name.
                                                         type: string
                                                       values:
                                                         description: |-
-                                                          Condition Value.
-                                                          Parameter Value.
+                                                          The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                          Parameter value.
                                                         items:
                                                           type: string
                                                         type: array
@@ -1504,40 +1838,64 @@ spec:
                                       type: array
                                     or:
                                       description: |-
-                                        OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
-                                        OR Conditions list of the rule. Rule would be triggered if any of the condition is true.
+                                        The condition that determines if a feature should run.
+                                        Note: If any condition in the array is met, the feature will run.
+                                        The condition that determines if a feature should run.
+                                        Note: If any condition in the array is met, the feature will run.
                                       items:
                                         properties:
                                           and:
                                             description: |-
                                               AND Conditions list of the rule. Rule would be triggered if all conditions are true.
-                                              AND Conditions list of the rule. Rule would be triggered if all conditions are true.
+                                              Rule engine condition. This condition will be considered met if all items in the array are met.
                                             items:
                                               properties:
                                                 ignoreCase:
                                                   description: |-
-                                                    Whether to ignore the case of the parameter value, the default value is false.
-                                                    Whether to ignore the case of the parameter value, the default value is false.
+                                                    Whether the parameter value is case insensitive. Default value: false.
+                                                    Whether the parameter value is case insensitive. Default value: false.
                                                   type: boolean
                                                 name:
                                                   description: |-
-                                                    The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
-                                                    The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty:- `query_string` (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; `request_header` (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.
+                                                    The parameter name of the match type. This field is required only when Target=query_string/request_header.
+                                                    The parameter name of the match type. This field is required only when `Target=query_string/request_header`.
+                                                    - `query_string`: Name of the query string, such as "lang" and "version" in "lang=cn&version=1".
+                                                    - `request_header`: Name of the HTTP request header, such as "Accept-Language" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                                   type: string
                                                 operator:
                                                   description: |-
-                                                    Condition operator. Valid values are equal, notequal.
-                                                    Condition operator. Valid values are `equal`, `notequal`.
+                                                    Operator. Valid values:
+                                                    Operator. Valid values:
+                                                    - `equals`: Equals.
+                                                    - `notEquals`: Does not equal.
+                                                    - `exist`: Exists.
+                                                    - `notexist`: Does not exist.
                                                   type: string
                                                 target:
                                                   description: |-
-                                                    Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.
-                                                    Condition target. Valid values:- `host`: Host of the URL.- `filename`: filename of the URL.- `extension`: file extension of the URL.- `full_url`: full url.- `url`: path of the URL.
+                                                    The match type. Values:
+                                                    The match type. Values:
+                                                    - `filename`: File name.
+                                                    - `extension`: File extension.
+                                                    - `host`: Host.
+                                                    - `full_url`: Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.
+                                                    - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
+                                                    - `query_string`: Query string in the request URL.
+                                                    - `request_header`: HTTP request header.
                                                   type: string
                                                 values:
                                                   description: |-
-                                                    Condition Value.
-                                                    Condition Value.
+                                                    The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
+                                                    The parameter value of the match type. It can be an empty string only when `Target=query string/request header` and `Operator=exist/notexist`.
+                                                    - When `Target=extension`, enter the file extension, such as "jpg" and "txt".
+                                                    - When `Target=filename`, enter the file name, such as "foo" in "foo.jpg".
+                                                    - When `Target=all`, it indicates any site request.
+                                                    - When `Target=host`, enter the host under the current site, such as "www.maxx55.com".
+                                                    - When `Target=url`, enter the partial URL path under the current site, such as "/example".
+                                                    - When `Target=full_url`, enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".
+                                                    - When `Target=client_country`, enter the ISO-3166 country/region code.
+                                                    - When `Target=query_string`, enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".
+                                                    - When `Target=request_header`, enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.
                                                   items:
                                                     type: string
                                                   type: array
@@ -1551,7 +1909,7 @@ spec:
                               tags:
                                 description: |-
                                   rule tag list.
-                                  rule tag list.
+                                  Tag of the rule.
                                 items:
                                   type: string
                                 type: array
@@ -1562,8 +1920,10 @@ spec:
                     type: array
                   status:
                     description: |-
-                      Rule status. Values: enable: Enabled; disable: Disabled.
-                      Rule status. Values: `enable`: Enabled; `disable`: Disabled.
+                      Rule status. Values:
+                      Rule status. Values:
+                      - `enable`: Enabled.
+                      - `disable`: Disabled.
                     type: string
                   tags:
                     description: |-

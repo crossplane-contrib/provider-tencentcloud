@@ -15,21 +15,23 @@ import (
 
 type OriginGroupInitParameters struct {
 
-	// Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.
-	// Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
-	ConfigurationType *string `json:"configurationType,omitempty" tf:"configuration_type,omitempty"`
+	// Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+	// Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+	HostHeader *string `json:"hostHeader,omitempty" tf:"host_header,omitempty"`
 
 	// OriginGroup Name.
 	// OriginGroup Name.
-	OriginGroupName *string `json:"originGroupName,omitempty" tf:"origin_group_name,omitempty"`
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Origin site records.
 	// Origin site records.
-	OriginRecords []OriginRecordsInitParameters `json:"originRecords,omitempty" tf:"origin_records,omitempty"`
+	Records []RecordsInitParameters `json:"records,omitempty" tf:"records,omitempty"`
 
-	// Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
-	// Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
-	OriginType *string `json:"originType,omitempty" tf:"origin_type,omitempty"`
+	// Type of the origin site. Valid values:
+	// Type of the origin site. Valid values:
+	// - `GENERAL`: Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.
+	// - `HTTP`: The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Site ID.
 	// Site ID.
@@ -47,31 +49,41 @@ type OriginGroupInitParameters struct {
 
 type OriginGroupObservation struct {
 
-	// Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.
-	// Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
-	ConfigurationType *string `json:"configurationType,omitempty" tf:"configuration_type,omitempty"`
+	// Origin site group creation time.
+	// Origin site group creation time.
+	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
+
+	// Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+	// Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+	HostHeader *string `json:"hostHeader,omitempty" tf:"host_header,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// OriginGroup Name.
+	// OriginGroup Name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// OriginGroup ID.
 	// OriginGroup ID.
 	OriginGroupID *string `json:"originGroupId,omitempty" tf:"origin_group_id,omitempty"`
 
-	// OriginGroup Name.
-	// OriginGroup Name.
-	OriginGroupName *string `json:"originGroupName,omitempty" tf:"origin_group_name,omitempty"`
-
 	// Origin site records.
 	// Origin site records.
-	OriginRecords []OriginRecordsObservation `json:"originRecords,omitempty" tf:"origin_records,omitempty"`
+	Records []RecordsObservation `json:"records,omitempty" tf:"records,omitempty"`
 
-	// Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
-	// Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
-	OriginType *string `json:"originType,omitempty" tf:"origin_type,omitempty"`
+	// List of referenced instances of the origin site group.
+	// List of referenced instances of the origin site group.
+	References []ReferencesObservation `json:"references,omitempty" tf:"references,omitempty"`
 
-	// Last modification date.
-	// Last modification date.
+	// Type of the origin site. Valid values:
+	// Type of the origin site. Valid values:
+	// - `GENERAL`: Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.
+	// - `HTTP`: The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Origin site group update time.
+	// Origin site group update time.
 	UpdateTime *string `json:"updateTime,omitempty" tf:"update_time,omitempty"`
 
 	// Site ID.
@@ -81,25 +93,27 @@ type OriginGroupObservation struct {
 
 type OriginGroupParameters struct {
 
-	// Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.
-	// Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
+	// Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+	// Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
 	// +kubebuilder:validation:Optional
-	ConfigurationType *string `json:"configurationType,omitempty" tf:"configuration_type,omitempty"`
+	HostHeader *string `json:"hostHeader,omitempty" tf:"host_header,omitempty"`
 
 	// OriginGroup Name.
 	// OriginGroup Name.
 	// +kubebuilder:validation:Optional
-	OriginGroupName *string `json:"originGroupName,omitempty" tf:"origin_group_name,omitempty"`
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Origin site records.
 	// Origin site records.
 	// +kubebuilder:validation:Optional
-	OriginRecords []OriginRecordsParameters `json:"originRecords,omitempty" tf:"origin_records,omitempty"`
+	Records []RecordsParameters `json:"records,omitempty" tf:"records,omitempty"`
 
-	// Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
-	// Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
+	// Type of the origin site. Valid values:
+	// Type of the origin site. Valid values:
+	// - `GENERAL`: Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.
+	// - `HTTP`: The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.
 	// +kubebuilder:validation:Optional
-	OriginType *string `json:"originType,omitempty" tf:"origin_type,omitempty"`
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Site ID.
 	// Site ID.
@@ -116,133 +130,171 @@ type OriginGroupParameters struct {
 	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
-type OriginRecordsInitParameters struct {
+type PrivateParametersInitParameters struct {
 
-	// Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-	// +listType=set
-	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
-
-	// Port of the origin site. Valid value range: 1-65535.
-	// Port of the origin site. Valid value range: 1-65535.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Whether origin site is using private authentication. Only valid when OriginType is third_party.
-	// Whether origin site is using private authentication. Only valid when `OriginType` is `third_party`.
-	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
-
-	// Parameters for private authentication. Only valid when Private is true.
-	// Parameters for private authentication. Only valid when `Private` is `true`.
-	PrivateParameter []PrivateParameterInitParameters `json:"privateParameter,omitempty" tf:"private_parameter,omitempty"`
-
-	// Record value, which could be an IPv4/IPv6 address or a domain.
-	// Record value, which could be an IPv4/IPv6 address or a domain.
-	Record *string `json:"record,omitempty" tf:"record,omitempty"`
-
-	// Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.
-	// Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
-	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
-}
-
-type OriginRecordsObservation struct {
-
-	// Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-	// +listType=set
-	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
-
-	// Port of the origin site. Valid value range: 1-65535.
-	// Port of the origin site. Valid value range: 1-65535.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Whether origin site is using private authentication. Only valid when OriginType is third_party.
-	// Whether origin site is using private authentication. Only valid when `OriginType` is `third_party`.
-	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
-
-	// Parameters for private authentication. Only valid when Private is true.
-	// Parameters for private authentication. Only valid when `Private` is `true`.
-	PrivateParameter []PrivateParameterObservation `json:"privateParameter,omitempty" tf:"private_parameter,omitempty"`
-
-	// Record value, which could be an IPv4/IPv6 address or a domain.
-	// Record value, which could be an IPv4/IPv6 address or a domain.
-	Record *string `json:"record,omitempty" tf:"record,omitempty"`
-
-	// ID of the resource.
-	// Record Id.
-	RecordID *string `json:"recordId,omitempty" tf:"record_id,omitempty"`
-
-	// Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.
-	// Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
-	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
-}
-
-type OriginRecordsParameters struct {
-
-	// Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-	// Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-	// +kubebuilder:validation:Optional
-	// +listType=set
-	Area []*string `json:"area,omitempty" tf:"area,omitempty"`
-
-	// Port of the origin site. Valid value range: 1-65535.
-	// Port of the origin site. Valid value range: 1-65535.
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port" tf:"port,omitempty"`
-
-	// Whether origin site is using private authentication. Only valid when OriginType is third_party.
-	// Whether origin site is using private authentication. Only valid when `OriginType` is `third_party`.
-	// +kubebuilder:validation:Optional
-	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
-
-	// Parameters for private authentication. Only valid when Private is true.
-	// Parameters for private authentication. Only valid when `Private` is `true`.
-	// +kubebuilder:validation:Optional
-	PrivateParameter []PrivateParameterParameters `json:"privateParameter,omitempty" tf:"private_parameter,omitempty"`
-
-	// Record value, which could be an IPv4/IPv6 address or a domain.
-	// Record value, which could be an IPv4/IPv6 address or a domain.
-	// +kubebuilder:validation:Optional
-	Record *string `json:"record" tf:"record,omitempty"`
-
-	// Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.
-	// Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
-	// +kubebuilder:validation:Optional
-	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
-}
-
-type PrivateParameterInitParameters struct {
-
-	// Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.
-	// Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
+	// OriginGroup Name.
+	// Private authentication parameter name, the values are:
+	// - `AccessKeyId`: Authentication parameter Access Key ID.
+	// - `SecretAccessKey`: Authentication parameter Secret Access Key.
+	// - `SignatureVersion`: Authentication version, v2 or v4.
+	// - `Region`: Bucket region.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Parameter value.
-	// Parameter value.
+	// Private authentication parameter value.
+	// Private authentication parameter value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type PrivateParameterObservation struct {
+type PrivateParametersObservation struct {
 
-	// Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.
-	// Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
+	// OriginGroup Name.
+	// Private authentication parameter name, the values are:
+	// - `AccessKeyId`: Authentication parameter Access Key ID.
+	// - `SecretAccessKey`: Authentication parameter Secret Access Key.
+	// - `SignatureVersion`: Authentication version, v2 or v4.
+	// - `Region`: Bucket region.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Parameter value.
-	// Parameter value.
+	// Private authentication parameter value.
+	// Private authentication parameter value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type PrivateParameterParameters struct {
+type PrivateParametersParameters struct {
 
-	// Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.
-	// Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
+	// OriginGroup Name.
+	// Private authentication parameter name, the values are:
+	// - `AccessKeyId`: Authentication parameter Access Key ID.
+	// - `SecretAccessKey`: Authentication parameter Secret Access Key.
+	// - `SignatureVersion`: Authentication version, v2 or v4.
+	// - `Region`: Bucket region.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Parameter value.
-	// Parameter value.
+	// Private authentication parameter value.
+	// Private authentication parameter value.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value" tf:"value,omitempty"`
+}
+
+type RecordsInitParameters struct {
+
+	// Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+	// Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+	// - `true`: Use private authentication.
+	// - `false`: Do not use private authentication.
+	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
+
+	// Parameters for private authentication. Only valid when Private is true.
+	// Parameters for private authentication. Only valid when `Private` is `true`.
+	PrivateParameters []PrivateParametersInitParameters `json:"privateParameters,omitempty" tf:"private_parameters,omitempty"`
+
+	// Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+	// Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+	Record *string `json:"record,omitempty" tf:"record,omitempty"`
+
+	// Origin record ID.
+	// Origin record ID.
+	RecordID *string `json:"recordId,omitempty" tf:"record_id,omitempty"`
+
+	// Type of the origin site. Valid values:
+	// Origin site type, the values are:
+	// - `IP_DOMAIN`: IPV4, IPV6, domain name type origin site.
+	// - `COS`: COS source.
+	// - `AWS_S3`: AWS S3 object storage origin site.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+	// The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
+}
+
+type RecordsObservation struct {
+
+	// Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+	// Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+	// - `true`: Use private authentication.
+	// - `false`: Do not use private authentication.
+	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
+
+	// Parameters for private authentication. Only valid when Private is true.
+	// Parameters for private authentication. Only valid when `Private` is `true`.
+	PrivateParameters []PrivateParametersObservation `json:"privateParameters,omitempty" tf:"private_parameters,omitempty"`
+
+	// Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+	// Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+	Record *string `json:"record,omitempty" tf:"record,omitempty"`
+
+	// Origin record ID.
+	// Origin record ID.
+	RecordID *string `json:"recordId,omitempty" tf:"record_id,omitempty"`
+
+	// Type of the origin site. Valid values:
+	// Origin site type, the values are:
+	// - `IP_DOMAIN`: IPV4, IPV6, domain name type origin site.
+	// - `COS`: COS source.
+	// - `AWS_S3`: AWS S3 object storage origin site.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+	// The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
+}
+
+type RecordsParameters struct {
+
+	// Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+	// Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+	// - `true`: Use private authentication.
+	// - `false`: Do not use private authentication.
+	// +kubebuilder:validation:Optional
+	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
+
+	// Parameters for private authentication. Only valid when Private is true.
+	// Parameters for private authentication. Only valid when `Private` is `true`.
+	// +kubebuilder:validation:Optional
+	PrivateParameters []PrivateParametersParameters `json:"privateParameters,omitempty" tf:"private_parameters,omitempty"`
+
+	// Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+	// Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+	// +kubebuilder:validation:Optional
+	Record *string `json:"record" tf:"record,omitempty"`
+
+	// Origin record ID.
+	// Origin record ID.
+	// +kubebuilder:validation:Optional
+	RecordID *string `json:"recordId,omitempty" tf:"record_id,omitempty"`
+
+	// Type of the origin site. Valid values:
+	// Origin site type, the values are:
+	// - `IP_DOMAIN`: IPV4, IPV6, domain name type origin site.
+	// - `COS`: COS source.
+	// - `AWS_S3`: AWS S3 object storage origin site.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+	// The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+	// +kubebuilder:validation:Optional
+	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
+}
+
+type ReferencesInitParameters struct {
+}
+
+type ReferencesObservation struct {
+
+	// The instance ID of the reference type.
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Instance name of the application type.
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Reference service type, the values are:
+	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+}
+
+type ReferencesParameters struct {
 }
 
 // OriginGroupSpec defines the desired state of OriginGroup
@@ -281,10 +333,8 @@ type OriginGroupStatus struct {
 type OriginGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.configurationType) || (has(self.initProvider) && has(self.initProvider.configurationType))",message="spec.forProvider.configurationType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.originGroupName) || (has(self.initProvider) && has(self.initProvider.originGroupName))",message="spec.forProvider.originGroupName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.originRecords) || (has(self.initProvider) && has(self.initProvider.originRecords))",message="spec.forProvider.originRecords is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.originType) || (has(self.initProvider) && has(self.initProvider.originType))",message="spec.forProvider.originType is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.records) || (has(self.initProvider) && has(self.initProvider.records))",message="spec.forProvider.records is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   OriginGroupSpec   `json:"spec"`
 	Status OriginGroupStatus `json:"status,omitempty"`
 }
