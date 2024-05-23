@@ -73,41 +73,30 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  configurationType:
+                  hostHeader:
                     description: |-
-                      Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.
-                      Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
+                      Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+                      Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
                     type: string
-                  originGroupName:
+                  name:
                     description: |-
                       OriginGroup Name.
                       OriginGroup Name.
                     type: string
-                  originRecords:
+                  records:
                     description: |-
                       Origin site records.
                       Origin site records.
                     items:
                       properties:
-                        area:
-                          description: |-
-                            Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-                            Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        port:
-                          description: |-
-                            Port of the origin site. Valid value range: 1-65535.
-                            Port of the origin site. Valid value range: 1-65535.
-                          type: number
                         private:
                           description: |-
-                            Whether origin site is using private authentication. Only valid when OriginType is third_party.
-                            Whether origin site is using private authentication. Only valid when `OriginType` is `third_party`.
+                            Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+                            Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+                            - `true`: Use private authentication.
+                            - `false`: Do not use private authentication.
                           type: boolean
-                        privateParameter:
+                        privateParameters:
                           description: |-
                             Parameters for private authentication. Only valid when Private is true.
                             Parameters for private authentication. Only valid when `Private` is `true`.
@@ -115,32 +104,51 @@ spec:
                             properties:
                               name:
                                 description: |-
-                                  Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.
-                                  Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
+                                  OriginGroup Name.
+                                  Private authentication parameter name, the values are:
+                                  - `AccessKeyId`: Authentication parameter Access Key ID.
+                                  - `SecretAccessKey`: Authentication parameter Secret Access Key.
+                                  - `SignatureVersion`: Authentication version, v2 or v4.
+                                  - `Region`: Bucket region.
                                 type: string
                               value:
                                 description: |-
-                                  Parameter value.
-                                  Parameter value.
+                                  Private authentication parameter value.
+                                  Private authentication parameter value.
                                 type: string
                             type: object
                           type: array
                         record:
                           description: |-
-                            Record value, which could be an IPv4/IPv6 address or a domain.
-                            Record value, which could be an IPv4/IPv6 address or a domain.
+                            Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+                            Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+                          type: string
+                        recordId:
+                          description: |-
+                            Origin record ID.
+                            Origin record ID.
+                          type: string
+                        type:
+                          description: |-
+                            Type of the origin site. Valid values:
+                            Origin site type, the values are:
+                            - `IP_DOMAIN`: IPV4, IPV6, domain name type origin site.
+                            - `COS`: COS source.
+                            - `AWS_S3`: AWS S3 object storage origin site.
                           type: string
                         weight:
                           description: |-
-                            Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.
-                            Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
+                            The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+                            The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
                           type: number
                       type: object
                     type: array
-                  originType:
+                  type:
                     description: |-
-                      Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
-                      Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
+                      Type of the origin site. Valid values:
+                      Type of the origin site. Valid values:
+                      - `GENERAL`: Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.
+                      - `HTTP`: The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.
                     type: string
                   zoneId:
                     description: |-
@@ -235,41 +243,30 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  configurationType:
+                  hostHeader:
                     description: |-
-                      Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.
-                      Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
+                      Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+                      Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
                     type: string
-                  originGroupName:
+                  name:
                     description: |-
                       OriginGroup Name.
                       OriginGroup Name.
                     type: string
-                  originRecords:
+                  records:
                     description: |-
                       Origin site records.
                       Origin site records.
                     items:
                       properties:
-                        area:
-                          description: |-
-                            Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-                            Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        port:
-                          description: |-
-                            Port of the origin site. Valid value range: 1-65535.
-                            Port of the origin site. Valid value range: 1-65535.
-                          type: number
                         private:
                           description: |-
-                            Whether origin site is using private authentication. Only valid when OriginType is third_party.
-                            Whether origin site is using private authentication. Only valid when `OriginType` is `third_party`.
+                            Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+                            Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+                            - `true`: Use private authentication.
+                            - `false`: Do not use private authentication.
                           type: boolean
-                        privateParameter:
+                        privateParameters:
                           description: |-
                             Parameters for private authentication. Only valid when Private is true.
                             Parameters for private authentication. Only valid when `Private` is `true`.
@@ -277,32 +274,51 @@ spec:
                             properties:
                               name:
                                 description: |-
-                                  Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.
-                                  Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
+                                  OriginGroup Name.
+                                  Private authentication parameter name, the values are:
+                                  - `AccessKeyId`: Authentication parameter Access Key ID.
+                                  - `SecretAccessKey`: Authentication parameter Secret Access Key.
+                                  - `SignatureVersion`: Authentication version, v2 or v4.
+                                  - `Region`: Bucket region.
                                 type: string
                               value:
                                 description: |-
-                                  Parameter value.
-                                  Parameter value.
+                                  Private authentication parameter value.
+                                  Private authentication parameter value.
                                 type: string
                             type: object
                           type: array
                         record:
                           description: |-
-                            Record value, which could be an IPv4/IPv6 address or a domain.
-                            Record value, which could be an IPv4/IPv6 address or a domain.
+                            Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+                            Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+                          type: string
+                        recordId:
+                          description: |-
+                            Origin record ID.
+                            Origin record ID.
+                          type: string
+                        type:
+                          description: |-
+                            Type of the origin site. Valid values:
+                            Origin site type, the values are:
+                            - `IP_DOMAIN`: IPV4, IPV6, domain name type origin site.
+                            - `COS`: COS source.
+                            - `AWS_S3`: AWS S3 object storage origin site.
                           type: string
                         weight:
                           description: |-
-                            Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.
-                            Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
+                            The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+                            The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
                           type: number
                       type: object
                     type: array
-                  originType:
+                  type:
                     description: |-
-                      Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
-                      Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
+                      Type of the origin site. Valid values:
+                      Type of the origin site. Valid values:
+                      - `GENERAL`: Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.
+                      - `HTTP`: The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.
                     type: string
                   zoneId:
                     description: |-
@@ -552,70 +568,56 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.configurationType is a required parameter
+            - message: spec.forProvider.records is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.configurationType)
-                || (has(self.initProvider) && has(self.initProvider.configurationType))'
-            - message: spec.forProvider.originGroupName is a required parameter
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.records)
+                || (has(self.initProvider) && has(self.initProvider.records))'
+            - message: spec.forProvider.type is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.originGroupName)
-                || (has(self.initProvider) && has(self.initProvider.originGroupName))'
-            - message: spec.forProvider.originRecords is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.originRecords)
-                || (has(self.initProvider) && has(self.initProvider.originRecords))'
-            - message: spec.forProvider.originType is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.originType)
-                || (has(self.initProvider) && has(self.initProvider.originType))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
           status:
             description: OriginGroupStatus defines the observed state of OriginGroup.
             properties:
               atProvider:
                 properties:
-                  configurationType:
+                  createTime:
                     description: |-
-                      Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.
-                      Type of the origin group, this field should be set when `OriginType` is self, otherwise leave it empty. Valid values: `area`: select an origin by using Geo info of the client IP and `Area` field in Records; `weight`: weighted select an origin by using `Weight` field in Records; `proto`: config by HTTP protocol.
+                      Origin site group creation time.
+                      Origin site group creation time.
+                    type: string
+                  hostHeader:
+                    description: |-
+                      Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
+                      Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.
                     type: string
                   id:
                     description: ID of the resource.
+                    type: string
+                  name:
+                    description: |-
+                      OriginGroup Name.
+                      OriginGroup Name.
                     type: string
                   originGroupId:
                     description: |-
                       OriginGroup ID.
                       OriginGroup ID.
                     type: string
-                  originGroupName:
-                    description: |-
-                      OriginGroup Name.
-                      OriginGroup Name.
-                    type: string
-                  originRecords:
+                  records:
                     description: |-
                       Origin site records.
                       Origin site records.
                     items:
                       properties:
-                        area:
-                          description: |-
-                            Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-                            Indicating origin sites area when `Type` field is `area`. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        port:
-                          description: |-
-                            Port of the origin site. Valid value range: 1-65535.
-                            Port of the origin site. Valid value range: 1-65535.
-                          type: number
                         private:
                           description: |-
-                            Whether origin site is using private authentication. Only valid when OriginType is third_party.
-                            Whether origin site is using private authentication. Only valid when `OriginType` is `third_party`.
+                            Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+                            Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:
+                            - `true`: Use private authentication.
+                            - `false`: Do not use private authentication.
                           type: boolean
-                        privateParameter:
+                        privateParameters:
                           description: |-
                             Parameters for private authentication. Only valid when Private is true.
                             Parameters for private authentication. Only valid when `Private` is `true`.
@@ -623,42 +625,73 @@ spec:
                             properties:
                               name:
                                 description: |-
-                                  Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.
-                                  Parameter Name. Valid values: `AccessKeyId`: Access Key ID; `SecretAccessKey`: Secret Access Key.
+                                  OriginGroup Name.
+                                  Private authentication parameter name, the values are:
+                                  - `AccessKeyId`: Authentication parameter Access Key ID.
+                                  - `SecretAccessKey`: Authentication parameter Secret Access Key.
+                                  - `SignatureVersion`: Authentication version, v2 or v4.
+                                  - `Region`: Bucket region.
                                 type: string
                               value:
                                 description: |-
-                                  Parameter value.
-                                  Parameter value.
+                                  Private authentication parameter value.
+                                  Private authentication parameter value.
                                 type: string
                             type: object
                           type: array
                         record:
                           description: |-
-                            Record value, which could be an IPv4/IPv6 address or a domain.
-                            Record value, which could be an IPv4/IPv6 address or a domain.
+                            Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
+                            Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.
                           type: string
                         recordId:
                           description: |-
-                            ID of the resource.
-                            Record Id.
+                            Origin record ID.
+                            Origin record ID.
+                          type: string
+                        type:
+                          description: |-
+                            Type of the origin site. Valid values:
+                            Origin site type, the values are:
+                            - `IP_DOMAIN`: IPV4, IPV6, domain name type origin site.
+                            - `COS`: COS source.
+                            - `AWS_S3`: AWS S3 object storage origin site.
                           type: string
                         weight:
                           description: |-
-                            Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.
-                            Indicating origin sites weight when `Type` field is `weight`. Valid value range: 1-100. Sum of all weights should be 100.
+                            The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
+                            The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.
                           type: number
                       type: object
                     type: array
-                  originType:
+                  references:
                     description: |-
-                      Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.
-                      Type of the origin site. Valid values: `self`: self-build website; `cos`: tencent cos; `third_party`: third party cos.
+                      List of referenced instances of the origin site group.
+                      List of referenced instances of the origin site group.
+                    items:
+                      properties:
+                        instanceId:
+                          description: The instance ID of the reference type.
+                          type: string
+                        instanceName:
+                          description: Instance name of the application type.
+                          type: string
+                        instanceType:
+                          description: 'Reference service type, the values are:'
+                          type: string
+                      type: object
+                    type: array
+                  type:
+                    description: |-
+                      Type of the origin site. Valid values:
+                      Type of the origin site. Valid values:
+                      - `GENERAL`: Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.
+                      - `HTTP`: The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.
                     type: string
                   updateTime:
                     description: |-
-                      Last modification date.
-                      Last modification date.
+                      Origin site group update time.
+                      Origin site group update time.
                     type: string
                   zoneId:
                     description: |-

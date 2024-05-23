@@ -1,0 +1,9 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  name: resource-vpc
+  namespace: crossplane-system
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    name: crossplane-test-vpc

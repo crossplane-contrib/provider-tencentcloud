@@ -4260,7 +4260,7 @@ resources:
         argumentDocs:
             attached_time: '- Time of attaching.'
             ccn_id: '- (Required, String, ForceNew) ID of the CCN.'
-            ccn_uin: '- (Optional, String, ForceNew) Uin of the ccn attached. Default is ``, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.'
+            ccn_uin: '- (Optional, String, ForceNew) Uin of the ccn attached. If not set, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.'
             cidr_block: '- A network address block of the instance that is attached.'
             description: '- (Optional, String) Remark of attachment.'
             id: '- ID of the resource.'
@@ -28095,6 +28095,35 @@ resources:
         description: Provides a mysql instance resource to create read-only database instances.
         name: tencentcloud_mysql_dr_instance
         title: tencentcloud_mysql_dr_instance
+        examples:
+            - name: mysql_dr
+              manifest: |-
+                {
+                  "auto_renew_flag": 0,
+                  "availability_zone": "ap-shanghai-3",
+                  "charge_type": "POSTPAID",
+                  "cpu": 4,
+                  "device_type": "UNIVERSAL",
+                  "first_slave_zone": "ap-shanghai-4",
+                  "instance_name": "mysql-dr-test-up",
+                  "intranet_port": 3360,
+                  "master_instance_id": "cdb-adjdu3t5",
+                  "master_region": "ap-guangzhou",
+                  "mem_size": 8000,
+                  "prepaid_period": 1,
+                  "project_id": 0,
+                  "security_groups": [
+                    "sg-q4d821qk"
+                  ],
+                  "slave_deploy_mode": 1,
+                  "slave_sync_mode": 0,
+                  "subnet_id": "subnet-5vfntba5",
+                  "tags": {
+                    "test": "test-tf"
+                  },
+                  "volume_size": 100,
+                  "vpc_id": "vpc-h6s1s3aa"
+                }
         argumentDocs:
             auto_renew_flag: '- (Optional, Int) Auto renew flag. NOTES: Only supported prepaid instance.'
             availability_zone: '- (Optional, String) Indicates which availability zone will be used.'
@@ -41630,62 +41659,96 @@ resources:
             type: '- (Optional, String) Type of the certificate. Values: default: Default certificate; upload: Specified certificate; managed: Tencent Cloud-managed certificate. Note: This field may return null, indicating that no valid value can be obtained.'
             zone_id: '- (Required, String, ForceNew) Site ID.'
         importStatements: []
+    tencentcloud_teo_l4_proxy:
+        subCategory: TencentCloud EdgeOne(TEO)
+        description: Provides a resource to create a teo teo_l4_proxy
+        name: tencentcloud_teo_l4_proxy
+        title: tencentcloud_teo_l4_proxy
+        examples:
+            - name: proxy
+              manifest: |-
+                {
+                  "accelerate_mainland": "off",
+                  "area": "overseas",
+                  "ipv6": "off",
+                  "proxy_name": "proxy-test",
+                  "static_ip": "off",
+                  "zone_id": "zone-2qtuhspy6cr7"
+                }
+        argumentDocs:
+            accelerate_mainland: '- (Optional, String) Specifies whether to enable network optimization in the Chinese mainland. The default value off is used if left empty. This configuration can only be enabled in certain acceleration zones and security protection configurations. For details, see Creating an L4 Proxy Instance. Valid values: on: Enable; off: Disable.'
+            area: '- (Optional, String) Acceleration zone of the Layer 4 proxy instance. mainland: Availability zone in the Chinese mainland; overseas: Global availability zone (excluding the Chinese mainland); global: Global availability zone.'
+            ddos_protection_config: '- (Optional, List) Layer 3/Layer 4 DDoS protection. The default protection option of the platform will be used if it is left empty. For details, see Exclusive DDoS Protection Usage.'
+            id: '- ID of the resource.'
+            ipv6: '- (Optional, String) Specifies whether to enable IPv6 access. The default value off is used if left empty. This configuration can only be enabled in certain acceleration zones and security protection configurations. For details, see Creating an L4 Proxy Instance. Valid values: on: Enable; off: Disable.'
+            level_mainland: '- (Optional, String) Exclusive DDoS protection specifications in the Chinese mainland. For details, see [Dedicated DDoS Mitigation Fee (Pay-as-You-Go)] (https://intl.cloud.tencent.com/document/product/1552/94162?from_cn_redirect=1). PLATFORM: Default protection of the platform, i.e., Exclusive DDoS protection is not enabled; BASE30_MAX300: Exclusive DDoS protection enabled, providing a baseline protection bandwidth of 30 Gbps and an elastic protection bandwidth of up to 300 Gbps; BASE60_MAX600: Exclusive DDoS protection enabled, providing a baseline protection bandwidth of 60 Gbps and an elastic protection bandwidth of up to 600 Gbps. If no parameters are filled, the default value PLATFORM is used.'
+            level_overseas: '- (Optional, String) Exclusive DDoS protection specifications in the worldwide region (excluding the Chinese mainland). PLATFORM: Default protection of the platform, i.e., Exclusive DDoS protection is not enabled; ANYCAST300: Exclusive DDoS protection enabled, offering a total maximum protection bandwidth of 300 Gbps; ANYCAST_ALLIN: Exclusive DDoS protection enabled, utilizing all available protection resources for protection. When no parameters are filled, the default value PLATFORM is used.'
+            max_bandwidth_mainland: '- (Optional, Int) Configuration of elastic protection bandwidth for exclusive DDoS protection in the Chinese mainland.Valid only when exclusive DDoS protection in the Chinese mainland is enabled (refer to the LevelMainland parameter configuration), and the value has the following limitations: When exclusive DDoS protection is enabled in the Chinese mainland and the 30 Gbps baseline protection bandwidth is used (the LevelMainland parameter value is BASE30_MAX300): the value range is 30 to 300 in Gbps; When exclusive DDoS protection is enabled in the Chinese mainland and the 60 Gbps baseline protection bandwidth is used (the LevelMainland parameter value is BASE60_MAX600): the value range is 60 to 600 in Gbps; When the default protection of the platform is used (the LevelMainland parameter value is PLATFORM): configuration is not supported, and the value of this parameter is invalid.'
+            proxy_name: '- (Required, String) Layer 4 proxy instance name. You can enter 1-50 characters. Valid characters are a-z, 0-9, and hyphens (-). However, hyphens (-) cannot be used individually or consecutively and should not be placed at the beginning or end of the name. Modifications are not allowed after creation.'
+            static_ip: '- (Optional, String) Specifies whether to enable the fixed IP address. The default value off is used if left empty. This configuration can only be enabled in certain acceleration zones and security protection configurations. For details, see Creating an L4 Proxy Instance. Valid values: on: Enable; off: Disable.'
+            zone_id: '- (Required, String, ForceNew) Site ID.'
+        importStatements: []
     tencentcloud_teo_origin_group:
         subCategory: TencentCloud EdgeOne(TEO)
         description: Provides a resource to create a teo origin_group
         name: tencentcloud_teo_origin_group
         title: tencentcloud_teo_origin_group
         examples:
-            - name: origin_group
+            - name: basic
               manifest: |-
                 {
-                  "configuration_type": "weight",
-                  "origin_group_name": "test-group",
-                  "origin_records": [
+                  "name": "keep-group-1",
+                  "records": [
                     {
-                      "area": [],
-                      "port": 8080,
-                      "private": false,
-                      "record": "150.109.8.1",
-                      "weight": 100
-                    }
-                  ],
-                  "origin_type": "self",
-                  "zone_id": "zone-297z8rf93cfw"
-                }
-            - name: origin_group
-              manifest: |-
-                {
-                  "configuration_type": "weight",
-                  "origin_group_name": "test",
-                  "origin_records": [
-                    {
-                      "area": [],
-                      "port": 0,
                       "private": true,
-                      "record": "test-ruichaolin-1310708577.cos.ap-nanjing.myqcloud.com",
+                      "private_parameters": [
+                        {
+                          "name": "SecretAccessKey",
+                          "value": "test"
+                        }
+                      ],
+                      "record": "tf-teo.xyz",
+                      "type": "IP_DOMAIN",
                       "weight": 100
                     }
                   ],
-                  "origin_type": "cos",
-                  "zone_id": "zone-2o3h21ed8bpu"
+                  "type": "GENERAL",
+                  "zone_id": "zone-197z8rf93cfw"
                 }
         argumentDocs:
-            area: '- (Optional, Set) Indicating origin sites area when Type field is area. An empty List indicate the default area. Valid value:- Asia, Americas, Europe, Africa or Oceania.'
-            configuration_type: '- (Required, String) Type of the origin group, this field should be set when OriginType is self, otherwise leave it empty. Valid values: area: select an origin by using Geo info of the client IP and Area field in Records; weight: weighted select an origin by using Weight field in Records; proto: config by HTTP protocol.'
+            AWS_S3: ': AWS S3 object storage origin site.'
+            AccelerationDomain: ': Acceleration domain name.'
+            AccessKeyId: ': Authentication parameter Access Key ID.'
+            ApplicationProxy: ': Four-layer proxy.'
+            COS: ': COS source.'
+            GENERAL: ': Universal origin site group, only supports adding IP/domain name origin sites, which can be referenced by domain name service, rule engine, four-layer proxy, general load balancing, and HTTP-specific load balancing.'
+            HTTP: ': The HTTP-specific origin site group, supports adding IP/domain name and object storage origin site as the origin site, it cannot be referenced by the four-layer proxy, it can only be added to the acceleration domain name, rule engine-modify origin site, and HTTP-specific load balancing reference.'
+            IP_DOMAIN: ': IPV4, IPV6, domain name type origin site.'
+            Loadbalance: ': Load balancing.'
+            Region: ': Bucket region.'
+            RuleEngine: ': Rule engine.'
+            SecretAccessKey: ': Authentication parameter Secret Access Key.'
+            SignatureVersion: ': Authentication version, v2 or v4.'
+            create_time: '- Origin site group creation time.'
+            "false": ': Do not use private authentication.'
+            host_header: '- (Optional, String) Back-to-origin Host Header, it only takes effect when type = HTTP is passed in. The rule engine modifies the Host Header configuration priority to be higher than the Host Header of the origin site group.'
             id: '- ID of the resource.'
-            name: '- (Required, String) Parameter Name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.'
+            instance_id: '- The instance ID of the reference type.'
+            instance_name: '- Instance name of the application type.'
+            instance_type: '- Reference service type, the values are:'
+            name: '- (Optional, String) OriginGroup Name.'
             origin_group_id: '- OriginGroup ID.'
-            origin_group_name: '- (Required, String) OriginGroup Name.'
-            origin_records: '- (Required, List) Origin site records.'
-            origin_type: '- (Required, String) Type of the origin site. Valid values: self: self-build website; cos: tencent cos; third_party: third party cos.'
-            port: '- (Required, Int) Port of the origin site. Valid value range: 1-65535.'
-            private: '- (Optional, Bool) Whether origin site is using private authentication. Only valid when OriginType is third_party.'
-            private_parameter: '- (Optional, List) Parameters for private authentication. Only valid when Private is true.'
-            record: '- (Required, String) Record value, which could be an IPv4/IPv6 address or a domain.'
-            update_time: '- Last modification date.'
-            value: '- (Required, String) Parameter value.'
-            weight: '- (Optional, Int) Indicating origin sites weight when Type field is weight. Valid value range: 1-100. Sum of all weights should be 100.'
+            private: '- (Optional, Bool) Whether to use private authentication, it takes effect when the origin site type RecordType=COS/AWS_S3, the values are:'
+            private_parameters: '- (Optional, List) Parameters for private authentication. Only valid when Private is true.'
+            record: '- (Required, String) Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.'
+            record_id: '- (Optional, String) Origin record ID.'
+            records: '- (Required, List) Origin site records.'
+            references: '- List of referenced instances of the origin site group.'
+            "true": ': Use private authentication.'
+            type: '- (Required, String) Type of the origin site. Valid values:'
+            update_time: '- Origin site group update time.'
+            value: '- (Required, String) Private authentication parameter value.'
+            weight: '- (Optional, Int) The weight of the origin site, the value is 0-100. If it is not filled in, it means that the weight will not be set and the system will schedule it freely. If it is filled in with 0, it means that the weight is 0 and the traffic will not be scheduled to this origin site.'
             zone_id: '- (Required, String, ForceNew) Site ID.'
         importStatements: []
     tencentcloud_teo_ownership_verify:
@@ -41862,27 +41925,87 @@ resources:
               references:
                 zone_id: tencentcloud_teo_zone.example.id
         argumentDocs:
-            action: '- (Required, String) Action name.'
-            actions: '- (Required, List) Actions list of the rule. See details in data source rule_engine_setting.'
+            AccessUrlRedirect: ': Access URL rewrite.'
+            Authentication: ': Token authentication.'
+            Cache: ': Node cache TTL.'
+            CacheKey: ': Custom cache key.'
+            CachePrefresh: ': Cache prefresh.'
+            ClientIpHeader: .
+            Compression: ': Smart compression.'
+            ErrorPage: ': Custom error page.'
+            ForceRedirect: ': Force HTTPS.'
+            HostHeader: ': Host header rewrite.'
+            Hsts: .
+            Http2: ': HTTP/2 access.'
+            MaxAge: ': Browser cache TTL.'
+            OcspStapling: .
+            OfflineCache: ': Offline cache.'
+            Origin: |-
+                : Origin.
+                Note: This field may return null, indicating that no valid value can be obtained.
+            OriginPullProtocol: ': Origin-pull HTTPS.'
+            QUIC: ': QUIC.'
+            RangeOriginPull: ': Range GETs.'
+            RequestHeader: ': HTTP request header modification.'
+            ResponseHeader: |-
+                : HTTP response header modification.
+                Note: This field may return null, indicating that no valid values can be obtained.
+            SmartRouting: ': Smart acceleration.'
+            SslTlsSecureConf: .
+            StatusCodeCache: |-
+                : Status code cache TTL.
+                Note: This field may return null, indicating that no valid values can be obtained.
+            Target=all: ', it indicates any site request.'
+            Target=client_country: ', enter the ISO-3166 country/region code.'
+            Target=extension: ', enter the file extension, such as "jpg" and "txt".'
+            Target=filename: ', enter the file name, such as "foo" in "foo.jpg".'
+            Target=full_url: ', enter the complete URL under the current site. It must contain the HTTP protocol, host, and path, such as "https://www.maxx55.cn/example".'
+            Target=host: ', enter the host under the current site, such as "www.maxx55.com".'
+            Target=query_string: ', enter the value of the query string, such as "cn" and "1" in "lang=cn&version=1".'
+            Target=request_header: ', enter the HTTP request header value, such as "zh-CN,zh;q=0.9" in the "Accept-Language:zh-CN,zh;q=0.9" header.'
+            Target=url: ', enter the partial URL path under the current site, such as "/example".'
+            UpstreamFollowRedirect: ': Follow origin redirect.'
+            UpstreamHttp2: ': HTTP/2 forwarding.'
+            UpstreamUrlRedirect: ': Origin-pull URL rewrite.'
+            VideoSeek: ': Video dragging.'
+            WebSocket: ': WebSocket.'
+            action: '- (Required, String) Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.'
+            actions: '- (Required, List) The feature to be executed.'
             and: '- (Required, List) AND Conditions list of the rule. Rule would be triggered if all conditions are true.'
-            code_action: '- (Optional, List) Define a code action.'
+            client_country: ': Country/Region of the client.'
+            code_action: '- (Optional, List) Feature operation with a status code. Features of this type include:'
+            disable: ': Disabled.'
+            enable: ': Enabled.'
+            equals: ': Equals.'
+            exist: ': Exists.'
+            extension: ': File extension.'
+            filename: ': File name.'
+            full_url: ': Full URL, which indicates the complete URL path under the current site and must contain the HTTP protocol, host, and path.'
+            host: ': Host.'
             id: '- ID of the resource.'
-            ignore_case: '- (Optional, Bool) Whether to ignore the case of the parameter value, the default value is false.'
-            name: '- (Optional, String) The parameter name corresponding to the matching type is valid when the Target value is the following, and the valid value cannot be empty: query_string (query string): The parameter name of the query string in the URL request under the current site, such as lang and version in lang=cn&version=1; request_header (HTTP request header): HTTP request header field name, such as Accept-Language in Accept-Language:zh-CN,zh;q=0.9.'
-            normal_action: '- (Optional, List) Define a normal action.'
-            operator: '- (Required, String) Condition operator. Valid values are equal, notequal.'
-            or: '- (Required, List) OR Conditions list of the rule. Rule would be triggered if any of the condition is true.'
-            parameters: '- (Required, List) Action parameters.'
-            rewrite_action: '- (Optional, List) Define a rewrite action.'
+            ignore_case: '- (Optional, Bool) Whether the parameter value is case insensitive. Default value: false.'
+            name: '- (Optional, String) The parameter name of the match type. This field is required only when Target=query_string/request_header.'
+            normal_action: '- (Optional, List) Common operation. Values:'
+            notEquals: ': Does not equal.'
+            notexist: ': Does not exist.'
+            operator: '- (Required, String) Operator. Valid values:'
+            or: |-
+                - (Required, List) The condition that determines if a feature should run.
+                Note: If any condition in the array is met, the feature will run.
+            parameters: '- (Required, List) Operation parameter.'
+            query_string: ': Query string in the request URL.'
+            request_header: ': HTTP request header.'
+            rewrite_action: '- (Optional, List) Feature operation with a request/response header. Features of this type include:'
             rule_id: '- Rule ID.'
             rule_name: '- (Required, String) The rule name (1 to 255 characters).'
             rules: '- (Required, List) Rule items list.'
-            status: '- (Required, String) Rule status. Values: enable: Enabled; disable: Disabled.'
-            status_code: '- (Required, Int) HTTP status code to use.'
-            sub_rules: '- (Optional, List) Actions list of the rule. See details in data source rule_engine_setting.'
+            status: '- (Required, String) Rule status. Values:'
+            status_code: '- (Required, Int) The status code.'
+            sub_rules: '- (Optional, List) The nested rule.'
             tags: '- (Optional, Set: [String]) rule tag list.'
-            target: '- (Required, String) Condition target. Valid values:- host: Host of the URL.- filename: filename of the URL.- extension: file extension of the URL.- full_url: full url.- url: path of the URL.'
-            values: '- (Required, Set) Condition Value.'
+            target: '- (Required, String) The match type. Values:'
+            url: ': Partial URL under the current site.'
+            values: '- (Optional, Set) The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.'
             zone_id: '- (Required, String, ForceNew) ID of the site.'
         importStatements: []
     tencentcloud_teo_zone:
@@ -41906,7 +42029,7 @@ resources:
                 }
         argumentDocs:
             alias_zone_name: '- (Optional, String) Alias site identifier. Limit the input to a combination of numbers, English, - and _, within 20 characters. For details, refer to the alias site identifier. If there is no such usage scenario, leave this field empty.'
-            area: '- (Required, String) When the type value is partial or full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the type value is noDomainAccess, please leave this value empty. Valid values: global: Global availability zone; mainland: Chinese mainland availability zone; overseas: Global availability zone (excluding Chinese mainland).'
+            area: '- (Required, String) When the Type value is partial/full, the acceleration region of the L7 domain name. The following are the values of this parameter, and the default value is overseas if not filled in. When the Type value is noDomainAccess, please leave this value empty:'
             dns_verification: '- CNAME access, using DNS to resolve the information required for authentication. For details, please refer to Site/Domain Name Ownership Verification . Note: This field may return null, indicating that no valid value can be obtained.'
             id: '- ID of the resource.'
             name_servers: '- NS list allocated by Tencent Cloud.'
@@ -41918,7 +42041,7 @@ resources:
             status: '- Site status. Valid values: active: NS is switched; pending: NS is not switched; moved: NS is moved; deactivated: this site is blocked.'
             subdomain: '- Host record.'
             tags: '- (Optional, Map) Tag description list.'
-            type: '- (Required, String) Site access type. The value of this parameter is as follows, and the default is partial if not filled in. Valid values: partial: CNAME access; full: NS access; noDomainAccess: No domain access.'
+            type: '- (Required, String) Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.'
             zone_name: '- (Required, String, ForceNew) Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.'
         importStatements: []
     tencentcloud_teo_zone_setting:
@@ -42056,26 +42179,29 @@ resources:
                   "zone_id": "zone-297z8rf93cfw"
                 }
         argumentDocs:
-            action: '- (Optional, String) - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.'
+            action: '- (Optional, String) - includeCustom: Include the specified query strings.'
             algorithms: '- (Optional, Set) Compression algorithms to select. Valid values: brotli, gzip.'
             area: '- Acceleration area of the zone. Valid values: mainland, overseas.'
             backup_origins: '- (Optional, Set) Backup origin sites list. Note: This field may return null, indicating that no valid value can be obtained.'
             cache: '- (Optional, List) Cache expiration time configuration.'
             cache_key: '- (Optional, List) Node cache key configuration.'
             cache_prefresh: '- (Optional, List) Cache pre-refresh configuration.'
-            cache_time: '- (Optional, Int) Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.'
+            cache_time: |-
+                - (Optional, Int) Cache expiration time settings.
+                Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
             client_ip_header: '- (Optional, List) Origin-pull client IP header configuration.'
             compression: '- (Optional, List) Smart compression configuration.'
-            cos_private_access: '- (Optional, String) Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.'
+            excludeCustom: ': Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.'
+            follow: ': Follow the protocol of the request.'
             follow_origin: '- (Optional, List) Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.'
             force_redirect: '- (Optional, List) Force HTTPS redirect configuration.'
-            full_url_cache: '- (Optional, String) Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.'
+            full_url_cache: '- (Optional, String) Specifies whether to enable full-path cache.'
             header_name: '- (Optional, String) Name of the origin-pull client IP request header. Note: This field may return null, indicating that no valid value can be obtained.'
             hsts: '- (Optional, List) HSTS Configuration. Note: This field may return null, indicating that no valid value can be obtained.'
-            http2: '- (Optional, String) HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.'
+            http: ': Switch HTTPS requests to HTTP.'
+            http2: '- (Optional, String) HTTP2 configuration switch.'
             https: '- (Optional, List) HTTPS acceleration configuration.'
             id: '- ID of the resource.'
-            ignore_cache_control: '- (Optional, String) Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.'
             ignore_case: '- (Optional, String) Specifies whether the cache key is case-sensitive. Note: This field may return null, indicating that no valid value can be obtained.'
             include_sub_domains: '- (Optional, String) Specifies whether to include subdomain names. Valid values: on and off. Note: This field may return null, indicating that no valid value can be obtained.'
             ipv6: '- (Optional, List) IPv6 access configuration.'
@@ -42083,21 +42209,25 @@ resources:
             max_age_time: '- (Optional, Int) Specifies the max age of the cache (in seconds). The maximum value is 365 days. Note: the value 0 means not to cache. Note: This field may return null, indicating that no valid value can be obtained.'
             max_size: '- (Optional, Int) Maximum size. Value range: 1-500 MB. Note: This field may return null, indicating that no valid value can be obtained.'
             no_cache: '- (Optional, List) No-cache configuration. Note: This field may return null, indicating that no valid value can be obtained.'
-            ocsp_stapling: '- (Optional, String) OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.'
+            ocsp_stapling: '- (Optional, String) OCSP configuration switch.'
+            "off": ': Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.'
             offline_cache: '- (Optional, List) Offline cache configuration.'
+            "on": ': Enable full-path cache (i.e., disable Ignore Query String).'
             origin: '- (Optional, List) Origin server configuration.'
-            origin_pull_protocol: '- (Optional, String) Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.'
+            origin_pull_protocol: '- (Optional, String) Origin-pull protocol.'
             origins: '- (Optional, Set) Origin sites list. Note: This field may return null, indicating that no valid value can be obtained.'
             percent: '- (Optional, Int) Percentage of cache time before try to prefresh. Valid value range: 1-99.'
             post_max_size: '- (Optional, List) Maximum size of files transferred over POST request.'
             preload: '- (Optional, String) Specifies whether to preload. Valid values: on and off. Note: This field may return null, indicating that no valid value can be obtained.'
             query_string: '- (Optional, List) Request parameter contained in CacheKey. Note: This field may return null, indicating that no valid value can be obtained.'
             quic: '- (Optional, List) QUIC access configuration.'
-            redirect_status_code: '- (Optional, Int) Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.'
+            redirect_status_code: '- (Optional, Int) Redirection status code.'
             smart_routing: '- (Optional, List) Smart acceleration configuration.'
-            switch: '- (Required, String) Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.'
+            switch: '- (Required, String) Specifies whether to enable cache prefresh.'
             timeout: '- (Optional, Int) Sets timeout period in seconds. Maximum value: 120.'
-            tls_version: '- (Optional, Set) TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.'
+            tls_version: |-
+                - (Optional, Set) TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+                Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
             upstream_http2: '- (Optional, List) HTTP2 origin-pull configuration.'
             value: '- (Optional, Set) Array of query strings used/excluded. Note: This field may return null, indicating that no valid value can be obtained.'
             web_socket: '- (Optional, List) WebSocket configuration.'

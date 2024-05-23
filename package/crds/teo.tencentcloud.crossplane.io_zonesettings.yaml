@@ -87,18 +87,17 @@ spec:
                             properties:
                               cacheTime:
                                 description: |-
-                                  Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
-                                  Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Cache expiration time settings.
+                                  Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Cache expiration time settings.
+                                  Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: number
-                              ignoreCacheControl:
-                                description: |-
-                                  Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                                  Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                                type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Cache configuration switch.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -110,8 +109,10 @@ spec:
                             properties:
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Specifies whether to follow the origin server configuration.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Specifies whether to follow the origin server configuration.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -123,8 +124,10 @@ spec:
                             properties:
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Whether to cache the configuration.
+                                  - `on`: Do not cache.
+                                  - `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -138,8 +141,10 @@ spec:
                       properties:
                         fullUrlCache:
                           description: |-
-                            Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
-                            Specifies whether to enable full-path cache.- `on`: Enable full-path cache (i.e., disable Ignore Query String).- `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable full-path cache.
+                            Specifies whether to enable full-path cache.
+                            - `on`: Enable full-path cache (i.e., disable Ignore Query String).
+                            - `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         ignoreCase:
                           description: |-
@@ -154,13 +159,16 @@ spec:
                             properties:
                               action:
                                 description: |-
-                                  - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
-                                  - `includeCustom`: Include the specified query strings.- `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
+                                  - includeCustom: Include the specified query strings.
+                                  - `includeCustom`: Include the specified query strings.
+                                  - `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Whether to use QueryString as part of CacheKey.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Whether to use QueryString as part of CacheKey.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                               value:
                                 description: |-
@@ -187,8 +195,10 @@ spec:
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable cache prefresh.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable cache prefresh.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -205,8 +215,10 @@ spec:
                           type: string
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable client IP header.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable client IP header.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                       type: object
                     type: array
@@ -226,8 +238,10 @@ spec:
                           x-kubernetes-list-type: set
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable Smart compression.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable Smart compression.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -239,13 +253,17 @@ spec:
                       properties:
                         redirectStatusCode:
                           description: |-
-                            Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
-                            Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
+                            Redirection status code.
+                            Redirection status code.
+                            - 301
+                            - 302 Note: This field may return null, indicating that no valid value can be obtained.
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable force redirect.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable force redirect.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -278,25 +296,33 @@ spec:
                                 type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  - `on`: Enable.- `off`: Disable.
+                                  Specifies whether to enable cache prefresh.
+                                  - `on`: Enable.
+                                  - `off`: Disable.
                                 type: string
                             type: object
                           type: array
                         http2:
                           description: |-
-                            HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                            HTTP2 configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            HTTP2 configuration switch.
+                            HTTP2 configuration switch.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         ocspStapling:
                           description: |-
-                            OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
-                            OCSP configuration switch.- `on`: Enable.- `off`: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
+                            OCSP configuration switch.
+                            OCSP configuration switch.
+                            - `on`: Enable.
+                            - `off`: Disable.
+                            It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         tlsVersion:
                           description: |-
-                            TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
-                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+                            Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.
+                            Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
                           items:
                             type: string
                           type: array
@@ -311,8 +337,9 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            - `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -325,7 +352,10 @@ spec:
                         followOrigin:
                           description: |-
                             Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.
-                            Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to follow the max cache age of the origin server.
+                            - `on`: Enable.
+                            - `off`: Disable.
+                            If it's on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         maxAgeTime:
                           description: |-
@@ -342,8 +372,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable offline cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable offline cache.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                       type: object
                     type: array
@@ -361,15 +393,13 @@ spec:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
-                        cosPrivateAccess:
-                          description: |-
-                            Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
-                            Whether access private cos bucket is allowed when `OriginType` is cos. Note: This field may return null, indicating that no valid value can be obtained.
-                          type: string
                         originPullProtocol:
                           description: |-
-                            Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
-                            Origin-pull protocol.- `http`: Switch HTTPS requests to HTTP.- `follow`: Follow the protocol of the request.- `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
+                            Origin-pull protocol.
+                            Origin-pull protocol.
+                            - `http`: Switch HTTPS requests to HTTP.
+                            - `follow`: Follow the protocol of the request.
+                            - `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         origins:
                           description: |-
@@ -394,8 +424,10 @@ spec:
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable custom setting of the maximum file size.- `on`: Enable. You can set a custom max size.- `off`: Disable. In this case, the max size defaults to 32 MB.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable custom setting of the maximum file size.
+                            - `on`: Enable. You can set a custom max size.
+                            - `off`: Disable. In this case, the max size defaults to 32 MB.
                           type: string
                       type: object
                     type: array
@@ -407,8 +439,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable QUIC.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable QUIC.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -420,8 +454,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable smart acceleration.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable smart acceleration.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -433,8 +469,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable HTTP2 origin-pull.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable HTTP2 origin-pull.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -446,8 +484,8 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable custom WebSocket timeout setting. When it's off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
                           type: string
                         timeout:
                           description: |-
@@ -563,18 +601,17 @@ spec:
                             properties:
                               cacheTime:
                                 description: |-
-                                  Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
-                                  Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Cache expiration time settings.
+                                  Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Cache expiration time settings.
+                                  Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: number
-                              ignoreCacheControl:
-                                description: |-
-                                  Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                                  Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                                type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Cache configuration switch.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -586,8 +623,10 @@ spec:
                             properties:
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Specifies whether to follow the origin server configuration.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Specifies whether to follow the origin server configuration.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -599,8 +638,10 @@ spec:
                             properties:
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Whether to cache the configuration.
+                                  - `on`: Do not cache.
+                                  - `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -614,8 +655,10 @@ spec:
                       properties:
                         fullUrlCache:
                           description: |-
-                            Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
-                            Specifies whether to enable full-path cache.- `on`: Enable full-path cache (i.e., disable Ignore Query String).- `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable full-path cache.
+                            Specifies whether to enable full-path cache.
+                            - `on`: Enable full-path cache (i.e., disable Ignore Query String).
+                            - `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         ignoreCase:
                           description: |-
@@ -630,13 +673,16 @@ spec:
                             properties:
                               action:
                                 description: |-
-                                  - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
-                                  - `includeCustom`: Include the specified query strings.- `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
+                                  - includeCustom: Include the specified query strings.
+                                  - `includeCustom`: Include the specified query strings.
+                                  - `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Whether to use QueryString as part of CacheKey.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Whether to use QueryString as part of CacheKey.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                               value:
                                 description: |-
@@ -663,8 +709,10 @@ spec:
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable cache prefresh.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable cache prefresh.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -681,8 +729,10 @@ spec:
                           type: string
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable client IP header.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable client IP header.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                       type: object
                     type: array
@@ -702,8 +752,10 @@ spec:
                           x-kubernetes-list-type: set
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable Smart compression.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable Smart compression.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -715,13 +767,17 @@ spec:
                       properties:
                         redirectStatusCode:
                           description: |-
-                            Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
-                            Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
+                            Redirection status code.
+                            Redirection status code.
+                            - 301
+                            - 302 Note: This field may return null, indicating that no valid value can be obtained.
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable force redirect.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable force redirect.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -754,25 +810,33 @@ spec:
                                 type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  - `on`: Enable.- `off`: Disable.
+                                  Specifies whether to enable cache prefresh.
+                                  - `on`: Enable.
+                                  - `off`: Disable.
                                 type: string
                             type: object
                           type: array
                         http2:
                           description: |-
-                            HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                            HTTP2 configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            HTTP2 configuration switch.
+                            HTTP2 configuration switch.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         ocspStapling:
                           description: |-
-                            OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
-                            OCSP configuration switch.- `on`: Enable.- `off`: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
+                            OCSP configuration switch.
+                            OCSP configuration switch.
+                            - `on`: Enable.
+                            - `off`: Disable.
+                            It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         tlsVersion:
                           description: |-
-                            TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
-                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+                            Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.
+                            Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
                           items:
                             type: string
                           type: array
@@ -787,8 +851,9 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            - `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -801,7 +866,10 @@ spec:
                         followOrigin:
                           description: |-
                             Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.
-                            Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to follow the max cache age of the origin server.
+                            - `on`: Enable.
+                            - `off`: Disable.
+                            If it's on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         maxAgeTime:
                           description: |-
@@ -818,8 +886,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable offline cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable offline cache.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                       type: object
                     type: array
@@ -837,15 +907,13 @@ spec:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
-                        cosPrivateAccess:
-                          description: |-
-                            Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
-                            Whether access private cos bucket is allowed when `OriginType` is cos. Note: This field may return null, indicating that no valid value can be obtained.
-                          type: string
                         originPullProtocol:
                           description: |-
-                            Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
-                            Origin-pull protocol.- `http`: Switch HTTPS requests to HTTP.- `follow`: Follow the protocol of the request.- `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
+                            Origin-pull protocol.
+                            Origin-pull protocol.
+                            - `http`: Switch HTTPS requests to HTTP.
+                            - `follow`: Follow the protocol of the request.
+                            - `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         origins:
                           description: |-
@@ -870,8 +938,10 @@ spec:
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable custom setting of the maximum file size.- `on`: Enable. You can set a custom max size.- `off`: Disable. In this case, the max size defaults to 32 MB.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable custom setting of the maximum file size.
+                            - `on`: Enable. You can set a custom max size.
+                            - `off`: Disable. In this case, the max size defaults to 32 MB.
                           type: string
                       type: object
                     type: array
@@ -883,8 +953,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable QUIC.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable QUIC.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -896,8 +968,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable smart acceleration.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable smart acceleration.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -909,8 +983,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable HTTP2 origin-pull.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable HTTP2 origin-pull.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -922,8 +998,8 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable custom WebSocket timeout setting. When it's off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
                           type: string
                         timeout:
                           description: |-
@@ -1203,18 +1279,17 @@ spec:
                             properties:
                               cacheTime:
                                 description: |-
-                                  Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
-                                  Cache expiration time settings, Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Cache expiration time settings.
+                                  Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Cache expiration time settings.
+                                  Unit: second. The maximum value is 365 days. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: number
-                              ignoreCacheControl:
-                                description: |-
-                                  Specifies whether to enable force cache. Valid values: on: Enable; off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                                  Specifies whether to enable force cache. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                                type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Cache configuration switch. Valid values: `on`: Enable; `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Cache configuration switch.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -1226,8 +1301,10 @@ spec:
                             properties:
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Specifies whether to follow the origin server configuration.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Specifies whether to follow the origin server configuration.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -1239,8 +1316,10 @@ spec:
                             properties:
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Whether to cache the configuration. Valid values: `on`: Do not cache; `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Whether to cache the configuration.
+                                  - `on`: Do not cache.
+                                  - `off`: Cache. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                             type: object
                           type: array
@@ -1254,8 +1333,10 @@ spec:
                       properties:
                         fullUrlCache:
                           description: |-
-                            Specifies whether to enable full-path cache.- on: Enable full-path cache (i.e., disable Ignore Query String).- off: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
-                            Specifies whether to enable full-path cache.- `on`: Enable full-path cache (i.e., disable Ignore Query String).- `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable full-path cache.
+                            Specifies whether to enable full-path cache.
+                            - `on`: Enable full-path cache (i.e., disable Ignore Query String).
+                            - `off`: Disable full-path cache (i.e., enable Ignore Query String). Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         ignoreCase:
                           description: |-
@@ -1270,13 +1351,16 @@ spec:
                             properties:
                               action:
                                 description: |-
-                                  - includeCustom: Include the specified query strings.- excludeCustom: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
-                                  - `includeCustom`: Include the specified query strings.- `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
+                                  - includeCustom: Include the specified query strings.
+                                  - `includeCustom`: Include the specified query strings.
+                                  - `excludeCustom`: Exclude the specified query strings. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  Whether to use QueryString as part of CacheKey.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                                  Specifies whether to enable cache prefresh.
+                                  Whether to use QueryString as part of CacheKey.
+                                  - `on`: Enable.
+                                  - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                                 type: string
                               value:
                                 description: |-
@@ -1303,8 +1387,10 @@ spec:
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable cache prefresh.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable cache prefresh.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1321,8 +1407,10 @@ spec:
                           type: string
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable client IP header.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable client IP header.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                       type: object
                     type: array
@@ -1342,8 +1430,10 @@ spec:
                           x-kubernetes-list-type: set
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable Smart compression.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable Smart compression.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1355,13 +1445,17 @@ spec:
                       properties:
                         redirectStatusCode:
                           description: |-
-                            Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
-                            Redirection status code.- 301- 302 Note: This field may return null, indicating that no valid value can be obtained.
+                            Redirection status code.
+                            Redirection status code.
+                            - 301
+                            - 302 Note: This field may return null, indicating that no valid value can be obtained.
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable force redirect.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable force redirect.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1394,25 +1488,33 @@ spec:
                                 type: string
                               switch:
                                 description: |-
-                                  Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                                  - `on`: Enable.- `off`: Disable.
+                                  Specifies whether to enable cache prefresh.
+                                  - `on`: Enable.
+                                  - `off`: Disable.
                                 type: string
                             type: object
                           type: array
                         http2:
                           description: |-
-                            HTTP2 configuration switch.- on: Enable.- off: Disable. Note: This field may return null, indicating that no valid value can be obtained.
-                            HTTP2 configuration switch.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            HTTP2 configuration switch.
+                            HTTP2 configuration switch.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         ocspStapling:
                           description: |-
-                            OCSP configuration switch.- on: Enable.- off: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
-                            OCSP configuration switch.- `on`: Enable.- `off`: Disable.It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
+                            OCSP configuration switch.
+                            OCSP configuration switch.
+                            - `on`: Enable.
+                            - `off`: Disable.
+                            It is disabled by default. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         tlsVersion:
                           description: |-
-                            TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
-                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: TLSv1, TLSV1.1, TLSV1.2, and TLSv1.3.
+                            Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
+                            TLS version settings. Valid values: `TLSv1`, `TLSV1.1`, `TLSV1.2`, and `TLSv1.3`.
+                            Only consecutive versions can be enabled at the same time. Note: This field may return null, indicating that no valid value can be obtained.
                           items:
                             type: string
                           type: array
@@ -1430,8 +1532,9 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            - `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1444,7 +1547,10 @@ spec:
                         followOrigin:
                           description: |-
                             Follows the origin server configuration. Note: This field may return null, indicating that no valid value can be obtained.
-                            Specifies whether to follow the max cache age of the origin server.- `on`: Enable.- `off`: Disable.If is on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to follow the max cache age of the origin server.
+                            - `on`: Enable.
+                            - `off`: Disable.
+                            If it's on, MaxAgeTime is ignored. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         maxAgeTime:
                           description: |-
@@ -1461,8 +1567,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable offline cache.- `on`: Enable.- `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable offline cache.
+                            - `on`: Enable.
+                            - `off`: Disable. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                       type: object
                     type: array
@@ -1480,15 +1588,13 @@ spec:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
-                        cosPrivateAccess:
-                          description: |-
-                            Whether access private cos bucket is allowed when OriginType is cos. Note: This field may return null, indicating that no valid value can be obtained.
-                            Whether access private cos bucket is allowed when `OriginType` is cos. Note: This field may return null, indicating that no valid value can be obtained.
-                          type: string
                         originPullProtocol:
                           description: |-
-                            Origin-pull protocol.- http: Switch HTTPS requests to HTTP.- follow: Follow the protocol of the request.- https: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
-                            Origin-pull protocol.- `http`: Switch HTTPS requests to HTTP.- `follow`: Follow the protocol of the request.- `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
+                            Origin-pull protocol.
+                            Origin-pull protocol.
+                            - `http`: Switch HTTPS requests to HTTP.
+                            - `follow`: Follow the protocol of the request.
+                            - `https`: Switch HTTP requests to HTTPS. This only supports port 443 on the origin server. Note: This field may return null, indicating that no valid value can be obtained.
                           type: string
                         origins:
                           description: |-
@@ -1513,8 +1619,10 @@ spec:
                           type: number
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Specifies whether to enable custom setting of the maximum file size.- `on`: Enable. You can set a custom max size.- `off`: Disable. In this case, the max size defaults to 32 MB.
+                            Specifies whether to enable cache prefresh.
+                            Specifies whether to enable custom setting of the maximum file size.
+                            - `on`: Enable. You can set a custom max size.
+                            - `off`: Disable. In this case, the max size defaults to 32 MB.
                           type: string
                       type: object
                     type: array
@@ -1526,8 +1634,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable QUIC.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable QUIC.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1539,8 +1649,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable smart acceleration.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable smart acceleration.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1552,8 +1664,10 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable HTTP2 origin-pull.- `on`: Enable.- `off`: Disable.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable HTTP2 origin-pull.
+                            - `on`: Enable.
+                            - `off`: Disable.
                           type: string
                       type: object
                     type: array
@@ -1565,8 +1679,8 @@ spec:
                       properties:
                         switch:
                           description: |-
-                            Specifies whether to enable cache prefresh.- on: Enable.- off: Disable.
-                            Whether to enable custom WebSocket timeout setting. When is off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
+                            Specifies whether to enable cache prefresh.
+                            Whether to enable custom WebSocket timeout setting. When it's off: it means to keep the default WebSocket connection timeout period, which is 15 seconds. To change the timeout period, please set it to on.
                           type: string
                         timeout:
                           description: |-
