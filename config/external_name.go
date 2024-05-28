@@ -232,6 +232,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// tcm
 	"tencentcloud_tcm_mesh":               config.IdentifierFromProvider,
 	"tencentcloud_tcm_cluster_attachment": config.IdentifierFromProvider,
+	// tcmq
+	"tencentcloud_tcmq_queue":     config.IdentifierFromProvider,
+	"tencentcloud_tcmq_subscribe": config.IdentifierFromProvider,
+	"tencentcloud_tcmq_topic":     config.IdentifierFromProvider,
 	// tcr
 	"tencentcloud_tcr_instance":       config.IdentifierFromProvider,
 	"tencentcloud_tcr_namespace":      config.IdentifierFromProvider,

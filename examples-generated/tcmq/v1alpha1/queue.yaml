@@ -1,0 +1,11 @@
+apiVersion: tcmq.tencentcloud.crossplane.io/v1alpha1
+kind: Queue
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcmq/v1alpha1/queue
+  labels:
+    testing.upbound.io/example-name: queue
+  name: queue
+spec:
+  forProvider:
+    queueName: queue_name
