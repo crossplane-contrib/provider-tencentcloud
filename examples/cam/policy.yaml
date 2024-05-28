@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cam/v1alpha1/policy
   labels:
-    testing.upbound.io/example-name: foo
+    testing.upbound.io/example-name: policy
   name: crossplane-sample-policy
 spec:
   forProvider:

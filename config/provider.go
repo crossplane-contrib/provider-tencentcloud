@@ -48,6 +48,7 @@ import (
 	"github.com/crossplane-contrib/provider-tencentcloud/config/ssm"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tcaplus"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tcm"
+	"github.com/crossplane-contrib/provider-tencentcloud/config/tcmq"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tcr"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tdmq"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/tem"
@@ -122,6 +123,7 @@ func GetProvider() *ujconfig.Provider {
 		ssm.Configure,
 		tcaplus.Configure,
 		tcm.Configure,
+		tcmq.Configure,
 		tcr.Configure,
 		tdmq.Configure,
 		tem.Configure,

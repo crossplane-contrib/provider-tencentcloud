@@ -10,7 +10,7 @@ spec:
   forProvider:
     policyNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: policy
     roleNameSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: role

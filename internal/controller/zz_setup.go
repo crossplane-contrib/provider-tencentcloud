@@ -188,6 +188,9 @@ import (
 	tablegroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcaplus/tablegroup"
 	clusterattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcm/clusterattachment"
 	mesh "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcm/mesh"
+	queue "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcmq/queue"
+	subscribe "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcmq/subscribe"
+	topictcmq "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcmq/topic"
 	instancetcr "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/instance"
 	repository "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/repository"
 	tcrnamespace "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tcr/tcrnamespace"
@@ -441,6 +444,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		tablegroup.Setup,
 		clusterattachment.Setup,
 		mesh.Setup,
+		queue.Setup,
+		subscribe.Setup,
+		topictcmq.Setup,
 		instancetcr.Setup,
 		repository.Setup,
 		tcrnamespace.Setup,

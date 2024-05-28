@@ -1,0 +1,11 @@
+apiVersion: tcmq.tencentcloud.crossplane.io/v1alpha1
+kind: Topic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tcmq/v1alpha1/topic
+  labels:
+    testing.upbound.io/example-name: topic
+  name: topic
+spec:
+  forProvider:
+    topicName: topic_name
