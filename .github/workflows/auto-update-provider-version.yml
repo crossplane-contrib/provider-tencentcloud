@@ -26,7 +26,7 @@ jobs:
           go mod tidy
           make generate
           git add .
-          git commit -m "update terraform version"
+          git commit -sm "update terraform version"
           git push origin feat/update-to-${version}
       - name: create pull request
         run: |
