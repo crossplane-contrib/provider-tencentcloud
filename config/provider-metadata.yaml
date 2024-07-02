@@ -7505,6 +7505,20 @@ resources:
                   "tags": {
                     "test": "tf"
                   },
+                  "vpc_id": "vpc-da7ffa61"
+                }
+            - name: open_clb
+              manifest: |-
+                {
+                  "clb_name": "myclb",
+                  "network_type": "OPEN",
+                  "project_id": 0,
+                  "security_groups": [
+                    "sg-o0ek7r93"
+                  ],
+                  "tags": {
+                    "test": "tf"
+                  },
                   "target_region_info_region": "ap-guangzhou",
                   "target_region_info_vpc_id": "vpc-da7ffa61",
                   "vpc_id": "vpc-da7ffa61"
@@ -7689,6 +7703,7 @@ resources:
                     }
         argumentDocs:
             address_ip_version: '- (Optional, String) IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.'
+            address_ipv6: '- The IPv6 address of the load balancing instance.'
             bandwidth_package_id: '- (Optional, String) Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.'
             clb_name: '- (Required, String) Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen ''-''.'
             clb_vips: '- The virtual service address table of the CLB.'
@@ -7699,6 +7714,7 @@ resources:
             internet_bandwidth_max_out: '- (Optional, Int) Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.'
             internet_charge_type: '- (Optional, String) Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.'
             ip: '- (Optional, String) Snat IP address, If set to empty will auto allocated.'
+            ipv6_mode: '- This field is meaningful when the IP address version is ipv6, IPv6Nat64 | IPv6FullChain.'
             load_balancer_pass_to_target: '- (Optional, Bool) Whether the target allow flow come from clb. If value is true, only check security group of clb, or check both clb and backend instance security group.'
             log_set_id: '- (Optional, String) The id of log set.'
             log_topic_id: '- (Optional, String) The id of log topic.'
@@ -8663,9 +8679,10 @@ resources:
         name: tencentcloud_cls_alarm
         title: tencentcloud_cls_alarm
         examples:
-            - name: alarm
+            - name: example
               manifest: |-
                 {
+                  "alarm_level": 0,
                   "alarm_notice_ids": [
                     "notice-0850756b-245d-4bc7-bb27-2a58fffc780b"
                   ],
@@ -8677,6 +8694,7 @@ resources:
                       "number": 1,
                       "query": "status:\u003e500 | select count(*) as errorCounts",
                       "start_time_offset": -15,
+                      "syntax_rule": 1,
                       "topic_id": "88735a07-bea4-4985-8763-e9deb6da4fad"
                     }
                   ],
@@ -8701,7 +8719,7 @@ resources:
                       "type": "Period"
                     }
                   ],
-                  "name": "terraform-alarm-test",
+                  "name": "tf-example",
                   "status": true,
                   "tags": {
                     "createdBy": "terraform"
@@ -8709,6 +8727,7 @@ resources:
                   "trigger_count": 1
                 }
         argumentDocs:
+            alarm_level: '- (Optional, Int) Alarm level. 0: Warning; 1: Info; 2: Critical. Default is 0.'
             alarm_notice_ids: '- (Required, Set: [String]) list of alarm notice id.'
             alarm_period: '- (Required, Int) alarm repeat cycle.'
             alarm_targets: '- (Required, List) list of alarm target.'
@@ -8730,6 +8749,7 @@ resources:
             query: '- (Required, String) query rules.'
             start_time_offset: '- (Required, Int) search start time of offset.'
             status: '- (Optional, Bool) whether to enable the alarm policy.'
+            syntax_rule: '- (Optional, Int) Retrieve grammar rules, 0: Lucene syntax, 1: CQL syntax, Default value is 0.'
             tags: '- (Optional, Map) Tag description list.'
             time: '- (Required, Int) time period or point in time.'
             topic_id: '- (Required, String) topic id.'
@@ -9305,7 +9325,7 @@ resources:
                         {
                           "case_sensitive": true,
                           "contain_z_h": true,
-                          "tokenizer": "@\u0026?|#()='\",;:\u003c\u003e[]{}/ \n\t\r\\"
+                          "tokenizer": "${local.tokenizer_value}"
                         }
                       ],
                       "key_value": [
@@ -9318,7 +9338,7 @@ resources:
                                 {
                                   "contain_z_h": true,
                                   "sql_flag": true,
-                                  "tokenizer": "@\u0026?|#()='\",;:\u003c\u003e[]{}/ \n\t\r\\",
+                                  "tokenizer": "${local.tokenizer_value}",
                                   "type": "text"
                                 }
                               ]
@@ -9329,7 +9349,7 @@ resources:
                                 {
                                   "contain_z_h": true,
                                   "sql_flag": true,
-                                  "tokenizer": "@\u0026?|#()='\",;:\u003c\u003e[]{}/ \n\t\r\\",
+                                  "tokenizer": "${local.tokenizer_value}",
                                   "type": "text"
                                 }
                               ]
@@ -9347,7 +9367,7 @@ resources:
                                 {
                                   "contain_z_h": true,
                                   "sql_flag": true,
-                                  "tokenizer": "@\u0026?|#()='\",;:\u003c\u003e[]{}/ \n\t\r\\",
+                                  "tokenizer": "${local.tokenizer_value}",
                                   "type": "text"
                                 }
                               ]
@@ -9361,6 +9381,9 @@ resources:
                   "topic_id": "${tencentcloud_cls_topic.example.id}"
                 }
               references:
+                rule.full_text.tokenizer: local.tokenizer_value
+                rule.key_value.key_values.value.tokenizer: local.tokenizer_value
+                rule.tag.key_values.value.tokenizer: local.tokenizer_value
                 topic_id: tencentcloud_cls_topic.example.id
               dependencies:
                 tencentcloud_cls_logset.example: |-
@@ -11729,18 +11752,61 @@ resources:
         name: tencentcloud_cvm_renew_instance
         title: tencentcloud_cvm_renew_instance
         examples:
-            - name: renew_instance
+            - name: example
               manifest: |-
                 {
                   "instance_charge_prepaid": [
                     {
                       "period": 1,
-                      "renew_flag": "NOTIFY_AND_AUTO_RENEW"
+                      "renew_flag": "NOTIFY_AND_MANUAL_RENEW"
                     }
                   ],
-                  "instance_id": "ins-f9jr4bd2",
+                  "instance_id": "${tencentcloud_instance.example.id}",
                   "renew_portable_data_disk": true
                 }
+              references:
+                instance_id: tencentcloud_instance.example.id
+              dependencies:
+                tencentcloud_instance.example: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "data_disks": [
+                        {
+                          "data_disk_size": 50,
+                          "data_disk_type": "CLOUD_HSSD",
+                          "encrypt": false
+                        }
+                      ],
+                      "force_delete": true,
+                      "hostname": "example",
+                      "image_id": "img-9qrfy1xt",
+                      "instance_charge_type": "PREPAID",
+                      "instance_charge_type_prepaid_period": 1,
+                      "instance_charge_type_prepaid_renew_flag": "NOTIFY_AND_MANUAL_RENEW",
+                      "instance_name": "tf_example",
+                      "instance_type": "SA3.MEDIUM4",
+                      "project_id": 0,
+                      "subnet_id": "${tencentcloud_subnet.subnet.id}",
+                      "system_disk_size": 100,
+                      "system_disk_type": "CLOUD_HSSD",
+                      "tags": {
+                        "tagKey": "tagValue"
+                      },
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "cidr_block": "10.0.20.0/28",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
         argumentDocs:
             DISABLE_NOTIFY_AND_MANUAL_RENEW: |-
                 : neither notify upon expiration nor renew automatically;
@@ -11764,12 +11830,61 @@ resources:
         name: tencentcloud_cvm_security_group_attachment
         title: tencentcloud_cvm_security_group_attachment
         examples:
-            - name: security_group_attachment
+            - name: example
               manifest: |-
                 {
-                  "instance_id": "ins-xxxxxxxx",
-                  "security_group_id": "sg-xxxxxxx"
+                  "instance_id": "${tencentcloud_instance.example.id}",
+                  "security_group_id": "${tencentcloud_security_group.example.id}"
                 }
+              references:
+                instance_id: tencentcloud_instance.example.id
+                security_group_id: tencentcloud_security_group.example.id
+              dependencies:
+                tencentcloud_instance.example: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "data_disks": [
+                        {
+                          "data_disk_size": 50,
+                          "data_disk_type": "CLOUD_HSSD",
+                          "encrypt": false
+                        }
+                      ],
+                      "hostname": "example",
+                      "image_id": "img-9qrfy1xt",
+                      "instance_name": "tf_example",
+                      "instance_type": "SA3.MEDIUM4",
+                      "project_id": 0,
+                      "subnet_id": "${tencentcloud_subnet.subnet.id}",
+                      "system_disk_size": 100,
+                      "system_disk_type": "CLOUD_HSSD",
+                      "tags": {
+                        "tagKey": "tagValue"
+                      },
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_security_group.example: |-
+                    {
+                      "description": "sg desc.",
+                      "name": "tf-example",
+                      "project_id": 0,
+                      "tags": {
+                        "example": "test"
+                      }
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "cidr_block": "10.0.20.0/28",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
         argumentDocs:
             id: '- ID of the resource.'
             instance_id: '- (Required, String, ForceNew) Instance id.'
@@ -11781,15 +11896,17 @@ resources:
         name: tencentcloud_cvm_sync_image
         title: tencentcloud_cvm_sync_image
         examples:
-            - name: sync_image
+            - name: example
               manifest: |-
                 {
                   "destination_regions": [
                     "ap-guangzhou",
                     "ap-shanghai"
                   ],
-                  "image_id": "img-xxxxxx"
+                  "image_id": "${data.tencentcloud_images.example.images.0.image_id}"
                 }
+              references:
+                image_id: data.tencentcloud_images.example.images.0.image_id
         argumentDocs:
             destination_regions: '- (Required, Set: [String], ForceNew) List of destination regions for synchronization. Limits: It must be a valid region. For a custom image, the destination region cannot be the source region. For a shared image, the destination region must be the source region, which indicates to create a copy of the image as a custom image in the same region.'
             dry_run: '- (Optional, Bool, ForceNew) Checks whether image synchronization can be initiated.'
@@ -17355,11 +17472,52 @@ resources:
         name: tencentcloud_eip_address_transform
         title: tencentcloud_eip_address_transform
         examples:
-            - name: address_transform
+            - name: example
               manifest: |-
                 {
-                  "instance_id": ""
+                  "instance_id": "${tencentcloud_instance.example.id}"
                 }
+              references:
+                instance_id: tencentcloud_instance.example.id
+              dependencies:
+                tencentcloud_instance.example: |-
+                    {
+                      "allocate_public_ip": true,
+                      "availability_zone": "ap-guangzhou-6",
+                      "data_disks": [
+                        {
+                          "data_disk_size": 50,
+                          "data_disk_type": "CLOUD_HSSD",
+                          "encrypt": false
+                        }
+                      ],
+                      "hostname": "example",
+                      "image_id": "img-9qrfy1xt",
+                      "instance_name": "tf_example",
+                      "instance_type": "SA3.MEDIUM4",
+                      "internet_max_bandwidth_out": 10,
+                      "project_id": 0,
+                      "subnet_id": "${tencentcloud_subnet.subnet.id}",
+                      "system_disk_size": 100,
+                      "system_disk_type": "CLOUD_HSSD",
+                      "tags": {
+                        "tagKey": "tagValue"
+                      },
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "cidr_block": "10.0.20.0/28",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
         argumentDocs:
             id: '- ID of the resource.'
             instance_id: '- (Required, String, ForceNew) the instance ID of a normal public network IP to be operated. eg:ins-23mk45jn.'
@@ -17463,7 +17621,7 @@ resources:
         name: tencentcloud_eip_normal_address_return
         title: tencentcloud_eip_normal_address_return
         examples:
-            - name: normal_address_return
+            - name: example
               manifest: |-
                 {
                   "address_ips": [
@@ -17480,12 +17638,58 @@ resources:
         name: tencentcloud_eip_public_address_adjust
         title: tencentcloud_eip_public_address_adjust
         examples:
-            - name: public_address_adjust
+            - name: example
               manifest: |-
                 {
-                  "address_id": "eip-erft45fu",
-                  "instance_id": "ins-cr2rfq78"
+                  "address_id": "${tencentcloud_eip.example.id}",
+                  "instance_id": "${tencentcloud_instance.example.id}"
                 }
+              references:
+                address_id: tencentcloud_eip.example.id
+                instance_id: tencentcloud_instance.example.id
+              dependencies:
+                tencentcloud_eip.example: |-
+                    {
+                      "name": "tf-example"
+                    }
+                tencentcloud_instance.example: |-
+                    {
+                      "allocate_public_ip": true,
+                      "availability_zone": "ap-guangzhou-6",
+                      "data_disks": [
+                        {
+                          "data_disk_size": 50,
+                          "data_disk_type": "CLOUD_HSSD",
+                          "encrypt": false
+                        }
+                      ],
+                      "hostname": "example",
+                      "image_id": "img-9qrfy1xt",
+                      "instance_name": "tf_example",
+                      "instance_type": "SA3.MEDIUM4",
+                      "internet_max_bandwidth_out": 10,
+                      "project_id": 0,
+                      "subnet_id": "${tencentcloud_subnet.subnet.id}",
+                      "system_disk_size": 100,
+                      "system_disk_type": "CLOUD_HSSD",
+                      "tags": {
+                        "tagKey": "tagValue"
+                      },
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "cidr_block": "10.0.20.0/28",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
         argumentDocs:
             address_id: '- (Optional, String, ForceNew) A unique ID that identifies an EIP instance. The unique ID of EIP is in the form:eip-erft45fu.'
             id: '- ID of the resource.'
@@ -19783,7 +19987,6 @@ resources:
                       ],
                       "enhanced_monitor_service": false,
                       "enhanced_security_service": false,
-                      "img_id": "${local.image_id}",
                       "instance_type": "${var.default_instance_type}",
                       "internet_charge_type": "TRAFFIC_POSTPAID_BY_HOUR",
                       "internet_max_bandwidth_out": 100,
@@ -19825,7 +20028,6 @@ resources:
                 cluster_internet_security_group: local.sg_id
                 vpc_id: local.first_vpc_id
                 worker_config.availability_zone: var.availability_zone_second
-                worker_config.img_id: local.image_id
                 worker_config.instance_type: var.default_instance_type
                 worker_config.subnet_id: local.second_subnet_id
               dependencies:
@@ -20079,7 +20281,6 @@ resources:
                       "disaster_recover_group_ids": [],
                       "enhanced_monitor_service": false,
                       "enhanced_security_service": false,
-                      "img_id": "${local.image_id}",
                       "instance_type": "${var.default_instance_type}",
                       "internet_charge_type": "TRAFFIC_POSTPAID_BY_HOUR",
                       "internet_max_bandwidth_out": 100,
@@ -20124,7 +20325,6 @@ resources:
                 cluster_internet_security_group: local.sg_id
                 vpc_id: local.first_vpc_id
                 worker_config.availability_zone: var.availability_zone_second
-                worker_config.img_id: local.image_id
                 worker_config.instance_type: var.default_instance_type
                 worker_config.subnet_id: local.second_subnet_id
               dependencies:
@@ -20179,7 +20379,6 @@ resources:
                       "count": 1,
                       "enhanced_monitor_service": false,
                       "enhanced_security_service": false,
-                      "img_id": "img-rkiynh11",
                       "instance_type": "${var.default_instance_type}",
                       "internet_charge_type": "TRAFFIC_POSTPAID_BY_HOUR",
                       "internet_max_bandwidth_out": 100,
@@ -20357,7 +20556,7 @@ resources:
             cluster_max_service_num: '- (Optional, Int, ForceNew) The maximum number of services in the cluster. Default is 256. The range is from 32 to 32768. When its power unequal to 2, it will round upward to the closest power of 2.'
             cluster_name: '- (Optional, String) Name of the cluster.'
             cluster_node_num: '- Number of nodes in the cluster.'
-            cluster_os: '- (Optional, String, ForceNew) Operating system of the cluster, the available values include: ''centos7.6.0_x64'',''ubuntu18.04.1x86_64'',''tlinux2.4x86_64''. Default is ''tlinux2.4x86_64''.'
+            cluster_os: '- (Optional, String, ForceNew) Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.'
             cluster_os_type: '- (Optional, String, ForceNew) Image type of the cluster os, the available values include: ''GENERAL''. Default is ''GENERAL''.'
             cluster_subnet_id: '- (Optional, String, ForceNew) Subnet ID of the cluster, such as: subnet-b3p7d7q5.'
             cluster_version: '- (Optional, String) Version of the cluster. Use tencentcloud_kubernetes_available_cluster_versions to get the upgradable cluster version.'
@@ -20394,7 +20593,7 @@ resources:
             id: '- ID of the resource.'
             ignore_cluster_cidr_conflict: '- (Optional, Bool, ForceNew) Indicates whether to ignore the cluster cidr conflict error. Default is false.'
             ignore_daemon_sets_utilization: '- (Optional, Bool) Whether to ignore DaemonSet pods by default when calculating resource usage.'
-            img_id: '- (Optional, String) The valid image id, format of img-xxx.'
+            img_id: '- (Optional, String) The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.'
             instance_charge_type: '- (Optional, String, ForceNew) The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.'
             instance_charge_type_prepaid_period: '- (Optional, Int, ForceNew) The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.'
             instance_charge_type_prepaid_renew_flag: '- (Optional, String, ForceNew) Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.'
@@ -20460,7 +20659,7 @@ resources:
             user_name: '- User name of account.'
             vpc_cni_type: '- (Optional, String) Distinguish between shared network card multi-IP mode and independent network card mode. Fill in tke-route-eni for shared network card multi-IP mode and tke-direct-eni for independent network card mode. The default is shared network card mode. When it is necessary to turn off the vpc-cni container network capability, both eni_subnet_ids and vpc_cni_type must be set to empty.'
             vpc_id: '- (Required, String, ForceNew) Vpc Id of the cluster.'
-            worker_config: '- (Optional, List, ForceNew) Deploy the machine configuration information of the ''WORKER'' service, and create <=20 units for common users. The other ''WORK'' service are added by ''tencentcloud_kubernetes_worker''.'
+            worker_config: '- (Optional, List, ForceNew) Deploy the machine configuration information of the ''WORKER'' service, and create <=20 units for common users. The other ''WORK'' service are added by ''tencentcloud_kubernetes_scale_worker''.'
             worker_instances_list: '- An information list of cvm within the ''WORKER'' clusters. Each element contains the following attributes:'
         importStatements: []
     tencentcloud_kubernetes_cluster_attachment:
@@ -20583,7 +20782,7 @@ resources:
             certification_authority: '- The certificate used for access.'
             cluster_deploy_type: '- Cluster deploy type of MANAGED_CLUSTER or INDEPENDENT_CLUSTER.'
             cluster_external_endpoint: '- External network address to access.'
-            cluster_id: '- (Required, String) Specify cluster ID.'
+            cluster_id: '- (Required, String, ForceNew) Specify cluster ID.'
             cluster_internet: '- (Optional, Bool) Open internet access or not.'
             cluster_internet_domain: '- (Optional, String) Domain name for cluster Kube-apiserver internet access.  Be careful if you modify value of this parameter, the cluster_external_endpoint value may be changed automatically too.'
             cluster_internet_security_group: '- (Optional, String) Specify security group, NOTE: This argument must not be empty if cluster internet enabled.'
@@ -20644,6 +20843,205 @@ resources:
             kms_configuration: '- (Required, List, ForceNew) kms encryption configuration.'
             kms_region: '- (Optional, String) kms region.'
             status: '- kms encryption status.'
+        importStatements: []
+    tencentcloud_kubernetes_native_node_pool:
+        subCategory: Tencent Kubernetes Engine(TKE)
+        description: Provides a resource to create a tke kubernetes_native_node_pool
+        name: tencentcloud_kubernetes_native_node_pool
+        title: tencentcloud_kubernetes_native_node_pool
+        examples:
+            - name: kubernetes_native_node_pool
+              manifest: |-
+                {
+                  "annotations": [
+                    {
+                      "name": "node.tke.cloud.tencent.com/test-anno",
+                      "value": "test"
+                    },
+                    {
+                      "name": "node.tke.cloud.tencent.com/test-label",
+                      "value": "test"
+                    }
+                  ],
+                  "cluster_id": "cls-eyier120",
+                  "deletion_protection": false,
+                  "labels": [
+                    {
+                      "name": "test11",
+                      "value": "test21"
+                    }
+                  ],
+                  "name": "native-node-pool",
+                  "native": [
+                    {
+                      "auto_repair": false,
+                      "data_disks": [
+                        {
+                          "auto_format_and_mount": true,
+                          "disk_size": 60,
+                          "disk_type": "CLOUD_PREMIUM",
+                          "file_system": "ext4",
+                          "mount_target": "/var/lib/containerd"
+                        }
+                      ],
+                      "enable_autoscaling": true,
+                      "host_name_pattern": "aaa{R:3}",
+                      "instance_charge_prepaid": [
+                        {
+                          "period": 1,
+                          "renew_flag": "NOTIFY_AND_MANUAL_RENEW"
+                        }
+                      ],
+                      "instance_charge_type": "PREPAID",
+                      "instance_types": [
+                        "SA2.MEDIUM2"
+                      ],
+                      "internet_accessible": [
+                        {
+                          "charge_type": "TRAFFIC_POSTPAID_BY_HOUR",
+                          "max_bandwidth_out": 50
+                        }
+                      ],
+                      "key_ids": [
+                        "skey-9pcs2100"
+                      ],
+                      "kubelet_args": [
+                        "allowed-unsafe-sysctls=net.core.somaxconn",
+                        "root-dir=/var/lib/test"
+                      ],
+                      "lifecycle": [
+                        {
+                          "post_init": "ZWNobyBoZWxsb3dvcmxk",
+                          "pre_init": "ZWNobyBoZWxsb3dvcmxk"
+                        }
+                      ],
+                      "management": [
+                        {
+                          "hosts": [
+                            "192.168.2.42 static.fake.com",
+                            "192.168.2.42 static.fake.com2"
+                          ],
+                          "kernel_args": [
+                            "kernel.pid_max=65535",
+                            "fs.file-max=400000"
+                          ],
+                          "nameservers": [
+                            "183.60.83.19",
+                            "183.60.82.98"
+                          ]
+                        }
+                      ],
+                      "replicas": 2,
+                      "runtime_root_dir": "/var/lib/docker",
+                      "scaling": [
+                        {
+                          "create_policy": "ZoneEquality",
+                          "max_replicas": 10,
+                          "min_replicas": 1
+                        }
+                      ],
+                      "security_group_ids": [
+                        "sg-7tum9120"
+                      ],
+                      "subnet_ids": [
+                        "subnet-itb6d123"
+                      ],
+                      "system_disk": [
+                        {
+                          "disk_size": 50,
+                          "disk_type": "CLOUD_SSD"
+                        }
+                      ]
+                    }
+                  ],
+                  "tags": [
+                    {
+                      "resource_type": "machine",
+                      "tags": [
+                        {
+                          "key": "keep-test-np1",
+                          "value": "test1"
+                        },
+                        {
+                          "key": "keep-test-np3",
+                          "value": "test3"
+                        }
+                      ]
+                    }
+                  ],
+                  "taints": [
+                    {
+                      "effect": "NoExecute",
+                      "key": "product",
+                      "value": "coderider"
+                    }
+                  ],
+                  "type": "Native",
+                  "unschedulable": false
+                }
+        argumentDocs:
+            DISABLE_NOTIFY_AND_MANUAL_RENEW: ': Do not notify users of expiration and do not automatically renew.'
+            NOTIFY_AND_AUTO_RENEW: ': Notify users of expiration and automatically renew (default).'
+            NOTIFY_AND_MANUAL_RENEW: ': Notify users of expiration, but do not automatically renew.'
+            annotations: '- (Optional, Set) Node Annotation List.'
+            auto_format_and_mount: '- (Required, Bool) Whether to automatically format the disk and mount it.'
+            auto_repair: '- (Optional, Bool) Whether to enable self-healing ability.'
+            bandwidth_package_id: '- (Optional, String, ForceNew) Bandwidth package ID. Note: When ChargeType is BANDWIDTH_PACKAG, the value cannot be empty; otherwise, the value must be empty.'
+            charge_type: '- (Required, String, ForceNew) Network billing method. Optional value is TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.'
+            cluster_id: '- (Required, String, ForceNew) ID of the cluster.'
+            create_policy: '- (Optional, String) Node pool expansion strategy. ZoneEquality: multiple availability zones are broken up; ZonePriority: the preferred availability zone takes precedence.'
+            created_at: '- Creation time.'
+            data_disks: '- (Optional, List) Native node pool data disk list.'
+            deletion_protection: '- (Optional, Bool) Whether to enable deletion protection.'
+            disk_partition: '- (Optional, String) Mount device name or partition name.'
+            disk_size: '- (Required, Int) Cloud disk size (G).'
+            disk_type: '- (Required, String) Cloud disk type. Valid values: CLOUD_PREMIUM: Premium Cloud Storage, CLOUD_SSD: cloud SSD disk, CLOUD_BSSD: Basic SSD, CLOUD_HSSD: Enhanced SSD, CLOUD_TSSD: Tremendous SSD, LOCAL_NVME: local NVME disk.'
+            effect: '- (Optional, String) Effect of the taint.'
+            enable_autoscaling: '- (Optional, Bool) Whether to enable elastic scaling.'
+            encrypt: '- (Optional, String) Pass in this parameter to create an encrypted cloud disk. The value is fixed to ENCRYPT.'
+            file_system: '- (Optional, String) File system (ext3/ext4/xfs).'
+            health_check_policy_name: '- (Optional, String) Fault self-healing rule name.'
+            host_name_pattern: '- (Optional, String) Native node pool hostName pattern string.'
+            hosts: '- (Optional, List) Hosts configuration.'
+            id: '- ID of the resource.'
+            instance_charge_prepaid: '- (Optional, List, ForceNew) Billing configuration for yearly and monthly models.'
+            instance_charge_type: '- (Required, String, ForceNew) Node billing type. PREPAID is a yearly and monthly subscription, POSTPAID_BY_HOUR is a pay-as-you-go plan. The default is POSTPAID_BY_HOUR.'
+            instance_types: '- (Required, List) Model list.'
+            internet_accessible: '- (Optional, List, ForceNew) Public network bandwidth settings.'
+            kernel_args: '- (Optional, List) Kernel parameter configuration.'
+            key: '- (Optional, String) Tag Key.'
+            key_ids: '- (Optional, List) Node pool ssh public key id array.'
+            kms_key_id: '- (Optional, String) Customize the key when purchasing an encrypted disk. When this parameter is passed in, the Encrypt parameter is not empty.'
+            kubelet_args: '- (Optional, List) Kubelet custom parameters.'
+            labels: '- (Optional, List) Node Labels.'
+            life_state: '- Node pool status.'
+            lifecycle: '- (Optional, List) Predefined scripts.'
+            management: '- (Optional, List) Node pool management parameter settings.'
+            max_bandwidth_out: '- (Required, Int, ForceNew) Maximum bandwidth output. Note: When chargeType is TRAFFIC_POSTPAID_BY_HOUR and BANDWIDTH_POSTPAID_BY_HOUR, the valid range is 1~100. When chargeType is BANDWIDTH_PACKAG, the valid range is 1~2000.'
+            max_replicas: '- (Optional, Int) Maximum number of replicas in node pool.'
+            min_replicas: '- (Optional, Int) Minimum number of replicas in node pool.'
+            mount_target: '- (Optional, String) Mount directory.'
+            name: '- (Required, String) Node pool name.'
+            nameservers: '- (Optional, List) Dns configuration.'
+            native: '- (Required, List) Native node pool creation parameters.'
+            period: '- (Required, Int, ForceNew) Postpaid billing cycle, unit (month): 1, 2, 3, 4, 5,, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60.'
+            post_init: '- (Optional, String) Custom script after node initialization.'
+            pre_init: '- (Optional, String) Custom script before node initialization.'
+            renew_flag: '- (Optional, String, ForceNew) Prepaid renewal method:'
+            replicas: '- (Optional, Int) Desired number of nodes.'
+            resource_type: '- (Optional, String) The resource type bound to the label.'
+            runtime_root_dir: '- (Optional, String, ForceNew) Runtime root directory.'
+            scaling: '- (Optional, List) Node pool scaling configuration.'
+            security_group_ids: '- (Required, List) Security group list.'
+            snapshot_id: '- (Optional, String) Snapshot ID. If passed in, the cloud disk will be created based on this snapshot. The snapshot type must be a data disk snapshot.'
+            subnet_ids: '- (Required, List) Subnet list.'
+            system_disk: '- (Required, List, ForceNew) System disk configuration.'
+            tags: '- (Optional, List) Node tags.'
+            taints: '- (Optional, List) Node taint.'
+            throughput_performance: '- (Optional, Int) Cloud disk performance, unit: MB/s. Use this parameter to purchase additional performance for the cloud disk.'
+            type: '- (Required, String) Node pool type. Optional value is Native.'
+            unschedulable: '- (Optional, Bool) Whether the node is not schedulable by default. The native node is not aware of it and passes false by default.'
+            value: '- (Required, String) Value in the map table.'
         importStatements: []
     tencentcloud_kubernetes_node_pool:
         subCategory: Tencent Kubernetes Engine(TKE)
@@ -20993,14 +21391,16 @@ resources:
             mig_enable: '- (Optional, Bool) Whether to enable MIG.'
             mount_target: '- (Optional, String, ForceNew) Mount target. Default is not mounting.'
             password: '- (Optional, String, ForceNew) Password to access, should be set if key_ids not set.'
+            pre_start_user_script: '- (Optional, String, ForceNew) Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.'
             public_ip_assigned: '- (Optional, Bool, ForceNew) Specify whether to assign an Internet IP address.'
             security_group_ids: '- (Optional, List, ForceNew) Security groups to which a CVM instance belongs.'
             snapshot_id: '- (Optional, String, ForceNew) Data disk snapshot ID.'
             subnet_id: '- (Required, String, ForceNew) Private network ID.'
             system_disk_size: '- (Optional, Int, ForceNew) Volume of system disk in GB. Default is 50.'
             system_disk_type: '- (Optional, String, ForceNew) System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.'
-            unschedulable: '- (Optional, Int, ForceNew) Sets whether the joining node participates in the schedule. Default is ''0''. Participate in scheduling.'
-            user_data: '- (Optional, String, ForceNew) ase64-encoded User Data text, the length limit is 16KB.'
+            unschedulable: '- (Optional, Int, ForceNew) Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.'
+            user_data: '- (Optional, String, ForceNew) User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.'
+            user_script: '- (Optional, String, ForceNew) Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.'
             worker_config: '- (Required, List, ForceNew) Deploy the machine configuration information of the ''WORK'' service, and create <=20 units for common users.'
             worker_instances_list: '- An information list of kubernetes cluster ''WORKER''. Each element contains the following attributes:'
         importStatements: []
@@ -22575,6 +22975,43 @@ resources:
             backup_remark: '- (Optional, String, ForceNew) backup notes.'
             id: '- ID of the resource.'
             instance_id: '- (Required, String, ForceNew) Instance ID, the format is: cmgo-9d0p6umb.Same as the instance ID displayed in the cloud database console page.'
+        importStatements: []
+    tencentcloud_mongodb_instance_backup_rule:
+        subCategory: TencentDB for MongoDB(mongodb)
+        description: Provides a resource to create mongodb backup rule
+        name: tencentcloud_mongodb_instance_backup_rule
+        title: tencentcloud_mongodb_instance_backup_rule
+        argumentDocs:
+            backup_method: '- (Required, Int) Set automatic backup method. Valid values:'
+            backup_retention_period: '- (Optional, Int) Specify the number of days to save backup data. The default is 7 days, and the support settings are 7, 30, 90, 180, 365.'
+            backup_time: '- (Required, Int) Set the start time for automatic backup. The value range is: [0,23]. For example, setting this parameter to 2 means that backup starts at 02:00.'
+            id: '- ID of the resource.'
+            instance_id: '- (Required, String, ForceNew) Instance id.'
+        importStatements: []
+    tencentcloud_mongodb_instance_transparent_data_encryption:
+        subCategory: TencentDB for MongoDB(mongodb)
+        description: Provides a resource to enable mongodb transparent data encryption
+        name: tencentcloud_mongodb_instance_transparent_data_encryption
+        title: tencentcloud_mongodb_instance_transparent_data_encryption
+        examples:
+            - name: encryption
+              manifest: |-
+                {
+                  "instance_id": "cmgo-xxxxxx",
+                  "kms_region": "ap-guangzhou"
+                }
+        argumentDocs:
+            create_time: '- Instance and key binding time.'
+            id: '- ID of the resource.'
+            instance_id: '- (Required, String, ForceNew) Instance ID, for example: cmgo-p8vn ***. Currently supported general versions include: 4.4 and 5.0, but the cloud disk version is not currently supported.'
+            key_id: '- (Optional, String) Key ID. If this parameter is not set and the specific key ID is not specified, Tencent Cloud will automatically generate the key and this key will be beyond the control of Terraform.'
+            key_info_list: '- List of bound keys.'
+            key_name: '- Master key name.'
+            key_origin: '- Key origin.'
+            key_usage: '- Purpose of the key.'
+            kms_region: '- (Required, String) The region where the Key Management Service (KMS) serves, such as ap-shanghai.'
+            status: '- Key status.'
+            transparent_data_encryption_status: '- Represents whether transparent encryption is turned on. Valid values:'
         importStatements: []
     tencentcloud_mongodb_sharding_instance:
         subCategory: TencentDB for MongoDB(mongodb)
@@ -30988,6 +31425,84 @@ resources:
             policy_name: '- (Optional, String) CAM default policy name. Valid and required when PolicyType is the 2-preset policy.'
             policy_type: '- (Optional, Int) Policy type. Value 1-custom policy 2-preset policy; default value 2.'
         importStatements: []
+    tencentcloud_organization_org_manage_policy:
+        subCategory: Tencent Cloud Organization (TCO)
+        description: Provides a resource to create a organization org_manage_policy
+        name: tencentcloud_organization_org_manage_policy
+        title: tencentcloud_organization_org_manage_policy
+        examples:
+            - name: org_manage_policy
+              manifest: |-
+                {
+                  "content": "{\"version\":\"2.0\",\"statement\":[{\"effect\":\"allow\",\"action\":\"*\",\"resource\":\"*\"}]}",
+                  "description": "Full access policy",
+                  "name": "FullAccessPolicy",
+                  "type": "SERVICE_CONTROL_POLICY"
+                }
+        argumentDocs:
+            SERVICE_CONTROL_POLICY: ': Service control policy.'
+            TAG_POLICY: ': Tag policy.'
+            content: '- (Required, String) Policy content. Refer to the CAM policy syntax.'
+            description: '- (Optional, String) Policy description.'
+            id: '- ID of the resource.'
+            name: |-
+                - (Required, String) Policy name.
+                The length is 1~128 characters, which can include Chinese characters, English letters, numbers, and underscores.
+            policy_id: '- Policy Id.'
+            type: |-
+                - (Optional, String) Policy type. Default value is SERVICE_CONTROL_POLICY.
+                Valid values:
+        importStatements: []
+    tencentcloud_organization_org_manage_policy_config:
+        subCategory: Tencent Cloud Organization (TCO)
+        description: Provides a resource to create a organization org_manage_policy_config
+        name: tencentcloud_organization_org_manage_policy_config
+        title: tencentcloud_organization_org_manage_policy_config
+        examples:
+            - name: org_manage_policy_config
+              manifest: |-
+                {
+                  "organization_id": 80001,
+                  "policy_type": "SERVICE_CONTROL_POLICY"
+                }
+        argumentDocs:
+            SERVICE_CONTROL_POLICY: ': Service control policy.'
+            TAG_POLICY: ': Tag policy.'
+            id: '- ID of the resource.'
+            organization_id: '- (Required, Int, ForceNew) Organization ID.'
+            policy_type: |-
+                - (Optional, String, ForceNew) Policy type. Default value is SERVICE_CONTROL_POLICY.
+                Valid values:
+        importStatements: []
+    tencentcloud_organization_org_manage_policy_target:
+        subCategory: Tencent Cloud Organization (TCO)
+        description: Provides a resource to create a organization org_manage_policy_target
+        name: tencentcloud_organization_org_manage_policy_target
+        title: tencentcloud_organization_org_manage_policy_target
+        examples:
+            - name: org_manage_policy_target
+              manifest: |-
+                {
+                  "policy_id": 100001,
+                  "policy_type": "SERVICE_CONTROL_POLICY",
+                  "target_id": 10001,
+                  "target_type": "NODE"
+                }
+        argumentDocs:
+            MEMBER: ': Check Member.'
+            NODE: ': Department.'
+            SERVICE_CONTROL_POLICY: ': Service control policy.'
+            TAG_POLICY: ': Tag policy.'
+            id: '- ID of the resource.'
+            policy_id: '- (Required, Int, ForceNew) Policy Id.'
+            policy_type: |-
+                - (Optional, String, ForceNew) Policy type. Default value is SERVICE_CONTROL_POLICY.
+                Valid values:
+            target_id: '- (Required, Int, ForceNew) Binding target ID of the policy. Member Uin or Department ID.'
+            target_type: |-
+                - (Required, String, ForceNew) Target type.
+                Valid values:
+        importStatements: []
     tencentcloud_organization_org_member:
         subCategory: Tencent Cloud Organization (TCO)
         description: Provides a resource to create a organization org_member
@@ -31326,79 +31841,6 @@ resources:
             new_expire_time: '- (Optional, String) New expiration time.'
             tags: '- (Optional, Map) Tag description list.'
         importStatements: []
-    tencentcloud_postgresql_clone_db_instance_operation:
-        subCategory: TencentDB for PostgreSQL(PostgreSQL)
-        description: Provides a resource to create a postgresql clone_db_instance_operation
-        name: tencentcloud_postgresql_clone_db_instance_operation
-        title: tencentcloud_postgresql_clone_db_instance_operation
-        examples:
-            - name: clone_db_instance_operation
-              manifest: |-
-                {
-                  "auto_renew_flag": 0,
-                  "auto_voucher": 0,
-                  "db_instance_id": "${local.pgsql_id}",
-                  "db_node_set": [
-                    {
-                      "role": "Primary",
-                      "zone": "${local.pg_az}"
-                    },
-                    {
-                      "role": "Standby",
-                      "zone": "${local.pg_az}"
-                    }
-                  ],
-                  "instance_charge_type": "POSTPAID_BY_HOUR",
-                  "name": "tf_test_pg_ins_clone",
-                  "period": 1,
-                  "project_id": 0,
-                  "recovery_target_time": "%s",
-                  "security_group_ids": [
-                    "${local.sg_id}"
-                  ],
-                  "spec_code": "${data.tencentcloud_postgresql_specinfos.foo.list.0.id}",
-                  "storage": "${data.tencentcloud_postgresql_specinfos.foo.list.0.storage_min}",
-                  "subnet_id": "${local.subnet_id}",
-                  "tag_list": [
-                    {
-                      "tag_key": "issued_by",
-                      "tag_value": "terraform_test"
-                    }
-                  ],
-                  "vpc_id": "${local.vpc_id}"
-                }
-              references:
-                db_instance_id: local.pgsql_id
-                db_node_set.zone: local.pg_az
-                spec_code: data.tencentcloud_postgresql_specinfos.foo.list.0.id
-                storage: data.tencentcloud_postgresql_specinfos.foo.list.0.storage_min
-                subnet_id: local.subnet_id
-                vpc_id: local.vpc_id
-        argumentDocs:
-            activity_id: '- (Optional, Int, ForceNew) Campaign ID.'
-            auto_renew_flag: '- (Required, Int, ForceNew) Renewal flag. Valid values: 0 (manual renewal), 1 (auto-renewal). Default value: 0.'
-            auto_voucher: '- (Optional, Int, ForceNew) Whether to automatically use vouchers. Valid values: 1 (yes), 0 (no). Default value: 0.'
-            backup_set_id: '- (Optional, String, ForceNew) Basic backup set ID.'
-            db_instance_id: '- (Required, String, ForceNew) ID of the original instance to be cloned.'
-            db_node_set: '- (Required, List, ForceNew) This parameter is required if you purchase a multi-AZ deployed instance.'
-            id: '- ID of the resource.'
-            instance_charge_type: '- (Optional, String, ForceNew) Instance billing mode. Valid values: PREPAID (monthly subscription), POSTPAID_BY_HOUR (pay-as-you-go).'
-            name: '- (Optional, String, ForceNew) Name of the purchased instance.'
-            period: '- (Required, Int, ForceNew) Valid period in months of the purchased instance. Valid values: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. This parameter is set to 1 when the pay-as-you-go billing mode is used.'
-            project_id: '- (Optional, Int, ForceNew) Project ID.'
-            recovery_target_time: '- (Optional, String, ForceNew) Restoration point in time.'
-            role: '- (Required, String) Node type. Valid values:Primary;Standby.'
-            security_group_ids: '- (Optional, Set: [String], ForceNew) Security group ID.'
-            spec_code: '- (Required, String, ForceNew) Purchasable specification ID, which can be obtained through the SpecCode field in the returned value of the DescribeProductConfig API.'
-            storage: '- (Required, Int, ForceNew) Instance storage capacity in GB.'
-            subnet_id: '- (Required, String, ForceNew) ID of a subnet in the VPC specified by VpcId.'
-            tag_key: '- (Required, String) Tag key.'
-            tag_list: '- (Optional, List, ForceNew) The information of tags to be bound with the purchased instance. This parameter is left empty by default.'
-            tag_value: '- (Required, String) Tag value.'
-            voucher_ids: '- (Optional, String, ForceNew) Voucher ID list.'
-            vpc_id: '- (Required, String, ForceNew) VPC ID.'
-            zone: '- (Required, String) AZ where the node resides, such as ap-guangzhou-1.'
-        importStatements: []
     tencentcloud_postgresql_delete_log_backup_operation:
         subCategory: TencentDB for PostgreSQL(PostgreSQL)
         description: Provides a resource to create a postgresql delete_log_backup_operation
@@ -31444,13 +31886,15 @@ resources:
         name: tencentcloud_postgresql_instance
         title: tencentcloud_postgresql_instance
         examples:
-            - name: foo
+            - name: example
               manifest: |-
                 {
                   "availability_zone": "${var.availability_zone}",
                   "charge_type": "POSTPAID_BY_HOUR",
                   "charset": "UTF8",
-                  "engine_version": "10.4",
+                  "cpu": 1,
+                  "db_major_version": "10",
+                  "engine_version": "10.23",
                   "memory": 2,
                   "name": "example",
                   "project_id": 0,
@@ -31473,21 +31917,22 @@ resources:
                       "availability_zone": "${var.availability_zone}",
                       "cidr_block": "10.0.20.0/28",
                       "is_multicast": false,
-                      "name": "guagua_vpc_subnet_test",
+                      "name": "subnet",
                       "vpc_id": "${tencentcloud_vpc.vpc.id}"
                     }
                 tencentcloud_vpc.vpc: |-
                     {
                       "cidr_block": "10.0.0.0/16",
-                      "name": "guagua_vpc_instance_test"
+                      "name": "vpc"
                     }
-            - name: foo
+            - name: example
               manifest: |-
                 {
                   "availability_zone": "${var.availability_zone}",
                   "charge_type": "POSTPAID_BY_HOUR",
                   "charset": "UTF8",
                   "cpu": 1,
+                  "db_major_version": "10",
                   "db_node_set": [
                     {
                       "role": "Primary",
@@ -31497,7 +31942,6 @@ resources:
                       "zone": "${var.standby_availability_zone}"
                     }
                   ],
-                  "engine_version": "10.4",
                   "memory": 2,
                   "name": "example",
                   "project_id": 0,
@@ -31521,18 +31965,18 @@ resources:
                       "availability_zone": "${var.availability_zone}",
                       "cidr_block": "10.0.20.0/28",
                       "is_multicast": false,
-                      "name": "guagua_vpc_subnet_test",
+                      "name": "subnet",
                       "vpc_id": "${tencentcloud_vpc.vpc.id}"
                     }
                 tencentcloud_vpc.vpc: |-
                     {
                       "cidr_block": "10.0.0.0/16",
-                      "name": "guagua_vpc_instance_test"
+                      "name": "vpc"
                     }
-            - name: pg
+            - name: example
               manifest: |-
                 {
-                  "availability_zone": "ap-guangzhou-6",
+                  "availability_zone": "${var.availability_zone}",
                   "backup_plan": [
                     {
                       "backup_period": [
@@ -31547,6 +31991,7 @@ resources:
                   "charge_type": "POSTPAID_BY_HOUR",
                   "charset": "LATIN1",
                   "db_kernel_version": "v11.12_r1.3",
+                  "db_major_version": "11",
                   "engine_version": "11.12",
                   "kms_key_id": "788c606a-c7b7-11ec-82d1-5254001e5c4e",
                   "kms_region": "ap-guangzhou",
@@ -31554,7 +31999,7 @@ resources:
                   "name": "tf_postsql_instance",
                   "need_support_tde": 1,
                   "project_id": 0,
-                  "root_password": "xxxxxxxxxx",
+                  "root_password": "Root123$",
                   "storage": 100,
                   "subnet_id": "subnet-enm92y0m",
                   "tags": {
@@ -31562,10 +32007,12 @@ resources:
                   },
                   "vpc_id": "vpc-86v957zb"
                 }
-            - name: test
+              references:
+                availability_zone: var.availability_zone
+            - name: example
               manifest: |-
                 {
-                  "availability_zone": "${data.tencentcloud_availability_zones_by_product.zone.zones[5].name}",
+                  "availability_zone": "${var.availability_zone}",
                   "backup_plan": [
                     {
                       "backup_period": [
@@ -31583,24 +32030,22 @@ resources:
                   "db_kernel_version": "v13.3_r1.4",
                   "engine_version": "13.3",
                   "memory": 4,
-                  "name": "tf_postsql_instance_update",
+                  "name": "tf_postsql_instance_update_kernel",
                   "project_id": 0,
                   "public_access_switch": false,
-                  "root_password": "*",
+                  "root_password": "Root123$",
                   "security_groups": [
-                    "${local.sg_id}"
+                    "sg-cm7fbbf3"
                   ],
                   "storage": 250,
-                  "subnet_id": "${local.subnet_id}",
+                  "subnet_id": "subnet-enm92y0m",
                   "tags": {
-                    "tf": "teest"
+                    "tf": "test"
                   },
-                  "vpc_id": "${local.vpc_id}"
+                  "vpc_id": "vpc-86v957zb"
                 }
               references:
-                availability_zone: data.tencentcloud_availability_zones_by_product.zone.zones[5].name
-                subnet_id: local.subnet_id
-                vpc_id: local.vpc_id
+                availability_zone: var.availability_zone
         argumentDocs:
             auto_renew_flag: '- (Optional, Int) Auto renew flag, 1 for enabled. NOTES: Only support prepaid instance.'
             auto_voucher: '- (Optional, Int) Whether to use voucher, 1 for enabled.'
@@ -31613,10 +32058,10 @@ resources:
             cpu: '- (Optional, Int) Number of CPU cores. Allowed value must be equal cpu that data source tencentcloud_postgresql_specinfos provides.'
             create_time: '- Create time of the postgresql instance.'
             db_kernel_version: '- (Optional, String) PostgreSQL kernel version number. If it is specified, an instance running kernel DBKernelVersion will be created. It supports updating the minor kernel version immediately.'
-            db_major_version: '- (Optional, String) PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.'
-            db_major_vesion: '- (Optional, String, Deprecated) db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.'
+            db_major_version: '- (Optional, String) PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.'
+            db_major_vesion: '- (Optional, String, Deprecated) db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.'
             db_node_set: '- (Optional, Set) Specify instance node info for disaster migration.'
-            engine_version: '- (Optional, String, ForceNew) Version of the postgresql database engine. Valid values: 10.4, 11.8, 12.4.'
+            engine_version: '- (Optional, String) Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.'
             id: '- ID of the resource.'
             kms_key_id: '- (Optional, String) KeyId of the custom key.'
             kms_region: '- (Optional, String) Region of the custom key.'
@@ -38077,14 +38522,14 @@ resources:
             id: '- ID of the resource.'
             insert_time: '- Certificate insert time.'
             old_certificate_id: '- (Optional, String, ForceNew) Specify old certificate ID, used for re-apply.'
-            package_type: '- (Optional, String) Type of package. Only support "2" (TrustAsia TLS RSA CA).'
+            package_type: '- (Optional, String) Type of package. Only support "83" (TrustAsia TLS RSA CA).'
             product_zh_name: '- Product zh name.'
             project_id: '- (Optional, Int) ID of projects which this certification belong to.'
             renewable: '- Indicates whether the certificate renewable.'
             status: '- Certificate status. 0 = Approving, 1 = Approved, 2 = Approve failed, 3 = expired, 4 = DNS record added, 5 = OV/EV Certificate and confirm letter needed, 6 = Order canceling, 7 = Order canceled, 8 = Submitted and confirm letter needed, 9 = Revoking, 10 = Revoked, 11 = re-applying, 12 = Revoke and confirm letter needed, 13 = Free SSL and confirm letter needed.'
             status_msg: '- Certificate status message.'
             status_name: '- Certificate status name.'
-            validity_period: '- (Optional, String) Specify validity period in month, only support "12" months for now.'
+            validity_period: '- (Optional, String) Specify validity period in month, only support "3" months for now.'
             vulnerability_status: '- Vulnerability status.'
         importStatements: []
     tencentcloud_ssl_pay_certificate:
@@ -40376,11 +40821,11 @@ resources:
         name: tencentcloud_tdmq_instance
         title: tencentcloud_tdmq_instance
         examples:
-            - name: foo
+            - name: example
               manifest: |-
                 {
-                  "cluster_name": "example",
-                  "remark": "this is description.",
+                  "cluster_name": "tf_example",
+                  "remark": "remark.",
                   "tags": {
                     "createdBy": "terraform"
                   }
@@ -40394,7 +40839,7 @@ resources:
         importStatements: []
     tencentcloud_tdmq_namespace:
         subCategory: TDMQ for Pulsar(tpulsar)
-        description: Provide a resource to create a tdmq namespace.
+        description: Provide a resource to create a TDMQ namespace.
         name: tencentcloud_tdmq_namespace
         title: tencentcloud_tdmq_namespace
         examples:
@@ -40435,7 +40880,7 @@ resources:
         importStatements: []
     tencentcloud_tdmq_namespace_role_attachment:
         subCategory: TDMQ for Pulsar(tpulsar)
-        description: Provide a resource to create a TDMQ role.
+        description: Provide a resource to create a TDMQ environment role.
         name: tencentcloud_tdmq_namespace_role_attachment
         title: tencentcloud_tdmq_namespace_role_attachment
         examples:
@@ -40890,6 +41335,13 @@ resources:
             - name: example
               manifest: |-
                 {
+                  "ip_rules": [
+                    {
+                      "allow": true,
+                      "ip_rule": "0.0.0.0/0",
+                      "remark": "remark."
+                    }
+                  ],
                   "name": "tx-example",
                   "node_count": 2,
                   "spec": "rocket-vip-basic-2",
@@ -40924,10 +41376,14 @@ resources:
                       "name": "vpc-example"
                     }
         argumentDocs:
+            allow: '- (Required, Bool) Whether to allow or deny.'
             id: '- ID of the resource.'
+            ip_rule: '- (Required, String) IP address block information.'
+            ip_rules: '- (Optional, List) Public IP access control rules.'
             name: '- (Required, String) Instance name.'
             node_count: '- (Required, Int) Number of nodes, minimum 2, maximum 20.'
-            spec: '- (Required, String) Instance specification: Basic type: rocket-vip-basic-1, Standard type: rocket-vip-basic-2, Advanced Type I: rocket-vip-basic-3, Advanced Type II: rocket-vip-basic-4.'
+            remark: '- (Required, String) Remark.'
+            spec: '- (Required, String) Instance specification: Universal type, rocket-vip-basic-0, Basic type: rocket-vip-basic-1, Standard type: rocket-vip-basic-2, Advanced Type I: rocket-vip-basic-3, Advanced Type II: rocket-vip-basic-4.'
             storage_size: '- (Required, Int) Single node storage space, in GB, minimum 200GB.'
             subnet_id: '- (Required, String) Subnet ID.'
             time_span: '- (Required, Int) Purchase period, in months.'
@@ -40946,7 +41402,7 @@ resources:
                 {
                   "cluster_id": "${tencentcloud_tdmq_instance.example.id}",
                   "remark": "remark.",
-                  "role_name": "tf_example"
+                  "role_name": "role_example"
                 }
               references:
                 cluster_id: tencentcloud_tdmq_instance.example.id
@@ -41094,7 +41550,7 @@ resources:
                       ]
                     }
         argumentDocs:
-            cluster_id: '- (Required, String) The Dedicated Cluster Id.'
+            cluster_id: '- (Required, String, ForceNew) The Dedicated Cluster Id.'
             create_time: '- Creation time of resource.'
             environ_id: '- (Required, String, ForceNew) The name of tdmq namespace.'
             id: '- ID of the resource.'
@@ -41571,10 +42027,14 @@ resources:
             backup_origin: '- (Optional, String) ID of the secondary origin group (valid when OriginType=ORIGIN_GROUP). If it is not specified, it indicates that secondary origins are not used.'
             cname: '- CNAME address.'
             domain_name: '- (Required, String, ForceNew) Accelerated domain name.'
+            http_origin_port: '- (Optional, Int) HTTP back-to-origin port, the value is 1-65535, effective when OriginProtocol=FOLLOW/HTTP, if not filled in, the default value is 80.'
+            https_origin_port: '- (Optional, Int) HTTPS back-to-origin port. The value range is 1-65535. It takes effect when OriginProtocol=FOLLOW/HTTPS. If it is not filled in, the default value is 443.'
             id: '- ID of the resource.'
+            ipv6_status: '- (Optional, String) IPv6 status, the value is: follow: follow the site IPv6 configuration; on: on; off: off. If not filled in, the default is: follow.'
             name: '- (Required, String) The parameter name. Valid values: AccessKeyId: Access Key ID; SecretAccessKey: Secret Access Key.'
             origin: '- (Required, String) The origin address. Enter the origin group ID if OriginType=ORIGIN_GROUP.'
             origin_info: '- (Required, List) Details of the origin.'
+            origin_protocol: '- (Optional, String) Origin return protocol, possible values are: FOLLOW: protocol follow; HTTP: HTTP protocol back to source; HTTPS: HTTPS protocol back to source. If not filled in, the default is: FOLLOW.'
             origin_type: '- (Required, String) The origin type. Values: IP_DOMAIN: IPv4/IPv6 address or domain name; COS: COS bucket address; ORIGIN_GROUP: Origin group; AWS_S3: AWS S3 bucket address; SPACE: EdgeOne Shield Space.'
             private_access: '- (Optional, String) Whether to authenticate access to the private object storage origin (valid when OriginType=COS/AWS_S3). Values: on: Enable private authentication; off: Disable private authentication. If this field is not specified, the default value off is used.'
             private_parameters: '- (Optional, List) The private authentication parameters. This field is valid when PrivateAccess=on.'
@@ -41742,7 +42202,7 @@ resources:
             private_parameters: '- (Optional, List) Parameters for private authentication. Only valid when Private is true.'
             record: '- (Required, String) Origin site record value, does not include port information, can be: IPv4, IPv6, domain name format.'
             record_id: '- (Optional, String) Origin record ID.'
-            records: '- (Required, List) Origin site records.'
+            records: '- (Required, Set) Origin site records.'
             references: '- List of referenced instances of the origin site group.'
             "true": ': Use private authentication.'
             type: '- (Required, String) Type of the origin site. Valid values:'
@@ -41767,6 +42227,103 @@ resources:
             id: '- ID of the resource.'
             result: '- When the verification result is failed, this field will return the reason.'
             status: '- Ownership verification results. success: verification successful; fail: verification failed.'
+        importStatements: []
+    tencentcloud_teo_realtime_log_delivery:
+        subCategory: TencentCloud EdgeOne(TEO)
+        description: Provides a resource to create a teo teo_realtime_log_delivery
+        name: tencentcloud_teo_realtime_log_delivery
+        title: tencentcloud_teo_realtime_log_delivery
+        examples:
+            - name: teo_realtime_log_delivery
+              manifest: |-
+                {
+                  "area": "overseas",
+                  "delivery_status": "disabled",
+                  "entity_list": [
+                    "sid-2yvhjw98uaco"
+                  ],
+                  "fields": [
+                    "ServiceID",
+                    "ConnectTimeStamp",
+                    "DisconnetTimeStamp",
+                    "DisconnetReason",
+                    "ClientRealIP",
+                    "ClientRegion",
+                    "EdgeIP",
+                    "ForwardProtocol",
+                    "ForwardPort",
+                    "SentBytes",
+                    "ReceivedBytes",
+                    "LogTimeStamp"
+                  ],
+                  "log_format": [
+                    {
+                      "field_delimiter": ",",
+                      "format_type": "json",
+                      "record_delimiter": "\n",
+                      "record_prefix": "{",
+                      "record_suffix": "}"
+                    }
+                  ],
+                  "log_type": "application",
+                  "s3": [
+                    {
+                      "access_id": "xxxxxxxxxx",
+                      "access_key": "xxxxxxxxxx",
+                      "bucket": "test-1253833068",
+                      "compress_type": "gzip",
+                      "endpoint": "https://test-1253833068.cos.ap-nanjing.myqcloud.com",
+                      "region": "ap-nanjing"
+                    }
+                  ],
+                  "sample": 0,
+                  "task_name": "test",
+                  "task_type": "s3",
+                  "zone_id": "zone-2qtuhspy7cr6"
+                }
+        argumentDocs:
+            access_id: '- (Optional, String) Fill in a custom SecretId to generate an encrypted signature. This parameter is required if the source site requires authentication.'
+            access_key: '- (Optional, String) Fill in the custom SecretKey to generate the encrypted signature. This parameter is required if the source site requires authentication.'
+            area: '- (Required, String) Data delivery area, possible values are: mainland: within mainland China; overseas: worldwide (excluding mainland China).'
+            batch_prefix: '- (Optional, String) A string to be added before each log delivery batch. Each log delivery batch may contain multiple log records.'
+            batch_suffix: '- (Optional, String) A string to append after each log delivery batch.'
+            bucket: '- (Required, String) Bucket name and log storage directory, for example: your_bucket_name/EO-logs/. If this directory does not exist in the bucket, it will be created automatically.'
+            cls: '- (Optional, List) CLS configuration information. This parameter is required when TaskType is cls.'
+            compress_type: '- (Optional, String) Data compression type, the possible values are: gzip: use gzip compression. If it is not filled in, compression is not enabled.'
+            conditions: '- (Optional, List) Log filtering conditions, the detailed filtering conditions are as follows: - EdgeResponseStatusCode: filter according to the status code returned by the EdgeOne node to the client. Supported operators: equal, great, less, great_equal, less_equal; Value range: any integer greater than or equal to 0; - OriginResponseStatusCode: filter according to the origin response status code. Supported operators: equal, great, less, great_equal, less_equal; Value range: any integer greater than or equal to -1; - SecurityAction: filter according to the final disposal action after the request hits the security rule. Supported operators: equal; Optional options are as follows: -: unknown/miss; Monitor: observe; JSChallenge: JavaScript challenge; Deny: intercept; Allow: allow; BlockIP: IP ban; Redirect: redirect; ReturnCustomPage: return to a custom page; ManagedChallenge: managed challenge; Silence: silent; LongDelay: respond after a long wait; ShortDelay: respond after a short wait; -SecurityModule: filter according to the name of the security module that finally handles the request. Supported operators: equal; Optional options: -: unknown/missed; CustomRule: Web Protection - Custom Rules; RateLimitingCustomRule: Web Protection - Rate Limiting Rules; ManagedRule: Web Protection - Managed Rules; L7DDoS: Web Protection - CC Attack Protection; BotManagement: Bot Management - Bot Basic Management; BotClientReputation: Bot Management - Client Profile Analysis; BotBehaviorAnalysis: Bot Management - Bot Intelligent Analysis; BotCustomRule: Bot Management - Custom Bot Rules; BotActiveDetection: Bot Management - Active Feature Recognition.'
+            custom_endpoint: '- (Optional, List) Customize the configuration information of the HTTP service. This parameter is required when TaskType is set to custom_endpoint.'
+            custom_fields: '- (Optional, List) The list of custom fields delivered supports extracting specified field values from HTTP request headers, response headers, and cookies. Custom field names cannot be repeated and cannot exceed 200 fields.'
+            delivery_conditions: '- (Optional, List) The filter condition for log delivery. If it is not filled, all logs will be delivered.'
+            delivery_status: '- (Optional, String) The status of the real-time log delivery task. The values are: enabled: enabled; disabled: disabled. Leave it blank to keep the original configuration. Not required when creating.'
+            enabled: '- (Optional, Bool) Whether to deliver this field. If left blank, this field will not be delivered.'
+            endpoint: '- (Required, String) URLs that do not include bucket names or paths, for example: https://storage.googleapis.com, https://s3.ap-northeast-2.amazonaws.com, https://cos.ap-nanjing.myqcloud.com.'
+            entity_list: '- (Required, List: [String]) List of entities (seven-layer domain names or four-layer proxy instances) corresponding to real-time log delivery tasks. Example values are as follows: Seven-layer domain name: domain.example.com; four-layer proxy instance: sid-2s69eb5wcms7. For values, refer to: https://cloud.tencent.com/document/api/1552/80690, https://cloud.tencent.com/document/api/1552/86336.'
+            field_delimiter: "- (Optional, String) In a single log record, a string is inserted between fields as a separator. The possible values are: \t: tab character; ,: comma; ;: semicolon."
+            fields: '- (Required, List: [String]) A list of preset fields for delivery.'
+            format_type: '- (Required, String) The default output format type for log delivery. The possible values are: json: Use the default log output format JSON Lines. The fields in a single log are presented as key-value pairs; csv: Use the default log output format csv. Only field values are presented in a single log, without field names.'
+            headers: '- (Optional, List) The custom request header carried when delivering logs. If the header name you fill in is the default header carried by EdgeOne log push, such as Content-Type, then the header value you fill in will overwrite the default value. The header value references a single variable ${batchSize} to obtain the number of logs included in each POST request.'
+            id: '- ID of the resource.'
+            key: '- (Required, String) The key of the filter condition.'
+            log_format: '- (Optional, List) The output format of log delivery. If it is not filled, it means the default format. The default format logic is as follows: when TaskType is custom_endpoint, the default format is an array of multiple JSON objects, each JSON object is a log; when TaskType is s3, the default format is JSON Lines; in particular, when TaskType is cls, the value of LogFormat.FormatType can only be json, and other parameters in LogFormat will be ignored. It is recommended not to pass LogFormat.'
+            log_set_id: '- (Required, String) Tencent Cloud CLS log set ID.'
+            log_set_region: '- (Required, String) The region where the Tencent Cloud CLS log set is located.'
+            log_type: '- (Required, String) Data delivery type, the values are: domain: site acceleration log; application: four-layer proxy log; web-rateLiming: rate limit and CC attack protection log; web-attack: managed rule log; web-rule: custom rule log; web-bot: Bot management log.'
+            name: '- (Required, String) Extract data from the specified location in the HTTP request and response. The values are: ReqHeader: extract the specified field value from the HTTP request header; RspHeader: extract the specified field value from the HTTP response header; Cookie: extract the specified field value from the Cookie.'
+            operator: '- (Required, String) Query condition operator, operation types are: equals: equal; notEquals: not equal; include: include; notInclude: not include; startWith: start with value; notStartWith: not start with value; endWith: end with value; notEndWith: not end with value.'
+            protocol: '- (Optional, String) When sending logs via POST request, the application layer protocol type used can be: http: HTTP protocol; https: HTTPS protocol. If not filled in, the protocol type will be parsed according to the filled in URL address.'
+            record_delimiter: "- (Optional, String) The string inserted between log records as a separator. The possible values are:  : newline character; \t: tab character; ,: comma."
+            record_prefix: '- (Optional, String) A string to prepend to each log record.'
+            record_suffix: '- (Optional, String) A string to append to each log record.'
+            region: '- (Required, String) The region where the bucket is located, for example: ap-northeast-2.'
+            s3: '- (Optional, List) Configuration information of AWS S3 compatible storage bucket. This parameter is required when TaskType is s3.'
+            sample: '- (Required, Int) The sampling ratio is in thousandths, with a value range of 1-1000. For example, filling in 605 means the sampling ratio is 60.5%. Leaving it blank means the sampling ratio is 100%.'
+            task_id: '- Real-time log delivery task ID.'
+            task_name: '- (Required, String) The name of the real-time log delivery task. The format is a combination of numbers, English, -, and _. The maximum length is 200 characters.'
+            task_type: '- (Required, String) The real-time log delivery task type. The possible values are: cls: push to Tencent Cloud CLS; custom_endpoint: push to a custom HTTP(S) address; s3: push to an AWS S3 compatible storage bucket address.'
+            topic_id: '- (Required, String) Tencent Cloud CLS log topic ID.'
+            url: '- (Required, String) The custom HTTP interface address for real-time log delivery. Currently, only HTTP/HTTPS protocols are supported.'
+            value: '- (Required, List) The value of the filter condition.'
+            zone_id: '- (Required, String, ForceNew) ID of the site.'
         importStatements: []
     tencentcloud_teo_rule_engine:
         subCategory: TencentCloud EdgeOne(TEO)
@@ -41970,7 +42527,7 @@ resources:
             VideoSeek: ': Video dragging.'
             WebSocket: ': WebSocket.'
             action: '- (Required, String) Feature name. You can call the DescribeRulesSetting API to view the requirements for entering the feature name.'
-            actions: '- (Required, List) The feature to be executed.'
+            actions: '- (Optional, List) The feature to be executed.'
             and: '- (Required, List) AND Conditions list of the rule. Rule would be triggered if all conditions are true.'
             client_country: ': Country/Region of the client.'
             code_action: '- (Optional, List) Feature operation with a status code. Features of this type include:'
@@ -42280,36 +42837,70 @@ resources:
         name: tencentcloud_trocket_rocketmq_instance
         title: tencentcloud_trocket_rocketmq_instance
         examples:
-            - name: rocketmq_instance
+            - name: example
               manifest: |-
                 {
-                  "instance_type": "EXPERIMENT",
-                  "name": "rocketmq-instance",
+                  "instance_type": "PRO",
+                  "name": "tf-example",
                   "remark": "remark",
-                  "sku_code": "experiment_500",
-                  "subnet_id": "subnet-xxxxxx",
+                  "sku_code": "pro_4k",
+                  "subnet_id": "${tencentcloud_subnet.subnet.id}",
                   "tags": {
                     "tag_key": "rocketmq",
                     "tag_value": "5.x"
                   },
-                  "vpc_id": "vpc-xxxxxx"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
-            - name: rocketmq_instance_public
+              references:
+                subnet_id: tencentcloud_subnet.subnet.id
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "cidr_block": "10.0.20.0/28",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: example
               manifest: |-
                 {
-                  "bandwidth": 1,
+                  "bandwidth": 10,
                   "enable_public": true,
-                  "instance_type": "EXPERIMENT",
-                  "name": "rocketmq-enable-public-instance",
+                  "instance_type": "PRO",
+                  "name": "tf-example",
                   "remark": "remark",
-                  "sku_code": "experiment_500",
-                  "subnet_id": "subnet-xxxxxx",
+                  "sku_code": "pro_4k",
+                  "subnet_id": "${tencentcloud_subnet.subnet.id}",
                   "tags": {
                     "tag_key": "rocketmq",
                     "tag_value": "5.x"
                   },
-                  "vpc_id": "vpc-xxxxxx"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
+              references:
+                subnet_id: tencentcloud_subnet.subnet.id
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-6",
+                      "cidr_block": "10.0.20.0/28",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
         argumentDocs:
             allow: '- (Required, Bool) Whether to allow release or not.'
             bandwidth: '- (Optional, Int) Public network bandwidth. bandwidth must be greater than zero when enable_public equal true.'
@@ -42322,7 +42913,7 @@ resources:
             name: '- (Required, String) Instance name.'
             public_end_point: '- Public network access address.'
             remark: '- (Optional, String) Remark.'
-            sku_code: '- (Required, String) SKU code. Available specifications are as follows: experiment_500, basic_1k, basic_2k, basic_4k, basic_6k.'
+            sku_code: '- (Required, String) SKU code. Available specifications are as follows: experiment_500, basic_1k, basic_2k, basic_3k, basic_4k, basic_5k, basic_6k, basic_7k, basic_8k, basic_9k, basic_10k, pro_4k, pro_6k, pro_8k, pro_1w, pro_15k, pro_2w, pro_25k, pro_3w, pro_35k, pro_4w, pro_45k, pro_5w, pro_55k, pro_60k, pro_65k, pro_70k, pro_75k, pro_80k, pro_85k, pro_90k, pro_95k, pro_100k, platinum_1w, platinum_2w, platinum_3w, platinum_4w, platinum_5w, platinum_6w, platinum_7w, platinum_8w, platinum_9w, platinum_10w, platinum_12w, platinum_14w, platinum_16w, platinum_18w, platinum_20w, platinum_25w, platinum_30w, platinum_35w, platinum_40w, platinum_45w, platinum_50w, platinum_60w, platinum_70w, platinum_80w, platinum_90w, platinum_100w.'
             subnet_id: '- (Required, String) Subnet id.'
             tags: '- (Optional, Map) Tag description list.'
             vpc_end_point: '- VPC access address.'

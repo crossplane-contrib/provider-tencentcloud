@@ -260,11 +260,21 @@ spec:
                       Mount target. Default is not mounting.
                       Mount target. Default is not mounting.
                     type: string
+                  preStartUserScript:
+                    description: |-
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                    type: string
                   unschedulable:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                      Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
+                      Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
                     type: number
+                  userScript:
+                    description: |-
+                      Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+                      Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+                    type: string
                   workerConfig:
                     description: |-
                       Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
@@ -471,8 +481,8 @@ spec:
                           type: string
                         userData:
                           description: |-
-                            ase64-encoded User Data text, the length limit is 16KB.
-                            ase64-encoded User Data text, the length limit is 16KB.
+                            User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
+                            User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
                           type: string
                       type: object
                     type: array
@@ -677,11 +687,21 @@ spec:
                       Mount target. Default is not mounting.
                       Mount target. Default is not mounting.
                     type: string
+                  preStartUserScript:
+                    description: |-
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                    type: string
                   unschedulable:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                      Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
+                      Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
                     type: number
+                  userScript:
+                    description: |-
+                      Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+                      Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+                    type: string
                   workerConfig:
                     description: |-
                       Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
@@ -869,8 +889,8 @@ spec:
                           type: string
                         userData:
                           description: |-
-                            ase64-encoded User Data text, the length limit is 16KB.
-                            ase64-encoded User Data text, the length limit is 16KB.
+                            User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
+                            User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
                           type: string
                       type: object
                     type: array
@@ -1168,11 +1188,21 @@ spec:
                       Mount target. Default is not mounting.
                       Mount target. Default is not mounting.
                     type: string
+                  preStartUserScript:
+                    description: |-
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                    type: string
                   unschedulable:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                      Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
+                      Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
                     type: number
+                  userScript:
+                    description: |-
+                      Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+                      Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+                    type: string
                   workerConfig:
                     description: |-
                       Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
@@ -1360,8 +1390,8 @@ spec:
                           type: string
                         userData:
                           description: |-
-                            ase64-encoded User Data text, the length limit is 16KB.
-                            ase64-encoded User Data text, the length limit is 16KB.
+                            User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
+                            User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
                           type: string
                       type: object
                     type: array

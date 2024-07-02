@@ -31,7 +31,6 @@ spec:
         diskType: CLOUD_PREMIUM
       enhancedMonitorService: false
       enhancedSecurityService: false
-      imgId: ${local.image_id}
       instanceType: ${var.default_instance_type}
       internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
       internetMaxBandwidthOut: 100
