@@ -250,8 +250,8 @@ spec:
                     type: string
                   clusterOs:
                     description: |-
-                      Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
-                      Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
+                      Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
+                      Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
                     type: string
                   clusterOsType:
                     description: |-
@@ -549,8 +549,8 @@ spec:
                           type: string
                         imgId:
                           description: |-
-                            The valid image id, format of img-xxx.
-                            The valid image id, format of img-xxx.
+                            The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+                            The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
                           type: string
                         instanceChargeType:
                           description: |-
@@ -834,8 +834,8 @@ spec:
                     type: object
                   workerConfig:
                     description: |-
-                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
-                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
+                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
                     items:
                       properties:
                         availabilityZone:
@@ -945,8 +945,8 @@ spec:
                           type: string
                         imgId:
                           description: |-
-                            The valid image id, format of img-xxx.
-                            The valid image id, format of img-xxx.
+                            The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+                            The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
                           type: string
                         instanceChargeType:
                           description: |-
@@ -1234,8 +1234,8 @@ spec:
                     type: string
                   clusterOs:
                     description: |-
-                      Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
-                      Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
+                      Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
+                      Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
                     type: string
                   clusterOsType:
                     description: |-
@@ -1533,8 +1533,8 @@ spec:
                           type: string
                         imgId:
                           description: |-
-                            The valid image id, format of img-xxx.
-                            The valid image id, format of img-xxx.
+                            The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+                            The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
                           type: string
                         instanceChargeType:
                           description: |-
@@ -1799,8 +1799,8 @@ spec:
                     type: object
                   workerConfig:
                     description: |-
-                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
-                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
+                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
                     items:
                       properties:
                         availabilityZone:
@@ -1910,8 +1910,8 @@ spec:
                           type: string
                         imgId:
                           description: |-
-                            The valid image id, format of img-xxx.
-                            The valid image id, format of img-xxx.
+                            The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+                            The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
                           type: string
                         instanceChargeType:
                           description: |-
@@ -2359,8 +2359,8 @@ spec:
                     type: number
                   clusterOs:
                     description: |-
-                      Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
-                      Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
+                      Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
+                      Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
                     type: string
                   clusterOsType:
                     description: |-
@@ -2676,8 +2676,8 @@ spec:
                           type: string
                         imgId:
                           description: |-
-                            The valid image id, format of img-xxx.
-                            The valid image id, format of img-xxx.
+                            The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+                            The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
                           type: string
                         instanceChargeType:
                           description: |-
@@ -2890,8 +2890,8 @@ spec:
                     type: string
                   workerConfig:
                     description: |-
-                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
-                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
+                      Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
                     items:
                       properties:
                         availabilityZone:
@@ -3001,8 +3001,8 @@ spec:
                           type: string
                         imgId:
                           description: |-
-                            The valid image id, format of img-xxx.
-                            The valid image id, format of img-xxx.
+                            The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+                            The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
                           type: string
                         instanceChargeType:
                           description: |-

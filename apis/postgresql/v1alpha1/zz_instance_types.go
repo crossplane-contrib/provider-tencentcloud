@@ -143,20 +143,20 @@ type InstanceInitParameters struct {
 	// PostgreSQL kernel version number. If it is specified, an instance running kernel DBKernelVersion will be created. It supports updating the minor kernel version immediately.
 	DBKernelVersion *string `json:"dbKernelVersion,omitempty" tf:"db_kernel_version,omitempty"`
 
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	DBMajorVersion *string `json:"dbMajorVersion,omitempty" tf:"db_major_version,omitempty"`
 
-	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	DBMajorVesion *string `json:"dbMajorVesion,omitempty" tf:"db_major_vesion,omitempty"`
 
 	// Specify instance node info for disaster migration.
 	// Specify instance node info for disaster migration.
 	DBNodeSet []DBNodeSetInitParameters `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
 
-	// Version of the postgresql database engine. Valid values: 10.4, 11.8, 12.4.
-	// Version of the postgresql database engine. Valid values: `10.4`, `11.8`, `12.4`.
+	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
+	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
 	// KeyId of the custom key.
@@ -286,20 +286,20 @@ type InstanceObservation struct {
 	// PostgreSQL kernel version number. If it is specified, an instance running kernel DBKernelVersion will be created. It supports updating the minor kernel version immediately.
 	DBKernelVersion *string `json:"dbKernelVersion,omitempty" tf:"db_kernel_version,omitempty"`
 
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	DBMajorVersion *string `json:"dbMajorVersion,omitempty" tf:"db_major_version,omitempty"`
 
-	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	DBMajorVesion *string `json:"dbMajorVesion,omitempty" tf:"db_major_vesion,omitempty"`
 
 	// Specify instance node info for disaster migration.
 	// Specify instance node info for disaster migration.
 	DBNodeSet []DBNodeSetObservation `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
 
-	// Version of the postgresql database engine. Valid values: 10.4, 11.8, 12.4.
-	// Version of the postgresql database engine. Valid values: `10.4`, `11.8`, `12.4`.
+	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
+	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
 	// ID of the resource.
@@ -438,13 +438,13 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DBKernelVersion *string `json:"dbKernelVersion,omitempty" tf:"db_kernel_version,omitempty"`
 
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	// +kubebuilder:validation:Optional
 	DBMajorVersion *string `json:"dbMajorVersion,omitempty" tf:"db_major_version,omitempty"`
 
-	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
+	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	// +kubebuilder:validation:Optional
 	DBMajorVesion *string `json:"dbMajorVesion,omitempty" tf:"db_major_vesion,omitempty"`
 
@@ -453,8 +453,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DBNodeSet []DBNodeSetParameters `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
 
-	// Version of the postgresql database engine. Valid values: 10.4, 11.8, 12.4.
-	// Version of the postgresql database engine. Valid values: `10.4`, `11.8`, `12.4`.
+	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
+	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 

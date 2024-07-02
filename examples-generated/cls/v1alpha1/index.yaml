@@ -16,7 +16,7 @@ spec:
       fullText:
       - caseSensitive: true
         containZH: true
-        tokenizer: "@&?|#()='\",;:<>[]{}/ \n\t\r\\"
+        tokenizer: ${local.tokenizer_value}
       keyValue:
       - caseSensitive: true
         keyValues:
@@ -24,13 +24,13 @@ spec:
           value:
           - containZH: true
             sqlFlag: true
-            tokenizer: "@&?|#()='\",;:<>[]{}/ \n\t\r\\"
+            tokenizer: ${local.tokenizer_value}
             type: text
         - key: world
           value:
           - containZH: true
             sqlFlag: true
-            tokenizer: "@&?|#()='\",;:<>[]{}/ \n\t\r\\"
+            tokenizer: ${local.tokenizer_value}
             type: text
       tag:
       - caseSensitive: true
@@ -39,7 +39,7 @@ spec:
           value:
           - containZH: true
             sqlFlag: true
-            tokenizer: "@&?|#()='\",;:<>[]{}/ \n\t\r\\"
+            tokenizer: ${local.tokenizer_value}
             type: text
     status: true
     topicIdSelector:

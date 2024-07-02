@@ -217,9 +217,17 @@ type ScaleWorkerInitParameters struct {
 	// Mount target. Default is not mounting.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
+
+	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
+	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
+
+	// Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+	// Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
@@ -264,9 +272,17 @@ type ScaleWorkerObservation struct {
 	// Mount target. Default is not mounting.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
+
+	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
+	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
+
+	// Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+	// Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
@@ -329,10 +345,20 @@ type ScaleWorkerParameters struct {
 	// +kubebuilder:validation:Optional
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// +kubebuilder:validation:Optional
+	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
+
+	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
+	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	// +kubebuilder:validation:Optional
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
+
+	// Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+	// Base64 encoded user script, this script will be executed after the k8s component is run. The user needs to ensure that the script is reentrant and retry logic. The script and its generated log files can be viewed in the /data/ccs_userscript/ path of the node, if required. The node needs to be initialized before it can be added to the schedule. It can be used with the unschedulable parameter. After the final initialization of userScript is completed, add the kubectl uncordon nodename --kubeconfig=/root/.kube/config command to add the node to the schedule.
+	// +kubebuilder:validation:Optional
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
@@ -568,8 +594,8 @@ type ScaleWorkerWorkerConfigInitParameters struct {
 	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// ase64-encoded User Data text, the length limit is 16KB.
+	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
+	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
@@ -675,8 +701,8 @@ type ScaleWorkerWorkerConfigObservation struct {
 	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// ase64-encoded User Data text, the length limit is 16KB.
+	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
+	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
@@ -812,8 +838,8 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// ase64-encoded User Data text, the length limit is 16KB.
+	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
+	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }

@@ -65,16 +65,16 @@ type FreeCertificateInitParameters struct {
 	// Specify old certificate ID, used for re-apply.
 	OldCertificateID *string `json:"oldCertificateId,omitempty" tf:"old_certificate_id,omitempty"`
 
-	// Type of package. Only support "2" (TrustAsia TLS RSA CA).
-	// Type of package. Only support `"2"` (TrustAsia TLS RSA CA).
+	// Type of package. Only support "83" (TrustAsia TLS RSA CA).
+	// Type of package. Only support `"83"` (TrustAsia TLS RSA CA).
 	PackageType *string `json:"packageType,omitempty" tf:"package_type,omitempty"`
 
 	// ID of projects which this certification belong to.
 	// ID of projects which this certification belong to.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// Specify validity period in month, only support "12" months for now.
-	// Specify validity period in month, only support `"12"` months for now.
+	// Specify validity period in month, only support "3" months for now.
+	// Specify validity period in month, only support `"3"` months for now.
 	ValidityPeriod *string `json:"validityPeriod,omitempty" tf:"validity_period,omitempty"`
 }
 
@@ -143,8 +143,8 @@ type FreeCertificateObservation struct {
 	// Specify old certificate ID, used for re-apply.
 	OldCertificateID *string `json:"oldCertificateId,omitempty" tf:"old_certificate_id,omitempty"`
 
-	// Type of package. Only support "2" (TrustAsia TLS RSA CA).
-	// Type of package. Only support `"2"` (TrustAsia TLS RSA CA).
+	// Type of package. Only support "83" (TrustAsia TLS RSA CA).
+	// Type of package. Only support `"83"` (TrustAsia TLS RSA CA).
 	PackageType *string `json:"packageType,omitempty" tf:"package_type,omitempty"`
 
 	// Product zh name.
@@ -171,8 +171,8 @@ type FreeCertificateObservation struct {
 	// Certificate status name.
 	StatusName *string `json:"statusName,omitempty" tf:"status_name,omitempty"`
 
-	// Specify validity period in month, only support "12" months for now.
-	// Specify validity period in month, only support `"12"` months for now.
+	// Specify validity period in month, only support "3" months for now.
+	// Specify validity period in month, only support `"3"` months for now.
 	ValidityPeriod *string `json:"validityPeriod,omitempty" tf:"validity_period,omitempty"`
 
 	// Vulnerability status.
@@ -227,8 +227,8 @@ type FreeCertificateParameters struct {
 	// +kubebuilder:validation:Optional
 	OldCertificateID *string `json:"oldCertificateId,omitempty" tf:"old_certificate_id,omitempty"`
 
-	// Type of package. Only support "2" (TrustAsia TLS RSA CA).
-	// Type of package. Only support `"2"` (TrustAsia TLS RSA CA).
+	// Type of package. Only support "83" (TrustAsia TLS RSA CA).
+	// Type of package. Only support `"83"` (TrustAsia TLS RSA CA).
 	// +kubebuilder:validation:Optional
 	PackageType *string `json:"packageType,omitempty" tf:"package_type,omitempty"`
 
@@ -237,8 +237,8 @@ type FreeCertificateParameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// Specify validity period in month, only support "12" months for now.
-	// Specify validity period in month, only support `"12"` months for now.
+	// Specify validity period in month, only support "3" months for now.
+	// Specify validity period in month, only support `"3"` months for now.
 	// +kubebuilder:validation:Optional
 	ValidityPeriod *string `json:"validityPeriod,omitempty" tf:"validity_period,omitempty"`
 }

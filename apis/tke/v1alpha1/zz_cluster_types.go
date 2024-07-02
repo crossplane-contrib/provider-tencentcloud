@@ -269,8 +269,8 @@ type ClusterInitParameters struct {
 	// Name of the cluster.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
-	// Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
+	// Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
+	// Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
 	ClusterOs *string `json:"clusterOs,omitempty" tf:"cluster_os,omitempty"`
 
 	// Image type of the cluster os, the available values include: 'GENERAL'. Default is 'GENERAL'.
@@ -412,8 +412,8 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
-	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
-	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
+	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
 	WorkerConfig []WorkerConfigInitParameters `json:"workerConfig,omitempty" tf:"worker_config,omitempty"`
 }
 
@@ -519,8 +519,8 @@ type ClusterObservation struct {
 	// Number of nodes in the cluster.
 	ClusterNodeNum *float64 `json:"clusterNodeNum,omitempty" tf:"cluster_node_num,omitempty"`
 
-	// Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
-	// Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
+	// Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
+	// Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
 	ClusterOs *string `json:"clusterOs,omitempty" tf:"cluster_os,omitempty"`
 
 	// Image type of the cluster os, the available values include: 'GENERAL'. Default is 'GENERAL'.
@@ -684,8 +684,8 @@ type ClusterObservation struct {
 	// Vpc Id of the cluster.
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
-	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
-	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
+	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
 	WorkerConfig []WorkerConfigObservation `json:"workerConfig,omitempty" tf:"worker_config,omitempty"`
 
 	// An information list of cvm within the 'WORKER' clusters. Each element contains the following attributes:
@@ -800,8 +800,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
-	// Operating system of the cluster, the available values include: 'centos7.6.0_x64','ubuntu18.04.1x86_64','tlinux2.4x86_64'. Default is 'tlinux2.4x86_64'.
+	// Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
+	// Cluster operating system, supports setting public images (the field passes the corresponding image Name) and custom images (the field passes the corresponding image ID). For details, please refer to: https://cloud.tencent.com/document/product/457/68289.
 	// +kubebuilder:validation:Optional
 	ClusterOs *string `json:"clusterOs,omitempty" tf:"cluster_os,omitempty"`
 
@@ -976,8 +976,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
-	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
-	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_worker'.
+	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
+	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
 	// +kubebuilder:validation:Optional
 	WorkerConfig []WorkerConfigParameters `json:"workerConfig,omitempty" tf:"worker_config,omitempty"`
 }
@@ -1355,8 +1355,8 @@ type MasterConfigInitParameters struct {
 	// Id of cvm hpc cluster.
 	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
-	// The valid image id, format of img-xxx.
-	// The valid image id, format of img-xxx.
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
@@ -1462,8 +1462,8 @@ type MasterConfigObservation struct {
 	// Id of cvm hpc cluster.
 	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
-	// The valid image id, format of img-xxx.
-	// The valid image id, format of img-xxx.
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
@@ -1580,8 +1580,8 @@ type MasterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
-	// The valid image id, format of img-xxx.
-	// The valid image id, format of img-xxx.
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
 	// +kubebuilder:validation:Optional
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
@@ -1959,8 +1959,8 @@ type WorkerConfigInitParameters struct {
 	// Id of cvm hpc cluster.
 	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
-	// The valid image id, format of img-xxx.
-	// The valid image id, format of img-xxx.
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
@@ -2066,8 +2066,8 @@ type WorkerConfigObservation struct {
 	// Id of cvm hpc cluster.
 	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
-	// The valid image id, format of img-xxx.
-	// The valid image id, format of img-xxx.
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
@@ -2184,8 +2184,8 @@ type WorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
-	// The valid image id, format of img-xxx.
-	// The valid image id, format of img-xxx.
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
 	// +kubebuilder:validation:Optional
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 

@@ -7283,9 +7283,19 @@ func (in *ScaleWorkerInitParameters) DeepCopyInto(out *ScaleWorkerInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.PreStartUserScript != nil {
+		in, out := &in.PreStartUserScript, &out.PreStartUserScript
+		*out = new(string)
+		**out = **in
+	}
 	if in.Unschedulable != nil {
 		in, out := &in.Unschedulable, &out.Unschedulable
 		*out = new(float64)
+		**out = **in
+	}
+	if in.UserScript != nil {
+		in, out := &in.UserScript, &out.UserScript
+		*out = new(string)
 		**out = **in
 	}
 	if in.WorkerConfig != nil {
@@ -7408,9 +7418,19 @@ func (in *ScaleWorkerObservation) DeepCopyInto(out *ScaleWorkerObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PreStartUserScript != nil {
+		in, out := &in.PreStartUserScript, &out.PreStartUserScript
+		*out = new(string)
+		**out = **in
+	}
 	if in.Unschedulable != nil {
 		in, out := &in.Unschedulable, &out.Unschedulable
 		*out = new(float64)
+		**out = **in
+	}
+	if in.UserScript != nil {
+		in, out := &in.UserScript, &out.UserScript
+		*out = new(string)
 		**out = **in
 	}
 	if in.WorkerConfig != nil {
@@ -7513,9 +7533,19 @@ func (in *ScaleWorkerParameters) DeepCopyInto(out *ScaleWorkerParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PreStartUserScript != nil {
+		in, out := &in.PreStartUserScript, &out.PreStartUserScript
+		*out = new(string)
+		**out = **in
+	}
 	if in.Unschedulable != nil {
 		in, out := &in.Unschedulable, &out.Unschedulable
 		*out = new(float64)
+		**out = **in
+	}
+	if in.UserScript != nil {
+		in, out := &in.UserScript, &out.UserScript
+		*out = new(string)
 		**out = **in
 	}
 	if in.WorkerConfig != nil {

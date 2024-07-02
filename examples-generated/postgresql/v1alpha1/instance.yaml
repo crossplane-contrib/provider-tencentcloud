@@ -4,14 +4,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: postgresql/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     availabilityZone: ${var.availability_zone}
     chargeType: POSTPAID_BY_HOUR
     charset: UTF8
-    engineVersion: "10.4"
+    cpu: 1
+    dbMajorVersion: "10"
+    engineVersion: "10.23"
     memory: 2
     name: example
     projectId: 0
@@ -45,7 +47,7 @@ spec:
     availabilityZone: ${var.availability_zone}
     cidrBlock: 10.0.20.0/28
     isMulticast: false
-    name: guagua_vpc_subnet_test
+    name: subnet
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vpc
@@ -63,4 +65,4 @@ metadata:
 spec:
   forProvider:
     cidrBlock: 10.0.0.0/16
-    name: guagua_vpc_instance_test
+    name: vpc

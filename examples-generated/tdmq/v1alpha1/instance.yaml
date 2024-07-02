@@ -4,11 +4,11 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tdmq/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    clusterName: example
-    remark: this is description.
+    clusterName: tf_example
+    remark: remark.
     tags:
       createdBy: terraform

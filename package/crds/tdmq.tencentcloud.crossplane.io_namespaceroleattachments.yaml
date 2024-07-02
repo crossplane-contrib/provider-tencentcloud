@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: NamespaceRoleAttachment is the Schema for the NamespaceRoleAttachments
-          API. Provide a resource to create a TDMQ role.
+          API. Provide a resource to create a TDMQ environment role.
         properties:
           apiVersion:
             description: |-

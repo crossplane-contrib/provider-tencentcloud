@@ -1287,7 +1287,7 @@ type RulesParameters struct {
 	// The feature to be executed.
 	// Feature to be executed.
 	// +kubebuilder:validation:Optional
-	Actions []ActionsParameters `json:"actions" tf:"actions,omitempty"`
+	Actions []ActionsParameters `json:"actions,omitempty" tf:"actions,omitempty"`
 
 	// The condition that determines if a feature should run.
 	// Note: If any condition in the array is met, the feature will run.
@@ -1370,7 +1370,7 @@ type SubRulesRulesParameters struct {
 	// The feature to be executed.
 	// The feature to be executed.
 	// +kubebuilder:validation:Optional
-	Actions []RulesActionsParameters `json:"actions" tf:"actions,omitempty"`
+	Actions []RulesActionsParameters `json:"actions,omitempty" tf:"actions,omitempty"`
 
 	// The condition that determines if a feature should run.
 	// Note: If any condition in the array is met, the feature will run.

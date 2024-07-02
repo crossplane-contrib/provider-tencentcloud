@@ -134,8 +134,8 @@ spec:
                     type: string
                   packageType:
                     description: |-
-                      Type of package. Only support "2" (TrustAsia TLS RSA CA).
-                      Type of package. Only support `"2"` (TrustAsia TLS RSA CA).
+                      Type of package. Only support "83" (TrustAsia TLS RSA CA).
+                      Type of package. Only support `"83"` (TrustAsia TLS RSA CA).
                     type: string
                   projectId:
                     description: |-
@@ -144,8 +144,8 @@ spec:
                     type: number
                   validityPeriod:
                     description: |-
-                      Specify validity period in month, only support "12" months for now.
-                      Specify validity period in month, only support `"12"` months for now.
+                      Specify validity period in month, only support "3" months for now.
+                      Specify validity period in month, only support `"3"` months for now.
                     type: string
                 type: object
               initProvider:
@@ -203,8 +203,8 @@ spec:
                     type: string
                   packageType:
                     description: |-
-                      Type of package. Only support "2" (TrustAsia TLS RSA CA).
-                      Type of package. Only support `"2"` (TrustAsia TLS RSA CA).
+                      Type of package. Only support "83" (TrustAsia TLS RSA CA).
+                      Type of package. Only support `"83"` (TrustAsia TLS RSA CA).
                     type: string
                   projectId:
                     description: |-
@@ -213,8 +213,8 @@ spec:
                     type: number
                   validityPeriod:
                     description: |-
-                      Specify validity period in month, only support "12" months for now.
-                      Specify validity period in month, only support `"12"` months for now.
+                      Specify validity period in month, only support "3" months for now.
+                      Specify validity period in month, only support `"3"` months for now.
                     type: string
                 type: object
               managementPolicies:
@@ -490,8 +490,8 @@ spec:
                     type: string
                   packageType:
                     description: |-
-                      Type of package. Only support "2" (TrustAsia TLS RSA CA).
-                      Type of package. Only support `"2"` (TrustAsia TLS RSA CA).
+                      Type of package. Only support "83" (TrustAsia TLS RSA CA).
+                      Type of package. Only support `"83"` (TrustAsia TLS RSA CA).
                     type: string
                   productZhName:
                     description: |-
@@ -525,8 +525,8 @@ spec:
                     type: string
                   validityPeriod:
                     description: |-
-                      Specify validity period in month, only support "12" months for now.
-                      Specify validity period in month, only support `"12"` months for now.
+                      Specify validity period in month, only support "3" months for now.
+                      Specify validity period in month, only support `"3"` months for now.
                     type: string
                   vulnerabilityStatus:
                     description: |-
