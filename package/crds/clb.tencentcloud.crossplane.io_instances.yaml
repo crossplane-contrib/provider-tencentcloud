@@ -866,6 +866,11 @@ spec:
                       IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
                       IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
                     type: string
+                  addressIpv6:
+                    description: |-
+                      The IPv6 address of the load balancing instance.
+                      The IPv6 address of the load balancing instance.
+                    type: string
                   bandwidthPackageId:
                     description: |-
                       Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
@@ -910,6 +915,11 @@ spec:
                     description: |-
                       Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
                       Internet charge type, only applicable to open CLB. Valid values are `TRAFFIC_POSTPAID_BY_HOUR`, `BANDWIDTH_POSTPAID_BY_HOUR` and `BANDWIDTH_PACKAGE`.
+                    type: string
+                  ipv6Mode:
+                    description: |-
+                      This field is meaningful when the IP address version is ipv6, IPv6Nat64 | IPv6FullChain.
+                      This field is meaningful when the IP address version is ipv6, `IPv6Nat64` | `IPv6FullChain`.
                     type: string
                   loadBalancerPassToTarget:
                     description: |-

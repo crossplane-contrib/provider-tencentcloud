@@ -145,6 +145,10 @@ type InstanceObservation struct {
 	// IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
 	AddressIPVersion *string `json:"addressIpVersion,omitempty" tf:"address_ip_version,omitempty"`
 
+	// The IPv6 address of the load balancing instance.
+	// The IPv6 address of the load balancing instance.
+	AddressIPv6 *string `json:"addressIpv6,omitempty" tf:"address_ipv6,omitempty"`
+
 	// Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
 	// Bandwidth package id. If set, the `internet_charge_type` must be `BANDWIDTH_PACKAGE`.
 	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
@@ -171,6 +175,10 @@ type InstanceObservation struct {
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// This field is meaningful when the IP address version is ipv6, IPv6Nat64 | IPv6FullChain.
+	// This field is meaningful when the IP address version is ipv6, `IPv6Nat64` | `IPv6FullChain`.
+	IPv6Mode *string `json:"ipv6Mode,omitempty" tf:"ipv6_mode,omitempty"`
 
 	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
 	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.

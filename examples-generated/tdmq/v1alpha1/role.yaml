@@ -12,7 +12,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
     remark: remark.
-    roleName: tf_example
+    roleName: role_example
 
 ---
 
