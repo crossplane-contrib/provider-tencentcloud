@@ -1,0 +1,37 @@
+name: Update Provider Version
+on:
+  repository_dispatch:
+    types: [webhook]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.20'
+      - name: update-code
+        id: update-code
+        run: |
+          version=`curl https://api.github.com/repos/tencentcloudstack/terraform-provider-tencentcloud/releases/latest --header 'Accept: application/vnd.github+json' --header 'Authorization: Bearer ${{secrets.GITHUB_TOKEN}}' | jq .name | tr -d '"' | tr -d 'v'`
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          git clone https://tongyiming:${{secrets.GITHUB_TOKEN}}@github.com/crossplane-contrib/provider-tencentcloud.git
+          cd provider-tencentcloud
+          git config --global user.email "tongyiming@threebody.xyz"
+          git config --global user.name "tongyiming"
+          git checkout -b "feat/update-to-${version}"
+          line=`cat Makefile| grep -n "export TERRAFORM_PROVIDER_VERSION" | awk -F ':' '{print $1}'`
+          sed -i "${line}c export TERRAFORM_PROVIDER_VERSION ?= ${version}" Makefile
+          go install golang.org/x/tools/cmd/goimports
+          go mod tidy
+          make generate
+          git add .
+          git commit -m "update terraform version"
+          git push origin feat/update-to-${version}
+      - name: create pull request
+        run: |
+          cd provider-tencentcloud
+          gh pr create -B main -H feat/update-to-${{ steps.update-code.outputs.version }} --title "update terraform provider" --body "update terraform provider version to ${{ steps.update-code.outputs.version }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
