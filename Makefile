@@ -11,7 +11,7 @@ export TERRAFORM_PROVIDER_REPO ?= https://github.com/tencentcloudstack/terraform
 export TERRAFORM_PROVIDER_VERSION ?= 1.81.97
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-tencentcloud
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-tencentcloud_v1.81.97
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= $(TERRAFORM_PROVIDER_DOWNLOAD_NAME)_v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 
 
@@ -51,7 +51,7 @@ GO_SUBDIRS += cmd internal apis
 # Setup Kubernetes tools
 
 KIND_VERSION = v0.15.0
-UP_VERSION = v0.18.0
+UP_VERSION = v0.28.0
 UP_CHANNEL = stable
 UPTEST_VERSION = v0.5.0
 -include build/makelib/k8s_tools.mk
