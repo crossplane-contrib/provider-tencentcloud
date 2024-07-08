@@ -4,21 +4,111 @@ metadata:
   annotations:
     meta.upbound.io/example-id: postgresql/v1alpha1/readonlygroup
   labels:
-    testing.upbound.io/example-name: group
-  name: group
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    masterDbInstanceId: postgres-gzg9jb2n
+    masterDbInstanceId: ${tencentcloud_postgresql_instance.example.id}
     maxReplayLag: 100
     maxReplayLatency: 512
     minDelayEliminateReserve: 1
-    name: world
+    name: tf_ro_group
     projectId: 0
     replayLagEliminate: 1
     replayLatencyEliminate: 1
+    securityGroupsIds:
+    - ${tencentcloud_security_group.example.id}
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: subnet
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: postgresql.tencentcloud.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlygroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    chargeType: POSTPAID_BY_HOUR
+    charset: UTF8
+    cpu: 2
+    engineVersion: "10.4"
+    memory: 4
+    name: example
+    projectId: 0
+    rootPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    rootUser: root123
+    storage: 50
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    tags:
+      test: tf
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlygroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: sg desc.
+    name: tf-example
+    projectId: 0
+    tags:
+      example: test
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlygroup
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.20.0/28
+    isMulticast: false
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: postgresql/v1alpha1/readonlygroup
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc
