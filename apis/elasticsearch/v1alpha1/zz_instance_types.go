@@ -84,6 +84,10 @@ type InstanceInitParameters struct {
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
+	// Kibana public network access status. Valid values are OPEN and CLOSE.
+	// Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
+	KibanaPublicAccess *string `json:"kibanaPublicAccess,omitempty" tf:"kibana_public_access,omitempty"`
+
 	// License type. Valid values are oss, basic and platinum. The default value is platinum.
 	// License type. Valid values are `oss`, `basic` and `platinum`. The default value is `platinum`.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
@@ -189,6 +193,10 @@ type InstanceObservation struct {
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
+	// Kibana public network access status. Valid values are OPEN and CLOSE.
+	// Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
+	KibanaPublicAccess *string `json:"kibanaPublicAccess,omitempty" tf:"kibana_public_access,omitempty"`
+
 	// Kibana access URL.
 	// Kibana access URL.
 	KibanaURL *string `json:"kibanaUrl,omitempty" tf:"kibana_url,omitempty"`
@@ -267,6 +275,11 @@ type InstanceParameters struct {
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Kibana public network access status. Valid values are OPEN and CLOSE.
+	// Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
+	// +kubebuilder:validation:Optional
+	KibanaPublicAccess *string `json:"kibanaPublicAccess,omitempty" tf:"kibana_public_access,omitempty"`
 
 	// License type. Valid values are oss, basic and platinum. The default value is platinum.
 	// License type. Valid values are `oss`, `basic` and `platinum`. The default value is `platinum`.
