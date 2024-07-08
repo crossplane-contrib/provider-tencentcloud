@@ -127,6 +127,11 @@ spec:
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                     type: string
+                  kibanaPublicAccess:
+                    description: |-
+                      Kibana public network access status. Valid values are OPEN and CLOSE.
+                      Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
                   licenseType:
                     description: |-
                       License type. Valid values are oss, basic and platinum. The default value is platinum.
@@ -468,6 +473,11 @@ spec:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  kibanaPublicAccess:
+                    description: |-
+                      Kibana public network access status. Valid values are OPEN and CLOSE.
+                      Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
                     type: string
                   licenseType:
                     description: |-
@@ -985,6 +995,11 @@ spec:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  kibanaPublicAccess:
+                    description: |-
+                      Kibana public network access status. Valid values are OPEN and CLOSE.
+                      Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
                     type: string
                   kibanaUrl:
                     description: |-

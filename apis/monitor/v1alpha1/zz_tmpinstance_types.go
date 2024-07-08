@@ -15,8 +15,8 @@ import (
 
 type TmpInstanceInitParameters struct {
 
-	// Data retention time.
-	// Data retention time.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
 	DataRetentionTime *float64 `json:"dataRetentionTime,omitempty" tf:"data_retention_time,omitempty"`
 
 	// Instance name.
@@ -65,8 +65,8 @@ type TmpInstanceObservation struct {
 	// Prometheus HTTP API root address.
 	APIRootPath *string `json:"apiRootPath,omitempty" tf:"api_root_path,omitempty"`
 
-	// Data retention time.
-	// Data retention time.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
 	DataRetentionTime *float64 `json:"dataRetentionTime,omitempty" tf:"data_retention_time,omitempty"`
 
 	// ID of the resource.
@@ -108,8 +108,8 @@ type TmpInstanceObservation struct {
 
 type TmpInstanceParameters struct {
 
-	// Data retention time.
-	// Data retention time.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
 	// +kubebuilder:validation:Optional
 	DataRetentionTime *float64 `json:"dataRetentionTime,omitempty" tf:"data_retention_time,omitempty"`
 
