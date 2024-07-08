@@ -144,7 +144,7 @@ type NamespaceRoleAttachmentStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// NamespaceRoleAttachment is the Schema for the NamespaceRoleAttachments API. Provide a resource to create a TDMQ role.
+// NamespaceRoleAttachment is the Schema for the NamespaceRoleAttachments API. Provide a resource to create a TDMQ environment role.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

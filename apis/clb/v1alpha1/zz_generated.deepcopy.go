@@ -1061,6 +1061,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AddressIPv6 != nil {
+		in, out := &in.AddressIPv6, &out.AddressIPv6
+		*out = new(string)
+		**out = **in
+	}
 	if in.BandwidthPackageID != nil {
 		in, out := &in.BandwidthPackageID, &out.BandwidthPackageID
 		*out = new(string)
@@ -1099,6 +1104,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IPv6Mode != nil {
+		in, out := &in.IPv6Mode, &out.IPv6Mode
 		*out = new(string)
 		**out = **in
 	}

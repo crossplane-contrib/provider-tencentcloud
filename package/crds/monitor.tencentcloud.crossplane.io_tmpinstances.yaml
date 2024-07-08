@@ -75,8 +75,8 @@ spec:
                 properties:
                   dataRetentionTime:
                     description: |-
-                      Data retention time.
-                      Data retention time.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
                     type: number
                   instanceName:
                     description: |-
@@ -270,8 +270,8 @@ spec:
                 properties:
                   dataRetentionTime:
                     description: |-
-                      Data retention time.
-                      Data retention time.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
                     type: number
                   instanceName:
                     description: |-
@@ -642,8 +642,8 @@ spec:
                     type: string
                   dataRetentionTime:
                     description: |-
-                      Data retention time.
-                      Data retention time.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
                     type: number
                   id:
                     description: ID of the resource.

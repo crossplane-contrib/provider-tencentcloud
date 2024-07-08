@@ -191,6 +191,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KibanaPublicAccess != nil {
+		in, out := &in.KibanaPublicAccess, &out.KibanaPublicAccess
+		*out = new(string)
+		**out = **in
+	}
 	if in.LicenseType != nil {
 		in, out := &in.LicenseType, &out.LicenseType
 		*out = new(string)
@@ -382,6 +387,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KibanaPublicAccess != nil {
+		in, out := &in.KibanaPublicAccess, &out.KibanaPublicAccess
+		*out = new(string)
+		**out = **in
+	}
 	if in.KibanaURL != nil {
 		in, out := &in.KibanaURL, &out.KibanaURL
 		*out = new(string)
@@ -498,6 +508,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
+		**out = **in
+	}
+	if in.KibanaPublicAccess != nil {
+		in, out := &in.KibanaPublicAccess, &out.KibanaPublicAccess
 		*out = new(string)
 		**out = **in
 	}
