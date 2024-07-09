@@ -1,0 +1,34 @@
+name: Auto Set Tag
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Build Tag
+        id: build-tag
+        run: |
+          VERSION=`curl https://api.github.com/repos/crossplane-contrib/provider-tencentcloud/releases/latest --header 'Accept: application/vnd.github+json' --header 'Authorization: Bearer ${{secrets.GITHUB_TOKEN}}' | jq .name | tr -d '"' | tr -d 'v'`
+          VERSION_BITS=(${VERSION//./ })
+          VNUM1=${VERSION_BITS[0]}
+          VNUM2=${VERSION_BITS[1]}
+          VNUM3=${VERSION_BITS[2]}
+          VNUM3=$((VNUM3+1))
+          NEXT_TAG="v$VNUM1.$VNUM2.$VNUM3"
+          echo "NEXT_TAG=$NEXT_TAG" >> "$GITHUB_OUTPUT"
+
+      
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Create Tag
+        uses: negz/create-tag@39bae1e0932567a58c20dea5a1a0d18358503320 # v1
+        with:
+          version: ${{ steps.build-tag.outputs.NEXT_TAG }}
+          message: ${{ steps.build-tag.outputs.NEXT_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
