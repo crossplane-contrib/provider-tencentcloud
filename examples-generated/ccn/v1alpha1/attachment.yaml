@@ -8,7 +8,7 @@ metadata:
   name: attachment
 spec:
   forProvider:
-    ccnId: ${tencentcloud_ccn.main.id}
+    ccnId: ${tencentcloud_ccn.example.id}
     instanceId: ${tencentcloud_vpc.vpc.id}
     instanceRegion: ${var.region}
     instanceType: VPC
@@ -21,13 +21,37 @@ metadata:
   annotations:
     meta.upbound.io/example-id: ccn/v1alpha1/attachment
   labels:
-    testing.upbound.io/example-name: main
-  name: main
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    description: ci-temp-test-ccn-des
-    name: ci-temp-test-ccn
+    bandwidthLimitType: INTER_REGION_LIMIT
+    chargeType: PREPAID
+    description: desc.
+    name: tf-example
     qos: AG
+    tags:
+      createBy: terraform
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/attachment
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 172.16.0.0/24
+    isMulticast: false
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -41,9 +65,5 @@ metadata:
   name: vpc
 spec:
   forProvider:
-    cidrBlock: 10.0.0.0/16
-    dnsServers:
-    - 119.29.29.29
-    - 8.8.8.8
-    isMulticast: false
-    name: ci-temp-test-vpc
+    cidrBlock: 172.16.0.0/16
+    name: vpc

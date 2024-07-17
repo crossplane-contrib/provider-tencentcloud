@@ -4,18 +4,52 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: internal_clb
-  name: internal-clb
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    clbName: myclb
+    clbName: tf-example
     networkType: INTERNAL
     projectId: 0
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: subnet
     tags:
-      test: tf
+      tagKey: tagValue
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ap-guangzhou-4
+    cidrBlock: 10.0.1.0/24
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc

@@ -4152,31 +4152,37 @@ resources:
         name: tencentcloud_ccn
         title: tencentcloud_ccn
         examples:
-            - name: main
+            - name: example
               manifest: |-
                 {
                   "bandwidth_limit_type": "INTER_REGION_LIMIT",
                   "charge_type": "PREPAID",
-                  "description": "ci-temp-test-ccn-des",
-                  "name": "ci-temp-test-ccn",
-                  "qos": "AG"
+                  "description": "desc.",
+                  "name": "tf-example",
+                  "qos": "AG",
+                  "tags": {
+                    "createBy": "terraform"
+                  }
                 }
-            - name: main
+            - name: example
               manifest: |-
                 {
                   "bandwidth_limit_type": "OUTER_REGION_LIMIT",
                   "charge_type": "POSTPAID",
-                  "description": "ci-temp-test-ccn-des",
-                  "name": "ci-temp-test-ccn",
-                  "qos": "AG"
+                  "description": "desc.",
+                  "name": "tf-example",
+                  "qos": "AG",
+                  "tags": {
+                    "createBy": "terraform"
+                  }
                 }
-            - name: main
+            - name: example
               manifest: |-
                 {
                   "bandwidth_limit_type": "INTER_REGION_LIMIT",
                   "charge_type": "POSTPAID",
-                  "description": "ci-temp-test-ccn-des",
-                  "name": "ci-temp-test-ccn",
+                  "description": "desc.",
+                  "name": "tf-example",
                   "qos": "AG"
                 }
         argumentDocs:
@@ -4200,62 +4206,123 @@ resources:
             - name: attachment
               manifest: |-
                 {
-                  "ccn_id": "${tencentcloud_ccn.main.id}",
+                  "ccn_id": "${tencentcloud_ccn.example.id}",
                   "instance_id": "${tencentcloud_vpc.vpc.id}",
                   "instance_region": "${var.region}",
                   "instance_type": "VPC"
                 }
               references:
-                ccn_id: tencentcloud_ccn.main.id
+                ccn_id: tencentcloud_ccn.example.id
                 instance_id: tencentcloud_vpc.vpc.id
                 instance_region: var.region
               dependencies:
-                tencentcloud_ccn.main: |-
+                tencentcloud_ccn.example: |-
                     {
-                      "description": "ci-temp-test-ccn-des",
-                      "name": "ci-temp-test-ccn",
-                      "qos": "AG"
+                      "bandwidth_limit_type": "INTER_REGION_LIMIT",
+                      "charge_type": "PREPAID",
+                      "description": "desc.",
+                      "name": "tf-example",
+                      "qos": "AG",
+                      "tags": {
+                        "createBy": "terraform"
+                      }
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "${var.availability_zone}",
+                      "cidr_block": "172.16.0.0/24",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
                     }
                 tencentcloud_vpc.vpc: |-
                     {
-                      "cidr_block": "10.0.0.0/16",
-                      "dns_servers": [
-                        "119.29.29.29",
-                        "8.8.8.8"
-                      ],
-                      "is_multicast": false,
-                      "name": "ci-temp-test-vpc"
+                      "cidr_block": "172.16.0.0/16",
+                      "name": "vpc"
                     }
             - name: other_account
               manifest: |-
                 {
-                  "ccn_id": "${var.otherccn}",
-                  "ccn_uin": "${var.otheruin}",
+                  "ccn_id": "${var.other_ccn}",
+                  "ccn_uin": "${var.other_uin}",
                   "instance_id": "${tencentcloud_vpc.vpc.id}",
                   "instance_region": "${var.region}",
                   "instance_type": "VPC"
                 }
               references:
-                ccn_id: var.otherccn
-                ccn_uin: var.otheruin
+                ccn_id: var.other_ccn
+                ccn_uin: var.other_uin
                 instance_id: tencentcloud_vpc.vpc.id
                 instance_region: var.region
               dependencies:
-                tencentcloud_ccn.main: |-
+                tencentcloud_ccn.example: |-
                     {
-                      "description": "ci-temp-test-ccn-des",
-                      "name": "ci-temp-test-ccn",
-                      "qos": "AG"
+                      "bandwidth_limit_type": "INTER_REGION_LIMIT",
+                      "charge_type": "PREPAID",
+                      "description": "desc.",
+                      "name": "tf-example",
+                      "qos": "AG",
+                      "tags": {
+                        "createBy": "terraform"
+                      }
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "${var.availability_zone}",
+                      "cidr_block": "172.16.0.0/24",
+                      "is_multicast": false,
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
                     }
                 tencentcloud_vpc.vpc: |-
                     {
-                      "cidr_block": "10.0.0.0/16",
-                      "dns_servers": [
-                        "119.29.29.29",
-                        "8.8.8.8"
-                      ],
+                      "cidr_block": "172.16.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: attachment
+              manifest: |-
+                {
+                  "ccn_id": "${tencentcloud_ccn.example.id}",
+                  "instance_id": "${tencentcloud_vpc.vpc.id}",
+                  "instance_region": "${var.region}",
+                  "instance_type": "VPC",
+                  "route_table_id": "${tencentcloud_ccn_route_table.example.id}"
+                }
+              references:
+                ccn_id: tencentcloud_ccn.example.id
+                instance_id: tencentcloud_vpc.vpc.id
+                instance_region: var.region
+                route_table_id: tencentcloud_ccn_route_table.example.id
+              dependencies:
+                tencentcloud_ccn.example: |-
+                    {
+                      "bandwidth_limit_type": "INTER_REGION_LIMIT",
+                      "charge_type": "PREPAID",
+                      "description": "desc.",
+                      "name": "tf-example",
+                      "qos": "AG",
+                      "tags": {
+                        "createBy": "terraform"
+                      }
+                    }
+                tencentcloud_ccn_route_table.example: |-
+                    {
+                      "ccn_id": "${tencentcloud_ccn.example.id}",
+                      "description": "desc.",
+                      "name": "tf-example"
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "${var.availability_zone}",
+                      "cidr_block": "172.16.0.0/24",
                       "is_multicast": false,
-                      "name": "ci-temp-test-vpc"
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "172.16.0.0/16",
+                      "name": "vpc"
                     }
         argumentDocs:
             attached_time: '- Time of attaching.'
@@ -4268,6 +4335,7 @@ resources:
             instance_region: '- (Required, String, ForceNew) The region that the instance locates at.'
             instance_type: '- (Required, String, ForceNew) Type of attached instance network, and available values include VPC, DIRECTCONNECT, BMVPC and VPNGW. Note: VPNGW type is only for whitelist customer now.'
             route_ids: '- Route id list.'
+            route_table_id: '- (Optional, String, ForceNew) Ccn instance route table ID.'
             state: '- States of instance is attached. Valid values: PENDING, ACTIVE, EXPIRED, REJECTED, DELETED, FAILED, ATTACHING, DETACHING and DETACHFAILED. FAILED means asynchronous forced disassociation after 2 hours. DETACHFAILED means asynchronous forced disassociation after 2 hours.'
         importStatements: []
     tencentcloud_ccn_bandwidth_limit:
@@ -4408,16 +4476,16 @@ resources:
         importStatements: []
     tencentcloud_ccn_routes:
         subCategory: Cloud Connect Network(CCN)
-        description: Provides a resource to create a vpc ccn_routes
+        description: Provides a resource to create a vpc ccn_routes switch
         name: tencentcloud_ccn_routes
         title: tencentcloud_ccn_routes
         examples:
-            - name: ccn_routes
+            - name: example
               manifest: |-
                 {
-                  "ccn_id": "ccn-39lqkygf",
-                  "route_id": "ccnr-3o0dfyuw",
-                  "switch": "on"
+                  "ccn_id": "ccn-gr7nynbd",
+                  "route_id": "ccnrtb-jpf7bzn3",
+                  "switch": "off"
                 }
         argumentDocs:
             ccn_id: '- (Required, String, ForceNew) CCN Instance ID.'
@@ -7468,78 +7536,149 @@ resources:
         name: tencentcloud_clb_instance
         title: tencentcloud_clb_instance
         examples:
-            - name: internal_clb
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "myclb",
+                  "clb_name": "tf-example",
                   "network_type": "INTERNAL",
                   "project_id": 0,
-                  "subnet_id": "subnet-12rastkr",
+                  "subnet_id": "${tencentcloud_subnet.subnet.id}",
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
-                  "vpc_id": "vpc-7007ll7q"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
-            - name: internal_clb
+              references:
+                subnet_id: tencentcloud_subnet.subnet.id
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-4",
+                      "cidr_block": "10.0.1.0/24",
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "myclb",
+                  "clb_name": "tf-example",
                   "network_type": "INTERNAL",
                   "project_id": 0,
                   "sla_type": "clb.c3.medium",
-                  "subnet_id": "subnet-o3a5nt20",
+                  "subnet_id": "${tencentcloud_subnet.subnet.id}",
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
-                  "vpc_id": "vpc-2hfyray3"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
-            - name: open_clb
+              references:
+                subnet_id: tencentcloud_subnet.subnet.id
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "ap-guangzhou-4",
+                      "cidr_block": "10.0.1.0/24",
+                      "name": "subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "myclb",
+                  "clb_name": "tf-example",
                   "network_type": "OPEN",
                   "project_id": 0,
                   "security_groups": [
-                    "sg-o0ek7r93"
+                    "${tencentcloud_security_group.example.id}"
                   ],
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
-                  "vpc_id": "vpc-da7ffa61"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
-            - name: open_clb
+              references:
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_security_group.example: |-
+                    {
+                      "description": "sg desc.",
+                      "name": "tf-example",
+                      "project_id": 0,
+                      "tags": {
+                        "example": "test"
+                      }
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "myclb",
+                  "clb_name": "tf-example",
                   "network_type": "OPEN",
                   "project_id": 0,
                   "security_groups": [
-                    "sg-o0ek7r93"
+                    "${tencentcloud_security_group.example.id}"
                   ],
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
                   "target_region_info_region": "ap-guangzhou",
-                  "target_region_info_vpc_id": "vpc-da7ffa61",
-                  "vpc_id": "vpc-da7ffa61"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
-            - name: open_clb
+              references:
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_security_group.example: |-
+                    {
+                      "description": "sg desc.",
+                      "name": "tf-example",
+                      "project_id": 0,
+                      "tags": {
+                        "example": "test"
+                      }
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: example
               manifest: |-
                 {
                   "bandwidth_package_id": "${tencentcloud_vpc_bandwidth_package.example.id}",
-                  "clb_name": "my-open-clb",
+                  "clb_name": "tf-example",
                   "internet_charge_type": "BANDWIDTH_PACKAGE",
                   "network_type": "OPEN",
                   "project_id": 0,
                   "tags": {
-                    "test": "open"
+                    "tagKey": "tagValue"
                   },
                   "vip_isp": "CMCC",
-                  "vpc_id": "vpc-4owdpnwr"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
               references:
                 bandwidth_package_id: tencentcloud_vpc_bandwidth_package.example.id
+                vpc_id: tencentcloud_vpc.vpc.id
               dependencies:
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
                 tencentcloud_vpc_bandwidth_package.example: |-
                     {
                       "bandwidth_package_name": "tf-example",
@@ -7551,155 +7690,162 @@ resources:
                         "createdBy": "terraform"
                       }
                     }
-            - name: clb_open
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "clb-instance-open",
+                  "clb_name": "tf-example",
                   "dynamic_vip": true,
                   "network_type": "OPEN",
                   "project_id": 0,
                   "security_groups": [
-                    "${tencentcloud_security_group.foo.id}"
+                    "${tencentcloud_security_group.example.id}"
                   ],
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
                   "target_region_info_region": "ap-guangzhou",
-                  "target_region_info_vpc_id": "${tencentcloud_vpc.foo.id}",
-                  "vpc_id": "${tencentcloud_vpc.foo.id}"
+                  "target_region_info_vpc_id": "${tencentcloud_vpc.vpc.id}",
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
               references:
-                target_region_info_vpc_id: tencentcloud_vpc.foo.id
-                vpc_id: tencentcloud_vpc.foo.id
+                target_region_info_vpc_id: tencentcloud_vpc.vpc.id
+                vpc_id: tencentcloud_vpc.vpc.id
               dependencies:
-                tencentcloud_security_group.foo: |-
+                tencentcloud_security_group.example: |-
                     {
-                      "name": "clb-instance-open-sg"
+                      "description": "sg desc.",
+                      "name": "tf-example",
+                      "project_id": 0,
+                      "tags": {
+                        "example": "test"
+                      }
                     }
-                tencentcloud_vpc.foo: |-
+                tencentcloud_vpc.vpc: |-
                     {
                       "cidr_block": "10.0.0.0/16",
-                      "name": "clb-instance-open-vpc"
+                      "name": "vpc"
                     }
-            - name: clb_open
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "clb-instance-open",
+                  "clb_name": "tf-example",
                   "network_type": "OPEN",
                   "project_id": 0,
                   "security_groups": [
-                    "${tencentcloud_security_group.foo.id}"
+                    "${tencentcloud_security_group.example.id}"
                   ],
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
                   "vip": "111.230.4.204",
-                  "vpc_id": "${tencentcloud_vpc.foo.id}"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
               references:
-                vpc_id: tencentcloud_vpc.foo.id
+                vpc_id: tencentcloud_vpc.vpc.id
               dependencies:
-                tencentcloud_security_group.foo: |-
+                tencentcloud_security_group.example: |-
                     {
-                      "name": "clb-instance-open-sg"
+                      "description": "sg desc.",
+                      "name": "tf-example",
+                      "project_id": 0,
+                      "tags": {
+                        "example": "test"
+                      }
                     }
-                tencentcloud_vpc.foo: |-
+                tencentcloud_vpc.vpc: |-
                     {
                       "cidr_block": "10.0.0.0/16",
-                      "name": "clb-instance-open-vpc"
+                      "name": "vpc"
                     }
-            - name: open_clb
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "my-open-clb",
+                  "clb_name": "tf-example",
                   "load_balancer_pass_to_target": true,
                   "network_type": "OPEN",
                   "project_id": 0,
                   "security_groups": [
-                    "${tencentcloud_security_group.sglab.id}"
+                    "${tencentcloud_security_group.example.id}"
                   ],
                   "tags": {
-                    "test": "open"
+                    "tagKey": "tagValue"
                   },
                   "target_region_info_region": "ap-guangzhou",
-                  "target_region_info_vpc_id": "${tencentcloud_vpc.foo.id}",
-                  "vpc_id": "${tencentcloud_vpc.foo.id}"
+                  "target_region_info_vpc_id": "${tencentcloud_vpc.vpc.id}",
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
               references:
-                target_region_info_vpc_id: tencentcloud_vpc.foo.id
-                vpc_id: tencentcloud_vpc.foo.id
+                target_region_info_vpc_id: tencentcloud_vpc.vpc.id
+                vpc_id: tencentcloud_vpc.vpc.id
               dependencies:
-                tencentcloud_security_group.sglab: |-
+                tencentcloud_security_group.example: |-
                     {
-                      "description": "favourite sg",
-                      "name": "sg_o0ek7r93",
-                      "project_id": 0
-                    }
-                tencentcloud_subnet.subnet: |-
-                    {
-                      "availability_zone": "ap-guangzhou-1",
-                      "cidr_block": "10.0.20.0/28",
-                      "is_multicast": false,
-                      "name": "sdk-feature-test",
-                      "vpc_id": "${tencentcloud_vpc.foo.id}"
-                    }
-                tencentcloud_vpc.foo: |-
-                    {
-                      "cidr_block": "10.0.0.0/16",
-                      "name": "for-my-open-clb",
+                      "description": "sg desc.",
+                      "name": "tf-example",
+                      "project_id": 0,
                       "tags": {
-                        "test": "mytest"
+                        "example": "test"
                       }
                     }
-            - name: open_clb1
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc"
+                    }
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "hello",
+                  "clb_name": "tf-example",
                   "master_zone_id": "ap-guangzhou-3",
                   "network_type": "OPEN"
                 }
-            - name: internal_clb
+            - name: example
               manifest: |-
                 {
-                  "clb_name": "myclb",
+                  "clb_name": "tf-example",
                   "load_balancer_pass_to_target": true,
-                  "log_set_id": "${tencentcloud_clb_log_set.set.id}",
-                  "log_topic_id": "${tencentcloud_clb_log_topic.topic.id}",
+                  "log_set_id": "${tencentcloud_clb_log_set.example.id}",
+                  "log_topic_id": "${tencentcloud_clb_log_topic.example.id}",
                   "network_type": "INTERNAL",
                   "project_id": 0,
-                  "subnet_id": "${tencentcloud_subnet.subnet_test.id}",
+                  "subnet_id": "${tencentcloud_subnet.subnet.id}",
                   "tags": {
-                    "test": "tf"
+                    "tagKey": "tagValue"
                   },
-                  "vpc_id": "${tencentcloud_vpc.vpc_test.id}"
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
                 }
+              references:
+                log_set_id: tencentcloud_clb_log_set.example.id
+                log_topic_id: tencentcloud_clb_log_topic.example.id
+                subnet_id: tencentcloud_subnet.subnet.id
+                vpc_id: tencentcloud_vpc.vpc.id
               dependencies:
-                tencentcloud_clb_log_set.set: |-
+                tencentcloud_clb_log_set.example: |-
                     {
                       "period": 7
                     }
-                tencentcloud_clb_log_topic.topic: |-
+                tencentcloud_clb_log_topic.example: |-
                     {
-                      "log_set_id": "${tencentcloud_clb_log_set.set.id}",
+                      "log_set_id": "${tencentcloud_clb_log_set.example.id}",
                       "topic_name": "clb-topic"
                     }
-                tencentcloud_route_table.rtb_test: |-
+                tencentcloud_route_table.example: |-
                     {
-                      "name": "clb-test",
-                      "vpc_id": "${tencentcloud_vpc.vpc_test.id}"
+                      "name": "tf-example",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
                     }
-                tencentcloud_subnet.subnet_test: |-
+                tencentcloud_subnet.subnet: |-
                     {
-                      "availability_zone": "ap-guangzhou-3",
+                      "availability_zone": "ap-guangzhou-4",
                       "cidr_block": "10.0.1.0/24",
-                      "name": "clb-test",
-                      "route_table_id": "${tencentcloud_route_table.rtb_test.id}",
-                      "vpc_id": "${tencentcloud_vpc.vpc_test.id}"
+                      "name": "subnet",
+                      "route_table_id": "${tencentcloud_route_table.example.id}",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
                     }
-                tencentcloud_vpc.vpc_test: |-
+                tencentcloud_vpc.vpc: |-
                     {
                       "cidr_block": "10.0.0.0/16",
-                      "name": "clb-test"
+                      "name": "vpc"
                     }
         argumentDocs:
             address_ip_version: '- (Optional, String) IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.'
@@ -7720,7 +7866,7 @@ resources:
             log_topic_id: '- (Optional, String) The id of log topic.'
             master_zone_id: '- (Optional, String) Setting master zone id of cross available zone disaster recovery, only applicable to open CLB.'
             network_type: '- (Required, String, ForceNew) Type of CLB instance. Valid values: OPEN and INTERNAL.'
-            project_id: '- (Optional, Int, ForceNew) ID of the project within the CLB instance, 0 - Default Project.'
+            project_id: '- (Optional, Int) ID of the project within the CLB instance, 0 - Default Project.'
             security_groups: '- (Optional, List: [String]) Security groups of the CLB instance. Supports both OPEN and INTERNAL CLBs.'
             sla_type: '- (Optional, String) This parameter is required to create LCU-supported instances. Values:SLA: Super Large 4. When you have activated Super Large models, SLA refers to Super Large 4; clb.c2.medium: Standard; clb.c3.small: Advanced 1; clb.c3.medium: Advanced 1; clb.c4.small: Super Large 1; clb.c4.medium: Super Large 2; clb.c4.large: Super Large 3; clb.c4.xlarge: Super Large 4. For more details, see Instance Specifications.'
             slave_zone_id: '- (Optional, String) Setting slave zone id of cross available zone disaster recovery, only applicable to open CLB. this zone will undertake traffic when the master is down.'
@@ -19812,6 +19958,28 @@ resources:
             values: '- (Optional, List: [String]) Values the addon passthroughs. Conflict with request_body.'
             version: '- (Optional, String) Addon version, default latest version. Conflict with request_body.'
         importStatements: []
+    tencentcloud_kubernetes_addon_config:
+        subCategory: Tencent Kubernetes Engine(TKE)
+        description: Provide a resource to configure addon that kubernetes comes with.
+        name: tencentcloud_kubernetes_addon_config
+        title: tencentcloud_kubernetes_addon_config
+        examples:
+            - name: kubernetes_addon_config
+              manifest: |-
+                {
+                  "addon_name": "cluster-autoscaler",
+                  "cluster_id": "cls-xxxxxx",
+                  "raw_values": "{\"extraArgs\":{\"scale-down-enabled\":true,\"max-empty-bulk-delete\":11,\"scale-down-delay-after-add\":\"10mm\",\"scale-down-unneeded-time\":\"10mm\",\"scale-down-utilization-threshold\":0.005,\"ignore-daemonsets-utilization\":false,\"skip-nodes-with-local-storage\":true,\"skip-nodes-with-system-pods\":true}}"
+                }
+        argumentDocs:
+            addon_name: '- (Required, String, ForceNew) Name of addon.'
+            addon_version: '- (Optional, String) Version of addon.'
+            cluster_id: '- (Required, String, ForceNew) ID of cluster.'
+            id: '- ID of the resource.'
+            phase: '- Status of addon.'
+            raw_values: '- (Optional, String) Params of addon, base64 encoded json format.'
+            reason: '- Reason of addon failed.'
+        importStatements: []
     tencentcloud_kubernetes_auth_attachment:
         subCategory: Tencent Kubernetes Engine(TKE)
         description: Provide a resource to configure kubernetes cluster authentication info.
@@ -24122,19 +24290,16 @@ resources:
         name: tencentcloud_monitor_tmp_alert_group
         title: tencentcloud_monitor_tmp_alert_group
         examples:
-            - name: tmp_alert_group
+            - name: example
               manifest: |-
                 {
-                  "amp_receivers": [
-                    "notice-om017kc2"
-                  ],
                   "custom_receiver": [
                     {
                       "type": "amp"
                     }
                   ],
-                  "group_name": "tf-test",
-                  "instance_id": "prom-ip429jis",
+                  "group_name": "tf-example",
+                  "instance_id": "${tencentcloud_monitor_tmp_instance.example.id}",
                   "repeat_interval": "5m",
                   "rules": [
                     {
@@ -24152,6 +24317,32 @@ resources:
                     }
                   ]
                 }
+              references:
+                instance_id: tencentcloud_monitor_tmp_instance.example.id
+              dependencies:
+                tencentcloud_monitor_tmp_instance.example: |-
+                    {
+                      "data_retention_time": 30,
+                      "instance_name": "tf-tmp-instance",
+                      "subnet_id": "${tencentcloud_subnet.subnet.id}",
+                      "tags": {
+                        "createdBy": "terraform"
+                      },
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}",
+                      "zone": "${var.availability_zone}"
+                    }
+                tencentcloud_subnet.subnet: |-
+                    {
+                      "availability_zone": "${var.availability_zone}",
+                      "cidr_block": "10.0.1.0/24",
+                      "name": "tf_monitor_subnet",
+                      "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                    }
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "tf_monitor_vpc"
+                    }
         argumentDocs:
             allowed_time_ranges: '- (Optional, List) Time ranges which allow alert message send.'
             amp_receivers: '- (Optional, Set: [String]) Tencent cloud notification template id list.'
@@ -34599,6 +34790,7 @@ resources:
             id: '- ID of the resource.'
             next_hub: '- (Required, String, ForceNew) ID of next-hop gateway. Note: when next_type is EIP, next_hub should be 0.'
             next_type: '- (Required, String, ForceNew) Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.'
+            route_item_id: '- ID of route table entry.'
             route_table_id: '- (Required, String, ForceNew) ID of routing table to which this entry belongs.'
         importStatements: []
     tencentcloud_rum_instance_status_config:
@@ -34643,22 +34835,36 @@ resources:
         name: tencentcloud_rum_project
         title: tencentcloud_rum_project
         examples:
-            - name: project
+            - name: example
               manifest: |-
                 {
-                  "desc": "projectDesc-1",
+                  "desc": "desc.",
                   "enable_url_group": "0",
-                  "instance_id": "rum-pasZKEI3RLgakj",
-                  "name": "projectName",
+                  "instance_id": "${tencentcloud_rum_taw_instance.example.id}",
+                  "name": "tf-example",
                   "rate": "100",
-                  "repo": "",
+                  "repo": "https://github.com/xxx",
                   "type": "web",
                   "url": "iac-tf.com"
                 }
+              references:
+                instance_id: tencentcloud_rum_taw_instance.example.id
+              dependencies:
+                tencentcloud_rum_taw_instance.example: |-
+                    {
+                      "area_id": "1",
+                      "charge_type": "1",
+                      "data_retention_days": "30",
+                      "instance_desc": "desc.",
+                      "instance_name": "tf-example",
+                      "tags": {
+                        "createdBy": "terraform"
+                      }
+                    }
         argumentDocs:
-            create_time: '- Creata Time.'
+            create_time: '- Create Time.'
             creator: '- Creator ID.'
-            desc: "- (Optional, String) \tDescription of the created project (optional and up to 1,000 characters)."
+            desc: '- (Optional, String) Description of the created project (optional and up to 1,000 characters).'
             enable_url_group: '- (Required, Int) Whether to enable aggregation.'
             id: '- ID of the resource.'
             instance_id: '- (Required, String) Business system ID.'
@@ -34696,14 +34902,14 @@ resources:
         name: tencentcloud_rum_taw_instance
         title: tencentcloud_rum_taw_instance
         examples:
-            - name: taw_instance
+            - name: example
               manifest: |-
                 {
                   "area_id": "1",
                   "charge_type": "1",
                   "data_retention_days": "30",
-                  "instance_desc": "instanceDesc-1",
-                  "instance_name": "instanceName-1",
+                  "instance_desc": "desc.",
+                  "instance_name": "tf-example",
                   "tags": {
                     "createdBy": "terraform"
                   }
@@ -39140,9 +39346,29 @@ resources:
                       "cidr_block": "10.0.0.0/16",
                       "name": "vpc-example"
                     }
+            - name: subnet
+              manifest: |-
+                {
+                  "availability_zone": "${data.tencentcloud_availability_zones.zones.zones.0.name}",
+                  "cdc_id": "cluster-lchwgxhs",
+                  "cidr_block": "10.0.0.0/16",
+                  "is_multicast": false,
+                  "name": "subnet-example",
+                  "vpc_id": "${tencentcloud_vpc.vpc.id}"
+                }
+              references:
+                availability_zone: data.tencentcloud_availability_zones.zones.zones.0.name
+                vpc_id: tencentcloud_vpc.vpc.id
+              dependencies:
+                tencentcloud_vpc.vpc: |-
+                    {
+                      "cidr_block": "10.0.0.0/16",
+                      "name": "vpc-example"
+                    }
         argumentDocs:
             availability_zone: '- (Required, String, ForceNew) The availability zone within which the subnet should be created.'
             available_ip_count: '- The number of available IPs.'
+            cdc_id: '- (Optional, String, ForceNew) ID of CDC instance.'
             cidr_block: '- (Required, String, ForceNew) A network address block of the subnet.'
             create_time: '- Creation time of subnet resource.'
             id: '- ID of the resource.'

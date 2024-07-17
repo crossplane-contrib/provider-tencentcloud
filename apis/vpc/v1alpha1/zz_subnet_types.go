@@ -19,6 +19,10 @@ type SubnetInitParameters struct {
 	// The availability zone within which the subnet should be created.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
+	// ID of CDC instance.
+	// ID of CDC instance.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// A network address block of the subnet.
 	// A network address block of the subnet.
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
@@ -64,6 +68,10 @@ type SubnetObservation struct {
 	// The number of available IPs.
 	AvailableIPCount *float64 `json:"availableIpCount,omitempty" tf:"available_ip_count,omitempty"`
 
+	// ID of CDC instance.
+	// ID of CDC instance.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// A network address block of the subnet.
 	// A network address block of the subnet.
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
@@ -107,6 +115,11 @@ type SubnetParameters struct {
 	// The availability zone within which the subnet should be created.
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+	// ID of CDC instance.
+	// ID of CDC instance.
+	// +kubebuilder:validation:Optional
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
 	// A network address block of the subnet.
 	// A network address block of the subnet.
