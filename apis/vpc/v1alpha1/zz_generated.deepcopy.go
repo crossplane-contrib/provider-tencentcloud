@@ -3108,6 +3108,11 @@ func (in *RouteTableEntryObservation) DeepCopyInto(out *RouteTableEntryObservati
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteItemID != nil {
+		in, out := &in.RouteItemID, &out.RouteItemID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RouteTableID != nil {
 		in, out := &in.RouteTableID, &out.RouteTableID
 		*out = new(string)
@@ -4563,6 +4568,11 @@ func (in *SubnetInitParameters) DeepCopyInto(out *SubnetInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CidrBlock != nil {
 		in, out := &in.CidrBlock, &out.CidrBlock
 		*out = new(string)
@@ -4671,6 +4681,11 @@ func (in *SubnetObservation) DeepCopyInto(out *SubnetObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CidrBlock != nil {
 		in, out := &in.CidrBlock, &out.CidrBlock
 		*out = new(string)
@@ -4744,6 +4759,11 @@ func (in *SubnetParameters) DeepCopyInto(out *SubnetParameters) {
 	*out = *in
 	if in.AvailabilityZone != nil {
 		in, out := &in.AvailabilityZone, &out.AvailabilityZone
+		*out = new(string)
+		**out = **in
+	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
 		*out = new(string)
 		**out = **in
 	}

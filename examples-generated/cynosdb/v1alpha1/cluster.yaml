@@ -4,16 +4,17 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cynosdb/v1alpha1/cluster
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availableZone: ap-guangzhou-4
-    clusterName: tf-cynosdb
+    availableZone: ${var.availability_zone}
+    clusterName: tf-example
+    dbMode: NORMAL
     dbType: MYSQL
     dbVersion: "5.7"
     forceDelete: false
-    instanceCpuCore: 1
+    instanceCpuCore: 2
     instanceMaintainDuration: 7200
     instanceMaintainStartTime: 10800
     instanceMaintainWeekdays:
@@ -24,25 +25,80 @@ spec:
     - Thu
     - Wed
     - Tue
-    instanceMemorySize: 2
-    param_item:
-    - current_value: utf8mb4
+    instanceMemorySize: 4
+    paramItems:
+    - currentValue: utf8mb4
       name: character_set_server
+    - currentValue: "0"
+      name: lower_case_table_names
     passwordSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    prarmTemplateId: "12345"
+    port: 3306
     roGroupSg:
-    - sg-ibyjkl6r
+    - ${tencentcloud_security_group.example.id}
     rwGroupSg:
-    - sg-ibyjkl6r
+    - ${tencentcloud_security_group.example.id}
     storageLimit: 1000
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: subnet
     tags:
-      test: test
+      createBy: terraform
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cynosdb/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: sg desc.
+    name: tf-example
+    projectId: 0
+    tags:
+      example: test
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cynosdb/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.20.0/28
+    isMulticast: false
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cynosdb/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc

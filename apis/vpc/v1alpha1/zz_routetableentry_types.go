@@ -74,6 +74,10 @@ type RouteTableEntryObservation struct {
 	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
+	// ID of route table entry.
+	// ID of route table entry.
+	RouteItemID *string `json:"routeItemId,omitempty" tf:"route_item_id,omitempty"`
+
 	// ID of routing table to which this entry belongs.
 	// ID of routing table to which this entry belongs.
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`

@@ -4,30 +4,30 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cvm/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: cvm_postpaid
-  name: cvm-postpaid
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availabilityZone: ${data.tencentcloud_availability_zones.my_favorite_zones.zones.0.name}
+    availabilityZone: ${var.availability_zone}
     dataDisks:
     - dataDiskSize: 50
       dataDiskType: CLOUD_PREMIUM
       encrypt: false
     hostname: user
-    imageId: ${data.tencentcloud_images.my_favorite_image.images.0.image_id}
-    instanceName: cvm_postpaid
-    instanceType: ${data.tencentcloud_instance_types.my_favorite_instance_types.instance_types.0.instance_type}
+    imageId: ${data.tencentcloud_images.images.images.0.image_id}
+    instanceName: tf-example
+    instanceType: ${data.tencentcloud_instance_types.types.instance_types.0.instance_type}
     projectId: 0
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: app
+        testing.upbound.io/example-name: subnet
     systemDiskSize: 50
     systemDiskType: CLOUD_PREMIUM
     tags:
       tagKey: tagValue
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: app
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -37,16 +37,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cvm/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: app
-  name: app
+    testing.upbound.io/example-name: subnet
+  name: subnet
 spec:
   forProvider:
-    availabilityZone: ${data.tencentcloud_availability_zones.my_favorite_zones.zones.0.name}
+    availabilityZone: ${var.availability_zone}
     cidrBlock: 10.0.1.0/24
-    name: awesome_app_subnet
+    name: subnet
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: app
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -56,9 +56,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cvm/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: app
-  name: app
+    testing.upbound.io/example-name: vpc
+  name: vpc
 spec:
   forProvider:
     cidrBlock: 10.0.0.0/16
-    name: awesome_app_vpc
+    name: vpc

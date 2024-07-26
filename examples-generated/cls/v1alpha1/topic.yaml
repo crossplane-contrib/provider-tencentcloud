@@ -19,7 +19,7 @@ spec:
     period: 30
     storageType: hot
     tags:
-      test: test
+      tagKey: tagValue
     topicName: tf_example
 
 ---
@@ -36,4 +36,4 @@ spec:
   forProvider:
     logsetName: tf_example
     tags:
-      demo: test
+      tagKey: tagValue

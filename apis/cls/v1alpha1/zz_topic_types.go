@@ -13,6 +13,111 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AnonymousAccessInitParameters struct {
+
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	Conditions []ConditionsInitParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
+
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	Operations []*string `json:"operations,omitempty" tf:"operations,omitempty"`
+}
+
+type AnonymousAccessObservation struct {
+
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	Conditions []ConditionsObservation `json:"conditions,omitempty" tf:"conditions,omitempty"`
+
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	Operations []*string `json:"operations,omitempty" tf:"operations,omitempty"`
+}
+
+type AnonymousAccessParameters struct {
+
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// +kubebuilder:validation:Optional
+	Conditions []ConditionsParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
+
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+	// +kubebuilder:validation:Optional
+	Operations []*string `json:"operations,omitempty" tf:"operations,omitempty"`
+}
+
+type ConditionsInitParameters struct {
+
+	// Condition attribute, currently only VpcID is supported.
+	// Condition attribute, currently only VpcID is supported.
+	Attributes *string `json:"attributes,omitempty" tf:"attributes,omitempty"`
+
+	// The value of the corresponding conditional attribute.
+	// The value of the corresponding conditional attribute.
+	ConditionValue *string `json:"conditionValue,omitempty" tf:"condition_value,omitempty"`
+
+	// Conditional rule, 1: equal, 2: not equal.
+	// Conditional rule, 1: equal, 2: not equal.
+	Rule *float64 `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ConditionsObservation struct {
+
+	// Condition attribute, currently only VpcID is supported.
+	// Condition attribute, currently only VpcID is supported.
+	Attributes *string `json:"attributes,omitempty" tf:"attributes,omitempty"`
+
+	// The value of the corresponding conditional attribute.
+	// The value of the corresponding conditional attribute.
+	ConditionValue *string `json:"conditionValue,omitempty" tf:"condition_value,omitempty"`
+
+	// Conditional rule, 1: equal, 2: not equal.
+	// Conditional rule, 1: equal, 2: not equal.
+	Rule *float64 `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ConditionsParameters struct {
+
+	// Condition attribute, currently only VpcID is supported.
+	// Condition attribute, currently only VpcID is supported.
+	// +kubebuilder:validation:Optional
+	Attributes *string `json:"attributes,omitempty" tf:"attributes,omitempty"`
+
+	// The value of the corresponding conditional attribute.
+	// The value of the corresponding conditional attribute.
+	// +kubebuilder:validation:Optional
+	ConditionValue *string `json:"conditionValue,omitempty" tf:"condition_value,omitempty"`
+
+	// Conditional rule, 1: equal, 2: not equal.
+	// Conditional rule, 1: equal, 2: not equal.
+	// +kubebuilder:validation:Optional
+	Rule *float64 `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ExtendsInitParameters struct {
+
+	// Log topic authentication free configuration information.
+	// Log topic authentication free configuration information.
+	AnonymousAccess []AnonymousAccessInitParameters `json:"anonymousAccess,omitempty" tf:"anonymous_access,omitempty"`
+}
+
+type ExtendsObservation struct {
+
+	// Log topic authentication free configuration information.
+	// Log topic authentication free configuration information.
+	AnonymousAccess []AnonymousAccessObservation `json:"anonymousAccess,omitempty" tf:"anonymous_access,omitempty"`
+}
+
+type ExtendsParameters struct {
+
+	// Log topic authentication free configuration information.
+	// Log topic authentication free configuration information.
+	// +kubebuilder:validation:Optional
+	AnonymousAccess []AnonymousAccessParameters `json:"anonymousAccess,omitempty" tf:"anonymous_access,omitempty"`
+}
+
 type TopicInitParameters struct {
 
 	// Whether to enable automatic split. Default value: true.
@@ -23,9 +128,17 @@ type TopicInitParameters struct {
 	// Log Topic Description.
 	Describes *string `json:"describes,omitempty" tf:"describes,omitempty"`
 
+	// Log Subject Extension Information.
+	// Log Subject Extension Information.
+	Extends []ExtendsInitParameters `json:"extends,omitempty" tf:"extends,omitempty"`
+
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
+
+	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	IsWebTracking *bool `json:"isWebTracking,omitempty" tf:"is_web_tracking,omitempty"`
 
 	// Logset ID.
 	// Logset ID.
@@ -76,12 +189,20 @@ type TopicObservation struct {
 	// Log Topic Description.
 	Describes *string `json:"describes,omitempty" tf:"describes,omitempty"`
 
+	// Log Subject Extension Information.
+	// Log Subject Extension Information.
+	Extends []ExtendsObservation `json:"extends,omitempty" tf:"extends,omitempty"`
+
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	IsWebTracking *bool `json:"isWebTracking,omitempty" tf:"is_web_tracking,omitempty"`
 
 	// Logset ID.
 	// Logset ID.
@@ -125,10 +246,20 @@ type TopicParameters struct {
 	// +kubebuilder:validation:Optional
 	Describes *string `json:"describes,omitempty" tf:"describes,omitempty"`
 
+	// Log Subject Extension Information.
+	// Log Subject Extension Information.
+	// +kubebuilder:validation:Optional
+	Extends []ExtendsParameters `json:"extends,omitempty" tf:"extends,omitempty"`
+
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
 	// +kubebuilder:validation:Optional
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
+
+	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// +kubebuilder:validation:Optional
+	IsWebTracking *bool `json:"isWebTracking,omitempty" tf:"is_web_tracking,omitempty"`
 
 	// Logset ID.
 	// Logset ID.

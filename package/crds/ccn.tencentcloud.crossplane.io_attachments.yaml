@@ -103,6 +103,11 @@ spec:
                       Type of attached instance network, and available values include VPC, DIRECTCONNECT, BMVPC and VPNGW. Note: VPNGW type is only for whitelist customer now.
                       Type of attached instance network, and available values include `VPC`, `DIRECTCONNECT`, `BMVPC` and `VPNGW`. Note: `VPNGW` type is only for whitelist customer now.
                     type: string
+                  routeTableId:
+                    description: |-
+                      Ccn instance route table ID.
+                      Ccn instance route table ID.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -146,6 +151,11 @@ spec:
                     description: |-
                       Type of attached instance network, and available values include VPC, DIRECTCONNECT, BMVPC and VPNGW. Note: VPNGW type is only for whitelist customer now.
                       Type of attached instance network, and available values include `VPC`, `DIRECTCONNECT`, `BMVPC` and `VPNGW`. Note: `VPNGW` type is only for whitelist customer now.
+                    type: string
+                  routeTableId:
+                    description: |-
+                      Ccn instance route table ID.
+                      Ccn instance route table ID.
                     type: string
                 type: object
               managementPolicies:
@@ -389,6 +399,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  routeTableId:
+                    description: |-
+                      Ccn instance route table ID.
+                      Ccn instance route table ID.
+                    type: string
                   state:
                     description: |-
                       States of instance is attached. Valid values: PENDING, ACTIVE, EXPIRED, REJECTED, DELETED, FAILED, ATTACHING, DETACHING and DETACHFAILED. FAILED means asynchronous forced disassociation after 2 hours. DETACHFAILED means asynchronous forced disassociation after 2 hours.

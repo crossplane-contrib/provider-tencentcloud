@@ -19,9 +19,13 @@ type StorageInitParameters struct {
 	// The available zone that the CBS instance locates at.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of CBS instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
-	// The charge type of CBS instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+	// The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+	// The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// The quota of backup points of cloud disk.
 	// The quota of backup points of cloud disk.
@@ -87,9 +91,13 @@ type StorageObservation struct {
 	// The available zone that the CBS instance locates at.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of CBS instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
-	// The charge type of CBS instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+	// The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+	// The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// The quota of backup points of cloud disk.
 	// The quota of backup points of cloud disk.
@@ -159,10 +167,15 @@ type StorageParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of CBS instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
-	// The charge type of CBS instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+	// The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+	// The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	// +kubebuilder:validation:Optional
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// The quota of backup points of cloud disk.
 	// The quota of backup points of cloud disk.
@@ -258,7 +271,7 @@ type StorageStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Storage is the Schema for the Storages API. Provides a resource to create a CBS.
+// Storage is the Schema for the Storages API. Provides a resource to create a CBS storage.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

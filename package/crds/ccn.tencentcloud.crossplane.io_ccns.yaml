@@ -98,6 +98,16 @@ spec:
                       Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
                       Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
                     type: string
+                  routeEcmpFlag:
+                    description: |-
+                      Whether to enable the equivalent routing function. true: enabled, false: disabled.
+                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+                    type: boolean
+                  routeOverlapFlag:
+                    description: |-
+                      Whether to enable the routing overlap function. true: enabled, false: disabled.
+                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+                    type: boolean
                   tags:
                     additionalProperties:
                       type: string
@@ -145,6 +155,16 @@ spec:
                       Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
                       Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
                     type: string
+                  routeEcmpFlag:
+                    description: |-
+                      Whether to enable the equivalent routing function. true: enabled, false: disabled.
+                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+                    type: boolean
+                  routeOverlapFlag:
+                    description: |-
+                      Whether to enable the routing overlap function. true: enabled, false: disabled.
+                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+                    type: boolean
                   tags:
                     additionalProperties:
                       type: string
@@ -369,6 +389,16 @@ spec:
                       Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
                       Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
                     type: string
+                  routeEcmpFlag:
+                    description: |-
+                      Whether to enable the equivalent routing function. true: enabled, false: disabled.
+                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+                    type: boolean
+                  routeOverlapFlag:
+                    description: |-
+                      Whether to enable the routing overlap function. true: enabled, false: disabled.
+                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+                    type: boolean
                   state:
                     description: |-
                       States of instance. Valid values: ISOLATED(arrears) and AVAILABLE.

@@ -146,6 +146,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
+                    type: string
                   disableApiTermination:
                     description: |-
                       Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
@@ -382,6 +387,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  systemDiskResizeOnline:
+                    description: |-
+                      Resize online.
+                      Resize online.
+                    type: boolean
                   systemDiskSize:
                     description: |-
                       Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
@@ -576,6 +586,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
+                    type: string
                   disableApiTermination:
                     description: |-
                       Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
@@ -793,6 +808,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  systemDiskResizeOnline:
+                    description: |-
+                      Resize online.
+                      Resize online.
+                    type: boolean
                   systemDiskSize:
                     description: |-
                       Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
@@ -1165,6 +1185,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
+                    type: string
                   disableApiTermination:
                     description: |-
                       Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
@@ -1341,6 +1366,11 @@ spec:
                       System disk snapshot ID used to initialize the system disk. When system disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
                       System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                     type: string
+                  systemDiskResizeOnline:
+                    description: |-
+                      Resize online.
+                      Resize online.
+                    type: boolean
                   systemDiskSize:
                     description: |-
                       Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.

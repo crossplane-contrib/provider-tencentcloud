@@ -27,6 +27,10 @@ type InstanceInitParameters struct {
 	// Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
 	ClbName *string `json:"clbName,omitempty" tf:"clb_name,omitempty"`
 
+	// Cluster ID.
+	// Cluster ID.
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
 	// Whether to enable delete protection.
 	// Whether to enable delete protection.
 	DeleteProtect *bool `json:"deleteProtect,omitempty" tf:"delete_protect,omitempty"`
@@ -161,6 +165,10 @@ type InstanceObservation struct {
 	// The virtual service address table of the CLB.
 	ClbVips []*string `json:"clbVips,omitempty" tf:"clb_vips,omitempty"`
 
+	// Cluster ID.
+	// Cluster ID.
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
 	// Whether to enable delete protection.
 	// Whether to enable delete protection.
 	DeleteProtect *bool `json:"deleteProtect,omitempty" tf:"delete_protect,omitempty"`
@@ -282,6 +290,11 @@ type InstanceParameters struct {
 	// Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
 	// +kubebuilder:validation:Optional
 	ClbName *string `json:"clbName,omitempty" tf:"clb_name,omitempty"`
+
+	// Cluster ID.
+	// Cluster ID.
+	// +kubebuilder:validation:Optional
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	// Whether to enable delete protection.
 	// Whether to enable delete protection.

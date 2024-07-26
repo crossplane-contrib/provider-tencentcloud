@@ -88,6 +88,11 @@ spec:
                       Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
                       Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
+                  clusterId:
+                    description: |-
+                      Cluster ID.
+                      Cluster ID.
+                    type: string
                   deleteProtect:
                     description: |-
                       Whether to enable delete protection.
@@ -397,6 +402,11 @@ spec:
                     description: |-
                       Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
                       Name of the CLB. The name can only contain Chinese characters, English letters, numbers, underscore and hyphen '-'.
+                    type: string
+                  clusterId:
+                    description: |-
+                      Cluster ID.
+                      Cluster ID.
                     type: string
                   deleteProtect:
                     description: |-
@@ -888,6 +898,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  clusterId:
+                    description: |-
+                      Cluster ID.
+                      Cluster ID.
+                    type: string
                   deleteProtect:
                     description: |-
                       Whether to enable delete protection.

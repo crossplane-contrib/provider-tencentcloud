@@ -988,6 +988,11 @@ func (in *StorageInitParameters) DeepCopyInto(out *StorageInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskBackupQuota != nil {
 		in, out := &in.DiskBackupQuota, &out.DiskBackupQuota
 		*out = new(float64)
@@ -1126,6 +1131,11 @@ func (in *StorageObservation) DeepCopyInto(out *StorageObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskBackupQuota != nil {
 		in, out := &in.DiskBackupQuota, &out.DiskBackupQuota
 		*out = new(float64)
@@ -1234,6 +1244,11 @@ func (in *StorageParameters) DeepCopyInto(out *StorageParameters) {
 	}
 	if in.ChargeType != nil {
 		in, out := &in.ChargeType, &out.ChargeType
+		*out = new(string)
+		**out = **in
+	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
 		*out = new(string)
 		**out = **in
 	}
@@ -1365,6 +1380,11 @@ func (in *StorageSetInitParameters) DeepCopyInto(out *StorageSetInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskCount != nil {
 		in, out := &in.DiskCount, &out.DiskCount
 		*out = new(float64)
@@ -1467,6 +1487,11 @@ func (in *StorageSetObservation) DeepCopyInto(out *StorageSetObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskCount != nil {
 		in, out := &in.DiskCount, &out.DiskCount
 		*out = new(float64)
@@ -1550,6 +1575,11 @@ func (in *StorageSetParameters) DeepCopyInto(out *StorageSetParameters) {
 	}
 	if in.ChargeType != nil {
 		in, out := &in.ChargeType, &out.ChargeType
+		*out = new(string)
+		**out = **in
+	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
 		*out = new(string)
 		**out = **in
 	}

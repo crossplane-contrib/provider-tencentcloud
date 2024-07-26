@@ -80,8 +80,13 @@ spec:
                     type: string
                   chargeType:
                     description: |-
-                      The charge type of CBS instance. Only support POSTPAID_BY_HOUR.
-                      The charge type of CBS instance. Only support `POSTPAID_BY_HOUR`.
+                      The charge type of CBS instance. Support POSTPAID_BY_HOUR and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Support `POSTPAID_BY_HOUR` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
                     type: string
                   diskCount:
                     description: |-
@@ -144,8 +149,13 @@ spec:
                     type: string
                   chargeType:
                     description: |-
-                      The charge type of CBS instance. Only support POSTPAID_BY_HOUR.
-                      The charge type of CBS instance. Only support `POSTPAID_BY_HOUR`.
+                      The charge type of CBS instance. Support POSTPAID_BY_HOUR and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Support `POSTPAID_BY_HOUR` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
                     type: string
                   diskCount:
                     description: |-
@@ -389,8 +399,13 @@ spec:
                     type: string
                   chargeType:
                     description: |-
-                      The charge type of CBS instance. Only support POSTPAID_BY_HOUR.
-                      The charge type of CBS instance. Only support `POSTPAID_BY_HOUR`.
+                      The charge type of CBS instance. Support POSTPAID_BY_HOUR and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Support `POSTPAID_BY_HOUR` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
                     type: string
                   diskCount:
                     description: |-

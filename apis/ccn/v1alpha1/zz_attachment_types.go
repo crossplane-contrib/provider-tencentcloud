@@ -38,6 +38,10 @@ type AttachmentInitParameters struct {
 	// Type of attached instance network, and available values include VPC, DIRECTCONNECT, BMVPC and VPNGW. Note: VPNGW type is only for whitelist customer now.
 	// Type of attached instance network, and available values include `VPC`, `DIRECTCONNECT`, `BMVPC` and `VPNGW`. Note: `VPNGW` type is only for whitelist customer now.
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Ccn instance route table ID.
+	// Ccn instance route table ID.
+	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 }
 
 type AttachmentObservation struct {
@@ -81,6 +85,10 @@ type AttachmentObservation struct {
 	// Route id list.
 	RouteIds []*string `json:"routeIds,omitempty" tf:"route_ids,omitempty"`
 
+	// Ccn instance route table ID.
+	// Ccn instance route table ID.
+	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
 	// States of instance is attached. Valid values: PENDING, ACTIVE, EXPIRED, REJECTED, DELETED, FAILED, ATTACHING, DETACHING and DETACHFAILED. FAILED means asynchronous forced disassociation after 2 hours. DETACHFAILED means asynchronous forced disassociation after 2 hours.
 	// States of instance is attached. Valid values: `PENDING`, `ACTIVE`, `EXPIRED`, `REJECTED`, `DELETED`, `FAILED`, `ATTACHING`, `DETACHING` and `DETACHFAILED`. `FAILED` means asynchronous forced disassociation after 2 hours. `DETACHFAILED` means asynchronous forced disassociation after 2 hours.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -117,6 +125,11 @@ type AttachmentParameters struct {
 	// Type of attached instance network, and available values include `VPC`, `DIRECTCONNECT`, `BMVPC` and `VPNGW`. Note: `VPNGW` type is only for whitelist customer now.
 	// +kubebuilder:validation:Optional
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Ccn instance route table ID.
+	// Ccn instance route table ID.
+	// +kubebuilder:validation:Optional
+	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 }
 
 // AttachmentSpec defines the desired state of Attachment

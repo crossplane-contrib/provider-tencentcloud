@@ -19,9 +19,13 @@ type StorageSetInitParameters struct {
 	// The available zone that the CBS instance locates at.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of CBS instance. Only support POSTPAID_BY_HOUR.
-	// The charge type of CBS instance. Only support `POSTPAID_BY_HOUR`.
+	// The charge type of CBS instance. Support POSTPAID_BY_HOUR and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+	// The charge type of CBS instance. Support `POSTPAID_BY_HOUR` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// The number of disks to be purchased. Default 1.
 	// The number of disks to be purchased. Default 1.
@@ -66,9 +70,13 @@ type StorageSetObservation struct {
 	// The available zone that the CBS instance locates at.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of CBS instance. Only support POSTPAID_BY_HOUR.
-	// The charge type of CBS instance. Only support `POSTPAID_BY_HOUR`.
+	// The charge type of CBS instance. Support POSTPAID_BY_HOUR and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+	// The charge type of CBS instance. Support `POSTPAID_BY_HOUR` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// The number of disks to be purchased. Default 1.
 	// The number of disks to be purchased. Default 1.
@@ -121,10 +129,15 @@ type StorageSetParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of CBS instance. Only support POSTPAID_BY_HOUR.
-	// The charge type of CBS instance. Only support `POSTPAID_BY_HOUR`.
+	// The charge type of CBS instance. Support POSTPAID_BY_HOUR and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+	// The charge type of CBS instance. Support `POSTPAID_BY_HOUR` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	// +kubebuilder:validation:Optional
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// The number of disks to be purchased. Default 1.
 	// The number of disks to be purchased. Default 1.
