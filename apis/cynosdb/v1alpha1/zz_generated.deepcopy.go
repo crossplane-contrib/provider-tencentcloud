@@ -146,6 +146,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ParamTemplateID != nil {
+		in, out := &in.ParamTemplateID, &out.ParamTemplateID
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
 		*out = new(float64)
@@ -190,6 +195,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 	}
 	if in.ServerlessStatusFlag != nil {
 		in, out := &in.ServerlessStatusFlag, &out.ServerlessStatusFlag
+		*out = new(string)
+		**out = **in
+	}
+	if in.SlaveZone != nil {
+		in, out := &in.SlaveZone, &out.SlaveZone
 		*out = new(string)
 		**out = **in
 	}
@@ -439,6 +449,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ParamTemplateID != nil {
+		in, out := &in.ParamTemplateID, &out.ParamTemplateID
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
 		*out = new(float64)
@@ -526,6 +541,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 	}
 	if in.ServerlessStatusFlag != nil {
 		in, out := &in.ServerlessStatusFlag, &out.ServerlessStatusFlag
+		*out = new(string)
+		**out = **in
+	}
+	if in.SlaveZone != nil {
+		in, out := &in.SlaveZone, &out.SlaveZone
 		*out = new(string)
 		**out = **in
 	}
@@ -688,6 +708,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ParamTemplateID != nil {
+		in, out := &in.ParamTemplateID, &out.ParamTemplateID
+		*out = new(float64)
+		**out = **in
+	}
 	out.PasswordSecretRef = in.PasswordSecretRef
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
@@ -733,6 +758,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	}
 	if in.ServerlessStatusFlag != nil {
 		in, out := &in.ServerlessStatusFlag, &out.ServerlessStatusFlag
+		*out = new(string)
+		**out = **in
+	}
+	if in.SlaveZone != nil {
+		in, out := &in.SlaveZone, &out.SlaveZone
 		*out = new(string)
 		**out = **in
 	}

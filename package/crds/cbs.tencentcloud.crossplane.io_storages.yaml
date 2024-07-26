@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Storage is the Schema for the Storages API. Provides a resource
-          to create a CBS.
+          to create a CBS storage.
         properties:
           apiVersion:
             description: |-
@@ -80,8 +80,13 @@ spec:
                     type: string
                   chargeType:
                     description: |-
-                      The charge type of CBS instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
-                      The charge type of CBS instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                      The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
                     type: string
                   diskBackupQuota:
                     description: |-
@@ -172,8 +177,13 @@ spec:
                     type: string
                   chargeType:
                     description: |-
-                      The charge type of CBS instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
-                      The charge type of CBS instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                      The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
                     type: string
                   diskBackupQuota:
                     description: |-
@@ -445,8 +455,13 @@ spec:
                     type: string
                   chargeType:
                     description: |-
-                      The charge type of CBS instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR.
-                      The charge type of CBS instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`.
+                      The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
+                      The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Exclusive cluster id.
+                      Exclusive cluster id.
                     type: string
                   diskBackupQuota:
                     description: |-

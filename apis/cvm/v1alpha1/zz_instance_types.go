@@ -143,6 +143,10 @@ type InstanceInitParameters struct {
 	// Settings for data disks.
 	DataDisks []DataDisksInitParameters `json:"dataDisks,omitempty" tf:"data_disks,omitempty"`
 
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
@@ -262,6 +266,10 @@ type InstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// Resize online.
+	// Resize online.
+	SystemDiskResizeOnline *bool `json:"systemDiskResizeOnline,omitempty" tf:"system_disk_resize_online,omitempty"`
+
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
@@ -334,6 +342,10 @@ type InstanceObservation struct {
 	// Settings for data disks.
 	// Settings for data disks.
 	DataDisks []DataDisksObservation `json:"dataDisks,omitempty" tf:"data_disks,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
@@ -472,6 +484,10 @@ type InstanceObservation struct {
 	// System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
 	SystemDiskID *string `json:"systemDiskId,omitempty" tf:"system_disk_id,omitempty"`
 
+	// Resize online.
+	// Resize online.
+	SystemDiskResizeOnline *bool `json:"systemDiskResizeOnline,omitempty" tf:"system_disk_resize_online,omitempty"`
+
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
@@ -538,6 +554,11 @@ type InstanceParameters struct {
 	// Settings for data disks.
 	// +kubebuilder:validation:Optional
 	DataDisks []DataDisksParameters `json:"dataDisks,omitempty" tf:"data_disks,omitempty"`
+
+	// Exclusive cluster id.
+	// Exclusive cluster id.
+	// +kubebuilder:validation:Optional
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
@@ -689,6 +710,11 @@ type InstanceParameters struct {
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// Resize online.
+	// Resize online.
+	// +kubebuilder:validation:Optional
+	SystemDiskResizeOnline *bool `json:"systemDiskResizeOnline,omitempty" tf:"system_disk_resize_online,omitempty"`
 
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.
 	// Size of the system disk. unit is GB, Default is 50GB. If modified, the instance may force stop.

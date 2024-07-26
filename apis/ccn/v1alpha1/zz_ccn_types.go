@@ -35,6 +35,14 @@ type CCNInitParameters struct {
 	// Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
+	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
+	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+	RouteEcmpFlag *bool `json:"routeEcmpFlag,omitempty" tf:"route_ecmp_flag,omitempty"`
+
+	// Whether to enable the routing overlap function. true: enabled, false: disabled.
+	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+	RouteOverlapFlag *bool `json:"routeOverlapFlag,omitempty" tf:"route_overlap_flag,omitempty"`
+
 	// Instance tag.
 	// Instance tag.
 	// +mapType=granular
@@ -74,6 +82,14 @@ type CCNObservation struct {
 	// Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
+	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
+	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+	RouteEcmpFlag *bool `json:"routeEcmpFlag,omitempty" tf:"route_ecmp_flag,omitempty"`
+
+	// Whether to enable the routing overlap function. true: enabled, false: disabled.
+	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+	RouteOverlapFlag *bool `json:"routeOverlapFlag,omitempty" tf:"route_overlap_flag,omitempty"`
+
 	// States of instance. Valid values: ISOLATED(arrears) and AVAILABLE.
 	// States of instance. Valid values: `ISOLATED`(arrears) and `AVAILABLE`.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -110,6 +126,16 @@ type CCNParameters struct {
 	// Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
 	// +kubebuilder:validation:Optional
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
+
+	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
+	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+	// +kubebuilder:validation:Optional
+	RouteEcmpFlag *bool `json:"routeEcmpFlag,omitempty" tf:"route_ecmp_flag,omitempty"`
+
+	// Whether to enable the routing overlap function. true: enabled, false: disabled.
+	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+	// +kubebuilder:validation:Optional
+	RouteOverlapFlag *bool `json:"routeOverlapFlag,omitempty" tf:"route_overlap_flag,omitempty"`
 
 	// Instance tag.
 	// Instance tag.

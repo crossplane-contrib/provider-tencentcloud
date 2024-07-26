@@ -47,8 +47,8 @@ type ClusterInitParameters struct {
 	// Type of CynosDB, and available values include `MYSQL`.
 	DBType *string `json:"dbType,omitempty" tf:"db_type,omitempty"`
 
-	// Version of CynosDB, which is related to db_type. For MYSQL, available value is 5.7.
-	// Version of CynosDB, which is related to `db_type`. For `MYSQL`, available value is `5.7`.
+	// Version of CynosDB, which is related to db_type. For MYSQL, available value is 5.7, 8.0.
+	// Version of CynosDB, which is related to `db_type`. For `MYSQL`, available value is `5.7`, `8.0`.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
 	// Indicate whether to delete cluster instance directly or not. Default is false. If set true, the cluster and its All RELATED INSTANCES will be deleted instead of staying recycle bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
@@ -88,15 +88,19 @@ type ClusterInitParameters struct {
 	// Recycling time of the old address, must be filled in when modifying the vpcRecycling time of the old address, must be filled in when modifying the vpc.
 	OldIPReserveHours *float64 `json:"oldIpReserveHours,omitempty" tf:"old_ip_reserve_hours,omitempty"`
 
-	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params to query available parameter details.
-	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
+	// Specify parameter list of database. It is valid when param_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params to query available parameter details.
+	// Specify parameter list of database. It is valid when `param_template_id` is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
 	ParamItems []ParamItemsInitParameters `json:"paramItems,omitempty" tf:"param_items,omitempty"`
+
+	// The ID of the parameter template.
+	// The ID of the parameter template.
+	ParamTemplateID *float64 `json:"paramTemplateId,omitempty" tf:"param_template_id,omitempty"`
 
 	// Port of CynosDB cluster.
 	// Port of CynosDB cluster.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The ID of the parameter template.
+	// It will be deprecated. Use param_template_id instead. The ID of the parameter template.
 	// The ID of the parameter template.
 	PrarmTemplateID *float64 `json:"prarmTemplateId,omitempty" tf:"prarm_template_id,omitempty"`
 
@@ -119,6 +123,10 @@ type ClusterInitParameters struct {
 	// Specify whether to pause or resume serverless cluster. values: resume, pause.
 	// Specify whether to pause or resume serverless cluster. values: `resume`, `pause`.
 	ServerlessStatusFlag *string `json:"serverlessStatusFlag,omitempty" tf:"serverless_status_flag,omitempty"`
+
+	// Multi zone Addresses of the CynosDB Cluster.
+	// Multi zone Addresses of the CynosDB Cluster.
+	SlaveZone *string `json:"slaveZone,omitempty" tf:"slave_zone,omitempty"`
 
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is MYSQL and charge_type is PREPAID, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is order and pay. when charge_type is POSTPAID_BY_HOUR, this argument is unnecessary.
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is `order and pay`. when charge_type is `POSTPAID_BY_HOUR`, this argument is unnecessary.
@@ -206,8 +214,8 @@ type ClusterObservation struct {
 	// Type of CynosDB, and available values include `MYSQL`.
 	DBType *string `json:"dbType,omitempty" tf:"db_type,omitempty"`
 
-	// Version of CynosDB, which is related to db_type. For MYSQL, available value is 5.7.
-	// Version of CynosDB, which is related to `db_type`. For `MYSQL`, available value is `5.7`.
+	// Version of CynosDB, which is related to db_type. For MYSQL, available value is 5.7, 8.0.
+	// Version of CynosDB, which is related to `db_type`. For `MYSQL`, available value is `5.7`, `8.0`.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
 	// Indicate whether to delete cluster instance directly or not. Default is false. If set true, the cluster and its All RELATED INSTANCES will be deleted instead of staying recycle bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
@@ -266,15 +274,19 @@ type ClusterObservation struct {
 	// Recycling time of the old address, must be filled in when modifying the vpcRecycling time of the old address, must be filled in when modifying the vpc.
 	OldIPReserveHours *float64 `json:"oldIpReserveHours,omitempty" tf:"old_ip_reserve_hours,omitempty"`
 
-	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params to query available parameter details.
-	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
+	// Specify parameter list of database. It is valid when param_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params to query available parameter details.
+	// Specify parameter list of database. It is valid when `param_template_id` is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
 	ParamItems []ParamItemsObservation `json:"paramItems,omitempty" tf:"param_items,omitempty"`
+
+	// The ID of the parameter template.
+	// The ID of the parameter template.
+	ParamTemplateID *float64 `json:"paramTemplateId,omitempty" tf:"param_template_id,omitempty"`
 
 	// Port of CynosDB cluster.
 	// Port of CynosDB cluster.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The ID of the parameter template.
+	// It will be deprecated. Use param_template_id instead. The ID of the parameter template.
 	// The ID of the parameter template.
 	PrarmTemplateID *float64 `json:"prarmTemplateId,omitempty" tf:"prarm_template_id,omitempty"`
 
@@ -325,6 +337,10 @@ type ClusterObservation struct {
 	// Specify whether to pause or resume serverless cluster. values: resume, pause.
 	// Specify whether to pause or resume serverless cluster. values: `resume`, `pause`.
 	ServerlessStatusFlag *string `json:"serverlessStatusFlag,omitempty" tf:"serverless_status_flag,omitempty"`
+
+	// Multi zone Addresses of the CynosDB Cluster.
+	// Multi zone Addresses of the CynosDB Cluster.
+	SlaveZone *string `json:"slaveZone,omitempty" tf:"slave_zone,omitempty"`
 
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is MYSQL and charge_type is PREPAID, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is order and pay. when charge_type is POSTPAID_BY_HOUR, this argument is unnecessary.
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is `order and pay`. when charge_type is `POSTPAID_BY_HOUR`, this argument is unnecessary.
@@ -394,8 +410,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	DBType *string `json:"dbType,omitempty" tf:"db_type,omitempty"`
 
-	// Version of CynosDB, which is related to db_type. For MYSQL, available value is 5.7.
-	// Version of CynosDB, which is related to `db_type`. For `MYSQL`, available value is `5.7`.
+	// Version of CynosDB, which is related to db_type. For MYSQL, available value is 5.7, 8.0.
+	// Version of CynosDB, which is related to `db_type`. For `MYSQL`, available value is `5.7`, `8.0`.
 	// +kubebuilder:validation:Optional
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
@@ -445,10 +461,15 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	OldIPReserveHours *float64 `json:"oldIpReserveHours,omitempty" tf:"old_ip_reserve_hours,omitempty"`
 
-	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params to query available parameter details.
-	// Specify parameter list of database. It is valid when prarm_template_id is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
+	// Specify parameter list of database. It is valid when param_template_id is set in create cluster. Use data.tencentcloud_mysql_default_params to query available parameter details.
+	// Specify parameter list of database. It is valid when `param_template_id` is set in create cluster. Use `data.tencentcloud_mysql_default_params` to query available parameter details.
 	// +kubebuilder:validation:Optional
 	ParamItems []ParamItemsParameters `json:"paramItems,omitempty" tf:"param_items,omitempty"`
+
+	// The ID of the parameter template.
+	// The ID of the parameter template.
+	// +kubebuilder:validation:Optional
+	ParamTemplateID *float64 `json:"paramTemplateId,omitempty" tf:"param_template_id,omitempty"`
 
 	// Password of root account.
 	// Password of `root` account.
@@ -460,7 +481,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The ID of the parameter template.
+	// It will be deprecated. Use param_template_id instead. The ID of the parameter template.
 	// The ID of the parameter template.
 	// +kubebuilder:validation:Optional
 	PrarmTemplateID *float64 `json:"prarmTemplateId,omitempty" tf:"prarm_template_id,omitempty"`
@@ -489,6 +510,11 @@ type ClusterParameters struct {
 	// Specify whether to pause or resume serverless cluster. values: `resume`, `pause`.
 	// +kubebuilder:validation:Optional
 	ServerlessStatusFlag *string `json:"serverlessStatusFlag,omitempty" tf:"serverless_status_flag,omitempty"`
+
+	// Multi zone Addresses of the CynosDB Cluster.
+	// Multi zone Addresses of the CynosDB Cluster.
+	// +kubebuilder:validation:Optional
+	SlaveZone *string `json:"slaveZone,omitempty" tf:"slave_zone,omitempty"`
 
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is MYSQL and charge_type is PREPAID, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is order and pay. when charge_type is POSTPAID_BY_HOUR, this argument is unnecessary.
 	// Storage limit of CynosDB cluster instance, unit in GB. The maximum storage of a non-serverless instance in GB. NOTE: If db_type is `MYSQL` and charge_type is `PREPAID`, the value cannot exceed the maximum storage corresponding to the CPU and memory specifications, and the transaction mode is `order and pay`. when charge_type is `POSTPAID_BY_HOUR`, this argument is unnecessary.

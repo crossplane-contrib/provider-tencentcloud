@@ -78,6 +78,11 @@ spec:
                       The availability zone within which the subnet should be created.
                       The availability zone within which the subnet should be created.
                     type: string
+                  cdcId:
+                    description: |-
+                      ID of CDC instance.
+                      ID of CDC instance.
+                    type: string
                   cidrBlock:
                     description: |-
                       A network address block of the subnet.
@@ -203,6 +208,11 @@ spec:
                     description: |-
                       The availability zone within which the subnet should be created.
                       The availability zone within which the subnet should be created.
+                    type: string
+                  cdcId:
+                    description: |-
+                      ID of CDC instance.
+                      ID of CDC instance.
                     type: string
                   cidrBlock:
                     description: |-
@@ -507,6 +517,11 @@ spec:
                       The number of available IPs.
                       The number of available IPs.
                     type: number
+                  cdcId:
+                    description: |-
+                      ID of CDC instance.
+                      ID of CDC instance.
+                    type: string
                   cidrBlock:
                     description: |-
                       A network address block of the subnet.

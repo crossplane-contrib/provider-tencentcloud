@@ -509,6 +509,11 @@ spec:
                       Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
                       Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
                     type: string
+                  routeItemId:
+                    description: |-
+                      ID of route table entry.
+                      ID of route table entry.
+                    type: string
                   routeTableId:
                     description: |-
                       ID of routing table to which this entry belongs.

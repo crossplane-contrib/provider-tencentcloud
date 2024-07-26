@@ -563,6 +563,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DisableAPITermination != nil {
 		in, out := &in.DisableAPITermination, &out.DisableAPITermination
 		*out = new(bool)
@@ -726,6 +731,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.SystemDiskResizeOnline != nil {
+		in, out := &in.SystemDiskResizeOnline, &out.SystemDiskResizeOnline
+		*out = new(bool)
+		**out = **in
+	}
 	if in.SystemDiskSize != nil {
 		in, out := &in.SystemDiskSize, &out.SystemDiskSize
 		*out = new(float64)
@@ -870,6 +880,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.DisableAPITermination != nil {
 		in, out := &in.DisableAPITermination, &out.DisableAPITermination
@@ -1059,6 +1074,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SystemDiskResizeOnline != nil {
+		in, out := &in.SystemDiskResizeOnline, &out.SystemDiskResizeOnline
+		*out = new(bool)
+		**out = **in
+	}
 	if in.SystemDiskSize != nil {
 		in, out := &in.SystemDiskSize, &out.SystemDiskSize
 		*out = new(float64)
@@ -1156,6 +1176,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.DisableAPITermination != nil {
 		in, out := &in.DisableAPITermination, &out.DisableAPITermination
@@ -1324,6 +1349,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.SystemDiskResizeOnline != nil {
+		in, out := &in.SystemDiskResizeOnline, &out.SystemDiskResizeOnline
+		*out = new(bool)
+		**out = **in
 	}
 	if in.SystemDiskSize != nil {
 		in, out := &in.SystemDiskSize, &out.SystemDiskSize

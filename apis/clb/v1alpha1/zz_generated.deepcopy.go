@@ -855,6 +855,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ClusterID != nil {
+		in, out := &in.ClusterID, &out.ClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DeleteProtect != nil {
 		in, out := &in.DeleteProtect, &out.DeleteProtect
 		*out = new(bool)
@@ -1087,6 +1092,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 			}
 		}
 	}
+	if in.ClusterID != nil {
+		in, out := &in.ClusterID, &out.ClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DeleteProtect != nil {
 		in, out := &in.DeleteProtect, &out.DeleteProtect
 		*out = new(bool)
@@ -1263,6 +1273,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.ClbName != nil {
 		in, out := &in.ClbName, &out.ClbName
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClusterID != nil {
+		in, out := &in.ClusterID, &out.ClusterID
 		*out = new(string)
 		**out = **in
 	}

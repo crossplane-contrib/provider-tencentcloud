@@ -4,15 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cbs/v1alpha1/storage
   labels:
-    testing.upbound.io/example-name: storage
-  name: storage
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     availabilityZone: ap-guangzhou-3
     encrypt: false
     projectId: 0
-    storageName: mystorage
+    storageName: tf-example
     storageSize: 100
     storageType: CLOUD_SSD
     tags:
-      test: tf
+      createBy: terraform

@@ -83,11 +83,62 @@ spec:
                       Log Topic Description.
                       Log Topic Description.
                     type: string
+                  extends:
+                    description: |-
+                      Log Subject Extension Information.
+                      Log Subject Extension Information.
+                    items:
+                      properties:
+                        anonymousAccess:
+                          description: |-
+                            Log topic authentication free configuration information.
+                            Log topic authentication free configuration information.
+                          items:
+                            properties:
+                              conditions:
+                                description: |-
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                items:
+                                  properties:
+                                    attributes:
+                                      description: |-
+                                        Condition attribute, currently only VpcID is supported.
+                                        Condition attribute, currently only VpcID is supported.
+                                      type: string
+                                    conditionValue:
+                                      description: |-
+                                        The value of the corresponding conditional attribute.
+                                        The value of the corresponding conditional attribute.
+                                      type: string
+                                    rule:
+                                      description: |-
+                                        Conditional rule, 1: equal, 2: not equal.
+                                        Conditional rule, 1: equal, 2: not equal.
+                                      type: number
+                                  type: object
+                                type: array
+                              operations:
+                                description: |-
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   hotPeriod:
                     description: |-
                       0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
                       0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
                     type: number
+                  isWebTracking:
+                    description: |-
+                      No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+                      No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+                    type: boolean
                   logsetId:
                     description: |-
                       Logset ID.
@@ -224,11 +275,62 @@ spec:
                       Log Topic Description.
                       Log Topic Description.
                     type: string
+                  extends:
+                    description: |-
+                      Log Subject Extension Information.
+                      Log Subject Extension Information.
+                    items:
+                      properties:
+                        anonymousAccess:
+                          description: |-
+                            Log topic authentication free configuration information.
+                            Log topic authentication free configuration information.
+                          items:
+                            properties:
+                              conditions:
+                                description: |-
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                items:
+                                  properties:
+                                    attributes:
+                                      description: |-
+                                        Condition attribute, currently only VpcID is supported.
+                                        Condition attribute, currently only VpcID is supported.
+                                      type: string
+                                    conditionValue:
+                                      description: |-
+                                        The value of the corresponding conditional attribute.
+                                        The value of the corresponding conditional attribute.
+                                      type: string
+                                    rule:
+                                      description: |-
+                                        Conditional rule, 1: equal, 2: not equal.
+                                        Conditional rule, 1: equal, 2: not equal.
+                                      type: number
+                                  type: object
+                                type: array
+                              operations:
+                                description: |-
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   hotPeriod:
                     description: |-
                       0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
                       0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
                     type: number
+                  isWebTracking:
+                    description: |-
+                      No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+                      No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+                    type: boolean
                   logsetId:
                     description: |-
                       Logset ID.
@@ -529,6 +631,52 @@ spec:
                       Log Topic Description.
                       Log Topic Description.
                     type: string
+                  extends:
+                    description: |-
+                      Log Subject Extension Information.
+                      Log Subject Extension Information.
+                    items:
+                      properties:
+                        anonymousAccess:
+                          description: |-
+                            Log topic authentication free configuration information.
+                            Log topic authentication free configuration information.
+                          items:
+                            properties:
+                              conditions:
+                                description: |-
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                items:
+                                  properties:
+                                    attributes:
+                                      description: |-
+                                        Condition attribute, currently only VpcID is supported.
+                                        Condition attribute, currently only VpcID is supported.
+                                      type: string
+                                    conditionValue:
+                                      description: |-
+                                        The value of the corresponding conditional attribute.
+                                        The value of the corresponding conditional attribute.
+                                      type: string
+                                    rule:
+                                      description: |-
+                                        Conditional rule, 1: equal, 2: not equal.
+                                        Conditional rule, 1: equal, 2: not equal.
+                                      type: number
+                                  type: object
+                                type: array
+                              operations:
+                                description: |-
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                  Operation list, supporting trackLog (JS/HTTP upload log) and realtimeProducer (kafka protocol upload log).
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   hotPeriod:
                     description: |-
                       0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
@@ -537,6 +685,11 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  isWebTracking:
+                    description: |-
+                      No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+                      No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+                    type: boolean
                   logsetId:
                     description: |-
                       Logset ID.
