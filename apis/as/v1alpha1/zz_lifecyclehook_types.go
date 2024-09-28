@@ -13,6 +13,41 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type LifecycleCommandInitParameters struct {
+
+	// Remote command ID. It is required to execute a command.
+	// Remote command ID. It is required to execute a command.
+	CommandID *string `json:"commandId,omitempty" tf:"command_id,omitempty"`
+
+	// Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+	// Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+	Parameters *string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+}
+
+type LifecycleCommandObservation struct {
+
+	// Remote command ID. It is required to execute a command.
+	// Remote command ID. It is required to execute a command.
+	CommandID *string `json:"commandId,omitempty" tf:"command_id,omitempty"`
+
+	// Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+	// Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+	Parameters *string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+}
+
+type LifecycleCommandParameters struct {
+
+	// Remote command ID. It is required to execute a command.
+	// Remote command ID. It is required to execute a command.
+	// +kubebuilder:validation:Optional
+	CommandID *string `json:"commandId" tf:"command_id,omitempty"`
+
+	// Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+	// Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+	// +kubebuilder:validation:Optional
+	Parameters *string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+}
+
 type LifecycleHookInitParameters struct {
 
 	// Defines the action the AS group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. Valid values: CONTINUE and ABANDON. The default value is CONTINUE.
@@ -22,6 +57,10 @@ type LifecycleHookInitParameters struct {
 	// Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. Valid value ranges: (30~7200). and default value is 300.
 	// Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. Valid value ranges: (30~7200). and default value is `300`.
 	HeartbeatTimeout *float64 `json:"heartbeatTimeout,omitempty" tf:"heartbeat_timeout,omitempty"`
+
+	// Remote command execution object. NotificationTarget and LifecycleCommand cannot be specified at the same time.
+	// Remote command execution object. `NotificationTarget` and `LifecycleCommand` cannot be specified at the same time.
+	LifecycleCommand []LifecycleCommandInitParameters `json:"lifecycleCommand,omitempty" tf:"lifecycle_command,omitempty"`
 
 	// The name of the lifecycle hook.
 	// The name of the lifecycle hook.
@@ -39,8 +78,8 @@ type LifecycleHookInitParameters struct {
 	// For CMQ_QUEUE type, a name of queue must be set.
 	NotificationQueueName *string `json:"notificationQueueName,omitempty" tf:"notification_queue_name,omitempty"`
 
-	// Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC.
-	// Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`.
+	// Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC, TDMQ_CMQ_QUEUE, TDMQ_CMQ_TOPIC.
+	// Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`, `TDMQ_CMQ_QUEUE`, `TDMQ_CMQ_TOPIC`.
 	NotificationTargetType *string `json:"notificationTargetType,omitempty" tf:"notification_target_type,omitempty"`
 
 	// For CMQ_TOPIC type, a name of topic must be set.
@@ -74,6 +113,10 @@ type LifecycleHookObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Remote command execution object. NotificationTarget and LifecycleCommand cannot be specified at the same time.
+	// Remote command execution object. `NotificationTarget` and `LifecycleCommand` cannot be specified at the same time.
+	LifecycleCommand []LifecycleCommandObservation `json:"lifecycleCommand,omitempty" tf:"lifecycle_command,omitempty"`
+
 	// The name of the lifecycle hook.
 	// The name of the lifecycle hook.
 	LifecycleHookName *string `json:"lifecycleHookName,omitempty" tf:"lifecycle_hook_name,omitempty"`
@@ -90,8 +133,8 @@ type LifecycleHookObservation struct {
 	// For CMQ_QUEUE type, a name of queue must be set.
 	NotificationQueueName *string `json:"notificationQueueName,omitempty" tf:"notification_queue_name,omitempty"`
 
-	// Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC.
-	// Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`.
+	// Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC, TDMQ_CMQ_QUEUE, TDMQ_CMQ_TOPIC.
+	// Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`, `TDMQ_CMQ_QUEUE`, `TDMQ_CMQ_TOPIC`.
 	NotificationTargetType *string `json:"notificationTargetType,omitempty" tf:"notification_target_type,omitempty"`
 
 	// For CMQ_TOPIC type, a name of topic must be set.
@@ -115,6 +158,11 @@ type LifecycleHookParameters struct {
 	// +kubebuilder:validation:Optional
 	HeartbeatTimeout *float64 `json:"heartbeatTimeout,omitempty" tf:"heartbeat_timeout,omitempty"`
 
+	// Remote command execution object. NotificationTarget and LifecycleCommand cannot be specified at the same time.
+	// Remote command execution object. `NotificationTarget` and `LifecycleCommand` cannot be specified at the same time.
+	// +kubebuilder:validation:Optional
+	LifecycleCommand []LifecycleCommandParameters `json:"lifecycleCommand,omitempty" tf:"lifecycle_command,omitempty"`
+
 	// The name of the lifecycle hook.
 	// The name of the lifecycle hook.
 	// +kubebuilder:validation:Optional
@@ -135,8 +183,8 @@ type LifecycleHookParameters struct {
 	// +kubebuilder:validation:Optional
 	NotificationQueueName *string `json:"notificationQueueName,omitempty" tf:"notification_queue_name,omitempty"`
 
-	// Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC.
-	// Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`.
+	// Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC, TDMQ_CMQ_QUEUE, TDMQ_CMQ_TOPIC.
+	// Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`, `TDMQ_CMQ_QUEUE`, `TDMQ_CMQ_TOPIC`.
 	// +kubebuilder:validation:Optional
 	NotificationTargetType *string `json:"notificationTargetType,omitempty" tf:"notification_target_type,omitempty"`
 

@@ -15,20 +15,36 @@ import (
 
 type Layer4ListenerInitParameters struct {
 
+	// UDP origin station health check probe port.
+	// UDP origin station health check probe port.
+	CheckPort *float64 `json:"checkPort,omitempty" tf:"check_port,omitempty"`
+
+	// UDP origin server health type. PORT means check port, and PING means PING.
+	// UDP origin server health type. PORT means check port, and PING means PING.
+	CheckType *string `json:"checkType,omitempty" tf:"check_type,omitempty"`
+
 	// The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of TCP protocol.
 	// The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of `TCP` protocol.
 	ClientIPMethod *float64 `json:"clientIpMethod,omitempty" tf:"client_ip_method,omitempty"`
 
-	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of TCP protocol and require less than interval.
-	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of `TCP` protocol and require less than `interval`.
+	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than interval.
+	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than `interval`.
 	ConnectTimeout *float64 `json:"connectTimeout,omitempty" tf:"connect_timeout,omitempty"`
 
-	// Indicates whether health check is enable, default value is false. NOTES: Only supports listeners of TCP protocol.
-	// Indicates whether health check is enable, default value is `false`. NOTES: Only supports listeners of `TCP` protocol.
+	// UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+	// UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+	ContextType *string `json:"contextType,omitempty" tf:"context_type,omitempty"`
+
+	// Indicates whether health check is enable, default value is false.
+	// Indicates whether health check is enable, default value is `false`.
 	HealthCheck *bool `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
 
-	// Interval of the health check, default value is 5s. NOTES: Only supports listeners of TCP protocol.
-	// Interval of the health check, default value is 5s. NOTES: Only supports listeners of `TCP` protocol.
+	// Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+	// Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
+
+	// Interval of the health check, default value is 5s.
+	// Interval of the health check, default value is 5s.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
 	// Name of the layer4 listener, the maximum length is 30.
@@ -64,34 +80,62 @@ type Layer4ListenerInitParameters struct {
 	// Type of the realserver. Valid value: `IP` and `DOMAIN`. NOTES: when the `protocol` is specified as `TCP` and the `scheduler` is specified as `wrr`, the item can only be set to `IP`.
 	RealserverType *string `json:"realserverType,omitempty" tf:"realserver_type,omitempty"`
 
+	// UDP source server health check port detects received messages. Only used when the health check type is PORT.
+	// UDP source server health check port detects received messages. Only used when the health check type is PORT.
+	RecvContext *string `json:"recvContext,omitempty" tf:"recv_context,omitempty"`
+
 	// Scheduling policy of the layer4 listener, default value is rr. Valid value: rr, wrr and lc.
 	// Scheduling policy of the layer4 listener, default value is `rr`. Valid value: `rr`, `wrr` and `lc`.
 	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
+
+	// UDP source server health check port detection sends messages. Only used when health check type is PORT.
+	// UDP source server health check port detection sends messages. Only used when health check type is PORT.
+	SendContext *string `json:"sendContext,omitempty" tf:"send_context,omitempty"`
+
+	// Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+	// Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type Layer4ListenerObservation struct {
+
+	// UDP origin station health check probe port.
+	// UDP origin station health check probe port.
+	CheckPort *float64 `json:"checkPort,omitempty" tf:"check_port,omitempty"`
+
+	// UDP origin server health type. PORT means check port, and PING means PING.
+	// UDP origin server health type. PORT means check port, and PING means PING.
+	CheckType *string `json:"checkType,omitempty" tf:"check_type,omitempty"`
 
 	// The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of TCP protocol.
 	// The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of `TCP` protocol.
 	ClientIPMethod *float64 `json:"clientIpMethod,omitempty" tf:"client_ip_method,omitempty"`
 
-	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of TCP protocol and require less than interval.
-	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of `TCP` protocol and require less than `interval`.
+	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than interval.
+	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than `interval`.
 	ConnectTimeout *float64 `json:"connectTimeout,omitempty" tf:"connect_timeout,omitempty"`
+
+	// UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+	// UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+	ContextType *string `json:"contextType,omitempty" tf:"context_type,omitempty"`
 
 	// Creation time of the layer4 listener.
 	// Creation time of the layer4 listener.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Indicates whether health check is enable, default value is false. NOTES: Only supports listeners of TCP protocol.
-	// Indicates whether health check is enable, default value is `false`. NOTES: Only supports listeners of `TCP` protocol.
+	// Indicates whether health check is enable, default value is false.
+	// Indicates whether health check is enable, default value is `false`.
 	HealthCheck *bool `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
+
+	// Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+	// Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
 	// ID of the GAAP realserver.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Interval of the health check, default value is 5s. NOTES: Only supports listeners of TCP protocol.
-	// Interval of the health check, default value is 5s. NOTES: Only supports listeners of `TCP` protocol.
+	// Interval of the health check, default value is 5s.
+	// Interval of the health check, default value is 5s.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
 	// Name of the layer4 listener, the maximum length is 30.
@@ -118,34 +162,66 @@ type Layer4ListenerObservation struct {
 	// Type of the realserver. Valid value: `IP` and `DOMAIN`. NOTES: when the `protocol` is specified as `TCP` and the `scheduler` is specified as `wrr`, the item can only be set to `IP`.
 	RealserverType *string `json:"realserverType,omitempty" tf:"realserver_type,omitempty"`
 
+	// UDP source server health check port detects received messages. Only used when the health check type is PORT.
+	// UDP source server health check port detects received messages. Only used when the health check type is PORT.
+	RecvContext *string `json:"recvContext,omitempty" tf:"recv_context,omitempty"`
+
 	// Scheduling policy of the layer4 listener, default value is rr. Valid value: rr, wrr and lc.
 	// Scheduling policy of the layer4 listener, default value is `rr`. Valid value: `rr`, `wrr` and `lc`.
 	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
 
+	// UDP source server health check port detection sends messages. Only used when health check type is PORT.
+	// UDP source server health check port detection sends messages. Only used when health check type is PORT.
+	SendContext *string `json:"sendContext,omitempty" tf:"send_context,omitempty"`
+
 	// Status of the layer4 listener.
 	// Status of the layer4 listener.
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+	// Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type Layer4ListenerParameters struct {
+
+	// UDP origin station health check probe port.
+	// UDP origin station health check probe port.
+	// +kubebuilder:validation:Optional
+	CheckPort *float64 `json:"checkPort,omitempty" tf:"check_port,omitempty"`
+
+	// UDP origin server health type. PORT means check port, and PING means PING.
+	// UDP origin server health type. PORT means check port, and PING means PING.
+	// +kubebuilder:validation:Optional
+	CheckType *string `json:"checkType,omitempty" tf:"check_type,omitempty"`
 
 	// The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of TCP protocol.
 	// The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of `TCP` protocol.
 	// +kubebuilder:validation:Optional
 	ClientIPMethod *float64 `json:"clientIpMethod,omitempty" tf:"client_ip_method,omitempty"`
 
-	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of TCP protocol and require less than interval.
-	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of `TCP` protocol and require less than `interval`.
+	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than interval.
+	// Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than `interval`.
 	// +kubebuilder:validation:Optional
 	ConnectTimeout *float64 `json:"connectTimeout,omitempty" tf:"connect_timeout,omitempty"`
 
-	// Indicates whether health check is enable, default value is false. NOTES: Only supports listeners of TCP protocol.
-	// Indicates whether health check is enable, default value is `false`. NOTES: Only supports listeners of `TCP` protocol.
+	// UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+	// UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+	// +kubebuilder:validation:Optional
+	ContextType *string `json:"contextType,omitempty" tf:"context_type,omitempty"`
+
+	// Indicates whether health check is enable, default value is false.
+	// Indicates whether health check is enable, default value is `false`.
 	// +kubebuilder:validation:Optional
 	HealthCheck *bool `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
 
-	// Interval of the health check, default value is 5s. NOTES: Only supports listeners of TCP protocol.
-	// Interval of the health check, default value is 5s. NOTES: Only supports listeners of `TCP` protocol.
+	// Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+	// Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+	// +kubebuilder:validation:Optional
+	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
+
+	// Interval of the health check, default value is 5s.
+	// Interval of the health check, default value is 5s.
 	// +kubebuilder:validation:Optional
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
@@ -188,10 +264,25 @@ type Layer4ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	RealserverType *string `json:"realserverType,omitempty" tf:"realserver_type,omitempty"`
 
+	// UDP source server health check port detects received messages. Only used when the health check type is PORT.
+	// UDP source server health check port detects received messages. Only used when the health check type is PORT.
+	// +kubebuilder:validation:Optional
+	RecvContext *string `json:"recvContext,omitempty" tf:"recv_context,omitempty"`
+
 	// Scheduling policy of the layer4 listener, default value is rr. Valid value: rr, wrr and lc.
 	// Scheduling policy of the layer4 listener, default value is `rr`. Valid value: `rr`, `wrr` and `lc`.
 	// +kubebuilder:validation:Optional
 	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
+
+	// UDP source server health check port detection sends messages. Only used when health check type is PORT.
+	// UDP source server health check port detection sends messages. Only used when health check type is PORT.
+	// +kubebuilder:validation:Optional
+	SendContext *string `json:"sendContext,omitempty" tf:"send_context,omitempty"`
+
+	// Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+	// Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+	// +kubebuilder:validation:Optional
+	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type RealserverBindSetInitParameters struct {

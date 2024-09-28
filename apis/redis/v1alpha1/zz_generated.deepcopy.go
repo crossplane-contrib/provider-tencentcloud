@@ -330,6 +330,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProductVersion != nil {
+		in, out := &in.ProductVersion, &out.ProductVersion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
 		*out = new(float64)
@@ -338,6 +343,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 	if in.Recycle != nil {
 		in, out := &in.Recycle, &out.Recycle
 		*out = new(float64)
+		**out = **in
+	}
+	if in.RedisClusterID != nil {
+		in, out := &in.RedisClusterID, &out.RedisClusterID
+		*out = new(string)
 		**out = **in
 	}
 	if in.RedisReplicasNum != nil {
@@ -485,6 +495,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ForceDelete != nil {
 		in, out := &in.ForceDelete, &out.ForceDelete
 		*out = new(bool)
@@ -542,6 +557,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProductVersion != nil {
+		in, out := &in.ProductVersion, &out.ProductVersion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
 		*out = new(float64)
@@ -550,6 +570,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 	if in.Recycle != nil {
 		in, out := &in.Recycle, &out.Recycle
 		*out = new(float64)
+		**out = **in
+	}
+	if in.RedisClusterID != nil {
+		in, out := &in.RedisClusterID, &out.RedisClusterID
+		*out = new(string)
 		**out = **in
 	}
 	if in.RedisReplicasNum != nil {
@@ -715,6 +740,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProductVersion != nil {
+		in, out := &in.ProductVersion, &out.ProductVersion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
 		*out = new(float64)
@@ -723,6 +753,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.Recycle != nil {
 		in, out := &in.Recycle, &out.Recycle
 		*out = new(float64)
+		**out = **in
+	}
+	if in.RedisClusterID != nil {
+		in, out := &in.RedisClusterID, &out.RedisClusterID
+		*out = new(string)
 		**out = **in
 	}
 	if in.RedisReplicasNum != nil {

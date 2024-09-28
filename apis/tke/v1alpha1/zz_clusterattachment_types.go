@@ -32,6 +32,10 @@ type ClusterAttachmentInitParameters struct {
 	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// ID of Node image.
+	// ID of Node image.
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
 	// ID of the CVM instance, this cvm will reinstall the system.
 	// ID of the CVM instance, this cvm will reinstall the system.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance
@@ -54,8 +58,8 @@ type ClusterAttachmentInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
+	// Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
@@ -80,6 +84,10 @@ type ClusterAttachmentObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// ID of Node image.
+	// ID of Node image.
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
 	// ID of the CVM instance, this cvm will reinstall the system.
 	// ID of the CVM instance, this cvm will reinstall the system.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
@@ -102,8 +110,8 @@ type ClusterAttachmentObservation struct {
 	// State of the node.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
+	// Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
@@ -136,6 +144,11 @@ type ClusterAttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// ID of Node image.
+	// ID of Node image.
+	// +kubebuilder:validation:Optional
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
 	// ID of the CVM instance, this cvm will reinstall the system.
 	// ID of the CVM instance, this cvm will reinstall the system.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance
@@ -166,8 +179,8 @@ type ClusterAttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
+	// Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
 	// +kubebuilder:validation:Optional
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
@@ -279,11 +292,11 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// Docker graph path. Default is /var/lib/docker.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
 	// Custom parameter information related to the node. This is a white-list parameter.
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
@@ -291,7 +304,7 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 	// GPU driver parameters.
 	GpuArgs []GpuArgsInitParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// Indicate to schedule the adding node or not. Default is true.
+	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
 
@@ -299,11 +312,11 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 	// Mount target. Default is not mounting.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
-	// Base64-encoded User Data text, the length limit is 16KB.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
@@ -318,11 +331,11 @@ type ClusterAttachmentWorkerConfigObservation struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// Docker graph path. Default is /var/lib/docker.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
 	// Custom parameter information related to the node. This is a white-list parameter.
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
@@ -330,7 +343,7 @@ type ClusterAttachmentWorkerConfigObservation struct {
 	// GPU driver parameters.
 	GpuArgs []GpuArgsObservation `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// Indicate to schedule the adding node or not. Default is true.
+	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
 
@@ -338,11 +351,11 @@ type ClusterAttachmentWorkerConfigObservation struct {
 	// Mount target. Default is not mounting.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
-	// Base64-encoded User Data text, the length limit is 16KB.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
@@ -359,12 +372,12 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// Docker graph path. Default is /var/lib/docker.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
 	// +kubebuilder:validation:Optional
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
 	// Custom parameter information related to the node. This is a white-list parameter.
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
@@ -374,7 +387,7 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	GpuArgs []GpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// Indicate to schedule the adding node or not. Default is true.
+	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
 	// +kubebuilder:validation:Optional
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
@@ -384,12 +397,12 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// +kubebuilder:validation:Optional
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
-	// Base64-encoded User Data text, the length limit is 16KB.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
@@ -664,11 +677,11 @@ type WorkerConfigOverridesInitParameters struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// Docker graph path. Default is /var/lib/docker.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
 	// Custom parameter information related to the node. This is a white-list parameter.
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
@@ -676,7 +689,7 @@ type WorkerConfigOverridesInitParameters struct {
 	// GPU driver parameters.
 	GpuArgs []WorkerConfigOverridesGpuArgsInitParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// Indicate to schedule the adding node or not. Default is true.
+	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
 
@@ -684,11 +697,11 @@ type WorkerConfigOverridesInitParameters struct {
 	// Mount target. Default is not mounting.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
-	// Base64-encoded User Data text, the length limit is 16KB.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
@@ -703,11 +716,11 @@ type WorkerConfigOverridesObservation struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// Docker graph path. Default is /var/lib/docker.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
 	// Custom parameter information related to the node. This is a white-list parameter.
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
@@ -715,7 +728,7 @@ type WorkerConfigOverridesObservation struct {
 	// GPU driver parameters.
 	GpuArgs []WorkerConfigOverridesGpuArgsObservation `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// Indicate to schedule the adding node or not. Default is true.
+	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
 
@@ -723,11 +736,11 @@ type WorkerConfigOverridesObservation struct {
 	// Mount target. Default is not mounting.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
-	// Base64-encoded User Data text, the length limit is 16KB.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
@@ -744,12 +757,12 @@ type WorkerConfigOverridesParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// Docker graph path. Default is /var/lib/docker.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
 	// +kubebuilder:validation:Optional
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
 	// Custom parameter information related to the node. This is a white-list parameter.
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
@@ -759,7 +772,7 @@ type WorkerConfigOverridesParameters struct {
 	// +kubebuilder:validation:Optional
 	GpuArgs []WorkerConfigOverridesGpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// Indicate to schedule the adding node or not. Default is true.
+	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
 	// +kubebuilder:validation:Optional
 	IsSchedule *bool `json:"isSchedule,omitempty" tf:"is_schedule,omitempty"`
@@ -769,12 +782,12 @@ type WorkerConfigOverridesParameters struct {
 	// +kubebuilder:validation:Optional
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// +kubebuilder:validation:Optional
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
-	// Base64-encoded User Data text, the length limit is 16KB.
+	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`

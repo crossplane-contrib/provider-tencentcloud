@@ -171,6 +171,16 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.MaintenanceEnd != nil {
+		in, out := &in.MaintenanceEnd, &out.MaintenanceEnd
+		*out = new(string)
+		**out = **in
+	}
+	if in.MaintenanceStart != nil {
+		in, out := &in.MaintenanceStart, &out.MaintenanceStart
+		*out = new(string)
+		**out = **in
+	}
 	if in.Memory != nil {
 		in, out := &in.Memory, &out.Memory
 		*out = new(float64)
@@ -370,6 +380,16 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.MaintenanceEnd != nil {
+		in, out := &in.MaintenanceEnd, &out.MaintenanceEnd
+		*out = new(string)
+		**out = **in
+	}
+	if in.MaintenanceStart != nil {
+		in, out := &in.MaintenanceStart, &out.MaintenanceStart
+		*out = new(string)
+		**out = **in
+	}
 	if in.Memory != nil {
 		in, out := &in.Memory, &out.Memory
 		*out = new(float64)
@@ -526,6 +546,16 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.MachineType != nil {
 		in, out := &in.MachineType, &out.MachineType
+		*out = new(string)
+		**out = **in
+	}
+	if in.MaintenanceEnd != nil {
+		in, out := &in.MaintenanceEnd, &out.MaintenanceEnd
+		*out = new(string)
+		**out = **in
+	}
+	if in.MaintenanceStart != nil {
+		in, out := &in.MaintenanceStart, &out.MaintenanceStart
 		*out = new(string)
 		**out = **in
 	}

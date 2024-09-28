@@ -689,6 +689,11 @@ spec:
             properties:
               atProvider:
                 properties:
+                  cdcId:
+                    description: |-
+                      CDC instance ID.
+                      CDC instance ID.
+                    type: string
                   createTime:
                     description: |-
                       Creation time of the ENI.

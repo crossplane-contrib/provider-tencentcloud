@@ -17,6 +17,7 @@ type VPCInitParameters struct {
 
 	// List of Assistant CIDR, NOTE: Only NORMAL typed CIDRs included, check the Docker CIDR by readonly assistant_docker_cidrs.
 	// List of Assistant CIDR, NOTE: Only `NORMAL` typed CIDRs included, check the Docker CIDR by readonly `assistant_docker_cidrs`.
+	// +listType=set
 	AssistantCidrs []*string `json:"assistantCidrs,omitempty" tf:"assistant_cidrs,omitempty"`
 
 	// A network address block which should be a subnet of the three internal network segments (10.0.0.0/16, 172.16.0.0/12 and 192.168.0.0/16).
@@ -46,6 +47,7 @@ type VPCObservation struct {
 
 	// List of Assistant CIDR, NOTE: Only NORMAL typed CIDRs included, check the Docker CIDR by readonly assistant_docker_cidrs.
 	// List of Assistant CIDR, NOTE: Only `NORMAL` typed CIDRs included, check the Docker CIDR by readonly `assistant_docker_cidrs`.
+	// +listType=set
 	AssistantCidrs []*string `json:"assistantCidrs,omitempty" tf:"assistant_cidrs,omitempty"`
 
 	// A network address block which should be a subnet of the three internal network segments (10.0.0.0/16, 172.16.0.0/12 and 192.168.0.0/16).
@@ -95,6 +97,7 @@ type VPCParameters struct {
 	// List of Assistant CIDR, NOTE: Only NORMAL typed CIDRs included, check the Docker CIDR by readonly assistant_docker_cidrs.
 	// List of Assistant CIDR, NOTE: Only `NORMAL` typed CIDRs included, check the Docker CIDR by readonly `assistant_docker_cidrs`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AssistantCidrs []*string `json:"assistantCidrs,omitempty" tf:"assistant_cidrs,omitempty"`
 
 	// A network address block which should be a subnet of the three internal network segments (10.0.0.0/16, 172.16.0.0/12 and 192.168.0.0/16).

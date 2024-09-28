@@ -127,6 +127,10 @@ type CoreResourceSpecParameters struct {
 
 type EmrClusterInitParameters struct {
 
+	// 0 means turn off automatic renewal, 1 means turn on automatic renewal. Default is 0.
+	// 0 means turn off automatic renewal, 1 means turn on automatic renewal. Default is 0.
+	AutoRenew *float64 `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
+
 	// It will be deprecated in later versions. Display strategy of EMR instance.
 	// Display strategy of EMR instance.
 	DisplayStrategy *string `json:"displayStrategy,omitempty" tf:"display_strategy,omitempty"`
@@ -217,6 +221,10 @@ type EmrClusterInitParameters struct {
 }
 
 type EmrClusterObservation struct {
+
+	// 0 means turn off automatic renewal, 1 means turn on automatic renewal. Default is 0.
+	// 0 means turn off automatic renewal, 1 means turn on automatic renewal. Default is 0.
+	AutoRenew *float64 `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
 	// It will be deprecated in later versions. Display strategy of EMR instance.
 	// Display strategy of EMR instance.
@@ -315,6 +323,11 @@ type EmrClusterObservation struct {
 }
 
 type EmrClusterParameters struct {
+
+	// 0 means turn off automatic renewal, 1 means turn on automatic renewal. Default is 0.
+	// 0 means turn off automatic renewal, 1 means turn on automatic renewal. Default is 0.
+	// +kubebuilder:validation:Optional
+	AutoRenew *float64 `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
 	// It will be deprecated in later versions. Display strategy of EMR instance.
 	// Display strategy of EMR instance.

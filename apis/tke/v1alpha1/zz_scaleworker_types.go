@@ -15,9 +15,13 @@ import (
 
 type ScaleWorkerDataDiskInitParameters struct {
 
-	// Indicate whether to auto format and mount or not. Default is false.
+	// This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
+
+	// This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
+	// The name of the device or partition to mount.
+	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
 	// Volume of disk in GB. Default is 0.
 	// Volume of disk in GB. Default is `0`.
@@ -27,7 +31,7 @@ type ScaleWorkerDataDiskInitParameters struct {
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
-	// File system, e.g. ext3/ext4/xfs.
+	// This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
@@ -38,9 +42,13 @@ type ScaleWorkerDataDiskInitParameters struct {
 
 type ScaleWorkerDataDiskObservation struct {
 
-	// Indicate whether to auto format and mount or not. Default is false.
+	// This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
+
+	// This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
+	// The name of the device or partition to mount.
+	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
 	// Volume of disk in GB. Default is 0.
 	// Volume of disk in GB. Default is `0`.
@@ -50,7 +58,7 @@ type ScaleWorkerDataDiskObservation struct {
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
-	// File system, e.g. ext3/ext4/xfs.
+	// This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
@@ -61,10 +69,15 @@ type ScaleWorkerDataDiskObservation struct {
 
 type ScaleWorkerDataDiskParameters struct {
 
-	// Indicate whether to auto format and mount or not. Default is false.
+	// This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	// +kubebuilder:validation:Optional
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
+
+	// This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
+	// The name of the device or partition to mount.
+	// +kubebuilder:validation:Optional
+	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
 	// Volume of disk in GB. Default is 0.
 	// Volume of disk in GB. Default is `0`.
@@ -76,7 +89,7 @@ type ScaleWorkerDataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
-	// File system, e.g. ext3/ext4/xfs.
+	// This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	// +kubebuilder:validation:Optional
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
@@ -188,8 +201,8 @@ type ScaleWorkerInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Configurations of data disk.
-	// Configurations of data disk.
+	// Configurations of tke data disk.
+	// Configurations of tke data disk.
 	DataDisk []ScaleWorkerDataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
 	// Indicate to set desired pod number in current node. Valid when the cluster enable customized pod cidr.
@@ -240,8 +253,8 @@ type ScaleWorkerObservation struct {
 	// ID of the cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// Configurations of data disk.
-	// Configurations of data disk.
+	// Configurations of tke data disk.
+	// Configurations of tke data disk.
 	DataDisk []ScaleWorkerDataDiskObservation `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
 	// Indicate to set desired pod number in current node. Valid when the cluster enable customized pod cidr.
@@ -309,8 +322,8 @@ type ScaleWorkerParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Configurations of data disk.
-	// Configurations of data disk.
+	// Configurations of tke data disk.
+	// Configurations of tke data disk.
 	// +kubebuilder:validation:Optional
 	DataDisk []ScaleWorkerDataDiskParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
@@ -368,11 +381,11 @@ type ScaleWorkerParameters struct {
 
 type ScaleWorkerWorkerConfigDataDiskInitParameters struct {
 
-	// Indicate whether to auto format and mount or not. Default is false.
+	// This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
 	// The name of the device or partition to mount.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -388,7 +401,7 @@ type ScaleWorkerWorkerConfigDataDiskInitParameters struct {
 	// Indicates whether to encrypt data disk, default `false`.
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
-	// File system, e.g. ext3/ext4/xfs.
+	// This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
@@ -407,11 +420,11 @@ type ScaleWorkerWorkerConfigDataDiskInitParameters struct {
 
 type ScaleWorkerWorkerConfigDataDiskObservation struct {
 
-	// Indicate whether to auto format and mount or not. Default is false.
+	// This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
 	// The name of the device or partition to mount.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -427,7 +440,7 @@ type ScaleWorkerWorkerConfigDataDiskObservation struct {
 	// Indicates whether to encrypt data disk, default `false`.
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
-	// File system, e.g. ext3/ext4/xfs.
+	// This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
@@ -446,12 +459,12 @@ type ScaleWorkerWorkerConfigDataDiskObservation struct {
 
 type ScaleWorkerWorkerConfigDataDiskParameters struct {
 
-	// Indicate whether to auto format and mount or not. Default is false.
+	// This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	// +kubebuilder:validation:Optional
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
 	// The name of the device or partition to mount.
 	// +kubebuilder:validation:Optional
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
@@ -471,7 +484,7 @@ type ScaleWorkerWorkerConfigDataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
-	// File system, e.g. ext3/ext4/xfs.
+	// This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	// +kubebuilder:validation:Optional
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
@@ -510,8 +523,8 @@ type ScaleWorkerWorkerConfigInitParameters struct {
 	// Number of cvm.
 	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
-	// Configurations of data disk.
-	// Configurations of data disk.
+	// Configurations of tke data disk.
+	// Configurations of cvm data disk.
 	DataDisk []ScaleWorkerWorkerConfigDataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
 	// Indicate to set desired pod number in current node. Valid when the cluster enable customized pod cidr.
@@ -617,8 +630,8 @@ type ScaleWorkerWorkerConfigObservation struct {
 	// Number of cvm.
 	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
-	// Configurations of data disk.
-	// Configurations of data disk.
+	// Configurations of tke data disk.
+	// Configurations of cvm data disk.
 	DataDisk []ScaleWorkerWorkerConfigDataDiskObservation `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
 	// Indicate to set desired pod number in current node. Valid when the cluster enable customized pod cidr.
@@ -728,8 +741,8 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
-	// Configurations of data disk.
-	// Configurations of data disk.
+	// Configurations of tke data disk.
+	// Configurations of cvm data disk.
 	// +kubebuilder:validation:Optional
 	DataDisk []ScaleWorkerWorkerConfigDataDiskParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 

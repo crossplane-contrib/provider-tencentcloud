@@ -93,6 +93,11 @@ spec:
                       The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example mycos-1258798060.
                       The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example `mycos-1258798060`.
                     type: string
+                  cdcId:
+                    description: |-
+                      CDC cluster ID.
+                      CDC cluster ID.
+                    type: string
                   corsRules:
                     description: |-
                       A rule of Cross-Origin Resource Sharing (documented below).
@@ -141,8 +146,8 @@ spec:
                     type: boolean
                   encryptionAlgorithm:
                     description: |-
-                      The server-side encryption algorithm to use. Valid value is AES256.
-                      The server-side encryption algorithm to use. Valid value is `AES256`.
+                      The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
+                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
                     type: string
                   forceClean:
                     description: |-
@@ -159,6 +164,11 @@ spec:
                       Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
                       Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
                     type: number
+                  kmsId:
+                    description: |-
+                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                    type: string
                   lifecycleRules:
                     description: |-
                       A configuration of object lifecycle management (documented below).
@@ -472,6 +482,11 @@ spec:
                       The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example mycos-1258798060.
                       The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example `mycos-1258798060`.
                     type: string
+                  cdcId:
+                    description: |-
+                      CDC cluster ID.
+                      CDC cluster ID.
+                    type: string
                   corsRules:
                     description: |-
                       A rule of Cross-Origin Resource Sharing (documented below).
@@ -520,8 +535,8 @@ spec:
                     type: boolean
                   encryptionAlgorithm:
                     description: |-
-                      The server-side encryption algorithm to use. Valid value is AES256.
-                      The server-side encryption algorithm to use. Valid value is `AES256`.
+                      The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
+                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
                     type: string
                   forceClean:
                     description: |-
@@ -538,6 +553,11 @@ spec:
                       Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
                       Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
                     type: number
+                  kmsId:
+                    description: |-
+                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                    type: string
                   lifecycleRules:
                     description: |-
                       A configuration of object lifecycle management (documented below).
@@ -1015,6 +1035,11 @@ spec:
                       The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example mycos-1258798060.
                       The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example `mycos-1258798060`.
                     type: string
+                  cdcId:
+                    description: |-
+                      CDC cluster ID.
+                      CDC cluster ID.
+                    type: string
                   corsRules:
                     description: |-
                       A rule of Cross-Origin Resource Sharing (documented below).
@@ -1068,8 +1093,8 @@ spec:
                     type: boolean
                   encryptionAlgorithm:
                     description: |-
-                      The server-side encryption algorithm to use. Valid value is AES256.
-                      The server-side encryption algorithm to use. Valid value is `AES256`.
+                      The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
+                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
                     type: string
                   forceClean:
                     description: |-
@@ -1090,6 +1115,11 @@ spec:
                       Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
                       Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
                     type: number
+                  kmsId:
+                    description: |-
+                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                    type: string
                   lifecycleRules:
                     description: |-
                       A configuration of object lifecycle management (documented below).

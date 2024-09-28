@@ -63,6 +63,10 @@ type InstanceInitParameters struct {
 	// The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
 	PrepaidPeriod *float64 `json:"prepaidPeriod,omitempty" tf:"prepaid_period,omitempty"`
 
+	// Specify the product version of the instance. local: Local disk version, cloud: Cloud disk version, cdc: Exclusive cluster version. Default is local.
+	// Specify the product version of the instance. `local`: Local disk version, `cloud`: Cloud disk version, `cdc`: Exclusive cluster version. Default is `local`.
+	ProductVersion *string `json:"productVersion,omitempty" tf:"product_version,omitempty"`
+
 	// Specifies which project the instance should belong to.
 	// Specifies which project the instance should belong to.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
@@ -70,6 +74,10 @@ type InstanceInitParameters struct {
 	// Original intranet IPv4 address retention time: unit: day, value range: 0, 1, 2, 3, 7, 15.
 	// Original intranet IPv4 address retention time: unit: day, value range: `0`, `1`, `2`, `3`, `7`, `15`.
 	Recycle *float64 `json:"recycle,omitempty" tf:"recycle,omitempty"`
+
+	// Exclusive cluster ID. When the product_version is set to cdc, this parameter must be set.
+	// Exclusive cluster ID. When the `product_version` is set to `cdc`, this parameter must be set.
+	RedisClusterID *string `json:"redisClusterId,omitempty" tf:"redis_cluster_id,omitempty"`
 
 	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of replica_zone_ids, Non-multi-AZ does not require replica_zone_ids; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.
 	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of `replica_zone_ids`, Non-multi-AZ does not require `replica_zone_ids`; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.
@@ -136,6 +144,10 @@ type InstanceObservation struct {
 	// The time when the instance was created.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// Dedicated Cluster ID.
+	// Dedicated Cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Indicate whether to delete Redis instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin. Note: only works for PREPAID instance.
 	// Indicate whether to delete Redis instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin. Note: only works for `PREPAID` instance.
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
@@ -179,6 +191,10 @@ type InstanceObservation struct {
 	// The tenancy (time unit is month) of the prepaid instance, NOTE: it only works when charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
 	PrepaidPeriod *float64 `json:"prepaidPeriod,omitempty" tf:"prepaid_period,omitempty"`
 
+	// Specify the product version of the instance. local: Local disk version, cloud: Cloud disk version, cdc: Exclusive cluster version. Default is local.
+	// Specify the product version of the instance. `local`: Local disk version, `cloud`: Cloud disk version, `cdc`: Exclusive cluster version. Default is `local`.
+	ProductVersion *string `json:"productVersion,omitempty" tf:"product_version,omitempty"`
+
 	// Specifies which project the instance should belong to.
 	// Specifies which project the instance should belong to.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
@@ -186,6 +202,10 @@ type InstanceObservation struct {
 	// Original intranet IPv4 address retention time: unit: day, value range: 0, 1, 2, 3, 7, 15.
 	// Original intranet IPv4 address retention time: unit: day, value range: `0`, `1`, `2`, `3`, `7`, `15`.
 	Recycle *float64 `json:"recycle,omitempty" tf:"recycle,omitempty"`
+
+	// Exclusive cluster ID. When the product_version is set to cdc, this parameter must be set.
+	// Exclusive cluster ID. When the `product_version` is set to `cdc`, this parameter must be set.
+	RedisClusterID *string `json:"redisClusterId,omitempty" tf:"redis_cluster_id,omitempty"`
 
 	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of replica_zone_ids, Non-multi-AZ does not require replica_zone_ids; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.
 	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of `replica_zone_ids`, Non-multi-AZ does not require `replica_zone_ids`; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.
@@ -305,6 +325,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	PrepaidPeriod *float64 `json:"prepaidPeriod,omitempty" tf:"prepaid_period,omitempty"`
 
+	// Specify the product version of the instance. local: Local disk version, cloud: Cloud disk version, cdc: Exclusive cluster version. Default is local.
+	// Specify the product version of the instance. `local`: Local disk version, `cloud`: Cloud disk version, `cdc`: Exclusive cluster version. Default is `local`.
+	// +kubebuilder:validation:Optional
+	ProductVersion *string `json:"productVersion,omitempty" tf:"product_version,omitempty"`
+
 	// Specifies which project the instance should belong to.
 	// Specifies which project the instance should belong to.
 	// +kubebuilder:validation:Optional
@@ -314,6 +339,11 @@ type InstanceParameters struct {
 	// Original intranet IPv4 address retention time: unit: day, value range: `0`, `1`, `2`, `3`, `7`, `15`.
 	// +kubebuilder:validation:Optional
 	Recycle *float64 `json:"recycle,omitempty" tf:"recycle,omitempty"`
+
+	// Exclusive cluster ID. When the product_version is set to cdc, this parameter must be set.
+	// Exclusive cluster ID. When the `product_version` is set to `cdc`, this parameter must be set.
+	// +kubebuilder:validation:Optional
+	RedisClusterID *string `json:"redisClusterId,omitempty" tf:"redis_cluster_id,omitempty"`
 
 	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of replica_zone_ids, Non-multi-AZ does not require replica_zone_ids; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.
 	// The number of instance copies. This is not required for standalone and master slave versions and must equal to count of `replica_zone_ids`, Non-multi-AZ does not require `replica_zone_ids`; Redis memory version 4.0, 5.0, 6.2 standard architecture and cluster architecture support the number of copies in the range [1, 2, 3, 4, 5]; Redis 2.8 standard version and CKV standard version only support 1 copy.

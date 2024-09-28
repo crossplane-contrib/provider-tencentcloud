@@ -154,15 +154,20 @@ spec:
                     type: object
                   dataDisk:
                     description: |-
-                      Configurations of data disk.
-                      Configurations of data disk.
+                      Configurations of tke data disk.
+                      Configurations of tke data disk.
                     items:
                       properties:
                         autoFormatAndMount:
                           description: |-
-                            Indicate whether to auto format and mount or not. Default is false.
+                            This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
                             Indicate whether to auto format and mount or not. Default is `false`.
                           type: boolean
+                        diskPartition:
+                          description: |-
+                            This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
+                            The name of the device or partition to mount.
+                          type: string
                         diskSize:
                           description: |-
                             Volume of disk in GB. Default is 0.
@@ -175,7 +180,7 @@ spec:
                           type: string
                         fileSystem:
                           description: |-
-                            File system, e.g. ext3/ext4/xfs.
+                            This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
                             File system, e.g. `ext3/ext4/xfs`.
                           type: string
                         mountTarget:
@@ -303,18 +308,18 @@ spec:
                           type: number
                         dataDisk:
                           description: |-
-                            Configurations of data disk.
-                            Configurations of data disk.
+                            Configurations of tke data disk.
+                            Configurations of cvm data disk.
                           items:
                             properties:
                               autoFormatAndMount:
                                 description: |-
-                                  Indicate whether to auto format and mount or not. Default is false.
+                                  This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
                                   Indicate whether to auto format and mount or not. Default is `false`.
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -334,7 +339,7 @@ spec:
                                 type: boolean
                               fileSystem:
                                 description: |-
-                                  File system, e.g. ext3/ext4/xfs.
+                                  This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
                                   File system, e.g. `ext3/ext4/xfs`.
                                 type: string
                               kmsKeyId:
@@ -581,15 +586,20 @@ spec:
                     type: object
                   dataDisk:
                     description: |-
-                      Configurations of data disk.
-                      Configurations of data disk.
+                      Configurations of tke data disk.
+                      Configurations of tke data disk.
                     items:
                       properties:
                         autoFormatAndMount:
                           description: |-
-                            Indicate whether to auto format and mount or not. Default is false.
+                            This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
                             Indicate whether to auto format and mount or not. Default is `false`.
                           type: boolean
+                        diskPartition:
+                          description: |-
+                            This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
+                            The name of the device or partition to mount.
+                          type: string
                         diskSize:
                           description: |-
                             Volume of disk in GB. Default is 0.
@@ -602,7 +612,7 @@ spec:
                           type: string
                         fileSystem:
                           description: |-
-                            File system, e.g. ext3/ext4/xfs.
+                            This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
                             File system, e.g. `ext3/ext4/xfs`.
                           type: string
                         mountTarget:
@@ -730,18 +740,18 @@ spec:
                           type: number
                         dataDisk:
                           description: |-
-                            Configurations of data disk.
-                            Configurations of data disk.
+                            Configurations of tke data disk.
+                            Configurations of cvm data disk.
                           items:
                             properties:
                               autoFormatAndMount:
                                 description: |-
-                                  Indicate whether to auto format and mount or not. Default is false.
+                                  This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
                                   Indicate whether to auto format and mount or not. Default is `false`.
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -761,7 +771,7 @@ spec:
                                 type: boolean
                               fileSystem:
                                 description: |-
-                                  File system, e.g. ext3/ext4/xfs.
+                                  This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
                                   File system, e.g. `ext3/ext4/xfs`.
                                 type: string
                               kmsKeyId:
@@ -1079,15 +1089,20 @@ spec:
                     type: string
                   dataDisk:
                     description: |-
-                      Configurations of data disk.
-                      Configurations of data disk.
+                      Configurations of tke data disk.
+                      Configurations of tke data disk.
                     items:
                       properties:
                         autoFormatAndMount:
                           description: |-
-                            Indicate whether to auto format and mount or not. Default is false.
+                            This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
                             Indicate whether to auto format and mount or not. Default is `false`.
                           type: boolean
+                        diskPartition:
+                          description: |-
+                            This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
+                            The name of the device or partition to mount.
+                          type: string
                         diskSize:
                           description: |-
                             Volume of disk in GB. Default is 0.
@@ -1100,7 +1115,7 @@ spec:
                           type: string
                         fileSystem:
                           description: |-
-                            File system, e.g. ext3/ext4/xfs.
+                            This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
                             File system, e.g. `ext3/ext4/xfs`.
                           type: string
                         mountTarget:
@@ -1231,18 +1246,18 @@ spec:
                           type: number
                         dataDisk:
                           description: |-
-                            Configurations of data disk.
-                            Configurations of data disk.
+                            Configurations of tke data disk.
+                            Configurations of cvm data disk.
                           items:
                             properties:
                               autoFormatAndMount:
                                 description: |-
-                                  Indicate whether to auto format and mount or not. Default is false.
+                                  This argument was deprecated, use data_disk instead. Indicate whether to auto format and mount or not. Default is false.
                                   Indicate whether to auto format and mount or not. Default is `false`.
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  This argument was deprecated, use data_disk instead. The name of the device or partition to mount.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -1262,7 +1277,7 @@ spec:
                                 type: boolean
                               fileSystem:
                                 description: |-
-                                  File system, e.g. ext3/ext4/xfs.
+                                  This argument was deprecated, use data_disk instead. File system, e.g. ext3/ext4/xfs.
                                   File system, e.g. `ext3/ext4/xfs`.
                                 type: string
                               kmsKeyId:

@@ -76,6 +76,10 @@ type BackupPlanParameters struct {
 
 type DBNodeSetInitParameters struct {
 
+	// Dedicated cluster ID.
+	// Dedicated cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Indicates node type, available values:Primary, Standby. Default: Standby.
 	// Indicates node type, available values:`Primary`, `Standby`. Default: `Standby`.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
@@ -87,6 +91,10 @@ type DBNodeSetInitParameters struct {
 
 type DBNodeSetObservation struct {
 
+	// Dedicated cluster ID.
+	// Dedicated cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Indicates node type, available values:Primary, Standby. Default: Standby.
 	// Indicates node type, available values:`Primary`, `Standby`. Default: `Standby`.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
@@ -97,6 +105,11 @@ type DBNodeSetObservation struct {
 }
 
 type DBNodeSetParameters struct {
+
+	// Dedicated cluster ID.
+	// Dedicated cluster ID.
+	// +kubebuilder:validation:Optional
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// Indicates node type, available values:Primary, Standby. Default: Standby.
 	// Indicates node type, available values:`Primary`, `Standby`. Default: `Standby`.
@@ -154,6 +167,10 @@ type InstanceInitParameters struct {
 	// Specify instance node info for disaster migration.
 	// Specify instance node info for disaster migration.
 	DBNodeSet []DBNodeSetInitParameters `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
+
+	// Whether to enable instance deletion protection. Default: false.
+	// Whether to enable instance deletion protection. Default: false.
+	DeleteProtection *bool `json:"deleteProtection,omitempty" tf:"delete_protection,omitempty"`
 
 	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
 	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
@@ -297,6 +314,10 @@ type InstanceObservation struct {
 	// Specify instance node info for disaster migration.
 	// Specify instance node info for disaster migration.
 	DBNodeSet []DBNodeSetObservation `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
+
+	// Whether to enable instance deletion protection. Default: false.
+	// Whether to enable instance deletion protection. Default: false.
+	DeleteProtection *bool `json:"deleteProtection,omitempty" tf:"delete_protection,omitempty"`
 
 	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
 	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
@@ -452,6 +473,11 @@ type InstanceParameters struct {
 	// Specify instance node info for disaster migration.
 	// +kubebuilder:validation:Optional
 	DBNodeSet []DBNodeSetParameters `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
+
+	// Whether to enable instance deletion protection. Default: false.
+	// Whether to enable instance deletion protection. Default: false.
+	// +kubebuilder:validation:Optional
+	DeleteProtection *bool `json:"deleteProtection,omitempty" tf:"delete_protection,omitempty"`
 
 	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
 	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.

@@ -83,6 +83,24 @@ spec:
                       Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. Valid value ranges: (30~7200). and default value is 300.
                       Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. Valid value ranges: (30~7200). and default value is `300`.
                     type: number
+                  lifecycleCommand:
+                    description: |-
+                      Remote command execution object. NotificationTarget and LifecycleCommand cannot be specified at the same time.
+                      Remote command execution object. `NotificationTarget` and `LifecycleCommand` cannot be specified at the same time.
+                    items:
+                      properties:
+                        commandId:
+                          description: |-
+                            Remote command ID. It is required to execute a command.
+                            Remote command ID. It is required to execute a command.
+                          type: string
+                        parameters:
+                          description: |-
+                            Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+                            Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+                          type: string
+                      type: object
+                    type: array
                   lifecycleHookName:
                     description: |-
                       The name of the lifecycle hook.
@@ -105,8 +123,8 @@ spec:
                     type: string
                   notificationTargetType:
                     description: |-
-                      Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC.
-                      Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`.
+                      Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC, TDMQ_CMQ_QUEUE, TDMQ_CMQ_TOPIC.
+                      Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`, `TDMQ_CMQ_QUEUE`, `TDMQ_CMQ_TOPIC`.
                     type: string
                   notificationTopicName:
                     description: |-
@@ -216,6 +234,24 @@ spec:
                       Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. Valid value ranges: (30~7200). and default value is 300.
                       Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. Valid value ranges: (30~7200). and default value is `300`.
                     type: number
+                  lifecycleCommand:
+                    description: |-
+                      Remote command execution object. NotificationTarget and LifecycleCommand cannot be specified at the same time.
+                      Remote command execution object. `NotificationTarget` and `LifecycleCommand` cannot be specified at the same time.
+                    items:
+                      properties:
+                        commandId:
+                          description: |-
+                            Remote command ID. It is required to execute a command.
+                            Remote command ID. It is required to execute a command.
+                          type: string
+                        parameters:
+                          description: |-
+                            Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+                            Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+                          type: string
+                      type: object
+                    type: array
                   lifecycleHookName:
                     description: |-
                       The name of the lifecycle hook.
@@ -238,8 +274,8 @@ spec:
                     type: string
                   notificationTargetType:
                     description: |-
-                      Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC.
-                      Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`.
+                      Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC, TDMQ_CMQ_QUEUE, TDMQ_CMQ_TOPIC.
+                      Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`, `TDMQ_CMQ_QUEUE`, `TDMQ_CMQ_TOPIC`.
                     type: string
                   notificationTopicName:
                     description: |-
@@ -520,6 +556,24 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  lifecycleCommand:
+                    description: |-
+                      Remote command execution object. NotificationTarget and LifecycleCommand cannot be specified at the same time.
+                      Remote command execution object. `NotificationTarget` and `LifecycleCommand` cannot be specified at the same time.
+                    items:
+                      properties:
+                        commandId:
+                          description: |-
+                            Remote command ID. It is required to execute a command.
+                            Remote command ID. It is required to execute a command.
+                          type: string
+                        parameters:
+                          description: |-
+                            Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+                            Custom parameter. The field type is JSON encoded string. For example, {"varA": "222"}.
+                          type: string
+                      type: object
+                    type: array
                   lifecycleHookName:
                     description: |-
                       The name of the lifecycle hook.
@@ -542,8 +596,8 @@ spec:
                     type: string
                   notificationTargetType:
                     description: |-
-                      Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC.
-                      Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`.
+                      Target type. Valid values: CMQ_QUEUE, CMQ_TOPIC, TDMQ_CMQ_QUEUE, TDMQ_CMQ_TOPIC.
+                      Target type. Valid values: `CMQ_QUEUE`, `CMQ_TOPIC`, `TDMQ_CMQ_QUEUE`, `TDMQ_CMQ_TOPIC`.
                     type: string
                   notificationTopicName:
                     description: |-

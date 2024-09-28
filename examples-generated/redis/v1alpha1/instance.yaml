@@ -4,13 +4,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: redis/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     availabilityZone: ${data.tencentcloud_redis_zone_config.zone.list[0].zone}
     memSize: 8192
-    name: terrform_test
+    name: tf-example
     passwordSecretRef:
       key: example-key
       name: example-secret

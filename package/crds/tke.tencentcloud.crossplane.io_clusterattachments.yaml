@@ -157,6 +157,11 @@ spec:
                       The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
                       The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
                     type: string
+                  imageId:
+                    description: |-
+                      ID of Node image.
+                      ID of Node image.
+                    type: string
                   instanceId:
                     description: |-
                       ID of the CVM instance, this cvm will reinstall the system.
@@ -272,8 +277,8 @@ spec:
                     type: object
                   unschedulable:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                      Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
+                      Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
                     type: number
                   workerConfig:
                     description: |-
@@ -326,12 +331,12 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            Docker graph path. Default is /var/lib/docker.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
                             Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
                             Custom parameter information related to the node. This is a white-list parameter.
                           items:
                             type: string
@@ -383,7 +388,7 @@ spec:
                           type: array
                         isSchedule:
                           description: |-
-                            Indicate to schedule the adding node or not. Default is true.
+                            This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
                             Indicate to schedule the adding node or not. Default is true.
                           type: boolean
                         mountTarget:
@@ -393,12 +398,12 @@ spec:
                           type: string
                         preStartUserScript:
                           description: |-
-                            Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
                         userData:
                           description: |-
-                            Base64-encoded User Data text, the length limit is 16KB.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
                       type: object
@@ -454,12 +459,12 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            Docker graph path. Default is /var/lib/docker.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
                             Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
                             Custom parameter information related to the node. This is a white-list parameter.
                           items:
                             type: string
@@ -511,7 +516,7 @@ spec:
                           type: array
                         isSchedule:
                           description: |-
-                            Indicate to schedule the adding node or not. Default is true.
+                            This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
                             Indicate to schedule the adding node or not. Default is true.
                           type: boolean
                         mountTarget:
@@ -521,12 +526,12 @@ spec:
                           type: string
                         preStartUserScript:
                           description: |-
-                            Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
                         userData:
                           description: |-
-                            Base64-encoded User Data text, the length limit is 16KB.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
                       type: object
@@ -629,6 +634,11 @@ spec:
                       The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
                       The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
                     type: string
+                  imageId:
+                    description: |-
+                      ID of Node image.
+                      ID of Node image.
+                    type: string
                   instanceId:
                     description: |-
                       ID of the CVM instance, this cvm will reinstall the system.
@@ -725,8 +735,8 @@ spec:
                     x-kubernetes-map-type: granular
                   unschedulable:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                      Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
+                      Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
                     type: number
                   workerConfig:
                     description: |-
@@ -779,12 +789,12 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            Docker graph path. Default is /var/lib/docker.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
                             Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
                             Custom parameter information related to the node. This is a white-list parameter.
                           items:
                             type: string
@@ -836,7 +846,7 @@ spec:
                           type: array
                         isSchedule:
                           description: |-
-                            Indicate to schedule the adding node or not. Default is true.
+                            This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
                             Indicate to schedule the adding node or not. Default is true.
                           type: boolean
                         mountTarget:
@@ -846,12 +856,12 @@ spec:
                           type: string
                         preStartUserScript:
                           description: |-
-                            Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
                         userData:
                           description: |-
-                            Base64-encoded User Data text, the length limit is 16KB.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
                       type: object
@@ -907,12 +917,12 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            Docker graph path. Default is /var/lib/docker.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
                             Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
                             Custom parameter information related to the node. This is a white-list parameter.
                           items:
                             type: string
@@ -964,7 +974,7 @@ spec:
                           type: array
                         isSchedule:
                           description: |-
-                            Indicate to schedule the adding node or not. Default is true.
+                            This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
                             Indicate to schedule the adding node or not. Default is true.
                           type: boolean
                         mountTarget:
@@ -974,12 +984,12 @@ spec:
                           type: string
                         preStartUserScript:
                           description: |-
-                            Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
                         userData:
                           description: |-
-                            Base64-encoded User Data text, the length limit is 16KB.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
                       type: object
@@ -1170,6 +1180,11 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  imageId:
+                    description: |-
+                      ID of Node image.
+                      ID of Node image.
+                    type: string
                   instanceId:
                     description: |-
                       ID of the CVM instance, this cvm will reinstall the system.
@@ -1205,8 +1220,8 @@ spec:
                     type: string
                   unschedulable:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                      Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
+                      Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
                     type: number
                   workerConfig:
                     description: |-
@@ -1259,12 +1274,12 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            Docker graph path. Default is /var/lib/docker.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
                             Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
                             Custom parameter information related to the node. This is a white-list parameter.
                           items:
                             type: string
@@ -1316,7 +1331,7 @@ spec:
                           type: array
                         isSchedule:
                           description: |-
-                            Indicate to schedule the adding node or not. Default is true.
+                            This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
                             Indicate to schedule the adding node or not. Default is true.
                           type: boolean
                         mountTarget:
@@ -1326,12 +1341,12 @@ spec:
                           type: string
                         preStartUserScript:
                           description: |-
-                            Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
                         userData:
                           description: |-
-                            Base64-encoded User Data text, the length limit is 16KB.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
                       type: object
@@ -1387,12 +1402,12 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            Docker graph path. Default is /var/lib/docker.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
                             Docker graph path. Default is `/var/lib/docker`.
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
                             Custom parameter information related to the node. This is a white-list parameter.
                           items:
                             type: string
@@ -1444,7 +1459,7 @@ spec:
                           type: array
                         isSchedule:
                           description: |-
-                            Indicate to schedule the adding node or not. Default is true.
+                            This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
                             Indicate to schedule the adding node or not. Default is true.
                           type: boolean
                         mountTarget:
@@ -1454,12 +1469,12 @@ spec:
                           type: string
                         preStartUserScript:
                           description: |-
-                            Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
                         userData:
                           description: |-
-                            Base64-encoded User Data text, the length limit is 16KB.
+                            This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
                       type: object

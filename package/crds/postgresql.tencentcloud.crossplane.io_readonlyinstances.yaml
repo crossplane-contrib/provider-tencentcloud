@@ -93,6 +93,11 @@ spec:
                       PostgreSQL kernel version, which must be the same as that of the primary instance.
                       PostgreSQL kernel version, which must be the same as that of the primary instance.
                     type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Dedicated cluster ID.
+                      Dedicated cluster ID.
+                    type: string
                   instanceChargeType:
                     description: |-
                       instance billing mode. Valid values: PREPAID (monthly subscription), POSTPAID_BY_HOUR (pay-as-you-go).
@@ -427,6 +432,11 @@ spec:
                     description: |-
                       PostgreSQL kernel version, which must be the same as that of the primary instance.
                       PostgreSQL kernel version, which must be the same as that of the primary instance.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Dedicated cluster ID.
+                      Dedicated cluster ID.
                     type: string
                   instanceChargeType:
                     description: |-
@@ -955,6 +965,11 @@ spec:
                     description: |-
                       PostgreSQL kernel version, which must be the same as that of the primary instance.
                       PostgreSQL kernel version, which must be the same as that of the primary instance.
+                    type: string
+                  dedicatedClusterId:
+                    description: |-
+                      Dedicated cluster ID.
+                      Dedicated cluster ID.
                     type: string
                   id:
                     description: ID of the resource.

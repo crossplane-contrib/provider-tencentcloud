@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/listenerrule
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     certificateCaId: VfqO4zkB
@@ -14,12 +14,12 @@ spec:
     clbIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    domain: foo.net
+    domain: example.com
     healthCheckHealthNum: 3
     healthCheckHttpCode: 2
-    healthCheckHttpDomain: Default Domain
+    healthCheckHttpDomain: check.com
     healthCheckHttpMethod: GET
-    healthCheckHttpPath: Default Path
+    healthCheckHttpPath: /
     healthCheckIntervalTime: 5
     healthCheckSwitch: true
     healthCheckUnhealthNum: 3
@@ -28,4 +28,4 @@ spec:
         testing.upbound.io/example-name: example
     scheduler: WRR
     sessionExpireTime: 30
-    url: /bar
+    url: /

@@ -35,6 +35,10 @@ type EipInitParameters struct {
 	// ID of bandwidth package, it will set when `internet_charge_type` is `BANDWIDTH_PACKAGE`.
 	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
 
+	// CDC Unique ID.
+	// CDC Unique ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Network egress. It defaults to center_egress1. If you want to try the egress feature, please submit a ticket.
 	// Network egress. It defaults to `center_egress1`. If you want to try the egress feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
 	Egress *string `json:"egress,omitempty" tf:"egress,omitempty"`
@@ -90,6 +94,10 @@ type EipObservation struct {
 	// ID of bandwidth package, it will set when internet_charge_type is BANDWIDTH_PACKAGE.
 	// ID of bandwidth package, it will set when `internet_charge_type` is `BANDWIDTH_PACKAGE`.
 	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// CDC Unique ID.
+	// CDC Unique ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
 	// Network egress. It defaults to center_egress1. If you want to try the egress feature, please submit a ticket.
 	// Network egress. It defaults to `center_egress1`. If you want to try the egress feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
@@ -162,6 +170,11 @@ type EipParameters struct {
 	// ID of bandwidth package, it will set when `internet_charge_type` is `BANDWIDTH_PACKAGE`.
 	// +kubebuilder:validation:Optional
 	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// CDC Unique ID.
+	// CDC Unique ID.
+	// +kubebuilder:validation:Optional
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
 	// Network egress. It defaults to center_egress1. If you want to try the egress feature, please submit a ticket.
 	// Network egress. It defaults to `center_egress1`. If you want to try the egress feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).

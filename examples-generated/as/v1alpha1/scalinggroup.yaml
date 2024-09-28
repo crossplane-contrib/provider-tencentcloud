@@ -11,8 +11,11 @@ spec:
     configurationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    healthCheckType: CLB
+    lbHealthCheckGracePeriod: 30
     maxSize: 1
     minSize: 0
+    replaceLoadBalancerUnhealthy: true
     scalingGroupName: tf-example
     subnetIds:
     - ${tencentcloud_subnet.subnet.id}

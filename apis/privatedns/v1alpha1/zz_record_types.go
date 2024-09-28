@@ -19,16 +19,16 @@ type RecordInitParameters struct {
 	// MX priority, which is required when the record type is MX. Valid values: 5, 10, 15, 20, 30, 40, 50.
 	Mx *float64 `json:"mx,omitempty" tf:"mx,omitempty"`
 
-	// Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
-	// Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
+	// Record type. Valid values: A, AAAA, CNAME, MX, TXT, PTR.
+	// Record type. Valid values: `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `PTR`.
 	RecordType *string `json:"recordType,omitempty" tf:"record_type,omitempty"`
 
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
 
-	// Subdomain, such as "www", "m", and "@".
-	// Subdomain, such as "www", "m", and "@".
+	// Subdomain, such as www, m, and @.
+	// Subdomain, such as `www`, `m`, and `@`.
 	SubDomain *string `json:"subDomain,omitempty" tf:"sub_domain,omitempty"`
 
 	// Record cache time. The smaller the value, the faster the record will take effect. Value range: 1~86400s.
@@ -53,16 +53,16 @@ type RecordObservation struct {
 	// MX priority, which is required when the record type is MX. Valid values: 5, 10, 15, 20, 30, 40, 50.
 	Mx *float64 `json:"mx,omitempty" tf:"mx,omitempty"`
 
-	// Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
-	// Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
+	// Record type. Valid values: A, AAAA, CNAME, MX, TXT, PTR.
+	// Record type. Valid values: `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `PTR`.
 	RecordType *string `json:"recordType,omitempty" tf:"record_type,omitempty"`
 
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
 
-	// Subdomain, such as "www", "m", and "@".
-	// Subdomain, such as "www", "m", and "@".
+	// Subdomain, such as www, m, and @.
+	// Subdomain, such as `www`, `m`, and `@`.
 	SubDomain *string `json:"subDomain,omitempty" tf:"sub_domain,omitempty"`
 
 	// Record cache time. The smaller the value, the faster the record will take effect. Value range: 1~86400s.
@@ -85,8 +85,8 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Optional
 	Mx *float64 `json:"mx,omitempty" tf:"mx,omitempty"`
 
-	// Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
-	// Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
+	// Record type. Valid values: A, AAAA, CNAME, MX, TXT, PTR.
+	// Record type. Valid values: `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `PTR`.
 	// +kubebuilder:validation:Optional
 	RecordType *string `json:"recordType,omitempty" tf:"record_type,omitempty"`
 
@@ -95,8 +95,8 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Optional
 	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
 
-	// Subdomain, such as "www", "m", and "@".
-	// Subdomain, such as "www", "m", and "@".
+	// Subdomain, such as www, m, and @.
+	// Subdomain, such as `www`, `m`, and `@`.
 	// +kubebuilder:validation:Optional
 	SubDomain *string `json:"subDomain,omitempty" tf:"sub_domain,omitempty"`
 

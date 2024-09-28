@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/attachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clbIdSelector:
