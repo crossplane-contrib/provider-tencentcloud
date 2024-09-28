@@ -154,6 +154,11 @@ spec:
                       Specify instance node info for disaster migration.
                     items:
                       properties:
+                        dedicatedClusterId:
+                          description: |-
+                            Dedicated cluster ID.
+                            Dedicated cluster ID.
+                          type: string
                         role:
                           description: |-
                             Indicates node type, available values:Primary, Standby. Default: Standby.
@@ -166,6 +171,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  deleteProtection:
+                    description: |-
+                      Whether to enable instance deletion protection. Default: false.
+                      Whether to enable instance deletion protection. Default: false.
+                    type: boolean
                   engineVersion:
                     description: |-
                       Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
@@ -526,6 +536,11 @@ spec:
                       Specify instance node info for disaster migration.
                     items:
                       properties:
+                        dedicatedClusterId:
+                          description: |-
+                            Dedicated cluster ID.
+                            Dedicated cluster ID.
+                          type: string
                         role:
                           description: |-
                             Indicates node type, available values:Primary, Standby. Default: Standby.
@@ -538,6 +553,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  deleteProtection:
+                    description: |-
+                      Whether to enable instance deletion protection. Default: false.
+                      Whether to enable instance deletion protection. Default: false.
+                    type: boolean
                   engineVersion:
                     description: |-
                       Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
@@ -1063,6 +1083,11 @@ spec:
                       Specify instance node info for disaster migration.
                     items:
                       properties:
+                        dedicatedClusterId:
+                          description: |-
+                            Dedicated cluster ID.
+                            Dedicated cluster ID.
+                          type: string
                         role:
                           description: |-
                             Indicates node type, available values:Primary, Standby. Default: Standby.
@@ -1075,6 +1100,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  deleteProtection:
+                    description: |-
+                      Whether to enable instance deletion protection. Default: false.
+                      Whether to enable instance deletion protection. Default: false.
+                    type: boolean
                   engineVersion:
                     description: |-
                       Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.

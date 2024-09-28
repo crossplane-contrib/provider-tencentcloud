@@ -4,17 +4,17 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
   labels:
-    testing.upbound.io/example-name: instance
-  name: instance
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    description: ci-test-route-table-entry
+    description: describe
     destinationCidrBlock: 10.4.4.0/24
     nextHub: "0"
     nextType: EIP
     routeTableIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: example
 
 ---
 
@@ -24,14 +24,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    name: ci-temp-test-rt
+    name: tf-example
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -41,17 +41,17 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: subnet
+  name: subnet
 spec:
   forProvider:
     availabilityZone: ${var.availability_zone}
     cidrBlock: 10.0.12.0/24
-    name: terraform test subnet
-    routeTableId: ${tencentcloud_route_table.foo.id}
+    name: subnet
+    routeTableId: ${tencentcloud_route_table.example.id}
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -61,9 +61,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routetableentry
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: vpc
+  name: vpc
 spec:
   forProvider:
     cidrBlock: 10.0.0.0/16
-    name: ci-temp-test
+    name: vpc

@@ -73,6 +73,16 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  checkPort:
+                    description: |-
+                      UDP origin station health check probe port.
+                      UDP origin station health check probe port.
+                    type: number
+                  checkType:
+                    description: |-
+                      UDP origin server health type. PORT means check port, and PING means PING.
+                      UDP origin server health type. PORT means check port, and PING means PING.
+                    type: string
                   clientIpMethod:
                     description: |-
                       The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of TCP protocol.
@@ -80,18 +90,28 @@ spec:
                     type: number
                   connectTimeout:
                     description: |-
-                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of TCP protocol and require less than interval.
-                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of `TCP` protocol and require less than `interval`.
+                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than interval.
+                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than `interval`.
                     type: number
+                  contextType:
+                    description: |-
+                      UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+                      UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+                    type: string
                   healthCheck:
                     description: |-
-                      Indicates whether health check is enable, default value is false. NOTES: Only supports listeners of TCP protocol.
-                      Indicates whether health check is enable, default value is `false`. NOTES: Only supports listeners of `TCP` protocol.
+                      Indicates whether health check is enable, default value is false.
+                      Indicates whether health check is enable, default value is `false`.
                     type: boolean
+                  healthyThreshold:
+                    description: |-
+                      Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+                      Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+                    type: number
                   interval:
                     description: |-
-                      Interval of the health check, default value is 5s. NOTES: Only supports listeners of TCP protocol.
-                      Interval of the health check, default value is 5s. NOTES: Only supports listeners of `TCP` protocol.
+                      Interval of the health check, default value is 5s.
+                      Interval of the health check, default value is 5s.
                     type: number
                   name:
                     description: |-
@@ -220,11 +240,26 @@ spec:
                       Type of the realserver. Valid value: IP and DOMAIN. NOTES: when the protocol is specified as TCP and the scheduler is specified as wrr, the item can only be set to IP.
                       Type of the realserver. Valid value: `IP` and `DOMAIN`. NOTES: when the `protocol` is specified as `TCP` and the `scheduler` is specified as `wrr`, the item can only be set to `IP`.
                     type: string
+                  recvContext:
+                    description: |-
+                      UDP source server health check port detects received messages. Only used when the health check type is PORT.
+                      UDP source server health check port detects received messages. Only used when the health check type is PORT.
+                    type: string
                   scheduler:
                     description: |-
                       Scheduling policy of the layer4 listener, default value is rr. Valid value: rr, wrr and lc.
                       Scheduling policy of the layer4 listener, default value is `rr`. Valid value: `rr`, `wrr` and `lc`.
                     type: string
+                  sendContext:
+                    description: |-
+                      UDP source server health check port detection sends messages. Only used when health check type is PORT.
+                      UDP source server health check port detection sends messages. Only used when health check type is PORT.
+                    type: string
+                  unhealthyThreshold:
+                    description: |-
+                      Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+                      Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+                    type: number
                 type: object
               initProvider:
                 description: |-
@@ -239,6 +274,16 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  checkPort:
+                    description: |-
+                      UDP origin station health check probe port.
+                      UDP origin station health check probe port.
+                    type: number
+                  checkType:
+                    description: |-
+                      UDP origin server health type. PORT means check port, and PING means PING.
+                      UDP origin server health type. PORT means check port, and PING means PING.
+                    type: string
                   clientIpMethod:
                     description: |-
                       The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of TCP protocol.
@@ -246,18 +291,28 @@ spec:
                     type: number
                   connectTimeout:
                     description: |-
-                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of TCP protocol and require less than interval.
-                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of `TCP` protocol and require less than `interval`.
+                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than interval.
+                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than `interval`.
                     type: number
+                  contextType:
+                    description: |-
+                      UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+                      UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+                    type: string
                   healthCheck:
                     description: |-
-                      Indicates whether health check is enable, default value is false. NOTES: Only supports listeners of TCP protocol.
-                      Indicates whether health check is enable, default value is `false`. NOTES: Only supports listeners of `TCP` protocol.
+                      Indicates whether health check is enable, default value is false.
+                      Indicates whether health check is enable, default value is `false`.
                     type: boolean
+                  healthyThreshold:
+                    description: |-
+                      Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+                      Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+                    type: number
                   interval:
                     description: |-
-                      Interval of the health check, default value is 5s. NOTES: Only supports listeners of TCP protocol.
-                      Interval of the health check, default value is 5s. NOTES: Only supports listeners of `TCP` protocol.
+                      Interval of the health check, default value is 5s.
+                      Interval of the health check, default value is 5s.
                     type: number
                   name:
                     description: |-
@@ -386,11 +441,26 @@ spec:
                       Type of the realserver. Valid value: IP and DOMAIN. NOTES: when the protocol is specified as TCP and the scheduler is specified as wrr, the item can only be set to IP.
                       Type of the realserver. Valid value: `IP` and `DOMAIN`. NOTES: when the `protocol` is specified as `TCP` and the `scheduler` is specified as `wrr`, the item can only be set to `IP`.
                     type: string
+                  recvContext:
+                    description: |-
+                      UDP source server health check port detects received messages. Only used when the health check type is PORT.
+                      UDP source server health check port detects received messages. Only used when the health check type is PORT.
+                    type: string
                   scheduler:
                     description: |-
                       Scheduling policy of the layer4 listener, default value is rr. Valid value: rr, wrr and lc.
                       Scheduling policy of the layer4 listener, default value is `rr`. Valid value: `rr`, `wrr` and `lc`.
                     type: string
+                  sendContext:
+                    description: |-
+                      UDP source server health check port detection sends messages. Only used when health check type is PORT.
+                      UDP source server health check port detection sends messages. Only used when health check type is PORT.
+                    type: string
+                  unhealthyThreshold:
+                    description: |-
+                      Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+                      Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -581,6 +651,16 @@ spec:
             properties:
               atProvider:
                 properties:
+                  checkPort:
+                    description: |-
+                      UDP origin station health check probe port.
+                      UDP origin station health check probe port.
+                    type: number
+                  checkType:
+                    description: |-
+                      UDP origin server health type. PORT means check port, and PING means PING.
+                      UDP origin server health type. PORT means check port, and PING means PING.
+                    type: string
                   clientIpMethod:
                     description: |-
                       The way the listener gets the client IP, 0 for TOA, 1 for Proxy Protocol, default value is 0. NOTES: Only supports listeners of TCP protocol.
@@ -588,9 +668,14 @@ spec:
                     type: number
                   connectTimeout:
                     description: |-
-                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of TCP protocol and require less than interval.
-                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Only supports listeners of `TCP` protocol and require less than `interval`.
+                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than interval.
+                      Timeout of the health check response, should less than interval, default value is 2s. NOTES: Require less than `interval`.
                     type: number
+                  contextType:
+                    description: |-
+                      UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+                      UDP source station health check port probe message type: TEXT represents text. Only used when the health check type is PORT.
+                    type: string
                   createTime:
                     description: |-
                       Creation time of the layer4 listener.
@@ -598,16 +683,21 @@ spec:
                     type: string
                   healthCheck:
                     description: |-
-                      Indicates whether health check is enable, default value is false. NOTES: Only supports listeners of TCP protocol.
-                      Indicates whether health check is enable, default value is `false`. NOTES: Only supports listeners of `TCP` protocol.
+                      Indicates whether health check is enable, default value is false.
+                      Indicates whether health check is enable, default value is `false`.
                     type: boolean
+                  healthyThreshold:
+                    description: |-
+                      Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+                      Health threshold, which indicates how many consecutive inspections are successful, the source station is determined to be healthy. Range from 1 to 10. Default value is 1.
+                    type: number
                   id:
                     description: ID of the GAAP realserver.
                     type: string
                   interval:
                     description: |-
-                      Interval of the health check, default value is 5s. NOTES: Only supports listeners of TCP protocol.
-                      Interval of the health check, default value is 5s. NOTES: Only supports listeners of `TCP` protocol.
+                      Interval of the health check, default value is 5s.
+                      Interval of the health check, default value is 5s.
                     type: number
                   name:
                     description: |-
@@ -662,15 +752,30 @@ spec:
                       Type of the realserver. Valid value: IP and DOMAIN. NOTES: when the protocol is specified as TCP and the scheduler is specified as wrr, the item can only be set to IP.
                       Type of the realserver. Valid value: `IP` and `DOMAIN`. NOTES: when the `protocol` is specified as `TCP` and the `scheduler` is specified as `wrr`, the item can only be set to `IP`.
                     type: string
+                  recvContext:
+                    description: |-
+                      UDP source server health check port detects received messages. Only used when the health check type is PORT.
+                      UDP source server health check port detects received messages. Only used when the health check type is PORT.
+                    type: string
                   scheduler:
                     description: |-
                       Scheduling policy of the layer4 listener, default value is rr. Valid value: rr, wrr and lc.
                       Scheduling policy of the layer4 listener, default value is `rr`. Valid value: `rr`, `wrr` and `lc`.
                     type: string
+                  sendContext:
+                    description: |-
+                      UDP source server health check port detection sends messages. Only used when health check type is PORT.
+                      UDP source server health check port detection sends messages. Only used when health check type is PORT.
+                    type: string
                   status:
                     description: |-
                       Status of the layer4 listener.
                       Status of the layer4 listener.
+                    type: number
+                  unhealthyThreshold:
+                    description: |-
+                      Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
+                      Unhealthy threshold, which indicates how many consecutive check failures the source station is considered unhealthy. Range from 1 to 10. Default value is 1.
                     type: number
                 type: object
               conditions:

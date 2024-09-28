@@ -10,6 +10,9 @@ spec:
   forProvider:
     availabilityZone: ${data.tencentcloud_availability_zones_by_product.availability_zone.zones.0.name}
     basicSecurityType: 2
+    cosBackup:
+    - backupTime: "22:00"
+      isAutoBackup: true
     esAcl:
     - whiteList:
       - 127.0.0.1

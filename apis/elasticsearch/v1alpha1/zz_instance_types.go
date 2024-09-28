@@ -13,6 +13,41 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CosBackupInitParameters struct {
+
+	// Automatic backup execution time (accurate to the hour), e.g. 22:00.
+	// Automatic backup execution time (accurate to the hour), e.g. `22:00`.
+	BackupTime *string `json:"backupTime,omitempty" tf:"backup_time,omitempty"`
+
+	// Whether to enable automatic backup of cos.
+	// Whether to enable automatic backup of cos.
+	IsAutoBackup *bool `json:"isAutoBackup,omitempty" tf:"is_auto_backup,omitempty"`
+}
+
+type CosBackupObservation struct {
+
+	// Automatic backup execution time (accurate to the hour), e.g. 22:00.
+	// Automatic backup execution time (accurate to the hour), e.g. `22:00`.
+	BackupTime *string `json:"backupTime,omitempty" tf:"backup_time,omitempty"`
+
+	// Whether to enable automatic backup of cos.
+	// Whether to enable automatic backup of cos.
+	IsAutoBackup *bool `json:"isAutoBackup,omitempty" tf:"is_auto_backup,omitempty"`
+}
+
+type CosBackupParameters struct {
+
+	// Automatic backup execution time (accurate to the hour), e.g. 22:00.
+	// Automatic backup execution time (accurate to the hour), e.g. `22:00`.
+	// +kubebuilder:validation:Optional
+	BackupTime *string `json:"backupTime" tf:"backup_time,omitempty"`
+
+	// Whether to enable automatic backup of cos.
+	// Whether to enable automatic backup of cos.
+	// +kubebuilder:validation:Optional
+	IsAutoBackup *bool `json:"isAutoBackup" tf:"is_auto_backup,omitempty"`
+}
+
 type EsACLInitParameters struct {
 
 	// Blacklist of kibana access.
@@ -71,6 +106,10 @@ type InstanceInitParameters struct {
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// COS automatic backup information.
+	// COS automatic backup information.
+	CosBackup []CosBackupInitParameters `json:"cosBackup,omitempty" tf:"cos_backup,omitempty"`
 
 	// Cluster deployment mode. Valid values are 0 and 1. 0 is single-AZ deployment, and 1 is multi-AZ deployment. Default value is 0.
 	// Cluster deployment mode. Valid values are `0` and `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment. Default value is `0`.
@@ -161,6 +200,10 @@ type InstanceObservation struct {
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// COS automatic backup information.
+	// COS automatic backup information.
+	CosBackup []CosBackupObservation `json:"cosBackup,omitempty" tf:"cos_backup,omitempty"`
 
 	// Instance creation time.
 	// Instance creation time.
@@ -260,6 +303,11 @@ type InstanceParameters struct {
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// COS automatic backup information.
+	// COS automatic backup information.
+	// +kubebuilder:validation:Optional
+	CosBackup []CosBackupParameters `json:"cosBackup,omitempty" tf:"cos_backup,omitempty"`
 
 	// Cluster deployment mode. Valid values are 0 and 1. 0 is single-AZ deployment, and 1 is multi-AZ deployment. Default value is 0.
 	// Cluster deployment mode. Valid values are `0` and `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment. Default value is `0`.
@@ -392,8 +440,8 @@ type NodeInfoListInitParameters struct {
 	// Node disk size. Unit is GB, and default value is `100`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are CLOUD_SSD and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
-	// Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
+	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// Decides to encrypt this disk or not.
@@ -419,8 +467,8 @@ type NodeInfoListObservation struct {
 	// Node disk size. Unit is GB, and default value is `100`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are CLOUD_SSD and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
-	// Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
+	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// Decides to encrypt this disk or not.
@@ -447,8 +495,8 @@ type NodeInfoListParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are CLOUD_SSD and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
-	// Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
+	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 

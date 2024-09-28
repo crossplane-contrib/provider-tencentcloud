@@ -80,8 +80,8 @@ spec:
                     type: number
                   recordType:
                     description: |-
-                      Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
-                      Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
+                      Record type. Valid values: A, AAAA, CNAME, MX, TXT, PTR.
+                      Record type. Valid values: `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `PTR`.
                     type: string
                   recordValue:
                     description: |-
@@ -90,8 +90,8 @@ spec:
                     type: string
                   subDomain:
                     description: |-
-                      Subdomain, such as "www", "m", and "@".
-                      Subdomain, such as "www", "m", and "@".
+                      Subdomain, such as www, m, and @.
+                      Subdomain, such as `www`, `m`, and `@`.
                     type: string
                   ttl:
                     description: |-
@@ -129,8 +129,8 @@ spec:
                     type: number
                   recordType:
                     description: |-
-                      Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
-                      Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
+                      Record type. Valid values: A, AAAA, CNAME, MX, TXT, PTR.
+                      Record type. Valid values: `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `PTR`.
                     type: string
                   recordValue:
                     description: |-
@@ -139,8 +139,8 @@ spec:
                     type: string
                   subDomain:
                     description: |-
-                      Subdomain, such as "www", "m", and "@".
-                      Subdomain, such as "www", "m", and "@".
+                      Subdomain, such as www, m, and @.
+                      Subdomain, such as `www`, `m`, and `@`.
                     type: string
                   ttl:
                     description: |-
@@ -357,8 +357,8 @@ spec:
                     type: number
                   recordType:
                     description: |-
-                      Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
-                      Record type. Valid values: "A", "AAAA", "CNAME", "MX", "TXT", "PTR".
+                      Record type. Valid values: A, AAAA, CNAME, MX, TXT, PTR.
+                      Record type. Valid values: `A`, `AAAA`, `CNAME`, `MX`, `TXT`, `PTR`.
                     type: string
                   recordValue:
                     description: |-
@@ -367,8 +367,8 @@ spec:
                     type: string
                   subDomain:
                     description: |-
-                      Subdomain, such as "www", "m", and "@".
-                      Subdomain, such as "www", "m", and "@".
+                      Subdomain, such as www, m, and @.
+                      Subdomain, such as `www`, `m`, and `@`.
                     type: string
                   ttl:
                     description: |-

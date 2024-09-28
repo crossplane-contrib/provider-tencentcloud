@@ -1004,6 +1004,11 @@ func (in *EipInitParameters) DeepCopyInto(out *EipInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Egress != nil {
 		in, out := &in.Egress, &out.Egress
 		*out = new(string)
@@ -1127,6 +1132,11 @@ func (in *EipObservation) DeepCopyInto(out *EipObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Egress != nil {
 		in, out := &in.Egress, &out.Egress
 		*out = new(string)
@@ -1230,6 +1240,11 @@ func (in *EipParameters) DeepCopyInto(out *EipParameters) {
 	}
 	if in.BandwidthPackageID != nil {
 		in, out := &in.BandwidthPackageID, &out.BandwidthPackageID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
 		*out = new(string)
 		**out = **in
 	}

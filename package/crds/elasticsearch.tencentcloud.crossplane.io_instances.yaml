@@ -93,6 +93,24 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
                     type: string
+                  cosBackup:
+                    description: |-
+                      COS automatic backup information.
+                      COS automatic backup information.
+                    items:
+                      properties:
+                        backupTime:
+                          description: |-
+                            Automatic backup execution time (accurate to the hour), e.g. 22:00.
+                            Automatic backup execution time (accurate to the hour), e.g. `22:00`.
+                          type: string
+                        isAutoBackup:
+                          description: |-
+                            Whether to enable automatic backup of cos.
+                            Whether to enable automatic backup of cos.
+                          type: boolean
+                      type: object
+                    type: array
                   deployMode:
                     description: |-
                       Cluster deployment mode. Valid values are 0 and 1. 0 is single-AZ deployment, and 1 is multi-AZ deployment. Default value is 0.
@@ -168,8 +186,8 @@ spec:
                           type: number
                         diskType:
                           description: |-
-                            Node disk type. Valid values are CLOUD_SSD and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
-                            Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
+                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
                           type: string
                         encrypt:
                           description: |-
@@ -440,6 +458,24 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
                     type: string
+                  cosBackup:
+                    description: |-
+                      COS automatic backup information.
+                      COS automatic backup information.
+                    items:
+                      properties:
+                        backupTime:
+                          description: |-
+                            Automatic backup execution time (accurate to the hour), e.g. 22:00.
+                            Automatic backup execution time (accurate to the hour), e.g. `22:00`.
+                          type: string
+                        isAutoBackup:
+                          description: |-
+                            Whether to enable automatic backup of cos.
+                            Whether to enable automatic backup of cos.
+                          type: boolean
+                      type: object
+                    type: array
                   deployMode:
                     description: |-
                       Cluster deployment mode. Valid values are 0 and 1. 0 is single-AZ deployment, and 1 is multi-AZ deployment. Default value is 0.
@@ -515,8 +551,8 @@ spec:
                           type: number
                         diskType:
                           description: |-
-                            Node disk type. Valid values are CLOUD_SSD and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
-                            Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
+                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
                           type: string
                         encrypt:
                           description: |-
@@ -939,6 +975,24 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`.
                     type: string
+                  cosBackup:
+                    description: |-
+                      COS automatic backup information.
+                      COS automatic backup information.
+                    items:
+                      properties:
+                        backupTime:
+                          description: |-
+                            Automatic backup execution time (accurate to the hour), e.g. 22:00.
+                            Automatic backup execution time (accurate to the hour), e.g. `22:00`.
+                          type: string
+                        isAutoBackup:
+                          description: |-
+                            Whether to enable automatic backup of cos.
+                            Whether to enable automatic backup of cos.
+                          type: boolean
+                      type: object
+                    type: array
                   createTime:
                     description: |-
                       Instance creation time.
@@ -1042,8 +1096,8 @@ spec:
                           type: number
                         diskType:
                           description: |-
-                            Node disk type. Valid values are CLOUD_SSD and CLOUD_PREMIUM, CLOUD_HSSD. The default value is CLOUD_SSD.
-                            Node disk type. Valid values are `CLOUD_SSD` and `CLOUD_PREMIUM`, `CLOUD_HSSD`. The default value is `CLOUD_SSD`.
+                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
+                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
                           type: string
                         encrypt:
                           description: |-

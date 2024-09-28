@@ -41,6 +41,11 @@ func (in *DataDisksInitParameters) DeepCopyInto(out *DataDisksInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.DeleteWithInstancePrepaid != nil {
+		in, out := &in.DeleteWithInstancePrepaid, &out.DeleteWithInstancePrepaid
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Encrypt != nil {
 		in, out := &in.Encrypt, &out.Encrypt
 		*out = new(bool)
@@ -91,6 +96,11 @@ func (in *DataDisksObservation) DeepCopyInto(out *DataDisksObservation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.DeleteWithInstancePrepaid != nil {
+		in, out := &in.DeleteWithInstancePrepaid, &out.DeleteWithInstancePrepaid
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Encrypt != nil {
 		in, out := &in.Encrypt, &out.Encrypt
 		*out = new(bool)
@@ -138,6 +148,11 @@ func (in *DataDisksParameters) DeepCopyInto(out *DataDisksParameters) {
 	}
 	if in.DeleteWithInstance != nil {
 		in, out := &in.DeleteWithInstance, &out.DeleteWithInstance
+		*out = new(bool)
+		**out = **in
+	}
+	if in.DeleteWithInstancePrepaid != nil {
+		in, out := &in.DeleteWithInstancePrepaid, &out.DeleteWithInstancePrepaid
 		*out = new(bool)
 		**out = **in
 	}

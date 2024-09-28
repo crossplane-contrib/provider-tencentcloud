@@ -109,6 +109,16 @@ type InstanceInitParameters struct {
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
 	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
 
+	// Maintenance window end time.
+	// Maintenance window end time.
+	// - The value range is any full point or half point from `00:00-23:00`, and the maintenance time duration is at least 30 minutes and at most 3 hours.
+	// - The end time must be based on the start time backwards.
+	MaintenanceEnd *string `json:"maintenanceEnd,omitempty" tf:"maintenance_end,omitempty"`
+
+	// Maintenance window start time. The value range is any full point or half point from 00:00-23:00, such as 00:00 or 00:30.
+	// Maintenance window start time. The value range is any full point or half point from `00:00-23:00`, such as 00:00 or 00:30.
+	MaintenanceStart *string `json:"maintenanceStart,omitempty" tf:"maintenance_start,omitempty"`
+
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
@@ -223,6 +233,16 @@ type InstanceObservation struct {
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
 	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
 
+	// Maintenance window end time.
+	// Maintenance window end time.
+	// - The value range is any full point or half point from `00:00-23:00`, and the maintenance time duration is at least 30 minutes and at most 3 hours.
+	// - The end time must be based on the start time backwards.
+	MaintenanceEnd *string `json:"maintenanceEnd,omitempty" tf:"maintenance_end,omitempty"`
+
+	// Maintenance window start time. The value range is any full point or half point from 00:00-23:00, such as 00:00 or 00:30.
+	// Maintenance window start time. The value range is any full point or half point from `00:00-23:00`, such as 00:00 or 00:30.
+	MaintenanceStart *string `json:"maintenanceStart,omitempty" tf:"maintenance_start,omitempty"`
+
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
@@ -336,6 +356,18 @@ type InstanceParameters struct {
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
 	// +kubebuilder:validation:Optional
 	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
+
+	// Maintenance window end time.
+	// Maintenance window end time.
+	// - The value range is any full point or half point from `00:00-23:00`, and the maintenance time duration is at least 30 minutes and at most 3 hours.
+	// - The end time must be based on the start time backwards.
+	// +kubebuilder:validation:Optional
+	MaintenanceEnd *string `json:"maintenanceEnd,omitempty" tf:"maintenance_end,omitempty"`
+
+	// Maintenance window start time. The value range is any full point or half point from 00:00-23:00, such as 00:00 or 00:30.
+	// Maintenance window start time. The value range is any full point or half point from `00:00-23:00`, such as 00:00 or 00:30.
+	// +kubebuilder:validation:Optional
+	MaintenanceStart *string `json:"maintenanceStart,omitempty" tf:"maintenance_start,omitempty"`
 
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.

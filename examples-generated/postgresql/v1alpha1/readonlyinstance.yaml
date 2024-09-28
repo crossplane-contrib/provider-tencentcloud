@@ -10,7 +10,7 @@ spec:
   forProvider:
     autoRenewFlag: 0
     cpu: 2
-    dbVersion: "10.4"
+    dbVersion: "10.23"
     instanceChargeType: POSTPAID_BY_HOUR
     masterDbInstanceId: ${tencentcloud_postgresql_instance.example.id}
     memory: 4
@@ -45,7 +45,7 @@ spec:
     chargeType: POSTPAID_BY_HOUR
     charset: UTF8
     cpu: 1
-    engineVersion: "10.4"
+    dbMajorVersion: "10"
     memory: 2
     name: example
     projectId: 0

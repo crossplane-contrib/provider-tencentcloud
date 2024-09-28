@@ -31,6 +31,10 @@ type ReadonlyInstanceInitParameters struct {
 	// PostgreSQL kernel version, which must be the same as that of the primary instance.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
+	// Dedicated cluster ID.
+	// Dedicated cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// instance billing mode. Valid values: PREPAID (monthly subscription), POSTPAID_BY_HOUR (pay-as-you-go).
 	// instance billing mode. Valid values: PREPAID (monthly subscription), POSTPAID_BY_HOUR (pay-as-you-go).
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
@@ -138,6 +142,10 @@ type ReadonlyInstanceObservation struct {
 	// PostgreSQL kernel version, which must be the same as that of the primary instance.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
+	// Dedicated cluster ID.
+	// Dedicated cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -232,6 +240,11 @@ type ReadonlyInstanceParameters struct {
 	// PostgreSQL kernel version, which must be the same as that of the primary instance.
 	// +kubebuilder:validation:Optional
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
+
+	// Dedicated cluster ID.
+	// Dedicated cluster ID.
+	// +kubebuilder:validation:Optional
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
 	// instance billing mode. Valid values: PREPAID (monthly subscription), POSTPAID_BY_HOUR (pay-as-you-go).
 	// instance billing mode. Valid values: PREPAID (monthly subscription), POSTPAID_BY_HOUR (pay-as-you-go).

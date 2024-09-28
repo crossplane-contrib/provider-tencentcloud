@@ -116,6 +116,11 @@ spec:
                       The number of basic pods. valid when enable_customized_pod_cidr=true.
                       The number of basic pods. valid when enable_customized_pod_cidr=true.
                     type: number
+                  cdcId:
+                    description: |-
+                      CDC ID.
+                      CDC ID.
+                    type: string
                   claimExpiredSeconds:
                     description: |-
                       Claim expired seconds to recycle ENI. This field can only set when field network_type is 'VPC-CNI'. claim_expired_seconds must greater or equal than 300 and less than 15768000.
@@ -392,6 +397,11 @@ spec:
                     description: |-
                       Indicates whether to ignore the cluster cidr conflict error. Default is false.
                       Indicates whether to ignore the cluster cidr conflict error. Default is false.
+                    type: boolean
+                  ignoreServiceCidrConflict:
+                    description: |-
+                      Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
+                      Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
                     type: boolean
                   isNonStaticIpMode:
                     description: |-
@@ -715,6 +725,11 @@ spec:
                           type: boolean
                       type: object
                     type: array
+                  preStartUserScript:
+                    description: |-
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                    type: string
                   projectId:
                     description: |-
                       Project ID, default value is 0.
@@ -1100,6 +1115,11 @@ spec:
                       The number of basic pods. valid when enable_customized_pod_cidr=true.
                       The number of basic pods. valid when enable_customized_pod_cidr=true.
                     type: number
+                  cdcId:
+                    description: |-
+                      CDC ID.
+                      CDC ID.
+                    type: string
                   claimExpiredSeconds:
                     description: |-
                       Claim expired seconds to recycle ENI. This field can only set when field network_type is 'VPC-CNI'. claim_expired_seconds must greater or equal than 300 and less than 15768000.
@@ -1376,6 +1396,11 @@ spec:
                     description: |-
                       Indicates whether to ignore the cluster cidr conflict error. Default is false.
                       Indicates whether to ignore the cluster cidr conflict error. Default is false.
+                    type: boolean
+                  ignoreServiceCidrConflict:
+                    description: |-
+                      Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
+                      Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
                     type: boolean
                   isNonStaticIpMode:
                     description: |-
@@ -1680,6 +1705,11 @@ spec:
                           type: boolean
                       type: object
                     type: array
+                  preStartUserScript:
+                    description: |-
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                    type: string
                   projectId:
                     description: |-
                       Project ID, default value is 0.
@@ -2205,6 +2235,11 @@ spec:
                       The number of basic pods. valid when enable_customized_pod_cidr=true.
                       The number of basic pods. valid when enable_customized_pod_cidr=true.
                     type: number
+                  cdcId:
+                    description: |-
+                      CDC ID.
+                      CDC ID.
+                    type: string
                   certificationAuthority:
                     description: |-
                       The certificate used for access.
@@ -2509,6 +2544,11 @@ spec:
                     description: |-
                       Indicates whether to ignore the cluster cidr conflict error. Default is false.
                       Indicates whether to ignore the cluster cidr conflict error. Default is false.
+                    type: boolean
+                  ignoreServiceCidrConflict:
+                    description: |-
+                      Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
+                      Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
                     type: boolean
                   isNonStaticIpMode:
                     description: |-
@@ -2832,6 +2872,11 @@ spec:
                     description: |-
                       The Intranet address used for access.
                       The Intranet address used for access.
+                    type: string
+                  preStartUserScript:
+                    description: |-
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+                      Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                     type: string
                   projectId:
                     description: |-

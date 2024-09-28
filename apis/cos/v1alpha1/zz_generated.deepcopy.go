@@ -323,6 +323,11 @@ func (in *BucketInitParameters) DeepCopyInto(out *BucketInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CorsRules != nil {
 		in, out := &in.CorsRules, &out.CorsRules
 		*out = make([]CorsRulesInitParameters, len(*in))
@@ -353,6 +358,11 @@ func (in *BucketInitParameters) DeepCopyInto(out *BucketInitParameters) {
 	if in.IntelligentTieringRequestFrequent != nil {
 		in, out := &in.IntelligentTieringRequestFrequent, &out.IntelligentTieringRequestFrequent
 		*out = new(float64)
+		**out = **in
+	}
+	if in.KMSID != nil {
+		in, out := &in.KMSID, &out.KMSID
+		*out = new(string)
 		**out = **in
 	}
 	if in.LifecycleRules != nil {
@@ -880,6 +890,11 @@ func (in *BucketObservation) DeepCopyInto(out *BucketObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CorsRules != nil {
 		in, out := &in.CorsRules, &out.CorsRules
 		*out = make([]CorsRulesObservation, len(*in))
@@ -920,6 +935,11 @@ func (in *BucketObservation) DeepCopyInto(out *BucketObservation) {
 	if in.IntelligentTieringRequestFrequent != nil {
 		in, out := &in.IntelligentTieringRequestFrequent, &out.IntelligentTieringRequestFrequent
 		*out = new(float64)
+		**out = **in
+	}
+	if in.KMSID != nil {
+		in, out := &in.KMSID, &out.KMSID
+		*out = new(string)
 		**out = **in
 	}
 	if in.LifecycleRules != nil {
@@ -1038,6 +1058,11 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CorsRules != nil {
 		in, out := &in.CorsRules, &out.CorsRules
 		*out = make([]CorsRulesParameters, len(*in))
@@ -1068,6 +1093,11 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 	if in.IntelligentTieringRequestFrequent != nil {
 		in, out := &in.IntelligentTieringRequestFrequent, &out.IntelligentTieringRequestFrequent
 		*out = new(float64)
+		**out = **in
+	}
+	if in.KMSID != nil {
+		in, out := &in.KMSID, &out.KMSID
+		*out = new(string)
 		**out = **in
 	}
 	if in.LifecycleRules != nil {

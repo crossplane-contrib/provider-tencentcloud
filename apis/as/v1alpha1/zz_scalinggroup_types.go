@@ -101,6 +101,14 @@ type ScalingGroupInitParameters struct {
 	// List of application load balancers, which can't be specified with `load_balancer_ids` together.
 	ForwardBalancerIds []ForwardBalancerIdsInitParameters `json:"forwardBalancerIds,omitempty" tf:"forward_balancer_ids,omitempty"`
 
+	// Health check type of instances in a scaling group.CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see Instance Health CheckCLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see Health Check Overview.If the parameter is set to CLB, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the HealthStatus field will return UNHEALTHY. If the CLB health check indicates unhealthy, the HealthStatus field will return CLB_UNHEALTHY. If both checks indicate unhealthy, the HealthStatus field will return UNHEALTHY|CLB_UNHEALTHY. Default value: CLB.
+	// Health check type of instances in a scaling group.<br><li>CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see [Instance Health Check](https://intl.cloud.tencent.com/document/product/377/8553?from_cn_redirect=1)<br><li>CLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see [Health Check Overview](https://intl.cloud.tencent.com/document/product/214/6097?from_cn_redirect=1).<br>If the parameter is set to `CLB`, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the `HealthStatus` field will return `UNHEALTHY`. If the CLB health check indicates unhealthy, the `HealthStatus` field will return `CLB_UNHEALTHY`. If both checks indicate unhealthy, the `HealthStatus` field will return `UNHEALTHY|CLB_UNHEALTHY`. Default value: `CLB`.
+	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
+
+	// Grace period of the CLB health check during which the IN_SERVICE instances added will not be marked as CLB_UNHEALTHY.Valid range: 0-7200, in seconds. Default value: 0.
+	// Grace period of the CLB health check during which the `IN_SERVICE` instances added will not be marked as `CLB_UNHEALTHY`.<br>Valid range: 0-7200, in seconds. Default value: `0`.
+	LBHealthCheckGracePeriod *float64 `json:"lbHealthCheckGracePeriod,omitempty" tf:"lb_health_check_grace_period,omitempty"`
+
 	// ID list of traditional load balancers.
 	// ID list of traditional load balancers.
 	LoadBalancerIds []*string `json:"loadBalancerIds,omitempty" tf:"load_balancer_ids,omitempty"`
@@ -185,12 +193,20 @@ type ScalingGroupObservation struct {
 	// List of application load balancers, which can't be specified with `load_balancer_ids` together.
 	ForwardBalancerIds []ForwardBalancerIdsObservation `json:"forwardBalancerIds,omitempty" tf:"forward_balancer_ids,omitempty"`
 
+	// Health check type of instances in a scaling group.CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see Instance Health CheckCLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see Health Check Overview.If the parameter is set to CLB, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the HealthStatus field will return UNHEALTHY. If the CLB health check indicates unhealthy, the HealthStatus field will return CLB_UNHEALTHY. If both checks indicate unhealthy, the HealthStatus field will return UNHEALTHY|CLB_UNHEALTHY. Default value: CLB.
+	// Health check type of instances in a scaling group.<br><li>CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see [Instance Health Check](https://intl.cloud.tencent.com/document/product/377/8553?from_cn_redirect=1)<br><li>CLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see [Health Check Overview](https://intl.cloud.tencent.com/document/product/214/6097?from_cn_redirect=1).<br>If the parameter is set to `CLB`, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the `HealthStatus` field will return `UNHEALTHY`. If the CLB health check indicates unhealthy, the `HealthStatus` field will return `CLB_UNHEALTHY`. If both checks indicate unhealthy, the `HealthStatus` field will return `UNHEALTHY|CLB_UNHEALTHY`. Default value: `CLB`.
+	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Instance number of a scaling group.
 	// Instance number of a scaling group.
 	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
+
+	// Grace period of the CLB health check during which the IN_SERVICE instances added will not be marked as CLB_UNHEALTHY.Valid range: 0-7200, in seconds. Default value: 0.
+	// Grace period of the CLB health check during which the `IN_SERVICE` instances added will not be marked as `CLB_UNHEALTHY`.<br>Valid range: 0-7200, in seconds. Default value: `0`.
+	LBHealthCheckGracePeriod *float64 `json:"lbHealthCheckGracePeriod,omitempty" tf:"lb_health_check_grace_period,omitempty"`
 
 	// ID list of traditional load balancers.
 	// ID list of traditional load balancers.
@@ -288,6 +304,16 @@ type ScalingGroupParameters struct {
 	// List of application load balancers, which can't be specified with `load_balancer_ids` together.
 	// +kubebuilder:validation:Optional
 	ForwardBalancerIds []ForwardBalancerIdsParameters `json:"forwardBalancerIds,omitempty" tf:"forward_balancer_ids,omitempty"`
+
+	// Health check type of instances in a scaling group.CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see Instance Health CheckCLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see Health Check Overview.If the parameter is set to CLB, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the HealthStatus field will return UNHEALTHY. If the CLB health check indicates unhealthy, the HealthStatus field will return CLB_UNHEALTHY. If both checks indicate unhealthy, the HealthStatus field will return UNHEALTHY|CLB_UNHEALTHY. Default value: CLB.
+	// Health check type of instances in a scaling group.<br><li>CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see [Instance Health Check](https://intl.cloud.tencent.com/document/product/377/8553?from_cn_redirect=1)<br><li>CLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see [Health Check Overview](https://intl.cloud.tencent.com/document/product/214/6097?from_cn_redirect=1).<br>If the parameter is set to `CLB`, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the `HealthStatus` field will return `UNHEALTHY`. If the CLB health check indicates unhealthy, the `HealthStatus` field will return `CLB_UNHEALTHY`. If both checks indicate unhealthy, the `HealthStatus` field will return `UNHEALTHY|CLB_UNHEALTHY`. Default value: `CLB`.
+	// +kubebuilder:validation:Optional
+	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
+
+	// Grace period of the CLB health check during which the IN_SERVICE instances added will not be marked as CLB_UNHEALTHY.Valid range: 0-7200, in seconds. Default value: 0.
+	// Grace period of the CLB health check during which the `IN_SERVICE` instances added will not be marked as `CLB_UNHEALTHY`.<br>Valid range: 0-7200, in seconds. Default value: `0`.
+	// +kubebuilder:validation:Optional
+	LBHealthCheckGracePeriod *float64 `json:"lbHealthCheckGracePeriod,omitempty" tf:"lb_health_check_grace_period,omitempty"`
 
 	// ID list of traditional load balancers.
 	// ID list of traditional load balancers.

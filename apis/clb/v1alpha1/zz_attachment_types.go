@@ -28,6 +28,10 @@ type AttachmentInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
+	// Domain of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+	// Domain of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+
 	// ID of the CLB listener.
 	// ID of the CLB listener.
 	// +crossplane:generate:reference:type=Listener
@@ -57,6 +61,10 @@ type AttachmentInitParameters struct {
 	// Information of the backends to be attached.
 	// Information of the backends to be attached.
 	Targets []TargetsInitParameters `json:"targets,omitempty" tf:"targets,omitempty"`
+
+	// URL of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+	// URL of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type AttachmentObservation struct {
@@ -64,6 +72,10 @@ type AttachmentObservation struct {
 	// ID of the CLB.
 	// ID of the CLB.
 	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
+
+	// Domain of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+	// Domain of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -83,6 +95,10 @@ type AttachmentObservation struct {
 	// Information of the backends to be attached.
 	// Information of the backends to be attached.
 	Targets []TargetsObservation `json:"targets,omitempty" tf:"targets,omitempty"`
+
+	// URL of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+	// URL of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type AttachmentParameters struct {
@@ -100,6 +116,11 @@ type AttachmentParameters struct {
 	// Selector for a Instance to populate clbId.
 	// +kubebuilder:validation:Optional
 	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
+
+	// Domain of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+	// Domain of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+	// +kubebuilder:validation:Optional
+	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
 	// ID of the CLB listener.
 	// ID of the CLB listener.
@@ -133,6 +154,11 @@ type AttachmentParameters struct {
 	// Information of the backends to be attached.
 	// +kubebuilder:validation:Optional
 	Targets []TargetsParameters `json:"targets,omitempty" tf:"targets,omitempty"`
+
+	// URL of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+	// URL of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+	// +kubebuilder:validation:Optional
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type TargetsInitParameters struct {

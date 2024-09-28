@@ -152,6 +152,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  domain:
+                    description: |-
+                      Domain of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+                      Domain of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+                    type: string
                   listenerId:
                     description: |-
                       ID of the CLB listener.
@@ -338,6 +343,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  url:
+                    description: |-
+                      URL of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+                      URL of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -431,6 +441,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  domain:
+                    description: |-
+                      Domain of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+                      Domain of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+                    type: string
                   listenerId:
                     description: |-
                       ID of the CLB listener.
@@ -617,6 +632,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  url:
+                    description: |-
+                      URL of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+                      URL of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -800,6 +820,11 @@ spec:
                       ID of the CLB.
                       ID of the CLB.
                     type: string
+                  domain:
+                    description: |-
+                      Domain of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+                      Domain of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+                    type: string
                   id:
                     description: ID of the resource.
                     type: string
@@ -846,6 +871,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  url:
+                    description: |-
+                      URL of the target forwarding rule. Does not take effect when parameter rule_id is provided.
+                      URL of the target forwarding rule. Does not take effect when parameter `rule_id` is provided.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

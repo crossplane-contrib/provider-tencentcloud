@@ -201,6 +201,10 @@ type ClusterInitParameters struct {
 	// The number of basic pods. valid when enable_customized_pod_cidr=true.
 	BasePodNum *float64 `json:"basePodNum,omitempty" tf:"base_pod_num,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Claim expired seconds to recycle ENI. This field can only set when field network_type is 'VPC-CNI'. claim_expired_seconds must greater or equal than 300 and less than 15768000.
 	// Claim expired seconds to recycle ENI. This field can only set when field `network_type` is 'VPC-CNI'. `claim_expired_seconds` must greater or equal than 300 and less than 15768000.
 	ClaimExpiredSeconds *float64 `json:"claimExpiredSeconds,omitempty" tf:"claim_expired_seconds,omitempty"`
@@ -329,6 +333,10 @@ type ClusterInitParameters struct {
 	// Indicates whether to ignore the cluster cidr conflict error. Default is false.
 	IgnoreClusterCidrConflict *bool `json:"ignoreClusterCidrConflict,omitempty" tf:"ignore_cluster_cidr_conflict,omitempty"`
 
+	// Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
+	// Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
+	IgnoreServiceCidrConflict *bool `json:"ignoreServiceCidrConflict,omitempty" tf:"ignore_service_cidr_conflict,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	IsNonStaticIPMode *bool `json:"isNonStaticIpMode,omitempty" tf:"is_non_static_ip_mode,omitempty"`
@@ -369,6 +377,10 @@ type ClusterInitParameters struct {
 	// Global config effective for all node pools.
 	// Global config effective for all node pools.
 	NodePoolGlobalConfig []NodePoolGlobalConfigInitParameters `json:"nodePoolGlobalConfig,omitempty" tf:"node_pool_global_config,omitempty"`
+
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
 	// Project ID, default value is 0.
 	// Project ID, default value is 0.
@@ -434,6 +446,10 @@ type ClusterObservation struct {
 	// The number of basic pods. valid when enable_customized_pod_cidr=true.
 	// The number of basic pods. valid when enable_customized_pod_cidr=true.
 	BasePodNum *float64 `json:"basePodNum,omitempty" tf:"base_pod_num,omitempty"`
+
+	// CDC ID.
+	// CDC ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
 	// The certificate used for access.
 	// The certificate used for access.
@@ -586,6 +602,10 @@ type ClusterObservation struct {
 	// Indicates whether to ignore the cluster cidr conflict error. Default is false.
 	IgnoreClusterCidrConflict *bool `json:"ignoreClusterCidrConflict,omitempty" tf:"ignore_cluster_cidr_conflict,omitempty"`
 
+	// Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
+	// Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
+	IgnoreServiceCidrConflict *bool `json:"ignoreServiceCidrConflict,omitempty" tf:"ignore_service_cidr_conflict,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	IsNonStaticIPMode *bool `json:"isNonStaticIpMode,omitempty" tf:"is_non_static_ip_mode,omitempty"`
@@ -642,6 +662,10 @@ type ClusterObservation struct {
 	// The Intranet address used for access.
 	// The Intranet address used for access.
 	PgwEndpoint *string `json:"pgwEndpoint,omitempty" tf:"pgw_endpoint,omitempty"`
+
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
 	// Project ID, default value is 0.
 	// Project ID, default value is 0.
@@ -714,6 +738,11 @@ type ClusterParameters struct {
 	// The number of basic pods. valid when enable_customized_pod_cidr=true.
 	// +kubebuilder:validation:Optional
 	BasePodNum *float64 `json:"basePodNum,omitempty" tf:"base_pod_num,omitempty"`
+
+	// CDC ID.
+	// CDC ID.
+	// +kubebuilder:validation:Optional
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
 	// Claim expired seconds to recycle ENI. This field can only set when field network_type is 'VPC-CNI'. claim_expired_seconds must greater or equal than 300 and less than 15768000.
 	// Claim expired seconds to recycle ENI. This field can only set when field `network_type` is 'VPC-CNI'. `claim_expired_seconds` must greater or equal than 300 and less than 15768000.
@@ -875,6 +904,11 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	IgnoreClusterCidrConflict *bool `json:"ignoreClusterCidrConflict,omitempty" tf:"ignore_cluster_cidr_conflict,omitempty"`
 
+	// Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
+	// Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
+	// +kubebuilder:validation:Optional
+	IgnoreServiceCidrConflict *bool `json:"ignoreServiceCidrConflict,omitempty" tf:"ignore_service_cidr_conflict,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// +kubebuilder:validation:Optional
@@ -925,6 +959,11 @@ type ClusterParameters struct {
 	// Global config effective for all node pools.
 	// +kubebuilder:validation:Optional
 	NodePoolGlobalConfig []NodePoolGlobalConfigParameters `json:"nodePoolGlobalConfig,omitempty" tf:"node_pool_global_config,omitempty"`
+
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
+	// +kubebuilder:validation:Optional
+	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
 	// Project ID, default value is 0.
 	// Project ID, default value is 0.

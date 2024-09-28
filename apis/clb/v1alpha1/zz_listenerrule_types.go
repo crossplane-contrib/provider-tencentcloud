@@ -40,9 +40,13 @@ type ListenerRuleInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
-	// Domain name of the listener rule.
-	// Domain name of the listener rule.
+	// Domain name of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+	// Domain name of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+
+	// Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
 	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
@@ -144,9 +148,13 @@ type ListenerRuleObservation struct {
 	// ID of CLB instance.
 	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
 
-	// Domain name of the listener rule.
-	// Domain name of the listener rule.
+	// Domain name of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+	// Domain name of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+
+	// Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
 	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
@@ -259,10 +267,15 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	ClbIDSelector *v1.Selector `json:"clbIdSelector,omitempty" tf:"-"`
 
-	// Domain name of the listener rule.
-	// Domain name of the listener rule.
+	// Domain name of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+	// Domain name of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
 	// +kubebuilder:validation:Optional
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
+
+	// Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+	// +kubebuilder:validation:Optional
+	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
 	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
@@ -400,7 +413,6 @@ type ListenerRuleStatus struct {
 type ListenerRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.domain) || (has(self.initProvider) && has(self.initProvider.domain))",message="spec.forProvider.domain is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.url) || (has(self.initProvider) && has(self.initProvider.url))",message="spec.forProvider.url is a required parameter"
 	Spec   ListenerRuleSpec   `json:"spec"`
 	Status ListenerRuleStatus `json:"status,omitempty"`

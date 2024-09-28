@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tke/v1alpha1/scaleworker
   labels:
-    testing.upbound.io/example-name: test_scale
-  name: test-scale
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clusterIdSelector:

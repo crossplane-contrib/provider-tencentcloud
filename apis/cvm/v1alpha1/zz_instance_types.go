@@ -35,6 +35,10 @@ type DataDisksInitParameters struct {
 	// Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `POSTPAID_BY_HOUR` instance), default is true.
 	DeleteWithInstance *bool `json:"deleteWithInstance,omitempty" tf:"delete_with_instance,omitempty"`
 
+	// Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with PREPAID instance), default is false.
+	// Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `PREPAID` instance), default is false.
+	DeleteWithInstancePrepaid *bool `json:"deleteWithInstancePrepaid,omitempty" tf:"delete_with_instance_prepaid,omitempty"`
+
 	// Decides whether the disk is encrypted. Default is false.
 	// Decides whether the disk is encrypted. Default is `false`.
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
@@ -65,6 +69,10 @@ type DataDisksObservation struct {
 	// Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with POSTPAID_BY_HOUR instance), default is true.
 	// Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `POSTPAID_BY_HOUR` instance), default is true.
 	DeleteWithInstance *bool `json:"deleteWithInstance,omitempty" tf:"delete_with_instance,omitempty"`
+
+	// Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with PREPAID instance), default is false.
+	// Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `PREPAID` instance), default is false.
+	DeleteWithInstancePrepaid *bool `json:"deleteWithInstancePrepaid,omitempty" tf:"delete_with_instance_prepaid,omitempty"`
 
 	// Decides whether the disk is encrypted. Default is false.
 	// Decides whether the disk is encrypted. Default is `false`.
@@ -101,6 +109,11 @@ type DataDisksParameters struct {
 	// Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `POSTPAID_BY_HOUR` instance), default is true.
 	// +kubebuilder:validation:Optional
 	DeleteWithInstance *bool `json:"deleteWithInstance,omitempty" tf:"delete_with_instance,omitempty"`
+
+	// Decides whether the disk is deleted with instance(only applied to CLOUD_BASIC, CLOUD_SSD and CLOUD_PREMIUM disk with PREPAID instance), default is false.
+	// Decides whether the disk is deleted with instance(only applied to `CLOUD_BASIC`, `CLOUD_SSD` and `CLOUD_PREMIUM` disk with `PREPAID` instance), default is false.
+	// +kubebuilder:validation:Optional
+	DeleteWithInstancePrepaid *bool `json:"deleteWithInstancePrepaid,omitempty" tf:"delete_with_instance_prepaid,omitempty"`
 
 	// Decides whether the disk is encrypted. Default is false.
 	// Decides whether the disk is encrypted. Default is `false`.

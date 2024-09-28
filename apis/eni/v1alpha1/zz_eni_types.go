@@ -70,6 +70,10 @@ type EniInitParameters struct {
 
 type EniObservation struct {
 
+	// CDC instance ID.
+	// CDC instance ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Creation time of the ENI.
 	// Creation time of the ENI.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`

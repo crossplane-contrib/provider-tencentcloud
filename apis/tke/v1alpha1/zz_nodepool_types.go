@@ -150,6 +150,10 @@ type AutoScalingConfigInitParameters struct {
 	// Instance name, no more than 60 characters. For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
+	// Type of CVM instance name. Valid values: ORIGINAL and UNIQUE. Default value: ORIGINAL. For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+	// Type of CVM instance name. Valid values: `ORIGINAL` and `UNIQUE`. Default value: `ORIGINAL`. For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+	InstanceNameStyle *string `json:"instanceNameStyle,omitempty" tf:"instance_name_style,omitempty"`
+
 	// Specified types of CVM instance.
 	// Specified types of CVM instance.
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
@@ -245,6 +249,10 @@ type AutoScalingConfigObservation struct {
 	// Instance name, no more than 60 characters. For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
 	// Instance name, no more than 60 characters. For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Type of CVM instance name. Valid values: ORIGINAL and UNIQUE. Default value: ORIGINAL. For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+	// Type of CVM instance name. Valid values: `ORIGINAL` and `UNIQUE`. Default value: `ORIGINAL`. For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+	InstanceNameStyle *string `json:"instanceNameStyle,omitempty" tf:"instance_name_style,omitempty"`
 
 	// Specified types of CVM instance.
 	// Specified types of CVM instance.
@@ -353,6 +361,11 @@ type AutoScalingConfigParameters struct {
 	// Instance name, no more than 60 characters. For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Type of CVM instance name. Valid values: ORIGINAL and UNIQUE. Default value: ORIGINAL. For usage, refer to InstanceNameSettings in https://www.tencentcloud.com/document/product/377/31001.
+	// Type of CVM instance name. Valid values: `ORIGINAL` and `UNIQUE`. Default value: `ORIGINAL`. For usage, refer to `InstanceNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
+	// +kubebuilder:validation:Optional
+	InstanceNameStyle *string `json:"instanceNameStyle,omitempty" tf:"instance_name_style,omitempty"`
 
 	// Specified types of CVM instance.
 	// Specified types of CVM instance.

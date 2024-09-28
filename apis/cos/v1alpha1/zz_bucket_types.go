@@ -53,6 +53,10 @@ type BucketInitParameters struct {
 	// The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example `mycos-1258798060`.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
+	// CDC cluster ID.
+	// CDC cluster ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRules []CorsRulesInitParameters `json:"corsRules,omitempty" tf:"cors_rules,omitempty"`
@@ -61,8 +65,8 @@ type BucketInitParameters struct {
 	// Enable intelligent tiering. NOTE: When intelligent tiering configuration is enabled, it cannot be turned off or modified.
 	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
 
-	// The server-side encryption algorithm to use. Valid value is AES256.
-	// The server-side encryption algorithm to use. Valid value is `AES256`.
+	// The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
+	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
 	// Force cleanup all objects before delete bucket.
@@ -76,6 +80,10 @@ type BucketInitParameters struct {
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
+
+	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	KMSID *string `json:"kmsId,omitempty" tf:"kms_id,omitempty"`
 
 	// A configuration of object lifecycle management (documented below).
 	// A configuration of object lifecycle management (documented below).
@@ -145,6 +153,10 @@ type BucketObservation struct {
 	// The name of a bucket to be created. Bucket format should be [custom name]-[appid], for example `mycos-1258798060`.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
+	// CDC cluster ID.
+	// CDC cluster ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRules []CorsRulesObservation `json:"corsRules,omitempty" tf:"cors_rules,omitempty"`
@@ -157,8 +169,8 @@ type BucketObservation struct {
 	// Enable intelligent tiering. NOTE: When intelligent tiering configuration is enabled, it cannot be turned off or modified.
 	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
 
-	// The server-side encryption algorithm to use. Valid value is AES256.
-	// The server-side encryption algorithm to use. Valid value is `AES256`.
+	// The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
+	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
 	// Force cleanup all objects before delete bucket.
@@ -175,6 +187,10 @@ type BucketObservation struct {
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
+
+	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	KMSID *string `json:"kmsId,omitempty" tf:"kms_id,omitempty"`
 
 	// A configuration of object lifecycle management (documented below).
 	// A configuration of object lifecycle management (documented below).
@@ -248,6 +264,11 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
+	// CDC cluster ID.
+	// CDC cluster ID.
+	// +kubebuilder:validation:Optional
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// +kubebuilder:validation:Optional
@@ -258,8 +279,8 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
 
-	// The server-side encryption algorithm to use. Valid value is AES256.
-	// The server-side encryption algorithm to use. Valid value is `AES256`.
+	// The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
+	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
 	// +kubebuilder:validation:Optional
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
@@ -277,6 +298,11 @@ type BucketParameters struct {
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	// +kubebuilder:validation:Optional
 	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
+
+	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// +kubebuilder:validation:Optional
+	KMSID *string `json:"kmsId,omitempty" tf:"kms_id,omitempty"`
 
 	// A configuration of object lifecycle management (documented below).
 	// A configuration of object lifecycle management (documented below).

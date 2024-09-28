@@ -169,9 +169,16 @@ spec:
                     type: object
                   domain:
                     description: |-
-                      Domain name of the listener rule.
-                      Domain name of the listener rule.
+                      Domain name of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+                      Domain name of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
                     type: string
+                  domains:
+                    description: |-
+                      Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+                      Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+                    items:
+                      type: string
+                    type: array
                   forwardType:
                     description: |-
                       Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
@@ -446,9 +453,16 @@ spec:
                     type: object
                   domain:
                     description: |-
-                      Domain name of the listener rule.
-                      Domain name of the listener rule.
+                      Domain name of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+                      Domain name of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
                     type: string
+                  domains:
+                    description: |-
+                      Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+                      Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+                    items:
+                      type: string
+                    type: array
                   forwardType:
                     description: |-
                       Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
@@ -782,10 +796,6 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.domain is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.domain)
-                || (has(self.initProvider) && has(self.initProvider.domain))'
             - message: spec.forProvider.url is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.url)
@@ -817,9 +827,16 @@ spec:
                     type: string
                   domain:
                     description: |-
-                      Domain name of the listener rule.
-                      Domain name of the listener rule.
+                      Domain name of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+                      Domain name of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
                     type: string
+                  domains:
+                    description: |-
+                      Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
+                      Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+                    items:
+                      type: string
+                    type: array
                   forwardType:
                     description: |-
                       Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.

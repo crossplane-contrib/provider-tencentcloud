@@ -944,6 +944,11 @@ func (in *AutoScalingConfigInitParameters) DeepCopyInto(out *AutoScalingConfigIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceNameStyle != nil {
+		in, out := &in.InstanceNameStyle, &out.InstanceNameStyle
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceType != nil {
 		in, out := &in.InstanceType, &out.InstanceType
 		*out = new(string)
@@ -1100,6 +1105,11 @@ func (in *AutoScalingConfigObservation) DeepCopyInto(out *AutoScalingConfigObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceNameStyle != nil {
+		in, out := &in.InstanceNameStyle, &out.InstanceNameStyle
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceType != nil {
 		in, out := &in.InstanceType, &out.InstanceType
 		*out = new(string)
@@ -1253,6 +1263,11 @@ func (in *AutoScalingConfigParameters) DeepCopyInto(out *AutoScalingConfigParame
 	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceNameStyle != nil {
+		in, out := &in.InstanceNameStyle, &out.InstanceNameStyle
 		*out = new(string)
 		**out = **in
 	}
@@ -1423,6 +1438,11 @@ func (in *ClusterAttachmentInitParameters) DeepCopyInto(out *ClusterAttachmentIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageID != nil {
+		in, out := &in.ImageID, &out.ImageID
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceID != nil {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
@@ -1546,6 +1566,11 @@ func (in *ClusterAttachmentObservation) DeepCopyInto(out *ClusterAttachmentObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageID != nil {
+		in, out := &in.ImageID, &out.ImageID
+		*out = new(string)
+		**out = **in
+	}
 	if in.InstanceID != nil {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
@@ -1645,6 +1670,11 @@ func (in *ClusterAttachmentParameters) DeepCopyInto(out *ClusterAttachmentParame
 	}
 	if in.Hostname != nil {
 		in, out := &in.Hostname, &out.Hostname
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageID != nil {
+		in, out := &in.ImageID, &out.ImageID
 		*out = new(string)
 		**out = **in
 	}
@@ -2747,6 +2777,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ClaimExpiredSeconds != nil {
 		in, out := &in.ClaimExpiredSeconds, &out.ClaimExpiredSeconds
 		*out = new(float64)
@@ -2929,6 +2964,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IgnoreServiceCidrConflict != nil {
+		in, out := &in.IgnoreServiceCidrConflict, &out.IgnoreServiceCidrConflict
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsNonStaticIPMode != nil {
 		in, out := &in.IsNonStaticIPMode, &out.IsNonStaticIPMode
 		*out = new(bool)
@@ -3001,6 +3041,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.PreStartUserScript != nil {
+		in, out := &in.PreStartUserScript, &out.PreStartUserScript
+		*out = new(string)
+		**out = **in
 	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
@@ -3137,6 +3182,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 	if in.BasePodNum != nil {
 		in, out := &in.BasePodNum, &out.BasePodNum
 		*out = new(float64)
+		**out = **in
+	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
 		**out = **in
 	}
 	if in.CertificationAuthority != nil {
@@ -3351,6 +3401,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IgnoreServiceCidrConflict != nil {
+		in, out := &in.IgnoreServiceCidrConflict, &out.IgnoreServiceCidrConflict
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsNonStaticIPMode != nil {
 		in, out := &in.IsNonStaticIPMode, &out.IsNonStaticIPMode
 		*out = new(bool)
@@ -3441,6 +3496,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 	}
 	if in.PgwEndpoint != nil {
 		in, out := &in.PgwEndpoint, &out.PgwEndpoint
+		*out = new(string)
+		**out = **in
+	}
+	if in.PreStartUserScript != nil {
+		in, out := &in.PreStartUserScript, &out.PreStartUserScript
 		*out = new(string)
 		**out = **in
 	}
@@ -3560,6 +3620,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	if in.BasePodNum != nil {
 		in, out := &in.BasePodNum, &out.BasePodNum
 		*out = new(float64)
+		**out = **in
+	}
+	if in.CdcID != nil {
+		in, out := &in.CdcID, &out.CdcID
+		*out = new(string)
 		**out = **in
 	}
 	if in.ClaimExpiredSeconds != nil {
@@ -3744,6 +3809,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IgnoreServiceCidrConflict != nil {
+		in, out := &in.IgnoreServiceCidrConflict, &out.IgnoreServiceCidrConflict
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsNonStaticIPMode != nil {
 		in, out := &in.IsNonStaticIPMode, &out.IsNonStaticIPMode
 		*out = new(bool)
@@ -3816,6 +3886,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.PreStartUserScript != nil {
+		in, out := &in.PreStartUserScript, &out.PreStartUserScript
+		*out = new(string)
+		**out = **in
 	}
 	if in.ProjectID != nil {
 		in, out := &in.ProjectID, &out.ProjectID
@@ -6845,6 +6920,11 @@ func (in *ScaleWorkerDataDiskInitParameters) DeepCopyInto(out *ScaleWorkerDataDi
 		*out = new(bool)
 		**out = **in
 	}
+	if in.DiskPartition != nil {
+		in, out := &in.DiskPartition, &out.DiskPartition
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
 		*out = new(float64)
@@ -6885,6 +6965,11 @@ func (in *ScaleWorkerDataDiskObservation) DeepCopyInto(out *ScaleWorkerDataDiskO
 		*out = new(bool)
 		**out = **in
 	}
+	if in.DiskPartition != nil {
+		in, out := &in.DiskPartition, &out.DiskPartition
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
 		*out = new(float64)
@@ -6923,6 +7008,11 @@ func (in *ScaleWorkerDataDiskParameters) DeepCopyInto(out *ScaleWorkerDataDiskPa
 	if in.AutoFormatAndMount != nil {
 		in, out := &in.AutoFormatAndMount, &out.AutoFormatAndMount
 		*out = new(bool)
+		**out = **in
+	}
+	if in.DiskPartition != nil {
+		in, out := &in.DiskPartition, &out.DiskPartition
+		*out = new(string)
 		**out = **in
 	}
 	if in.DiskSize != nil {

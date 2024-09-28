@@ -273,6 +273,11 @@ func (in *AttachmentInitParameters) DeepCopyInto(out *AttachmentInitParameters) 
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
+		*out = new(string)
+		**out = **in
+	}
 	if in.ListenerID != nil {
 		in, out := &in.ListenerID, &out.ListenerID
 		*out = new(string)
@@ -309,6 +314,11 @@ func (in *AttachmentInitParameters) DeepCopyInto(out *AttachmentInitParameters) 
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.URL != nil {
+		in, out := &in.URL, &out.URL
+		*out = new(string)
+		**out = **in
 	}
 }
 
@@ -362,6 +372,11 @@ func (in *AttachmentObservation) DeepCopyInto(out *AttachmentObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -388,6 +403,11 @@ func (in *AttachmentObservation) DeepCopyInto(out *AttachmentObservation) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.URL != nil {
+		in, out := &in.URL, &out.URL
+		*out = new(string)
+		**out = **in
 	}
 }
 
@@ -418,6 +438,11 @@ func (in *AttachmentParameters) DeepCopyInto(out *AttachmentParameters) {
 		in, out := &in.ClbIDSelector, &out.ClbIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
+		*out = new(string)
+		**out = **in
 	}
 	if in.ListenerID != nil {
 		in, out := &in.ListenerID, &out.ListenerID
@@ -455,6 +480,11 @@ func (in *AttachmentParameters) DeepCopyInto(out *AttachmentParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.URL != nil {
+		in, out := &in.URL, &out.URL
+		*out = new(string)
+		**out = **in
 	}
 }
 
@@ -2430,6 +2460,17 @@ func (in *ListenerRuleInitParameters) DeepCopyInto(out *ListenerRuleInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.Domains != nil {
+		in, out := &in.Domains, &out.Domains
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.ForwardType != nil {
 		in, out := &in.ForwardType, &out.ForwardType
 		*out = new(string)
@@ -2602,6 +2643,17 @@ func (in *ListenerRuleObservation) DeepCopyInto(out *ListenerRuleObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Domains != nil {
+		in, out := &in.Domains, &out.Domains
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.ForwardType != nil {
 		in, out := &in.ForwardType, &out.ForwardType
 		*out = new(string)
@@ -2751,6 +2803,17 @@ func (in *ListenerRuleParameters) DeepCopyInto(out *ListenerRuleParameters) {
 		in, out := &in.Domain, &out.Domain
 		*out = new(string)
 		**out = **in
+	}
+	if in.Domains != nil {
+		in, out := &in.Domains, &out.Domains
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.ForwardType != nil {
 		in, out := &in.ForwardType, &out.ForwardType
