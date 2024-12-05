@@ -21,7 +21,7 @@ func (mg *EmailAddress) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this EmailAddress
 func (tr *EmailAddress) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"smtp_password": "spec.forProvider.smtpPasswordSecretRef"}
 }
 
 // GetObservation of this EmailAddress

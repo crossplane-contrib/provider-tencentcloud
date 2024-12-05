@@ -303,11 +303,6 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DBMajorVesion != nil {
-		in, out := &in.DBMajorVesion, &out.DBMajorVesion
-		*out = new(string)
-		**out = **in
-	}
 	if in.DBNodeSet != nil {
 		in, out := &in.DBNodeSet, &out.DBNodeSet
 		*out = make([]DBNodeSetInitParameters, len(*in))
@@ -771,11 +766,6 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.DBMajorVersion != nil {
 		in, out := &in.DBMajorVersion, &out.DBMajorVersion
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBMajorVesion != nil {
-		in, out := &in.DBMajorVesion, &out.DBMajorVesion
 		*out = new(string)
 		**out = **in
 	}

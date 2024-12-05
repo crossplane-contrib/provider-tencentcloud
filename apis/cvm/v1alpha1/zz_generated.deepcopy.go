@@ -229,6 +229,11 @@ func (in *ImageInitParameters) DeepCopyInto(out *ImageInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageFamily != nil {
+		in, out := &in.ImageFamily, &out.ImageFamily
+		*out = new(string)
+		**out = **in
+	}
 	if in.ImageName != nil {
 		in, out := &in.ImageName, &out.ImageName
 		*out = new(string)
@@ -344,6 +349,11 @@ func (in *ImageObservation) DeepCopyInto(out *ImageObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageFamily != nil {
+		in, out := &in.ImageFamily, &out.ImageFamily
+		*out = new(string)
+		**out = **in
+	}
 	if in.ImageName != nil {
 		in, out := &in.ImageName, &out.ImageName
 		*out = new(string)
@@ -419,6 +429,11 @@ func (in *ImageParameters) DeepCopyInto(out *ImageParameters) {
 	}
 	if in.ImageDescription != nil {
 		in, out := &in.ImageDescription, &out.ImageDescription
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageFamily != nil {
+		in, out := &in.ImageFamily, &out.ImageFamily
 		*out = new(string)
 		**out = **in
 	}
@@ -585,6 +600,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 	}
 	if in.DisableAPITermination != nil {
 		in, out := &in.DisableAPITermination, &out.DisableAPITermination
+		*out = new(bool)
+		**out = **in
+	}
+	if in.DisableAutomationService != nil {
+		in, out := &in.DisableAutomationService, &out.DisableAutomationService
 		*out = new(bool)
 		**out = **in
 	}
@@ -906,6 +926,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.DisableAutomationService != nil {
+		in, out := &in.DisableAutomationService, &out.DisableAutomationService
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DisableMonitorService != nil {
 		in, out := &in.DisableMonitorService, &out.DisableMonitorService
 		*out = new(bool)
@@ -1199,6 +1224,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	}
 	if in.DisableAPITermination != nil {
 		in, out := &in.DisableAPITermination, &out.DisableAPITermination
+		*out = new(bool)
+		**out = **in
+	}
+	if in.DisableAutomationService != nil {
+		in, out := &in.DisableAutomationService, &out.DisableAutomationService
 		*out = new(bool)
 		**out = **in
 	}

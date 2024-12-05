@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: EmailAddress is the Schema for the EmailAddresss API. Provides
-          a resource to create a ses email_address
+          a resource to create a ses email address
         properties:
           apiVersion:
             description: |-
@@ -75,14 +75,33 @@ spec:
                 properties:
                   emailAddress:
                     description: |-
-                      Your sender address. (You can create up to 10 sender addresses for each domain.).
-                      Your sender address. (You can create up to 10 sender addresses for each domain.).
+                      Your sender address(You can create up to 10 sender addresses for each domain).
+                      Your sender address(You can create up to 10 sender addresses for each domain).
                     type: string
                   emailSenderName:
                     description: |-
                       Sender name.
                       Sender name.
                     type: string
+                  smtpPasswordSecretRef:
+                    description: |-
+                      Password for SMTP, Length limit 64.
+                      Password for SMTP, Length limit 64.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                 type: object
               initProvider:
                 description: |-
@@ -99,8 +118,8 @@ spec:
                 properties:
                   emailAddress:
                     description: |-
-                      Your sender address. (You can create up to 10 sender addresses for each domain.).
-                      Your sender address. (You can create up to 10 sender addresses for each domain.).
+                      Your sender address(You can create up to 10 sender addresses for each domain).
+                      Your sender address(You can create up to 10 sender addresses for each domain).
                     type: string
                   emailSenderName:
                     description: |-
@@ -287,8 +306,8 @@ spec:
                 properties:
                   emailAddress:
                     description: |-
-                      Your sender address. (You can create up to 10 sender addresses for each domain.).
-                      Your sender address. (You can create up to 10 sender addresses for each domain.).
+                      Your sender address(You can create up to 10 sender addresses for each domain).
+                      Your sender address(You can create up to 10 sender addresses for each domain).
                     type: string
                   emailSenderName:
                     description: |-

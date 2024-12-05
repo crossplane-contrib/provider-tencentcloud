@@ -14,113 +14,332 @@ import (
 )
 
 type CommonResourceSpecInitParameters struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []MultiDisksInitParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
 type CommonResourceSpecObservation struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []MultiDisksObservation `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
 type CommonResourceSpecParameters struct {
 
+	// Number of CPU cores.
+	// Number of CPU cores.
 	// +kubebuilder:validation:Optional
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	// +kubebuilder:validation:Optional
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// +kubebuilder:validation:Optional
+	MultiDisks []MultiDisksParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	// +kubebuilder:validation:Optional
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	// +kubebuilder:validation:Optional
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
 type CoreResourceSpecInitParameters struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []CoreResourceSpecMultiDisksInitParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
-type CoreResourceSpecObservation struct {
-	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+type CoreResourceSpecMultiDisksInitParameters struct {
 
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type CoreResourceSpecMultiDisksObservation struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type CoreResourceSpecMultiDisksParameters struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	// +kubebuilder:validation:Optional
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	// +kubebuilder:validation:Optional
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	// +kubebuilder:validation:Optional
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type CoreResourceSpecObservation struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
+	// Data disk capacity.
+	// Data disk capacity.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []CoreResourceSpecMultiDisksObservation `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
 type CoreResourceSpecParameters struct {
 
+	// Number of CPU cores.
+	// Number of CPU cores.
 	// +kubebuilder:validation:Optional
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	// +kubebuilder:validation:Optional
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// +kubebuilder:validation:Optional
+	MultiDisks []CoreResourceSpecMultiDisksParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	// +kubebuilder:validation:Optional
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	// +kubebuilder:validation:Optional
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
@@ -166,20 +385,26 @@ type EmrClusterInitParameters struct {
 	// The location of the instance.
 	PlacementInfo []PlacementInfoInitParameters `json:"placementInfo,omitempty" tf:"placement_info,omitempty"`
 
+	// Pre executed file settings. It can only be set at the time of creation, and cannot be modified.
+	// Pre executed file settings. It can only be set at the time of creation, and cannot be modified.
+	PreExecutedFileSettings []PreExecutedFileSettingsInitParameters `json:"preExecutedFileSettings,omitempty" tf:"pre_executed_file_settings,omitempty"`
+
 	// Product ID. Different products ID represents different EMR product versions. Value range:
 	// Product ID. Different products ID represents different EMR product versions. Value range:
 	// - 16: represents EMR-V2.3.0
-	// - 20: indicates EMR-V2.5.0
+	// - 20: represents EMR-V2.5.0
 	// - 25: represents EMR-V3.1.0
 	// - 27: represents KAFKA-V1.0.0
-	// - 30: indicates EMR-V2.6.0
+	// - 30: represents EMR-V2.6.0
 	// - 33: represents EMR-V3.2.1
-	// - 34: stands for EMR-V3.3.0
-	// - 36: represents STARROCKS-V1.0.0
-	// - 37: indicates EMR-V3.4.0
+	// - 34: represents EMR-V3.3.0
+	// - 37: represents EMR-V3.4.0
 	// - 38: represents EMR-V2.7.0
-	// - 39: stands for STARROCKS-V1.1.0
-	// - 41: represents DRUID-V1.1.0.
+	// - 44: represents EMR-V3.5.0
+	// - 50: represents KAFKA-V2.0.0
+	// - 51: represents STARROCKS-V1.4.0
+	// - 53: represents EMR-V3.6.0
+	// - 54: represents STARROCKS-V2.0.0.
 	ProductID *float64 `json:"productId,omitempty" tf:"product_id,omitempty"`
 
 	// Resource specification of EMR instance.
@@ -203,6 +428,10 @@ type EmrClusterInitParameters struct {
 	// Tag description list.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Terminate nodes. Note: it only works when the number of nodes decreases.
+	// Terminate nodes. Note: it only works when the number of nodes decreases.
+	TerminateNodeInfo []TerminateNodeInfoInitParameters `json:"terminateNodeInfo,omitempty" tf:"terminate_node_info,omitempty"`
 
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
 	// When TimeUnit is m, the number filled in by this parameter indicates the length of purchase of the monthly instance of the package year, such as 1 for one month of purchase.
@@ -268,20 +497,26 @@ type EmrClusterObservation struct {
 	// The location of the instance.
 	PlacementInfo []PlacementInfoObservation `json:"placementInfo,omitempty" tf:"placement_info,omitempty"`
 
+	// Pre executed file settings. It can only be set at the time of creation, and cannot be modified.
+	// Pre executed file settings. It can only be set at the time of creation, and cannot be modified.
+	PreExecutedFileSettings []PreExecutedFileSettingsObservation `json:"preExecutedFileSettings,omitempty" tf:"pre_executed_file_settings,omitempty"`
+
 	// Product ID. Different products ID represents different EMR product versions. Value range:
 	// Product ID. Different products ID represents different EMR product versions. Value range:
 	// - 16: represents EMR-V2.3.0
-	// - 20: indicates EMR-V2.5.0
+	// - 20: represents EMR-V2.5.0
 	// - 25: represents EMR-V3.1.0
 	// - 27: represents KAFKA-V1.0.0
-	// - 30: indicates EMR-V2.6.0
+	// - 30: represents EMR-V2.6.0
 	// - 33: represents EMR-V3.2.1
-	// - 34: stands for EMR-V3.3.0
-	// - 36: represents STARROCKS-V1.0.0
-	// - 37: indicates EMR-V3.4.0
+	// - 34: represents EMR-V3.3.0
+	// - 37: represents EMR-V3.4.0
 	// - 38: represents EMR-V2.7.0
-	// - 39: stands for STARROCKS-V1.1.0
-	// - 41: represents DRUID-V1.1.0.
+	// - 44: represents EMR-V3.5.0
+	// - 50: represents KAFKA-V2.0.0
+	// - 51: represents STARROCKS-V1.4.0
+	// - 53: represents EMR-V3.6.0
+	// - 54: represents STARROCKS-V2.0.0.
 	ProductID *float64 `json:"productId,omitempty" tf:"product_id,omitempty"`
 
 	// Resource specification of EMR instance.
@@ -305,6 +540,10 @@ type EmrClusterObservation struct {
 	// Tag description list.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Terminate nodes. Note: it only works when the number of nodes decreases.
+	// Terminate nodes. Note: it only works when the number of nodes decreases.
+	TerminateNodeInfo []TerminateNodeInfoObservation `json:"terminateNodeInfo,omitempty" tf:"terminate_node_info,omitempty"`
 
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
 	// When TimeUnit is m, the number filled in by this parameter indicates the length of purchase of the monthly instance of the package year, such as 1 for one month of purchase.
@@ -376,20 +615,27 @@ type EmrClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	PlacementInfo []PlacementInfoParameters `json:"placementInfo,omitempty" tf:"placement_info,omitempty"`
 
+	// Pre executed file settings. It can only be set at the time of creation, and cannot be modified.
+	// Pre executed file settings. It can only be set at the time of creation, and cannot be modified.
+	// +kubebuilder:validation:Optional
+	PreExecutedFileSettings []PreExecutedFileSettingsParameters `json:"preExecutedFileSettings,omitempty" tf:"pre_executed_file_settings,omitempty"`
+
 	// Product ID. Different products ID represents different EMR product versions. Value range:
 	// Product ID. Different products ID represents different EMR product versions. Value range:
 	// - 16: represents EMR-V2.3.0
-	// - 20: indicates EMR-V2.5.0
+	// - 20: represents EMR-V2.5.0
 	// - 25: represents EMR-V3.1.0
 	// - 27: represents KAFKA-V1.0.0
-	// - 30: indicates EMR-V2.6.0
+	// - 30: represents EMR-V2.6.0
 	// - 33: represents EMR-V3.2.1
-	// - 34: stands for EMR-V3.3.0
-	// - 36: represents STARROCKS-V1.0.0
-	// - 37: indicates EMR-V3.4.0
+	// - 34: represents EMR-V3.3.0
+	// - 37: represents EMR-V3.4.0
 	// - 38: represents EMR-V2.7.0
-	// - 39: stands for STARROCKS-V1.1.0
-	// - 41: represents DRUID-V1.1.0.
+	// - 44: represents EMR-V3.5.0
+	// - 50: represents KAFKA-V2.0.0
+	// - 51: represents STARROCKS-V1.4.0
+	// - 53: represents EMR-V3.6.0
+	// - 54: represents STARROCKS-V2.0.0.
 	// +kubebuilder:validation:Optional
 	ProductID *float64 `json:"productId,omitempty" tf:"product_id,omitempty"`
 
@@ -420,6 +666,11 @@ type EmrClusterParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
+	// Terminate nodes. Note: it only works when the number of nodes decreases.
+	// Terminate nodes. Note: it only works when the number of nodes decreases.
+	// +kubebuilder:validation:Optional
+	TerminateNodeInfo []TerminateNodeInfoParameters `json:"terminateNodeInfo,omitempty" tf:"terminate_node_info,omitempty"`
+
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
 	// When TimeUnit is m, the number filled in by this parameter indicates the length of purchase of the monthly instance of the package year, such as 1 for one month of purchase.
 	// The length of time the instance was purchased. Use with TimeUnit.When TimeUnit is s, the parameter can only be filled in at 3600, representing a metered instance.
@@ -440,59 +691,254 @@ type EmrClusterParameters struct {
 }
 
 type MasterResourceSpecInitParameters struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []MasterResourceSpecMultiDisksInitParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
-type MasterResourceSpecObservation struct {
-	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+type MasterResourceSpecMultiDisksInitParameters struct {
 
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type MasterResourceSpecMultiDisksObservation struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type MasterResourceSpecMultiDisksParameters struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	// +kubebuilder:validation:Optional
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	// +kubebuilder:validation:Optional
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	// +kubebuilder:validation:Optional
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type MasterResourceSpecObservation struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
+	// Data disk capacity.
+	// Data disk capacity.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []MasterResourceSpecMultiDisksObservation `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
 type MasterResourceSpecParameters struct {
 
+	// Number of CPU cores.
+	// Number of CPU cores.
 	// +kubebuilder:validation:Optional
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	// +kubebuilder:validation:Optional
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// +kubebuilder:validation:Optional
+	MultiDisks []MasterResourceSpecMultiDisksParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	// +kubebuilder:validation:Optional
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	// +kubebuilder:validation:Optional
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+}
+
+type MultiDisksInitParameters struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type MultiDisksObservation struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type MultiDisksParameters struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	// +kubebuilder:validation:Optional
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	// +kubebuilder:validation:Optional
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	// +kubebuilder:validation:Optional
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
 }
 
 type PlacementInfoInitParameters struct {
@@ -530,30 +976,151 @@ type PlacementInfoParameters struct {
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
+type PreExecutedFileSettingsInitParameters struct {
+
+	// Execution script parameters.
+	// Execution script parameters.
+	Args []*string `json:"args,omitempty" tf:"args,omitempty"`
+
+	// Script file name.
+	// Script file name.
+	CosFileName *string `json:"cosFileName,omitempty" tf:"cos_file_name,omitempty"`
+
+	// The cos address of the script.
+	// The cos address of the script.
+	CosFileURI *string `json:"cosFileUri,omitempty" tf:"cos_file_uri,omitempty"`
+
+	// Cos secretId.
+	// Cos secretId.
+	CosSecretID *string `json:"cosSecretId,omitempty" tf:"cos_secret_id,omitempty"`
+
+	// Cos secretKey.
+	// Cos secretKey.
+	CosSecretKey *string `json:"cosSecretKey,omitempty" tf:"cos_secret_key,omitempty"`
+
+	// Remark.
+	// Remark.
+	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
+
+	// Run order.
+	// Run order.
+	RunOrder *float64 `json:"runOrder,omitempty" tf:"run_order,omitempty"`
+
+	// resourceAfter or clusterAfter.
+	// `resourceAfter` or `clusterAfter`.
+	WhenRun *string `json:"whenRun,omitempty" tf:"when_run,omitempty"`
+}
+
+type PreExecutedFileSettingsObservation struct {
+
+	// Execution script parameters.
+	// Execution script parameters.
+	Args []*string `json:"args,omitempty" tf:"args,omitempty"`
+
+	// Script file name.
+	// Script file name.
+	CosFileName *string `json:"cosFileName,omitempty" tf:"cos_file_name,omitempty"`
+
+	// The cos address of the script.
+	// The cos address of the script.
+	CosFileURI *string `json:"cosFileUri,omitempty" tf:"cos_file_uri,omitempty"`
+
+	// Cos secretId.
+	// Cos secretId.
+	CosSecretID *string `json:"cosSecretId,omitempty" tf:"cos_secret_id,omitempty"`
+
+	// Cos secretKey.
+	// Cos secretKey.
+	CosSecretKey *string `json:"cosSecretKey,omitempty" tf:"cos_secret_key,omitempty"`
+
+	// Remark.
+	// Remark.
+	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
+
+	// Run order.
+	// Run order.
+	RunOrder *float64 `json:"runOrder,omitempty" tf:"run_order,omitempty"`
+
+	// resourceAfter or clusterAfter.
+	// `resourceAfter` or `clusterAfter`.
+	WhenRun *string `json:"whenRun,omitempty" tf:"when_run,omitempty"`
+}
+
+type PreExecutedFileSettingsParameters struct {
+
+	// Execution script parameters.
+	// Execution script parameters.
+	// +kubebuilder:validation:Optional
+	Args []*string `json:"args,omitempty" tf:"args,omitempty"`
+
+	// Script file name.
+	// Script file name.
+	// +kubebuilder:validation:Optional
+	CosFileName *string `json:"cosFileName,omitempty" tf:"cos_file_name,omitempty"`
+
+	// The cos address of the script.
+	// The cos address of the script.
+	// +kubebuilder:validation:Optional
+	CosFileURI *string `json:"cosFileUri,omitempty" tf:"cos_file_uri,omitempty"`
+
+	// Cos secretId.
+	// Cos secretId.
+	// +kubebuilder:validation:Optional
+	CosSecretID *string `json:"cosSecretId,omitempty" tf:"cos_secret_id,omitempty"`
+
+	// Cos secretKey.
+	// Cos secretKey.
+	// +kubebuilder:validation:Optional
+	CosSecretKey *string `json:"cosSecretKey,omitempty" tf:"cos_secret_key,omitempty"`
+
+	// Remark.
+	// Remark.
+	// +kubebuilder:validation:Optional
+	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
+
+	// Run order.
+	// Run order.
+	// +kubebuilder:validation:Optional
+	RunOrder *float64 `json:"runOrder,omitempty" tf:"run_order,omitempty"`
+
+	// resourceAfter or clusterAfter.
+	// `resourceAfter` or `clusterAfter`.
+	// +kubebuilder:validation:Optional
+	WhenRun *string `json:"whenRun,omitempty" tf:"when_run,omitempty"`
+}
+
 type ResourceSpecInitParameters struct {
 
 	// The number of common node.
 	// The number of common node.
 	CommonCount *float64 `json:"commonCount,omitempty" tf:"common_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	CommonResourceSpec []CommonResourceSpecInitParameters `json:"commonResourceSpec,omitempty" tf:"common_resource_spec,omitempty"`
 
 	// The number of core node.
 	// The number of core node.
 	CoreCount *float64 `json:"coreCount,omitempty" tf:"core_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	CoreResourceSpec []CoreResourceSpecInitParameters `json:"coreResourceSpec,omitempty" tf:"core_resource_spec,omitempty"`
 
 	// The number of master node.
 	// The number of master node.
 	MasterCount *float64 `json:"masterCount,omitempty" tf:"master_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	MasterResourceSpec []MasterResourceSpecInitParameters `json:"masterResourceSpec,omitempty" tf:"master_resource_spec,omitempty"`
 
 	// The number of core node.
 	// The number of core node.
 	TaskCount *float64 `json:"taskCount,omitempty" tf:"task_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	TaskResourceSpec []TaskResourceSpecInitParameters `json:"taskResourceSpec,omitempty" tf:"task_resource_spec,omitempty"`
 }
 
@@ -563,24 +1130,32 @@ type ResourceSpecObservation struct {
 	// The number of common node.
 	CommonCount *float64 `json:"commonCount,omitempty" tf:"common_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	CommonResourceSpec []CommonResourceSpecObservation `json:"commonResourceSpec,omitempty" tf:"common_resource_spec,omitempty"`
 
 	// The number of core node.
 	// The number of core node.
 	CoreCount *float64 `json:"coreCount,omitempty" tf:"core_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	CoreResourceSpec []CoreResourceSpecObservation `json:"coreResourceSpec,omitempty" tf:"core_resource_spec,omitempty"`
 
 	// The number of master node.
 	// The number of master node.
 	MasterCount *float64 `json:"masterCount,omitempty" tf:"master_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	MasterResourceSpec []MasterResourceSpecObservation `json:"masterResourceSpec,omitempty" tf:"master_resource_spec,omitempty"`
 
 	// The number of core node.
 	// The number of core node.
 	TaskCount *float64 `json:"taskCount,omitempty" tf:"task_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	TaskResourceSpec []TaskResourceSpecObservation `json:"taskResourceSpec,omitempty" tf:"task_resource_spec,omitempty"`
 }
 
@@ -591,6 +1166,8 @@ type ResourceSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	CommonCount *float64 `json:"commonCount,omitempty" tf:"common_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	// +kubebuilder:validation:Optional
 	CommonResourceSpec []CommonResourceSpecParameters `json:"commonResourceSpec,omitempty" tf:"common_resource_spec,omitempty"`
 
@@ -599,6 +1176,8 @@ type ResourceSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	CoreCount *float64 `json:"coreCount,omitempty" tf:"core_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	// +kubebuilder:validation:Optional
 	CoreResourceSpec []CoreResourceSpecParameters `json:"coreResourceSpec,omitempty" tf:"core_resource_spec,omitempty"`
 
@@ -607,6 +1186,8 @@ type ResourceSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	MasterCount *float64 `json:"masterCount,omitempty" tf:"master_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	// +kubebuilder:validation:Optional
 	MasterResourceSpec []MasterResourceSpecParameters `json:"masterResourceSpec,omitempty" tf:"master_resource_spec,omitempty"`
 
@@ -615,64 +1196,239 @@ type ResourceSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	TaskCount *float64 `json:"taskCount,omitempty" tf:"task_count,omitempty"`
 
+	// Resource details.
+	// Resource details.
 	// +kubebuilder:validation:Optional
 	TaskResourceSpec []TaskResourceSpecParameters `json:"taskResourceSpec,omitempty" tf:"task_resource_spec,omitempty"`
 }
 
 type TaskResourceSpecInitParameters struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []TaskResourceSpecMultiDisksInitParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
-type TaskResourceSpecObservation struct {
-	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+type TaskResourceSpecMultiDisksInitParameters struct {
 
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type TaskResourceSpecMultiDisksObservation struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type TaskResourceSpecMultiDisksParameters struct {
+
+	// Number of cloud disks of this type.
+	// Number of cloud disks of this type.
+	// +kubebuilder:validation:Optional
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// disk types. Value range:
+	// Cloud disk type
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+	// +kubebuilder:validation:Optional
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Cloud disk size.
+	// Cloud disk size.
+	// +kubebuilder:validation:Optional
+	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type TaskResourceSpecObservation struct {
+
+	// Number of CPU cores.
+	// Number of CPU cores.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
+	// Data disk capacity.
+	// Data disk capacity.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Memory size in M.
+	// Memory size in M.
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	MultiDisks []TaskResourceSpecMultiDisksObservation `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 }
 
 type TaskResourceSpecParameters struct {
 
+	// Number of CPU cores.
+	// Number of CPU cores.
 	// +kubebuilder:validation:Optional
 	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
+	// Data disk capacity.
+	// Data disk capacity.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// disk types. Value range:
+	// disk types. Value range:
+	// - CLOUD_SSD: Represents cloud SSD;
+	// - CLOUD_PREMIUM: Represents efficient cloud disk;
+	// - CLOUD_BASIC: Represents Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
+	// Memory size in M.
+	// Memory size in M.
 	// +kubebuilder:validation:Optional
 	MemSize *float64 `json:"memSize,omitempty" tf:"mem_size,omitempty"`
 
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+	// +kubebuilder:validation:Optional
+	MultiDisks []TaskResourceSpecMultiDisksParameters `json:"multiDisks,omitempty" tf:"multi_disks,omitempty"`
+
+	// Root disk capacity.
+	// Root disk capacity.
 	// +kubebuilder:validation:Optional
 	RootSize *float64 `json:"rootSize,omitempty" tf:"root_size,omitempty"`
 
+	// Node specification description, such as CVM.SA2.
+	// Node specification description, such as CVM.SA2.
 	// +kubebuilder:validation:Optional
 	Spec *string `json:"spec,omitempty" tf:"spec,omitempty"`
 
+	// Storage type. Value range:
+	// Storage type. Value range:
+	// - 4: Represents cloud SSD;
+	// - 5: Represents efficient cloud disk;
+	// - 6: Represents enhanced SSD Cloud Block Storage;
+	// - 11: Represents throughput Cloud Block Storage;
+	// - 12: Represents extremely fast SSD Cloud Block Storage.
 	// +kubebuilder:validation:Optional
 	StorageType *float64 `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+}
+
+type TerminateNodeInfoInitParameters struct {
+
+	// Destroy resource list.
+	// Destroy resource list.
+	CvmInstanceIds []*string `json:"cvmInstanceIds,omitempty" tf:"cvm_instance_ids,omitempty"`
+
+	// Value range of destruction node type: MASTER, TASK, CORE, ROUTER.
+	// Value range of destruction node type: `MASTER`, `TASK`, `CORE`, `ROUTER`.
+	NodeFlag *string `json:"nodeFlag,omitempty" tf:"node_flag,omitempty"`
+}
+
+type TerminateNodeInfoObservation struct {
+
+	// Destroy resource list.
+	// Destroy resource list.
+	CvmInstanceIds []*string `json:"cvmInstanceIds,omitempty" tf:"cvm_instance_ids,omitempty"`
+
+	// Value range of destruction node type: MASTER, TASK, CORE, ROUTER.
+	// Value range of destruction node type: `MASTER`, `TASK`, `CORE`, `ROUTER`.
+	NodeFlag *string `json:"nodeFlag,omitempty" tf:"node_flag,omitempty"`
+}
+
+type TerminateNodeInfoParameters struct {
+
+	// Destroy resource list.
+	// Destroy resource list.
+	// +kubebuilder:validation:Optional
+	CvmInstanceIds []*string `json:"cvmInstanceIds,omitempty" tf:"cvm_instance_ids,omitempty"`
+
+	// Value range of destruction node type: MASTER, TASK, CORE, ROUTER.
+	// Value range of destruction node type: `MASTER`, `TASK`, `CORE`, `ROUTER`.
+	// +kubebuilder:validation:Optional
+	NodeFlag *string `json:"nodeFlag,omitempty" tf:"node_flag,omitempty"`
 }
 
 // EmrClusterSpec defines the desired state of EmrCluster

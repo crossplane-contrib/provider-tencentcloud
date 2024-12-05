@@ -723,6 +723,11 @@ func (in *LifecycleHookInitParameters) DeepCopyInto(out *LifecycleHookInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.LifecycleTransitionType != nil {
+		in, out := &in.LifecycleTransitionType, &out.LifecycleTransitionType
+		*out = new(string)
+		**out = **in
+	}
 	if in.NotificationMetadata != nil {
 		in, out := &in.NotificationMetadata, &out.NotificationMetadata
 		*out = new(string)
@@ -837,6 +842,11 @@ func (in *LifecycleHookObservation) DeepCopyInto(out *LifecycleHookObservation) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.LifecycleTransitionType != nil {
+		in, out := &in.LifecycleTransitionType, &out.LifecycleTransitionType
+		*out = new(string)
+		**out = **in
+	}
 	if in.NotificationMetadata != nil {
 		in, out := &in.NotificationMetadata, &out.NotificationMetadata
 		*out = new(string)
@@ -901,6 +911,11 @@ func (in *LifecycleHookParameters) DeepCopyInto(out *LifecycleHookParameters) {
 	}
 	if in.LifecycleTransition != nil {
 		in, out := &in.LifecycleTransition, &out.LifecycleTransition
+		*out = new(string)
+		**out = **in
+	}
+	if in.LifecycleTransitionType != nil {
+		in, out := &in.LifecycleTransitionType, &out.LifecycleTransitionType
 		*out = new(string)
 		**out = **in
 	}
@@ -1278,9 +1293,19 @@ func (in *ScalingConfigInitParameters) DeepCopyInto(out *ScalingConfigInitParame
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskTypePolicy != nil {
 		in, out := &in.DiskTypePolicy, &out.DiskTypePolicy
 		*out = new(string)
+		**out = **in
+	}
+	if in.EnhancedAutomationToolsService != nil {
+		in, out := &in.EnhancedAutomationToolsService, &out.EnhancedAutomationToolsService
+		*out = new(bool)
 		**out = **in
 	}
 	if in.EnhancedMonitorService != nil {
@@ -1299,6 +1324,11 @@ func (in *ScalingConfigInitParameters) DeepCopyInto(out *ScalingConfigInitParame
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ImageFamily != nil {
+		in, out := &in.ImageFamily, &out.ImageFamily
+		*out = new(string)
+		**out = **in
 	}
 	if in.ImageID != nil {
 		in, out := &in.ImageID, &out.ImageID
@@ -1495,9 +1525,19 @@ func (in *ScalingConfigObservation) DeepCopyInto(out *ScalingConfigObservation) 
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskTypePolicy != nil {
 		in, out := &in.DiskTypePolicy, &out.DiskTypePolicy
 		*out = new(string)
+		**out = **in
+	}
+	if in.EnhancedAutomationToolsService != nil {
+		in, out := &in.EnhancedAutomationToolsService, &out.EnhancedAutomationToolsService
+		*out = new(bool)
 		**out = **in
 	}
 	if in.EnhancedMonitorService != nil {
@@ -1519,6 +1559,11 @@ func (in *ScalingConfigObservation) DeepCopyInto(out *ScalingConfigObservation) 
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageFamily != nil {
+		in, out := &in.ImageFamily, &out.ImageFamily
 		*out = new(string)
 		**out = **in
 	}
@@ -1685,9 +1730,19 @@ func (in *ScalingConfigParameters) DeepCopyInto(out *ScalingConfigParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.DedicatedClusterID != nil {
+		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.DiskTypePolicy != nil {
 		in, out := &in.DiskTypePolicy, &out.DiskTypePolicy
 		*out = new(string)
+		**out = **in
+	}
+	if in.EnhancedAutomationToolsService != nil {
+		in, out := &in.EnhancedAutomationToolsService, &out.EnhancedAutomationToolsService
+		*out = new(bool)
 		**out = **in
 	}
 	if in.EnhancedMonitorService != nil {
@@ -1706,6 +1761,11 @@ func (in *ScalingConfigParameters) DeepCopyInto(out *ScalingConfigParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ImageFamily != nil {
+		in, out := &in.ImageFamily, &out.ImageFamily
+		*out = new(string)
+		**out = **in
 	}
 	if in.ImageID != nil {
 		in, out := &in.ImageID, &out.ImageID

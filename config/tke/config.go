@@ -50,6 +50,18 @@ func Configure(p *config.Provider) {
 		r.References["instance_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/cvm/v1alpha1.Instance",
 		}
+		computedFields := []string{
+			"base_pod_num", "cluster_extra_args", "cluster_ipvs", "cluster_os_type", "extra_args", "globe_desired_pod_num", "ignore_cluster_cidr_conflict",
+			"ignore_service_cidr_conflict", "is_non_static_ip_mode", "labels", "master_config", "mount_target", "node_name_type", "pre_start_user_script",
+			"unschedulable", "upgrade_instances_follow_cluster", "vpc_cni_type", "worker_config",
+		}
+		for _, computedField := range computedFields {
+			if t, ok := r.TerraformResource.Schema[computedField]; ok {
+				t.Optional = false
+				t.Computed = true
+			}
+		}
+
 	})
 
 	p.AddResourceConfigurator("tencentcloud_kubernetes_node_pool", func(r *config.Resource) {

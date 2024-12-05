@@ -4227,6 +4227,11 @@ func (in *RuleEngineObservation) DeepCopyInto(out *RuleEngineObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RulePriority != nil {
+		in, out := &in.RulePriority, &out.RulePriority
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Rules != nil {
 		in, out := &in.Rules, &out.Rules
 		*out = make([]RulesObservation, len(*in))

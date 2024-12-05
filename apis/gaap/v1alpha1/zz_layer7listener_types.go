@@ -36,6 +36,10 @@ type Layer7ListenerInitParameters struct {
 	// Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`. NOTES: Only supports listeners of `HTTPS` protocol.
 	ForwardProtocol *string `json:"forwardProtocol,omitempty" tf:"forward_protocol,omitempty"`
 
+	// Group ID.
+	// Group ID.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
 	// Name of the layer7 listener, the maximum length is 30.
 	// Name of the layer7 listener, the maximum length is 30.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -60,6 +64,15 @@ type Layer7ListenerInitParameters struct {
 	// Selector for a Proxy to populate proxyId.
 	// +kubebuilder:validation:Optional
 	ProxyIDSelector *v1.Selector `json:"proxyIdSelector,omitempty" tf:"-"`
+
+	// Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+	// Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+	// TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+	// +listType=set
+	TLSSupportVersions []*string `json:"tlsSupportVersions,omitempty" tf:"tls_support_versions,omitempty"`
 }
 
 type Layer7ListenerObservation struct {
@@ -89,6 +102,10 @@ type Layer7ListenerObservation struct {
 	// Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`. NOTES: Only supports listeners of `HTTPS` protocol.
 	ForwardProtocol *string `json:"forwardProtocol,omitempty" tf:"forward_protocol,omitempty"`
 
+	// Group ID.
+	// Group ID.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -111,6 +128,15 @@ type Layer7ListenerObservation struct {
 	// Status of the layer7 listener.
 	// Status of the layer7 listener.
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+	// Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+	// TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+	// +listType=set
+	TLSSupportVersions []*string `json:"tlsSupportVersions,omitempty" tf:"tls_support_versions,omitempty"`
 }
 
 type Layer7ListenerParameters struct {
@@ -141,6 +167,11 @@ type Layer7ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	ForwardProtocol *string `json:"forwardProtocol,omitempty" tf:"forward_protocol,omitempty"`
 
+	// Group ID.
+	// Group ID.
+	// +kubebuilder:validation:Optional
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
 	// Name of the layer7 listener, the maximum length is 30.
 	// Name of the layer7 listener, the maximum length is 30.
 	// +kubebuilder:validation:Optional
@@ -169,6 +200,17 @@ type Layer7ListenerParameters struct {
 	// Selector for a Proxy to populate proxyId.
 	// +kubebuilder:validation:Optional
 	ProxyIDSelector *v1.Selector `json:"proxyIdSelector,omitempty" tf:"-"`
+
+	// Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+	// Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+	// +kubebuilder:validation:Optional
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+	// TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	TLSSupportVersions []*string `json:"tlsSupportVersions,omitempty" tf:"tls_support_versions,omitempty"`
 }
 
 // Layer7ListenerSpec defines the desired state of Layer7Listener

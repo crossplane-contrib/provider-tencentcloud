@@ -1024,6 +1024,10 @@ type RuleEngineObservation struct {
 	// The rule name (1 to 255 characters).
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
 
+	// Rule priority, the larger the value, the higher the priority, the minimum is 1.
+	// Rule priority, the larger the value, the higher the priority, the minimum is 1.
+	RulePriority *float64 `json:"rulePriority,omitempty" tf:"rule_priority,omitempty"`
+
 	// Rule items list.
 	// Rule items list.
 	Rules []RulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`

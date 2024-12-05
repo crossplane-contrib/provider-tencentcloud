@@ -111,11 +111,21 @@ spec:
                           type: string
                       type: object
                     type: array
+                  dedicatedClusterId:
+                    description: |-
+                      Dedicated Cluster ID.
+                      Dedicated Cluster ID.
+                    type: string
                   diskTypePolicy:
                     description: |-
                       Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
                       Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
                     type: string
+                  enhancedAutomationToolsService:
+                    description: |-
+                      To specify whether to enable cloud automation tools service.
+                      To specify whether to enable cloud automation tools service.
+                    type: boolean
                   enhancedMonitorService:
                     description: |-
                       To specify whether to enable cloud monitor service. Default is TRUE.
@@ -144,6 +154,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  imageFamily:
+                    description: |-
+                      Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+                      Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+                    type: string
                   imageId:
                     description: |-
                       An available image ID for a cvm instance.
@@ -151,8 +166,8 @@ spec:
                     type: string
                   instanceChargeType:
                     description: |-
-                      Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-                      Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+                      Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+                      Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
                     type: string
                   instanceChargeTypePrepaidPeriod:
                     description: |-
@@ -332,11 +347,21 @@ spec:
                           type: string
                       type: object
                     type: array
+                  dedicatedClusterId:
+                    description: |-
+                      Dedicated Cluster ID.
+                      Dedicated Cluster ID.
+                    type: string
                   diskTypePolicy:
                     description: |-
                       Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
                       Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
                     type: string
+                  enhancedAutomationToolsService:
+                    description: |-
+                      To specify whether to enable cloud automation tools service.
+                      To specify whether to enable cloud automation tools service.
+                    type: boolean
                   enhancedMonitorService:
                     description: |-
                       To specify whether to enable cloud monitor service. Default is TRUE.
@@ -365,6 +390,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  imageFamily:
+                    description: |-
+                      Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+                      Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+                    type: string
                   imageId:
                     description: |-
                       An available image ID for a cvm instance.
@@ -372,8 +402,8 @@ spec:
                     type: string
                   instanceChargeType:
                     description: |-
-                      Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-                      Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+                      Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+                      Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
                     type: string
                   instanceChargeTypePrepaidPeriod:
                     description: |-
@@ -655,10 +685,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.configurationName)
                 || (has(self.initProvider) && has(self.initProvider.configurationName))'
-            - message: spec.forProvider.imageId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.imageId)
-                || (has(self.initProvider) && has(self.initProvider.imageId))'
             - message: spec.forProvider.instanceTypes is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.instanceTypes)
@@ -711,11 +737,21 @@ spec:
                           type: string
                       type: object
                     type: array
+                  dedicatedClusterId:
+                    description: |-
+                      Dedicated Cluster ID.
+                      Dedicated Cluster ID.
+                    type: string
                   diskTypePolicy:
                     description: |-
                       Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
                       Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
                     type: string
+                  enhancedAutomationToolsService:
+                    description: |-
+                      To specify whether to enable cloud automation tools service.
+                      To specify whether to enable cloud automation tools service.
+                    type: boolean
                   enhancedMonitorService:
                     description: |-
                       To specify whether to enable cloud monitor service. Default is TRUE.
@@ -747,6 +783,11 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  imageFamily:
+                    description: |-
+                      Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+                      Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+                    type: string
                   imageId:
                     description: |-
                       An available image ID for a cvm instance.
@@ -754,8 +795,8 @@ spec:
                     type: string
                   instanceChargeType:
                     description: |-
-                      Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-                      Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+                      Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+                      Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
                     type: string
                   instanceChargeTypePrepaidPeriod:
                     description: |-

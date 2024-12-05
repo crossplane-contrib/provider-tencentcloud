@@ -94,9 +94,9 @@ spec:
                     description: Description of the security group rule.
                     type: string
                   ipProtocol:
-                    description: 'Type of IP protocol. Valid values: `TCP`, `UDP`
-                      and `ICMP`. Default to all types protocol, and conflicts with
-                      `protocol_template`.'
+                    description: 'Type of IP protocol. Valid values: `TCP`, `UDP`,
+                      `ICMP`, `ICMPv6` and `ALL`. Default to all types protocol, and
+                      conflicts with `protocol_template`.'
                     type: string
                   policy:
                     description: 'Rule policy of security group. Valid values: `ACCEPT`
@@ -244,9 +244,9 @@ spec:
                     description: Description of the security group rule.
                     type: string
                   ipProtocol:
-                    description: 'Type of IP protocol. Valid values: `TCP`, `UDP`
-                      and `ICMP`. Default to all types protocol, and conflicts with
-                      `protocol_template`.'
+                    description: 'Type of IP protocol. Valid values: `TCP`, `UDP`,
+                      `ICMP`, `ICMPv6` and `ALL`. Default to all types protocol, and
+                      conflicts with `protocol_template`.'
                     type: string
                   policy:
                     description: 'Rule policy of security group. Valid values: `ACCEPT`
@@ -564,9 +564,9 @@ spec:
                   id:
                     type: string
                   ipProtocol:
-                    description: 'Type of IP protocol. Valid values: `TCP`, `UDP`
-                      and `ICMP`. Default to all types protocol, and conflicts with
-                      `protocol_template`.'
+                    description: 'Type of IP protocol. Valid values: `TCP`, `UDP`,
+                      `ICMP`, `ICMPv6` and `ALL`. Default to all types protocol, and
+                      conflicts with `protocol_template`.'
                     type: string
                   policy:
                     description: 'Rule policy of security group. Valid values: `ACCEPT`

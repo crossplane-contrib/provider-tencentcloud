@@ -172,6 +172,11 @@ spec:
                       This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the Ports parameter, which is used to specify the start port. If you want to try the port range feature, please submit a ticket.
                       This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
                     type: number
+                  h2cSwitch:
+                    description: |-
+                      Enable H2C switch for intranet HTTP listener.
+                      Enable H2C switch for intranet HTTP listener.
+                    type: boolean
                   healthCheckContextType:
                     description: |-
                       Health check protocol. When the value of health_check_type of the health check protocol is CUSTOM, this field is required, which represents the input format of the health check. Valid values: HEX, TEXT.
@@ -410,6 +415,11 @@ spec:
                       This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the Ports parameter, which is used to specify the start port. If you want to try the port range feature, please submit a ticket.
                       This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
                     type: number
+                  h2cSwitch:
+                    description: |-
+                      Enable H2C switch for intranet HTTP listener.
+                      Enable H2C switch for intranet HTTP listener.
+                    type: boolean
                   healthCheckContextType:
                     description: |-
                       Health check protocol. When the value of health_check_type of the health check protocol is CUSTOM, this field is required, which represents the input format of the health check. Valid values: HEX, TEXT.
@@ -742,6 +752,11 @@ spec:
                       This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the Ports parameter, which is used to specify the start port. If you want to try the port range feature, please submit a ticket.
                       This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
                     type: number
+                  h2cSwitch:
+                    description: |-
+                      Enable H2C switch for intranet HTTP listener.
+                      Enable H2C switch for intranet HTTP listener.
+                    type: boolean
                   healthCheckContextType:
                     description: |-
                       Health check protocol. When the value of health_check_type of the health check protocol is CUSTOM, this field is required, which represents the input format of the health check. Valid values: HEX, TEXT.

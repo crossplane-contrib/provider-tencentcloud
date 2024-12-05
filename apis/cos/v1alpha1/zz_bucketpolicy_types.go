@@ -28,8 +28,8 @@ type BucketPolicyInitParameters struct {
 	// +kubebuilder:validation:Optional
 	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
-	// The text of the policy. For more info please refer to Tencent official doc.
-	// The text of the policy. For more info please refer to [Tencent official doc](https://intl.cloud.tencent.com/document/product/436/18023).
+	// The text of the policy. For more info please refer to Tencent official doc, The six-segment resource scenario example in the document is as follows: Example of specifying a bucket: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/*, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/*; Example of specifying a folder: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/*, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/*; Specified object example: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/exampleobject, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/exampleobject.
+	// The text of the policy. For more info please refer to [Tencent official doc](https://intl.cloud.tencent.com/document/product/436/18023), The six-segment resource scenario example in the document is as follows: Example of specifying a bucket: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/*`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/*`; Example of specifying a folder: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/*`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/*`; Specified object example: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/exampleobject`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/exampleobject`.
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 }
 
@@ -42,8 +42,8 @@ type BucketPolicyObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The text of the policy. For more info please refer to Tencent official doc.
-	// The text of the policy. For more info please refer to [Tencent official doc](https://intl.cloud.tencent.com/document/product/436/18023).
+	// The text of the policy. For more info please refer to Tencent official doc, The six-segment resource scenario example in the document is as follows: Example of specifying a bucket: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/*, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/*; Example of specifying a folder: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/*, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/*; Specified object example: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/exampleobject, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/exampleobject.
+	// The text of the policy. For more info please refer to [Tencent official doc](https://intl.cloud.tencent.com/document/product/436/18023), The six-segment resource scenario example in the document is as follows: Example of specifying a bucket: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/*`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/*`; Example of specifying a folder: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/*`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/*`; Specified object example: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/exampleobject`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/exampleobject`.
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 }
 
@@ -63,8 +63,8 @@ type BucketPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
-	// The text of the policy. For more info please refer to Tencent official doc.
-	// The text of the policy. For more info please refer to [Tencent official doc](https://intl.cloud.tencent.com/document/product/436/18023).
+	// The text of the policy. For more info please refer to Tencent official doc, The six-segment resource scenario example in the document is as follows: Example of specifying a bucket: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/*, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/*; Example of specifying a folder: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/*, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/*; Specified object example: qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/exampleobject, In the cdc scenario: qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/exampleobject.
+	// The text of the policy. For more info please refer to [Tencent official doc](https://intl.cloud.tencent.com/document/product/436/18023), The six-segment resource scenario example in the document is as follows: Example of specifying a bucket: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/*`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/*`; Example of specifying a folder: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/*`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/*`; Specified object example: `qcs::cos:ap-guangzhou:uid/1250000000:examplebucket-1250000000/folder/exampleobject`, In the cdc scenario: `qcs::cos:ap-guangzhou:uid/1250000000:cdc_cluster-123456_examplebucket-1250000000/folder/exampleobject`.
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 }

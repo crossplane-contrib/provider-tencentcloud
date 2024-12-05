@@ -158,9 +158,17 @@ type ScalingConfigInitParameters struct {
 	// Configurations of data disk.
 	DataDisk []DataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
+	// Dedicated Cluster ID.
+	// Dedicated Cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
 	// Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
 	DiskTypePolicy *string `json:"diskTypePolicy,omitempty" tf:"disk_type_policy,omitempty"`
+
+	// To specify whether to enable cloud automation tools service.
+	// To specify whether to enable cloud automation tools service.
+	EnhancedAutomationToolsService *bool `json:"enhancedAutomationToolsService,omitempty" tf:"enhanced_automation_tools_service,omitempty"`
 
 	// To specify whether to enable cloud monitor service. Default is TRUE.
 	// To specify whether to enable cloud monitor service. Default is `TRUE`.
@@ -174,12 +182,16 @@ type ScalingConfigInitParameters struct {
 	// Related settings of the cloud server hostname (HostName).
 	HostNameSettings []HostNameSettingsInitParameters `json:"hostNameSettings,omitempty" tf:"host_name_settings,omitempty"`
 
+	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
+
 	// An available image ID for a cvm instance.
 	// An available image ID for a cvm instance.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
 	// The tenancy (in month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
@@ -270,9 +282,17 @@ type ScalingConfigObservation struct {
 	// Configurations of data disk.
 	DataDisk []DataDiskObservation `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
+	// Dedicated Cluster ID.
+	// Dedicated Cluster ID.
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
 	// Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
 	DiskTypePolicy *string `json:"diskTypePolicy,omitempty" tf:"disk_type_policy,omitempty"`
+
+	// To specify whether to enable cloud automation tools service.
+	// To specify whether to enable cloud automation tools service.
+	EnhancedAutomationToolsService *bool `json:"enhancedAutomationToolsService,omitempty" tf:"enhanced_automation_tools_service,omitempty"`
 
 	// To specify whether to enable cloud monitor service. Default is TRUE.
 	// To specify whether to enable cloud monitor service. Default is `TRUE`.
@@ -289,12 +309,16 @@ type ScalingConfigObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
+
 	// An available image ID for a cvm instance.
 	// An available image ID for a cvm instance.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
 	// The tenancy (in month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
@@ -388,10 +412,20 @@ type ScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	DataDisk []DataDiskParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
+	// Dedicated Cluster ID.
+	// Dedicated Cluster ID.
+	// +kubebuilder:validation:Optional
+	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
 	// Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
 	// Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
 	// +kubebuilder:validation:Optional
 	DiskTypePolicy *string `json:"diskTypePolicy,omitempty" tf:"disk_type_policy,omitempty"`
+
+	// To specify whether to enable cloud automation tools service.
+	// To specify whether to enable cloud automation tools service.
+	// +kubebuilder:validation:Optional
+	EnhancedAutomationToolsService *bool `json:"enhancedAutomationToolsService,omitempty" tf:"enhanced_automation_tools_service,omitempty"`
 
 	// To specify whether to enable cloud monitor service. Default is TRUE.
 	// To specify whether to enable cloud monitor service. Default is `TRUE`.
@@ -408,13 +442,18 @@ type ScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	HostNameSettings []HostNameSettingsParameters `json:"hostNameSettings,omitempty" tf:"host_name_settings,omitempty"`
 
+	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
+	// +kubebuilder:validation:Optional
+	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
+
 	// An available image ID for a cvm instance.
 	// An available image ID for a cvm instance.
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
 	// +kubebuilder:validation:Optional
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
@@ -547,7 +586,6 @@ type ScalingConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.configurationName) || (has(self.initProvider) && has(self.initProvider.configurationName))",message="spec.forProvider.configurationName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.imageId) || (has(self.initProvider) && has(self.initProvider.imageId))",message="spec.forProvider.imageId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceTypes) || (has(self.initProvider) && has(self.initProvider.instanceTypes))",message="spec.forProvider.instanceTypes is a required parameter"
 	Spec   ScalingConfigSpec   `json:"spec"`
 	Status ScalingConfigStatus `json:"status,omitempty"`

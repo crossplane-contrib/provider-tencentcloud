@@ -13,6 +13,115 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type BGPConfigInitParameters struct {
+
+	// Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+	// Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+	LocalBGPIP *string `json:"localBgpIp,omitempty" tf:"local_bgp_ip,omitempty"`
+
+	// User side BGP address. It must be allocated from within the BGP tunnel network segment.
+	// User side BGP address. It must be allocated from within the BGP tunnel network segment.
+	RemoteBGPIP *string `json:"remoteBgpIp,omitempty" tf:"remote_bgp_ip,omitempty"`
+
+	// BGP tunnel segment.
+	// BGP tunnel segment.
+	TunnelCidr *string `json:"tunnelCidr,omitempty" tf:"tunnel_cidr,omitempty"`
+}
+
+type BGPConfigObservation struct {
+
+	// Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+	// Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+	LocalBGPIP *string `json:"localBgpIp,omitempty" tf:"local_bgp_ip,omitempty"`
+
+	// User side BGP address. It must be allocated from within the BGP tunnel network segment.
+	// User side BGP address. It must be allocated from within the BGP tunnel network segment.
+	RemoteBGPIP *string `json:"remoteBgpIp,omitempty" tf:"remote_bgp_ip,omitempty"`
+
+	// BGP tunnel segment.
+	// BGP tunnel segment.
+	TunnelCidr *string `json:"tunnelCidr,omitempty" tf:"tunnel_cidr,omitempty"`
+}
+
+type BGPConfigParameters struct {
+
+	// Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+	// Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+	// +kubebuilder:validation:Optional
+	LocalBGPIP *string `json:"localBgpIp" tf:"local_bgp_ip,omitempty"`
+
+	// User side BGP address. It must be allocated from within the BGP tunnel network segment.
+	// User side BGP address. It must be allocated from within the BGP tunnel network segment.
+	// +kubebuilder:validation:Optional
+	RemoteBGPIP *string `json:"remoteBgpIp" tf:"remote_bgp_ip,omitempty"`
+
+	// BGP tunnel segment.
+	// BGP tunnel segment.
+	// +kubebuilder:validation:Optional
+	TunnelCidr *string `json:"tunnelCidr" tf:"tunnel_cidr,omitempty"`
+}
+
+type HealthCheckConfigInitParameters struct {
+
+	// Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+	// Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+	ProbeInterval *float64 `json:"probeInterval,omitempty" tf:"probe_interval,omitempty"`
+
+	// Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+	// Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+	ProbeThreshold *float64 `json:"probeThreshold,omitempty" tf:"probe_threshold,omitempty"`
+
+	// Detection timeout, range [10-5000], Unit: ms.
+	// Detection timeout, range [10-5000], Unit: ms.
+	ProbeTimeout *float64 `json:"probeTimeout,omitempty" tf:"probe_timeout,omitempty"`
+
+	// Detection mode, default is NQA, cannot be modified.
+	// Detection mode, default is `NQA`, cannot be modified.
+	ProbeType *string `json:"probeType,omitempty" tf:"probe_type,omitempty"`
+}
+
+type HealthCheckConfigObservation struct {
+
+	// Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+	// Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+	ProbeInterval *float64 `json:"probeInterval,omitempty" tf:"probe_interval,omitempty"`
+
+	// Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+	// Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+	ProbeThreshold *float64 `json:"probeThreshold,omitempty" tf:"probe_threshold,omitempty"`
+
+	// Detection timeout, range [10-5000], Unit: ms.
+	// Detection timeout, range [10-5000], Unit: ms.
+	ProbeTimeout *float64 `json:"probeTimeout,omitempty" tf:"probe_timeout,omitempty"`
+
+	// Detection mode, default is NQA, cannot be modified.
+	// Detection mode, default is `NQA`, cannot be modified.
+	ProbeType *string `json:"probeType,omitempty" tf:"probe_type,omitempty"`
+}
+
+type HealthCheckConfigParameters struct {
+
+	// Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+	// Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+	// +kubebuilder:validation:Optional
+	ProbeInterval *float64 `json:"probeInterval,omitempty" tf:"probe_interval,omitempty"`
+
+	// Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+	// Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+	// +kubebuilder:validation:Optional
+	ProbeThreshold *float64 `json:"probeThreshold,omitempty" tf:"probe_threshold,omitempty"`
+
+	// Detection timeout, range [10-5000], Unit: ms.
+	// Detection timeout, range [10-5000], Unit: ms.
+	// +kubebuilder:validation:Optional
+	ProbeTimeout *float64 `json:"probeTimeout,omitempty" tf:"probe_timeout,omitempty"`
+
+	// Detection mode, default is NQA, cannot be modified.
+	// Detection mode, default is `NQA`, cannot be modified.
+	// +kubebuilder:validation:Optional
+	ProbeType *string `json:"probeType,omitempty" tf:"probe_type,omitempty"`
+}
+
 type SecurityGroupPolicyInitParameters struct {
 
 	// Local cidr block.
@@ -53,6 +162,10 @@ type SecurityGroupPolicyParameters struct {
 
 type VPNConnectionInitParameters struct {
 
+	// BGP config.
+	// BGP config.
+	BGPConfig []BGPConfigInitParameters `json:"bgpConfig,omitempty" tf:"bgp_config,omitempty"`
+
 	// ID of the customer gateway.
 	// ID of the customer gateway.
 	// +crossplane:generate:reference:type=VPNCustomerGateway
@@ -81,6 +194,10 @@ type VPNConnectionInitParameters struct {
 	// Whether intra-tunnel health checks are supported.
 	// Whether intra-tunnel health checks are supported.
 	EnableHealthCheck *bool `json:"enableHealthCheck,omitempty" tf:"enable_health_check,omitempty"`
+
+	// VPN channel health check configuration.
+	// VPN channel health check configuration.
+	HealthCheckConfig []HealthCheckConfigInitParameters `json:"healthCheckConfig,omitempty" tf:"health_check_config,omitempty"`
 
 	// Health check the address of this terminal.
 	// Health check the address of this terminal.
@@ -162,12 +279,16 @@ type VPNConnectionInitParameters struct {
 	// Name of the VPN connection. The length of character is limited to 1-60.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The default negotiation type is active. Optional values: active (active negotiation), passive (passive negotiation), flowTrigger (traffic negotiation).
+	// The default negotiation type is `active`. Optional values: `active` (active negotiation), `passive` (passive negotiation), `flowTrigger` (traffic negotiation).
+	NegotiationType *string `json:"negotiationType,omitempty" tf:"negotiation_type,omitempty"`
+
 	// Pre-shared key of the VPN connection.
 	// Pre-shared key of the VPN connection.
 	PreShareKey *string `json:"preShareKey,omitempty" tf:"pre_share_key,omitempty"`
 
-	// Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy.
-	// Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`.
+	// Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy, Bgp.
+	// Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`, `Bgp`.
 	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
 
 	// SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]}, 10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16 is the IDC network segment. Users specify which network segments in the VPC can communicate with which network segments in your IDC.
@@ -208,6 +329,10 @@ type VPNConnectionInitParameters struct {
 
 type VPNConnectionObservation struct {
 
+	// BGP config.
+	// BGP config.
+	BGPConfig []BGPConfigObservation `json:"bgpConfig,omitempty" tf:"bgp_config,omitempty"`
+
 	// Create time of the VPN connection.
 	// Create time of the VPN connection.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
@@ -235,6 +360,10 @@ type VPNConnectionObservation struct {
 	// Encrypt proto of the VPN connection.
 	// Encrypt proto of the VPN connection.
 	EncryptProto *string `json:"encryptProto,omitempty" tf:"encrypt_proto,omitempty"`
+
+	// VPN channel health check configuration.
+	// VPN channel health check configuration.
+	HealthCheckConfig []HealthCheckConfigObservation `json:"healthCheckConfig,omitempty" tf:"health_check_config,omitempty"`
 
 	// Health check the address of this terminal.
 	// Health check the address of this terminal.
@@ -323,6 +452,10 @@ type VPNConnectionObservation struct {
 	// Name of the VPN connection. The length of character is limited to 1-60.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The default negotiation type is active. Optional values: active (active negotiation), passive (passive negotiation), flowTrigger (traffic negotiation).
+	// The default negotiation type is `active`. Optional values: `active` (active negotiation), `passive` (passive negotiation), `flowTrigger` (traffic negotiation).
+	NegotiationType *string `json:"negotiationType,omitempty" tf:"negotiation_type,omitempty"`
+
 	// Net status of the VPN connection. Valid value: AVAILABLE.
 	// Net status of the VPN connection. Valid value: `AVAILABLE`.
 	NetStatus *string `json:"netStatus,omitempty" tf:"net_status,omitempty"`
@@ -331,8 +464,8 @@ type VPNConnectionObservation struct {
 	// Pre-shared key of the VPN connection.
 	PreShareKey *string `json:"preShareKey,omitempty" tf:"pre_share_key,omitempty"`
 
-	// Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy.
-	// Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`.
+	// Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy, Bgp.
+	// Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`, `Bgp`.
 	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
 
 	// SPD policy group, for example: {"10.0.0.5/24":["172.123.10.5/16"]}, 10.0.0.5/24 is the vpc intranet segment, and 172.123.10.5/16 is the IDC network segment. Users specify which network segments in the VPC can communicate with which network segments in your IDC.
@@ -362,6 +495,11 @@ type VPNConnectionObservation struct {
 }
 
 type VPNConnectionParameters struct {
+
+	// BGP config.
+	// BGP config.
+	// +kubebuilder:validation:Optional
+	BGPConfig []BGPConfigParameters `json:"bgpConfig,omitempty" tf:"bgp_config,omitempty"`
 
 	// ID of the customer gateway.
 	// ID of the customer gateway.
@@ -396,6 +534,11 @@ type VPNConnectionParameters struct {
 	// Whether intra-tunnel health checks are supported.
 	// +kubebuilder:validation:Optional
 	EnableHealthCheck *bool `json:"enableHealthCheck,omitempty" tf:"enable_health_check,omitempty"`
+
+	// VPN channel health check configuration.
+	// VPN channel health check configuration.
+	// +kubebuilder:validation:Optional
+	HealthCheckConfig []HealthCheckConfigParameters `json:"healthCheckConfig,omitempty" tf:"health_check_config,omitempty"`
 
 	// Health check the address of this terminal.
 	// Health check the address of this terminal.
@@ -497,13 +640,18 @@ type VPNConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The default negotiation type is active. Optional values: active (active negotiation), passive (passive negotiation), flowTrigger (traffic negotiation).
+	// The default negotiation type is `active`. Optional values: `active` (active negotiation), `passive` (passive negotiation), `flowTrigger` (traffic negotiation).
+	// +kubebuilder:validation:Optional
+	NegotiationType *string `json:"negotiationType,omitempty" tf:"negotiation_type,omitempty"`
+
 	// Pre-shared key of the VPN connection.
 	// Pre-shared key of the VPN connection.
 	// +kubebuilder:validation:Optional
 	PreShareKey *string `json:"preShareKey,omitempty" tf:"pre_share_key,omitempty"`
 
-	// Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy.
-	// Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`.
+	// Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy, Bgp.
+	// Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`, `Bgp`.
 	// +kubebuilder:validation:Optional
 	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
 

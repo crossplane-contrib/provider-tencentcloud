@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tke/v1alpha1/nodepool
   labels:
-    testing.upbound.io/example-name: mynodepool
-  name: mynodepool
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     autoScalingConfig:
@@ -28,7 +28,7 @@ spec:
       publicIpAssigned: true
       systemDiskSize: "50"
       systemDiskType: CLOUD_PREMIUM
-    clusterId: ${tencentcloud_kubernetes_cluster.managed_cluster.id}
+    clusterId: ${tencentcloud_kubernetes_cluster.example.id}
     desiredCapacity: 4
     enableAutoScale: true
     labels:
@@ -37,10 +37,12 @@ spec:
     maxSize: 6
     minSize: 1
     multiZoneSubnetPolicy: EQUALITY
-    name: mynodepool
+    name: tf-example
     nodeConfig:
-    - extraArgs:
+    - dockerGraphPath: /var/lib/docker
+      extraArgs:
       - root-dir=/var/lib/kubelet
+    nodeOs: img-9qrfy1xt
     retryPolicy: INCREMENTAL_INTERVALS
     subnetIds:
     - ${data.tencentcloud_vpc_subnets.vpc.instance_list.0.subnet_id}
@@ -63,8 +65,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tke/v1alpha1/nodepool
   labels:
-    testing.upbound.io/example-name: managed_cluster
-  name: managed-cluster
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clusterCidr: ${var.cluster_cidr}

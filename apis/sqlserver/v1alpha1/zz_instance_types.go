@@ -35,7 +35,7 @@ type InstanceInitParameters struct {
 	// Version of the SQL Server database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+	// It has been deprecated from version 1.81.136. Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
 	// Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
 	HaType *string `json:"haType,omitempty" tf:"ha_type,omitempty"`
 
@@ -148,7 +148,7 @@ type InstanceObservation struct {
 	// Version of the SQL Server database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+	// It has been deprecated from version 1.81.136. Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
 	// Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
 	HaType *string `json:"haType,omitempty" tf:"ha_type,omitempty"`
 
@@ -263,7 +263,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+	// It has been deprecated from version 1.81.136. Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
 	// Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
 	// +kubebuilder:validation:Optional
 	HaType *string `json:"haType,omitempty" tf:"ha_type,omitempty"`

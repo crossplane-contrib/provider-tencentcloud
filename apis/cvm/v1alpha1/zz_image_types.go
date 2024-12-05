@@ -28,6 +28,10 @@ type ImageInitParameters struct {
 	// Image Description.
 	ImageDescription *string `json:"imageDescription,omitempty" tf:"image_description,omitempty"`
 
+	// Set image family. Example value: business-daily-update.
+	// Set image family. Example value: `business-daily-update`.
+	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
+
 	// Image name.
 	// Image name.
 	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
@@ -69,6 +73,10 @@ type ImageObservation struct {
 	// Image Description.
 	ImageDescription *string `json:"imageDescription,omitempty" tf:"image_description,omitempty"`
 
+	// Set image family. Example value: business-daily-update.
+	// Set image family. Example value: `business-daily-update`.
+	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
+
 	// Image name.
 	// Image name.
 	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
@@ -109,6 +117,11 @@ type ImageParameters struct {
 	// Image Description.
 	// +kubebuilder:validation:Optional
 	ImageDescription *string `json:"imageDescription,omitempty" tf:"image_description,omitempty"`
+
+	// Set image family. Example value: business-daily-update.
+	// Set image family. Example value: `business-daily-update`.
+	// +kubebuilder:validation:Optional
+	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
 
 	// Image name.
 	// Image name.

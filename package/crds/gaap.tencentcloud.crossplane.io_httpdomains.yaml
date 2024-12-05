@@ -116,6 +116,16 @@ spec:
                       ID of the SSL certificate.
                       ID of the SSL certificate.
                     type: string
+                  groupId:
+                    description: |-
+                      Group Id.
+                      Group Id.
+                    type: string
+                  isDefaultServer:
+                    description: |-
+                      Whether to use as the default domain name, the default is false.
+                      Whether to use as the default domain name, the default is false.
+                    type: boolean
                   listenerId:
                     description: |-
                       ID of the layer7 listener.
@@ -275,6 +285,16 @@ spec:
                       ID of the SSL certificate.
                       ID of the SSL certificate.
                     type: string
+                  groupId:
+                    description: |-
+                      Group Id.
+                      Group Id.
+                    type: string
+                  isDefaultServer:
+                    description: |-
+                      Whether to use as the default domain name, the default is false.
+                      Whether to use as the default domain name, the default is false.
+                    type: boolean
                   listenerId:
                     description: |-
                       ID of the layer7 listener.
@@ -598,9 +618,19 @@ spec:
                       ID of the SSL certificate.
                       ID of the SSL certificate.
                     type: string
+                  groupId:
+                    description: |-
+                      Group Id.
+                      Group Id.
+                    type: string
                   id:
                     description: ID of the resource.
                     type: string
+                  isDefaultServer:
+                    description: |-
+                      Whether to use as the default domain name, the default is false.
+                      Whether to use as the default domain name, the default is false.
+                    type: boolean
                   listenerId:
                     description: |-
                       ID of the layer7 listener.

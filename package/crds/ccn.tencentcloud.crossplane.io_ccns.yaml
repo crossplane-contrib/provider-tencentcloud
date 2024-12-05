@@ -95,8 +95,8 @@ spec:
                     type: string
                   qos:
                     description: |-
-                      Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
-                      Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
+                      CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
+                      CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
                     type: string
                   routeEcmpFlag:
                     description: |-
@@ -152,8 +152,8 @@ spec:
                     type: string
                   qos:
                     description: |-
-                      Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
-                      Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
+                      CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
+                      CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
                     type: string
                   routeEcmpFlag:
                     description: |-
@@ -386,8 +386,8 @@ spec:
                     type: string
                   qos:
                     description: |-
-                      Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
-                      Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
+                      CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
+                      CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
                     type: string
                   routeEcmpFlag:
                     description: |-

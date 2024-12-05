@@ -11,6 +11,7 @@ spec:
     clusterIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    createResultOutputFile: my_output_file_path
     desiredPodNum: 16
     labels:
       test1: test1

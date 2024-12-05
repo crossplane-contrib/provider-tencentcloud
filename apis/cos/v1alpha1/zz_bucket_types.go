@@ -956,6 +956,10 @@ type WebsiteInitParameters struct {
 	// COS returns this index document when requests are made to the root domain or any of the subfolders.
 	// COS returns this index document when requests are made to the root domain or any of the subfolders.
 	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
+
+	// Redirects all request configurations. Valid values: http, https. Default is http.
+	// Redirects all request configurations. Valid values: http, https. Default is `http`.
+	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
 }
 
 type WebsiteObservation struct {
@@ -970,6 +974,10 @@ type WebsiteObservation struct {
 	// COS returns this index document when requests are made to the root domain or any of the subfolders.
 	// COS returns this index document when requests are made to the root domain or any of the subfolders.
 	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
+
+	// Redirects all request configurations. Valid values: http, https. Default is http.
+	// Redirects all request configurations. Valid values: http, https. Default is `http`.
+	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
 }
 
 type WebsiteParameters struct {
@@ -983,6 +991,11 @@ type WebsiteParameters struct {
 	// COS returns this index document when requests are made to the root domain or any of the subfolders.
 	// +kubebuilder:validation:Optional
 	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
+
+	// Redirects all request configurations. Valid values: http, https. Default is http.
+	// Redirects all request configurations. Valid values: http, https. Default is `http`.
+	// +kubebuilder:validation:Optional
+	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
 }
 
 // BucketSpec defines the desired state of Bucket

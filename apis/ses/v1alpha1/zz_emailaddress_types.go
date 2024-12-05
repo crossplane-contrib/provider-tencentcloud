@@ -15,8 +15,8 @@ import (
 
 type EmailAddressInitParameters struct {
 
-	// Your sender address. (You can create up to 10 sender addresses for each domain.).
-	// Your sender address. (You can create up to 10 sender addresses for each domain.).
+	// Your sender address(You can create up to 10 sender addresses for each domain).
+	// Your sender address(You can create up to 10 sender addresses for each domain).
 	EmailAddress *string `json:"emailAddress,omitempty" tf:"email_address,omitempty"`
 
 	// Sender name.
@@ -26,8 +26,8 @@ type EmailAddressInitParameters struct {
 
 type EmailAddressObservation struct {
 
-	// Your sender address. (You can create up to 10 sender addresses for each domain.).
-	// Your sender address. (You can create up to 10 sender addresses for each domain.).
+	// Your sender address(You can create up to 10 sender addresses for each domain).
+	// Your sender address(You can create up to 10 sender addresses for each domain).
 	EmailAddress *string `json:"emailAddress,omitempty" tf:"email_address,omitempty"`
 
 	// Sender name.
@@ -40,8 +40,8 @@ type EmailAddressObservation struct {
 
 type EmailAddressParameters struct {
 
-	// Your sender address. (You can create up to 10 sender addresses for each domain.).
-	// Your sender address. (You can create up to 10 sender addresses for each domain.).
+	// Your sender address(You can create up to 10 sender addresses for each domain).
+	// Your sender address(You can create up to 10 sender addresses for each domain).
 	// +kubebuilder:validation:Optional
 	EmailAddress *string `json:"emailAddress,omitempty" tf:"email_address,omitempty"`
 
@@ -49,6 +49,11 @@ type EmailAddressParameters struct {
 	// Sender name.
 	// +kubebuilder:validation:Optional
 	EmailSenderName *string `json:"emailSenderName,omitempty" tf:"email_sender_name,omitempty"`
+
+	// Password for SMTP, Length limit 64.
+	// Password for SMTP, Length limit 64.
+	// +kubebuilder:validation:Optional
+	SMTPPasswordSecretRef *v1.SecretKeySelector `json:"smtpPasswordSecretRef,omitempty" tf:"-"`
 }
 
 // EmailAddressSpec defines the desired state of EmailAddress
@@ -78,7 +83,7 @@ type EmailAddressStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// EmailAddress is the Schema for the EmailAddresss API. Provides a resource to create a ses email_address
+// EmailAddress is the Schema for the EmailAddresss API. Provides a resource to create a ses email address
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

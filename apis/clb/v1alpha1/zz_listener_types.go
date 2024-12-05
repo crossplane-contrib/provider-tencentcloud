@@ -44,6 +44,10 @@ type ListenerInitParameters struct {
 	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
 	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
 
+	// Enable H2C switch for intranet HTTP listener.
+	// Enable H2C switch for intranet HTTP listener.
+	H2CSwitch *bool `json:"h2cSwitch,omitempty" tf:"h2c_switch,omitempty"`
+
 	// Health check protocol. When the value of health_check_type of the health check protocol is CUSTOM, this field is required, which represents the input format of the health check. Valid values: HEX, TEXT.
 	// Health check protocol. When the value of `health_check_type` of the health check protocol is `CUSTOM`, this field is required, which represents the input format of the health check. Valid values: `HEX`, `TEXT`.
 	HealthCheckContextType *string `json:"healthCheckContextType,omitempty" tf:"health_check_context_type,omitempty"`
@@ -166,6 +170,10 @@ type ListenerObservation struct {
 	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the Ports parameter, which is used to specify the start port. If you want to try the port range feature, please submit a ticket.
 	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
 	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
+
+	// Enable H2C switch for intranet HTTP listener.
+	// Enable H2C switch for intranet HTTP listener.
+	H2CSwitch *bool `json:"h2cSwitch,omitempty" tf:"h2c_switch,omitempty"`
 
 	// Health check protocol. When the value of health_check_type of the health check protocol is CUSTOM, this field is required, which represents the input format of the health check. Valid values: HEX, TEXT.
 	// Health check protocol. When the value of `health_check_type` of the health check protocol is `CUSTOM`, this field is required, which represents the input format of the health check. Valid values: `HEX`, `TEXT`.
@@ -310,6 +318,11 @@ type ListenerParameters struct {
 	// This parameter is used to specify the end port and is required when creating a port range listener. Only one member can be passed in when inputting the `Ports` parameter, which is used to specify the start port. If you want to try the port range feature, please [submit a ticket](https://console.cloud.tencent.com/workorder/category).
 	// +kubebuilder:validation:Optional
 	EndPort *float64 `json:"endPort,omitempty" tf:"end_port,omitempty"`
+
+	// Enable H2C switch for intranet HTTP listener.
+	// Enable H2C switch for intranet HTTP listener.
+	// +kubebuilder:validation:Optional
+	H2CSwitch *bool `json:"h2cSwitch,omitempty" tf:"h2c_switch,omitempty"`
 
 	// Health check protocol. When the value of health_check_type of the health check protocol is CUSTOM, this field is required, which represents the input format of the health check. Valid values: HEX, TEXT.
 	// Health check protocol. When the value of `health_check_type` of the health check protocol is `CUSTOM`, this field is required, which represents the input format of the health check. Valid values: `HEX`, `TEXT`.

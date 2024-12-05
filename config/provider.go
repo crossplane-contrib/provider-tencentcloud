@@ -10,7 +10,6 @@ import (
 
 	"github.com/crossplane-contrib/provider-tencentcloud/config/apigateway"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/as"
-	"github.com/crossplane-contrib/provider-tencentcloud/config/audit"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cam"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cat"
 	"github.com/crossplane-contrib/provider-tencentcloud/config/cbs"
@@ -85,7 +84,6 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		apigateway.Configure,
 		as.Configure,
-		audit.Configure,
 		cam.Configure,
 		cat.Configure,
 		cbs.Configure,
