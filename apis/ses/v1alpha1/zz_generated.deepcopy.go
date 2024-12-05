@@ -9,6 +9,7 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -363,6 +364,11 @@ func (in *EmailAddressParameters) DeepCopyInto(out *EmailAddressParameters) {
 	if in.EmailSenderName != nil {
 		in, out := &in.EmailSenderName, &out.EmailSenderName
 		*out = new(string)
+		**out = **in
+	}
+	if in.SMTPPasswordSecretRef != nil {
+		in, out := &in.SMTPPasswordSecretRef, &out.SMTPPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 }

@@ -12,6 +12,7 @@ spec:
     heartbeatTimeout: 500
     lifecycleHookName: tf-as-lifecycle-hook
     lifecycleTransition: INSTANCE_LAUNCHING
+    lifecycleTransitionType: NORMAL
     notificationMetadata: tf test
     scalingGroupIdSelector:
       matchLabels:

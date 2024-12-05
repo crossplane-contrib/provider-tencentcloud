@@ -201,6 +201,10 @@ type ScaleWorkerInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// Used to save results of CVMs creation error messages.
+	// Used to save results of CVMs creation error messages.
+	CreateResultOutputFile *string `json:"createResultOutputFile,omitempty" tf:"create_result_output_file,omitempty"`
+
 	// Configurations of tke data disk.
 	// Configurations of tke data disk.
 	DataDisk []ScaleWorkerDataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
@@ -234,6 +238,10 @@ type ScaleWorkerInitParameters struct {
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
+	// Node taint.
+	// Node taint.
+	Taints []ScaleWorkerTaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+
 	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
@@ -252,6 +260,10 @@ type ScaleWorkerObservation struct {
 	// ID of the cluster.
 	// ID of the cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Used to save results of CVMs creation error messages.
+	// Used to save results of CVMs creation error messages.
+	CreateResultOutputFile *string `json:"createResultOutputFile,omitempty" tf:"create_result_output_file,omitempty"`
 
 	// Configurations of tke data disk.
 	// Configurations of tke data disk.
@@ -289,6 +301,10 @@ type ScaleWorkerObservation struct {
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
+	// Node taint.
+	// Node taint.
+	Taints []ScaleWorkerTaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
+
 	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
@@ -321,6 +337,11 @@ type ScaleWorkerParameters struct {
 	// Selector for a Cluster to populate clusterId.
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
+	// Used to save results of CVMs creation error messages.
+	// Used to save results of CVMs creation error messages.
+	// +kubebuilder:validation:Optional
+	CreateResultOutputFile *string `json:"createResultOutputFile,omitempty" tf:"create_result_output_file,omitempty"`
 
 	// Configurations of tke data disk.
 	// Configurations of tke data disk.
@@ -363,6 +384,11 @@ type ScaleWorkerParameters struct {
 	// +kubebuilder:validation:Optional
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
+	// Node taint.
+	// Node taint.
+	// +kubebuilder:validation:Optional
+	Taints []ScaleWorkerTaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+
 	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	// Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
 	// +kubebuilder:validation:Optional
@@ -377,6 +403,54 @@ type ScaleWorkerParameters struct {
 	// Deploy the machine configuration information of the 'WORK' service, and create <=20 units for common users.
 	// +kubebuilder:validation:Optional
 	WorkerConfig []ScaleWorkerWorkerConfigParameters `json:"workerConfig,omitempty" tf:"worker_config,omitempty"`
+}
+
+type ScaleWorkerTaintsInitParameters struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of the taint.
+	// Value of the taint.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ScaleWorkerTaintsObservation struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of the taint.
+	// Value of the taint.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ScaleWorkerTaintsParameters struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	// +kubebuilder:validation:Optional
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of the taint.
+	// Value of the taint.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type ScaleWorkerWorkerConfigDataDiskInitParameters struct {

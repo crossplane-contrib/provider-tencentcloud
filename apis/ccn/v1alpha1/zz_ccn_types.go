@@ -31,8 +31,8 @@ type CCNInitParameters struct {
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
-	// Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
+	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
+	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
 	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
@@ -78,8 +78,8 @@ type CCNObservation struct {
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
-	// Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
+	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
+	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
 	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
@@ -122,8 +122,8 @@ type CCNParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Service quality of CCN. Valid values: PT, AU, AG. The default is AU.
-	// Service quality of CCN. Valid values: `PT`, `AU`, `AG`. The default is `AU`.
+	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
+	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
 	// +kubebuilder:validation:Optional
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 

@@ -20,12 +20,12 @@ type NatGatewayInitParameters struct {
 	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
-	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100.
-	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: `20`, `50`, `100`, `200`, `500`, `1000`, `2000`, `5000`. Default is 100.
+	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100. When the value of parameter nat_product_version is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to 5000.
+	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: `20`, `50`, `100`, `200`, `500`, `1000`, `2000`, `5000`. Default is `100`. When the value of parameter `nat_product_version` is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to `5000`.
 	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
 
-	// The upper limit of concurrent connection of NAT gateway. Valid values: 1000000, 3000000, 10000000. Default is 1000000.
-	// The upper limit of concurrent connection of NAT gateway. Valid values: `1000000`, `3000000`, `10000000`. Default is `1000000`.
+	// The upper limit of concurrent connection of NAT gateway. Valid values: 1000000, 3000000, 10000000. Default is 1000000. When the value of parameter nat_product_version is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to 2000000.
+	// The upper limit of concurrent connection of NAT gateway. Valid values: `1000000`, `3000000`, `10000000`. Default is `1000000`. When the value of parameter `nat_product_version` is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to `2000000`.
 	MaxConcurrent *float64 `json:"maxConcurrent,omitempty" tf:"max_concurrent,omitempty"`
 
 	// 1: traditional NAT, 2: standard NAT, default value is 1.
@@ -35,6 +35,10 @@ type NatGatewayInitParameters struct {
 	// Name of the NAT gateway.
 	// Name of the NAT gateway.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The elastic public IP bandwidth value (unit: Mbps) for binding NAT gateway. When this parameter is not filled in, it defaults to the bandwidth value of the elastic public IP, and for some users, it defaults to the bandwidth limit of the elastic public IP of that user type.
+	// The elastic public IP bandwidth value (unit: Mbps) for binding NAT gateway. When this parameter is not filled in, it defaults to the bandwidth value of the elastic public IP, and for some users, it defaults to the bandwidth limit of the elastic public IP of that user type.
+	StockPublicIPAddressesBandwidthOut *float64 `json:"stockPublicIpAddressesBandwidthOut,omitempty" tf:"stock_public_ip_addresses_bandwidth_out,omitempty"`
 
 	// Subnet of NAT.
 	// Subnet of NAT.
@@ -70,8 +74,8 @@ type NatGatewayObservation struct {
 	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
-	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100.
-	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: `20`, `50`, `100`, `200`, `500`, `1000`, `2000`, `5000`. Default is 100.
+	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100. When the value of parameter nat_product_version is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to 5000.
+	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: `20`, `50`, `100`, `200`, `500`, `1000`, `2000`, `5000`. Default is `100`. When the value of parameter `nat_product_version` is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to `5000`.
 	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
 
 	// Create time of the NAT gateway.
@@ -81,8 +85,8 @@ type NatGatewayObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The upper limit of concurrent connection of NAT gateway. Valid values: 1000000, 3000000, 10000000. Default is 1000000.
-	// The upper limit of concurrent connection of NAT gateway. Valid values: `1000000`, `3000000`, `10000000`. Default is `1000000`.
+	// The upper limit of concurrent connection of NAT gateway. Valid values: 1000000, 3000000, 10000000. Default is 1000000. When the value of parameter nat_product_version is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to 2000000.
+	// The upper limit of concurrent connection of NAT gateway. Valid values: `1000000`, `3000000`, `10000000`. Default is `1000000`. When the value of parameter `nat_product_version` is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to `2000000`.
 	MaxConcurrent *float64 `json:"maxConcurrent,omitempty" tf:"max_concurrent,omitempty"`
 
 	// 1: traditional NAT, 2: standard NAT, default value is 1.
@@ -92,6 +96,10 @@ type NatGatewayObservation struct {
 	// Name of the NAT gateway.
 	// Name of the NAT gateway.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The elastic public IP bandwidth value (unit: Mbps) for binding NAT gateway. When this parameter is not filled in, it defaults to the bandwidth value of the elastic public IP, and for some users, it defaults to the bandwidth limit of the elastic public IP of that user type.
+	// The elastic public IP bandwidth value (unit: Mbps) for binding NAT gateway. When this parameter is not filled in, it defaults to the bandwidth value of the elastic public IP, and for some users, it defaults to the bandwidth limit of the elastic public IP of that user type.
+	StockPublicIPAddressesBandwidthOut *float64 `json:"stockPublicIpAddressesBandwidthOut,omitempty" tf:"stock_public_ip_addresses_bandwidth_out,omitempty"`
 
 	// Subnet of NAT.
 	// Subnet of NAT.
@@ -119,13 +127,13 @@ type NatGatewayParameters struct {
 	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
-	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100.
-	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: `20`, `50`, `100`, `200`, `500`, `1000`, `2000`, `5000`. Default is 100.
+	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: 20, 50, 100, 200, 500, 1000, 2000, 5000. Default is 100. When the value of parameter nat_product_version is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to 5000.
+	// The maximum public network output bandwidth of NAT gateway (unit: Mbps). Valid values: `20`, `50`, `100`, `200`, `500`, `1000`, `2000`, `5000`. Default is `100`. When the value of parameter `nat_product_version` is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to `5000`.
 	// +kubebuilder:validation:Optional
 	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
 
-	// The upper limit of concurrent connection of NAT gateway. Valid values: 1000000, 3000000, 10000000. Default is 1000000.
-	// The upper limit of concurrent connection of NAT gateway. Valid values: `1000000`, `3000000`, `10000000`. Default is `1000000`.
+	// The upper limit of concurrent connection of NAT gateway. Valid values: 1000000, 3000000, 10000000. Default is 1000000. When the value of parameter nat_product_version is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to 2000000.
+	// The upper limit of concurrent connection of NAT gateway. Valid values: `1000000`, `3000000`, `10000000`. Default is `1000000`. When the value of parameter `nat_product_version` is 2, which is the standard NAT type, this parameter does not need to be filled in and defaults to `2000000`.
 	// +kubebuilder:validation:Optional
 	MaxConcurrent *float64 `json:"maxConcurrent,omitempty" tf:"max_concurrent,omitempty"`
 
@@ -138,6 +146,11 @@ type NatGatewayParameters struct {
 	// Name of the NAT gateway.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The elastic public IP bandwidth value (unit: Mbps) for binding NAT gateway. When this parameter is not filled in, it defaults to the bandwidth value of the elastic public IP, and for some users, it defaults to the bandwidth limit of the elastic public IP of that user type.
+	// The elastic public IP bandwidth value (unit: Mbps) for binding NAT gateway. When this parameter is not filled in, it defaults to the bandwidth value of the elastic public IP, and for some users, it defaults to the bandwidth limit of the elastic public IP of that user type.
+	// +kubebuilder:validation:Optional
+	StockPublicIPAddressesBandwidthOut *float64 `json:"stockPublicIpAddressesBandwidthOut,omitempty" tf:"stock_public_ip_addresses_bandwidth_out,omitempty"`
 
 	// Subnet of NAT.
 	// Subnet of NAT.

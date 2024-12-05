@@ -73,6 +73,24 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  annotations:
+                    description: |-
+                      Node Annotation List.
+                      Node Annotation List.
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+                            Name in the map table.
+                          type: string
+                        value:
+                          description: |-
+                            Value in the map table.
+                            Value in the map table.
+                          type: string
+                      type: object
+                    type: array
                   autoScalingConfig:
                     description: |-
                       Auto scaling config parameters.
@@ -262,6 +280,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  autoUpdateInstanceTags:
+                    description: |-
+                      Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+                      Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+                    type: boolean
                   clusterId:
                     description: |-
                       ID of the cluster.
@@ -463,6 +486,11 @@ spec:
                       Available values for retry policies include IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.
                       Available values for retry policies include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
                     type: string
+                  scaleTolerance:
+                    description: |-
+                      Control how many expectations(desired_capacity) can be tolerated successfully. Unit is percentage, Default is 100. Only can be set if wait_node_ready is true.
+                      Control how many expectations(`desired_capacity`) can be tolerated successfully. Unit is percentage, Default is `100`. Only can be set if `wait_node_ready` is `true`.
+                    type: number
                   scalingGroupName:
                     description: |-
                       Name of relative scaling group.
@@ -511,7 +539,7 @@ spec:
                           type: string
                         value:
                           description: |-
-                            Value of the taint.
+                            Value in the map table.
                             Value of the taint.
                           type: string
                       type: object
@@ -607,6 +635,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitNodeReady:
+                    description: |-
+                      Whether to wait for all desired nodes to be ready. Default is false. Only can be set if enable_auto_scale is false.
+                      Whether to wait for all desired nodes to be ready. Default is false. Only can be set if `enable_auto_scale` is `false`.
+                    type: boolean
                   zones:
                     description: |-
                       List of auto scaling group available zones, for Basic network it is required.
@@ -628,6 +661,24 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  annotations:
+                    description: |-
+                      Node Annotation List.
+                      Node Annotation List.
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+                            Name in the map table.
+                          type: string
+                        value:
+                          description: |-
+                            Value in the map table.
+                            Value in the map table.
+                          type: string
+                      type: object
+                    type: array
                   autoScalingConfig:
                     description: |-
                       Auto scaling config parameters.
@@ -798,6 +849,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  autoUpdateInstanceTags:
+                    description: |-
+                      Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+                      Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+                    type: boolean
                   clusterId:
                     description: |-
                       ID of the cluster.
@@ -999,6 +1055,11 @@ spec:
                       Available values for retry policies include IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.
                       Available values for retry policies include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
                     type: string
+                  scaleTolerance:
+                    description: |-
+                      Control how many expectations(desired_capacity) can be tolerated successfully. Unit is percentage, Default is 100. Only can be set if wait_node_ready is true.
+                      Control how many expectations(`desired_capacity`) can be tolerated successfully. Unit is percentage, Default is `100`. Only can be set if `wait_node_ready` is `true`.
+                    type: number
                   scalingGroupName:
                     description: |-
                       Name of relative scaling group.
@@ -1047,7 +1108,7 @@ spec:
                           type: string
                         value:
                           description: |-
-                            Value of the taint.
+                            Value in the map table.
                             Value of the taint.
                           type: string
                       type: object
@@ -1143,6 +1204,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitNodeReady:
+                    description: |-
+                      Whether to wait for all desired nodes to be ready. Default is false. Only can be set if enable_auto_scale is false.
+                      Whether to wait for all desired nodes to be ready. Default is false. Only can be set if `enable_auto_scale` is `false`.
+                    type: boolean
                   zones:
                     description: |-
                       List of auto scaling group available zones, for Basic network it is required.
@@ -1344,6 +1410,24 @@ spec:
             properties:
               atProvider:
                 properties:
+                  annotations:
+                    description: |-
+                      Node Annotation List.
+                      Node Annotation List.
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+                            Name in the map table.
+                          type: string
+                        value:
+                          description: |-
+                            Value in the map table.
+                            Value in the map table.
+                          type: string
+                      type: object
+                    type: array
                   autoScalingConfig:
                     description: |-
                       Auto scaling config parameters.
@@ -1519,6 +1603,11 @@ spec:
                       The auto scaling group ID.
                       The auto scaling group ID.
                     type: string
+                  autoUpdateInstanceTags:
+                    description: |-
+                      Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+                      Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+                    type: boolean
                   autoscalingAddedTotal:
                     description: |-
                       The total of autoscaling added node.
@@ -1743,6 +1832,11 @@ spec:
                       Available values for retry policies include IMMEDIATE_RETRY and INCREMENTAL_INTERVALS.
                       Available values for retry policies include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
                     type: string
+                  scaleTolerance:
+                    description: |-
+                      Control how many expectations(desired_capacity) can be tolerated successfully. Unit is percentage, Default is 100. Only can be set if wait_node_ready is true.
+                      Control how many expectations(`desired_capacity`) can be tolerated successfully. Unit is percentage, Default is `100`. Only can be set if `wait_node_ready` is `true`.
+                    type: number
                   scalingGroupName:
                     description: |-
                       Name of relative scaling group.
@@ -1796,7 +1890,7 @@ spec:
                           type: string
                         value:
                           description: |-
-                            Value of the taint.
+                            Value in the map table.
                             Value of the taint.
                           type: string
                       type: object
@@ -1818,6 +1912,11 @@ spec:
                       ID of VPC network.
                       ID of VPC network.
                     type: string
+                  waitNodeReady:
+                    description: |-
+                      Whether to wait for all desired nodes to be ready. Default is false. Only can be set if enable_auto_scale is false.
+                      Whether to wait for all desired nodes to be ready. Default is false. Only can be set if `enable_auto_scale` is `false`.
+                    type: boolean
                   zones:
                     description: |-
                       List of auto scaling group available zones, for Basic network it is required.

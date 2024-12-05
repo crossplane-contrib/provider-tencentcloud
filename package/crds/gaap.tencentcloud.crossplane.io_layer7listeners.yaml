@@ -101,6 +101,11 @@ spec:
                       Protocol type of the forwarding. Valid value: HTTP and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
                       Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`. NOTES: Only supports listeners of `HTTPS` protocol.
                     type: string
+                  groupId:
+                    description: |-
+                      Group ID.
+                      Group ID.
+                    type: string
                   name:
                     description: |-
                       Name of the layer7 listener, the maximum length is 30.
@@ -195,6 +200,19 @@ spec:
                             type: string
                         type: object
                     type: object
+                  tlsCiphers:
+                    description: |-
+                      Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+                      Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+                    type: string
+                  tlsSupportVersions:
+                    description: |-
+                      TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+                      TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                 type: object
               initProvider:
                 description: |-
@@ -237,6 +255,11 @@ spec:
                       Protocol type of the forwarding. Valid value: HTTP and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
                       Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`. NOTES: Only supports listeners of `HTTPS` protocol.
                     type: string
+                  groupId:
+                    description: |-
+                      Group ID.
+                      Group ID.
+                    type: string
                   name:
                     description: |-
                       Name of the layer7 listener, the maximum length is 30.
@@ -331,6 +354,19 @@ spec:
                             type: string
                         type: object
                     type: object
+                  tlsCiphers:
+                    description: |-
+                      Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+                      Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+                    type: string
+                  tlsSupportVersions:
+                    description: |-
+                      TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+                      TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                 type: object
               managementPolicies:
                 default:
@@ -550,6 +586,11 @@ spec:
                       Protocol type of the forwarding. Valid value: HTTP and HTTPS. NOTES: Only supports listeners of HTTPS protocol.
                       Protocol type of the forwarding. Valid value: `HTTP` and `HTTPS`. NOTES: Only supports listeners of `HTTPS` protocol.
                     type: string
+                  groupId:
+                    description: |-
+                      Group ID.
+                      Group ID.
+                    type: string
                   id:
                     description: ID of the resource.
                     type: string
@@ -578,6 +619,19 @@ spec:
                       Status of the layer7 listener.
                       Status of the layer7 listener.
                     type: number
+                  tlsCiphers:
+                    description: |-
+                      Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+                      Password Suite, optional GAAP_TLS_CIPHERS_STRICT, GAAP_TLS_CIPHERS_GENERAL, GAAP_TLS_CIPHERS_WIDE(default).
+                    type: string
+                  tlsSupportVersions:
+                    description: |-
+                      TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+                      TLS version, optional TLSv1, TLSv1.1, TLSv1.2, TLSv1.3.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                 type: object
               conditions:
                 description: Conditions of the resource.

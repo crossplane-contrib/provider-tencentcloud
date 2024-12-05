@@ -15,8 +15,8 @@ import (
 
 type InstanceInitParameters struct {
 
-	// IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
-	// IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
+	// It's only applicable to public network CLB instances. IP version. Values: IPV4, IPV6 and IPv6FullChain (case-insensitive). Default: IPV4. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
+	// It's only applicable to public network CLB instances. IP version. Values: `IPV4`, `IPV6` and `IPv6FullChain` (case-insensitive). Default: `IPV4`. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
 	AddressIPVersion *string `json:"addressIpVersion,omitempty" tf:"address_ip_version,omitempty"`
 
 	// Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
@@ -145,8 +145,8 @@ type InstanceInitParameters struct {
 
 type InstanceObservation struct {
 
-	// IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
-	// IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
+	// It's only applicable to public network CLB instances. IP version. Values: IPV4, IPV6 and IPv6FullChain (case-insensitive). Default: IPV4. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
+	// It's only applicable to public network CLB instances. IP version. Values: `IPV4`, `IPV6` and `IPv6FullChain` (case-insensitive). Default: `IPV4`. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
 	AddressIPVersion *string `json:"addressIpVersion,omitempty" tf:"address_ip_version,omitempty"`
 
 	// The IPv6 address of the load balancing instance.
@@ -276,8 +276,8 @@ type InstanceObservation struct {
 
 type InstanceParameters struct {
 
-	// IP version, only applicable to open CLB. Valid values are ipv4, ipv6 and IPv6FullChain.
-	// IP version, only applicable to open CLB. Valid values are `ipv4`, `ipv6` and `IPv6FullChain`.
+	// It's only applicable to public network CLB instances. IP version. Values: IPV4, IPV6 and IPv6FullChain (case-insensitive). Default: IPV4. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
+	// It's only applicable to public network CLB instances. IP version. Values: `IPV4`, `IPV6` and `IPv6FullChain` (case-insensitive). Default: `IPV4`. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
 	// +kubebuilder:validation:Optional
 	AddressIPVersion *string `json:"addressIpVersion,omitempty" tf:"address_ip_version,omitempty"`
 

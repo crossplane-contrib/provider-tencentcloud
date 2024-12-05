@@ -53,14 +53,9 @@ type ClusterAttachmentInitParameters struct {
 	// The key pair to use for the instance, it looks like skey-16jig7tx, it should be set if `password` not set.
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
-	// Labels of tke attachment exits CVM.
-	// Labels of tke attachment exits CVM.
-	// +mapType=granular
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
-	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
+	// A list of security group IDs after attach to cluster.
+	// A list of security group IDs after attach to cluster.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
 	// Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
@@ -103,7 +98,6 @@ type ClusterAttachmentObservation struct {
 
 	// A list of security group IDs after attach to cluster.
 	// A list of security group IDs after attach to cluster.
-	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// State of the node.
@@ -168,21 +162,15 @@ type ClusterAttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
-	// Labels of tke attachment exits CVM.
-	// Labels of tke attachment exits CVM.
-	// +kubebuilder:validation:Optional
-	// +mapType=granular
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
 	// Password to access, should be set if key_ids not set.
 	// Password to access, should be set if `key_ids` not set.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
-	// Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
+	// A list of security group IDs after attach to cluster.
+	// A list of security group IDs after attach to cluster.
 	// +kubebuilder:validation:Optional
-	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
 	// Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
@@ -302,7 +290,7 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 
 	// GPU driver parameters.
 	// GPU driver parameters.
-	GpuArgs []GpuArgsInitParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
+	GpuArgs []WorkerConfigGpuArgsInitParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
 	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
@@ -315,6 +303,10 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
+
+	// Node taint.
+	// Node taint.
+	Taints []WorkerConfigTaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
@@ -341,7 +333,7 @@ type ClusterAttachmentWorkerConfigObservation struct {
 
 	// GPU driver parameters.
 	// GPU driver parameters.
-	GpuArgs []GpuArgsObservation `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
+	GpuArgs []WorkerConfigGpuArgsObservation `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
 	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
@@ -354,6 +346,10 @@ type ClusterAttachmentWorkerConfigObservation struct {
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	// Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
+
+	// Node taint.
+	// Node taint.
+	Taints []WorkerConfigTaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
@@ -385,7 +381,7 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// GPU driver parameters.
 	// GPU driver parameters.
 	// +kubebuilder:validation:Optional
-	GpuArgs []GpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
+	GpuArgs []WorkerConfigGpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
 	// This argument was deprecated, use unschedulable instead. Indicate to schedule the adding node or not. Default is true.
 	// Indicate to schedule the adding node or not. Default is true.
@@ -402,13 +398,18 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	PreStartUserScript *string `json:"preStartUserScript,omitempty" tf:"pre_start_user_script,omitempty"`
 
+	// Node taint.
+	// Node taint.
+	// +kubebuilder:validation:Optional
+	Taints []WorkerConfigTaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
-type GpuArgsInitParameters struct {
+type WorkerConfigGpuArgsInitParameters struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
@@ -435,7 +436,7 @@ type GpuArgsInitParameters struct {
 	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
 }
 
-type GpuArgsObservation struct {
+type WorkerConfigGpuArgsObservation struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
@@ -462,7 +463,7 @@ type GpuArgsObservation struct {
 	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
 }
 
-type GpuArgsParameters struct {
+type WorkerConfigGpuArgsParameters struct {
 
 	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
 	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
@@ -793,6 +794,54 @@ type WorkerConfigOverridesParameters struct {
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
+type WorkerConfigTaintsInitParameters struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of the taint.
+	// Value of the taint.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type WorkerConfigTaintsObservation struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of the taint.
+	// Value of the taint.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type WorkerConfigTaintsParameters struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	// +kubebuilder:validation:Optional
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of the taint.
+	// Value of the taint.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
 // ClusterAttachmentSpec defines the desired state of ClusterAttachment
 type ClusterAttachmentSpec struct {
 	v1.ResourceSpec `json:",inline"`
@@ -829,8 +878,9 @@ type ClusterAttachmentStatus struct {
 type ClusterAttachment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ClusterAttachmentSpec   `json:"spec"`
-	Status            ClusterAttachmentStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.workerConfig) || (has(self.initProvider) && has(self.initProvider.workerConfig))",message="spec.forProvider.workerConfig is a required parameter"
+	Spec   ClusterAttachmentSpec   `json:"spec"`
+	Status ClusterAttachmentStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -12,7 +12,6 @@ import (
 
 	v1alpha1 "github.com/crossplane-contrib/provider-tencentcloud/apis/apigateway/v1alpha1"
 	v1alpha1as "github.com/crossplane-contrib/provider-tencentcloud/apis/as/v1alpha1"
-	v1alpha1audit "github.com/crossplane-contrib/provider-tencentcloud/apis/audit/v1alpha1"
 	v1alpha1cam "github.com/crossplane-contrib/provider-tencentcloud/apis/cam/v1alpha1"
 	v1alpha1cat "github.com/crossplane-contrib/provider-tencentcloud/apis/cat/v1alpha1"
 	v1alpha1cbs "github.com/crossplane-contrib/provider-tencentcloud/apis/cbs/v1alpha1"
@@ -67,7 +66,6 @@ func init() {
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1alpha1as.SchemeBuilder.AddToScheme,
-		v1alpha1audit.SchemeBuilder.AddToScheme,
 		v1alpha1cam.SchemeBuilder.AddToScheme,
 		v1alpha1cat.SchemeBuilder.AddToScheme,
 		v1alpha1cbs.SchemeBuilder.AddToScheme,

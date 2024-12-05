@@ -22,7 +22,6 @@ import (
 	scalinggroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/as/scalinggroup"
 	scalingpolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/as/scalingpolicy"
 	schedule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/as/schedule"
-	audit "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/audit/audit"
 	group "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cam/group"
 	groupmembership "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cam/groupmembership"
 	grouppolicyattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cam/grouppolicyattachment"
@@ -278,7 +277,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		scalinggroup.Setup,
 		scalingpolicy.Setup,
 		schedule.Setup,
-		audit.Setup,
 		group.Setup,
 		groupmembership.Setup,
 		grouppolicyattachment.Setup,

@@ -4,35 +4,45 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/vpnconnection
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     customerGatewayIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    enableHealthCheck: true
+    healthCheckConfig:
+    - probeInterval: 5000
+      probeThreshold: 3
+      probeTimeout: 150
+      probeType: NQA
+    healthCheckLocalIp: 169.254.227.187
+    healthCheckRemoteIp: 169.254.164.37
     ikeDhGroupName: GROUP2
     ikeExchangeMode: AGGRESSIVE
-    ikeLocalAddress: 1.1.1.1
+    ikeLocalAddress: 159.75.204.38
     ikeLocalIdentity: ADDRESS
     ikeProtoAuthenAlgorithm: SHA
     ikeProtoEncryAlgorithm: 3DES-CBC
-    ikeRemoteAddress: 2.2.2.2
+    ikeRemoteAddress: 109.244.60.154
     ikeRemoteIdentity: ADDRESS
-    ikeSaLifetimeSeconds: 86401
+    ikeSaLifetimeSeconds: 86400
     ipsecEncryptAlgorithm: 3DES-CBC
     ipsecIntegrityAlgorithm: SHA1
     ipsecPfsDhGroup: "NULL"
-    ipsecSaLifetimeSeconds: 7200
-    ipsecSaLifetimeTraffic: 2570
-    name: vpn_connection_test
-    preShareKey: testt
+    ipsecSaLifetimeSeconds: 14400
+    ipsecSaLifetimeTraffic: 4096000000
+    name: tf-example
+    negotiationType: flowTrigger
+    preShareKey: your_pre_share_key
+    routeType: StaticRoute
     securityGroupPolicy:
     - localCidrBlock: 172.16.0.0/16
       remoteCidrBlock:
       - 2.2.2.0/26
     tags:
-      test: testt
+      createBy: Terraform
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

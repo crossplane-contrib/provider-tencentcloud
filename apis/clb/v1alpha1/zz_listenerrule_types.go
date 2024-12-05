@@ -48,8 +48,8 @@ type ListenerRuleInitParameters struct {
 	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
-	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
-	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
+	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
+	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `GRPC`, `GRPCS`, `TRPC`. The default is `HTTP`.
 	ForwardType *string `json:"forwardType,omitempty" tf:"forward_type,omitempty"`
 
 	// HTTP Status Code. The default is 31. Valid value ranges: [1~31]. 1 means the return value '1xx' is health. 2means the return value '2xx' is health.4means the return value '3xx' is health.8` means the return value '4xx' is health. 16 means the return value '5xx' is health. If you want multiple return codes to indicate health, need to add the corresponding values. NOTES: The 'HTTP' health check of the 'TCP' listener only supports specifying one health check status code. NOTES: Only supports listeners of 'HTTP' and 'HTTPS' protocol.
@@ -84,8 +84,8 @@ type ListenerRuleInitParameters struct {
 	// Time out of health check. The value range is [2-60](SEC).
 	HealthCheckTimeOut *float64 `json:"healthCheckTimeOut,omitempty" tf:"health_check_time_out,omitempty"`
 
-	// Type of health check. Valid value is CUSTOM, TCP, HTTP.
-	// Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+	// Type of health check. Valid value is CUSTOM, PING, TCP, HTTP, HTTPS, GRPC, GRPCS.
+	// Type of health check. Valid value is `CUSTOM`, `PING`, `TCP`, `HTTP`, `HTTPS`, `GRPC`, `GRPCS`.
 	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
 
 	// Unhealthy threshold of health check, and the default is 3. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
@@ -108,6 +108,10 @@ type ListenerRuleInitParameters struct {
 	// Selector for a Listener to populate listenerId.
 	// +kubebuilder:validation:Optional
 	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
+
+	// OAuth configuration information.
+	// OAuth configuration information.
+	Oauth []OauthInitParameters `json:"oauth,omitempty" tf:"oauth,omitempty"`
 
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
@@ -156,8 +160,8 @@ type ListenerRuleObservation struct {
 	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
-	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
-	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
+	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
+	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `GRPC`, `GRPCS`, `TRPC`. The default is `HTTP`.
 	ForwardType *string `json:"forwardType,omitempty" tf:"forward_type,omitempty"`
 
 	// HTTP Status Code. The default is 31. Valid value ranges: [1~31]. 1 means the return value '1xx' is health. 2means the return value '2xx' is health.4means the return value '3xx' is health.8` means the return value '4xx' is health. 16 means the return value '5xx' is health. If you want multiple return codes to indicate health, need to add the corresponding values. NOTES: The 'HTTP' health check of the 'TCP' listener only supports specifying one health check status code. NOTES: Only supports listeners of 'HTTP' and 'HTTPS' protocol.
@@ -192,8 +196,8 @@ type ListenerRuleObservation struct {
 	// Time out of health check. The value range is [2-60](SEC).
 	HealthCheckTimeOut *float64 `json:"healthCheckTimeOut,omitempty" tf:"health_check_time_out,omitempty"`
 
-	// Type of health check. Valid value is CUSTOM, TCP, HTTP.
-	// Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+	// Type of health check. Valid value is CUSTOM, PING, TCP, HTTP, HTTPS, GRPC, GRPCS.
+	// Type of health check. Valid value is `CUSTOM`, `PING`, `TCP`, `HTTP`, `HTTPS`, `GRPC`, `GRPCS`.
 	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
 
 	// Unhealthy threshold of health check, and the default is 3. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
@@ -210,6 +214,10 @@ type ListenerRuleObservation struct {
 	// ID of CLB listener.
 	// ID of CLB listener.
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// OAuth configuration information.
+	// OAuth configuration information.
+	Oauth []OauthObservation `json:"oauth,omitempty" tf:"oauth,omitempty"`
 
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
@@ -277,8 +285,8 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
-	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
-	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
+	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
+	// Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `GRPC`, `GRPCS`, `TRPC`. The default is `HTTP`.
 	// +kubebuilder:validation:Optional
 	ForwardType *string `json:"forwardType,omitempty" tf:"forward_type,omitempty"`
 
@@ -322,8 +330,8 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	HealthCheckTimeOut *float64 `json:"healthCheckTimeOut,omitempty" tf:"health_check_time_out,omitempty"`
 
-	// Type of health check. Valid value is CUSTOM, TCP, HTTP.
-	// Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+	// Type of health check. Valid value is CUSTOM, PING, TCP, HTTP, HTTPS, GRPC, GRPCS.
+	// Type of health check. Valid value is `CUSTOM`, `PING`, `TCP`, `HTTP`, `HTTPS`, `GRPC`, `GRPCS`.
 	// +kubebuilder:validation:Optional
 	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
 
@@ -351,6 +359,11 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
 
+	// OAuth configuration information.
+	// OAuth configuration information.
+	// +kubebuilder:validation:Optional
+	Oauth []OauthParameters `json:"oauth,omitempty" tf:"oauth,omitempty"`
+
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
 	// +kubebuilder:validation:Optional
@@ -375,6 +388,41 @@ type ListenerRuleParameters struct {
 	// Url of the listener rule.
 	// +kubebuilder:validation:Optional
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+}
+
+type OauthInitParameters struct {
+
+	// Enable or disable authentication. True: Enabled; False: Disabled.
+	// Enable or disable authentication. True: Enabled; False: Disabled.
+	OauthEnable *bool `json:"oauthEnable,omitempty" tf:"oauth_enable,omitempty"`
+
+	// After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+	// After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+	OauthFailureStatus *string `json:"oauthFailureStatus,omitempty" tf:"oauth_failure_status,omitempty"`
+}
+
+type OauthObservation struct {
+
+	// Enable or disable authentication. True: Enabled; False: Disabled.
+	// Enable or disable authentication. True: Enabled; False: Disabled.
+	OauthEnable *bool `json:"oauthEnable,omitempty" tf:"oauth_enable,omitempty"`
+
+	// After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+	// After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+	OauthFailureStatus *string `json:"oauthFailureStatus,omitempty" tf:"oauth_failure_status,omitempty"`
+}
+
+type OauthParameters struct {
+
+	// Enable or disable authentication. True: Enabled; False: Disabled.
+	// Enable or disable authentication. True: Enabled; False: Disabled.
+	// +kubebuilder:validation:Optional
+	OauthEnable *bool `json:"oauthEnable,omitempty" tf:"oauth_enable,omitempty"`
+
+	// After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+	// After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+	// +kubebuilder:validation:Optional
+	OauthFailureStatus *string `json:"oauthFailureStatus,omitempty" tf:"oauth_failure_status,omitempty"`
 }
 
 // ListenerRuleSpec defines the desired state of ListenerRule

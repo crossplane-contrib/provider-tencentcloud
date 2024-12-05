@@ -13,6 +13,41 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AnnotationsInitParameters struct {
+
+	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+	// Name in the map table.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Value in the map table.
+	// Value in the map table.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AnnotationsObservation struct {
+
+	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+	// Name in the map table.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Value in the map table.
+	// Value in the map table.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AnnotationsParameters struct {
+
+	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+	// Name in the map table.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Value in the map table.
+	// Value in the map table.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type AutoScalingConfigDataDiskInitParameters struct {
 
 	// Indicates whether the disk remove after instance terminated. Default is false.
@@ -730,9 +765,17 @@ type NodeConfigParameters struct {
 
 type NodePoolInitParameters struct {
 
+	// Node Annotation List.
+	// Node Annotation List.
+	Annotations []AnnotationsInitParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
+
 	// Auto scaling config parameters.
 	// Auto scaling config parameters.
 	AutoScalingConfig []AutoScalingConfigInitParameters `json:"autoScalingConfig,omitempty" tf:"auto_scaling_config,omitempty"`
+
+	// Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+	// Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+	AutoUpdateInstanceTags *bool `json:"autoUpdateInstanceTags,omitempty" tf:"auto_update_instance_tags,omitempty"`
 
 	// ID of the cluster.
 	// ID of the cluster.
@@ -795,6 +838,10 @@ type NodePoolInitParameters struct {
 	// Available values for retry policies include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
 	RetryPolicy *string `json:"retryPolicy,omitempty" tf:"retry_policy,omitempty"`
 
+	// Control how many expectations(desired_capacity) can be tolerated successfully. Unit is percentage, Default is 100. Only can be set if wait_node_ready is true.
+	// Control how many expectations(`desired_capacity`) can be tolerated successfully. Unit is percentage, Default is `100`. Only can be set if `wait_node_ready` is `true`.
+	ScaleTolerance *float64 `json:"scaleTolerance,omitempty" tf:"scale_tolerance,omitempty"`
+
 	// Name of relative scaling group.
 	// Name of relative scaling group.
 	ScalingGroupName *string `json:"scalingGroupName,omitempty" tf:"scaling_group_name,omitempty"`
@@ -818,7 +865,7 @@ type NodePoolInitParameters struct {
 
 	// Taints of kubernetes node pool created nodes.
 	// Taints of kubernetes node pool created nodes.
-	Taints []TaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+	Taints []NodePoolTaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// Policy of scaling group termination. Available values: ["OLDEST_INSTANCE"], ["NEWEST_INSTANCE"].
 	// Policy of scaling group termination. Available values: `["OLDEST_INSTANCE"]`, `["NEWEST_INSTANCE"]`.
@@ -841,12 +888,20 @@ type NodePoolInitParameters struct {
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
+	// Whether to wait for all desired nodes to be ready. Default is false. Only can be set if enable_auto_scale is false.
+	// Whether to wait for all desired nodes to be ready. Default is false. Only can be set if `enable_auto_scale` is `false`.
+	WaitNodeReady *bool `json:"waitNodeReady,omitempty" tf:"wait_node_ready,omitempty"`
+
 	// List of auto scaling group available zones, for Basic network it is required.
 	// List of auto scaling group available zones, for Basic network it is required.
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 }
 
 type NodePoolObservation struct {
+
+	// Node Annotation List.
+	// Node Annotation List.
+	Annotations []AnnotationsObservation `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
 	// Auto scaling config parameters.
 	// Auto scaling config parameters.
@@ -855,6 +910,10 @@ type NodePoolObservation struct {
 	// The auto scaling group ID.
 	// The auto scaling group ID.
 	AutoScalingGroupID *string `json:"autoScalingGroupId,omitempty" tf:"auto_scaling_group_id,omitempty"`
+
+	// Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+	// Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+	AutoUpdateInstanceTags *bool `json:"autoUpdateInstanceTags,omitempty" tf:"auto_update_instance_tags,omitempty"`
 
 	// The total of autoscaling added node.
 	// The total of autoscaling added node.
@@ -936,6 +995,10 @@ type NodePoolObservation struct {
 	// Available values for retry policies include `IMMEDIATE_RETRY` and `INCREMENTAL_INTERVALS`.
 	RetryPolicy *string `json:"retryPolicy,omitempty" tf:"retry_policy,omitempty"`
 
+	// Control how many expectations(desired_capacity) can be tolerated successfully. Unit is percentage, Default is 100. Only can be set if wait_node_ready is true.
+	// Control how many expectations(`desired_capacity`) can be tolerated successfully. Unit is percentage, Default is `100`. Only can be set if `wait_node_ready` is `true`.
+	ScaleTolerance *float64 `json:"scaleTolerance,omitempty" tf:"scale_tolerance,omitempty"`
+
 	// Name of relative scaling group.
 	// Name of relative scaling group.
 	ScalingGroupName *string `json:"scalingGroupName,omitempty" tf:"scaling_group_name,omitempty"`
@@ -963,7 +1026,7 @@ type NodePoolObservation struct {
 
 	// Taints of kubernetes node pool created nodes.
 	// Taints of kubernetes node pool created nodes.
-	Taints []TaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
+	Taints []NodePoolTaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// Policy of scaling group termination. Available values: ["OLDEST_INSTANCE"], ["NEWEST_INSTANCE"].
 	// Policy of scaling group termination. Available values: `["OLDEST_INSTANCE"]`, `["NEWEST_INSTANCE"]`.
@@ -977,6 +1040,10 @@ type NodePoolObservation struct {
 	// ID of VPC network.
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
+	// Whether to wait for all desired nodes to be ready. Default is false. Only can be set if enable_auto_scale is false.
+	// Whether to wait for all desired nodes to be ready. Default is false. Only can be set if `enable_auto_scale` is `false`.
+	WaitNodeReady *bool `json:"waitNodeReady,omitempty" tf:"wait_node_ready,omitempty"`
+
 	// List of auto scaling group available zones, for Basic network it is required.
 	// List of auto scaling group available zones, for Basic network it is required.
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
@@ -984,10 +1051,20 @@ type NodePoolObservation struct {
 
 type NodePoolParameters struct {
 
+	// Node Annotation List.
+	// Node Annotation List.
+	// +kubebuilder:validation:Optional
+	Annotations []AnnotationsParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
+
 	// Auto scaling config parameters.
 	// Auto scaling config parameters.
 	// +kubebuilder:validation:Optional
 	AutoScalingConfig []AutoScalingConfigParameters `json:"autoScalingConfig,omitempty" tf:"auto_scaling_config,omitempty"`
+
+	// Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+	// Automatically update instance tags. The default value is false. After configuration, if the scaling group tags are updated, the tags of the running instances in the scaling group will be updated synchronously (synchronous updates only support adding and modifying tags, and do not support deleting tags for the time being). Synchronous updates do not take effect immediately and there is a certain delay.
+	// +kubebuilder:validation:Optional
+	AutoUpdateInstanceTags *bool `json:"autoUpdateInstanceTags,omitempty" tf:"auto_update_instance_tags,omitempty"`
 
 	// ID of the cluster.
 	// ID of the cluster.
@@ -1065,6 +1142,11 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	RetryPolicy *string `json:"retryPolicy,omitempty" tf:"retry_policy,omitempty"`
 
+	// Control how many expectations(desired_capacity) can be tolerated successfully. Unit is percentage, Default is 100. Only can be set if wait_node_ready is true.
+	// Control how many expectations(`desired_capacity`) can be tolerated successfully. Unit is percentage, Default is `100`. Only can be set if `wait_node_ready` is `true`.
+	// +kubebuilder:validation:Optional
+	ScaleTolerance *float64 `json:"scaleTolerance,omitempty" tf:"scale_tolerance,omitempty"`
+
 	// Name of relative scaling group.
 	// Name of relative scaling group.
 	// +kubebuilder:validation:Optional
@@ -1094,7 +1176,7 @@ type NodePoolParameters struct {
 	// Taints of kubernetes node pool created nodes.
 	// Taints of kubernetes node pool created nodes.
 	// +kubebuilder:validation:Optional
-	Taints []TaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+	Taints []NodePoolTaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// Policy of scaling group termination. Available values: ["OLDEST_INSTANCE"], ["NEWEST_INSTANCE"].
 	// Policy of scaling group termination. Available values: `["OLDEST_INSTANCE"]`, `["NEWEST_INSTANCE"]`.
@@ -1120,13 +1202,18 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
 
+	// Whether to wait for all desired nodes to be ready. Default is false. Only can be set if enable_auto_scale is false.
+	// Whether to wait for all desired nodes to be ready. Default is false. Only can be set if `enable_auto_scale` is `false`.
+	// +kubebuilder:validation:Optional
+	WaitNodeReady *bool `json:"waitNodeReady,omitempty" tf:"wait_node_ready,omitempty"`
+
 	// List of auto scaling group available zones, for Basic network it is required.
 	// List of auto scaling group available zones, for Basic network it is required.
 	// +kubebuilder:validation:Optional
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 }
 
-type TaintsInitParameters struct {
+type NodePoolTaintsInitParameters struct {
 
 	// Effect of the taint. Valid values are: NoSchedule, PreferNoSchedule, NoExecute.
 	// Effect of the taint. Valid values are: `NoSchedule`, `PreferNoSchedule`, `NoExecute`.
@@ -1136,12 +1223,12 @@ type TaintsInitParameters struct {
 	// Key of the taint. The taint key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Value of the taint.
+	// Value in the map table.
 	// Value of the taint.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type TaintsObservation struct {
+type NodePoolTaintsObservation struct {
 
 	// Effect of the taint. Valid values are: NoSchedule, PreferNoSchedule, NoExecute.
 	// Effect of the taint. Valid values are: `NoSchedule`, `PreferNoSchedule`, `NoExecute`.
@@ -1151,12 +1238,12 @@ type TaintsObservation struct {
 	// Key of the taint. The taint key name does not exceed 63 characters, only supports English, numbers,'/','-', and does not allow beginning with ('/').
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Value of the taint.
+	// Value in the map table.
 	// Value of the taint.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type TaintsParameters struct {
+type NodePoolTaintsParameters struct {
 
 	// Effect of the taint. Valid values are: NoSchedule, PreferNoSchedule, NoExecute.
 	// Effect of the taint. Valid values are: `NoSchedule`, `PreferNoSchedule`, `NoExecute`.
@@ -1168,7 +1255,7 @@ type TaintsParameters struct {
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key" tf:"key,omitempty"`
 
-	// Value of the taint.
+	// Value in the map table.
 	// Value of the taint.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value" tf:"value,omitempty"`

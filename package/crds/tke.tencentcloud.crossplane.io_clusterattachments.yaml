@@ -248,14 +248,6 @@ spec:
                     items:
                       type: string
                     type: array
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Labels of tke attachment exits CVM.
-                      Labels of tke attachment exits CVM.
-                    type: object
-                    x-kubernetes-map-type: granular
                   passwordSecretRef:
                     description: |-
                       Password to access, should be set if key_ids not set.
@@ -275,11 +267,13 @@ spec:
                     - name
                     - namespace
                     type: object
-                  unschedulable:
+                  securityGroups:
                     description: |-
-                      Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
-                    type: number
+                      A list of security group IDs after attach to cluster.
+                      A list of security group IDs after attach to cluster.
+                    items:
+                      type: string
+                    type: array
                   workerConfig:
                     description: |-
                       Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
@@ -401,6 +395,29 @@ spec:
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
+                        taints:
+                          description: |-
+                            Node taint.
+                            Node taint.
+                          items:
+                            properties:
+                              effect:
+                                description: |-
+                                  Effect of the taint.
+                                  Effect of the taint.
+                                type: string
+                              key:
+                                description: |-
+                                  Key of the taint.
+                                  Key of the taint.
+                                type: string
+                              value:
+                                description: |-
+                                  Value of the taint.
+                                  Value of the taint.
+                                type: string
+                            type: object
+                          type: array
                         userData:
                           description: |-
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
@@ -725,19 +742,13 @@ spec:
                     items:
                       type: string
                     type: array
-                  labels:
-                    additionalProperties:
+                  securityGroups:
+                    description: |-
+                      A list of security group IDs after attach to cluster.
+                      A list of security group IDs after attach to cluster.
+                    items:
                       type: string
-                    description: |-
-                      Labels of tke attachment exits CVM.
-                      Labels of tke attachment exits CVM.
-                    type: object
-                    x-kubernetes-map-type: granular
-                  unschedulable:
-                    description: |-
-                      Sets whether the joining node participates in the schedule. Default is 0, which means it participates in scheduling. Non-zero(eg: 1) number means it does not participate in scheduling.
-                      Sets whether the joining node participates in the schedule. Default is `0`, which means it participates in scheduling. Non-zero(eg: `1`) number means it does not participate in scheduling.
-                    type: number
+                    type: array
                   workerConfig:
                     description: |-
                       Deploy the machine configuration information of the 'WORKER', commonly used to attach existing instances.
@@ -859,6 +870,29 @@ spec:
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
+                        taints:
+                          description: |-
+                            Node taint.
+                            Node taint.
+                          items:
+                            properties:
+                              effect:
+                                description: |-
+                                  Effect of the taint.
+                                  Effect of the taint.
+                                type: string
+                              key:
+                                description: |-
+                                  Key of the taint.
+                                  Key of the taint.
+                                type: string
+                              value:
+                                description: |-
+                                  Value of the taint.
+                                  Value of the taint.
+                                type: string
+                            type: object
+                          type: array
                         userData:
                           description: |-
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
@@ -1162,6 +1196,11 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.workerConfig is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.workerConfig)
+                || (has(self.initProvider) && has(self.initProvider.workerConfig))'
           status:
             description: ClusterAttachmentStatus defines the observed state of ClusterAttachment.
             properties:
@@ -1212,7 +1251,6 @@ spec:
                     items:
                       type: string
                     type: array
-                    x-kubernetes-list-type: set
                   state:
                     description: |-
                       State of the node.
@@ -1344,6 +1382,29 @@ spec:
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                             Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                           type: string
+                        taints:
+                          description: |-
+                            Node taint.
+                            Node taint.
+                          items:
+                            properties:
+                              effect:
+                                description: |-
+                                  Effect of the taint.
+                                  Effect of the taint.
+                                type: string
+                              key:
+                                description: |-
+                                  Key of the taint.
+                                  Key of the taint.
+                                type: string
+                              value:
+                                description: |-
+                                  Value of the taint.
+                                  Value of the taint.
+                                type: string
+                            type: object
+                          type: array
                         userData:
                           description: |-
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.

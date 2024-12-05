@@ -446,6 +446,11 @@ spec:
                             COS returns this index document when requests are made to the root domain or any of the subfolders.
                             COS returns this index document when requests are made to the root domain or any of the subfolders.
                           type: string
+                        redirectAllRequestsTo:
+                          description: |-
+                            Redirects all request configurations. Valid values: http, https. Default is http.
+                            Redirects all request configurations. Valid values: http, https. Default is `http`.
+                          type: string
                       type: object
                     type: array
                 type: object
@@ -834,6 +839,11 @@ spec:
                           description: |-
                             COS returns this index document when requests are made to the root domain or any of the subfolders.
                             COS returns this index document when requests are made to the root domain or any of the subfolders.
+                          type: string
+                        redirectAllRequestsTo:
+                          description: |-
+                            Redirects all request configurations. Valid values: http, https. Default is http.
+                            Redirects all request configurations. Valid values: http, https. Default is `http`.
                           type: string
                       type: object
                     type: array
@@ -1399,6 +1409,11 @@ spec:
                           description: |-
                             COS returns this index document when requests are made to the root domain or any of the subfolders.
                             COS returns this index document when requests are made to the root domain or any of the subfolders.
+                          type: string
+                        redirectAllRequestsTo:
+                          description: |-
+                            Redirects all request configurations. Valid values: http, https. Default is http.
+                            Redirects all request configurations. Valid values: http, https. Default is `http`.
                           type: string
                       type: object
                     type: array
