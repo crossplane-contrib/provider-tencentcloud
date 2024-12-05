@@ -164,6 +164,10 @@ type InstanceInitParameters struct {
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
 
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	DisableAutomationService *bool `json:"disableAutomationService,omitempty" tf:"disable_automation_service,omitempty"`
+
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
@@ -363,6 +367,10 @@ type InstanceObservation struct {
 	// Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
+
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	DisableAutomationService *bool `json:"disableAutomationService,omitempty" tf:"disable_automation_service,omitempty"`
 
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
@@ -577,6 +585,11 @@ type InstanceParameters struct {
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
 	// +kubebuilder:validation:Optional
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
+
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// +kubebuilder:validation:Optional
+	DisableAutomationService *bool `json:"disableAutomationService,omitempty" tf:"disable_automation_service,omitempty"`
 
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
 	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.

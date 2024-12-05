@@ -73,6 +73,29 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  bgpConfig:
+                    description: |-
+                      BGP config.
+                      BGP config.
+                    items:
+                      properties:
+                        localBgpIp:
+                          description: |-
+                            Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+                            Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+                          type: string
+                        remoteBgpIp:
+                          description: |-
+                            User side BGP address. It must be allocated from within the BGP tunnel network segment.
+                            User side BGP address. It must be allocated from within the BGP tunnel network segment.
+                          type: string
+                        tunnelCidr:
+                          description: |-
+                            BGP tunnel segment.
+                            BGP tunnel segment.
+                          type: string
+                      type: object
+                    type: array
                   customerGatewayId:
                     description: |-
                       ID of the customer gateway.
@@ -172,6 +195,34 @@ spec:
                       Whether intra-tunnel health checks are supported.
                       Whether intra-tunnel health checks are supported.
                     type: boolean
+                  healthCheckConfig:
+                    description: |-
+                      VPN channel health check configuration.
+                      VPN channel health check configuration.
+                    items:
+                      properties:
+                        probeInterval:
+                          description: |-
+                            Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+                            Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+                          type: number
+                        probeThreshold:
+                          description: |-
+                            Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+                            Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+                          type: number
+                        probeTimeout:
+                          description: |-
+                            Detection timeout, range [10-5000], Unit: ms.
+                            Detection timeout, range [10-5000], Unit: ms.
+                          type: number
+                        probeType:
+                          description: |-
+                            Detection mode, default is NQA, cannot be modified.
+                            Detection mode, default is `NQA`, cannot be modified.
+                          type: string
+                      type: object
+                    type: array
                   healthCheckLocalIp:
                     description: |-
                       Health check the address of this terminal.
@@ -272,6 +323,11 @@ spec:
                       Name of the VPN connection. The length of character is limited to 1-60.
                       Name of the VPN connection. The length of character is limited to 1-60.
                     type: string
+                  negotiationType:
+                    description: |-
+                      The default negotiation type is active. Optional values: active (active negotiation), passive (passive negotiation), flowTrigger (traffic negotiation).
+                      The default negotiation type is `active`. Optional values: `active` (active negotiation), `passive` (passive negotiation), `flowTrigger` (traffic negotiation).
+                    type: string
                   preShareKey:
                     description: |-
                       Pre-shared key of the VPN connection.
@@ -279,8 +335,8 @@ spec:
                     type: string
                   routeType:
                     description: |-
-                      Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy.
-                      Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`.
+                      Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy, Bgp.
+                      Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`, `Bgp`.
                     type: string
                   securityGroupPolicy:
                     description: |-
@@ -483,6 +539,29 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  bgpConfig:
+                    description: |-
+                      BGP config.
+                      BGP config.
+                    items:
+                      properties:
+                        localBgpIp:
+                          description: |-
+                            Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+                            Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+                          type: string
+                        remoteBgpIp:
+                          description: |-
+                            User side BGP address. It must be allocated from within the BGP tunnel network segment.
+                            User side BGP address. It must be allocated from within the BGP tunnel network segment.
+                          type: string
+                        tunnelCidr:
+                          description: |-
+                            BGP tunnel segment.
+                            BGP tunnel segment.
+                          type: string
+                      type: object
+                    type: array
                   customerGatewayId:
                     description: |-
                       ID of the customer gateway.
@@ -582,6 +661,34 @@ spec:
                       Whether intra-tunnel health checks are supported.
                       Whether intra-tunnel health checks are supported.
                     type: boolean
+                  healthCheckConfig:
+                    description: |-
+                      VPN channel health check configuration.
+                      VPN channel health check configuration.
+                    items:
+                      properties:
+                        probeInterval:
+                          description: |-
+                            Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+                            Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+                          type: number
+                        probeThreshold:
+                          description: |-
+                            Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+                            Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+                          type: number
+                        probeTimeout:
+                          description: |-
+                            Detection timeout, range [10-5000], Unit: ms.
+                            Detection timeout, range [10-5000], Unit: ms.
+                          type: number
+                        probeType:
+                          description: |-
+                            Detection mode, default is NQA, cannot be modified.
+                            Detection mode, default is `NQA`, cannot be modified.
+                          type: string
+                      type: object
+                    type: array
                   healthCheckLocalIp:
                     description: |-
                       Health check the address of this terminal.
@@ -682,6 +789,11 @@ spec:
                       Name of the VPN connection. The length of character is limited to 1-60.
                       Name of the VPN connection. The length of character is limited to 1-60.
                     type: string
+                  negotiationType:
+                    description: |-
+                      The default negotiation type is active. Optional values: active (active negotiation), passive (passive negotiation), flowTrigger (traffic negotiation).
+                      The default negotiation type is `active`. Optional values: `active` (active negotiation), `passive` (passive negotiation), `flowTrigger` (traffic negotiation).
+                    type: string
                   preShareKey:
                     description: |-
                       Pre-shared key of the VPN connection.
@@ -689,8 +801,8 @@ spec:
                     type: string
                   routeType:
                     description: |-
-                      Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy.
-                      Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`.
+                      Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy, Bgp.
+                      Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`, `Bgp`.
                     type: string
                   securityGroupPolicy:
                     description: |-
@@ -1061,6 +1173,29 @@ spec:
             properties:
               atProvider:
                 properties:
+                  bgpConfig:
+                    description: |-
+                      BGP config.
+                      BGP config.
+                    items:
+                      properties:
+                        localBgpIp:
+                          description: |-
+                            Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+                            Cloud BGP address. It must be allocated from within the BGP tunnel network segment.
+                          type: string
+                        remoteBgpIp:
+                          description: |-
+                            User side BGP address. It must be allocated from within the BGP tunnel network segment.
+                            User side BGP address. It must be allocated from within the BGP tunnel network segment.
+                          type: string
+                        tunnelCidr:
+                          description: |-
+                            BGP tunnel segment.
+                            BGP tunnel segment.
+                          type: string
+                      type: object
+                    type: array
                   createTime:
                     description: |-
                       Create time of the VPN connection.
@@ -1096,6 +1231,34 @@ spec:
                       Encrypt proto of the VPN connection.
                       Encrypt proto of the VPN connection.
                     type: string
+                  healthCheckConfig:
+                    description: |-
+                      VPN channel health check configuration.
+                      VPN channel health check configuration.
+                    items:
+                      properties:
+                        probeInterval:
+                          description: |-
+                            Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+                            Detection interval, Tencent Cloud's interval between two health checks, range [1000-5000], Unit: ms.
+                          type: number
+                        probeThreshold:
+                          description: |-
+                            Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+                            Detection times, perform route switching after N consecutive health check failures, range [3-8], Unit: times.
+                          type: number
+                        probeTimeout:
+                          description: |-
+                            Detection timeout, range [10-5000], Unit: ms.
+                            Detection timeout, range [10-5000], Unit: ms.
+                          type: number
+                        probeType:
+                          description: |-
+                            Detection mode, default is NQA, cannot be modified.
+                            Detection mode, default is `NQA`, cannot be modified.
+                          type: string
+                      type: object
+                    type: array
                   healthCheckLocalIp:
                     description: |-
                       Health check the address of this terminal.
@@ -1204,6 +1367,11 @@ spec:
                       Name of the VPN connection. The length of character is limited to 1-60.
                       Name of the VPN connection. The length of character is limited to 1-60.
                     type: string
+                  negotiationType:
+                    description: |-
+                      The default negotiation type is active. Optional values: active (active negotiation), passive (passive negotiation), flowTrigger (traffic negotiation).
+                      The default negotiation type is `active`. Optional values: `active` (active negotiation), `passive` (passive negotiation), `flowTrigger` (traffic negotiation).
+                    type: string
                   netStatus:
                     description: |-
                       Net status of the VPN connection. Valid value: AVAILABLE.
@@ -1216,8 +1384,8 @@ spec:
                     type: string
                   routeType:
                     description: |-
-                      Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy.
-                      Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`.
+                      Route type of the VPN connection. Valid value: STATIC, StaticRoute, Policy, Bgp.
+                      Route type of the VPN connection. Valid value: `STATIC`, `StaticRoute`, `Policy`, `Bgp`.
                     type: string
                   securityGroupPolicy:
                     description: |-

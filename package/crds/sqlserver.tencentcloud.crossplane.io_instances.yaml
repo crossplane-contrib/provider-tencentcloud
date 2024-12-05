@@ -100,7 +100,7 @@ spec:
                     type: string
                   haType:
                     description: |-
-                      Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+                      It has been deprecated from version 1.81.136. Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
                       Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
                     type: string
                   maintenanceStartTime:
@@ -379,7 +379,7 @@ spec:
                     type: string
                   haType:
                     description: |-
-                      Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+                      It has been deprecated from version 1.81.136. Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
                       Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
                     type: string
                   maintenanceStartTime:
@@ -835,7 +835,7 @@ spec:
                     type: string
                   haType:
                     description: |-
-                      Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
+                      It has been deprecated from version 1.81.136. Instance type. DUAL (dual-server high availability), CLUSTER (cluster). Default is DUAL.
                       Instance type. `DUAL` (dual-server high availability), `CLUSTER` (cluster). Default is `DUAL`.
                     type: string
                   id:

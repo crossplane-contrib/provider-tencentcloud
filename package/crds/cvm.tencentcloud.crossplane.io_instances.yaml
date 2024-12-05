@@ -161,6 +161,11 @@ spec:
                       Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
                       Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
                     type: boolean
+                  disableAutomationService:
+                    description: |-
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                    type: boolean
                   disableMonitorService:
                     description: |-
                       Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
@@ -605,6 +610,11 @@ spec:
                     description: |-
                       Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
                       Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
+                    type: boolean
+                  disableAutomationService:
+                    description: |-
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   disableMonitorService:
                     description: |-
@@ -1209,6 +1219,11 @@ spec:
                     description: |-
                       Whether the termination protection is enabled. Default is false. If set true, which means that this instance can not be deleted by an API action.
                       Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
+                    type: boolean
+                  disableAutomationService:
+                    description: |-
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
                     type: boolean
                   disableMonitorService:
                     description: |-

@@ -70,6 +70,10 @@ type LifecycleHookInitParameters struct {
 	// The instance state to which you want to attach the lifecycle hook. Valid values: `INSTANCE_LAUNCHING` and `INSTANCE_TERMINATING`.
 	LifecycleTransition *string `json:"lifecycleTransition,omitempty" tf:"lifecycle_transition,omitempty"`
 
+	// The scenario where the lifecycle hook is applied. EXTENSION: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. NORMAL: the lifecycle hook is not triggered by the above APIs.
+	// The scenario where the lifecycle hook is applied. `EXTENSION`: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. `NORMAL`: the lifecycle hook is not triggered by the above APIs.
+	LifecycleTransitionType *string `json:"lifecycleTransitionType,omitempty" tf:"lifecycle_transition_type,omitempty"`
+
 	// Contains additional information that you want to include any time AS sends a message to the notification target.
 	// Contains additional information that you want to include any time AS sends a message to the notification target.
 	NotificationMetadata *string `json:"notificationMetadata,omitempty" tf:"notification_metadata,omitempty"`
@@ -125,6 +129,10 @@ type LifecycleHookObservation struct {
 	// The instance state to which you want to attach the lifecycle hook. Valid values: `INSTANCE_LAUNCHING` and `INSTANCE_TERMINATING`.
 	LifecycleTransition *string `json:"lifecycleTransition,omitempty" tf:"lifecycle_transition,omitempty"`
 
+	// The scenario where the lifecycle hook is applied. EXTENSION: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. NORMAL: the lifecycle hook is not triggered by the above APIs.
+	// The scenario where the lifecycle hook is applied. `EXTENSION`: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. `NORMAL`: the lifecycle hook is not triggered by the above APIs.
+	LifecycleTransitionType *string `json:"lifecycleTransitionType,omitempty" tf:"lifecycle_transition_type,omitempty"`
+
 	// Contains additional information that you want to include any time AS sends a message to the notification target.
 	// Contains additional information that you want to include any time AS sends a message to the notification target.
 	NotificationMetadata *string `json:"notificationMetadata,omitempty" tf:"notification_metadata,omitempty"`
@@ -172,6 +180,11 @@ type LifecycleHookParameters struct {
 	// The instance state to which you want to attach the lifecycle hook. Valid values: `INSTANCE_LAUNCHING` and `INSTANCE_TERMINATING`.
 	// +kubebuilder:validation:Optional
 	LifecycleTransition *string `json:"lifecycleTransition,omitempty" tf:"lifecycle_transition,omitempty"`
+
+	// The scenario where the lifecycle hook is applied. EXTENSION: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. NORMAL: the lifecycle hook is not triggered by the above APIs.
+	// The scenario where the lifecycle hook is applied. `EXTENSION`: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. `NORMAL`: the lifecycle hook is not triggered by the above APIs.
+	// +kubebuilder:validation:Optional
+	LifecycleTransitionType *string `json:"lifecycleTransitionType,omitempty" tf:"lifecycle_transition_type,omitempty"`
 
 	// Contains additional information that you want to include any time AS sends a message to the notification target.
 	// Contains additional information that you want to include any time AS sends a message to the notification target.

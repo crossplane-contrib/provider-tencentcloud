@@ -48,6 +48,14 @@ type HttpDomainInitParameters struct {
 	// ID of the SSL certificate.
 	GaapAuthID *string `json:"gaapAuthId,omitempty" tf:"gaap_auth_id,omitempty"`
 
+	// Group Id.
+	// Group Id.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Whether to use as the default domain name, the default is false.
+	// Whether to use as the default domain name, the default is false.
+	IsDefaultServer *bool `json:"isDefaultServer,omitempty" tf:"is_default_server,omitempty"`
+
 	// ID of the layer7 listener.
 	// ID of the layer7 listener.
 	// +crossplane:generate:reference:type=Layer7Listener
@@ -114,8 +122,16 @@ type HttpDomainObservation struct {
 	// ID of the SSL certificate.
 	GaapAuthID *string `json:"gaapAuthId,omitempty" tf:"gaap_auth_id,omitempty"`
 
+	// Group Id.
+	// Group Id.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Whether to use as the default domain name, the default is false.
+	// Whether to use as the default domain name, the default is false.
+	IsDefaultServer *bool `json:"isDefaultServer,omitempty" tf:"is_default_server,omitempty"`
 
 	// ID of the layer7 listener.
 	// ID of the layer7 listener.
@@ -181,6 +197,16 @@ type HttpDomainParameters struct {
 	// ID of the SSL certificate.
 	// +kubebuilder:validation:Optional
 	GaapAuthID *string `json:"gaapAuthId,omitempty" tf:"gaap_auth_id,omitempty"`
+
+	// Group Id.
+	// Group Id.
+	// +kubebuilder:validation:Optional
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Whether to use as the default domain name, the default is false.
+	// Whether to use as the default domain name, the default is false.
+	// +kubebuilder:validation:Optional
+	IsDefaultServer *bool `json:"isDefaultServer,omitempty" tf:"is_default_server,omitempty"`
 
 	// ID of the layer7 listener.
 	// ID of the layer7 listener.

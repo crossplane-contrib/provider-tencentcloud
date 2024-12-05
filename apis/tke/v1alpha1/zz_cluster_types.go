@@ -337,6 +337,10 @@ type ClusterInitParameters struct {
 	// Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
 	IgnoreServiceCidrConflict *bool `json:"ignoreServiceCidrConflict,omitempty" tf:"ignore_service_cidr_conflict,omitempty"`
 
+	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+	InstanceDeleteMode *string `json:"instanceDeleteMode,omitempty" tf:"instance_delete_mode,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	IsNonStaticIPMode *bool `json:"isNonStaticIpMode,omitempty" tf:"is_non_static_ip_mode,omitempty"`
@@ -360,7 +364,7 @@ type ClusterInitParameters struct {
 
 	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
 	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
-	MasterConfig []MasterConfigInitParameters `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
+	MasterConfig []ClusterMasterConfigInitParameters `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
 
 	// Mount target. Default is not mounting.
 	// Mount target. Default is not mounting.
@@ -385,6 +389,10 @@ type ClusterInitParameters struct {
 	// Project ID, default value is 0.
 	// Project ID, default value is 0.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+	// The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+	ResourceDeleteOptions []ResourceDeleteOptionsInitParameters `json:"resourceDeleteOptions,omitempty" tf:"resource_delete_options,omitempty"`
 
 	// Container Runtime version.
 	// Container Runtime version.
@@ -427,6 +435,358 @@ type ClusterInitParameters struct {
 	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
 	// Deploy the machine configuration information of the 'WORKER' service, and create <=20 units for common users. The other 'WORK' service are added by 'tencentcloud_kubernetes_scale_worker'.
 	WorkerConfig []WorkerConfigInitParameters `json:"workerConfig,omitempty" tf:"worker_config,omitempty"`
+}
+
+type ClusterMasterConfigInitParameters struct {
+
+	// Indicates which availability zone will be used.
+	// Indicates which availability zone will be used.
+	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// CAM role name authorized to access.
+	// CAM role name authorized to access.
+	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
+
+	// Number of cvm.
+	// Number of cvm.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// Configurations of data disk.
+	// Configurations of data disk.
+	DataDisk []MasterConfigDataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
+
+	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override [globe_]desired_pod_num for current node. Either all the fields desired_pod_num or none.
+	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override `[globe_]desired_pod_num` for current node. Either all the fields `desired_pod_num` or none.
+	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
+
+	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// To specify whether to enable cloud security service. Default is TRUE.
+	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+
+	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// Id of cvm hpc cluster.
+	// Id of cvm hpc cluster.
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
+	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
+
+	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
+
+	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
+	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
+	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
+
+	// Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
+	// Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
+	InstanceChargeTypePrepaidRenewFlag *string `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
+
+	// Name of the CVMs.
+	// Name of the CVMs.
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Specified types of CVM instance.
+	// Specified types of CVM instance.
+	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Charge types for network traffic. Available values include TRAFFIC_POSTPAID_BY_HOUR.
+	// Charge types for network traffic. Available values include `TRAFFIC_POSTPAID_BY_HOUR`.
+	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
+
+	// Max bandwidth of Internet access in Mbps. Default is 0.
+	// Max bandwidth of Internet access in Mbps. Default is 0.
+	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
+
+	// ID list of keys, should be set if password not set.
+	// ID list of keys, should be set if `password` not set.
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
+
+	// Specify whether to assign an Internet IP address.
+	// Specify whether to assign an Internet IP address.
+	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
+
+	// Security groups to which a CVM instance belongs.
+	// Security groups to which a CVM instance belongs.
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// Private network ID.
+	// Private network ID.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Volume of system disk in GB. Default is 50.
+	// Volume of system disk in GB. Default is `50`.
+	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
+
+	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
+	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
+	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
+
+	// ase64-encoded User Data text, the length limit is 16KB.
+	// ase64-encoded User Data text, the length limit is 16KB.
+	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+}
+
+type ClusterMasterConfigObservation struct {
+
+	// Indicates which availability zone will be used.
+	// Indicates which availability zone will be used.
+	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// CAM role name authorized to access.
+	// CAM role name authorized to access.
+	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
+
+	// Number of cvm.
+	// Number of cvm.
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// Configurations of data disk.
+	// Configurations of data disk.
+	DataDisk []MasterConfigDataDiskObservation `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
+
+	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override [globe_]desired_pod_num for current node. Either all the fields desired_pod_num or none.
+	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override `[globe_]desired_pod_num` for current node. Either all the fields `desired_pod_num` or none.
+	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
+
+	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// To specify whether to enable cloud security service. Default is TRUE.
+	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+
+	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// Id of cvm hpc cluster.
+	// Id of cvm hpc cluster.
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
+	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
+
+	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
+
+	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
+	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
+	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
+
+	// Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
+	// Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
+	InstanceChargeTypePrepaidRenewFlag *string `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
+
+	// Name of the CVMs.
+	// Name of the CVMs.
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Specified types of CVM instance.
+	// Specified types of CVM instance.
+	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Charge types for network traffic. Available values include TRAFFIC_POSTPAID_BY_HOUR.
+	// Charge types for network traffic. Available values include `TRAFFIC_POSTPAID_BY_HOUR`.
+	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
+
+	// Max bandwidth of Internet access in Mbps. Default is 0.
+	// Max bandwidth of Internet access in Mbps. Default is 0.
+	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
+
+	// ID list of keys, should be set if password not set.
+	// ID list of keys, should be set if `password` not set.
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
+
+	// Specify whether to assign an Internet IP address.
+	// Specify whether to assign an Internet IP address.
+	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
+
+	// Security groups to which a CVM instance belongs.
+	// Security groups to which a CVM instance belongs.
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// Private network ID.
+	// Private network ID.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Volume of system disk in GB. Default is 50.
+	// Volume of system disk in GB. Default is `50`.
+	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
+
+	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
+	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
+	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
+
+	// ase64-encoded User Data text, the length limit is 16KB.
+	// ase64-encoded User Data text, the length limit is 16KB.
+	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+}
+
+type ClusterMasterConfigParameters struct {
+
+	// Indicates which availability zone will be used.
+	// Indicates which availability zone will be used.
+	// +kubebuilder:validation:Optional
+	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
+	// +kubebuilder:validation:Optional
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
+	// CAM role name authorized to access.
+	// CAM role name authorized to access.
+	// +kubebuilder:validation:Optional
+	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
+
+	// Number of cvm.
+	// Number of cvm.
+	// +kubebuilder:validation:Optional
+	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
+
+	// Configurations of data disk.
+	// Configurations of data disk.
+	// +kubebuilder:validation:Optional
+	DataDisk []MasterConfigDataDiskParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
+
+	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override [globe_]desired_pod_num for current node. Either all the fields desired_pod_num or none.
+	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override `[globe_]desired_pod_num` for current node. Either all the fields `desired_pod_num` or none.
+	// +kubebuilder:validation:Optional
+	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
+
+	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	// +kubebuilder:validation:Optional
+	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// +kubebuilder:validation:Optional
+	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// +kubebuilder:validation:Optional
+	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+
+	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	// +kubebuilder:validation:Optional
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// Id of cvm hpc cluster.
+	// Id of cvm hpc cluster.
+	// +kubebuilder:validation:Optional
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+
+	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
+	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
+	// +kubebuilder:validation:Optional
+	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
+
+	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// +kubebuilder:validation:Optional
+	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
+
+	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
+	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
+	// +kubebuilder:validation:Optional
+	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
+
+	// Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
+	// Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
+	// +kubebuilder:validation:Optional
+	InstanceChargeTypePrepaidRenewFlag *string `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
+
+	// Name of the CVMs.
+	// Name of the CVMs.
+	// +kubebuilder:validation:Optional
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Specified types of CVM instance.
+	// Specified types of CVM instance.
+	// +kubebuilder:validation:Optional
+	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
+
+	// Charge types for network traffic. Available values include TRAFFIC_POSTPAID_BY_HOUR.
+	// Charge types for network traffic. Available values include `TRAFFIC_POSTPAID_BY_HOUR`.
+	// +kubebuilder:validation:Optional
+	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
+
+	// Max bandwidth of Internet access in Mbps. Default is 0.
+	// Max bandwidth of Internet access in Mbps. Default is 0.
+	// +kubebuilder:validation:Optional
+	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
+
+	// ID list of keys, should be set if password not set.
+	// ID list of keys, should be set if `password` not set.
+	// +kubebuilder:validation:Optional
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
+
+	// Password to access, should be set if key_ids not set.
+	// Password to access, should be set if `key_ids` not set.
+	// +kubebuilder:validation:Optional
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+	// Specify whether to assign an Internet IP address.
+	// Specify whether to assign an Internet IP address.
+	// +kubebuilder:validation:Optional
+	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
+
+	// Security groups to which a CVM instance belongs.
+	// Security groups to which a CVM instance belongs.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// Private network ID.
+	// Private network ID.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+
+	// Volume of system disk in GB. Default is 50.
+	// Volume of system disk in GB. Default is `50`.
+	// +kubebuilder:validation:Optional
+	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
+
+	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
+	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
+	// +kubebuilder:validation:Optional
+	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
+
+	// ase64-encoded User Data text, the length limit is 16KB.
+	// ase64-encoded User Data text, the length limit is 16KB.
+	// +kubebuilder:validation:Optional
+	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
 type ClusterObservation struct {
@@ -606,6 +966,10 @@ type ClusterObservation struct {
 	// Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
 	IgnoreServiceCidrConflict *bool `json:"ignoreServiceCidrConflict,omitempty" tf:"ignore_service_cidr_conflict,omitempty"`
 
+	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+	InstanceDeleteMode *string `json:"instanceDeleteMode,omitempty" tf:"instance_delete_mode,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	IsNonStaticIPMode *bool `json:"isNonStaticIpMode,omitempty" tf:"is_non_static_ip_mode,omitempty"`
@@ -637,7 +1001,7 @@ type ClusterObservation struct {
 
 	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
 	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
-	MasterConfig []MasterConfigObservation `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
+	MasterConfig []ClusterMasterConfigObservation `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
 
 	// Mount target. Default is not mounting.
 	// Mount target. Default is not mounting.
@@ -670,6 +1034,10 @@ type ClusterObservation struct {
 	// Project ID, default value is 0.
 	// Project ID, default value is 0.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+	// The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+	ResourceDeleteOptions []ResourceDeleteOptionsObservation `json:"resourceDeleteOptions,omitempty" tf:"resource_delete_options,omitempty"`
 
 	// Container Runtime version.
 	// Container Runtime version.
@@ -909,6 +1277,11 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	IgnoreServiceCidrConflict *bool `json:"ignoreServiceCidrConflict,omitempty" tf:"ignore_service_cidr_conflict,omitempty"`
 
+	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+	// +kubebuilder:validation:Optional
+	InstanceDeleteMode *string `json:"instanceDeleteMode,omitempty" tf:"instance_delete_mode,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// +kubebuilder:validation:Optional
@@ -938,7 +1311,7 @@ type ClusterParameters struct {
 	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
 	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
 	// +kubebuilder:validation:Optional
-	MasterConfig []MasterConfigParameters `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
+	MasterConfig []ClusterMasterConfigParameters `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
 
 	// Mount target. Default is not mounting.
 	// Mount target. Default is not mounting.
@@ -969,6 +1342,11 @@ type ClusterParameters struct {
 	// Project ID, default value is 0.
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+	// The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+	// +kubebuilder:validation:Optional
+	ResourceDeleteOptions []ResourceDeleteOptionsParameters `json:"resourceDeleteOptions,omitempty" tf:"resource_delete_options,omitempty"`
 
 	// Container Runtime version.
 	// Container Runtime version.
@@ -1028,7 +1406,7 @@ type DataDiskInitParameters struct {
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
 	// The name of the device or partition to mount.
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
 	// Volume of disk in GB. Default is 0.
@@ -1036,28 +1414,16 @@ type DataDiskInitParameters struct {
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
-	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
+	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
-
-	// Indicates whether to encrypt data disk, default false.
-	// Indicates whether to encrypt data disk, default `false`.
-	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
 	// File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
-	// ID of the custom CMK in the format of UUID or kms-abcd1234. This parameter is used to encrypt cloud disks.
-	// ID of the custom CMK in the format of UUID or `kms-abcd1234`. This parameter is used to encrypt cloud disks.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
-
 	// Mount target. Default is not mounting.
 	// Mount target.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
-
-	// Data disk snapshot ID.
-	// Data disk snapshot ID.
-	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 }
 
 type DataDiskObservation struct {
@@ -1067,7 +1433,7 @@ type DataDiskObservation struct {
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
 	// The name of the device or partition to mount.
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
 	// Volume of disk in GB. Default is 0.
@@ -1075,28 +1441,16 @@ type DataDiskObservation struct {
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
-	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
+	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
-
-	// Indicates whether to encrypt data disk, default false.
-	// Indicates whether to encrypt data disk, default `false`.
-	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
 	// File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
-	// ID of the custom CMK in the format of UUID or kms-abcd1234. This parameter is used to encrypt cloud disks.
-	// ID of the custom CMK in the format of UUID or `kms-abcd1234`. This parameter is used to encrypt cloud disks.
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
-
 	// Mount target. Default is not mounting.
 	// Mount target.
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
-
-	// Data disk snapshot ID.
-	// Data disk snapshot ID.
-	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 }
 
 type DataDiskParameters struct {
@@ -1107,7 +1461,7 @@ type DataDiskParameters struct {
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
 	// The name of the device or partition to mount.
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// +kubebuilder:validation:Optional
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -1117,34 +1471,19 @@ type DataDiskParameters struct {
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
-	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
+	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
-
-	// Indicates whether to encrypt data disk, default false.
-	// Indicates whether to encrypt data disk, default `false`.
-	// +kubebuilder:validation:Optional
-	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
 	// File system, e.g. ext3/ext4/xfs.
 	// File system, e.g. `ext3/ext4/xfs`.
 	// +kubebuilder:validation:Optional
 	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
 
-	// ID of the custom CMK in the format of UUID or kms-abcd1234. This parameter is used to encrypt cloud disks.
-	// ID of the custom CMK in the format of UUID or `kms-abcd1234`. This parameter is used to encrypt cloud disks.
-	// +kubebuilder:validation:Optional
-	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
-
 	// Mount target. Default is not mounting.
 	// Mount target.
 	// +kubebuilder:validation:Optional
 	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
-
-	// Data disk snapshot ID.
-	// Data disk snapshot ID.
-	// +kubebuilder:validation:Optional
-	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 }
 
 type EventPersistenceInitParameters struct {
@@ -1291,26 +1630,239 @@ type ExtensionAddonParameters struct {
 	Param *string `json:"param" tf:"param,omitempty"`
 }
 
+type ExtraArgsInitParameters struct {
+
+	// Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+	// Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+	Kubelet []*string `json:"kubelet,omitempty" tf:"kubelet,omitempty"`
+}
+
+type ExtraArgsObservation struct {
+
+	// Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+	// Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+	Kubelet []*string `json:"kubelet,omitempty" tf:"kubelet,omitempty"`
+}
+
+type ExtraArgsParameters struct {
+
+	// Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+	// Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+	// +kubebuilder:validation:Optional
+	Kubelet []*string `json:"kubelet,omitempty" tf:"kubelet,omitempty"`
+}
+
+type GpuArgsInitParameters struct {
+
+	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// Whether to enable MIG.
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
+}
+
+type GpuArgsObservation struct {
+
+	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +mapType=granular
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +mapType=granular
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +mapType=granular
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// Whether to enable MIG.
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
+}
+
+type GpuArgsParameters struct {
+
+	// CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+	// CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Cuda map[string]*string `json:"cuda,omitempty" tf:"cuda,omitempty"`
+
+	// cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
+	// cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Cudnn map[string]*string `json:"cudnn,omitempty" tf:"cudnn,omitempty"`
+
+	// Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
+	// Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	CustomDriver map[string]*string `json:"customDriver,omitempty" tf:"custom_driver,omitempty"`
+
+	// GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+	// GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Driver map[string]*string `json:"driver,omitempty" tf:"driver,omitempty"`
+
+	// Whether to enable MIG.
+	// Whether to enable MIG.
+	// +kubebuilder:validation:Optional
+	MigEnable *bool `json:"migEnable,omitempty" tf:"mig_enable,omitempty"`
+}
+
 type InstancesParaInitParameters struct {
+
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// To specify whether to enable cloud security service. Default is TRUE.
+	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
 
 	// Cluster IDs.
 	// Cluster IDs.
 	InstanceIds []*string `json:"instanceIds,omitempty" tf:"instance_ids,omitempty"`
+
+	// ID list of keys, should be set if password not set.
+	// ID list of keys, should be set if `password` not set.
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
+
+	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
+	// Advanced Node Settings. commonly used to attach existing instances.
+	MasterConfig []MasterConfigInitParameters `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
+
+	// Security groups to which a CVM instance belongs.
+	// Security groups to which a CVM instance belongs.
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 }
 
 type InstancesParaObservation struct {
 
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// To specify whether to enable cloud security service. Default is TRUE.
+	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+
 	// Cluster IDs.
 	// Cluster IDs.
 	InstanceIds []*string `json:"instanceIds,omitempty" tf:"instance_ids,omitempty"`
+
+	// ID list of keys, should be set if password not set.
+	// ID list of keys, should be set if `password` not set.
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
+
+	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
+	// Advanced Node Settings. commonly used to attach existing instances.
+	MasterConfig []MasterConfigObservation `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
+
+	// Security groups to which a CVM instance belongs.
+	// Security groups to which a CVM instance belongs.
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 }
 
 type InstancesParaParameters struct {
+
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// +kubebuilder:validation:Optional
+	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// To specify whether to enable cloud security service. Default is TRUE.
+	// +kubebuilder:validation:Optional
+	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
 
 	// Cluster IDs.
 	// Cluster IDs.
 	// +kubebuilder:validation:Optional
 	InstanceIds []*string `json:"instanceIds" tf:"instance_ids,omitempty"`
+
+	// ID list of keys, should be set if password not set.
+	// ID list of keys, should be set if `password` not set.
+	// +kubebuilder:validation:Optional
+	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
+
+	// Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
+	// Advanced Node Settings. commonly used to attach existing instances.
+	// +kubebuilder:validation:Optional
+	MasterConfig []MasterConfigParameters `json:"masterConfig,omitempty" tf:"master_config,omitempty"`
+
+	// Password to access, should be set if key_ids not set.
+	// Password to access, should be set if `key_ids` not set.
+	// +kubebuilder:validation:Optional
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
+	// Security groups to which a CVM instance belongs.
+	// Security groups to which a CVM instance belongs.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+}
+
+type LabelsInitParameters struct {
+
+	// Add-on name.
+	// Name of map.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Value of map.
+	// Value of map.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type LabelsObservation struct {
+
+	// Add-on name.
+	// Name of map.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Value of map.
+	// Value of map.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type LabelsParameters struct {
+
+	// Add-on name.
+	// Name of map.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Value of map.
+	// Value of map.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 type LogAgentInitParameters struct {
@@ -1348,356 +1900,269 @@ type LogAgentParameters struct {
 	KubeletRootDir *string `json:"kubeletRootDir,omitempty" tf:"kubelet_root_dir,omitempty"`
 }
 
+type MasterConfigDataDiskInitParameters struct {
+
+	// Indicate whether to auto format and mount or not. Default is false.
+	// Indicate whether to auto format and mount or not. Default is `false`.
+	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
+
+	// The name of the device or partition to mount.
+	// The name of the device or partition to mount.
+	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
+
+	// Volume of disk in GB. Default is 0.
+	// Volume of disk in GB. Default is `0`.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Indicates whether to encrypt data disk, default false.
+	// Indicates whether to encrypt data disk, default `false`.
+	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// File system, e.g. ext3/ext4/xfs.
+	// File system, e.g. `ext3/ext4/xfs`.
+	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
+
+	// ID of the custom CMK in the format of UUID or kms-abcd1234. This parameter is used to encrypt cloud disks.
+	// ID of the custom CMK in the format of UUID or `kms-abcd1234`. This parameter is used to encrypt cloud disks.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Mount target. Default is not mounting.
+	// Mount target.
+	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
+
+	// Data disk snapshot ID.
+	// Data disk snapshot ID.
+	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
+}
+
+type MasterConfigDataDiskObservation struct {
+
+	// Indicate whether to auto format and mount or not. Default is false.
+	// Indicate whether to auto format and mount or not. Default is `false`.
+	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
+
+	// The name of the device or partition to mount.
+	// The name of the device or partition to mount.
+	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
+
+	// Volume of disk in GB. Default is 0.
+	// Volume of disk in GB. Default is `0`.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Indicates whether to encrypt data disk, default false.
+	// Indicates whether to encrypt data disk, default `false`.
+	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// File system, e.g. ext3/ext4/xfs.
+	// File system, e.g. `ext3/ext4/xfs`.
+	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
+
+	// ID of the custom CMK in the format of UUID or kms-abcd1234. This parameter is used to encrypt cloud disks.
+	// ID of the custom CMK in the format of UUID or `kms-abcd1234`. This parameter is used to encrypt cloud disks.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Mount target. Default is not mounting.
+	// Mount target.
+	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
+
+	// Data disk snapshot ID.
+	// Data disk snapshot ID.
+	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
+}
+
+type MasterConfigDataDiskParameters struct {
+
+	// Indicate whether to auto format and mount or not. Default is false.
+	// Indicate whether to auto format and mount or not. Default is `false`.
+	// +kubebuilder:validation:Optional
+	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
+
+	// The name of the device or partition to mount.
+	// The name of the device or partition to mount.
+	// +kubebuilder:validation:Optional
+	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
+
+	// Volume of disk in GB. Default is 0.
+	// Volume of disk in GB. Default is `0`.
+	// +kubebuilder:validation:Optional
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
+	// +kubebuilder:validation:Optional
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// Indicates whether to encrypt data disk, default false.
+	// Indicates whether to encrypt data disk, default `false`.
+	// +kubebuilder:validation:Optional
+	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// File system, e.g. ext3/ext4/xfs.
+	// File system, e.g. `ext3/ext4/xfs`.
+	// +kubebuilder:validation:Optional
+	FileSystem *string `json:"fileSystem,omitempty" tf:"file_system,omitempty"`
+
+	// ID of the custom CMK in the format of UUID or kms-abcd1234. This parameter is used to encrypt cloud disks.
+	// ID of the custom CMK in the format of UUID or `kms-abcd1234`. This parameter is used to encrypt cloud disks.
+	// +kubebuilder:validation:Optional
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Mount target. Default is not mounting.
+	// Mount target.
+	// +kubebuilder:validation:Optional
+	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
+
+	// Data disk snapshot ID.
+	// Data disk snapshot ID.
+	// +kubebuilder:validation:Optional
+	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
+}
+
 type MasterConfigInitParameters struct {
-
-	// Indicates which availability zone will be used.
-	// Indicates which availability zone will be used.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
-
-	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
-	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
-	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
-
-	// CAM role name authorized to access.
-	// CAM role name authorized to access.
-	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
-
-	// Number of cvm.
-	// Number of cvm.
-	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
 	// Configurations of data disk.
 	// Configurations of data disk.
 	DataDisk []DataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
-	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override [globe_]desired_pod_num for current node. Either all the fields desired_pod_num or none.
-	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override `[globe_]desired_pod_num` for current node. Either all the fields `desired_pod_num` or none.
-	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
+	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+	DesiredPodNumber *float64 `json:"desiredPodNumber,omitempty" tf:"desired_pod_number,omitempty"`
 
-	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
-	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
-	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+	// Docker graph path. Default is /var/lib/docker.
+	// Docker graph path. Default is `/var/lib/docker`.
+	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// To specify whether to enable cloud monitor service. Default is TRUE.
-	// To specify whether to enable cloud monitor service. Default is TRUE.
-	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+	// Custom parameter information related to the node.
+	// Custom parameter information related to the node. This is a white-list parameter.
+	ExtraArgs []ExtraArgsInitParameters `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
-	// To specify whether to enable cloud security service. Default is TRUE.
-	// To specify whether to enable cloud security service. Default is TRUE.
-	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+	// GPU driver parameters.
+	// GPU driver parameters.
+	GpuArgs []GpuArgsInitParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
-	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
-	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+	// Labels of tke cluster nodes.
+	// Node label list.
+	Labels []LabelsInitParameters `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Id of cvm hpc cluster.
-	// Id of cvm hpc cluster.
-	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+	// Mount target. Default is not mounting.
+	// Mount target. Default is not mounting.
+	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
-	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
-	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
+	// Node taint.
+	// Node taint.
+	Taints []TaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
-	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
+	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Set whether the joined nodes participate in scheduling, with a default value of 0, indicating participation in scheduling; Non 0 means not participating in scheduling.
+	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
-	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
-	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
-	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
-
-	// Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
-	// Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
-	InstanceChargeTypePrepaidRenewFlag *string `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
-
-	// Name of the CVMs.
-	// Name of the CVMs.
-	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
-
-	// Specified types of CVM instance.
-	// Specified types of CVM instance.
-	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
-
-	// Charge types for network traffic. Available values include TRAFFIC_POSTPAID_BY_HOUR.
-	// Charge types for network traffic. Available values include `TRAFFIC_POSTPAID_BY_HOUR`.
-	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
-
-	// Max bandwidth of Internet access in Mbps. Default is 0.
-	// Max bandwidth of Internet access in Mbps. Default is 0.
-	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
-
-	// ID list of keys, should be set if password not set.
-	// ID list of keys, should be set if `password` not set.
-	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
-
-	// Specify whether to assign an Internet IP address.
-	// Specify whether to assign an Internet IP address.
-	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
-
-	// Security groups to which a CVM instance belongs.
-	// Security groups to which a CVM instance belongs.
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
-
-	// Private network ID.
-	// Private network ID.
-	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
-
-	// Volume of system disk in GB. Default is 50.
-	// Volume of system disk in GB. Default is `50`.
-	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
-
-	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
-	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
-	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
-
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// ase64-encoded User Data text, the length limit is 16KB.
-	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+	// User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the unschedulable parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+	// User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the `unschedulable` parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 }
 
 type MasterConfigObservation struct {
-
-	// Indicates which availability zone will be used.
-	// Indicates which availability zone will be used.
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
-
-	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
-	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
-	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
-
-	// CAM role name authorized to access.
-	// CAM role name authorized to access.
-	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
-
-	// Number of cvm.
-	// Number of cvm.
-	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
 	// Configurations of data disk.
 	// Configurations of data disk.
 	DataDisk []DataDiskObservation `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
-	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override [globe_]desired_pod_num for current node. Either all the fields desired_pod_num or none.
-	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override `[globe_]desired_pod_num` for current node. Either all the fields `desired_pod_num` or none.
-	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
+	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+	DesiredPodNumber *float64 `json:"desiredPodNumber,omitempty" tf:"desired_pod_number,omitempty"`
 
-	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
-	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
-	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+	// Docker graph path. Default is /var/lib/docker.
+	// Docker graph path. Default is `/var/lib/docker`.
+	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// To specify whether to enable cloud monitor service. Default is TRUE.
-	// To specify whether to enable cloud monitor service. Default is TRUE.
-	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+	// Custom parameter information related to the node.
+	// Custom parameter information related to the node. This is a white-list parameter.
+	ExtraArgs []ExtraArgsObservation `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
-	// To specify whether to enable cloud security service. Default is TRUE.
-	// To specify whether to enable cloud security service. Default is TRUE.
-	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+	// GPU driver parameters.
+	// GPU driver parameters.
+	GpuArgs []GpuArgsObservation `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
-	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
-	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+	// Labels of tke cluster nodes.
+	// Node label list.
+	Labels []LabelsObservation `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Id of cvm hpc cluster.
-	// Id of cvm hpc cluster.
-	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+	// Mount target. Default is not mounting.
+	// Mount target. Default is not mounting.
+	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
-	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
-	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
+	// Node taint.
+	// Node taint.
+	Taints []TaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
 
-	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
+	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Set whether the joined nodes participate in scheduling, with a default value of 0, indicating participation in scheduling; Non 0 means not participating in scheduling.
+	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
-	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
-	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
-	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
-
-	// Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
-	// Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
-	InstanceChargeTypePrepaidRenewFlag *string `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
-
-	// Name of the CVMs.
-	// Name of the CVMs.
-	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
-
-	// Specified types of CVM instance.
-	// Specified types of CVM instance.
-	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
-
-	// Charge types for network traffic. Available values include TRAFFIC_POSTPAID_BY_HOUR.
-	// Charge types for network traffic. Available values include `TRAFFIC_POSTPAID_BY_HOUR`.
-	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
-
-	// Max bandwidth of Internet access in Mbps. Default is 0.
-	// Max bandwidth of Internet access in Mbps. Default is 0.
-	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
-
-	// ID list of keys, should be set if password not set.
-	// ID list of keys, should be set if `password` not set.
-	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
-
-	// Specify whether to assign an Internet IP address.
-	// Specify whether to assign an Internet IP address.
-	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
-
-	// Security groups to which a CVM instance belongs.
-	// Security groups to which a CVM instance belongs.
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
-
-	// Private network ID.
-	// Private network ID.
-	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
-
-	// Volume of system disk in GB. Default is 50.
-	// Volume of system disk in GB. Default is `50`.
-	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
-
-	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
-	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
-	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
-
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// ase64-encoded User Data text, the length limit is 16KB.
-	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+	// User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the unschedulable parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+	// User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the `unschedulable` parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 }
 
 type MasterConfigParameters struct {
-
-	// Indicates which availability zone will be used.
-	// Indicates which availability zone will be used.
-	// +kubebuilder:validation:Optional
-	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
-
-	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
-	// bandwidth package id. if user is standard user, then the bandwidth_package_id is needed, or default has bandwidth_package_id.
-	// +kubebuilder:validation:Optional
-	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
-
-	// CAM role name authorized to access.
-	// CAM role name authorized to access.
-	// +kubebuilder:validation:Optional
-	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
-
-	// Number of cvm.
-	// Number of cvm.
-	// +kubebuilder:validation:Optional
-	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
 
 	// Configurations of data disk.
 	// Configurations of data disk.
 	// +kubebuilder:validation:Optional
 	DataDisk []DataDiskParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
 
-	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override [globe_]desired_pod_num for current node. Either all the fields desired_pod_num or none.
-	// Indicate to set desired pod number in node. valid when enable_customized_pod_cidr=true, and it override `[globe_]desired_pod_num` for current node. Either all the fields `desired_pod_num` or none.
+	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	// +kubebuilder:validation:Optional
-	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
+	DesiredPodNumber *float64 `json:"desiredPodNumber,omitempty" tf:"desired_pod_number,omitempty"`
 
-	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
-	// Disaster recover groups to which a CVM instance belongs. Only support maximum 1.
+	// Docker graph path. Default is /var/lib/docker.
+	// Docker graph path. Default is `/var/lib/docker`.
 	// +kubebuilder:validation:Optional
-	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// To specify whether to enable cloud monitor service. Default is TRUE.
-	// To specify whether to enable cloud monitor service. Default is TRUE.
+	// Custom parameter information related to the node.
+	// Custom parameter information related to the node. This is a white-list parameter.
 	// +kubebuilder:validation:Optional
-	EnhancedMonitorService *bool `json:"enhancedMonitorService,omitempty" tf:"enhanced_monitor_service,omitempty"`
+	ExtraArgs []ExtraArgsParameters `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
-	// To specify whether to enable cloud security service. Default is TRUE.
-	// To specify whether to enable cloud security service. Default is TRUE.
+	// GPU driver parameters.
+	// GPU driver parameters.
 	// +kubebuilder:validation:Optional
-	EnhancedSecurityService *bool `json:"enhancedSecurityService,omitempty" tf:"enhanced_security_service,omitempty"`
+	GpuArgs []GpuArgsParameters `json:"gpuArgs,omitempty" tf:"gpu_args,omitempty"`
 
-	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
-	// The host name of the attached instance. Dot (.) and dash (-) cannot be used as the first and last characters of HostName and cannot be used consecutively. Windows example: The length of the name character is [2, 15], letters (capitalization is not restricted), numbers and dashes (-) are allowed, dots (.) are not supported, and not all numbers are allowed. Examples of other types (Linux, etc.): The character length is [2, 60], and multiple dots are allowed. There is a segment between the dots. Each segment allows letters (with no limitation on capitalization), numbers and dashes (-).
+	// Labels of tke cluster nodes.
+	// Node label list.
 	// +kubebuilder:validation:Optional
-	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+	Labels []LabelsParameters `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Id of cvm hpc cluster.
-	// Id of cvm hpc cluster.
+	// Mount target. Default is not mounting.
+	// Mount target. Default is not mounting.
 	// +kubebuilder:validation:Optional
-	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+	MountTarget *string `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
 
-	// The valid image id, format of img-xxx. Note: img_id will be replaced with the image corresponding to TKE cluster_os.
-	// The valid image id, format of img-xxx. Note: `img_id` will be replaced with the image corresponding to TKE `cluster_os`.
+	// Node taint.
+	// Node taint.
 	// +kubebuilder:validation:Optional
-	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
+	Taints []TaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
-	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+	// Set whether the joined nodes participate in scheduling, with a default value of 0, indicating participation in scheduling; Non 0 means not participating in scheduling.
 	// +kubebuilder:validation:Optional
-	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
+	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
-	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
-	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to `PREPAID`. Valid values are `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `24`, `36`.
+	// User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the unschedulable parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+	// User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the `unschedulable` parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
 	// +kubebuilder:validation:Optional
-	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
-
-	// Auto renewal flag. Valid values: NOTIFY_AND_AUTO_RENEW: notify upon expiration and renew automatically, NOTIFY_AND_MANUAL_RENEW: notify upon expiration but do not renew automatically, DISABLE_NOTIFY_AND_MANUAL_RENEW: neither notify upon expiration nor renew automatically. Default value: NOTIFY_AND_MANUAL_RENEW. If this parameter is specified as NOTIFY_AND_AUTO_RENEW, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to PREPAID.
-	// Auto renewal flag. Valid values: `NOTIFY_AND_AUTO_RENEW`: notify upon expiration and renew automatically, `NOTIFY_AND_MANUAL_RENEW`: notify upon expiration but do not renew automatically, `DISABLE_NOTIFY_AND_MANUAL_RENEW`: neither notify upon expiration nor renew automatically. Default value: `NOTIFY_AND_MANUAL_RENEW`. If this parameter is specified as `NOTIFY_AND_AUTO_RENEW`, the instance will be automatically renewed on a monthly basis if the account balance is sufficient. NOTE: it only works when instance_charge_type is set to `PREPAID`.
-	// +kubebuilder:validation:Optional
-	InstanceChargeTypePrepaidRenewFlag *string `json:"instanceChargeTypePrepaidRenewFlag,omitempty" tf:"instance_charge_type_prepaid_renew_flag,omitempty"`
-
-	// Name of the CVMs.
-	// Name of the CVMs.
-	// +kubebuilder:validation:Optional
-	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
-
-	// Specified types of CVM instance.
-	// Specified types of CVM instance.
-	// +kubebuilder:validation:Optional
-	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
-
-	// Charge types for network traffic. Available values include TRAFFIC_POSTPAID_BY_HOUR.
-	// Charge types for network traffic. Available values include `TRAFFIC_POSTPAID_BY_HOUR`.
-	// +kubebuilder:validation:Optional
-	InternetChargeType *string `json:"internetChargeType,omitempty" tf:"internet_charge_type,omitempty"`
-
-	// Max bandwidth of Internet access in Mbps. Default is 0.
-	// Max bandwidth of Internet access in Mbps. Default is 0.
-	// +kubebuilder:validation:Optional
-	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
-
-	// ID list of keys, should be set if password not set.
-	// ID list of keys, should be set if `password` not set.
-	// +kubebuilder:validation:Optional
-	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
-
-	// Password to access, should be set if key_ids not set.
-	// Password to access, should be set if `key_ids` not set.
-	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
-
-	// Specify whether to assign an Internet IP address.
-	// Specify whether to assign an Internet IP address.
-	// +kubebuilder:validation:Optional
-	PublicIPAssigned *bool `json:"publicIpAssigned,omitempty" tf:"public_ip_assigned,omitempty"`
-
-	// Security groups to which a CVM instance belongs.
-	// Security groups to which a CVM instance belongs.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
-
-	// Private network ID.
-	// Private network ID.
-	// +kubebuilder:validation:Optional
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
-
-	// Volume of system disk in GB. Default is 50.
-	// Volume of system disk in GB. Default is `50`.
-	// +kubebuilder:validation:Optional
-	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
-
-	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
-	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
-	// +kubebuilder:validation:Optional
-	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
-
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// ase64-encoded User Data text, the length limit is 16KB.
-	// +kubebuilder:validation:Optional
-	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 }
 
 type NodePoolGlobalConfigInitParameters struct {
@@ -1824,6 +2289,102 @@ type NodePoolGlobalConfigParameters struct {
 	// During scale-in, ignore nodes with pods in the kube-system namespace that are not managed by DaemonSet.
 	// +kubebuilder:validation:Optional
 	SkipNodesWithSystemPods *bool `json:"skipNodesWithSystemPods,omitempty" tf:"skip_nodes_with_system_pods,omitempty"`
+}
+
+type ResourceDeleteOptionsInitParameters struct {
+
+	// The deletion mode of CBS resources when the cluster is deleted, terminate (destroy), retain (retain). Other resources are deleted by default.
+	// The deletion mode of CBS resources when the cluster is deleted, `terminate` (destroy), `retain` (retain). Other resources are deleted by default.
+	DeleteMode *string `json:"deleteMode,omitempty" tf:"delete_mode,omitempty"`
+
+	// Resource type, valid values are CBS, CLB, and CVM.
+	// Resource type, valid values are `CBS`, `CLB`, and `CVM`.
+	ResourceType *string `json:"resourceType,omitempty" tf:"resource_type,omitempty"`
+
+	// Whether to skip resources with deletion protection enabled, the default is false.
+	// Whether to skip resources with deletion protection enabled, the default is false.
+	SkipDeletionProtection *bool `json:"skipDeletionProtection,omitempty" tf:"skip_deletion_protection,omitempty"`
+}
+
+type ResourceDeleteOptionsObservation struct {
+
+	// The deletion mode of CBS resources when the cluster is deleted, terminate (destroy), retain (retain). Other resources are deleted by default.
+	// The deletion mode of CBS resources when the cluster is deleted, `terminate` (destroy), `retain` (retain). Other resources are deleted by default.
+	DeleteMode *string `json:"deleteMode,omitempty" tf:"delete_mode,omitempty"`
+
+	// Resource type, valid values are CBS, CLB, and CVM.
+	// Resource type, valid values are `CBS`, `CLB`, and `CVM`.
+	ResourceType *string `json:"resourceType,omitempty" tf:"resource_type,omitempty"`
+
+	// Whether to skip resources with deletion protection enabled, the default is false.
+	// Whether to skip resources with deletion protection enabled, the default is false.
+	SkipDeletionProtection *bool `json:"skipDeletionProtection,omitempty" tf:"skip_deletion_protection,omitempty"`
+}
+
+type ResourceDeleteOptionsParameters struct {
+
+	// The deletion mode of CBS resources when the cluster is deleted, terminate (destroy), retain (retain). Other resources are deleted by default.
+	// The deletion mode of CBS resources when the cluster is deleted, `terminate` (destroy), `retain` (retain). Other resources are deleted by default.
+	// +kubebuilder:validation:Optional
+	DeleteMode *string `json:"deleteMode" tf:"delete_mode,omitempty"`
+
+	// Resource type, valid values are CBS, CLB, and CVM.
+	// Resource type, valid values are `CBS`, `CLB`, and `CVM`.
+	// +kubebuilder:validation:Optional
+	ResourceType *string `json:"resourceType" tf:"resource_type,omitempty"`
+
+	// Whether to skip resources with deletion protection enabled, the default is false.
+	// Whether to skip resources with deletion protection enabled, the default is false.
+	// +kubebuilder:validation:Optional
+	SkipDeletionProtection *bool `json:"skipDeletionProtection,omitempty" tf:"skip_deletion_protection,omitempty"`
+}
+
+type TaintsInitParameters struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of map.
+	// Value of the taint.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TaintsObservation struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of map.
+	// Value of the taint.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TaintsParameters struct {
+
+	// Effect of the taint.
+	// Effect of the taint.
+	// +kubebuilder:validation:Optional
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// Key of the taint.
+	// Key of the taint.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Value of map.
+	// Value of the taint.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type WorkerConfigDataDiskInitParameters struct {

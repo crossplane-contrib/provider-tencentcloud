@@ -308,6 +308,16 @@ func (in *HttpDomainInitParameters) DeepCopyInto(out *HttpDomainInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsDefaultServer != nil {
+		in, out := &in.IsDefaultServer, &out.IsDefaultServer
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ListenerID != nil {
 		in, out := &in.ListenerID, &out.ListenerID
 		*out = new(string)
@@ -442,9 +452,19 @@ func (in *HttpDomainObservation) DeepCopyInto(out *HttpDomainObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
+		**out = **in
+	}
+	if in.IsDefaultServer != nil {
+		in, out := &in.IsDefaultServer, &out.IsDefaultServer
+		*out = new(bool)
 		**out = **in
 	}
 	if in.ListenerID != nil {
@@ -537,6 +557,16 @@ func (in *HttpDomainParameters) DeepCopyInto(out *HttpDomainParameters) {
 	if in.GaapAuthID != nil {
 		in, out := &in.GaapAuthID, &out.GaapAuthID
 		*out = new(string)
+		**out = **in
+	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsDefaultServer != nil {
+		in, out := &in.IsDefaultServer, &out.IsDefaultServer
+		*out = new(bool)
 		**out = **in
 	}
 	if in.ListenerID != nil {
@@ -1551,6 +1581,11 @@ func (in *Layer7ListenerInitParameters) DeepCopyInto(out *Layer7ListenerInitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1580,6 +1615,22 @@ func (in *Layer7ListenerInitParameters) DeepCopyInto(out *Layer7ListenerInitPara
 		in, out := &in.ProxyIDSelector, &out.ProxyIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSSupportVersions != nil {
+		in, out := &in.TLSSupportVersions, &out.TLSSupportVersions
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 }
 
@@ -1664,6 +1715,11 @@ func (in *Layer7ListenerObservation) DeepCopyInto(out *Layer7ListenerObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1693,6 +1749,22 @@ func (in *Layer7ListenerObservation) DeepCopyInto(out *Layer7ListenerObservation
 		in, out := &in.Status, &out.Status
 		*out = new(float64)
 		**out = **in
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSSupportVersions != nil {
+		in, out := &in.TLSSupportVersions, &out.TLSSupportVersions
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 }
 
@@ -1740,6 +1812,11 @@ func (in *Layer7ListenerParameters) DeepCopyInto(out *Layer7ListenerParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1769,6 +1846,22 @@ func (in *Layer7ListenerParameters) DeepCopyInto(out *Layer7ListenerParameters) 
 		in, out := &in.ProxyIDSelector, &out.ProxyIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSSupportVersions != nil {
+		in, out := &in.TLSSupportVersions, &out.TLSSupportVersions
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 }
 

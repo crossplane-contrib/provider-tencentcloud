@@ -152,6 +152,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  createResultOutputFile:
+                    description: |-
+                      Used to save results of CVMs creation error messages.
+                      Used to save results of CVMs creation error messages.
+                    type: string
                   dataDisk:
                     description: |-
                       Configurations of tke data disk.
@@ -270,6 +275,29 @@ spec:
                       Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                       Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                     type: string
+                  taints:
+                    description: |-
+                      Node taint.
+                      Node taint.
+                    items:
+                      properties:
+                        effect:
+                          description: |-
+                            Effect of the taint.
+                            Effect of the taint.
+                          type: string
+                        key:
+                          description: |-
+                            Key of the taint.
+                            Key of the taint.
+                          type: string
+                        value:
+                          description: |-
+                            Value of the taint.
+                            Value of the taint.
+                          type: string
+                      type: object
+                    type: array
                   unschedulable:
                     description: |-
                       Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
@@ -584,6 +612,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  createResultOutputFile:
+                    description: |-
+                      Used to save results of CVMs creation error messages.
+                      Used to save results of CVMs creation error messages.
+                    type: string
                   dataDisk:
                     description: |-
                       Configurations of tke data disk.
@@ -702,6 +735,29 @@ spec:
                       Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                       Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                     type: string
+                  taints:
+                    description: |-
+                      Node taint.
+                      Node taint.
+                    items:
+                      properties:
+                        effect:
+                          description: |-
+                            Effect of the taint.
+                            Effect of the taint.
+                          type: string
+                        key:
+                          description: |-
+                            Key of the taint.
+                            Key of the taint.
+                          type: string
+                        value:
+                          description: |-
+                            Value of the taint.
+                            Value of the taint.
+                          type: string
+                      type: object
+                    type: array
                   unschedulable:
                     description: |-
                       Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.
@@ -1087,6 +1143,11 @@ spec:
                       ID of the cluster.
                       ID of the cluster.
                     type: string
+                  createResultOutputFile:
+                    description: |-
+                      Used to save results of CVMs creation error messages.
+                      Used to save results of CVMs creation error messages.
+                    type: string
                   dataDisk:
                     description: |-
                       Configurations of tke data disk.
@@ -1208,6 +1269,29 @@ spec:
                       Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                       Base64-encoded user script, executed before initializing the node, currently only effective for adding existing nodes.
                     type: string
+                  taints:
+                    description: |-
+                      Node taint.
+                      Node taint.
+                    items:
+                      properties:
+                        effect:
+                          description: |-
+                            Effect of the taint.
+                            Effect of the taint.
+                          type: string
+                        key:
+                          description: |-
+                            Key of the taint.
+                            Key of the taint.
+                          type: string
+                        value:
+                          description: |-
+                            Value of the taint.
+                            Value of the taint.
+                          type: string
+                      type: object
+                    type: array
                   unschedulable:
                     description: |-
                       Set whether the added node participates in scheduling. The default value is 0, which means participating in scheduling; non-0 means not participating in scheduling. After the node initialization is completed, you can execute kubectl uncordon nodename to join the node in scheduling.

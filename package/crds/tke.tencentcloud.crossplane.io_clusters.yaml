@@ -347,10 +347,225 @@ spec:
                             Reinstallation parameters of an existing instance.
                           items:
                             properties:
+                              enhancedMonitorService:
+                                description: |-
+                                  To specify whether to enable cloud monitor service. Default is TRUE.
+                                  To specify whether to enable cloud monitor service. Default is TRUE.
+                                type: boolean
+                              enhancedSecurityService:
+                                description: |-
+                                  To specify whether to enable cloud security service. Default is TRUE.
+                                  To specify whether to enable cloud security service. Default is TRUE.
+                                type: boolean
                               instanceIds:
                                 description: |-
                                   Cluster IDs.
                                   Cluster IDs.
+                                items:
+                                  type: string
+                                type: array
+                              keyIds:
+                                description: |-
+                                  ID list of keys, should be set if password not set.
+                                  ID list of keys, should be set if `password` not set.
+                                items:
+                                  type: string
+                                type: array
+                              masterConfig:
+                                description: |-
+                                  Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
+                                  Advanced Node Settings. commonly used to attach existing instances.
+                                items:
+                                  properties:
+                                    dataDisk:
+                                      description: |-
+                                        Configurations of data disk.
+                                        Configurations of data disk.
+                                      items:
+                                        properties:
+                                          autoFormatAndMount:
+                                            description: |-
+                                              Indicate whether to auto format and mount or not. Default is false.
+                                              Indicate whether to auto format and mount or not. Default is `false`.
+                                            type: boolean
+                                          diskPartition:
+                                            description: |-
+                                              The name of the device or partition to mount.
+                                              The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
+                                            type: string
+                                          diskSize:
+                                            description: |-
+                                              Volume of disk in GB. Default is 0.
+                                              Volume of disk in GB. Default is `0`.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                              Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+                                            type: string
+                                          fileSystem:
+                                            description: |-
+                                              File system, e.g. ext3/ext4/xfs.
+                                              File system, e.g. `ext3/ext4/xfs`.
+                                            type: string
+                                          mountTarget:
+                                            description: |-
+                                              Mount target. Default is not mounting.
+                                              Mount target.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    desiredPodNumber:
+                                      description: |-
+                                        Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+                                        Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+                                      type: number
+                                    dockerGraphPath:
+                                      description: |-
+                                        Docker graph path. Default is /var/lib/docker.
+                                        Docker graph path. Default is `/var/lib/docker`.
+                                      type: string
+                                    extraArgs:
+                                      description: |-
+                                        Custom parameter information related to the node.
+                                        Custom parameter information related to the node. This is a white-list parameter.
+                                      items:
+                                        properties:
+                                          kubelet:
+                                            description: |-
+                                              Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+                                              Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    gpuArgs:
+                                      description: |-
+                                        GPU driver parameters.
+                                        GPU driver parameters.
+                                      items:
+                                        properties:
+                                          cuda:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+                                              CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          cudnn:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
+                                              cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          customDriver:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
+                                              Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          driver:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+                                              GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          migEnable:
+                                            description: |-
+                                              Whether to enable MIG.
+                                              Whether to enable MIG.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    labels:
+                                      description: |-
+                                        Labels of tke cluster nodes.
+                                        Node label list.
+                                      items:
+                                        properties:
+                                          name:
+                                            description: |-
+                                              Add-on name.
+                                              Name of map.
+                                            type: string
+                                          value:
+                                            description: |-
+                                              Value of map.
+                                              Value of map.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mountTarget:
+                                      description: |-
+                                        Mount target. Default is not mounting.
+                                        Mount target. Default is not mounting.
+                                      type: string
+                                    taints:
+                                      description: |-
+                                        Node taint.
+                                        Node taint.
+                                      items:
+                                        properties:
+                                          effect:
+                                            description: |-
+                                              Effect of the taint.
+                                              Effect of the taint.
+                                            type: string
+                                          key:
+                                            description: |-
+                                              Key of the taint.
+                                              Key of the taint.
+                                            type: string
+                                          value:
+                                            description: |-
+                                              Value of map.
+                                              Value of the taint.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    unschedulable:
+                                      description: |-
+                                        Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                                        Set whether the joined nodes participate in scheduling, with a default value of 0, indicating participation in scheduling; Non 0 means not participating in scheduling.
+                                      type: number
+                                    userScript:
+                                      description: |-
+                                        User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the unschedulable parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+                                        User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the `unschedulable` parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+                                      type: string
+                                  type: object
+                                type: array
+                              passwordSecretRef:
+                                description: |-
+                                  Password to access, should be set if key_ids not set.
+                                  Password to access, should be set if `key_ids` not set.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              securityGroupIds:
+                                description: |-
+                                  Security groups to which a CVM instance belongs.
+                                  Security groups to which a CVM instance belongs.
                                 items:
                                   type: string
                                 type: array
@@ -403,6 +618,11 @@ spec:
                       Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
                       Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
                     type: boolean
+                  instanceDeleteMode:
+                    description: |-
+                      The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+                      The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+                    type: string
                   isNonStaticIpMode:
                     description: |-
                       Indicates whether non-static ip mode is enabled. Default is false.
@@ -735,6 +955,29 @@ spec:
                       Project ID, default value is 0.
                       Project ID, default value is 0.
                     type: number
+                  resourceDeleteOptions:
+                    description: |-
+                      The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+                      The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+                    items:
+                      properties:
+                        deleteMode:
+                          description: |-
+                            The deletion mode of CBS resources when the cluster is deleted, terminate (destroy), retain (retain). Other resources are deleted by default.
+                            The deletion mode of CBS resources when the cluster is deleted, `terminate` (destroy), `retain` (retain). Other resources are deleted by default.
+                          type: string
+                        resourceType:
+                          description: |-
+                            Resource type, valid values are CBS, CLB, and CVM.
+                            Resource type, valid values are `CBS`, `CLB`, and `CVM`.
+                          type: string
+                        skipDeletionProtection:
+                          description: |-
+                            Whether to skip resources with deletion protection enabled, the default is false.
+                            Whether to skip resources with deletion protection enabled, the default is false.
+                          type: boolean
+                      type: object
+                    type: array
                   runtimeVersion:
                     description: |-
                       Container Runtime version.
@@ -1346,10 +1589,206 @@ spec:
                             Reinstallation parameters of an existing instance.
                           items:
                             properties:
+                              enhancedMonitorService:
+                                description: |-
+                                  To specify whether to enable cloud monitor service. Default is TRUE.
+                                  To specify whether to enable cloud monitor service. Default is TRUE.
+                                type: boolean
+                              enhancedSecurityService:
+                                description: |-
+                                  To specify whether to enable cloud security service. Default is TRUE.
+                                  To specify whether to enable cloud security service. Default is TRUE.
+                                type: boolean
                               instanceIds:
                                 description: |-
                                   Cluster IDs.
                                   Cluster IDs.
+                                items:
+                                  type: string
+                                type: array
+                              keyIds:
+                                description: |-
+                                  ID list of keys, should be set if password not set.
+                                  ID list of keys, should be set if `password` not set.
+                                items:
+                                  type: string
+                                type: array
+                              masterConfig:
+                                description: |-
+                                  Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
+                                  Advanced Node Settings. commonly used to attach existing instances.
+                                items:
+                                  properties:
+                                    dataDisk:
+                                      description: |-
+                                        Configurations of data disk.
+                                        Configurations of data disk.
+                                      items:
+                                        properties:
+                                          autoFormatAndMount:
+                                            description: |-
+                                              Indicate whether to auto format and mount or not. Default is false.
+                                              Indicate whether to auto format and mount or not. Default is `false`.
+                                            type: boolean
+                                          diskPartition:
+                                            description: |-
+                                              The name of the device or partition to mount.
+                                              The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
+                                            type: string
+                                          diskSize:
+                                            description: |-
+                                              Volume of disk in GB. Default is 0.
+                                              Volume of disk in GB. Default is `0`.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                              Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+                                            type: string
+                                          fileSystem:
+                                            description: |-
+                                              File system, e.g. ext3/ext4/xfs.
+                                              File system, e.g. `ext3/ext4/xfs`.
+                                            type: string
+                                          mountTarget:
+                                            description: |-
+                                              Mount target. Default is not mounting.
+                                              Mount target.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    desiredPodNumber:
+                                      description: |-
+                                        Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+                                        Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+                                      type: number
+                                    dockerGraphPath:
+                                      description: |-
+                                        Docker graph path. Default is /var/lib/docker.
+                                        Docker graph path. Default is `/var/lib/docker`.
+                                      type: string
+                                    extraArgs:
+                                      description: |-
+                                        Custom parameter information related to the node.
+                                        Custom parameter information related to the node. This is a white-list parameter.
+                                      items:
+                                        properties:
+                                          kubelet:
+                                            description: |-
+                                              Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+                                              Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    gpuArgs:
+                                      description: |-
+                                        GPU driver parameters.
+                                        GPU driver parameters.
+                                      items:
+                                        properties:
+                                          cuda:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+                                              CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          cudnn:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
+                                              cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          customDriver:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
+                                              Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          driver:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+                                              GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          migEnable:
+                                            description: |-
+                                              Whether to enable MIG.
+                                              Whether to enable MIG.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    labels:
+                                      description: |-
+                                        Labels of tke cluster nodes.
+                                        Node label list.
+                                      items:
+                                        properties:
+                                          name:
+                                            description: |-
+                                              Add-on name.
+                                              Name of map.
+                                            type: string
+                                          value:
+                                            description: |-
+                                              Value of map.
+                                              Value of map.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mountTarget:
+                                      description: |-
+                                        Mount target. Default is not mounting.
+                                        Mount target. Default is not mounting.
+                                      type: string
+                                    taints:
+                                      description: |-
+                                        Node taint.
+                                        Node taint.
+                                      items:
+                                        properties:
+                                          effect:
+                                            description: |-
+                                              Effect of the taint.
+                                              Effect of the taint.
+                                            type: string
+                                          key:
+                                            description: |-
+                                              Key of the taint.
+                                              Key of the taint.
+                                            type: string
+                                          value:
+                                            description: |-
+                                              Value of map.
+                                              Value of the taint.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    unschedulable:
+                                      description: |-
+                                        Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                                        Set whether the joined nodes participate in scheduling, with a default value of 0, indicating participation in scheduling; Non 0 means not participating in scheduling.
+                                      type: number
+                                    userScript:
+                                      description: |-
+                                        User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the unschedulable parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+                                        User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the `unschedulable` parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+                                      type: string
+                                  type: object
+                                type: array
+                              securityGroupIds:
+                                description: |-
+                                  Security groups to which a CVM instance belongs.
+                                  Security groups to which a CVM instance belongs.
                                 items:
                                   type: string
                                 type: array
@@ -1402,6 +1841,11 @@ spec:
                       Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
                       Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
                     type: boolean
+                  instanceDeleteMode:
+                    description: |-
+                      The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+                      The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+                    type: string
                   isNonStaticIpMode:
                     description: |-
                       Indicates whether non-static ip mode is enabled. Default is false.
@@ -1715,6 +2159,29 @@ spec:
                       Project ID, default value is 0.
                       Project ID, default value is 0.
                     type: number
+                  resourceDeleteOptions:
+                    description: |-
+                      The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+                      The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+                    items:
+                      properties:
+                        deleteMode:
+                          description: |-
+                            The deletion mode of CBS resources when the cluster is deleted, terminate (destroy), retain (retain). Other resources are deleted by default.
+                            The deletion mode of CBS resources when the cluster is deleted, `terminate` (destroy), `retain` (retain). Other resources are deleted by default.
+                          type: string
+                        resourceType:
+                          description: |-
+                            Resource type, valid values are CBS, CLB, and CVM.
+                            Resource type, valid values are `CBS`, `CLB`, and `CVM`.
+                          type: string
+                        skipDeletionProtection:
+                          description: |-
+                            Whether to skip resources with deletion protection enabled, the default is false.
+                            Whether to skip resources with deletion protection enabled, the default is false.
+                          type: boolean
+                      type: object
+                    type: array
                   runtimeVersion:
                     description: |-
                       Container Runtime version.
@@ -2491,10 +2958,206 @@ spec:
                             Reinstallation parameters of an existing instance.
                           items:
                             properties:
+                              enhancedMonitorService:
+                                description: |-
+                                  To specify whether to enable cloud monitor service. Default is TRUE.
+                                  To specify whether to enable cloud monitor service. Default is TRUE.
+                                type: boolean
+                              enhancedSecurityService:
+                                description: |-
+                                  To specify whether to enable cloud security service. Default is TRUE.
+                                  To specify whether to enable cloud security service. Default is TRUE.
+                                type: boolean
                               instanceIds:
                                 description: |-
                                   Cluster IDs.
                                   Cluster IDs.
+                                items:
+                                  type: string
+                                type: array
+                              keyIds:
+                                description: |-
+                                  ID list of keys, should be set if password not set.
+                                  ID list of keys, should be set if `password` not set.
+                                items:
+                                  type: string
+                                type: array
+                              masterConfig:
+                                description: |-
+                                  Deploy the machine configuration information of the 'MASTER_ETCD' service, and create <=7 units for common users.
+                                  Advanced Node Settings. commonly used to attach existing instances.
+                                items:
+                                  properties:
+                                    dataDisk:
+                                      description: |-
+                                        Configurations of data disk.
+                                        Configurations of data disk.
+                                      items:
+                                        properties:
+                                          autoFormatAndMount:
+                                            description: |-
+                                              Indicate whether to auto format and mount or not. Default is false.
+                                              Indicate whether to auto format and mount or not. Default is `false`.
+                                            type: boolean
+                                          diskPartition:
+                                            description: |-
+                                              The name of the device or partition to mount.
+                                              The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
+                                            type: string
+                                          diskSize:
+                                            description: |-
+                                              Volume of disk in GB. Default is 0.
+                                              Volume of disk in GB. Default is `0`.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                              Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+                                            type: string
+                                          fileSystem:
+                                            description: |-
+                                              File system, e.g. ext3/ext4/xfs.
+                                              File system, e.g. `ext3/ext4/xfs`.
+                                            type: string
+                                          mountTarget:
+                                            description: |-
+                                              Mount target. Default is not mounting.
+                                              Mount target.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    desiredPodNumber:
+                                      description: |-
+                                        Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+                                        Indicate to set desired pod number in node. valid when the cluster is podCIDR.
+                                      type: number
+                                    dockerGraphPath:
+                                      description: |-
+                                        Docker graph path. Default is /var/lib/docker.
+                                        Docker graph path. Default is `/var/lib/docker`.
+                                      type: string
+                                    extraArgs:
+                                      description: |-
+                                        Custom parameter information related to the node.
+                                        Custom parameter information related to the node. This is a white-list parameter.
+                                      items:
+                                        properties:
+                                          kubelet:
+                                            description: |-
+                                              Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+                                              Kubelet custom parameter. The parameter format is ["k1=v1", "k1=v2"].
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    gpuArgs:
+                                      description: |-
+                                        GPU driver parameters.
+                                        GPU driver parameters.
+                                      items:
+                                        properties:
+                                          cuda:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              CUDA  version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+                                              CUDA  version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          cudnn:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              cuDNN version. Format like: { version: String, name: String, doc_name: String, dev_name: String }. version: cuDNN version; name: cuDNN name; doc_name: Doc name of cuDNN; dev_name: Dev name of cuDNN.
+                                              cuDNN version. Format like: `{ version: String, name: String, doc_name: String, dev_name: String }`. `version`: cuDNN version; `name`: cuDNN name; `doc_name`: Doc name of cuDNN; `dev_name`: Dev name of cuDNN.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          customDriver:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              Custom GPU driver. Format like: {address: String}. address: URL of custom GPU driver address.
+                                              Custom GPU driver. Format like: `{address: String}`. `address`: URL of custom GPU driver address.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          driver:
+                                            additionalProperties:
+                                              type: string
+                                            description: |-
+                                              GPU driver version. Format like: { version: String, name: String }. version: Version of GPU driver or CUDA; name: Name of GPU driver or CUDA.
+                                              GPU driver version. Format like: `{ version: String, name: String }`. `version`: Version of GPU driver or CUDA; `name`: Name of GPU driver or CUDA.
+                                            type: object
+                                            x-kubernetes-map-type: granular
+                                          migEnable:
+                                            description: |-
+                                              Whether to enable MIG.
+                                              Whether to enable MIG.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    labels:
+                                      description: |-
+                                        Labels of tke cluster nodes.
+                                        Node label list.
+                                      items:
+                                        properties:
+                                          name:
+                                            description: |-
+                                              Add-on name.
+                                              Name of map.
+                                            type: string
+                                          value:
+                                            description: |-
+                                              Value of map.
+                                              Value of map.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mountTarget:
+                                      description: |-
+                                        Mount target. Default is not mounting.
+                                        Mount target. Default is not mounting.
+                                      type: string
+                                    taints:
+                                      description: |-
+                                        Node taint.
+                                        Node taint.
+                                      items:
+                                        properties:
+                                          effect:
+                                            description: |-
+                                              Effect of the taint.
+                                              Effect of the taint.
+                                            type: string
+                                          key:
+                                            description: |-
+                                              Key of the taint.
+                                              Key of the taint.
+                                            type: string
+                                          value:
+                                            description: |-
+                                              Value of map.
+                                              Value of the taint.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    unschedulable:
+                                      description: |-
+                                        Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
+                                        Set whether the joined nodes participate in scheduling, with a default value of 0, indicating participation in scheduling; Non 0 means not participating in scheduling.
+                                      type: number
+                                    userScript:
+                                      description: |-
+                                        User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the unschedulable parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+                                        User script encoded in base64, which will be executed after the k8s component runs. The user needs to ensure the script's reentrant and retry logic. The script and its generated log files can be viewed in the node path /data/ccs_userscript/. If the node needs to be initialized before joining the schedule, it can be used in conjunction with the `unschedulable` parameter. After the final initialization of the userScript is completed, add the command "kubectl uncordon nodename --kubeconfig=/root/.kube/config" to add the node to the schedule.
+                                      type: string
+                                  type: object
+                                type: array
+                              securityGroupIds:
+                                description: |-
+                                  Security groups to which a CVM instance belongs.
+                                  Security groups to which a CVM instance belongs.
                                 items:
                                   type: string
                                 type: array
@@ -2550,6 +3213,11 @@ spec:
                       Indicates whether to ignore the service cidr conflict error. Only valid in VPC-CNI mode.
                       Indicates whether to ignore the service cidr conflict error. Only valid in `VPC-CNI` mode.
                     type: boolean
+                  instanceDeleteMode:
+                    description: |-
+                      The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+                      The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
+                    type: string
                   isNonStaticIpMode:
                     description: |-
                       Indicates whether non-static ip mode is enabled. Default is false.
@@ -2883,6 +3551,29 @@ spec:
                       Project ID, default value is 0.
                       Project ID, default value is 0.
                     type: number
+                  resourceDeleteOptions:
+                    description: |-
+                      The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+                      The resource deletion policy when the cluster is deleted. Currently, CBS is supported (CBS is retained by default). Only valid when deleting cluster.
+                    items:
+                      properties:
+                        deleteMode:
+                          description: |-
+                            The deletion mode of CBS resources when the cluster is deleted, terminate (destroy), retain (retain). Other resources are deleted by default.
+                            The deletion mode of CBS resources when the cluster is deleted, `terminate` (destroy), `retain` (retain). Other resources are deleted by default.
+                          type: string
+                        resourceType:
+                          description: |-
+                            Resource type, valid values are CBS, CLB, and CVM.
+                            Resource type, valid values are `CBS`, `CLB`, and `CVM`.
+                          type: string
+                        skipDeletionProtection:
+                          description: |-
+                            Whether to skip resources with deletion protection enabled, the default is false.
+                            Whether to skip resources with deletion protection enabled, the default is false.
+                          type: boolean
+                      type: object
+                    type: array
                   runtimeVersion:
                     description: |-
                       Container Runtime version.

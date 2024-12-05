@@ -4,9 +4,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: ses/v1alpha1/emailaddress
   labels:
-    testing.upbound.io/example-name: email_address
-  name: email-address
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    emailAddress: aaa@iac-tf.cloud
-    emailSenderName: aaa
+    emailAddress: demo@iac-terraform.cloud
+    emailSenderName: root

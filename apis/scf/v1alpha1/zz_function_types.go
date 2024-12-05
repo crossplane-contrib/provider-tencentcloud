@@ -758,7 +758,7 @@ type TriggerInfoObservation struct {
 	// TriggerDesc of the SCF function trigger, parameter format of timer is linux cron expression; parameter of cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}, where bucketUrl is cos bucket , event is the cos event trigger, Prefix is the corresponding file prefix filter condition, Suffix is the suffix filter condition, if not need filter condition can not pass; cmq type does not pass this parameter; ckafka type parameter format is json string {"maxMsgNum":"1","offset":"latest"}; apigw type parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
 	TriggerDesc *string `json:"triggerDesc,omitempty" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
+	// Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -779,8 +779,8 @@ type TriggersInitParameters struct {
 	// TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
 	TriggerDesc *string `json:"triggerDesc,omitempty" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
-	// Type of the SCF function trigger, support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
+	// Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
+	// Type of the SCF function trigger, support `cos`, `cls`, `timer`, `ckafka`, `http`, `apigw`, `cmq`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -798,8 +798,8 @@ type TriggersObservation struct {
 	// TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
 	TriggerDesc *string `json:"triggerDesc,omitempty" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
-	// Type of the SCF function trigger, support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
+	// Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
+	// Type of the SCF function trigger, support `cos`, `cls`, `timer`, `ckafka`, `http`, `apigw`, `cmq`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -820,8 +820,8 @@ type TriggersParameters struct {
 	// +kubebuilder:validation:Optional
 	TriggerDesc *string `json:"triggerDesc" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support cos, cmq, timer, ckafka, apigw.
-	// Type of the SCF function trigger, support `cos`, `cmq`, `timer`, `ckafka`, `apigw`.
+	// Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
+	// Type of the SCF function trigger, support `cos`, `cls`, `timer`, `ckafka`, `http`, `apigw`, `cmq`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }

@@ -1440,6 +1440,11 @@ spec:
                       The rule name (1 to 255 characters).
                       The rule name (1 to 255 characters).
                     type: string
+                  rulePriority:
+                    description: |-
+                      Rule priority, the larger the value, the higher the priority, the minimum is 1.
+                      Rule priority, the larger the value, the higher the priority, the minimum is 1.
+                    type: number
                   rules:
                     description: |-
                       Rule items list.

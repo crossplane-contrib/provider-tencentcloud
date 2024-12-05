@@ -111,6 +111,11 @@ spec:
                       The instance state to which you want to attach the lifecycle hook. Valid values: INSTANCE_LAUNCHING and INSTANCE_TERMINATING.
                       The instance state to which you want to attach the lifecycle hook. Valid values: `INSTANCE_LAUNCHING` and `INSTANCE_TERMINATING`.
                     type: string
+                  lifecycleTransitionType:
+                    description: |-
+                      The scenario where the lifecycle hook is applied. EXTENSION: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. NORMAL: the lifecycle hook is not triggered by the above APIs.
+                      The scenario where the lifecycle hook is applied. `EXTENSION`: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. `NORMAL`: the lifecycle hook is not triggered by the above APIs.
+                    type: string
                   notificationMetadata:
                     description: |-
                       Contains additional information that you want to include any time AS sends a message to the notification target.
@@ -261,6 +266,11 @@ spec:
                     description: |-
                       The instance state to which you want to attach the lifecycle hook. Valid values: INSTANCE_LAUNCHING and INSTANCE_TERMINATING.
                       The instance state to which you want to attach the lifecycle hook. Valid values: `INSTANCE_LAUNCHING` and `INSTANCE_TERMINATING`.
+                    type: string
+                  lifecycleTransitionType:
+                    description: |-
+                      The scenario where the lifecycle hook is applied. EXTENSION: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. NORMAL: the lifecycle hook is not triggered by the above APIs.
+                      The scenario where the lifecycle hook is applied. `EXTENSION`: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. `NORMAL`: the lifecycle hook is not triggered by the above APIs.
                     type: string
                   notificationMetadata:
                     description: |-
@@ -583,6 +593,11 @@ spec:
                     description: |-
                       The instance state to which you want to attach the lifecycle hook. Valid values: INSTANCE_LAUNCHING and INSTANCE_TERMINATING.
                       The instance state to which you want to attach the lifecycle hook. Valid values: `INSTANCE_LAUNCHING` and `INSTANCE_TERMINATING`.
+                    type: string
+                  lifecycleTransitionType:
+                    description: |-
+                      The scenario where the lifecycle hook is applied. EXTENSION: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. NORMAL: the lifecycle hook is not triggered by the above APIs.
+                      The scenario where the lifecycle hook is applied. `EXTENSION`: the lifecycle hook will be triggered when AttachInstances, DetachInstances or RemoveInstaces is called. `NORMAL`: the lifecycle hook is not triggered by the above APIs.
                     type: string
                   notificationMetadata:
                     description: |-

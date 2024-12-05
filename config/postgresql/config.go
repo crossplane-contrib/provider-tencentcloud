@@ -31,6 +31,10 @@ func Configure(p *config.Provider) {
 		r.References["subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
 		}
+		if t, ok := r.TerraformResource.Schema["db_major_vesion"]; ok {
+			t.Optional = false
+			t.Computed = true
+		}
 	})
 
 	p.AddResourceConfigurator("tencentcloud_postgresql_readonly_instance", func(r *config.Resource) {

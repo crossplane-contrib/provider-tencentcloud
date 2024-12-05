@@ -160,10 +160,6 @@ type InstanceInitParameters struct {
 	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	DBMajorVersion *string `json:"dbMajorVersion,omitempty" tf:"db_major_version,omitempty"`
 
-	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	DBMajorVesion *string `json:"dbMajorVesion,omitempty" tf:"db_major_vesion,omitempty"`
-
 	// Specify instance node info for disaster migration.
 	// Specify instance node info for disaster migration.
 	DBNodeSet []DBNodeSetInitParameters `json:"dbNodeSet,omitempty" tf:"db_node_set,omitempty"`
@@ -463,11 +459,6 @@ type InstanceParameters struct {
 	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
 	// +kubebuilder:validation:Optional
 	DBMajorVersion *string `json:"dbMajorVersion,omitempty" tf:"db_major_version,omitempty"`
-
-	// db_major_vesion will be deprecated, use db_major_version instead. PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// PostgreSQL major version number. Valid values: 10, 11, 12, 13, 14, 15, 16. If it is specified, an instance running the latest kernel of PostgreSQL DBMajorVersion will be created.
-	// +kubebuilder:validation:Optional
-	DBMajorVesion *string `json:"dbMajorVesion,omitempty" tf:"db_major_vesion,omitempty"`
 
 	// Specify instance node info for disaster migration.
 	// Specify instance node info for disaster migration.

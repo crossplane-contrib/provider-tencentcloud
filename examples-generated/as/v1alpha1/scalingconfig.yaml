@@ -8,20 +8,21 @@ metadata:
   name: example
 spec:
   forProvider:
-    configurationName: example-launch-configuration
+    configurationName: tf-example
     dataDisk:
     - diskSize: 50
       diskType: CLOUD_PREMIUM
+    enhancedAutomationToolsService: false
     enhancedMonitorService: false
     enhancedSecurityService: false
     hostNameSettings:
-    - hostName: host-name-test
+    - hostName: host-name
       hostNameStyle: UNIQUE
     imageId: ${data.tencentcloud_images.example.images.0.image_id}
     instanceTags:
       tag: example
     instanceTypes:
-    - SA1.SMALL1
+    - SA5.MEDIUM4
     internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
     internetMaxBandwidthOut: 10
     passwordSecretRef:

@@ -14,8 +14,9 @@ spec:
     bandwidth: 100
     maxConcurrent: 1000000
     name: tf_example_nat_gateway
+    natProductVersion: 1
     tags:
-      tf_tag_key: tf_tag_value
+      createBy: terraform
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vpc

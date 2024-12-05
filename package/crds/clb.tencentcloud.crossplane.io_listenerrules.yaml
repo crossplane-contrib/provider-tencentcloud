@@ -181,8 +181,8 @@ spec:
                     type: array
                   forwardType:
                     description: |-
-                      Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
-                      Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
+                      Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
+                      Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `GRPC`, `GRPCS`, `TRPC`. The default is `HTTP`.
                     type: string
                   healthCheckHealthNum:
                     description: |-
@@ -226,8 +226,8 @@ spec:
                     type: number
                   healthCheckType:
                     description: |-
-                      Type of health check. Valid value is CUSTOM, TCP, HTTP.
-                      Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+                      Type of health check. Valid value is CUSTOM, PING, TCP, HTTP, HTTPS, GRPC, GRPCS.
+                      Type of health check. Valid value is `CUSTOM`, `PING`, `TCP`, `HTTP`, `HTTPS`, `GRPC`, `GRPCS`.
                     type: string
                   healthCheckUnhealthNum:
                     description: |-
@@ -318,6 +318,24 @@ spec:
                             type: string
                         type: object
                     type: object
+                  oauth:
+                    description: |-
+                      OAuth configuration information.
+                      OAuth configuration information.
+                    items:
+                      properties:
+                        oauthEnable:
+                          description: |-
+                            Enable or disable authentication. True: Enabled; False: Disabled.
+                            Enable or disable authentication. True: Enabled; False: Disabled.
+                          type: boolean
+                        oauthFailureStatus:
+                          description: |-
+                            After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+                            After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+                          type: string
+                      type: object
+                    type: array
                   quic:
                     description: |-
                       Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
@@ -465,8 +483,8 @@ spec:
                     type: array
                   forwardType:
                     description: |-
-                      Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
-                      Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
+                      Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
+                      Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `GRPC`, `GRPCS`, `TRPC`. The default is `HTTP`.
                     type: string
                   healthCheckHealthNum:
                     description: |-
@@ -510,8 +528,8 @@ spec:
                     type: number
                   healthCheckType:
                     description: |-
-                      Type of health check. Valid value is CUSTOM, TCP, HTTP.
-                      Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+                      Type of health check. Valid value is CUSTOM, PING, TCP, HTTP, HTTPS, GRPC, GRPCS.
+                      Type of health check. Valid value is `CUSTOM`, `PING`, `TCP`, `HTTP`, `HTTPS`, `GRPC`, `GRPCS`.
                     type: string
                   healthCheckUnhealthNum:
                     description: |-
@@ -602,6 +620,24 @@ spec:
                             type: string
                         type: object
                     type: object
+                  oauth:
+                    description: |-
+                      OAuth configuration information.
+                      OAuth configuration information.
+                    items:
+                      properties:
+                        oauthEnable:
+                          description: |-
+                            Enable or disable authentication. True: Enabled; False: Disabled.
+                            Enable or disable authentication. True: Enabled; False: Disabled.
+                          type: boolean
+                        oauthFailureStatus:
+                          description: |-
+                            After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+                            After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+                          type: string
+                      type: object
+                    type: array
                   quic:
                     description: |-
                       Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
@@ -839,8 +875,8 @@ spec:
                     type: array
                   forwardType:
                     description: |-
-                      Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, TRPC. The default is HTTP.
-                      Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `TRPC`. The default is `HTTP`.
+                      Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
+                      Forwarding protocol between the CLB instance and real server. Valid values: `HTTP`, `HTTPS`, `GRPC`, `GRPCS`, `TRPC`. The default is `HTTP`.
                     type: string
                   healthCheckHealthNum:
                     description: |-
@@ -884,8 +920,8 @@ spec:
                     type: number
                   healthCheckType:
                     description: |-
-                      Type of health check. Valid value is CUSTOM, TCP, HTTP.
-                      Type of health check. Valid value is `CUSTOM`, `TCP`, `HTTP`.
+                      Type of health check. Valid value is CUSTOM, PING, TCP, HTTP, HTTPS, GRPC, GRPCS.
+                      Type of health check. Valid value is `CUSTOM`, `PING`, `TCP`, `HTTP`, `HTTPS`, `GRPC`, `GRPCS`.
                     type: string
                   healthCheckUnhealthNum:
                     description: |-
@@ -905,6 +941,24 @@ spec:
                       ID of CLB listener.
                       ID of CLB listener.
                     type: string
+                  oauth:
+                    description: |-
+                      OAuth configuration information.
+                      OAuth configuration information.
+                    items:
+                      properties:
+                        oauthEnable:
+                          description: |-
+                            Enable or disable authentication. True: Enabled; False: Disabled.
+                            Enable or disable authentication. True: Enabled; False: Disabled.
+                          type: boolean
+                        oauthFailureStatus:
+                          description: |-
+                            After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+                            After all IAPs fail, the request is rejected or released. BYPASS: PASS; REJECT: Reject.
+                          type: string
+                      type: object
+                    type: array
                   quic:
                     description: |-
                       Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
