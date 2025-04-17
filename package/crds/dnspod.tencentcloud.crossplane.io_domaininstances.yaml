@@ -325,6 +325,11 @@ spec:
                       The Domain.
                       The Domain.
                     type: string
+                  domainId:
+                    description: |-
+                      ID of the domain.
+                      ID of the domain.
+                    type: number
                   groupId:
                     description: |-
                       The Group Id of Domain.

@@ -15,6 +15,10 @@ import (
 
 type VPNGatewayInitParameters struct {
 
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN.
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN.
+	BGPAsn *float64 `json:"bgpAsn,omitempty" tf:"bgp_asn,omitempty"`
+
 	// The maximum public network output bandwidth of VPN gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000. Default is 5. When charge type is PREPAID, bandwidth degradation operation is unsupported.
 	// The maximum public network output bandwidth of VPN gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000. Default is 5. When charge type is `PREPAID`, bandwidth degradation operation is unsupported.
 	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
@@ -71,6 +75,10 @@ type VPNGatewayInitParameters struct {
 }
 
 type VPNGatewayObservation struct {
+
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN.
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN.
+	BGPAsn *float64 `json:"bgpAsn,omitempty" tf:"bgp_asn,omitempty"`
 
 	// The maximum public network output bandwidth of VPN gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000. Default is 5. When charge type is PREPAID, bandwidth degradation operation is unsupported.
 	// The maximum public network output bandwidth of VPN gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000. Default is 5. When charge type is `PREPAID`, bandwidth degradation operation is unsupported.
@@ -150,6 +158,11 @@ type VPNGatewayObservation struct {
 }
 
 type VPNGatewayParameters struct {
+
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN.
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN.
+	// +kubebuilder:validation:Optional
+	BGPAsn *float64 `json:"bgpAsn,omitempty" tf:"bgp_asn,omitempty"`
 
 	// The maximum public network output bandwidth of VPN gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000. Default is 5. When charge type is PREPAID, bandwidth degradation operation is unsupported.
 	// The maximum public network output bandwidth of VPN gateway (unit: Mbps), the available values include: 5,10,20,50,100,200,500,1000. Default is 5. When charge type is `PREPAID`, bandwidth degradation operation is unsupported.

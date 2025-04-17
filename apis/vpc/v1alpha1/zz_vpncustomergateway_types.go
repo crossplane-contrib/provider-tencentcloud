@@ -15,6 +15,10 @@ import (
 
 type VPNCustomerGatewayInitParameters struct {
 
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+	BGPAsn *float64 `json:"bgpAsn,omitempty" tf:"bgp_asn,omitempty"`
+
 	// Name of the customer gateway. The length of character is limited to 1-60.
 	// Name of the customer gateway. The length of character is limited to 1-60.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -30,6 +34,10 @@ type VPNCustomerGatewayInitParameters struct {
 }
 
 type VPNCustomerGatewayObservation struct {
+
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+	BGPAsn *float64 `json:"bgpAsn,omitempty" tf:"bgp_asn,omitempty"`
 
 	// Create time of the customer gateway.
 	// Create time of the customer gateway.
@@ -53,6 +61,11 @@ type VPNCustomerGatewayObservation struct {
 }
 
 type VPNCustomerGatewayParameters struct {
+
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+	// BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+	// +kubebuilder:validation:Optional
+	BGPAsn *float64 `json:"bgpAsn,omitempty" tf:"bgp_asn,omitempty"`
 
 	// Name of the customer gateway. The length of character is limited to 1-60.
 	// Name of the customer gateway. The length of character is limited to 1-60.

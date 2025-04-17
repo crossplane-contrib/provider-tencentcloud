@@ -268,8 +268,8 @@ spec:
                                       description: |-
                                         Operator. Valid values:
                                         Operator. Valid values:
-                                        - `equals`: Equals.
-                                        - `notEquals`: Does not equal.
+                                        - `equal`: Equal.
+                                        - `notEqual`: Does not equal.
                                         - `exist`: Exists.
                                         - `notexist`: Does not exist.
                                       type: string
@@ -285,6 +285,7 @@ spec:
                                         - `client_country`: Country/Region of the client.
                                         - `query_string`: Query string in the request URL.
                                         - `request_header`: HTTP request header.
+                                        - `client_ip`: Client IP.
                                       type: string
                                     values:
                                       description: |-
@@ -504,8 +505,8 @@ spec:
                                                   description: |-
                                                     Operator. Valid values:
                                                     Operator. Valid values:
-                                                    - `equals`: Equals.
-                                                    - `notEquals`: Does not equal.
+                                                    - `equal`: Equal.
+                                                    - `notEqual`: Does not equal.
                                                     - `exist`: Exists.
                                                     - `notexist`: Does not exist.
                                                   type: string
@@ -520,6 +521,7 @@ spec:
                                                     - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
                                                     - `query_string`: Query string in the request URL.
                                                     - `request_header`: HTTP request header.
+                                                    - `client_ip`: Client IP.
                                                   type: string
                                                 values:
                                                   description: |-
@@ -859,8 +861,8 @@ spec:
                                       description: |-
                                         Operator. Valid values:
                                         Operator. Valid values:
-                                        - `equals`: Equals.
-                                        - `notEquals`: Does not equal.
+                                        - `equal`: Equal.
+                                        - `notEqual`: Does not equal.
                                         - `exist`: Exists.
                                         - `notexist`: Does not exist.
                                       type: string
@@ -876,6 +878,7 @@ spec:
                                         - `client_country`: Country/Region of the client.
                                         - `query_string`: Query string in the request URL.
                                         - `request_header`: HTTP request header.
+                                        - `client_ip`: Client IP.
                                       type: string
                                     values:
                                       description: |-
@@ -1095,8 +1098,8 @@ spec:
                                                   description: |-
                                                     Operator. Valid values:
                                                     Operator. Valid values:
-                                                    - `equals`: Equals.
-                                                    - `notEquals`: Does not equal.
+                                                    - `equal`: Equal.
+                                                    - `notEqual`: Does not equal.
                                                     - `exist`: Exists.
                                                     - `notexist`: Does not exist.
                                                   type: string
@@ -1111,6 +1114,7 @@ spec:
                                                     - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
                                                     - `query_string`: Query string in the request URL.
                                                     - `request_header`: HTTP request header.
+                                                    - `client_ip`: Client IP.
                                                   type: string
                                                 values:
                                                   description: |-
@@ -1635,8 +1639,8 @@ spec:
                                       description: |-
                                         Operator. Valid values:
                                         Operator. Valid values:
-                                        - `equals`: Equals.
-                                        - `notEquals`: Does not equal.
+                                        - `equal`: Equal.
+                                        - `notEqual`: Does not equal.
                                         - `exist`: Exists.
                                         - `notexist`: Does not exist.
                                       type: string
@@ -1652,6 +1656,7 @@ spec:
                                         - `client_country`: Country/Region of the client.
                                         - `query_string`: Query string in the request URL.
                                         - `request_header`: HTTP request header.
+                                        - `client_ip`: Client IP.
                                       type: string
                                     values:
                                       description: |-
@@ -1871,8 +1876,8 @@ spec:
                                                   description: |-
                                                     Operator. Valid values:
                                                     Operator. Valid values:
-                                                    - `equals`: Equals.
-                                                    - `notEquals`: Does not equal.
+                                                    - `equal`: Equal.
+                                                    - `notEqual`: Does not equal.
                                                     - `exist`: Exists.
                                                     - `notexist`: Does not exist.
                                                   type: string
@@ -1887,6 +1892,7 @@ spec:
                                                     - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
                                                     - `query_string`: Query string in the request URL.
                                                     - `request_header`: HTTP request header.
+                                                    - `client_ip`: Client IP.
                                                   type: string
                                                 values:
                                                   description: |-

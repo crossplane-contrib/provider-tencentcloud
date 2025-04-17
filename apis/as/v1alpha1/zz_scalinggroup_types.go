@@ -97,6 +97,10 @@ type ScalingGroupInitParameters struct {
 	// Desired volume of CVM instances, which is between `max_size` and `min_size`.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// The expected number of instances is synchronized with the maximum and minimum values. The default value is False. This parameter is effective only in the scenario where the expected number is not passed in when modifying the scaling group interface. True: When modifying the maximum or minimum value, if there is a conflict with the current expected number, the expected number is adjusted synchronously. For example, when modifying, if the minimum value 2 is passed in and the current expected number is 1, the expected number is adjusted synchronously to 2; False: When modifying the maximum or minimum value, if there is a conflict with the current expected number, an error message is displayed indicating that the modification is not allowed.
+	// The expected number of instances is synchronized with the maximum and minimum values. The default value is `False`. This parameter is effective only in the scenario where the expected number is not passed in when modifying the scaling group interface. True: When modifying the maximum or minimum value, if there is a conflict with the current expected number, the expected number is adjusted synchronously. For example, when modifying, if the minimum value 2 is passed in and the current expected number is 1, the expected number is adjusted synchronously to 2; False: When modifying the maximum or minimum value, if there is a conflict with the current expected number, an error message is displayed indicating that the modification is not allowed.
+	DesiredCapacitySyncWithMaxMinSize *bool `json:"desiredCapacitySyncWithMaxMinSize,omitempty" tf:"desired_capacity_sync_with_max_min_size,omitempty"`
+
 	// List of application load balancers, which can't be specified with load_balancer_ids together.
 	// List of application load balancers, which can't be specified with `load_balancer_ids` together.
 	ForwardBalancerIds []ForwardBalancerIdsInitParameters `json:"forwardBalancerIds,omitempty" tf:"forward_balancer_ids,omitempty"`
@@ -132,6 +136,10 @@ type ScalingGroupInitParameters struct {
 	// Enable unhealthy instance replacement. If set to true, AS will replace instances that are found unhealthy in the CLB health check.
 	// Enable unhealthy instance replacement. If set to `true`, AS will replace instances that are found unhealthy in the CLB health check.
 	ReplaceLoadBalancerUnhealthy *bool `json:"replaceLoadBalancerUnhealthy,omitempty" tf:"replace_load_balancer_unhealthy,omitempty"`
+
+	// Replace mode of unhealthy replacement service. Valid values: RECREATE: Rebuild an instance to replace the original unhealthy instance. RESET: Performing a system reinstallation on unhealthy instances to keep information such as data disks, private IP addresses, and instance IDs unchanged. The instance login settings, HostName, enhanced services, and UserData will remain consistent with the current launch configuration. Default value: RECREATE. Note: This field may return null, indicating that no valid values can be obtained.
+	// Replace mode of unhealthy replacement service. Valid values: RECREATE: Rebuild an instance to replace the original unhealthy instance. RESET: Performing a system reinstallation on unhealthy instances to keep information such as data disks, private IP addresses, and instance IDs unchanged. The instance login settings, HostName, enhanced services, and UserData will remain consistent with the current launch configuration. Default value: RECREATE. Note: This field may return null, indicating that no valid values can be obtained.
+	ReplaceMode *string `json:"replaceMode,omitempty" tf:"replace_mode,omitempty"`
 
 	// Enables unhealthy instance replacement. If set to true, AS will replace instances that are flagged as unhealthy by Cloud Monitor.
 	// Enables unhealthy instance replacement. If set to `true`, AS will replace instances that are flagged as unhealthy by Cloud Monitor.
@@ -189,6 +197,10 @@ type ScalingGroupObservation struct {
 	// Desired volume of CVM instances, which is between `max_size` and `min_size`.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// The expected number of instances is synchronized with the maximum and minimum values. The default value is False. This parameter is effective only in the scenario where the expected number is not passed in when modifying the scaling group interface. True: When modifying the maximum or minimum value, if there is a conflict with the current expected number, the expected number is adjusted synchronously. For example, when modifying, if the minimum value 2 is passed in and the current expected number is 1, the expected number is adjusted synchronously to 2; False: When modifying the maximum or minimum value, if there is a conflict with the current expected number, an error message is displayed indicating that the modification is not allowed.
+	// The expected number of instances is synchronized with the maximum and minimum values. The default value is `False`. This parameter is effective only in the scenario where the expected number is not passed in when modifying the scaling group interface. True: When modifying the maximum or minimum value, if there is a conflict with the current expected number, the expected number is adjusted synchronously. For example, when modifying, if the minimum value 2 is passed in and the current expected number is 1, the expected number is adjusted synchronously to 2; False: When modifying the maximum or minimum value, if there is a conflict with the current expected number, an error message is displayed indicating that the modification is not allowed.
+	DesiredCapacitySyncWithMaxMinSize *bool `json:"desiredCapacitySyncWithMaxMinSize,omitempty" tf:"desired_capacity_sync_with_max_min_size,omitempty"`
+
 	// List of application load balancers, which can't be specified with load_balancer_ids together.
 	// List of application load balancers, which can't be specified with `load_balancer_ids` together.
 	ForwardBalancerIds []ForwardBalancerIdsObservation `json:"forwardBalancerIds,omitempty" tf:"forward_balancer_ids,omitempty"`
@@ -231,6 +243,10 @@ type ScalingGroupObservation struct {
 	// Enable unhealthy instance replacement. If set to true, AS will replace instances that are found unhealthy in the CLB health check.
 	// Enable unhealthy instance replacement. If set to `true`, AS will replace instances that are found unhealthy in the CLB health check.
 	ReplaceLoadBalancerUnhealthy *bool `json:"replaceLoadBalancerUnhealthy,omitempty" tf:"replace_load_balancer_unhealthy,omitempty"`
+
+	// Replace mode of unhealthy replacement service. Valid values: RECREATE: Rebuild an instance to replace the original unhealthy instance. RESET: Performing a system reinstallation on unhealthy instances to keep information such as data disks, private IP addresses, and instance IDs unchanged. The instance login settings, HostName, enhanced services, and UserData will remain consistent with the current launch configuration. Default value: RECREATE. Note: This field may return null, indicating that no valid values can be obtained.
+	// Replace mode of unhealthy replacement service. Valid values: RECREATE: Rebuild an instance to replace the original unhealthy instance. RESET: Performing a system reinstallation on unhealthy instances to keep information such as data disks, private IP addresses, and instance IDs unchanged. The instance login settings, HostName, enhanced services, and UserData will remain consistent with the current launch configuration. Default value: RECREATE. Note: This field may return null, indicating that no valid values can be obtained.
+	ReplaceMode *string `json:"replaceMode,omitempty" tf:"replace_mode,omitempty"`
 
 	// Enables unhealthy instance replacement. If set to true, AS will replace instances that are flagged as unhealthy by Cloud Monitor.
 	// Enables unhealthy instance replacement. If set to `true`, AS will replace instances that are flagged as unhealthy by Cloud Monitor.
@@ -300,6 +316,11 @@ type ScalingGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// The expected number of instances is synchronized with the maximum and minimum values. The default value is False. This parameter is effective only in the scenario where the expected number is not passed in when modifying the scaling group interface. True: When modifying the maximum or minimum value, if there is a conflict with the current expected number, the expected number is adjusted synchronously. For example, when modifying, if the minimum value 2 is passed in and the current expected number is 1, the expected number is adjusted synchronously to 2; False: When modifying the maximum or minimum value, if there is a conflict with the current expected number, an error message is displayed indicating that the modification is not allowed.
+	// The expected number of instances is synchronized with the maximum and minimum values. The default value is `False`. This parameter is effective only in the scenario where the expected number is not passed in when modifying the scaling group interface. True: When modifying the maximum or minimum value, if there is a conflict with the current expected number, the expected number is adjusted synchronously. For example, when modifying, if the minimum value 2 is passed in and the current expected number is 1, the expected number is adjusted synchronously to 2; False: When modifying the maximum or minimum value, if there is a conflict with the current expected number, an error message is displayed indicating that the modification is not allowed.
+	// +kubebuilder:validation:Optional
+	DesiredCapacitySyncWithMaxMinSize *bool `json:"desiredCapacitySyncWithMaxMinSize,omitempty" tf:"desired_capacity_sync_with_max_min_size,omitempty"`
+
 	// List of application load balancers, which can't be specified with load_balancer_ids together.
 	// List of application load balancers, which can't be specified with `load_balancer_ids` together.
 	// +kubebuilder:validation:Optional
@@ -344,6 +365,11 @@ type ScalingGroupParameters struct {
 	// Enable unhealthy instance replacement. If set to `true`, AS will replace instances that are found unhealthy in the CLB health check.
 	// +kubebuilder:validation:Optional
 	ReplaceLoadBalancerUnhealthy *bool `json:"replaceLoadBalancerUnhealthy,omitempty" tf:"replace_load_balancer_unhealthy,omitempty"`
+
+	// Replace mode of unhealthy replacement service. Valid values: RECREATE: Rebuild an instance to replace the original unhealthy instance. RESET: Performing a system reinstallation on unhealthy instances to keep information such as data disks, private IP addresses, and instance IDs unchanged. The instance login settings, HostName, enhanced services, and UserData will remain consistent with the current launch configuration. Default value: RECREATE. Note: This field may return null, indicating that no valid values can be obtained.
+	// Replace mode of unhealthy replacement service. Valid values: RECREATE: Rebuild an instance to replace the original unhealthy instance. RESET: Performing a system reinstallation on unhealthy instances to keep information such as data disks, private IP addresses, and instance IDs unchanged. The instance login settings, HostName, enhanced services, and UserData will remain consistent with the current launch configuration. Default value: RECREATE. Note: This field may return null, indicating that no valid values can be obtained.
+	// +kubebuilder:validation:Optional
+	ReplaceMode *string `json:"replaceMode,omitempty" tf:"replace_mode,omitempty"`
 
 	// Enables unhealthy instance replacement. If set to true, AS will replace instances that are flagged as unhealthy by Cloud Monitor.
 	// Enables unhealthy instance replacement. If set to `true`, AS will replace instances that are flagged as unhealthy by Cloud Monitor.

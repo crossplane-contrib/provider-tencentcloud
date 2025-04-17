@@ -547,6 +547,11 @@ func (in *EmrClusterInitParameters) DeepCopyInto(out *EmrClusterInitParameters) 
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SceneName != nil {
+		in, out := &in.SceneName, &out.SceneName
+		*out = new(string)
+		**out = **in
+	}
 	if in.SgID != nil {
 		in, out := &in.SgID, &out.SgID
 		*out = new(string)
@@ -746,6 +751,11 @@ func (in *EmrClusterObservation) DeepCopyInto(out *EmrClusterObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SceneName != nil {
+		in, out := &in.SceneName, &out.SceneName
+		*out = new(string)
+		**out = **in
+	}
 	if in.SgID != nil {
 		in, out := &in.SgID, &out.SgID
 		*out = new(string)
@@ -907,6 +917,11 @@ func (in *EmrClusterParameters) DeepCopyInto(out *EmrClusterParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.SceneName != nil {
+		in, out := &in.SceneName, &out.SceneName
+		*out = new(string)
+		**out = **in
 	}
 	if in.SgID != nil {
 		in, out := &in.SgID, &out.SgID

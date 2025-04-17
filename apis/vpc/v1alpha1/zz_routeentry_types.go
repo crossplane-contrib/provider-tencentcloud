@@ -23,8 +23,8 @@ type RouteEntryInitParameters struct {
 	// The route entry's next hub. CVM instance ID or VPC router interface ID.
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
-	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
+	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway, intranat, user_ccn and instance. instance points to CVM Instance.
+	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway`, `intranat`, `user_ccn` and `instance`. `instance` points to CVM Instance.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
 	// The ID of the route table.
@@ -67,8 +67,8 @@ type RouteEntryObservation struct {
 	// The route entry's next hub. CVM instance ID or VPC router interface ID.
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
-	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
+	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway, intranat, user_ccn and instance. instance points to CVM Instance.
+	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway`, `intranat`, `user_ccn` and `instance`. `instance` points to CVM Instance.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
 	// The ID of the route table.
@@ -92,8 +92,8 @@ type RouteEntryParameters struct {
 	// +kubebuilder:validation:Optional
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
-	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
+	// The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway, intranat, user_ccn and instance. instance points to CVM Instance.
+	// The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway`, `intranat`, `user_ccn` and `instance`. `instance` points to CVM Instance.
 	// +kubebuilder:validation:Optional
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 

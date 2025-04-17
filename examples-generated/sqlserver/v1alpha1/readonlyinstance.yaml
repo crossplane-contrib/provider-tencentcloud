@@ -22,7 +22,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: subnet
     tags:
-      test: test
+      CreateBy: Terraform
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vpc
@@ -45,7 +45,7 @@ spec:
 ---
 
 apiVersion: sqlserver.tencentcloud.crossplane.io/v1alpha1
-kind: BasicInstance
+kind: Instance
 metadata:
   annotations:
     meta.upbound.io/example-id: sqlserver/v1alpha1/readonlyinstance
@@ -56,25 +56,17 @@ spec:
   forProvider:
     availabilityZone: ${data.tencentcloud_availability_zones_by_product.zones.zones.4.name}
     chargeType: POSTPAID_BY_HOUR
-    cpu: 2
-    machineType: CLOUD_PREMIUM
-    maintenanceStartTime: "09:00"
-    maintenanceTimeSpan: 3
-    maintenanceWeekSet:
-    - 1
-    - 2
-    - 3
-    memory: 4
+    engineVersion: "2019"
+    memory: 16
+    multiZones: true
     name: tf-example
     projectId: 0
     securityGroups:
     - ${tencentcloud_security_group.security_group.id}
-    storage: 100
+    storage: 20
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: subnet
-    tags:
-      test: test
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vpc

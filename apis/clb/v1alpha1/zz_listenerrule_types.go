@@ -46,6 +46,7 @@ type ListenerRuleInitParameters struct {
 
 	// Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
 	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+	// +listType=set
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
@@ -76,6 +77,10 @@ type ListenerRuleInitParameters struct {
 	// Interval time of health check. Valid value ranges: (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	HealthCheckIntervalTime *float64 `json:"healthCheckIntervalTime,omitempty" tf:"health_check_interval_time,omitempty"`
 
+	// Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+	// Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+	HealthCheckPort *float64 `json:"healthCheckPort,omitempty" tf:"health_check_port,omitempty"`
+
 	// Indicates whether health check is enabled.
 	// Indicates whether health check is enabled.
 	HealthCheckSwitch *bool `json:"healthCheckSwitch,omitempty" tf:"health_check_switch,omitempty"`
@@ -91,6 +96,10 @@ type ListenerRuleInitParameters struct {
 	// Unhealthy threshold of health check, and the default is 3. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
 	// Unhealthy threshold of health check, and the default is `3`. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	HealthCheckUnhealthNum *float64 `json:"healthCheckUnhealthNum,omitempty" tf:"health_check_unhealth_num,omitempty"`
+
+	// Specifies the type of health check source IP. 0 (default): CLB VIP. 1: 100.64 IP range.
+	// Specifies the type of health check source IP. `0` (default): CLB VIP. `1`: 100.64 IP range.
+	HealthSourceIPType *float64 `json:"healthSourceIpType,omitempty" tf:"health_source_ip_type,omitempty"`
 
 	// Indicate to apply HTTP2.0 protocol or not.
 	// Indicate to apply HTTP2.0 protocol or not.
@@ -108,6 +117,10 @@ type ListenerRuleInitParameters struct {
 	// Selector for a Listener to populate listenerId.
 	// +kubebuilder:validation:Optional
 	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
+
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	MultiCertInfo []ListenerRuleMultiCertInfoInitParameters `json:"multiCertInfo,omitempty" tf:"multi_cert_info,omitempty"`
 
 	// OAuth configuration information.
 	// OAuth configuration information.
@@ -134,6 +147,44 @@ type ListenerRuleInitParameters struct {
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
+type ListenerRuleMultiCertInfoInitParameters struct {
+
+	// List of server certificate ID.
+	// List of server certificate ID.
+	// +listType=set
+	CertIDList []*string `json:"certIdList,omitempty" tf:"cert_id_list,omitempty"`
+
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
+}
+
+type ListenerRuleMultiCertInfoObservation struct {
+
+	// List of server certificate ID.
+	// List of server certificate ID.
+	// +listType=set
+	CertIDList []*string `json:"certIdList,omitempty" tf:"cert_id_list,omitempty"`
+
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
+}
+
+type ListenerRuleMultiCertInfoParameters struct {
+
+	// List of server certificate ID.
+	// List of server certificate ID.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	CertIDList []*string `json:"certIdList" tf:"cert_id_list,omitempty"`
+
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// +kubebuilder:validation:Optional
+	SSLMode *string `json:"sslMode" tf:"ssl_mode,omitempty"`
+}
+
 type ListenerRuleObservation struct {
 
 	// ID of the client certificate. NOTES: Only supports listeners of HTTPS protocol.
@@ -158,6 +209,7 @@ type ListenerRuleObservation struct {
 
 	// Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
 	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
+	// +listType=set
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
@@ -188,6 +240,10 @@ type ListenerRuleObservation struct {
 	// Interval time of health check. Valid value ranges: (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	HealthCheckIntervalTime *float64 `json:"healthCheckIntervalTime,omitempty" tf:"health_check_interval_time,omitempty"`
 
+	// Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+	// Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+	HealthCheckPort *float64 `json:"healthCheckPort,omitempty" tf:"health_check_port,omitempty"`
+
 	// Indicates whether health check is enabled.
 	// Indicates whether health check is enabled.
 	HealthCheckSwitch *bool `json:"healthCheckSwitch,omitempty" tf:"health_check_switch,omitempty"`
@@ -204,6 +260,10 @@ type ListenerRuleObservation struct {
 	// Unhealthy threshold of health check, and the default is `3`. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	HealthCheckUnhealthNum *float64 `json:"healthCheckUnhealthNum,omitempty" tf:"health_check_unhealth_num,omitempty"`
 
+	// Specifies the type of health check source IP. 0 (default): CLB VIP. 1: 100.64 IP range.
+	// Specifies the type of health check source IP. `0` (default): CLB VIP. `1`: 100.64 IP range.
+	HealthSourceIPType *float64 `json:"healthSourceIpType,omitempty" tf:"health_source_ip_type,omitempty"`
+
 	// Indicate to apply HTTP2.0 protocol or not.
 	// Indicate to apply HTTP2.0 protocol or not.
 	Http2Switch *bool `json:"http2Switch,omitempty" tf:"http2_switch,omitempty"`
@@ -214,6 +274,10 @@ type ListenerRuleObservation struct {
 	// ID of CLB listener.
 	// ID of CLB listener.
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	MultiCertInfo []ListenerRuleMultiCertInfoObservation `json:"multiCertInfo,omitempty" tf:"multi_cert_info,omitempty"`
 
 	// OAuth configuration information.
 	// OAuth configuration information.
@@ -283,6 +347,7 @@ type ListenerRuleParameters struct {
 	// Domain name list of the listener rule. Single domain rules are passed to domain, and multi domain rules are passed to domains.
 	// Domain name list of the listener rule. Single domain rules are passed to `domain`, and multi domain rules are passed to `domains`.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
@@ -320,6 +385,11 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	HealthCheckIntervalTime *float64 `json:"healthCheckIntervalTime,omitempty" tf:"health_check_interval_time,omitempty"`
 
+	// Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+	// Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+	// +kubebuilder:validation:Optional
+	HealthCheckPort *float64 `json:"healthCheckPort,omitempty" tf:"health_check_port,omitempty"`
+
 	// Indicates whether health check is enabled.
 	// Indicates whether health check is enabled.
 	// +kubebuilder:validation:Optional
@@ -340,6 +410,11 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	HealthCheckUnhealthNum *float64 `json:"healthCheckUnhealthNum,omitempty" tf:"health_check_unhealth_num,omitempty"`
 
+	// Specifies the type of health check source IP. 0 (default): CLB VIP. 1: 100.64 IP range.
+	// Specifies the type of health check source IP. `0` (default): CLB VIP. `1`: 100.64 IP range.
+	// +kubebuilder:validation:Optional
+	HealthSourceIPType *float64 `json:"healthSourceIpType,omitempty" tf:"health_source_ip_type,omitempty"`
+
 	// Indicate to apply HTTP2.0 protocol or not.
 	// Indicate to apply HTTP2.0 protocol or not.
 	// +kubebuilder:validation:Optional
@@ -358,6 +433,11 @@ type ListenerRuleParameters struct {
 	// Selector for a Listener to populate listenerId.
 	// +kubebuilder:validation:Optional
 	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
+
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// +kubebuilder:validation:Optional
+	MultiCertInfo []ListenerRuleMultiCertInfoParameters `json:"multiCertInfo,omitempty" tf:"multi_cert_info,omitempty"`
 
 	// OAuth configuration information.
 	// OAuth configuration information.

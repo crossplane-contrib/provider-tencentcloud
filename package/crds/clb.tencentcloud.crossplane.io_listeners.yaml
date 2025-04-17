@@ -267,6 +267,27 @@ spec:
                       Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
                       Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
+                  multiCertInfo:
+                    description: |-
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                    items:
+                      properties:
+                        certIdList:
+                          description: |-
+                            List of server certificate ID.
+                            List of server certificate ID.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        sslMode:
+                          description: |-
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                          type: string
+                      type: object
+                    type: array
                   port:
                     description: |-
                       Port of the CLB listener.
@@ -292,6 +313,11 @@ spec:
                       Session persistence type. Valid values: NORMAL: the default session persistence type; QUIC_CID: session persistence by QUIC connection ID. The QUIC_CID value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
                       Session persistence type. Valid values: `NORMAL`: the default session persistence type; `QUIC_CID`: session persistence by QUIC connection ID. The `QUIC_CID` value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
                     type: string
+                  snatEnable:
+                    description: |-
+                      Whether to enable SNAT.
+                      Whether to enable SNAT.
+                    type: boolean
                   sniSwitch:
                     description: |-
                       Indicates whether SNI is enabled, and only supported with protocol HTTPS. If enabled, you can set a certificate for each rule in tencentcloud_clb_listener_rule, otherwise all rules have a certificate.
@@ -510,6 +536,27 @@ spec:
                       Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
                       Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
+                  multiCertInfo:
+                    description: |-
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                    items:
+                      properties:
+                        certIdList:
+                          description: |-
+                            List of server certificate ID.
+                            List of server certificate ID.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        sslMode:
+                          description: |-
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                          type: string
+                      type: object
+                    type: array
                   port:
                     description: |-
                       Port of the CLB listener.
@@ -535,6 +582,11 @@ spec:
                       Session persistence type. Valid values: NORMAL: the default session persistence type; QUIC_CID: session persistence by QUIC connection ID. The QUIC_CID value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
                       Session persistence type. Valid values: `NORMAL`: the default session persistence type; `QUIC_CID`: session persistence by QUIC connection ID. The `QUIC_CID` value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
                     type: string
+                  snatEnable:
+                    description: |-
+                      Whether to enable SNAT.
+                      Whether to enable SNAT.
+                    type: boolean
                   sniSwitch:
                     description: |-
                       Indicates whether SNI is enabled, and only supported with protocol HTTPS. If enabled, you can set a certificate for each rule in tencentcloud_clb_listener_rule, otherwise all rules have a certificate.
@@ -855,6 +907,27 @@ spec:
                       Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
                       Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
                     type: string
+                  multiCertInfo:
+                    description: |-
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                    items:
+                      properties:
+                        certIdList:
+                          description: |-
+                            List of server certificate ID.
+                            List of server certificate ID.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        sslMode:
+                          description: |-
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                          type: string
+                      type: object
+                    type: array
                   port:
                     description: |-
                       Port of the CLB listener.
@@ -880,6 +953,11 @@ spec:
                       Session persistence type. Valid values: NORMAL: the default session persistence type; QUIC_CID: session persistence by QUIC connection ID. The QUIC_CID value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
                       Session persistence type. Valid values: `NORMAL`: the default session persistence type; `QUIC_CID`: session persistence by QUIC connection ID. The `QUIC_CID` value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
                     type: string
+                  snatEnable:
+                    description: |-
+                      Whether to enable SNAT.
+                      Whether to enable SNAT.
+                    type: boolean
                   sniSwitch:
                     description: |-
                       Indicates whether SNI is enabled, and only supported with protocol HTTPS. If enabled, you can set a certificate for each rule in tencentcloud_clb_listener_rule, otherwise all rules have a certificate.

@@ -19,6 +19,10 @@ type DataDisksInitParameters struct {
 	// Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
 	DataDiskID *string `json:"dataDiskId,omitempty" tf:"data_disk_id,omitempty"`
 
+	// Name of data disk.
+	// Name of data disk.
+	DataDiskName *string `json:"dataDiskName,omitempty" tf:"data_disk_name,omitempty"`
+
 	// Size of the data disk, and unit is GB.
 	// Size of the data disk, and unit is GB.
 	DataDiskSize *float64 `json:"dataDiskSize,omitempty" tf:"data_disk_size,omitempty"`
@@ -53,6 +57,10 @@ type DataDisksObservation struct {
 	// Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
 	// Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
 	DataDiskID *string `json:"dataDiskId,omitempty" tf:"data_disk_id,omitempty"`
+
+	// Name of data disk.
+	// Name of data disk.
+	DataDiskName *string `json:"dataDiskName,omitempty" tf:"data_disk_name,omitempty"`
 
 	// Size of the data disk, and unit is GB.
 	// Size of the data disk, and unit is GB.
@@ -89,6 +97,11 @@ type DataDisksParameters struct {
 	// Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
 	// +kubebuilder:validation:Optional
 	DataDiskID *string `json:"dataDiskId,omitempty" tf:"data_disk_id,omitempty"`
+
+	// Name of data disk.
+	// Name of data disk.
+	// +kubebuilder:validation:Optional
+	DataDiskName *string `json:"dataDiskName,omitempty" tf:"data_disk_name,omitempty"`
 
 	// Size of the data disk, and unit is GB.
 	// Size of the data disk, and unit is GB.
@@ -164,28 +177,32 @@ type InstanceInitParameters struct {
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
 
-	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableAutomationService *bool `json:"disableAutomationService,omitempty" tf:"disable_automation_service,omitempty"`
 
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
 
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableSecurityService *bool `json:"disableSecurityService,omitempty" tf:"disable_security_service,omitempty"`
 
 	// Indicate whether to force delete the instance. Default is false. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for PREPAID instance.
 	// Indicate whether to force delete the instance. Default is `false`. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for `PREPAID` instance.
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// The image to use for the instance. Changing image_id will cause the instance reset.
-	// The image to use for the instance. Changing `image_id` will cause the instance reset.
+	// High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+	// High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+
+	// The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
+	// The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow to delete before expired. SPOTPAID instance must set spot_instance_type and spot_max_price at the same time. CDHPAID instance must set cdh_instance_type and cdh_host_id.
@@ -220,17 +237,17 @@ type InstanceInitParameters struct {
 	// Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
-	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system..
+	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system..
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
 
-	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	// +listType=set
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
-	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
 	// A list of orderly security group IDs to associate with.
@@ -282,6 +299,10 @@ type InstanceInitParameters struct {
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// Name of the system disk.
+	// Name of the system disk.
+	SystemDiskName *string `json:"systemDiskName,omitempty" tf:"system_disk_name,omitempty"`
 
 	// Resize online.
 	// Resize online.
@@ -368,16 +389,16 @@ type InstanceObservation struct {
 	// Whether the termination protection is enabled. Default is `false`. If set true, which means that this instance can not be deleted by an API action.
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
 
-	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableAutomationService *bool `json:"disableAutomationService,omitempty" tf:"disable_automation_service,omitempty"`
 
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
 
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableSecurityService *bool `json:"disableSecurityService,omitempty" tf:"disable_security_service,omitempty"`
 
 	// Expired time of the instance.
@@ -388,15 +409,19 @@ type InstanceObservation struct {
 	// Indicate whether to force delete the instance. Default is `false`. If set true, the instance will be permanently deleted instead of being moved into the recycle bin. Note: only works for `PREPAID` instance.
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+	// High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The image to use for the instance. Changing image_id will cause the instance reset.
-	// The image to use for the instance. Changing `image_id` will cause the instance reset.
+	// The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
+	// The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDHPAID and CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR and CDHPAID. PREPAID instance may not allow to delete before expired. SPOTPAID instance must set spot_instance_type and spot_max_price at the same time. CDHPAID instance must set cdh_instance_type and cdh_host_id.
@@ -435,17 +460,17 @@ type InstanceObservation struct {
 	// Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
-	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system..
+	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system..
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
 
-	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	// +listType=set
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
-	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
 	// Instance memory capacity, unit in GB.
@@ -504,6 +529,10 @@ type InstanceObservation struct {
 	// System disk snapshot ID used to initialize the system disk. When system disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
 	// System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
 	SystemDiskID *string `json:"systemDiskId,omitempty" tf:"system_disk_id,omitempty"`
+
+	// Name of the system disk.
+	// Name of the system disk.
+	SystemDiskName *string `json:"systemDiskName,omitempty" tf:"system_disk_name,omitempty"`
 
 	// Resize online.
 	// Resize online.
@@ -586,18 +615,18 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DisableAPITermination *bool `json:"disableApiTermination,omitempty" tf:"disable_api_termination,omitempty"`
 
-	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	DisableAutomationService *bool `json:"disableAutomationService,omitempty" tf:"disable_automation_service,omitempty"`
 
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
 
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	DisableSecurityService *bool `json:"disableSecurityService,omitempty" tf:"disable_security_service,omitempty"`
 
@@ -606,13 +635,18 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// The image to use for the instance. Changing image_id will cause the instance reset.
-	// The image to use for the instance. Changing `image_id` will cause the instance reset.
+	// High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+	// High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+	// +kubebuilder:validation:Optional
+	HpcClusterID *string `json:"hpcClusterId,omitempty" tf:"hpc_cluster_id,omitempty"`
+
+	// The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
+	// The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
@@ -656,19 +690,19 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
-	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system..
+	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system..
 	// +kubebuilder:validation:Optional
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
 
-	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	KeyIds []*string `json:"keyIds,omitempty" tf:"key_ids,omitempty"`
 
-	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
@@ -677,8 +711,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	OrderlySecurityGroups []*string `json:"orderlySecurityGroups,omitempty" tf:"orderly_security_groups,omitempty"`
 
-	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
-	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
+	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifications may lead to the reinstallation of the instance's operating system.
+	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
@@ -736,6 +770,11 @@ type InstanceParameters struct {
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// Name of the system disk.
+	// Name of the system disk.
+	// +kubebuilder:validation:Optional
+	SystemDiskName *string `json:"systemDiskName,omitempty" tf:"system_disk_name,omitempty"`
 
 	// Resize online.
 	// Resize online.

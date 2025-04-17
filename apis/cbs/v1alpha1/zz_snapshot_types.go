@@ -32,7 +32,7 @@ type SnapshotInitParameters struct {
 	// +kubebuilder:validation:Optional
 	StorageIDSelector *v1.Selector `json:"storageIdSelector,omitempty" tf:"-"`
 
-	// cbs snapshot do not support tag now. The available tags within this CBS Snapshot.
+	// The available tags within this CBS Snapshot.
 	// The available tags within this CBS Snapshot.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -71,7 +71,7 @@ type SnapshotObservation struct {
 	// Volume of storage which this snapshot created from.
 	StorageSize *float64 `json:"storageSize,omitempty" tf:"storage_size,omitempty"`
 
-	// cbs snapshot do not support tag now. The available tags within this CBS Snapshot.
+	// The available tags within this CBS Snapshot.
 	// The available tags within this CBS Snapshot.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -98,7 +98,7 @@ type SnapshotParameters struct {
 	// +kubebuilder:validation:Optional
 	StorageIDSelector *v1.Selector `json:"storageIdSelector,omitempty" tf:"-"`
 
-	// cbs snapshot do not support tag now. The available tags within this CBS Snapshot.
+	// The available tags within this CBS Snapshot.
 	// The available tags within this CBS Snapshot.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

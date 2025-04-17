@@ -317,6 +317,11 @@ spec:
                       The tags of the SQL Server.
                     type: object
                     x-kubernetes-map-type: granular
+                  timeZone:
+                    description: |-
+                      System time zone, default: China Standard Time.
+                      System time zone, default: `China Standard Time`.
+                    type: string
                   voucherIds:
                     description: |-
                       An array of voucher IDs, currently only one can be used for a single order.
@@ -667,6 +672,11 @@ spec:
                       The tags of the SQL Server.
                     type: object
                     x-kubernetes-map-type: granular
+                  timeZone:
+                    description: |-
+                      System time zone, default: China Standard Time.
+                      System time zone, default: `China Standard Time`.
+                    type: string
                   voucherIds:
                     description: |-
                       An array of voucher IDs, currently only one can be used for a single order.
@@ -969,11 +979,26 @@ spec:
                       Create time of the SQL Server instance.
                       Create time of the SQL Server instance.
                     type: string
+                  dnsPodDomain:
+                    description: |-
+                      Internet address domain name.
+                      Internet address domain name.
+                    type: string
+                  engineVersion:
+                    description: |-
+                      Version of the SQL Server database engine.
+                      Version of the SQL Server database engine.
+                    type: string
                   forceUpgrade:
                     description: |-
                       Indicate that the master instance upgrade or not. true for upgrading the master SQL Server instance to cluster type by force. Default is false. Note: this is not supported with DUAL(ha_type), 2017(engine_version) master SQL Server instance, for it will cause ha_type of the master SQL Server instance change.
                       Indicate that the master instance upgrade or not. `true` for upgrading the master SQL Server instance to cluster type by force. Default is false. Note: this is not supported with `DUAL`(ha_type), `2017`(engine_version) master SQL Server instance, for it will cause ha_type of the master SQL Server instance change.
                     type: boolean
+                  haType:
+                    description: |-
+                      Instance type.
+                      Instance type.
+                    type: string
                   id:
                     description: ID of the resource.
                     type: string
@@ -996,6 +1021,11 @@ spec:
                     description: |-
                       Purchase instance period in month. The value does not exceed 48.
                       Purchase instance period in month. The value does not exceed 48.
+                    type: number
+                  projectId:
+                    description: |-
+                      Project ID.
+                      Project ID.
                     type: number
                   readonlyGroupId:
                     description: |-
@@ -1063,6 +1093,16 @@ spec:
                       The tags of the SQL Server.
                     type: object
                     x-kubernetes-map-type: granular
+                  tgwWanVport:
+                    description: |-
+                      External port number.
+                      External port number.
+                    type: number
+                  timeZone:
+                    description: |-
+                      System time zone, default: China Standard Time.
+                      System time zone, default: `China Standard Time`.
+                    type: string
                   vip:
                     description: |-
                       IP for private access.

@@ -1298,6 +1298,17 @@ func (in *ScalingConfigInitParameters) DeepCopyInto(out *ScalingConfigInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.DisasterRecoverGroupIds != nil {
+		in, out := &in.DisasterRecoverGroupIds, &out.DisasterRecoverGroupIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.DiskTypePolicy != nil {
 		in, out := &in.DiskTypePolicy, &out.DiskTypePolicy
 		*out = new(string)
@@ -1530,6 +1541,17 @@ func (in *ScalingConfigObservation) DeepCopyInto(out *ScalingConfigObservation) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.DisasterRecoverGroupIds != nil {
+		in, out := &in.DisasterRecoverGroupIds, &out.DisasterRecoverGroupIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.DiskTypePolicy != nil {
 		in, out := &in.DiskTypePolicy, &out.DiskTypePolicy
 		*out = new(string)
@@ -1734,6 +1756,17 @@ func (in *ScalingConfigParameters) DeepCopyInto(out *ScalingConfigParameters) {
 		in, out := &in.DedicatedClusterID, &out.DedicatedClusterID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DisasterRecoverGroupIds != nil {
+		in, out := &in.DisasterRecoverGroupIds, &out.DisasterRecoverGroupIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.DiskTypePolicy != nil {
 		in, out := &in.DiskTypePolicy, &out.DiskTypePolicy
@@ -2000,6 +2033,11 @@ func (in *ScalingGroupInitParameters) DeepCopyInto(out *ScalingGroupInitParamete
 		*out = new(float64)
 		**out = **in
 	}
+	if in.DesiredCapacitySyncWithMaxMinSize != nil {
+		in, out := &in.DesiredCapacitySyncWithMaxMinSize, &out.DesiredCapacitySyncWithMaxMinSize
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ForwardBalancerIds != nil {
 		in, out := &in.ForwardBalancerIds, &out.ForwardBalancerIds
 		*out = make([]ForwardBalancerIdsInitParameters, len(*in))
@@ -2051,6 +2089,11 @@ func (in *ScalingGroupInitParameters) DeepCopyInto(out *ScalingGroupInitParamete
 	if in.ReplaceLoadBalancerUnhealthy != nil {
 		in, out := &in.ReplaceLoadBalancerUnhealthy, &out.ReplaceLoadBalancerUnhealthy
 		*out = new(bool)
+		**out = **in
+	}
+	if in.ReplaceMode != nil {
+		in, out := &in.ReplaceMode, &out.ReplaceMode
+		*out = new(string)
 		**out = **in
 	}
 	if in.ReplaceMonitorUnhealthy != nil {
@@ -2194,6 +2237,11 @@ func (in *ScalingGroupObservation) DeepCopyInto(out *ScalingGroupObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.DesiredCapacitySyncWithMaxMinSize != nil {
+		in, out := &in.DesiredCapacitySyncWithMaxMinSize, &out.DesiredCapacitySyncWithMaxMinSize
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ForwardBalancerIds != nil {
 		in, out := &in.ForwardBalancerIds, &out.ForwardBalancerIds
 		*out = make([]ForwardBalancerIdsObservation, len(*in))
@@ -2255,6 +2303,11 @@ func (in *ScalingGroupObservation) DeepCopyInto(out *ScalingGroupObservation) {
 	if in.ReplaceLoadBalancerUnhealthy != nil {
 		in, out := &in.ReplaceLoadBalancerUnhealthy, &out.ReplaceLoadBalancerUnhealthy
 		*out = new(bool)
+		**out = **in
+	}
+	if in.ReplaceMode != nil {
+		in, out := &in.ReplaceMode, &out.ReplaceMode
+		*out = new(string)
 		**out = **in
 	}
 	if in.ReplaceMonitorUnhealthy != nil {
@@ -2376,6 +2429,11 @@ func (in *ScalingGroupParameters) DeepCopyInto(out *ScalingGroupParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.DesiredCapacitySyncWithMaxMinSize != nil {
+		in, out := &in.DesiredCapacitySyncWithMaxMinSize, &out.DesiredCapacitySyncWithMaxMinSize
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ForwardBalancerIds != nil {
 		in, out := &in.ForwardBalancerIds, &out.ForwardBalancerIds
 		*out = make([]ForwardBalancerIdsParameters, len(*in))
@@ -2427,6 +2485,11 @@ func (in *ScalingGroupParameters) DeepCopyInto(out *ScalingGroupParameters) {
 	if in.ReplaceLoadBalancerUnhealthy != nil {
 		in, out := &in.ReplaceLoadBalancerUnhealthy, &out.ReplaceLoadBalancerUnhealthy
 		*out = new(bool)
+		**out = **in
+	}
+	if in.ReplaceMode != nil {
+		in, out := &in.ReplaceMode, &out.ReplaceMode
+		*out = new(string)
 		**out = **in
 	}
 	if in.ReplaceMonitorUnhealthy != nil {

@@ -4,22 +4,22 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cam/v1alpha1/user
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     consoleLogin: true
     countryCode: "86"
-    email: hello@test.com
+    email: example@qq.com
     forceDelete: true
-    name: tf_cam_user
+    name: tf-example
     needResetPassword: true
     passwordSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    phoneNum: "12345678910"
-    remark: tf_user_test
+    phoneNum: 189********
+    remark: Remark.
     tags:
-      test: tf_cam_user
+      createBy: Terraform
     useApi: true

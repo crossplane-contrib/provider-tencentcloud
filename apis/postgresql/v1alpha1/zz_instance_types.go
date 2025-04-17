@@ -30,6 +30,14 @@ type BackupPlanInitParameters struct {
 	// Specify earliest backup start time, format hh:mm:ss.
 	// Specify earliest backup start time, format `hh:mm:ss`.
 	MinBackupStartTime *string `json:"minBackupStartTime,omitempty" tf:"min_backup_start_time,omitempty"`
+
+	// If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+	// If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+	MonthlyBackupPeriod []*string `json:"monthlyBackupPeriod,omitempty" tf:"monthly_backup_period,omitempty"`
+
+	// Specify days of the retention.
+	// Specify days of the retention.
+	MonthlyBackupRetentionPeriod *float64 `json:"monthlyBackupRetentionPeriod,omitempty" tf:"monthly_backup_retention_period,omitempty"`
 }
 
 type BackupPlanObservation struct {
@@ -49,6 +57,18 @@ type BackupPlanObservation struct {
 	// Specify earliest backup start time, format hh:mm:ss.
 	// Specify earliest backup start time, format `hh:mm:ss`.
 	MinBackupStartTime *string `json:"minBackupStartTime,omitempty" tf:"min_backup_start_time,omitempty"`
+
+	// If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+	// If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+	MonthlyBackupPeriod []*string `json:"monthlyBackupPeriod,omitempty" tf:"monthly_backup_period,omitempty"`
+
+	// Specify days of the retention.
+	// Specify days of the retention.
+	MonthlyBackupRetentionPeriod *float64 `json:"monthlyBackupRetentionPeriod,omitempty" tf:"monthly_backup_retention_period,omitempty"`
+
+	// ID of the resource.
+	// Monthly plan id.
+	MonthlyPlanID *string `json:"monthlyPlanId,omitempty" tf:"monthly_plan_id,omitempty"`
 }
 
 type BackupPlanParameters struct {
@@ -72,6 +92,16 @@ type BackupPlanParameters struct {
 	// Specify earliest backup start time, format `hh:mm:ss`.
 	// +kubebuilder:validation:Optional
 	MinBackupStartTime *string `json:"minBackupStartTime,omitempty" tf:"min_backup_start_time,omitempty"`
+
+	// If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+	// If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+	// +kubebuilder:validation:Optional
+	MonthlyBackupPeriod []*string `json:"monthlyBackupPeriod,omitempty" tf:"monthly_backup_period,omitempty"`
+
+	// Specify days of the retention.
+	// Specify days of the retention.
+	// +kubebuilder:validation:Optional
+	MonthlyBackupRetentionPeriod *float64 `json:"monthlyBackupRetentionPeriod,omitempty" tf:"monthly_backup_retention_period,omitempty"`
 }
 
 type DBNodeSetInitParameters struct {
@@ -259,6 +289,10 @@ type InstanceInitParameters struct {
 	// Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu, db_node_set, db_kernel_version fields.
+	// Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu`, `db_node_set`, `db_kernel_version` fields.
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 }
 
 type InstanceObservation struct {
@@ -411,6 +445,10 @@ type InstanceObservation struct {
 	// Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu, db_node_set, db_kernel_version fields.
+	// Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu`, `db_node_set`, `db_kernel_version` fields.
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 }
 
 type InstanceParameters struct {
@@ -584,6 +622,11 @@ type InstanceParameters struct {
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
 	// +kubebuilder:validation:Optional
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu, db_node_set, db_kernel_version fields.
+	// Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu`, `db_node_set`, `db_kernel_version` fields.
+	// +kubebuilder:validation:Optional
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 }
 
 // InstanceSpec defines the desired state of Instance

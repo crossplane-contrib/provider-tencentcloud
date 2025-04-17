@@ -411,11 +411,11 @@ type ScaleWorkerTaintsInitParameters struct {
 	// Effect of the taint.
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
-	// Key of the taint.
+	// Tag key.
 	// Key of the taint.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Value of the taint.
+	// Tag value.
 	// Value of the taint.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
@@ -426,11 +426,11 @@ type ScaleWorkerTaintsObservation struct {
 	// Effect of the taint.
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
-	// Key of the taint.
+	// Tag key.
 	// Key of the taint.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Value of the taint.
+	// Tag value.
 	// Value of the taint.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
@@ -442,12 +442,12 @@ type ScaleWorkerTaintsParameters struct {
 	// +kubebuilder:validation:Optional
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
-	// Key of the taint.
+	// Tag key.
 	// Key of the taint.
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Value of the taint.
+	// Tag value.
 	// Value of the taint.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
@@ -681,6 +681,10 @@ type ScaleWorkerWorkerConfigInitParameters struct {
 	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
+	// Tag pairs.
+	// Tag pairs.
+	Tags []TagsInitParameters `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
@@ -787,6 +791,10 @@ type ScaleWorkerWorkerConfigObservation struct {
 	// System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
 	// System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
+
+	// Tag pairs.
+	// Tag pairs.
+	Tags []TagsObservation `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
@@ -925,6 +933,11 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
+	// Tag pairs.
+	// Tag pairs.
+	// +kubebuilder:validation:Optional
+	Tags []TagsParameters `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// +kubebuilder:validation:Optional
@@ -953,6 +966,41 @@ type ScaleWorkerWorkerInstancesListObservation struct {
 }
 
 type ScaleWorkerWorkerInstancesListParameters struct {
+}
+
+type TagsInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TagsObservation struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TagsParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 // ScaleWorkerSpec defines the desired state of ScaleWorker

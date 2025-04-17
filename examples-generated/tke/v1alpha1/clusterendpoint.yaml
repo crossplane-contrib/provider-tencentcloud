@@ -4,25 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tke/v1alpha1/clusterendpoint
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clusterIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    clusterInternet: true
     clusterIntranet: true
-
----
-
-apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
-kind: NodePool
-metadata:
-  annotations:
-    meta.upbound.io/example-id: tke/v1alpha1/clusterendpoint
-  labels:
-    testing.upbound.io/example-name: pool1
-  name: pool1
-spec:
-  forProvider: {}
+    clusterIntranetDomain: intranet_demo.com
+    clusterIntranetSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

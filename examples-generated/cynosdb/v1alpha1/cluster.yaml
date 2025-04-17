@@ -15,6 +15,17 @@ spec:
     dbVersion: "5.7"
     forceDelete: false
     instanceCpuCore: 2
+    instanceInitInfos:
+    - cpu: 2
+      deviceType: common
+      instanceCount: 1
+      instanceType: rw
+      memory: 4
+    - cpu: 2
+      deviceType: exclusive
+      instanceCount: 1
+      instanceType: ro
+      memory: 4
     instanceMaintainDuration: 7200
     instanceMaintainStartTime: 10800
     instanceMaintainWeekdays:
@@ -40,7 +51,6 @@ spec:
     - ${tencentcloud_security_group.example.id}
     rwGroupSg:
     - ${tencentcloud_security_group.example.id}
-    storageLimit: 1000
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: subnet

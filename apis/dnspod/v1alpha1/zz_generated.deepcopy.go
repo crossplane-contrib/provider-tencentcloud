@@ -124,6 +124,11 @@ func (in *DomainInstanceObservation) DeepCopyInto(out *DomainInstanceObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainID != nil {
+		in, out := &in.DomainID, &out.DomainID
+		*out = new(float64)
+		**out = **in
+	}
 	if in.GroupID != nil {
 		in, out := &in.GroupID, &out.GroupID
 		*out = new(float64)

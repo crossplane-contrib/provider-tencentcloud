@@ -4,11 +4,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cbs/v1alpha1/snapshot
   labels:
-    testing.upbound.io/example-name: snapshot
-  name: snapshot
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    snapshotName: unnamed
+    snapshotName: tf-example
     storageIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    tags:
+      createBy: Terraform

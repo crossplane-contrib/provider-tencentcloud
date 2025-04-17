@@ -89,6 +89,31 @@ type EsACLParameters struct {
 	WhiteList []*string `json:"whiteList,omitempty" tf:"white_list,omitempty"`
 }
 
+type EsPublicACLInitParameters struct {
+
+	// Access Whitelist.
+	// Access Whitelist.
+	// +listType=set
+	WhiteIPList []*string `json:"whiteIpList,omitempty" tf:"white_ip_list,omitempty"`
+}
+
+type EsPublicACLObservation struct {
+
+	// Access Whitelist.
+	// Access Whitelist.
+	// +listType=set
+	WhiteIPList []*string `json:"whiteIpList,omitempty" tf:"white_ip_list,omitempty"`
+}
+
+type EsPublicACLParameters struct {
+
+	// Access Whitelist.
+	// Access Whitelist.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	WhiteIPList []*string `json:"whiteIpList,omitempty" tf:"white_ip_list,omitempty"`
+}
+
 type InstanceInitParameters struct {
 
 	// Availability zone. When create multi-az es, this parameter must be omitted or -.
@@ -119,6 +144,10 @@ type InstanceInitParameters struct {
 	// Kibana Access Control Configuration.
 	EsACL []EsACLInitParameters `json:"esAcl,omitempty" tf:"es_acl,omitempty"`
 
+	// Public network access control list.
+	// Public network access control list.
+	EsPublicACL []EsPublicACLInitParameters `json:"esPublicAcl,omitempty" tf:"es_public_acl,omitempty"`
+
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
@@ -138,6 +167,10 @@ type InstanceInitParameters struct {
 	// Node information list, which is used to describe the specification information of various types of nodes in the cluster, such as node type, node quantity, node specification, disk type, and disk size.
 	// Node information list, which is used to describe the specification information of various types of nodes in the cluster, such as node type, node quantity, node specification, disk type, and disk size.
 	NodeInfoList []NodeInfoListInitParameters `json:"nodeInfoList,omitempty" tf:"node_info_list,omitempty"`
+
+	// ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
+	// ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
+	PublicAccess *string `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
 
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
@@ -229,6 +262,14 @@ type InstanceObservation struct {
 	// Kibana Access Control Configuration.
 	EsACL []EsACLObservation `json:"esAcl,omitempty" tf:"es_acl,omitempty"`
 
+	// Public network access control list.
+	// Public network access control list.
+	EsPublicACL []EsPublicACLObservation `json:"esPublicAcl,omitempty" tf:"es_public_acl,omitempty"`
+
+	// Es public network address.
+	// Es public network address.
+	EsPublicURL *string `json:"esPublicUrl,omitempty" tf:"es_public_url,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -255,6 +296,10 @@ type InstanceObservation struct {
 	// Node information list, which is used to describe the specification information of various types of nodes in the cluster, such as node type, node quantity, node specification, disk type, and disk size.
 	// Node information list, which is used to describe the specification information of various types of nodes in the cluster, such as node type, node quantity, node specification, disk type, and disk size.
 	NodeInfoList []NodeInfoListObservation `json:"nodeInfoList,omitempty" tf:"node_info_list,omitempty"`
+
+	// ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
+	// ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
+	PublicAccess *string `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
 
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
@@ -319,6 +364,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	EsACL []EsACLParameters `json:"esAcl,omitempty" tf:"es_acl,omitempty"`
 
+	// Public network access control list.
+	// Public network access control list.
+	// +kubebuilder:validation:Optional
+	EsPublicACL []EsPublicACLParameters `json:"esPublicAcl,omitempty" tf:"es_public_acl,omitempty"`
+
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// +kubebuilder:validation:Optional
@@ -348,6 +398,11 @@ type InstanceParameters struct {
 	// Password to an instance, the password needs to be 8 to 16 characters, including at least two items ([a-z,A-Z], [0-9] and [-!@#$%&^*+=_:;,.?] special symbols.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+
+	// ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
+	// ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
+	// +kubebuilder:validation:Optional
+	PublicAccess *string `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
 
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.

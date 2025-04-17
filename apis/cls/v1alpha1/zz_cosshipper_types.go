@@ -97,6 +97,14 @@ type CosShipperInitParameters struct {
 	// Format configuration of shipped log content.
 	Content []ContentInitParameters `json:"content,omitempty" tf:"content,omitempty"`
 
+	// End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+	// End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+	EndTime *float64 `json:"endTime,omitempty" tf:"end_time,omitempty"`
+
+	// Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+	// Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+	FilenameMode *float64 `json:"filenameMode,omitempty" tf:"filename_mode,omitempty"`
+
 	// Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
 	// Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
 	FilterRules []FilterRulesInitParameters `json:"filterRules,omitempty" tf:"filter_rules,omitempty"`
@@ -120,6 +128,14 @@ type CosShipperInitParameters struct {
 	// Shipping rule name.
 	// Shipping rule name.
 	ShipperName *string `json:"shipperName,omitempty" tf:"shipper_name,omitempty"`
+
+	// Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+	// Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+	StartTime *float64 `json:"startTime,omitempty" tf:"start_time,omitempty"`
+
+	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
 	// ID of the log topic to which the shipping rule to be created belongs.
 	// ID of the log topic to which the shipping rule to be created belongs.
@@ -149,6 +165,14 @@ type CosShipperObservation struct {
 	// Format configuration of shipped log content.
 	Content []ContentObservation `json:"content,omitempty" tf:"content,omitempty"`
 
+	// End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+	// End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+	EndTime *float64 `json:"endTime,omitempty" tf:"end_time,omitempty"`
+
+	// Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+	// Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+	FilenameMode *float64 `json:"filenameMode,omitempty" tf:"filename_mode,omitempty"`
+
 	// Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
 	// Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
 	FilterRules []FilterRulesObservation `json:"filterRules,omitempty" tf:"filter_rules,omitempty"`
@@ -176,6 +200,14 @@ type CosShipperObservation struct {
 	// Shipping rule name.
 	ShipperName *string `json:"shipperName,omitempty" tf:"shipper_name,omitempty"`
 
+	// Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+	// Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+	StartTime *float64 `json:"startTime,omitempty" tf:"start_time,omitempty"`
+
+	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+
 	// ID of the log topic to which the shipping rule to be created belongs.
 	// ID of the log topic to which the shipping rule to be created belongs.
 	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
@@ -197,6 +229,16 @@ type CosShipperParameters struct {
 	// Format configuration of shipped log content.
 	// +kubebuilder:validation:Optional
 	Content []ContentParameters `json:"content,omitempty" tf:"content,omitempty"`
+
+	// End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+	// End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+	// +kubebuilder:validation:Optional
+	EndTime *float64 `json:"endTime,omitempty" tf:"end_time,omitempty"`
+
+	// Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+	// Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+	// +kubebuilder:validation:Optional
+	FilenameMode *float64 `json:"filenameMode,omitempty" tf:"filename_mode,omitempty"`
 
 	// Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
 	// Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
@@ -227,6 +269,16 @@ type CosShipperParameters struct {
 	// Shipping rule name.
 	// +kubebuilder:validation:Optional
 	ShipperName *string `json:"shipperName,omitempty" tf:"shipper_name,omitempty"`
+
+	// Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+	// Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+	// +kubebuilder:validation:Optional
+	StartTime *float64 `json:"startTime,omitempty" tf:"start_time,omitempty"`
+
+	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+	// +kubebuilder:validation:Optional
+	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
 	// ID of the log topic to which the shipping rule to be created belongs.
 	// ID of the log topic to which the shipping rule to be created belongs.

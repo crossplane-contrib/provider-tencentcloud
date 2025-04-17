@@ -172,6 +172,14 @@ spec:
                       Indicates the region of main instance.
                       Indicates the region of main instance.
                     type: string
+                  inMaintenance:
+                    description: |-
+                      Switch time for instance configuration changes.
+                      Switch time for instance configuration changes.
+                      - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+                      - 1: Perform reconfiguration tasks within the maintenance time window.
+                      Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+                    type: number
                   instanceName:
                     description: |-
                       Name of the Mongodb instance.
@@ -336,6 +344,14 @@ spec:
                       Indicates the region of main instance.
                       Indicates the region of main instance.
                     type: string
+                  inMaintenance:
+                    description: |-
+                      Switch time for instance configuration changes.
+                      Switch time for instance configuration changes.
+                      - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+                      - 1: Perform reconfiguration tasks within the maintenance time window.
+                      Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+                    type: number
                   instanceName:
                     description: |-
                       Name of the Mongodb instance.
@@ -619,6 +635,14 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  inMaintenance:
+                    description: |-
+                      Switch time for instance configuration changes.
+                      Switch time for instance configuration changes.
+                      - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+                      - 1: Perform reconfiguration tasks within the maintenance time window.
+                      Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+                    type: number
                   instanceName:
                     description: |-
                       Name of the Mongodb instance.

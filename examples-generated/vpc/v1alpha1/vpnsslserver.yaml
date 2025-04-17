@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/vpnsslserver
   labels:
-    testing.upbound.io/example-name: server
-  name: server
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     compress: true

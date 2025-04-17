@@ -4,15 +4,20 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tencentcloud/v1alpha1/dcx
   labels:
-    testing.upbound.io/example-name: bgp_main
-  name: bgp-main
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    bandwidth: 900
-    dcId: ${var.dc_id}
-    dcgId: ${var.dcg_id}
-    name: bgp_main
+    bandwidth: 100
+    bgpAsn: 64511
+    customerAddress: 10.8.254.13/30
+    dcId: dc-ink7y3qf
+    dcOwnerAccount: "100017971194"
+    dcgId: dcg-ehr22qfb
+    name: tf-example
+    networkRegion: ap-guangzhou
     networkType: VPC
     routeType: BGP
-    vlan: 306
-    vpcId: ${var.vpc_id}
+    tencentAddress: 10.8.254.14/30
+    vlan: 60
+    vpcId: vpc-nzuu8dyj

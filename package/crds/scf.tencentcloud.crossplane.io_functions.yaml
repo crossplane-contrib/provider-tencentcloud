@@ -329,8 +329,8 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
-                            Type of the SCF function trigger, support `cos`, `cls`, `timer`, `ckafka`, `http`, `apigw`, `cmq`.
+                            Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+                            Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
                           type: string
                       type: object
                     type: array
@@ -614,8 +614,8 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
-                            Type of the SCF function trigger, support `cos`, `cls`, `timer`, `ckafka`, `http`, `apigw`, `cmq`.
+                            Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+                            Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
                           type: string
                       type: object
                     type: array
@@ -1161,8 +1161,9 @@ spec:
                             parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
                           type: string
                         type:
-                          description: Type of the SCF function trigger, support cos,
-                            cls, timer, ckafka, http, apigw, cmq.
+                          description: Type of the SCF function trigger, support timer,
+                            ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb,
+                            mps, vod, cm, eb, http.
                           type: string
                       type: object
                     type: array
@@ -1189,8 +1190,8 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Type of the SCF function trigger, support cos, cls, timer, ckafka, http, apigw, cmq.
-                            Type of the SCF function trigger, support `cos`, `cls`, `timer`, `ckafka`, `http`, `apigw`, `cmq`.
+                            Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+                            Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
                           type: string
                       type: object
                     type: array

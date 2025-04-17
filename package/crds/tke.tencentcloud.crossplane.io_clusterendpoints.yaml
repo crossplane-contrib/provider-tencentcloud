@@ -35,8 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: ClusterEndpoint is the Schema for the ClusterEndpoints API. Provide
-          a resource to create a KubernetesClusterEndpoint. This resource allows you
-          to create an empty cluster first without any workers. Only all attached
+          a resource to create a kubernetes cluster endpoint. This resource allows
+          you to create an empty cluster first without any workers. Only all attached
           node depends create complete, cluster endpoint will finally be enabled.
         properties:
           apiVersion:
@@ -714,6 +714,16 @@ spec:
                     type: string
                   id:
                     description: ID of the resource.
+                    type: string
+                  kubeConfig:
+                    description: |-
+                      The Intranet address used for access.
+                      The Intranet address used for access.
+                    type: string
+                  kubeConfigIntranet:
+                    description: |-
+                      Kubernetes config of private network.
+                      Kubernetes config of private network.
                     type: string
                   managedClusterInternetSecurityPolicies:
                     description: |-

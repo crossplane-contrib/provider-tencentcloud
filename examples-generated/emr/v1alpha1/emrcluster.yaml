@@ -15,7 +15,7 @@ spec:
       namespace: upbound-system
     payMode: 0
     placementInfo:
-      projectId: 0
+    - projectId: 0
       zone: ${var.availability_zone}
     productId: 38
     resourceSpec:

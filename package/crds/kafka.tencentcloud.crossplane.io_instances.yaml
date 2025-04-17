@@ -144,6 +144,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  elasticBandwidthSwitch:
+                    description: |-
+                      Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+                      Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+                    type: number
                   instanceName:
                     description: |-
                       Instance name.
@@ -493,6 +498,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  elasticBandwidthSwitch:
+                    description: |-
+                      Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+                      Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+                    type: number
                   instanceName:
                     description: |-
                       Instance name.
@@ -1010,6 +1020,11 @@ spec:
                           type: number
                       type: object
                     type: array
+                  elasticBandwidthSwitch:
+                    description: |-
+                      Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+                      Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+                    type: number
                   id:
                     description: ID of the resource.
                     type: string

@@ -390,11 +390,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  targrtGroupId:
-                    description: |-
-                      It has been deprecated from version 1.47.1. Use target_group_id instead. ID of the CLB target group.
-                      ID of the CLB target group.
-                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -725,11 +720,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  targrtGroupId:
-                    description: |-
-                      It has been deprecated from version 1.47.1. Use target_group_id instead. ID of the CLB target group.
-                      ID of the CLB target group.
-                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -925,11 +915,6 @@ spec:
                   targetGroupId:
                     description: |-
                       ID of the CLB target group.
-                      ID of the CLB target group.
-                    type: string
-                  targrtGroupId:
-                    description: |-
-                      It has been deprecated from version 1.47.1. Use target_group_id instead. ID of the CLB target group.
                       ID of the CLB target group.
                     type: string
                 type: object

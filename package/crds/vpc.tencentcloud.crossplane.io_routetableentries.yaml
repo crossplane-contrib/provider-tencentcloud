@@ -95,8 +95,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
-                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
+                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
+                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
                     type: string
                   routeTableId:
                     description: |-
@@ -213,8 +213,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
-                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
+                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
+                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
                     type: string
                   routeTableId:
                     description: |-
@@ -506,8 +506,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
-                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
+                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
+                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
                     type: string
                   routeItemId:
                     description: |-

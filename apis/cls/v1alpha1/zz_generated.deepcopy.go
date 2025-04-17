@@ -2053,6 +2053,16 @@ func (in *CosShipperInitParameters) DeepCopyInto(out *CosShipperInitParameters) 
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.EndTime != nil {
+		in, out := &in.EndTime, &out.EndTime
+		*out = new(float64)
+		**out = **in
+	}
+	if in.FilenameMode != nil {
+		in, out := &in.FilenameMode, &out.FilenameMode
+		*out = new(float64)
+		**out = **in
+	}
 	if in.FilterRules != nil {
 		in, out := &in.FilterRules, &out.FilterRules
 		*out = make([]FilterRulesInitParameters, len(*in))
@@ -2082,6 +2092,16 @@ func (in *CosShipperInitParameters) DeepCopyInto(out *CosShipperInitParameters) 
 	}
 	if in.ShipperName != nil {
 		in, out := &in.ShipperName, &out.ShipperName
+		*out = new(string)
+		**out = **in
+	}
+	if in.StartTime != nil {
+		in, out := &in.StartTime, &out.StartTime
+		*out = new(float64)
+		**out = **in
+	}
+	if in.StorageType != nil {
+		in, out := &in.StorageType, &out.StorageType
 		*out = new(string)
 		**out = **in
 	}
@@ -2166,6 +2186,16 @@ func (in *CosShipperObservation) DeepCopyInto(out *CosShipperObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.EndTime != nil {
+		in, out := &in.EndTime, &out.EndTime
+		*out = new(float64)
+		**out = **in
+	}
+	if in.FilenameMode != nil {
+		in, out := &in.FilenameMode, &out.FilenameMode
+		*out = new(float64)
+		**out = **in
+	}
 	if in.FilterRules != nil {
 		in, out := &in.FilterRules, &out.FilterRules
 		*out = make([]FilterRulesObservation, len(*in))
@@ -2200,6 +2230,16 @@ func (in *CosShipperObservation) DeepCopyInto(out *CosShipperObservation) {
 	}
 	if in.ShipperName != nil {
 		in, out := &in.ShipperName, &out.ShipperName
+		*out = new(string)
+		**out = **in
+	}
+	if in.StartTime != nil {
+		in, out := &in.StartTime, &out.StartTime
+		*out = new(float64)
+		**out = **in
+	}
+	if in.StorageType != nil {
+		in, out := &in.StorageType, &out.StorageType
 		*out = new(string)
 		**out = **in
 	}
@@ -2242,6 +2282,16 @@ func (in *CosShipperParameters) DeepCopyInto(out *CosShipperParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.EndTime != nil {
+		in, out := &in.EndTime, &out.EndTime
+		*out = new(float64)
+		**out = **in
+	}
+	if in.FilenameMode != nil {
+		in, out := &in.FilenameMode, &out.FilenameMode
+		*out = new(float64)
+		**out = **in
+	}
 	if in.FilterRules != nil {
 		in, out := &in.FilterRules, &out.FilterRules
 		*out = make([]FilterRulesParameters, len(*in))
@@ -2271,6 +2321,16 @@ func (in *CosShipperParameters) DeepCopyInto(out *CosShipperParameters) {
 	}
 	if in.ShipperName != nil {
 		in, out := &in.ShipperName, &out.ShipperName
+		*out = new(string)
+		**out = **in
+	}
+	if in.StartTime != nil {
+		in, out := &in.StartTime, &out.StartTime
+		*out = new(float64)
+		**out = **in
+	}
+	if in.StorageType != nil {
+		in, out := &in.StorageType, &out.StorageType
 		*out = new(string)
 		**out = **in
 	}

@@ -140,6 +140,22 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
+                  esPublicAcl:
+                    description: |-
+                      Public network access control list.
+                      Public network access control list.
+                    items:
+                      properties:
+                        whiteIpList:
+                          description: |-
+                            Access Whitelist.
+                            Access Whitelist.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
                   instanceName:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
@@ -230,6 +246,11 @@ spec:
                     - name
                     - namespace
                     type: object
+                  publicAccess:
+                    description: |-
+                      ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
+                      ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
+                    type: string
                   renewFlag:
                     description: |-
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
@@ -505,6 +526,22 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
+                  esPublicAcl:
+                    description: |-
+                      Public network access control list.
+                      Public network access control list.
+                    items:
+                      properties:
+                        whiteIpList:
+                          description: |-
+                            Access Whitelist.
+                            Access Whitelist.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
                   instanceName:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
@@ -576,6 +613,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  publicAccess:
+                    description: |-
+                      ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
+                      ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
+                    type: string
                   renewFlag:
                     description: |-
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
@@ -1042,6 +1084,27 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
+                  esPublicAcl:
+                    description: |-
+                      Public network access control list.
+                      Public network access control list.
+                    items:
+                      properties:
+                        whiteIpList:
+                          description: |-
+                            Access Whitelist.
+                            Access Whitelist.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  esPublicUrl:
+                    description: |-
+                      Es public network address.
+                      Es public network address.
+                    type: string
                   id:
                     description: ID of the resource.
                     type: string
@@ -1121,6 +1184,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  publicAccess:
+                    description: |-
+                      ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
+                      ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
+                    type: string
                   renewFlag:
                     description: |-
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.

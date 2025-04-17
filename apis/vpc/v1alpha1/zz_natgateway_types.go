@@ -15,8 +15,8 @@ import (
 
 type NatGatewayInitParameters struct {
 
-	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
-	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
+	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
 	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
@@ -69,8 +69,8 @@ type NatGatewayInitParameters struct {
 
 type NatGatewayObservation struct {
 
-	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
-	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
+	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
 	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`
 
@@ -121,8 +121,8 @@ type NatGatewayObservation struct {
 
 type NatGatewayParameters struct {
 
-	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
-	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
+	// EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	AssignedEIPSet []*string `json:"assignedEipSet,omitempty" tf:"assigned_eip_set,omitempty"`

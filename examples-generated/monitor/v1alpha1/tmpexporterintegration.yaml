@@ -4,14 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: monitor/v1alpha1/tmpexporterintegration
   labels:
-    testing.upbound.io/example-name: tmpExporterIntegration
-  name: tmpexporterintegration
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    clusterId: cls-bmuaukfu
-    content: '{"name":"test","kind":"blackbox-exporter","spec":{"instanceSpec":{"module":"http_get","urls":["xx"]}}}'
+    clusterId: cls-csxm4phu
+    content: '{"name":"test","kind":"qcloud-exporter","spec":{"scrapeSpec":{"interval":"1m","timeout":"1m","relabelConfigs":"#metricRelabelings:\n#-
+      action: labeldrop\n#  regex: tmp_test_label\n"},"instanceSpec":{"region":"Guangzhou","role":"CM_QCSLinkedRoleInTMP","useRole":true,"authProvider":{"method":1,"presetRole":"CM_QCSLinkedRoleInTMP"},"rateLimit":1000,"delaySeconds":0,"rangeSeconds":0,"reload_interval_minutes":10,"uin":"100023201586","tag_key_operation":"ToUnderLineAndLower"},"exporterSpec":{"cvm":false,"cbs":true,"imageRegistry":"ccr.ccs.tencentyun.com","cpu":"0.25","memory":"0.5Gi"}},"status":{}}'
     instanceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    kind: blackbox-exporter
-    kubeType: 1
+    kind: qcloud-exporter
+    kubeType: 3

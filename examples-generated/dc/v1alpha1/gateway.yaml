@@ -4,13 +4,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dc/v1alpha1/gateway
   labels:
-    testing.upbound.io/example-name: vpc_main
-  name: vpc-main
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    gatewayType: NAT
-    name: ci-cdg-vpc-test
-    networkInstanceId: ${tencentcloud_vpc.main.id}
+    gatewayType: NORMAL
+    name: tf-example
+    networkInstanceId: ${tencentcloud_vpc.vpc.id}
     networkType: VPC
 
 ---
@@ -21,9 +21,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dc/v1alpha1/gateway
   labels:
-    testing.upbound.io/example-name: main
-  name: main
+    testing.upbound.io/example-name: vpc
+  name: vpc
 spec:
   forProvider:
     cidrBlock: 10.0.0.0/16
-    name: ci-vpc-instance-test
+    name: vpc

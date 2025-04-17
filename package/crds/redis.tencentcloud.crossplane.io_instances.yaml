@@ -80,8 +80,8 @@ spec:
                     type: number
                   availabilityZone:
                     description: |-
-                      The available zone ID of an instance to be created, please refer to tencentcloud_redis_zone_config.list.
-                      The available zone ID of an instance to be created, please refer to `tencentcloud_redis_zone_config.list`.
+                      The available zone of an instance to be created, like ap-beijing-7, please refer to tencentcloud_redis_zone_config.list.
+                      The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
                     type: string
                   chargeType:
                     description: |-
@@ -235,6 +235,11 @@ spec:
                       Switching mode: 1-maintenance time window switching, 2-immediate switching, default value 2.
                       Switching mode: `1`-maintenance time window switching, `2`-immediate switching, default value `2`.
                     type: number
+                  wanAddressSwitch:
+                    description: |-
+                      Wan address switch, default close, values: open, close.
+                      Wan address switch, default `close`, values: `open`, `close`.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -256,8 +261,8 @@ spec:
                     type: number
                   availabilityZone:
                     description: |-
-                      The available zone ID of an instance to be created, please refer to tencentcloud_redis_zone_config.list.
-                      The available zone ID of an instance to be created, please refer to `tencentcloud_redis_zone_config.list`.
+                      The available zone of an instance to be created, like ap-beijing-7, please refer to tencentcloud_redis_zone_config.list.
+                      The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
                     type: string
                   chargeType:
                     description: |-
@@ -392,6 +397,11 @@ spec:
                       Switching mode: 1-maintenance time window switching, 2-immediate switching, default value 2.
                       Switching mode: `1`-maintenance time window switching, `2`-immediate switching, default value `2`.
                     type: number
+                  wanAddressSwitch:
+                    description: |-
+                      Wan address switch, default close, values: open, close.
+                      Wan address switch, default `close`, values: `open`, `close`.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -581,8 +591,8 @@ spec:
                     type: number
                   availabilityZone:
                     description: |-
-                      The available zone ID of an instance to be created, please refer to tencentcloud_redis_zone_config.list.
-                      The available zone ID of an instance to be created, please refer to `tencentcloud_redis_zone_config.list`.
+                      The available zone of an instance to be created, like ap-beijing-7, please refer to tencentcloud_redis_zone_config.list.
+                      The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
                     type: string
                   chargeType:
                     description: |-
@@ -753,6 +763,16 @@ spec:
                       Switching mode: 1-maintenance time window switching, 2-immediate switching, default value 2.
                       Switching mode: `1`-maintenance time window switching, `2`-immediate switching, default value `2`.
                     type: number
+                  wanAddress:
+                    description: |-
+                      Allocate Wan Address.
+                      Allocate Wan Address.
+                    type: string
+                  wanAddressSwitch:
+                    description: |-
+                      Wan address switch, default close, values: open, close.
+                      Wan address switch, default `close`, values: `open`, `close`.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

@@ -35,12 +35,12 @@ type ConfigInitParameters struct {
 	// Log topic ID (TopicId) of collection configuration.
 	Output *string `json:"output,omitempty" tf:"output,omitempty"`
 
-	// Log collection path containing the filename.
-	// Log collection path containing the filename.
+	// Log collection path containing the filename. Required for document collection.
+	// Log collection path containing the filename. Required for document collection.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Custom collection rule, which is a serialized JSON string.
-	// Custom collection rule, which is a serialized JSON string.
+	// Custom collection rule, which is a serialized JSON string. Required when LogType is user_define_log.
+	// Custom collection rule, which is a serialized JSON string. Required when LogType is user_define_log.
 	UserDefineRule *string `json:"userDefineRule,omitempty" tf:"user_define_rule,omitempty"`
 }
 
@@ -69,12 +69,12 @@ type ConfigObservation struct {
 	// Log topic ID (TopicId) of collection configuration.
 	Output *string `json:"output,omitempty" tf:"output,omitempty"`
 
-	// Log collection path containing the filename.
-	// Log collection path containing the filename.
+	// Log collection path containing the filename. Required for document collection.
+	// Log collection path containing the filename. Required for document collection.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Custom collection rule, which is a serialized JSON string.
-	// Custom collection rule, which is a serialized JSON string.
+	// Custom collection rule, which is a serialized JSON string. Required when LogType is user_define_log.
+	// Custom collection rule, which is a serialized JSON string. Required when LogType is user_define_log.
 	UserDefineRule *string `json:"userDefineRule,omitempty" tf:"user_define_rule,omitempty"`
 }
 
@@ -105,13 +105,13 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Output *string `json:"output,omitempty" tf:"output,omitempty"`
 
-	// Log collection path containing the filename.
-	// Log collection path containing the filename.
+	// Log collection path containing the filename. Required for document collection.
+	// Log collection path containing the filename. Required for document collection.
 	// +kubebuilder:validation:Optional
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Custom collection rule, which is a serialized JSON string.
-	// Custom collection rule, which is a serialized JSON string.
+	// Custom collection rule, which is a serialized JSON string. Required when LogType is user_define_log.
+	// Custom collection rule, which is a serialized JSON string. Required when LogType is user_define_log.
 	// +kubebuilder:validation:Optional
 	UserDefineRule *string `json:"userDefineRule,omitempty" tf:"user_define_rule,omitempty"`
 }
@@ -153,8 +153,8 @@ type ExcludePathsParameters struct {
 
 type ExtractRuleInitParameters struct {
 
-	// syslog system log collection specifies the address and port that the collector listens to.
-	// syslog system log collection specifies the address and port that the collector listens to.
+	// syslog system log collection specifies the address and port that the collector listens to. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
+	// syslog system log collection specifies the address and port that the collector listens to. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
 	// Size of the data to be rewound in incremental collection mode. Default value: -1 (full collection).
@@ -173,8 +173,8 @@ type ExtractRuleInitParameters struct {
 	// Log keys to be filtered and the corresponding regex.
 	FilterKeyRegex []FilterKeyRegexInitParameters `json:"filterKeyRegex,omitempty" tf:"filter_key_regex,omitempty"`
 
-	// GBK encoding. Default 0.
-	// GBK encoding. Default 0.
+	// GBK encoding. Default 0. Note: - Currently, when the value is 0, it means UTF-8 encoding.
+	// GBK encoding. Default 0. Note: - Currently, when the value is 0, it means UTF-8 encoding.
 	IsGbk *float64 `json:"isGbk,omitempty" tf:"is_gbk,omitempty"`
 
 	// standard json. Default 0.
@@ -190,24 +190,24 @@ type ExtractRuleInitParameters struct {
 	// Full log matching rule, which is valid only if log_type is fullregex_log.
 	LogRegex *string `json:"logRegex,omitempty" tf:"log_regex,omitempty"`
 
-	// metadata tags.
-	// metadata tags.
+	// metadata tags. Note: - Required when MetadataType is 2. - COS import does not support this field.
+	// metadata tags. Note: - Required when MetadataType is 2. - COS import does not support this field.
 	MetaTags []MetaTagsInitParameters `json:"metaTags,omitempty" tf:"meta_tags,omitempty"`
 
-	// metadata type.
-	// metadata type.
+	// metadata type. 0: Do not use metadata information; 1: Use machine group metadata; 2: Use user-defined metadata; 3: Use collection configuration path. Note: COS import does not support this field.
+	// metadata type. 0: Do not use metadata information; 1: Use machine group metadata; 2: Use user-defined metadata; 3: Use collection configuration path. Note: COS import does not support this field.
 	MetadataType *float64 `json:"metadataType,omitempty" tf:"metadata_type,omitempty"`
 
-	// parse protocol.
-	// parse protocol.
+	// parse protocol. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
+	// parse protocol. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
 	ParseProtocol *string `json:"parseProtocol,omitempty" tf:"parse_protocol,omitempty"`
 
 	// metadata path regex.
 	// metadata path regex.
 	PathRegex *string `json:"pathRegex,omitempty" tf:"path_regex,omitempty"`
 
-	// syslog protocol, tcp or udp.
-	// syslog protocol, tcp or udp.
+	// syslog protocol, tcp or udp. The value can be tcp or udp. It is effective only when LogType is service_syslog. Other types do not need to be filled in.
+	// syslog protocol, tcp or udp. The value can be tcp or udp. It is effective only when LogType is service_syslog. Other types do not need to be filled in.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// Time field format. For more information, please see the output parameters of the time format description of the strftime function in C language.
@@ -218,8 +218,8 @@ type ExtractRuleInitParameters struct {
 	// Time field key name. time_key and time_format must appear in pair.
 	TimeKey *string `json:"timeKey,omitempty" tf:"time_key,omitempty"`
 
-	// Unmatched log key.
-	// Unmatched log key.
+	// Unmatched log key. Required when UnMatchUpLoadSwitch is true.
+	// Unmatched log key. Required when UnMatchUpLoadSwitch is true.
 	UnMatchLogKey *string `json:"unMatchLogKey,omitempty" tf:"un_match_log_key,omitempty"`
 
 	// Whether to upload the logs that failed to be parsed. Valid values: true: yes; false: no.
@@ -229,8 +229,8 @@ type ExtractRuleInitParameters struct {
 
 type ExtractRuleObservation struct {
 
-	// syslog system log collection specifies the address and port that the collector listens to.
-	// syslog system log collection specifies the address and port that the collector listens to.
+	// syslog system log collection specifies the address and port that the collector listens to. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
+	// syslog system log collection specifies the address and port that the collector listens to. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
 	// Size of the data to be rewound in incremental collection mode. Default value: -1 (full collection).
@@ -249,8 +249,8 @@ type ExtractRuleObservation struct {
 	// Log keys to be filtered and the corresponding regex.
 	FilterKeyRegex []FilterKeyRegexObservation `json:"filterKeyRegex,omitempty" tf:"filter_key_regex,omitempty"`
 
-	// GBK encoding. Default 0.
-	// GBK encoding. Default 0.
+	// GBK encoding. Default 0. Note: - Currently, when the value is 0, it means UTF-8 encoding.
+	// GBK encoding. Default 0. Note: - Currently, when the value is 0, it means UTF-8 encoding.
 	IsGbk *float64 `json:"isGbk,omitempty" tf:"is_gbk,omitempty"`
 
 	// standard json. Default 0.
@@ -266,24 +266,24 @@ type ExtractRuleObservation struct {
 	// Full log matching rule, which is valid only if log_type is fullregex_log.
 	LogRegex *string `json:"logRegex,omitempty" tf:"log_regex,omitempty"`
 
-	// metadata tags.
-	// metadata tags.
+	// metadata tags. Note: - Required when MetadataType is 2. - COS import does not support this field.
+	// metadata tags. Note: - Required when MetadataType is 2. - COS import does not support this field.
 	MetaTags []MetaTagsObservation `json:"metaTags,omitempty" tf:"meta_tags,omitempty"`
 
-	// metadata type.
-	// metadata type.
+	// metadata type. 0: Do not use metadata information; 1: Use machine group metadata; 2: Use user-defined metadata; 3: Use collection configuration path. Note: COS import does not support this field.
+	// metadata type. 0: Do not use metadata information; 1: Use machine group metadata; 2: Use user-defined metadata; 3: Use collection configuration path. Note: COS import does not support this field.
 	MetadataType *float64 `json:"metadataType,omitempty" tf:"metadata_type,omitempty"`
 
-	// parse protocol.
-	// parse protocol.
+	// parse protocol. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
+	// parse protocol. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
 	ParseProtocol *string `json:"parseProtocol,omitempty" tf:"parse_protocol,omitempty"`
 
 	// metadata path regex.
 	// metadata path regex.
 	PathRegex *string `json:"pathRegex,omitempty" tf:"path_regex,omitempty"`
 
-	// syslog protocol, tcp or udp.
-	// syslog protocol, tcp or udp.
+	// syslog protocol, tcp or udp. The value can be tcp or udp. It is effective only when LogType is service_syslog. Other types do not need to be filled in.
+	// syslog protocol, tcp or udp. The value can be tcp or udp. It is effective only when LogType is service_syslog. Other types do not need to be filled in.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// Time field format. For more information, please see the output parameters of the time format description of the strftime function in C language.
@@ -294,8 +294,8 @@ type ExtractRuleObservation struct {
 	// Time field key name. time_key and time_format must appear in pair.
 	TimeKey *string `json:"timeKey,omitempty" tf:"time_key,omitempty"`
 
-	// Unmatched log key.
-	// Unmatched log key.
+	// Unmatched log key. Required when UnMatchUpLoadSwitch is true.
+	// Unmatched log key. Required when UnMatchUpLoadSwitch is true.
 	UnMatchLogKey *string `json:"unMatchLogKey,omitempty" tf:"un_match_log_key,omitempty"`
 
 	// Whether to upload the logs that failed to be parsed. Valid values: true: yes; false: no.
@@ -305,8 +305,8 @@ type ExtractRuleObservation struct {
 
 type ExtractRuleParameters struct {
 
-	// syslog system log collection specifies the address and port that the collector listens to.
-	// syslog system log collection specifies the address and port that the collector listens to.
+	// syslog system log collection specifies the address and port that the collector listens to. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
+	// syslog system log collection specifies the address and port that the collector listens to. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
@@ -330,8 +330,8 @@ type ExtractRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	FilterKeyRegex []FilterKeyRegexParameters `json:"filterKeyRegex,omitempty" tf:"filter_key_regex,omitempty"`
 
-	// GBK encoding. Default 0.
-	// GBK encoding. Default 0.
+	// GBK encoding. Default 0. Note: - Currently, when the value is 0, it means UTF-8 encoding.
+	// GBK encoding. Default 0. Note: - Currently, when the value is 0, it means UTF-8 encoding.
 	// +kubebuilder:validation:Optional
 	IsGbk *float64 `json:"isGbk,omitempty" tf:"is_gbk,omitempty"`
 
@@ -351,18 +351,18 @@ type ExtractRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	LogRegex *string `json:"logRegex,omitempty" tf:"log_regex,omitempty"`
 
-	// metadata tags.
-	// metadata tags.
+	// metadata tags. Note: - Required when MetadataType is 2. - COS import does not support this field.
+	// metadata tags. Note: - Required when MetadataType is 2. - COS import does not support this field.
 	// +kubebuilder:validation:Optional
 	MetaTags []MetaTagsParameters `json:"metaTags,omitempty" tf:"meta_tags,omitempty"`
 
-	// metadata type.
-	// metadata type.
+	// metadata type. 0: Do not use metadata information; 1: Use machine group metadata; 2: Use user-defined metadata; 3: Use collection configuration path. Note: COS import does not support this field.
+	// metadata type. 0: Do not use metadata information; 1: Use machine group metadata; 2: Use user-defined metadata; 3: Use collection configuration path. Note: COS import does not support this field.
 	// +kubebuilder:validation:Optional
 	MetadataType *float64 `json:"metadataType,omitempty" tf:"metadata_type,omitempty"`
 
-	// parse protocol.
-	// parse protocol.
+	// parse protocol. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
+	// parse protocol. This parameter is only valid when LogType is service_syslog. It does not need to be filled in for other types.
 	// +kubebuilder:validation:Optional
 	ParseProtocol *string `json:"parseProtocol,omitempty" tf:"parse_protocol,omitempty"`
 
@@ -371,8 +371,8 @@ type ExtractRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	PathRegex *string `json:"pathRegex,omitempty" tf:"path_regex,omitempty"`
 
-	// syslog protocol, tcp or udp.
-	// syslog protocol, tcp or udp.
+	// syslog protocol, tcp or udp. The value can be tcp or udp. It is effective only when LogType is service_syslog. Other types do not need to be filled in.
+	// syslog protocol, tcp or udp. The value can be tcp or udp. It is effective only when LogType is service_syslog. Other types do not need to be filled in.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
@@ -386,8 +386,8 @@ type ExtractRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	TimeKey *string `json:"timeKey,omitempty" tf:"time_key,omitempty"`
 
-	// Unmatched log key.
-	// Unmatched log key.
+	// Unmatched log key. Required when UnMatchUpLoadSwitch is true.
+	// Unmatched log key. Required when UnMatchUpLoadSwitch is true.
 	// +kubebuilder:validation:Optional
 	UnMatchLogKey *string `json:"unMatchLogKey,omitempty" tf:"un_match_log_key,omitempty"`
 

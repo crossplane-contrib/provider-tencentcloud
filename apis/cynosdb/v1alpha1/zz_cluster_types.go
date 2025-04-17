@@ -39,6 +39,10 @@ type ClusterInitParameters struct {
 	// Name of CynosDB cluster.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
+	// Kernel version, you can enter it when modifying.
+	// Kernel version, you can enter it when modifying.
+	CynosVersion *string `json:"cynosVersion,omitempty" tf:"cynos_version,omitempty"`
+
 	// Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
 	// Specify DB mode, only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default), `SERVERLESS`.
 	DBMode *string `json:"dbMode,omitempty" tf:"db_mode,omitempty"`
@@ -58,6 +62,10 @@ type ClusterInitParameters struct {
 	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
+
+	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+	InstanceInitInfos []InstanceInitInfosInitParameters `json:"instanceInitInfos,omitempty" tf:"instance_init_infos,omitempty"`
 
 	// Duration time for maintenance, unit in second. 3600 by default.
 	// Duration time for maintenance, unit in second. `3600` by default.
@@ -206,6 +214,10 @@ type ClusterObservation struct {
 	// Creation time of the CynosDB cluster.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// Kernel version, you can enter it when modifying.
+	// Kernel version, you can enter it when modifying.
+	CynosVersion *string `json:"cynosVersion,omitempty" tf:"cynos_version,omitempty"`
+
 	// Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
 	// Specify DB mode, only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default), `SERVERLESS`.
 	DBMode *string `json:"dbMode,omitempty" tf:"db_mode,omitempty"`
@@ -232,6 +244,10 @@ type ClusterObservation struct {
 	// ID of instance.
 	// ID of instance.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+	InstanceInitInfos []InstanceInitInfosObservation `json:"instanceInitInfos,omitempty" tf:"instance_init_infos,omitempty"`
 
 	// Duration time for maintenance, unit in second. 3600 by default.
 	// Duration time for maintenance, unit in second. `3600` by default.
@@ -400,6 +416,11 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
+	// Kernel version, you can enter it when modifying.
+	// Kernel version, you can enter it when modifying.
+	// +kubebuilder:validation:Optional
+	CynosVersion *string `json:"cynosVersion,omitempty" tf:"cynos_version,omitempty"`
+
 	// Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
 	// Specify DB mode, only available when `db_type` is `MYSQL`. Values: `NORMAL` (Default), `SERVERLESS`.
 	// +kubebuilder:validation:Optional
@@ -424,6 +445,11 @@ type ClusterParameters struct {
 	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	// +kubebuilder:validation:Optional
 	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
+
+	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+	// +kubebuilder:validation:Optional
+	InstanceInitInfos []InstanceInitInfosParameters `json:"instanceInitInfos,omitempty" tf:"instance_init_infos,omitempty"`
 
 	// Duration time for maintenance, unit in second. 3600 by default.
 	// Duration time for maintenance, unit in second. `3600` by default.
@@ -559,6 +585,132 @@ type ClusterParameters struct {
 	// Selector for a VPC in vpc to populate vpcId.
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
+}
+
+type InstanceInitInfosInitParameters struct {
+
+	// CPU of instance.
+	// CPU of instance.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
+	// Instance machine type. Values: common, exclusive.
+	// Instance machine type. Values: `common`, `exclusive`.
+	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
+
+	// Instance count. Range: [1, 15].
+	// Instance count. Range: [1, 15].
+	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
+
+	// Instance type. Value: rw, ro.
+	// Instance type. Value: `rw`, `ro`.
+	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Maximum Serverless Instance Specifications.
+	// Maximum Serverless Instance Specifications.
+	MaxRoCPU *float64 `json:"maxRoCpu,omitempty" tf:"max_ro_cpu,omitempty"`
+
+	// Maximum number of Serverless instances. Range [1,15].
+	// Maximum number of Serverless instances. Range [1,15].
+	MaxRoCount *float64 `json:"maxRoCount,omitempty" tf:"max_ro_count,omitempty"`
+
+	// Memory of instance.
+	// Memory of instance.
+	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
+
+	// Minimum Serverless Instance Specifications.
+	// Minimum Serverless Instance Specifications.
+	MinRoCPU *float64 `json:"minRoCpu,omitempty" tf:"min_ro_cpu,omitempty"`
+
+	// Minimum number of Serverless instances. Range [1,15].
+	// Minimum number of Serverless instances. Range [1,15].
+	MinRoCount *float64 `json:"minRoCount,omitempty" tf:"min_ro_count,omitempty"`
+}
+
+type InstanceInitInfosObservation struct {
+
+	// CPU of instance.
+	// CPU of instance.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
+	// Instance machine type. Values: common, exclusive.
+	// Instance machine type. Values: `common`, `exclusive`.
+	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
+
+	// Instance count. Range: [1, 15].
+	// Instance count. Range: [1, 15].
+	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
+
+	// Instance type. Value: rw, ro.
+	// Instance type. Value: `rw`, `ro`.
+	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Maximum Serverless Instance Specifications.
+	// Maximum Serverless Instance Specifications.
+	MaxRoCPU *float64 `json:"maxRoCpu,omitempty" tf:"max_ro_cpu,omitempty"`
+
+	// Maximum number of Serverless instances. Range [1,15].
+	// Maximum number of Serverless instances. Range [1,15].
+	MaxRoCount *float64 `json:"maxRoCount,omitempty" tf:"max_ro_count,omitempty"`
+
+	// Memory of instance.
+	// Memory of instance.
+	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
+
+	// Minimum Serverless Instance Specifications.
+	// Minimum Serverless Instance Specifications.
+	MinRoCPU *float64 `json:"minRoCpu,omitempty" tf:"min_ro_cpu,omitempty"`
+
+	// Minimum number of Serverless instances. Range [1,15].
+	// Minimum number of Serverless instances. Range [1,15].
+	MinRoCount *float64 `json:"minRoCount,omitempty" tf:"min_ro_count,omitempty"`
+}
+
+type InstanceInitInfosParameters struct {
+
+	// CPU of instance.
+	// CPU of instance.
+	// +kubebuilder:validation:Optional
+	CPU *float64 `json:"cpu" tf:"cpu,omitempty"`
+
+	// Instance machine type. Values: common, exclusive.
+	// Instance machine type. Values: `common`, `exclusive`.
+	// +kubebuilder:validation:Optional
+	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
+
+	// Instance count. Range: [1, 15].
+	// Instance count. Range: [1, 15].
+	// +kubebuilder:validation:Optional
+	InstanceCount *float64 `json:"instanceCount" tf:"instance_count,omitempty"`
+
+	// Instance type. Value: rw, ro.
+	// Instance type. Value: `rw`, `ro`.
+	// +kubebuilder:validation:Optional
+	InstanceType *string `json:"instanceType" tf:"instance_type,omitempty"`
+
+	// Maximum Serverless Instance Specifications.
+	// Maximum Serverless Instance Specifications.
+	// +kubebuilder:validation:Optional
+	MaxRoCPU *float64 `json:"maxRoCpu,omitempty" tf:"max_ro_cpu,omitempty"`
+
+	// Maximum number of Serverless instances. Range [1,15].
+	// Maximum number of Serverless instances. Range [1,15].
+	// +kubebuilder:validation:Optional
+	MaxRoCount *float64 `json:"maxRoCount,omitempty" tf:"max_ro_count,omitempty"`
+
+	// Memory of instance.
+	// Memory of instance.
+	// +kubebuilder:validation:Optional
+	Memory *float64 `json:"memory" tf:"memory,omitempty"`
+
+	// Minimum Serverless Instance Specifications.
+	// Minimum Serverless Instance Specifications.
+	// +kubebuilder:validation:Optional
+	MinRoCPU *float64 `json:"minRoCpu,omitempty" tf:"min_ro_cpu,omitempty"`
+
+	// Minimum number of Serverless instances. Range [1,15].
+	// Minimum number of Serverless instances. Range [1,15].
+	// +kubebuilder:validation:Optional
+	MinRoCount *float64 `json:"minRoCount,omitempty" tf:"min_ro_count,omitempty"`
 }
 
 type ParamItemsInitParameters struct {

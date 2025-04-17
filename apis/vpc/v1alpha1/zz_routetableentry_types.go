@@ -31,8 +31,8 @@ type RouteTableEntryInitParameters struct {
 	// ID of next-hop gateway. Note: when `next_type` is EIP, `next_hub` should be `0`.
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
+	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
 	// ID of routing table to which this entry belongs.
@@ -70,8 +70,8 @@ type RouteTableEntryObservation struct {
 	// ID of next-hop gateway. Note: when `next_type` is EIP, `next_hub` should be `0`.
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
+	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
 	// ID of route table entry.
@@ -105,8 +105,8 @@ type RouteTableEntryParameters struct {
 	// +kubebuilder:validation:Optional
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP and LOCAL_GATEWAY.
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP` and `LOCAL_GATEWAY`.
+	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
 	// +kubebuilder:validation:Optional
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 

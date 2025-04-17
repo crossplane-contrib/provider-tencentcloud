@@ -31,12 +31,12 @@ type InstanceSetInitParameters struct {
 	// CAM role name authorized to access.
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
 
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableSecurityService *bool `json:"disableSecurityService,omitempty" tf:"disable_security_service,omitempty"`
 
 	// instance ids list to exclude.
@@ -44,8 +44,8 @@ type InstanceSetInitParameters struct {
 	// +listType=set
 	ExcludeInstanceIds []*string `json:"excludeInstanceIds,omitempty" tf:"exclude_instance_ids,omitempty"`
 
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system..
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system..
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// The image to use for the instance. Changing image_id will cause the instance reset.
@@ -76,12 +76,12 @@ type InstanceSetInitParameters struct {
 	// Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
-	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system.
+	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system.
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
 
-	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
 	// The ID of a placement group.
@@ -170,12 +170,12 @@ type InstanceSetObservation struct {
 	// Create time of the instance.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
 
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	DisableSecurityService *bool `json:"disableSecurityService,omitempty" tf:"disable_security_service,omitempty"`
 
 	// instance ids list to exclude.
@@ -187,8 +187,8 @@ type InstanceSetObservation struct {
 	// Expired time of the instance.
 	ExpiredTime *string `json:"expiredTime,omitempty" tf:"expired_time,omitempty"`
 
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system..
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system..
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// ID of the resource.
@@ -230,12 +230,12 @@ type InstanceSetObservation struct {
 	// Maximum outgoing bandwidth to the public network, measured in Mbps (Mega bits per second). This value does not need to be set when `allocate_public_ip` is false.
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
-	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system.
+	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system.
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
 
-	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
 	// The ID of a placement group.
@@ -310,13 +310,13 @@ type InstanceSetParameters struct {
 	// +kubebuilder:validation:Optional
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	DisableMonitorService *bool `json:"disableMonitorService,omitempty" tf:"disable_monitor_service,omitempty"`
 
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+	// Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	DisableSecurityService *bool `json:"disableSecurityService,omitempty" tf:"disable_security_service,omitempty"`
 
@@ -326,8 +326,8 @@ type InstanceSetParameters struct {
 	// +listType=set
 	ExcludeInstanceIds []*string `json:"excludeInstanceIds,omitempty" tf:"exclude_instance_ids,omitempty"`
 
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system..
+	// The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system..
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
@@ -366,18 +366,18 @@ type InstanceSetParameters struct {
 	// +kubebuilder:validation:Optional
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
-	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+	// Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system.
+	// Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
 
-	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+	// The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+	// The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
 
-	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
-	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
+	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifications may lead to the reinstallation of the instance's operating system.
+	// Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifications may lead to the reinstallation of the instance's operating system.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 

@@ -39,8 +39,12 @@ type InstanceInitParameters struct {
 	// If create dynamic vip CLB instance, `true` or `false`.
 	DynamicVip *bool `json:"dynamicVip,omitempty" tf:"dynamic_vip,omitempty"`
 
-	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
-	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+	// The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+	// The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+	EIPAddressID *string `json:"eipAddressId,omitempty" tf:"eip_address_id,omitempty"`
+
+	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
 	InternetBandwidthMaxOut *float64 `json:"internetBandwidthMaxOut,omitempty" tf:"internet_bandwidth_max_out,omitempty"`
 
 	// Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
@@ -181,6 +185,10 @@ type InstanceObservation struct {
 	// If create dynamic vip CLB instance, `true` or `false`.
 	DynamicVip *bool `json:"dynamicVip,omitempty" tf:"dynamic_vip,omitempty"`
 
+	// The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+	// The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+	EIPAddressID *string `json:"eipAddressId,omitempty" tf:"eip_address_id,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -188,8 +196,8 @@ type InstanceObservation struct {
 	// This field is meaningful when the IP address version is ipv6, `IPv6Nat64` | `IPv6FullChain`.
 	IPv6Mode *string `json:"ipv6Mode,omitempty" tf:"ipv6_mode,omitempty"`
 
-	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
-	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
 	InternetBandwidthMaxOut *float64 `json:"internetBandwidthMaxOut,omitempty" tf:"internet_bandwidth_max_out,omitempty"`
 
 	// Internet charge type, only applicable to open CLB. Valid values are TRAFFIC_POSTPAID_BY_HOUR, BANDWIDTH_POSTPAID_BY_HOUR and BANDWIDTH_PACKAGE.
@@ -306,8 +314,13 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DynamicVip *bool `json:"dynamicVip,omitempty" tf:"dynamic_vip,omitempty"`
 
-	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
-	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+	// The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+	// The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+	// +kubebuilder:validation:Optional
+	EIPAddressID *string `json:"eipAddressId,omitempty" tf:"eip_address_id,omitempty"`
+
+	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+	// Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
 	// +kubebuilder:validation:Optional
 	InternetBandwidthMaxOut *float64 `json:"internetBandwidthMaxOut,omitempty" tf:"internet_bandwidth_max_out,omitempty"`
 
