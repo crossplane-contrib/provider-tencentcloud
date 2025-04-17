@@ -4,14 +4,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/vpngateway
   labels:
-    testing.upbound.io/example-name: my_cgw
-  name: my-cgw
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     bandwidth: 5
-    name: test
+    name: tf-example
     tags:
-      test: test
+      createBy: Terraform
     type: SSL
     vpcIdSelector:
       matchLabels:

@@ -46,6 +46,10 @@ type DomainInstanceObservation struct {
 	// The Domain.
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
+	// ID of the domain.
+	// ID of the domain.
+	DomainID *float64 `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
 	// The Group Id of Domain.
 	// The Group Id of Domain.
 	GroupID *float64 `json:"groupId,omitempty" tf:"group_id,omitempty"`

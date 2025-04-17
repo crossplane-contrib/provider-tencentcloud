@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cos/v1alpha1/bucketdomaincertificateattachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     bucketSelector:
@@ -15,6 +15,23 @@ spec:
     - certificate:
       - certType: CustomCert
         customCert:
-        - cert: ===CERTIFICATE===
-          privateKey: ===PRIVATE_KEY===
-      domain: domain_name
+        - cert: '-----BEGIN CERTIFICATE-----'
+          certId: Mbx45wts
+          privateKey: '-----BEGIN RSA PRIVATE_KEY-----'
+      domain: www.example.com
+
+---
+
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cos/v1alpha1/bucketdomaincertificateattachment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    acl: private
+    bucket: private-bucket-${local.app_id}
+    forceClean: true

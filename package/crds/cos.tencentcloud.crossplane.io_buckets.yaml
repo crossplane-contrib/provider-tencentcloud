@@ -146,8 +146,8 @@ spec:
                     type: boolean
                   encryptionAlgorithm:
                     description: |-
-                      The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
-                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
+                      The server-side encryption algorithm to use. Valid values are AES256, KMS and SM4.
+                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `SM4`.
                     type: string
                   forceClean:
                     description: |-
@@ -166,8 +166,8 @@ spec:
                     type: number
                   kmsId:
                     description: |-
-                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
-                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
                     type: string
                   lifecycleRules:
                     description: |-
@@ -451,6 +451,47 @@ spec:
                             Redirects all request configurations. Valid values: http, https. Default is http.
                             Redirects all request configurations. Valid values: http, https. Default is `http`.
                           type: string
+                        routingRules:
+                          description: |-
+                            Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+                            Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+                          items:
+                            properties:
+                              rules:
+                                description: |-
+                                  Routing rule list.
+                                  Routing rule list.
+                                items:
+                                  properties:
+                                    conditionErrorCode:
+                                      description: |-
+                                        Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+                                        Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+                                      type: string
+                                    conditionPrefix:
+                                      description: |-
+                                        Specifies the object key prefix as the match condition for the routing rule.
+                                        Specifies the object key prefix as the match condition for the routing rule.
+                                      type: string
+                                    redirectProtocol:
+                                      description: |-
+                                        Specifies the target protocol for the routing rule. Only HTTPS is supported.
+                                        Specifies the target protocol for the routing rule. Only HTTPS is supported.
+                                      type: string
+                                    redirectReplaceKey:
+                                      description: |-
+                                        Specifies the target object key to replace the original object key in the request.
+                                        Specifies the target object key to replace the original object key in the request.
+                                      type: string
+                                    redirectReplaceKeyPrefix:
+                                      description: |-
+                                        Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+                                        Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                       type: object
                     type: array
                 type: object
@@ -540,8 +581,8 @@ spec:
                     type: boolean
                   encryptionAlgorithm:
                     description: |-
-                      The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
-                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
+                      The server-side encryption algorithm to use. Valid values are AES256, KMS and SM4.
+                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `SM4`.
                     type: string
                   forceClean:
                     description: |-
@@ -560,8 +601,8 @@ spec:
                     type: number
                   kmsId:
                     description: |-
-                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
-                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
                     type: string
                   lifecycleRules:
                     description: |-
@@ -845,6 +886,47 @@ spec:
                             Redirects all request configurations. Valid values: http, https. Default is http.
                             Redirects all request configurations. Valid values: http, https. Default is `http`.
                           type: string
+                        routingRules:
+                          description: |-
+                            Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+                            Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+                          items:
+                            properties:
+                              rules:
+                                description: |-
+                                  Routing rule list.
+                                  Routing rule list.
+                                items:
+                                  properties:
+                                    conditionErrorCode:
+                                      description: |-
+                                        Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+                                        Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+                                      type: string
+                                    conditionPrefix:
+                                      description: |-
+                                        Specifies the object key prefix as the match condition for the routing rule.
+                                        Specifies the object key prefix as the match condition for the routing rule.
+                                      type: string
+                                    redirectProtocol:
+                                      description: |-
+                                        Specifies the target protocol for the routing rule. Only HTTPS is supported.
+                                        Specifies the target protocol for the routing rule. Only HTTPS is supported.
+                                      type: string
+                                    redirectReplaceKey:
+                                      description: |-
+                                        Specifies the target object key to replace the original object key in the request.
+                                        Specifies the target object key to replace the original object key in the request.
+                                      type: string
+                                    redirectReplaceKeyPrefix:
+                                      description: |-
+                                        Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+                                        Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                       type: object
                     type: array
                 type: object
@@ -1103,8 +1185,8 @@ spec:
                     type: boolean
                   encryptionAlgorithm:
                     description: |-
-                      The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
-                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
+                      The server-side encryption algorithm to use. Valid values are AES256, KMS and SM4.
+                      The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `SM4`.
                     type: string
                   forceClean:
                     description: |-
@@ -1127,8 +1209,8 @@ spec:
                     type: number
                   kmsId:
                     description: |-
-                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
-                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
+                      The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
                     type: string
                   lifecycleRules:
                     description: |-
@@ -1415,6 +1497,47 @@ spec:
                             Redirects all request configurations. Valid values: http, https. Default is http.
                             Redirects all request configurations. Valid values: http, https. Default is `http`.
                           type: string
+                        routingRules:
+                          description: |-
+                            Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+                            Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+                          items:
+                            properties:
+                              rules:
+                                description: |-
+                                  Routing rule list.
+                                  Routing rule list.
+                                items:
+                                  properties:
+                                    conditionErrorCode:
+                                      description: |-
+                                        Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+                                        Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+                                      type: string
+                                    conditionPrefix:
+                                      description: |-
+                                        Specifies the object key prefix as the match condition for the routing rule.
+                                        Specifies the object key prefix as the match condition for the routing rule.
+                                      type: string
+                                    redirectProtocol:
+                                      description: |-
+                                        Specifies the target protocol for the routing rule. Only HTTPS is supported.
+                                        Specifies the target protocol for the routing rule. Only HTTPS is supported.
+                                      type: string
+                                    redirectReplaceKey:
+                                      description: |-
+                                        Specifies the target object key to replace the original object key in the request.
+                                        Specifies the target object key to replace the original object key in the request.
+                                      type: string
+                                    redirectReplaceKeyPrefix:
+                                      description: |-
+                                        Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+                                        Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                       type: object
                     type: array
                 type: object

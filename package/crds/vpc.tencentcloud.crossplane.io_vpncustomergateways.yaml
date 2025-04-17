@@ -73,6 +73,11 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  bgpAsn:
+                    description: |-
+                      BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+                      BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+                    type: number
                   name:
                     description: |-
                       Name of the customer gateway. The length of character is limited to 1-60.
@@ -105,6 +110,11 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  bgpAsn:
+                    description: |-
+                      BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+                      BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+                    type: number
                   name:
                     description: |-
                       Name of the customer gateway. The length of character is limited to 1-60.
@@ -305,6 +315,11 @@ spec:
             properties:
               atProvider:
                 properties:
+                  bgpAsn:
+                    description: |-
+                      BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+                      BGP ASN. Value range: 1 - 4294967295. Using BGP requires configuring ASN. 139341, 45090, and 58835 are not available.
+                    type: number
                   createTime:
                     description: |-
                       Create time of the customer gateway.

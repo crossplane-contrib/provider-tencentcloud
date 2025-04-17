@@ -75,8 +75,8 @@ spec:
                 properties:
                   assignedEipSet:
                     description: |-
-                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
-                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
+                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
                     items:
                       type: string
                     type: array
@@ -219,8 +219,8 @@ spec:
                 properties:
                   assignedEipSet:
                     description: |-
-                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
-                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
+                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
                     items:
                       type: string
                     type: array
@@ -531,8 +531,8 @@ spec:
                 properties:
                   assignedEipSet:
                     description: |-
-                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
-                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10.
+                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
+                      EIP IP address set bound to the gateway. The value of at least 1 and at most 10 if do not apply for a whitelist.
                     items:
                       type: string
                     type: array

@@ -179,6 +179,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   forwardType:
                     description: |-
                       Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
@@ -214,6 +215,11 @@ spec:
                       Interval time of health check. Valid value ranges: (2~300) sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
                       Interval time of health check. Valid value ranges: (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
                     type: number
+                  healthCheckPort:
+                    description: |-
+                      Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+                      Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+                    type: number
                   healthCheckSwitch:
                     description: |-
                       Indicates whether health check is enabled.
@@ -233,6 +239,11 @@ spec:
                     description: |-
                       Unhealthy threshold of health check, and the default is 3. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
                       Unhealthy threshold of health check, and the default is `3`. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+                    type: number
+                  healthSourceIpType:
+                    description: |-
+                      Specifies the type of health check source IP. 0 (default): CLB VIP. 1: 100.64 IP range.
+                      Specifies the type of health check source IP. `0` (default): CLB VIP. `1`: 100.64 IP range.
                     type: number
                   http2Switch:
                     description: |-
@@ -318,6 +329,27 @@ spec:
                             type: string
                         type: object
                     type: object
+                  multiCertInfo:
+                    description: |-
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                    items:
+                      properties:
+                        certIdList:
+                          description: |-
+                            List of server certificate ID.
+                            List of server certificate ID.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        sslMode:
+                          description: |-
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                          type: string
+                      type: object
+                    type: array
                   oauth:
                     description: |-
                       OAuth configuration information.
@@ -481,6 +513,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   forwardType:
                     description: |-
                       Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
@@ -516,6 +549,11 @@ spec:
                       Interval time of health check. Valid value ranges: (2~300) sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
                       Interval time of health check. Valid value ranges: (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
                     type: number
+                  healthCheckPort:
+                    description: |-
+                      Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+                      Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+                    type: number
                   healthCheckSwitch:
                     description: |-
                       Indicates whether health check is enabled.
@@ -535,6 +573,11 @@ spec:
                     description: |-
                       Unhealthy threshold of health check, and the default is 3. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
                       Unhealthy threshold of health check, and the default is `3`. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+                    type: number
+                  healthSourceIpType:
+                    description: |-
+                      Specifies the type of health check source IP. 0 (default): CLB VIP. 1: 100.64 IP range.
+                      Specifies the type of health check source IP. `0` (default): CLB VIP. `1`: 100.64 IP range.
                     type: number
                   http2Switch:
                     description: |-
@@ -620,6 +663,27 @@ spec:
                             type: string
                         type: object
                     type: object
+                  multiCertInfo:
+                    description: |-
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                    items:
+                      properties:
+                        certIdList:
+                          description: |-
+                            List of server certificate ID.
+                            List of server certificate ID.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        sslMode:
+                          description: |-
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                          type: string
+                      type: object
+                    type: array
                   oauth:
                     description: |-
                       OAuth configuration information.
@@ -873,6 +937,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   forwardType:
                     description: |-
                       Forwarding protocol between the CLB instance and real server. Valid values: HTTP, HTTPS, GRPC, GRPCS, TRPC. The default is HTTP.
@@ -908,6 +973,11 @@ spec:
                       Interval time of health check. Valid value ranges: (2~300) sec. and the default is 5 sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
                       Interval time of health check. Valid value ranges: (2~300) sec. and the default is `5` sec. NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
                     type: number
+                  healthCheckPort:
+                    description: |-
+                      Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+                      Customize detection related parameters. Health check port, defaults to the port of the backend service, unless you want to specify a specific port, it is recommended to leave it blank. (Applicable only to TCP/UDP listeners).
+                    type: number
                   healthCheckSwitch:
                     description: |-
                       Indicates whether health check is enabled.
@@ -928,6 +998,11 @@ spec:
                       Unhealthy threshold of health check, and the default is 3. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
                       Unhealthy threshold of health check, and the default is `3`. If the unhealthy result is returned 3 consecutive times, indicates that the forwarding is abnormal. The value range is [2-10].  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
                     type: number
+                  healthSourceIpType:
+                    description: |-
+                      Specifies the type of health check source IP. 0 (default): CLB VIP. 1: 100.64 IP range.
+                      Specifies the type of health check source IP. `0` (default): CLB VIP. `1`: 100.64 IP range.
+                    type: number
                   http2Switch:
                     description: |-
                       Indicate to apply HTTP2.0 protocol or not.
@@ -941,6 +1016,27 @@ spec:
                       ID of CLB listener.
                       ID of CLB listener.
                     type: string
+                  multiCertInfo:
+                    description: |-
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                      Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+                    items:
+                      properties:
+                        certIdList:
+                          description: |-
+                            List of server certificate ID.
+                            List of server certificate ID.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        sslMode:
+                          description: |-
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                            Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+                          type: string
+                      type: object
+                    type: array
                   oauth:
                     description: |-
                       OAuth configuration information.

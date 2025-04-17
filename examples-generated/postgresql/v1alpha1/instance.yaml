@@ -27,7 +27,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: subnet
     tags:
-      test: tf
+      CreateBy: Terraform
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vpc

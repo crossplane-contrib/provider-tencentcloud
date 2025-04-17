@@ -116,6 +116,18 @@ spec:
                             Specify earliest backup start time, format hh:mm:ss.
                             Specify earliest backup start time, format `hh:mm:ss`.
                           type: string
+                        monthlyBackupPeriod:
+                          description: |-
+                            If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+                            If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+                          items:
+                            type: string
+                          type: array
+                        monthlyBackupRetentionPeriod:
+                          description: |-
+                            Specify days of the retention.
+                            Specify days of the retention.
+                          type: number
                       type: object
                     type: array
                   chargeType:
@@ -436,6 +448,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitSwitch:
+                    description: |-
+                      Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu, db_node_set, db_kernel_version fields.
+                      Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu`, `db_node_set`, `db_kernel_version` fields.
+                    type: number
                 type: object
               initProvider:
                 description: |-
@@ -493,6 +510,18 @@ spec:
                             Specify earliest backup start time, format hh:mm:ss.
                             Specify earliest backup start time, format `hh:mm:ss`.
                           type: string
+                        monthlyBackupPeriod:
+                          description: |-
+                            If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+                            If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+                          items:
+                            type: string
+                          type: array
+                        monthlyBackupRetentionPeriod:
+                          description: |-
+                            Specify days of the retention.
+                            Specify days of the retention.
+                          type: number
                       type: object
                     type: array
                   chargeType:
@@ -794,6 +823,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitSwitch:
+                    description: |-
+                      Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu, db_node_set, db_kernel_version fields.
+                      Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu`, `db_node_set`, `db_kernel_version` fields.
+                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -1030,6 +1064,23 @@ spec:
                             Specify earliest backup start time, format hh:mm:ss.
                             Specify earliest backup start time, format `hh:mm:ss`.
                           type: string
+                        monthlyBackupPeriod:
+                          description: |-
+                            If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+                            If it is in monthly dimension, the format is numeric characters, such as ["1","2"].
+                          items:
+                            type: string
+                          type: array
+                        monthlyBackupRetentionPeriod:
+                          description: |-
+                            Specify days of the retention.
+                            Specify days of the retention.
+                          type: number
+                        monthlyPlanId:
+                          description: |-
+                            ID of the resource.
+                            Monthly plan id.
+                          type: string
                       type: object
                     type: array
                   chargeType:
@@ -1221,6 +1272,11 @@ spec:
                       ID of VPC.
                       ID of VPC.
                     type: string
+                  waitSwitch:
+                    description: |-
+                      Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu, db_node_set, db_kernel_version fields.
+                      Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu`, `db_node_set`, `db_kernel_version` fields.
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.

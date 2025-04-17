@@ -116,6 +116,13 @@ spec:
                       Dedicated Cluster ID.
                       Dedicated Cluster ID.
                     type: string
+                  disasterRecoverGroupIds:
+                    description: |-
+                      Placement group ID. Only one is allowed.
+                      Placement group ID. Only one is allowed.
+                    items:
+                      type: string
+                    type: array
                   diskTypePolicy:
                     description: |-
                       Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
@@ -352,6 +359,13 @@ spec:
                       Dedicated Cluster ID.
                       Dedicated Cluster ID.
                     type: string
+                  disasterRecoverGroupIds:
+                    description: |-
+                      Placement group ID. Only one is allowed.
+                      Placement group ID. Only one is allowed.
+                    items:
+                      type: string
+                    type: array
                   diskTypePolicy:
                     description: |-
                       Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
@@ -742,6 +756,13 @@ spec:
                       Dedicated Cluster ID.
                       Dedicated Cluster ID.
                     type: string
+                  disasterRecoverGroupIds:
+                    description: |-
+                      Placement group ID. Only one is allowed.
+                      Placement group ID. Only one is allowed.
+                    items:
+                      type: string
+                    type: array
                   diskTypePolicy:
                     description: |-
                       Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.

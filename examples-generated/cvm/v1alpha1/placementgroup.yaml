@@ -8,5 +8,8 @@ metadata:
   name: foo
 spec:
   forProvider:
+    affinity: 2
     name: test
+    tags:
+      createBy: terraform
     type: HOST

@@ -120,6 +120,10 @@ type ListenerInitParameters struct {
 	// Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
 	ListenerName *string `json:"listenerName,omitempty" tf:"listener_name,omitempty"`
 
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	MultiCertInfo []MultiCertInfoInitParameters `json:"multiCertInfo,omitempty" tf:"multi_cert_info,omitempty"`
+
 	// Port of the CLB listener.
 	// Port of the CLB listener.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
@@ -139,6 +143,10 @@ type ListenerInitParameters struct {
 	// Session persistence type. Valid values: NORMAL: the default session persistence type; QUIC_CID: session persistence by QUIC connection ID. The QUIC_CID value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
 	// Session persistence type. Valid values: `NORMAL`: the default session persistence type; `QUIC_CID`: session persistence by QUIC connection ID. The `QUIC_CID` value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
 	SessionType *string `json:"sessionType,omitempty" tf:"session_type,omitempty"`
+
+	// Whether to enable SNAT.
+	// Whether to enable SNAT.
+	SnatEnable *bool `json:"snatEnable,omitempty" tf:"snat_enable,omitempty"`
 
 	// Indicates whether SNI is enabled, and only supported with protocol HTTPS. If enabled, you can set a certificate for each rule in tencentcloud_clb_listener_rule, otherwise all rules have a certificate.
 	// Indicates whether SNI is enabled, and only supported with protocol `HTTPS`. If enabled, you can set a certificate for each rule in `tencentcloud_clb_listener_rule`, otherwise all rules have a certificate.
@@ -254,6 +262,10 @@ type ListenerObservation struct {
 	// Name of the CLB listener, and available values can only be Chinese characters, English letters, numbers, underscore and hyphen '-'.
 	ListenerName *string `json:"listenerName,omitempty" tf:"listener_name,omitempty"`
 
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	MultiCertInfo []MultiCertInfoObservation `json:"multiCertInfo,omitempty" tf:"multi_cert_info,omitempty"`
+
 	// Port of the CLB listener.
 	// Port of the CLB listener.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
@@ -273,6 +285,10 @@ type ListenerObservation struct {
 	// Session persistence type. Valid values: NORMAL: the default session persistence type; QUIC_CID: session persistence by QUIC connection ID. The QUIC_CID value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
 	// Session persistence type. Valid values: `NORMAL`: the default session persistence type; `QUIC_CID`: session persistence by QUIC connection ID. The `QUIC_CID` value can only be configured in UDP listeners. If this field is not specified, the default session persistence type will be used.
 	SessionType *string `json:"sessionType,omitempty" tf:"session_type,omitempty"`
+
+	// Whether to enable SNAT.
+	// Whether to enable SNAT.
+	SnatEnable *bool `json:"snatEnable,omitempty" tf:"snat_enable,omitempty"`
 
 	// Indicates whether SNI is enabled, and only supported with protocol HTTPS. If enabled, you can set a certificate for each rule in tencentcloud_clb_listener_rule, otherwise all rules have a certificate.
 	// Indicates whether SNI is enabled, and only supported with protocol `HTTPS`. If enabled, you can set a certificate for each rule in `tencentcloud_clb_listener_rule`, otherwise all rules have a certificate.
@@ -414,6 +430,11 @@ type ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	ListenerName *string `json:"listenerName,omitempty" tf:"listener_name,omitempty"`
 
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// Certificate information. You can specify multiple server-side certificates with different algorithm types. This parameter is only applicable to HTTPS listeners with the SNI feature not enabled. Certificate and MultiCertInfo cannot be specified at the same time.
+	// +kubebuilder:validation:Optional
+	MultiCertInfo []MultiCertInfoParameters `json:"multiCertInfo,omitempty" tf:"multi_cert_info,omitempty"`
+
 	// Port of the CLB listener.
 	// Port of the CLB listener.
 	// +kubebuilder:validation:Optional
@@ -439,6 +460,11 @@ type ListenerParameters struct {
 	// +kubebuilder:validation:Optional
 	SessionType *string `json:"sessionType,omitempty" tf:"session_type,omitempty"`
 
+	// Whether to enable SNAT.
+	// Whether to enable SNAT.
+	// +kubebuilder:validation:Optional
+	SnatEnable *bool `json:"snatEnable,omitempty" tf:"snat_enable,omitempty"`
+
 	// Indicates whether SNI is enabled, and only supported with protocol HTTPS. If enabled, you can set a certificate for each rule in tencentcloud_clb_listener_rule, otherwise all rules have a certificate.
 	// Indicates whether SNI is enabled, and only supported with protocol `HTTPS`. If enabled, you can set a certificate for each rule in `tencentcloud_clb_listener_rule`, otherwise all rules have a certificate.
 	// +kubebuilder:validation:Optional
@@ -448,6 +474,44 @@ type ListenerParameters struct {
 	// Backend target type. Valid values: `NODE`, `TARGETGROUP`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group. NOTES: TCP/UDP/TCP_SSL listener must configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
 	// +kubebuilder:validation:Optional
 	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
+}
+
+type MultiCertInfoInitParameters struct {
+
+	// List of server certificate ID.
+	// List of server certificate ID.
+	// +listType=set
+	CertIDList []*string `json:"certIdList,omitempty" tf:"cert_id_list,omitempty"`
+
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
+}
+
+type MultiCertInfoObservation struct {
+
+	// List of server certificate ID.
+	// List of server certificate ID.
+	// +listType=set
+	CertIDList []*string `json:"certIdList,omitempty" tf:"cert_id_list,omitempty"`
+
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
+}
+
+type MultiCertInfoParameters struct {
+
+	// List of server certificate ID.
+	// List of server certificate ID.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	CertIDList []*string `json:"certIdList" tf:"cert_id_list,omitempty"`
+
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// Authentication type. Values: UNIDIRECTIONAL (one-way authentication), MUTUAL (two-way authentication).
+	// +kubebuilder:validation:Optional
+	SSLMode *string `json:"sslMode" tf:"ssl_mode,omitempty"`
 }
 
 // ListenerSpec defines the desired state of Listener

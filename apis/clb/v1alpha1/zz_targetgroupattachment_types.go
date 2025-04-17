@@ -66,10 +66,6 @@ type TargetGroupAttachmentInitParameters struct {
 	// Selector for a TargetGroup to populate targetGroupId.
 	// +kubebuilder:validation:Optional
 	TargetGroupIDSelector *v1.Selector `json:"targetGroupIdSelector,omitempty" tf:"-"`
-
-	// It has been deprecated from version 1.47.1. Use target_group_id instead. ID of the CLB target group.
-	// ID of the CLB target group.
-	TargrtGroupID *string `json:"targrtGroupId,omitempty" tf:"targrt_group_id,omitempty"`
 }
 
 type TargetGroupAttachmentObservation struct {
@@ -92,10 +88,6 @@ type TargetGroupAttachmentObservation struct {
 	// ID of the CLB target group.
 	// ID of the CLB target group.
 	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
-
-	// It has been deprecated from version 1.47.1. Use target_group_id instead. ID of the CLB target group.
-	// ID of the CLB target group.
-	TargrtGroupID *string `json:"targrtGroupId,omitempty" tf:"targrt_group_id,omitempty"`
 }
 
 type TargetGroupAttachmentParameters struct {
@@ -155,11 +147,6 @@ type TargetGroupAttachmentParameters struct {
 	// Selector for a TargetGroup to populate targetGroupId.
 	// +kubebuilder:validation:Optional
 	TargetGroupIDSelector *v1.Selector `json:"targetGroupIdSelector,omitempty" tf:"-"`
-
-	// It has been deprecated from version 1.47.1. Use target_group_id instead. ID of the CLB target group.
-	// ID of the CLB target group.
-	// +kubebuilder:validation:Optional
-	TargrtGroupID *string `json:"targrtGroupId,omitempty" tf:"targrt_group_id,omitempty"`
 }
 
 // TargetGroupAttachmentSpec defines the desired state of TargetGroupAttachment

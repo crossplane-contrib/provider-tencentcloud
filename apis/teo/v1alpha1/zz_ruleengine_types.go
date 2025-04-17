@@ -374,8 +374,8 @@ type AndInitParameters struct {
 
 	// Operator. Valid values:
 	// Operator. Valid values:
-	// - `equals`: Equals.
-	// - `notEquals`: Does not equal.
+	// - `equal`: Equal.
+	// - `notEqual`: Does not equal.
 	// - `exist`: Exists.
 	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
@@ -390,6 +390,7 @@ type AndInitParameters struct {
 	// - `client_country`: Country/Region of the client.
 	// - `query_string`: Query string in the request URL.
 	// - `request_header`: HTTP request header.
+	// - `client_ip`: Client IP.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
@@ -421,8 +422,8 @@ type AndObservation struct {
 
 	// Operator. Valid values:
 	// Operator. Valid values:
-	// - `equals`: Equals.
-	// - `notEquals`: Does not equal.
+	// - `equal`: Equal.
+	// - `notEqual`: Does not equal.
 	// - `exist`: Exists.
 	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
@@ -437,6 +438,7 @@ type AndObservation struct {
 	// - `client_country`: Country/Region of the client.
 	// - `query_string`: Query string in the request URL.
 	// - `request_header`: HTTP request header.
+	// - `client_ip`: Client IP.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
@@ -470,8 +472,8 @@ type AndParameters struct {
 
 	// Operator. Valid values:
 	// Operator. Valid values:
-	// - `equals`: Equals.
-	// - `notEquals`: Does not equal.
+	// - `equal`: Equal.
+	// - `notEqual`: Does not equal.
 	// - `exist`: Exists.
 	// - `notexist`: Does not exist.
 	// +kubebuilder:validation:Optional
@@ -487,6 +489,7 @@ type AndParameters struct {
 	// - `client_country`: Country/Region of the client.
 	// - `query_string`: Query string in the request URL.
 	// - `request_header`: HTTP request header.
+	// - `client_ip`: Client IP.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target" tf:"target,omitempty"`
 
@@ -679,8 +682,8 @@ type OrAndInitParameters struct {
 
 	// Operator. Valid values:
 	// Operator. Valid values:
-	// - `equals`: Equals.
-	// - `notEquals`: Does not equal.
+	// - `equal`: Equal.
+	// - `notEqual`: Does not equal.
 	// - `exist`: Exists.
 	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
@@ -694,6 +697,7 @@ type OrAndInitParameters struct {
 	// - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
 	// - `query_string`: Query string in the request URL.
 	// - `request_header`: HTTP request header.
+	// - `client_ip`: Client IP.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
@@ -725,8 +729,8 @@ type OrAndObservation struct {
 
 	// Operator. Valid values:
 	// Operator. Valid values:
-	// - `equals`: Equals.
-	// - `notEquals`: Does not equal.
+	// - `equal`: Equal.
+	// - `notEqual`: Does not equal.
 	// - `exist`: Exists.
 	// - `notexist`: Does not exist.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
@@ -740,6 +744,7 @@ type OrAndObservation struct {
 	// - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
 	// - `query_string`: Query string in the request URL.
 	// - `request_header`: HTTP request header.
+	// - `client_ip`: Client IP.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// The parameter value of the match type. It can be an empty string only when Target=query string/request header and Operator=exist/notexist.
@@ -773,8 +778,8 @@ type OrAndParameters struct {
 
 	// Operator. Valid values:
 	// Operator. Valid values:
-	// - `equals`: Equals.
-	// - `notEquals`: Does not equal.
+	// - `equal`: Equal.
+	// - `notEqual`: Does not equal.
 	// - `exist`: Exists.
 	// - `notexist`: Does not exist.
 	// +kubebuilder:validation:Optional
@@ -789,6 +794,7 @@ type OrAndParameters struct {
 	// - `url`: Partial URL under the current site.  - `client_country`: Country/Region of the client.
 	// - `query_string`: Query string in the request URL.
 	// - `request_header`: HTTP request header.
+	// - `client_ip`: Client IP.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target" tf:"target,omitempty"`
 

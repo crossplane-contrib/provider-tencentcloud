@@ -230,8 +230,8 @@ type AutoScalingConfigInitParameters struct {
 	// Volume of system disk in GB. Default is `50`.
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
 
-	// Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM.
-	// Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.
+	// Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD, CLOUD_BSSD and LOCAL_NVME. Default is CLOUD_PREMIUM.
+	// Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`. Default is `CLOUD_PREMIUM`.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 }
 
@@ -330,8 +330,8 @@ type AutoScalingConfigObservation struct {
 	// Volume of system disk in GB. Default is `50`.
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
 
-	// Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM.
-	// Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.
+	// Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD, CLOUD_BSSD and LOCAL_NVME. Default is CLOUD_PREMIUM.
+	// Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`. Default is `CLOUD_PREMIUM`.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 }
 
@@ -458,8 +458,8 @@ type AutoScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	SystemDiskSize *float64 `json:"systemDiskSize,omitempty" tf:"system_disk_size,omitempty"`
 
-	// Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM.
-	// Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.
+	// Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD, CLOUD_BSSD and LOCAL_NVME. Default is CLOUD_PREMIUM.
+	// Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`. Default is `CLOUD_PREMIUM`.
 	// +kubebuilder:validation:Optional
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 }
@@ -479,7 +479,7 @@ type NodeConfigDataDiskInitParameters struct {
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
-	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// File system, e.g. ext3/ext4/xfs.
@@ -506,7 +506,7 @@ type NodeConfigDataDiskObservation struct {
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
-	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// File system, e.g. ext3/ext4/xfs.
@@ -536,7 +536,7 @@ type NodeConfigDataDiskParameters struct {
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
-	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 

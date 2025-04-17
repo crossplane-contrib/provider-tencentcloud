@@ -4,10 +4,10 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cls/v1alpha1/logset
   labels:
-    testing.upbound.io/example-name: logset
-  name: logset
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    logsetName: demo
+    logsetName: tf-example
     tags:
-      createdBy: terraform
+      createdBy: Terraform

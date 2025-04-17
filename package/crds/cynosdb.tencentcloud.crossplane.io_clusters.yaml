@@ -103,6 +103,11 @@ spec:
                       Name of CynosDB cluster.
                       Name of CynosDB cluster.
                     type: string
+                  cynosVersion:
+                    description: |-
+                      Kernel version, you can enter it when modifying.
+                      Kernel version, you can enter it when modifying.
+                    type: string
                   dbMode:
                     description: |-
                       Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
@@ -128,6 +133,59 @@ spec:
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                     type: number
+                  instanceInitInfos:
+                    description: |-
+                      Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+                      Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+                    items:
+                      properties:
+                        cpu:
+                          description: |-
+                            CPU of instance.
+                            CPU of instance.
+                          type: number
+                        deviceType:
+                          description: |-
+                            Instance machine type. Values: common, exclusive.
+                            Instance machine type. Values: `common`, `exclusive`.
+                          type: string
+                        instanceCount:
+                          description: |-
+                            Instance count. Range: [1, 15].
+                            Instance count. Range: [1, 15].
+                          type: number
+                        instanceType:
+                          description: |-
+                            Instance type. Value: rw, ro.
+                            Instance type. Value: `rw`, `ro`.
+                          type: string
+                        maxRoCount:
+                          description: |-
+                            Maximum number of Serverless instances. Range [1,15].
+                            Maximum number of Serverless instances. Range [1,15].
+                          type: number
+                        maxRoCpu:
+                          description: |-
+                            Maximum Serverless Instance Specifications.
+                            Maximum Serverless Instance Specifications.
+                          type: number
+                        memory:
+                          description: |-
+                            Memory of instance.
+                            Memory of instance.
+                          type: number
+                        minRoCount:
+                          description: |-
+                            Minimum number of Serverless instances. Range [1,15].
+                            Minimum number of Serverless instances. Range [1,15].
+                          type: number
+                        minRoCpu:
+                          description: |-
+                            Minimum Serverless Instance Specifications.
+                            Minimum Serverless Instance Specifications.
+                          type: number
+                      type: object
+                    type: array
                   instanceMaintainDuration:
                     description: |-
                       Duration time for maintenance, unit in second. 3600 by default.
@@ -477,6 +535,11 @@ spec:
                       Name of CynosDB cluster.
                       Name of CynosDB cluster.
                     type: string
+                  cynosVersion:
+                    description: |-
+                      Kernel version, you can enter it when modifying.
+                      Kernel version, you can enter it when modifying.
+                    type: string
                   dbMode:
                     description: |-
                       Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
@@ -502,6 +565,59 @@ spec:
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                     type: number
+                  instanceInitInfos:
+                    description: |-
+                      Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+                      Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+                    items:
+                      properties:
+                        cpu:
+                          description: |-
+                            CPU of instance.
+                            CPU of instance.
+                          type: number
+                        deviceType:
+                          description: |-
+                            Instance machine type. Values: common, exclusive.
+                            Instance machine type. Values: `common`, `exclusive`.
+                          type: string
+                        instanceCount:
+                          description: |-
+                            Instance count. Range: [1, 15].
+                            Instance count. Range: [1, 15].
+                          type: number
+                        instanceType:
+                          description: |-
+                            Instance type. Value: rw, ro.
+                            Instance type. Value: `rw`, `ro`.
+                          type: string
+                        maxRoCount:
+                          description: |-
+                            Maximum number of Serverless instances. Range [1,15].
+                            Maximum number of Serverless instances. Range [1,15].
+                          type: number
+                        maxRoCpu:
+                          description: |-
+                            Maximum Serverless Instance Specifications.
+                            Maximum Serverless Instance Specifications.
+                          type: number
+                        memory:
+                          description: |-
+                            Memory of instance.
+                            Memory of instance.
+                          type: number
+                        minRoCount:
+                          description: |-
+                            Minimum number of Serverless instances. Range [1,15].
+                            Minimum number of Serverless instances. Range [1,15].
+                          type: number
+                        minRoCpu:
+                          description: |-
+                            Minimum Serverless Instance Specifications.
+                            Minimum Serverless Instance Specifications.
+                          type: number
+                      type: object
+                    type: array
                   instanceMaintainDuration:
                     description: |-
                       Duration time for maintenance, unit in second. 3600 by default.
@@ -1026,6 +1142,11 @@ spec:
                       Creation time of the CynosDB cluster.
                       Creation time of the CynosDB cluster.
                     type: string
+                  cynosVersion:
+                    description: |-
+                      Kernel version, you can enter it when modifying.
+                      Kernel version, you can enter it when modifying.
+                    type: string
                   dbMode:
                     description: |-
                       Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
@@ -1059,6 +1180,59 @@ spec:
                       ID of instance.
                       ID of instance.
                     type: string
+                  instanceInitInfos:
+                    description: |-
+                      Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+                      Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
+                    items:
+                      properties:
+                        cpu:
+                          description: |-
+                            CPU of instance.
+                            CPU of instance.
+                          type: number
+                        deviceType:
+                          description: |-
+                            Instance machine type. Values: common, exclusive.
+                            Instance machine type. Values: `common`, `exclusive`.
+                          type: string
+                        instanceCount:
+                          description: |-
+                            Instance count. Range: [1, 15].
+                            Instance count. Range: [1, 15].
+                          type: number
+                        instanceType:
+                          description: |-
+                            Instance type. Value: rw, ro.
+                            Instance type. Value: `rw`, `ro`.
+                          type: string
+                        maxRoCount:
+                          description: |-
+                            Maximum number of Serverless instances. Range [1,15].
+                            Maximum number of Serverless instances. Range [1,15].
+                          type: number
+                        maxRoCpu:
+                          description: |-
+                            Maximum Serverless Instance Specifications.
+                            Maximum Serverless Instance Specifications.
+                          type: number
+                        memory:
+                          description: |-
+                            Memory of instance.
+                            Memory of instance.
+                          type: number
+                        minRoCount:
+                          description: |-
+                            Minimum number of Serverless instances. Range [1,15].
+                            Minimum number of Serverless instances. Range [1,15].
+                          type: number
+                        minRoCpu:
+                          description: |-
+                            Minimum Serverless Instance Specifications.
+                            Minimum Serverless Instance Specifications.
+                          type: number
+                      type: object
+                    type: array
                   instanceMaintainDuration:
                     description: |-
                       Duration time for maintenance, unit in second. 3600 by default.

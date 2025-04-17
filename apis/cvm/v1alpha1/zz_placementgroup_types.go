@@ -15,9 +15,18 @@ import (
 
 type PlacementGroupInitParameters struct {
 
+	// Affinity of the placement group.Valid values: 1~10, default is 1.
+	// Affinity of the placement group.Valid values: 1~10, default is 1.
+	Affinity *float64 `json:"affinity,omitempty" tf:"affinity,omitempty"`
+
 	// Name of the placement group, 1-60 characters in length.
 	// Name of the placement group, 1-60 characters in length.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Tags of the placement group.
+	// Tags of the placement group.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Type of the placement group. Valid values: HOST, SW and RACK.
 	// Type of the placement group. Valid values: `HOST`, `SW` and `RACK`.
@@ -25,6 +34,10 @@ type PlacementGroupInitParameters struct {
 }
 
 type PlacementGroupObservation struct {
+
+	// Affinity of the placement group.Valid values: 1~10, default is 1.
+	// Affinity of the placement group.Valid values: 1~10, default is 1.
+	Affinity *float64 `json:"affinity,omitempty" tf:"affinity,omitempty"`
 
 	// Creation time of the placement group.
 	// Creation time of the placement group.
@@ -45,6 +58,11 @@ type PlacementGroupObservation struct {
 	// Name of the placement group, 1-60 characters in length.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Tags of the placement group.
+	// Tags of the placement group.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Type of the placement group. Valid values: HOST, SW and RACK.
 	// Type of the placement group. Valid values: `HOST`, `SW` and `RACK`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -52,10 +70,21 @@ type PlacementGroupObservation struct {
 
 type PlacementGroupParameters struct {
 
+	// Affinity of the placement group.Valid values: 1~10, default is 1.
+	// Affinity of the placement group.Valid values: 1~10, default is 1.
+	// +kubebuilder:validation:Optional
+	Affinity *float64 `json:"affinity,omitempty" tf:"affinity,omitempty"`
+
 	// Name of the placement group, 1-60 characters in length.
 	// Name of the placement group, 1-60 characters in length.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Tags of the placement group.
+	// Tags of the placement group.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Type of the placement group. Valid values: HOST, SW and RACK.
 	// Type of the placement group. Valid values: `HOST`, `SW` and `RACK`.

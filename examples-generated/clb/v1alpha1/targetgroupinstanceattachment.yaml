@@ -4,16 +4,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
   labels:
-    testing.upbound.io/example-name: test
-  name: test
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    bindIp: ${data.tencentcloud_instances.foo.instance_list[0].private_ip}
-    port: 222
+    bindIp: ${data.tencentcloud_instances.instances.instance_list[0].private_ip}
+    port: 8080
     targetGroupIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: test
-    weight: 3
+        testing.upbound.io/example-name: example
+    weight: 10
 
 ---
 
@@ -23,12 +23,12 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
   labels:
-    testing.upbound.io/example-name: test
-  name: test
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    targetGroupName: test
-    vpcId: ${tencentcloud_vpc.app.id}
+    targetGroupName: tf-example
+    vpcId: ${tencentcloud_vpc.vpc.id}
 
 ---
 
@@ -38,8 +38,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
   labels:
-    testing.upbound.io/example-name: my_awesome_app
-  name: my-awesome-app
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     availabilityZone: ${data.tencentcloud_availability_zones.default.zones.0.name}
@@ -48,21 +48,21 @@ spec:
       dataDiskType: CLOUD_PREMIUM
       encrypt: false
     hostname: user
-    imageId: ${data.tencentcloud_images.my_favorite_image.images.0.image_id}
-    instanceName: awesome_app
-    instanceType: ${data.tencentcloud_instance_types.my_favorite_instance_types.instance_types.0.instance_type}
-    internetMaxBandwidthOut: 20
+    imageId: ${data.tencentcloud_images.images.images.0.image_id}
+    instanceName: tf-example
+    instanceType: ${data.tencentcloud_instance_types.instance_types.instance_types.0.instance_type}
+    internetMaxBandwidthOut: 100
     projectId: 0
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: app
+        testing.upbound.io/example-name: subnet
     systemDiskSize: 50
     systemDiskType: CLOUD_PREMIUM
     tags:
       tagKey: tagValue
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: app
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -72,16 +72,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
   labels:
-    testing.upbound.io/example-name: app
-  name: app
+    testing.upbound.io/example-name: subnet
+  name: subnet
 spec:
   forProvider:
     availabilityZone: ${data.tencentcloud_availability_zones.default.zones.0.name}
     cidrBlock: 10.0.1.0/24
-    name: awesome_app_subnet
+    name: subnet
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: app
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -91,9 +91,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupinstanceattachment
   labels:
-    testing.upbound.io/example-name: app
-  name: app
+    testing.upbound.io/example-name: vpc
+  name: vpc
 spec:
   forProvider:
     cidrBlock: 10.0.0.0/16
-    name: awesome_app_vpc
+    name: vpc

@@ -15,16 +15,16 @@ import (
 
 type VPNSSLServerInitParameters struct {
 
-	// need compressed. Default value: False.
-	// need compressed. Default value: False.
+	// Need compressed. Currently is not supports compress. Default value: False.
+	// Need compressed. Currently is not supports compress. Default value: False.
 	Compress *bool `json:"compress,omitempty" tf:"compress,omitempty"`
 
-	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC, NONE.Default value: NONE.
-	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC, NONE.Default value: NONE.
+	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
+	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
 	EncryptAlgorithm *string `json:"encryptAlgorithm,omitempty" tf:"encrypt_algorithm,omitempty"`
 
-	// The integrity algorithm. Valid values: SHA1, MD5 and NONE. Default value: NONE.
-	// The integrity algorithm. Valid values: SHA1, MD5 and NONE. Default value: NONE.
+	// The integrity algorithm. Valid values: SHA1. Default value: SHA1.
+	// The integrity algorithm. Valid values: SHA1. Default value: SHA1.
 	IntegrityAlgorithm *string `json:"integrityAlgorithm,omitempty" tf:"integrity_algorithm,omitempty"`
 
 	// List of local CIDR.
@@ -35,8 +35,8 @@ type VPNSSLServerInitParameters struct {
 	// Remote CIDR for client.
 	RemoteAddress *string `json:"remoteAddress,omitempty" tf:"remote_address,omitempty"`
 
-	// The port of ssl vpn. Default value: 1194.
-	// The port of ssl vpn. Default value: 1194.
+	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
+	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	SSLVPNPort *float64 `json:"sslVpnPort,omitempty" tf:"ssl_vpn_port,omitempty"`
 
 	// The protocol of ssl vpn. Default value: UDP.
@@ -63,19 +63,19 @@ type VPNSSLServerInitParameters struct {
 
 type VPNSSLServerObservation struct {
 
-	// need compressed. Default value: False.
-	// need compressed. Default value: False.
+	// Need compressed. Currently is not supports compress. Default value: False.
+	// Need compressed. Currently is not supports compress. Default value: False.
 	Compress *bool `json:"compress,omitempty" tf:"compress,omitempty"`
 
-	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC, NONE.Default value: NONE.
-	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC, NONE.Default value: NONE.
+	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
+	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
 	EncryptAlgorithm *string `json:"encryptAlgorithm,omitempty" tf:"encrypt_algorithm,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The integrity algorithm. Valid values: SHA1, MD5 and NONE. Default value: NONE.
-	// The integrity algorithm. Valid values: SHA1, MD5 and NONE. Default value: NONE.
+	// The integrity algorithm. Valid values: SHA1. Default value: SHA1.
+	// The integrity algorithm. Valid values: SHA1. Default value: SHA1.
 	IntegrityAlgorithm *string `json:"integrityAlgorithm,omitempty" tf:"integrity_algorithm,omitempty"`
 
 	// List of local CIDR.
@@ -86,8 +86,8 @@ type VPNSSLServerObservation struct {
 	// Remote CIDR for client.
 	RemoteAddress *string `json:"remoteAddress,omitempty" tf:"remote_address,omitempty"`
 
-	// The port of ssl vpn. Default value: 1194.
-	// The port of ssl vpn. Default value: 1194.
+	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
+	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	SSLVPNPort *float64 `json:"sslVpnPort,omitempty" tf:"ssl_vpn_port,omitempty"`
 
 	// The protocol of ssl vpn. Default value: UDP.
@@ -105,18 +105,18 @@ type VPNSSLServerObservation struct {
 
 type VPNSSLServerParameters struct {
 
-	// need compressed. Default value: False.
-	// need compressed. Default value: False.
+	// Need compressed. Currently is not supports compress. Default value: False.
+	// Need compressed. Currently is not supports compress. Default value: False.
 	// +kubebuilder:validation:Optional
 	Compress *bool `json:"compress,omitempty" tf:"compress,omitempty"`
 
-	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC, NONE.Default value: NONE.
-	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC, NONE.Default value: NONE.
+	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
+	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
 	// +kubebuilder:validation:Optional
 	EncryptAlgorithm *string `json:"encryptAlgorithm,omitempty" tf:"encrypt_algorithm,omitempty"`
 
-	// The integrity algorithm. Valid values: SHA1, MD5 and NONE. Default value: NONE.
-	// The integrity algorithm. Valid values: SHA1, MD5 and NONE. Default value: NONE.
+	// The integrity algorithm. Valid values: SHA1. Default value: SHA1.
+	// The integrity algorithm. Valid values: SHA1. Default value: SHA1.
 	// +kubebuilder:validation:Optional
 	IntegrityAlgorithm *string `json:"integrityAlgorithm,omitempty" tf:"integrity_algorithm,omitempty"`
 
@@ -130,8 +130,8 @@ type VPNSSLServerParameters struct {
 	// +kubebuilder:validation:Optional
 	RemoteAddress *string `json:"remoteAddress,omitempty" tf:"remote_address,omitempty"`
 
-	// The port of ssl vpn. Default value: 1194.
-	// The port of ssl vpn. Default value: 1194.
+	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
+	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	// +kubebuilder:validation:Optional
 	SSLVPNPort *float64 `json:"sslVpnPort,omitempty" tf:"ssl_vpn_port,omitempty"`
 

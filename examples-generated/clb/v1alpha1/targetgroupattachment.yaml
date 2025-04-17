@@ -4,22 +4,22 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
   labels:
-    testing.upbound.io/example-name: group
-  name: group
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clbIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: clb_basic
+        testing.upbound.io/example-name: example
     listenerIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: listener_basic
+        testing.upbound.io/example-name: example
     ruleIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: rule_basic
+        testing.upbound.io/example-name: example
     targetGroupIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: test
+        testing.upbound.io/example-name: example
 
 ---
 
@@ -29,12 +29,18 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
   labels:
-    testing.upbound.io/example-name: clb_basic
-  name: clb-basic
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    clbName: tf-clb-rule-basic
-    networkType: OPEN
+    clbName: tf-example
+    networkType: INTERNAL
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -44,15 +50,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
   labels:
-    testing.upbound.io/example-name: listener_basic
-  name: listener-basic
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clbIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: clb_basic
-    listenerName: listener_basic
-    port: 1
+        testing.upbound.io/example-name: example
+    listenerName: tf-example
+    port: 8080
     protocol: HTTP
 
 ---
@@ -63,19 +69,19 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
   labels:
-    testing.upbound.io/example-name: rule_basic
-  name: rule-basic
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     clbIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: clb_basic
-    domain: abc.com
+        testing.upbound.io/example-name: example
+    domain: example.com
     listenerIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: listener_basic
+        testing.upbound.io/example-name: example
     scheduler: WRR
-    sessionExpireTime: 30
+    sessionExpireTime: 60
     targetType: TARGETGROUP
     url: /
 
@@ -87,8 +93,44 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
   labels:
-    testing.upbound.io/example-name: test
-  name: test
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    targetGroupName: test-target-keep-1
+    targetGroupName: tf-example
+    vpcId: ${tencentcloud_vpc.vpc.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ${var.availability_zone}
+    cidrBlock: 10.0.1.0/24
+    isMulticast: false
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clb/v1alpha1/targetgroupattachment
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc

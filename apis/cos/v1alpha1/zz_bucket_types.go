@@ -65,8 +65,8 @@ type BucketInitParameters struct {
 	// Enable intelligent tiering. NOTE: When intelligent tiering configuration is enabled, it cannot be turned off or modified.
 	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
 
-	// The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
-	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
+	// The server-side encryption algorithm to use. Valid values are AES256, KMS and SM4.
+	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `SM4`.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
 	// Force cleanup all objects before delete bucket.
@@ -81,8 +81,8 @@ type BucketInitParameters struct {
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
 
-	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
-	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
 	KMSID *string `json:"kmsId,omitempty" tf:"kms_id,omitempty"`
 
 	// A configuration of object lifecycle management (documented below).
@@ -169,8 +169,8 @@ type BucketObservation struct {
 	// Enable intelligent tiering. NOTE: When intelligent tiering configuration is enabled, it cannot be turned off or modified.
 	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
 
-	// The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
-	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
+	// The server-side encryption algorithm to use. Valid values are AES256, KMS and SM4.
+	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `SM4`.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
 	// Force cleanup all objects before delete bucket.
@@ -188,8 +188,8 @@ type BucketObservation struct {
 	// Specify the access limit for converting standard layer data into low-frequency layer data in the configuration. The default value is once, which can be used in combination with the number of days to achieve the conversion effect. For example, if the parameter is set to 1 and the number of access days is 30, it means that objects with less than one visit in 30 consecutive days will be reduced from the standard layer to the low frequency layer.
 	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
 
-	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
-	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
 	KMSID *string `json:"kmsId,omitempty" tf:"kms_id,omitempty"`
 
 	// A configuration of object lifecycle management (documented below).
@@ -279,8 +279,8 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableIntelligentTiering *bool `json:"enableIntelligentTiering,omitempty" tf:"enable_intelligent_tiering,omitempty"`
 
-	// The server-side encryption algorithm to use. Valid values are AES256, KMS and cos/kms, cos/kms is for cdc cos scenario.
-	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `cos/kms`, `cos/kms` is for cdc cos scenario.
+	// The server-side encryption algorithm to use. Valid values are AES256, KMS and SM4.
+	// The server-side encryption algorithm to use. Valid values are `AES256`, `KMS` and `SM4`.
 	// +kubebuilder:validation:Optional
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
@@ -299,8 +299,8 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	IntelligentTieringRequestFrequent *float64 `json:"intelligentTieringRequestFrequent,omitempty" tf:"intelligent_tiering_request_frequent,omitempty"`
 
-	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
-	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS or cos/kms. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when encryption_algorithm is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
+	// The KMS Master Key ID. This value is valid only when `encryption_algorithm` is set to KMS. Set kms id to the specified value. If not specified, the default kms id is used.
 	// +kubebuilder:validation:Optional
 	KMSID *string `json:"kmsId,omitempty" tf:"kms_id,omitempty"`
 
@@ -899,6 +899,102 @@ type ReplicaRulesParameters struct {
 	Status *string `json:"status" tf:"status,omitempty"`
 }
 
+type RoutingRulesInitParameters struct {
+
+	// Routing rule list.
+	// Routing rule list.
+	Rules []RulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
+}
+
+type RoutingRulesObservation struct {
+
+	// Routing rule list.
+	// Routing rule list.
+	Rules []RulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
+}
+
+type RoutingRulesParameters struct {
+
+	// Routing rule list.
+	// Routing rule list.
+	// +kubebuilder:validation:Optional
+	Rules []RulesParameters `json:"rules" tf:"rules,omitempty"`
+}
+
+type RulesInitParameters struct {
+
+	// Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+	// Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+	ConditionErrorCode *string `json:"conditionErrorCode,omitempty" tf:"condition_error_code,omitempty"`
+
+	// Specifies the object key prefix as the match condition for the routing rule.
+	// Specifies the object key prefix as the match condition for the routing rule.
+	ConditionPrefix *string `json:"conditionPrefix,omitempty" tf:"condition_prefix,omitempty"`
+
+	// Specifies the target protocol for the routing rule. Only HTTPS is supported.
+	// Specifies the target protocol for the routing rule. Only HTTPS is supported.
+	RedirectProtocol *string `json:"redirectProtocol,omitempty" tf:"redirect_protocol,omitempty"`
+
+	// Specifies the target object key to replace the original object key in the request.
+	// Specifies the target object key to replace the original object key in the request.
+	RedirectReplaceKey *string `json:"redirectReplaceKey,omitempty" tf:"redirect_replace_key,omitempty"`
+
+	// Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+	// Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+	RedirectReplaceKeyPrefix *string `json:"redirectReplaceKeyPrefix,omitempty" tf:"redirect_replace_key_prefix,omitempty"`
+}
+
+type RulesObservation struct {
+
+	// Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+	// Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+	ConditionErrorCode *string `json:"conditionErrorCode,omitempty" tf:"condition_error_code,omitempty"`
+
+	// Specifies the object key prefix as the match condition for the routing rule.
+	// Specifies the object key prefix as the match condition for the routing rule.
+	ConditionPrefix *string `json:"conditionPrefix,omitempty" tf:"condition_prefix,omitempty"`
+
+	// Specifies the target protocol for the routing rule. Only HTTPS is supported.
+	// Specifies the target protocol for the routing rule. Only HTTPS is supported.
+	RedirectProtocol *string `json:"redirectProtocol,omitempty" tf:"redirect_protocol,omitempty"`
+
+	// Specifies the target object key to replace the original object key in the request.
+	// Specifies the target object key to replace the original object key in the request.
+	RedirectReplaceKey *string `json:"redirectReplaceKey,omitempty" tf:"redirect_replace_key,omitempty"`
+
+	// Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+	// Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+	RedirectReplaceKeyPrefix *string `json:"redirectReplaceKeyPrefix,omitempty" tf:"redirect_replace_key_prefix,omitempty"`
+}
+
+type RulesParameters struct {
+
+	// Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+	// Specifies the error code as the match condition for the routing rule. Valid values: only 4xx return codes, such as 403 or 404.
+	// +kubebuilder:validation:Optional
+	ConditionErrorCode *string `json:"conditionErrorCode,omitempty" tf:"condition_error_code,omitempty"`
+
+	// Specifies the object key prefix as the match condition for the routing rule.
+	// Specifies the object key prefix as the match condition for the routing rule.
+	// +kubebuilder:validation:Optional
+	ConditionPrefix *string `json:"conditionPrefix,omitempty" tf:"condition_prefix,omitempty"`
+
+	// Specifies the target protocol for the routing rule. Only HTTPS is supported.
+	// Specifies the target protocol for the routing rule. Only HTTPS is supported.
+	// +kubebuilder:validation:Optional
+	RedirectProtocol *string `json:"redirectProtocol,omitempty" tf:"redirect_protocol,omitempty"`
+
+	// Specifies the target object key to replace the original object key in the request.
+	// Specifies the target object key to replace the original object key in the request.
+	// +kubebuilder:validation:Optional
+	RedirectReplaceKey *string `json:"redirectReplaceKey,omitempty" tf:"redirect_replace_key,omitempty"`
+
+	// Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+	// Specifies the object key prefix to replace the original prefix in the request. You can set this parameter only if the condition is KeyPrefixEquals.
+	// +kubebuilder:validation:Optional
+	RedirectReplaceKeyPrefix *string `json:"redirectReplaceKeyPrefix,omitempty" tf:"redirect_replace_key_prefix,omitempty"`
+}
+
 type TransitionInitParameters struct {
 
 	// Specifies the date after which you want the corresponding action to take effect.
@@ -960,6 +1056,10 @@ type WebsiteInitParameters struct {
 	// Redirects all request configurations. Valid values: http, https. Default is http.
 	// Redirects all request configurations. Valid values: http, https. Default is `http`.
 	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
+
+	// Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+	// Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+	RoutingRules []RoutingRulesInitParameters `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
 }
 
 type WebsiteObservation struct {
@@ -978,6 +1078,10 @@ type WebsiteObservation struct {
 	// Redirects all request configurations. Valid values: http, https. Default is http.
 	// Redirects all request configurations. Valid values: http, https. Default is `http`.
 	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
+
+	// Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+	// Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+	RoutingRules []RoutingRulesObservation `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
 }
 
 type WebsiteParameters struct {
@@ -996,6 +1100,11 @@ type WebsiteParameters struct {
 	// Redirects all request configurations. Valid values: http, https. Default is `http`.
 	// +kubebuilder:validation:Optional
 	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
+
+	// Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+	// Routing rule configuration. A RoutingRules container can contain up to 100 RoutingRule elements.
+	// +kubebuilder:validation:Optional
+	RoutingRules []RoutingRulesParameters `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
 }
 
 // BucketSpec defines the desired state of Bucket

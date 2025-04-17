@@ -163,6 +163,16 @@ spec:
                           type: array
                       type: object
                     type: array
+                  endTime:
+                    description: |-
+                      End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+                      End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+                    type: number
+                  filenameMode:
+                    description: |-
+                      Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+                      Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+                    type: number
                   filterRules:
                     description: |-
                       Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
@@ -210,6 +220,16 @@ spec:
                     description: |-
                       Shipping rule name.
                       Shipping rule name.
+                    type: string
+                  startTime:
+                    description: |-
+                      Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+                      Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+                    type: number
+                  storageType:
+                    description: |-
+                      COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+                      COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
                     type: string
                   topicId:
                     description: |-
@@ -394,6 +414,16 @@ spec:
                           type: array
                       type: object
                     type: array
+                  endTime:
+                    description: |-
+                      End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+                      End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+                    type: number
+                  filenameMode:
+                    description: |-
+                      Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+                      Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+                    type: number
                   filterRules:
                     description: |-
                       Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
@@ -441,6 +471,16 @@ spec:
                     description: |-
                       Shipping rule name.
                       Shipping rule name.
+                    type: string
+                  startTime:
+                    description: |-
+                      Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+                      Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+                    type: number
+                  storageType:
+                    description: |-
+                      COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+                      COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
                     type: string
                   topicId:
                     description: |-
@@ -797,6 +837,16 @@ spec:
                           type: array
                       type: object
                     type: array
+                  endTime:
+                    description: |-
+                      End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+                      End time for data shipping, which cannot be set to a future time. If you do not specify this parameter, it indicates continuous data shipping.
+                    type: number
+                  filenameMode:
+                    description: |-
+                      Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+                      Naming a shipping file. Valid values: 0 (by random number); 1 (by shipping time). Default value: 0.
+                    type: number
                   filterRules:
                     description: |-
                       Filter rules for shipped logs. Only logs matching the rules can be shipped. All rules are in the AND relationship, and up to five rules can be added. If the array is empty, no filtering will be performed, and all logs will be shipped.
@@ -847,6 +897,16 @@ spec:
                     description: |-
                       Shipping rule name.
                       Shipping rule name.
+                    type: string
+                  startTime:
+                    description: |-
+                      Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+                      Start time for data shipping, which cannot be earlier than the lifecycle start time of the log topic. If you do not specify this parameter, it will be set to the time when you create the data shipping task.
+                    type: number
+                  storageType:
+                    description: |-
+                      COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
+                      COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
                     type: string
                   topicId:
                     description: |-

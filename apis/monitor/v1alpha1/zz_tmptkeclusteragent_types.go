@@ -43,6 +43,10 @@ type AgentsInitParameters struct {
 	// Whether to collect indicators, true means drop all indicators, false means collect default indicators.
 	NotScrape *bool `json:"notScrape,omitempty" tf:"not_scrape,omitempty"`
 
+	// Whether to enable the default pre-aggregation rule.
+	// Whether to enable the default pre-aggregation rule.
+	OpenDefaultRecord *bool `json:"openDefaultRecord,omitempty" tf:"open_default_record,omitempty"`
+
 	// Limitation of region.
 	// Limitation of region.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -81,6 +85,10 @@ type AgentsObservation struct {
 	// Whether to collect indicators, true means drop all indicators, false means collect default indicators.
 	// Whether to collect indicators, true means drop all indicators, false means collect default indicators.
 	NotScrape *bool `json:"notScrape,omitempty" tf:"not_scrape,omitempty"`
+
+	// Whether to enable the default pre-aggregation rule.
+	// Whether to enable the default pre-aggregation rule.
+	OpenDefaultRecord *bool `json:"openDefaultRecord,omitempty" tf:"open_default_record,omitempty"`
 
 	// Limitation of region.
 	// Limitation of region.
@@ -126,6 +134,11 @@ type AgentsParameters struct {
 	// Whether to collect indicators, true means drop all indicators, false means collect default indicators.
 	// +kubebuilder:validation:Optional
 	NotScrape *bool `json:"notScrape,omitempty" tf:"not_scrape,omitempty"`
+
+	// Whether to enable the default pre-aggregation rule.
+	// Whether to enable the default pre-aggregation rule.
+	// +kubebuilder:validation:Optional
+	OpenDefaultRecord *bool `json:"openDefaultRecord,omitempty" tf:"open_default_record,omitempty"`
 
 	// Limitation of region.
 	// Limitation of region.

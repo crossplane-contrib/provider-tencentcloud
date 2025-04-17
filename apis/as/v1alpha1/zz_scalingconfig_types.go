@@ -162,6 +162,10 @@ type ScalingConfigInitParameters struct {
 	// Dedicated Cluster ID.
 	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
 
+	// Placement group ID. Only one is allowed.
+	// Placement group ID. Only one is allowed.
+	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
+
 	// Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
 	// Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
 	DiskTypePolicy *string `json:"diskTypePolicy,omitempty" tf:"disk_type_policy,omitempty"`
@@ -285,6 +289,10 @@ type ScalingConfigObservation struct {
 	// Dedicated Cluster ID.
 	// Dedicated Cluster ID.
 	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
+	// Placement group ID. Only one is allowed.
+	// Placement group ID. Only one is allowed.
+	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
 
 	// Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
 	// Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.
@@ -416,6 +424,11 @@ type ScalingConfigParameters struct {
 	// Dedicated Cluster ID.
 	// +kubebuilder:validation:Optional
 	DedicatedClusterID *string `json:"dedicatedClusterId,omitempty" tf:"dedicated_cluster_id,omitempty"`
+
+	// Placement group ID. Only one is allowed.
+	// Placement group ID. Only one is allowed.
+	// +kubebuilder:validation:Optional
+	DisasterRecoverGroupIds []*string `json:"disasterRecoverGroupIds,omitempty" tf:"disaster_recover_group_ids,omitempty"`
 
 	// Policy of cloud disk type. Valid values: ORIGINAL and AUTOMATIC. Default is ORIGINAL.
 	// Policy of cloud disk type. Valid values: `ORIGINAL` and `AUTOMATIC`. Default is `ORIGINAL`.

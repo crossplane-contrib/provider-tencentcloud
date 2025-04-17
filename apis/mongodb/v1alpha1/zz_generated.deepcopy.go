@@ -161,6 +161,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -370,6 +375,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -537,6 +547,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.HiddenZone != nil {
 		in, out := &in.HiddenZone, &out.HiddenZone
 		*out = new(string)
+		**out = **in
+	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
 		**out = **in
 	}
 	if in.InstanceName != nil {
@@ -856,6 +871,11 @@ func (in *ShardingInstanceInitParameters) DeepCopyInto(out *ShardingInstanceInit
 		*out = new(string)
 		**out = **in
 	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -1061,6 +1081,11 @@ func (in *ShardingInstanceObservation) DeepCopyInto(out *ShardingInstanceObserva
 		*out = new(string)
 		**out = **in
 	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -1217,6 +1242,11 @@ func (in *ShardingInstanceParameters) DeepCopyInto(out *ShardingInstanceParamete
 	if in.HiddenZone != nil {
 		in, out := &in.HiddenZone, &out.HiddenZone
 		*out = new(string)
+		**out = **in
+	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
 		**out = **in
 	}
 	if in.InstanceName != nil {
@@ -1448,6 +1478,11 @@ func (in *StandbyInstanceInitParameters) DeepCopyInto(out *StandbyInstanceInitPa
 		*out = new(string)
 		**out = **in
 	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -1652,6 +1687,11 @@ func (in *StandbyInstanceObservation) DeepCopyInto(out *StandbyInstanceObservati
 		*out = new(string)
 		**out = **in
 	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
@@ -1782,6 +1822,11 @@ func (in *StandbyInstanceParameters) DeepCopyInto(out *StandbyInstanceParameters
 	if in.FatherInstanceRegion != nil {
 		in, out := &in.FatherInstanceRegion, &out.FatherInstanceRegion
 		*out = new(string)
+		**out = **in
+	}
+	if in.InMaintenance != nil {
+		in, out := &in.InMaintenance, &out.InMaintenance
+		*out = new(float64)
 		**out = **in
 	}
 	if in.InstanceName != nil {

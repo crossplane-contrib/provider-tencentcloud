@@ -12,5 +12,6 @@ spec:
     description: example of kms key
     isEnabled: true
     keyRotationEnabled: false
+    pendingDeleteWindowInDays: 7
     tags:
-      createdBy: terraform
+      createdBy: Terraform

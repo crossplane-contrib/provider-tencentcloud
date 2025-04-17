@@ -152,6 +152,10 @@ type BasicInstanceObservation struct {
 	// Create time of the SQL Server basic instance.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// Internet address domain name.
+	// Internet address domain name.
+	DNSPodDomain *string `json:"dnsPodDomain,omitempty" tf:"dns_pod_domain,omitempty"`
+
 	// Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
 	// Version of the SQL Server basic database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
@@ -213,6 +217,10 @@ type BasicInstanceObservation struct {
 	// The tags of the SQL Server basic instance.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// External port number.
+	// External port number.
+	TgwWanVport *float64 `json:"tgwWanVport,omitempty" tf:"tgw_wan_vport,omitempty"`
 
 	// ID of VPC.
 	// ID of VPC.

@@ -4,16 +4,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: eni/v1alpha1/eniattachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     eniIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: eni
     instanceIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: example
 
 ---
 
@@ -23,8 +23,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: eni/v1alpha1/eniattachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: eni
+  name: eni
 spec:
   forProvider:
     description: eni desc
@@ -32,10 +32,10 @@ spec:
     name: ci-test-eni
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: subnet
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -45,23 +45,23 @@ metadata:
   annotations:
     meta.upbound.io/example-id: eni/v1alpha1/eniattachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availabilityZone: ${data.tencentcloud_availability_zones.my_favorite_zones.zones.0.name}
+    availabilityZone: ${data.tencentcloud_availability_zones.zones.zones.0.name}
     disableMonitorService: true
     disableSecurityService: true
-    imageId: ${data.tencentcloud_images.my_favorite_image.images.0.image_id}
+    imageId: ${data.tencentcloud_images.images.images.0.image_id}
     instanceName: ci-test-eni-attach
-    instanceType: ${data.tencentcloud_instance_types.my_favorite_instance_types.instance_types.0.instance_type}
+    instanceType: ${data.tencentcloud_instance_types.instance_types.instance_types.0.instance_type}
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: subnet
     systemDiskType: CLOUD_PREMIUM
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -71,8 +71,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: eni/v1alpha1/eniattachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: subnet
+  name: subnet
 spec:
   forProvider:
     availabilityZone: ap-guangzhou-3
@@ -81,7 +81,7 @@ spec:
     name: ci-test-eni-subnet
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -91,8 +91,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: eni/v1alpha1/eniattachment
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: vpc
+  name: vpc
 spec:
   forProvider:
     cidrBlock: 10.0.0.0/16

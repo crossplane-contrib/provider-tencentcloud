@@ -55,6 +55,11 @@ func (in *AgentsInitParameters) DeepCopyInto(out *AgentsInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.OpenDefaultRecord != nil {
+		in, out := &in.OpenDefaultRecord, &out.OpenDefaultRecord
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -119,6 +124,11 @@ func (in *AgentsObservation) DeepCopyInto(out *AgentsObservation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.OpenDefaultRecord != nil {
+		in, out := &in.OpenDefaultRecord, &out.OpenDefaultRecord
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -180,6 +190,11 @@ func (in *AgentsParameters) DeepCopyInto(out *AgentsParameters) {
 	}
 	if in.NotScrape != nil {
 		in, out := &in.NotScrape, &out.NotScrape
+		*out = new(bool)
+		**out = **in
+	}
+	if in.OpenDefaultRecord != nil {
+		in, out := &in.OpenDefaultRecord, &out.OpenDefaultRecord
 		*out = new(bool)
 		**out = **in
 	}

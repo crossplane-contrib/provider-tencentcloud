@@ -107,6 +107,10 @@ type ReadonlyInstanceInitParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
+	// System time zone, default: China Standard Time.
+	// System time zone, default: `China Standard Time`.
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
 	// ID of VPC.
 	// ID of VPC.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
@@ -148,9 +152,21 @@ type ReadonlyInstanceObservation struct {
 	// Create time of the SQL Server instance.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// Internet address domain name.
+	// Internet address domain name.
+	DNSPodDomain *string `json:"dnsPodDomain,omitempty" tf:"dns_pod_domain,omitempty"`
+
+	// Version of the SQL Server database engine.
+	// Version of the SQL Server database engine.
+	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
 	// Indicate that the master instance upgrade or not. true for upgrading the master SQL Server instance to cluster type by force. Default is false. Note: this is not supported with DUAL(ha_type), 2017(engine_version) master SQL Server instance, for it will cause ha_type of the master SQL Server instance change.
 	// Indicate that the master instance upgrade or not. `true` for upgrading the master SQL Server instance to cluster type by force. Default is false. Note: this is not supported with `DUAL`(ha_type), `2017`(engine_version) master SQL Server instance, for it will cause ha_type of the master SQL Server instance change.
 	ForceUpgrade *bool `json:"forceUpgrade,omitempty" tf:"force_upgrade,omitempty"`
+
+	// Instance type.
+	// Instance type.
+	HaType *string `json:"haType,omitempty" tf:"ha_type,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -170,6 +186,10 @@ type ReadonlyInstanceObservation struct {
 	// Purchase instance period in month. The value does not exceed 48.
 	// Purchase instance period in month. The value does not exceed 48.
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
+	// Project ID.
+	// Project ID.
+	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
 	// ID of the readonly group that this instance belongs to. When readonly_group_type set value 3, it must be set with valid value.
 	// ID of the readonly group that this instance belongs to. When `readonly_group_type` set value `3`, it must be set with valid value.
@@ -220,6 +240,14 @@ type ReadonlyInstanceObservation struct {
 	// The tags of the SQL Server.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// External port number.
+	// External port number.
+	TgwWanVport *float64 `json:"tgwWanVport,omitempty" tf:"tgw_wan_vport,omitempty"`
+
+	// System time zone, default: China Standard Time.
+	// System time zone, default: `China Standard Time`.
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// ID of VPC.
 	// ID of VPC.
@@ -354,6 +382,11 @@ type ReadonlyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// System time zone, default: China Standard Time.
+	// System time zone, default: `China Standard Time`.
+	// +kubebuilder:validation:Optional
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// ID of VPC.
 	// ID of VPC.

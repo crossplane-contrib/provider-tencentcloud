@@ -176,6 +176,11 @@ spec:
                             Whether to collect indicators, true means drop all indicators, false means collect default indicators.
                             Whether to collect indicators, true means drop all indicators, false means collect default indicators.
                           type: boolean
+                        openDefaultRecord:
+                          description: |-
+                            Whether to enable the default pre-aggregation rule.
+                            Whether to enable the default pre-aggregation rule.
+                          type: boolean
                         region:
                           description: |-
                             Limitation of region.
@@ -378,6 +383,11 @@ spec:
                           description: |-
                             Whether to collect indicators, true means drop all indicators, false means collect default indicators.
                             Whether to collect indicators, true means drop all indicators, false means collect default indicators.
+                          type: boolean
+                        openDefaultRecord:
+                          description: |-
+                            Whether to enable the default pre-aggregation rule.
+                            Whether to enable the default pre-aggregation rule.
                           type: boolean
                         region:
                           description: |-
@@ -750,6 +760,11 @@ spec:
                           description: |-
                             Whether to collect indicators, true means drop all indicators, false means collect default indicators.
                             Whether to collect indicators, true means drop all indicators, false means collect default indicators.
+                          type: boolean
+                        openDefaultRecord:
+                          description: |-
+                            Whether to enable the default pre-aggregation rule.
+                            Whether to enable the default pre-aggregation rule.
                           type: boolean
                         region:
                           description: |-

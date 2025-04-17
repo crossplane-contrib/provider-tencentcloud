@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cos/v1alpha1/bucketpolicy
   labels:
-    testing.upbound.io/example-name: cos_policy
-  name: cos-policy
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     bucketSelector:
@@ -27,8 +27,23 @@ spec:
             ],
             "Effect": "allow",
             "Resource": [
-              "qcs::cos:<bucket region>:uid/<your-account-id>:<bucket name>/*"
+              "qcs::cos:<bucket region>:uid/<your-appid-id>:<your-bucket-name>/*"
             ]
           }
         ]
       }
+
+---
+
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cos/v1alpha1/bucketpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    acl: private
+    bucket: private-bucket-${local.app_id}

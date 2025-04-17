@@ -846,6 +846,11 @@ spec:
                       Create time of the SQL Server basic instance.
                       Create time of the SQL Server basic instance.
                     type: string
+                  dnsPodDomain:
+                    description: |-
+                      Internet address domain name.
+                      Internet address domain name.
+                    type: string
                   engineVersion:
                     description: |-
                       Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
@@ -928,6 +933,11 @@ spec:
                       The tags of the SQL Server basic instance.
                     type: object
                     x-kubernetes-map-type: granular
+                  tgwWanVport:
+                    description: |-
+                      External port number.
+                      External port number.
+                    type: number
                   vip:
                     description: |-
                       IP for private access.

@@ -43,9 +43,16 @@ type ShardingInstanceInitParameters struct {
 	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
-	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
+	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
+	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
 	HiddenZone *string `json:"hiddenZone,omitempty" tf:"hidden_zone,omitempty"`
+
+	// Switch time for instance configuration changes.
+	// Switch time for instance configuration changes.
+	// - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+	// - 1: Perform reconfiguration tasks within the maintenance time window.
+	// Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+	InMaintenance *float64 `json:"inMaintenance,omitempty" tf:"in_maintenance,omitempty"`
 
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
@@ -162,12 +169,19 @@ type ShardingInstanceObservation struct {
 	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
-	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
+	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
+	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
 	HiddenZone *string `json:"hiddenZone,omitempty" tf:"hidden_zone,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Switch time for instance configuration changes.
+	// Switch time for instance configuration changes.
+	// - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+	// - 1: Perform reconfiguration tasks within the maintenance time window.
+	// Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+	InMaintenance *float64 `json:"inMaintenance,omitempty" tf:"in_maintenance,omitempty"`
 
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
@@ -279,10 +293,18 @@ type ShardingInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
-	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
-	// The availability zone to which the Hidden node belongs. This parameter must be configured to deploy instances across availability zones.
+	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
+	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
 	// +kubebuilder:validation:Optional
 	HiddenZone *string `json:"hiddenZone,omitempty" tf:"hidden_zone,omitempty"`
+
+	// Switch time for instance configuration changes.
+	// Switch time for instance configuration changes.
+	// - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+	// - 1: Perform reconfiguration tasks within the maintenance time window.
+	// Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+	// +kubebuilder:validation:Optional
+	InMaintenance *float64 `json:"inMaintenance,omitempty" tf:"in_maintenance,omitempty"`
 
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.

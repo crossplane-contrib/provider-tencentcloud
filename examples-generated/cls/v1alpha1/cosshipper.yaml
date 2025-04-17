@@ -4,11 +4,11 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cls/v1alpha1/cosshipper
   labels:
-    testing.upbound.io/example-name: shipper
-  name: shipper
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    bucket: preset-scf-bucket-1308919341
+    bucket: ${tencentcloud_cos_bucket.example.id}
     compress:
     - format: lzop
     content:
@@ -27,3 +27,58 @@ spec:
     topicIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Logset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/cosshipper
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    logsetName: tf-example
+    tags:
+      createBy: Terraform
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Topic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/cosshipper
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autoSplit: false
+    logsetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    maxSplitPartitions: 20
+    partitionCount: 1
+    period: 10
+    storageType: hot
+    tags:
+      createBy: Terraform
+    topicName: tf-example
+
+---
+
+apiVersion: cos.tencentcloud.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cls/v1alpha1/cosshipper
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    acl: private
+    bucket: private-bucket-${local.app_id}

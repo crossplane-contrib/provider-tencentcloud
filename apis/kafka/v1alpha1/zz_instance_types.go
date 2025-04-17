@@ -148,6 +148,10 @@ type InstanceInitParameters struct {
 	// Dynamic message retention policy configuration.
 	DynamicRetentionConfig []DynamicRetentionConfigInitParameters `json:"dynamicRetentionConfig,omitempty" tf:"dynamic_retention_config,omitempty"`
 
+	// Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+	// Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+	ElasticBandwidthSwitch *float64 `json:"elasticBandwidthSwitch,omitempty" tf:"elastic_bandwidth_switch,omitempty"`
+
 	// Instance name.
 	// Instance name.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
@@ -273,6 +277,10 @@ type InstanceObservation struct {
 	// Dynamic message retention policy configuration.
 	DynamicRetentionConfig []DynamicRetentionConfigObservation `json:"dynamicRetentionConfig,omitempty" tf:"dynamic_retention_config,omitempty"`
 
+	// Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+	// Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+	ElasticBandwidthSwitch *float64 `json:"elasticBandwidthSwitch,omitempty" tf:"elastic_bandwidth_switch,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -396,6 +404,11 @@ type InstanceParameters struct {
 	// Dynamic message retention policy configuration.
 	// +kubebuilder:validation:Optional
 	DynamicRetentionConfig []DynamicRetentionConfigParameters `json:"dynamicRetentionConfig,omitempty" tf:"dynamic_retention_config,omitempty"`
+
+	// Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+	// Elastic bandwidth switch 0 not turned on 1 turned on (0 default). This takes effect only when the instance is created.
+	// +kubebuilder:validation:Optional
+	ElasticBandwidthSwitch *float64 `json:"elasticBandwidthSwitch,omitempty" tf:"elastic_bandwidth_switch,omitempty"`
 
 	// Instance name.
 	// Instance name.

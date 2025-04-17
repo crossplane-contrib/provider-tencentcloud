@@ -411,6 +411,14 @@ type EmrClusterInitParameters struct {
 	// Resource specification of EMR instance.
 	ResourceSpec []ResourceSpecInitParameters `json:"resourceSpec,omitempty" tf:"resource_spec,omitempty"`
 
+	// Scene-based value:
+	// Scene-based value:
+	// - Hadoop-Kudu
+	// - Hadoop-Zookeeper
+	// - Hadoop-Presto
+	// - Hadoop-Hbase.
+	SceneName *string `json:"sceneName,omitempty" tf:"scene_name,omitempty"`
+
 	// The ID of the security group to which the instance belongs, in the form of sg-xxxxxxxx.
 	// The ID of the security group to which the instance belongs, in the form of sg-xxxxxxxx.
 	SgID *string `json:"sgId,omitempty" tf:"sg_id,omitempty"`
@@ -522,6 +530,14 @@ type EmrClusterObservation struct {
 	// Resource specification of EMR instance.
 	// Resource specification of EMR instance.
 	ResourceSpec []ResourceSpecObservation `json:"resourceSpec,omitempty" tf:"resource_spec,omitempty"`
+
+	// Scene-based value:
+	// Scene-based value:
+	// - Hadoop-Kudu
+	// - Hadoop-Zookeeper
+	// - Hadoop-Presto
+	// - Hadoop-Hbase.
+	SceneName *string `json:"sceneName,omitempty" tf:"scene_name,omitempty"`
 
 	// The ID of the security group to which the instance belongs, in the form of sg-xxxxxxxx.
 	// The ID of the security group to which the instance belongs, in the form of sg-xxxxxxxx.
@@ -643,6 +659,15 @@ type EmrClusterParameters struct {
 	// Resource specification of EMR instance.
 	// +kubebuilder:validation:Optional
 	ResourceSpec []ResourceSpecParameters `json:"resourceSpec,omitempty" tf:"resource_spec,omitempty"`
+
+	// Scene-based value:
+	// Scene-based value:
+	// - Hadoop-Kudu
+	// - Hadoop-Zookeeper
+	// - Hadoop-Presto
+	// - Hadoop-Hbase.
+	// +kubebuilder:validation:Optional
+	SceneName *string `json:"sceneName,omitempty" tf:"scene_name,omitempty"`
 
 	// The ID of the security group to which the instance belongs, in the form of sg-xxxxxxxx.
 	// The ID of the security group to which the instance belongs, in the form of sg-xxxxxxxx.
@@ -1458,7 +1483,7 @@ type EmrClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// EmrCluster is the Schema for the EmrClusters API. Provide a resource to create a emr cluster.
+// EmrCluster is the Schema for the EmrClusters API. Provide a resource to create an emr cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

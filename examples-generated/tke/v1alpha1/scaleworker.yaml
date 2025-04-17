@@ -35,4 +35,7 @@ spec:
       subnetId: ${var.subnet}
       systemDiskSize: 50
       systemDiskType: CLOUD_SSD
+      tags:
+      - key: createBy
+        value: Terraform
       userData: dGVzdA==

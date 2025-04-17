@@ -44,6 +44,13 @@ type StandbyInstanceInitParameters struct {
 	// Indicates the region of main instance.
 	FatherInstanceRegion *string `json:"fatherInstanceRegion,omitempty" tf:"father_instance_region,omitempty"`
 
+	// Switch time for instance configuration changes.
+	// Switch time for instance configuration changes.
+	// - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+	// - 1: Perform reconfiguration tasks within the maintenance time window.
+	// Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+	InMaintenance *float64 `json:"inMaintenance,omitempty" tf:"in_maintenance,omitempty"`
+
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
@@ -115,6 +122,13 @@ type StandbyInstanceObservation struct {
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Switch time for instance configuration changes.
+	// Switch time for instance configuration changes.
+	// - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+	// - 1: Perform reconfiguration tasks within the maintenance time window.
+	// Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+	InMaintenance *float64 `json:"inMaintenance,omitempty" tf:"in_maintenance,omitempty"`
 
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
@@ -206,6 +220,14 @@ type StandbyInstanceParameters struct {
 	// Indicates the region of main instance.
 	// +kubebuilder:validation:Optional
 	FatherInstanceRegion *string `json:"fatherInstanceRegion,omitempty" tf:"father_instance_region,omitempty"`
+
+	// Switch time for instance configuration changes.
+	// Switch time for instance configuration changes.
+	// - 0: When the adjustment is completed, perform the configuration task immediately. Default is 0.
+	// - 1: Perform reconfiguration tasks within the maintenance time window.
+	// Note: Adjusting the number of nodes and slices does not support changes within the maintenance window.
+	// +kubebuilder:validation:Optional
+	InMaintenance *float64 `json:"inMaintenance,omitempty" tf:"in_maintenance,omitempty"`
 
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.

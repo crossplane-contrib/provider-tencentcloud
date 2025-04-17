@@ -19,8 +19,8 @@ type InstanceInitParameters struct {
 	// Auto-renew flag. 0 - default state (manual renewal); 1 - automatic renewal; 2 - explicit no automatic renewal.
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
-	// The available zone ID of an instance to be created, please refer to tencentcloud_redis_zone_config.list.
-	// The available zone ID of an instance to be created, please refer to `tencentcloud_redis_zone_config.list`.
+	// The available zone of an instance to be created, like ap-beijing-7, please refer to tencentcloud_redis_zone_config.list.
+	// The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
 	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID. Note: TencentCloud International only supports POSTPAID. Caution that update operation on this field will delete old instances and create new with new charge type.
@@ -124,6 +124,10 @@ type InstanceInitParameters struct {
 	// Switching mode: 1-maintenance time window switching, 2-immediate switching, default value 2.
 	// Switching mode: `1`-maintenance time window switching, `2`-immediate switching, default value `2`.
 	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
+
+	// Wan address switch, default close, values: open, close.
+	// Wan address switch, default `close`, values: `open`, `close`.
+	WanAddressSwitch *string `json:"wanAddressSwitch,omitempty" tf:"wan_address_switch,omitempty"`
 }
 
 type InstanceObservation struct {
@@ -132,8 +136,8 @@ type InstanceObservation struct {
 	// Auto-renew flag. 0 - default state (manual renewal); 1 - automatic renewal; 2 - explicit no automatic renewal.
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
-	// The available zone ID of an instance to be created, please refer to tencentcloud_redis_zone_config.list.
-	// The available zone ID of an instance to be created, please refer to `tencentcloud_redis_zone_config.list`.
+	// The available zone of an instance to be created, like ap-beijing-7, please refer to tencentcloud_redis_zone_config.list.
+	// The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
 	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID. Note: TencentCloud International only supports POSTPAID. Caution that update operation on this field will delete old instances and create new with new charge type.
@@ -256,6 +260,14 @@ type InstanceObservation struct {
 	// Switching mode: 1-maintenance time window switching, 2-immediate switching, default value 2.
 	// Switching mode: `1`-maintenance time window switching, `2`-immediate switching, default value `2`.
 	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
+
+	// Allocate Wan Address.
+	// Allocate Wan Address.
+	WanAddress *string `json:"wanAddress,omitempty" tf:"wan_address,omitempty"`
+
+	// Wan address switch, default close, values: open, close.
+	// Wan address switch, default `close`, values: `open`, `close`.
+	WanAddressSwitch *string `json:"wanAddressSwitch,omitempty" tf:"wan_address_switch,omitempty"`
 }
 
 type InstanceParameters struct {
@@ -265,8 +277,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
-	// The available zone ID of an instance to be created, please refer to tencentcloud_redis_zone_config.list.
-	// The available zone ID of an instance to be created, please refer to `tencentcloud_redis_zone_config.list`.
+	// The available zone of an instance to be created, like ap-beijing-7, please refer to tencentcloud_redis_zone_config.list.
+	// The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
@@ -401,6 +413,11 @@ type InstanceParameters struct {
 	// Switching mode: `1`-maintenance time window switching, `2`-immediate switching, default value `2`.
 	// +kubebuilder:validation:Optional
 	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
+
+	// Wan address switch, default close, values: open, close.
+	// Wan address switch, default `close`, values: `open`, `close`.
+	// +kubebuilder:validation:Optional
+	WanAddressSwitch *string `json:"wanAddressSwitch,omitempty" tf:"wan_address_switch,omitempty"`
 }
 
 type NodeInfoInitParameters struct {

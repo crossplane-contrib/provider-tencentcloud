@@ -115,6 +115,10 @@ type ReadonlyInstanceInitParameters struct {
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
 
+	// Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu fields.
+	// Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu` fields.
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
+
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -213,6 +217,10 @@ type ReadonlyInstanceObservation struct {
 	// Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu fields.
+	// Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu` fields.
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
@@ -338,6 +346,11 @@ type ReadonlyInstanceParameters struct {
 	// Specify Voucher Ids if `auto_voucher` was `1`, only support using 1 vouchers for now.
 	// +kubebuilder:validation:Optional
 	VoucherIds []*string `json:"voucherIds,omitempty" tf:"voucher_ids,omitempty"`
+
+	// Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu fields.
+	// Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu` fields.
+	// +kubebuilder:validation:Optional
+	WaitSwitch *float64 `json:"waitSwitch,omitempty" tf:"wait_switch,omitempty"`
 
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
 	// Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.

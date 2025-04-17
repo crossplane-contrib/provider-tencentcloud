@@ -114,6 +114,11 @@ spec:
                             Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
                             Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                           type: string
+                        dataDiskName:
+                          description: |-
+                            Name of data disk.
+                            Name of data disk.
+                          type: string
                         dataDiskSize:
                           description: |-
                             Size of the data disk, and unit is GB.
@@ -163,18 +168,18 @@ spec:
                     type: boolean
                   disableAutomationService:
                     description: |-
-                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   disableMonitorService:
                     description: |-
-                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   disableSecurityService:
                     description: |-
-                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   forceDelete:
                     description: |-
@@ -183,13 +188,18 @@ spec:
                     type: boolean
                   hostname:
                     description: |-
-                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+                    type: string
+                  hpcClusterId:
+                    description: |-
+                      High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+                      High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
                     type: string
                   imageId:
                     description: |-
-                      The image to use for the instance. Changing image_id will cause the instance reset.
-                      The image to use for the instance. Changing `image_id` will cause the instance reset.
+                      The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
+                      The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
                     type: string
                   instanceChargeType:
                     description: |-
@@ -233,21 +243,21 @@ spec:
                     type: number
                   keepImageLogin:
                     description: |-
-                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system..
+                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system..
                     type: boolean
                   keyIds:
                     description: |-
-                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   keyName:
                     description: |-
-                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
                     type: string
                   orderlySecurityGroups:
                     description: |-
@@ -258,8 +268,8 @@ spec:
                     type: array
                   passwordSecretRef:
                     description: |-
-                      Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
-                      Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifying will cause the instance reset.
+                      Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifications may lead to the reinstallation of the instance's operating system.
+                      Password for the instance. In order for the new password to take effect, the instance will be restarted after the password change. Modifications may lead to the reinstallation of the instance's operating system.
                     properties:
                       key:
                         description: The key to select.
@@ -397,6 +407,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  systemDiskName:
+                    description: |-
+                      Name of the system disk.
+                      Name of the system disk.
+                    type: string
                   systemDiskResizeOnline:
                     description: |-
                       Resize online.
@@ -564,6 +579,11 @@ spec:
                             Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
                             Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                           type: string
+                        dataDiskName:
+                          description: |-
+                            Name of data disk.
+                            Name of data disk.
+                          type: string
                         dataDiskSize:
                           description: |-
                             Size of the data disk, and unit is GB.
@@ -613,18 +633,18 @@ spec:
                     type: boolean
                   disableAutomationService:
                     description: |-
-                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   disableMonitorService:
                     description: |-
-                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   disableSecurityService:
                     description: |-
-                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   forceDelete:
                     description: |-
@@ -633,13 +653,18 @@ spec:
                     type: boolean
                   hostname:
                     description: |-
-                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+                    type: string
+                  hpcClusterId:
+                    description: |-
+                      High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+                      High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
                     type: string
                   imageId:
                     description: |-
-                      The image to use for the instance. Changing image_id will cause the instance reset.
-                      The image to use for the instance. Changing `image_id` will cause the instance reset.
+                      The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
+                      The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
                     type: string
                   instanceChargeType:
                     description: |-
@@ -683,21 +708,21 @@ spec:
                     type: number
                   keepImageLogin:
                     description: |-
-                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system..
+                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system..
                     type: boolean
                   keyIds:
                     description: |-
-                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   keyName:
                     description: |-
-                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
                     type: string
                   orderlySecurityGroups:
                     description: |-
@@ -828,6 +853,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  systemDiskName:
+                    description: |-
+                      Name of the system disk.
+                      Name of the system disk.
+                    type: string
                   systemDiskResizeOnline:
                     description: |-
                       Resize online.
@@ -1173,6 +1203,11 @@ spec:
                             Data disk ID used to initialize the data disk. When data disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
                             Data disk ID used to initialize the data disk. When data disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
                           type: string
+                        dataDiskName:
+                          description: |-
+                            Name of data disk.
+                            Name of data disk.
+                          type: string
                         dataDiskSize:
                           description: |-
                             Size of the data disk, and unit is GB.
@@ -1222,18 +1257,18 @@ spec:
                     type: boolean
                   disableAutomationService:
                     description: |-
-                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for automation, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   disableMonitorService:
                     description: |-
-                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for monitor, it is enabled by default. When this options is set, monitor agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   disableSecurityService:
                     description: |-
-                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
-                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifying will cause the instance reset.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
+                      Disable enhance service for security, it is enabled by default. When this options is set, security agent won't be installed. Modifications may lead to the reinstallation of the instance's operating system.
                     type: boolean
                   expiredTime:
                     description: |-
@@ -1247,16 +1282,21 @@ spec:
                     type: boolean
                   hostname:
                     description: |-
-                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
-                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifying will cause the instance reset.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+                      The hostname of the instance. Windows instance: The name should be a combination of 2 to 15 characters comprised of letters (case insensitive), numbers, and hyphens (-). Period (.) is not supported, and the name cannot be a string of pure numbers. Other types (such as Linux) of instances: The name should be a combination of 2 to 60 characters, supporting multiple periods (.). The piece between two periods is composed of letters (case insensitive), numbers, and hyphens (-). Modifications may lead to the reinstallation of the instance's operating system.
+                    type: string
+                  hpcClusterId:
+                    description: |-
+                      High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
+                      High-performance computing cluster ID. If the instance created is a high-performance computing instance, you need to specify the cluster in which the instance is placed, otherwise it cannot be specified.
                     type: string
                   id:
                     description: ID of the resource.
                     type: string
                   imageId:
                     description: |-
-                      The image to use for the instance. Changing image_id will cause the instance reset.
-                      The image to use for the instance. Changing `image_id` will cause the instance reset.
+                      The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
+                      The image to use for the instance. Modifications may lead to the reinstallation of the instance's operating system..
                     type: string
                   instanceChargeType:
                     description: |-
@@ -1305,21 +1345,21 @@ spec:
                     type: number
                   keepImageLogin:
                     description: |-
-                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifying will cause the instance reset.
-                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifying will cause the instance reset.
+                      Whether to keep image login or not, default is false. When the image type is private or shared or imported, this parameter can be set true. Modifications may lead to the reinstallation of the instance's operating system..
+                      Whether to keep image login or not, default is `false`. When the image type is private or shared or imported, this parameter can be set `true`. Modifications may lead to the reinstallation of the instance's operating system..
                     type: boolean
                   keyIds:
                     description: |-
-                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+                      The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   keyName:
                     description: |-
-                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifying will cause the instance reset.
-                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifying will cause the instance reset.
+                      Please use key_ids instead. The key pair to use for the instance, it looks like skey-16jig7tx. Modifications may lead to the reinstallation of the instance's operating system.
+                      The key pair to use for the instance, it looks like `skey-16jig7tx`. Modifications may lead to the reinstallation of the instance's operating system.
                     type: string
                   memory:
                     description: |-
@@ -1395,6 +1435,11 @@ spec:
                     description: |-
                       System disk snapshot ID used to initialize the system disk. When system disk type is LOCAL_BASIC and LOCAL_SSD, disk id is not supported.
                       System disk snapshot ID used to initialize the system disk. When system disk type is `LOCAL_BASIC` and `LOCAL_SSD`, disk id is not supported.
+                    type: string
+                  systemDiskName:
+                    description: |-
+                      Name of the system disk.
+                      Name of the system disk.
                     type: string
                   systemDiskResizeOnline:
                     description: |-

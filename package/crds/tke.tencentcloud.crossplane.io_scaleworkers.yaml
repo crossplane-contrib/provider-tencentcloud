@@ -288,12 +288,12 @@ spec:
                           type: string
                         key:
                           description: |-
-                            Key of the taint.
+                            Tag key.
                             Key of the taint.
                           type: string
                         value:
                           description: |-
-                            Value of the taint.
+                            Tag value.
                             Value of the taint.
                           type: string
                       type: object
@@ -512,6 +512,24 @@ spec:
                             System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
                             System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
                           type: string
+                        tags:
+                          description: |-
+                            Tag pairs.
+                            Tag pairs.
+                          items:
+                            properties:
+                              key:
+                                description: |-
+                                  Tag key.
+                                  Tag key.
+                                type: string
+                              value:
+                                description: |-
+                                  Tag value.
+                                  Tag value.
+                                type: string
+                            type: object
+                          type: array
                         userData:
                           description: |-
                             User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
@@ -748,12 +766,12 @@ spec:
                           type: string
                         key:
                           description: |-
-                            Key of the taint.
+                            Tag key.
                             Key of the taint.
                           type: string
                         value:
                           description: |-
-                            Value of the taint.
+                            Tag value.
                             Value of the taint.
                           type: string
                       type: object
@@ -953,6 +971,24 @@ spec:
                             System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
                             System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
                           type: string
+                        tags:
+                          description: |-
+                            Tag pairs.
+                            Tag pairs.
+                          items:
+                            properties:
+                              key:
+                                description: |-
+                                  Tag key.
+                                  Tag key.
+                                type: string
+                              value:
+                                description: |-
+                                  Tag value.
+                                  Tag value.
+                                type: string
+                            type: object
+                          type: array
                         userData:
                           description: |-
                             User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
@@ -1282,12 +1318,12 @@ spec:
                           type: string
                         key:
                           description: |-
-                            Key of the taint.
+                            Tag key.
                             Key of the taint.
                           type: string
                         value:
                           description: |-
-                            Value of the taint.
+                            Tag value.
                             Value of the taint.
                           type: string
                       type: object
@@ -1487,6 +1523,24 @@ spec:
                             System disk type. For more information on limits of system disk types, see Storage Overview. Valid values: LOCAL_BASIC: local disk, LOCAL_SSD: local SSD disk, CLOUD_SSD: SSD, CLOUD_PREMIUM: Premium Cloud Storage. NOTE: CLOUD_BASIC, LOCAL_BASIC and LOCAL_SSD are deprecated.
                             System disk type. For more information on limits of system disk types, see [Storage Overview](https://intl.cloud.tencent.com/document/product/213/4952). Valid values: `LOCAL_BASIC`: local disk, `LOCAL_SSD`: local SSD disk, `CLOUD_SSD`: SSD, `CLOUD_PREMIUM`: Premium Cloud Storage. NOTE: `CLOUD_BASIC`, `LOCAL_BASIC` and `LOCAL_SSD` are deprecated.
                           type: string
+                        tags:
+                          description: |-
+                            Tag pairs.
+                            Tag pairs.
+                          items:
+                            properties:
+                              key:
+                                description: |-
+                                  Tag key.
+                                  Tag key.
+                                type: string
+                              value:
+                                description: |-
+                                  Tag value.
+                                  Tag value.
+                                type: string
+                            type: object
+                          type: array
                         userData:
                           description: |-
                             User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.

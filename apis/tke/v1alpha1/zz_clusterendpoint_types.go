@@ -123,6 +123,14 @@ type ClusterEndpointObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The Intranet address used for access.
+	// The Intranet address used for access.
+	KubeConfig *string `json:"kubeConfig,omitempty" tf:"kube_config,omitempty"`
+
+	// Kubernetes config of private network.
+	// Kubernetes config of private network.
+	KubeConfigIntranet *string `json:"kubeConfigIntranet,omitempty" tf:"kube_config_intranet,omitempty"`
+
 	// this argument was deprecated, use cluster_internet_security_group instead. Security policies for managed cluster internet, like:'192.168.1.0/24' or '113.116.51.27', '0.0.0.0/0' means all. This field can only set when field cluster_deploy_type is 'MANAGED_CLUSTER' and cluster_internet is true. managed_cluster_internet_security_policies can not delete or empty once be set.
 	// Security policies for managed cluster internet, like:'192.168.1.0/24' or '113.116.51.27', '0.0.0.0/0' means all. This field can only set when field `cluster_deploy_type` is 'MANAGED_CLUSTER' and `cluster_internet` is true. `managed_cluster_internet_security_policies` can not delete or empty once be set.
 	ManagedClusterInternetSecurityPolicies []*string `json:"managedClusterInternetSecurityPolicies,omitempty" tf:"managed_cluster_internet_security_policies,omitempty"`
@@ -229,7 +237,7 @@ type ClusterEndpointStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ClusterEndpoint is the Schema for the ClusterEndpoints API. Provide a resource to create a KubernetesClusterEndpoint. This resource allows you to create an empty cluster first without any workers. Only all attached node depends create complete, cluster endpoint will finally be enabled.
+// ClusterEndpoint is the Schema for the ClusterEndpoints API. Provide a resource to create a kubernetes cluster endpoint. This resource allows you to create an empty cluster first without any workers. Only all attached node depends create complete, cluster endpoint will finally be enabled.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

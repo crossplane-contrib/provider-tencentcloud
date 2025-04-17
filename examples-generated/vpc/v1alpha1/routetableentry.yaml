@@ -8,8 +8,8 @@ metadata:
   name: example
 spec:
   forProvider:
-    description: describe
-    destinationCidrBlock: 10.4.4.0/24
+    description: Terraform test.
+    destinationCidrBlock: 10.12.12.0/24
     nextHub: "0"
     nextType: EIP
     routeTableIdSelector:

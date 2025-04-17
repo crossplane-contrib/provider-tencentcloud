@@ -103,10 +103,15 @@ spec:
                       If create dynamic vip CLB instance, true or false.
                       If create dynamic vip CLB instance, `true` or `false`.
                     type: boolean
+                  eipAddressId:
+                    description: |-
+                      The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+                      The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+                    type: string
                   internetBandwidthMaxOut:
                     description: |-
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
                     type: number
                   internetChargeType:
                     description: |-
@@ -418,10 +423,15 @@ spec:
                       If create dynamic vip CLB instance, true or false.
                       If create dynamic vip CLB instance, `true` or `false`.
                     type: boolean
+                  eipAddressId:
+                    description: |-
+                      The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+                      The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+                    type: string
                   internetBandwidthMaxOut:
                     description: |-
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
                     type: number
                   internetChargeType:
                     description: |-
@@ -918,13 +928,18 @@ spec:
                       If create dynamic vip CLB instance, true or false.
                       If create dynamic vip CLB instance, `true` or `false`.
                     type: boolean
+                  eipAddressId:
+                    description: |-
+                      The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+                      The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
+                    type: string
                   id:
                     description: ID of the resource.
                     type: string
                   internetBandwidthMaxOut:
                     description: |-
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is MB.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
                     type: number
                   internetChargeType:
                     description: |-

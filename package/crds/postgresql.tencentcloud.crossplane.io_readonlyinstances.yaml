@@ -394,6 +394,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitSwitch:
+                    description: |-
+                      Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu fields.
+                      Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu` fields.
+                    type: number
                   zone:
                     description: |-
                       Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
@@ -734,6 +739,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  waitSwitch:
+                    description: |-
+                      Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu fields.
+                      Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu` fields.
+                    type: number
                   zone:
                     description: |-
                       Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.
@@ -1059,6 +1069,11 @@ spec:
                       VPC ID.
                       VPC ID.
                     type: string
+                  waitSwitch:
+                    description: |-
+                      Switch time after instance configurations are modified. 0: Switch immediately; 2: Switch during maintenance time window. Default: 0. Note: This only takes effect when updating the memory, storage, cpu fields.
+                      Switch time after instance configurations are modified. `0`: Switch immediately; `2`: Switch during maintenance time window. Default: `0`. Note: This only takes effect when updating the `memory`, `storage`, `cpu` fields.
+                    type: number
                   zone:
                     description: |-
                       Availability zone ID, which can be obtained through the Zone field in the returned value of the DescribeZones API.

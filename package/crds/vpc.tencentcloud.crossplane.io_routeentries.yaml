@@ -85,8 +85,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
-                      The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
+                      The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway, intranat, user_ccn and instance. instance points to CVM Instance.
+                      The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway`, `intranat`, `user_ccn` and `instance`. `instance` points to CVM Instance.
                     type: string
                   routeTableId:
                     description: |-
@@ -272,8 +272,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
-                      The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
+                      The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway, intranat, user_ccn and instance. instance points to CVM Instance.
+                      The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway`, `intranat`, `user_ccn` and `instance`. `instance` points to CVM Instance.
                     type: string
                   routeTableId:
                     description: |-
@@ -634,8 +634,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway and instance. instance points to CVM Instance.
-                      The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway` and `instance`. `instance` points to CVM Instance.
+                      The next hop type. Valid values: public_gateway,vpn_gateway,sslvpn_gateway,dc_gateway,peering_connection,nat_gateway,havip,local_gateway, intranat, user_ccn and instance. instance points to CVM Instance.
+                      The next hop type. Valid values: `public_gateway`,`vpn_gateway`,`sslvpn_gateway`,`dc_gateway`,`peering_connection`,`nat_gateway`,`havip`,`local_gateway`, `intranat`, `user_ccn` and `instance`. `instance` points to CVM Instance.
                     type: string
                   routeTableId:
                     description: |-

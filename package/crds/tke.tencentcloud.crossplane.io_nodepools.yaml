@@ -275,8 +275,8 @@ spec:
                           type: number
                         systemDiskType:
                           description: |-
-                            Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM.
-                            Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.
+                            Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD, CLOUD_BSSD and LOCAL_NVME. Default is CLOUD_PREMIUM.
+                            Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`. Default is `CLOUD_PREMIUM`.
                           type: string
                       type: object
                     type: array
@@ -373,7 +373,7 @@ spec:
                               diskType:
                                 description: |-
                                   Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
-                                  Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+                                  Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`.
                                 type: string
                               fileSystem:
                                 description: |-
@@ -844,8 +844,8 @@ spec:
                           type: number
                         systemDiskType:
                           description: |-
-                            Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM.
-                            Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.
+                            Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD, CLOUD_BSSD and LOCAL_NVME. Default is CLOUD_PREMIUM.
+                            Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`. Default is `CLOUD_PREMIUM`.
                           type: string
                       type: object
                     type: array
@@ -942,7 +942,7 @@ spec:
                               diskType:
                                 description: |-
                                   Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
-                                  Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+                                  Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`.
                                 type: string
                               fileSystem:
                                 description: |-
@@ -1593,8 +1593,8 @@ spec:
                           type: number
                         systemDiskType:
                           description: |-
-                            Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD. Default is CLOUD_PREMIUM.
-                            Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`. Default is `CLOUD_PREMIUM`.
+                            Type of a CVM disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD, CLOUD_BSSD and LOCAL_NVME. Default is CLOUD_PREMIUM.
+                            Type of a CVM disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`. Default is `CLOUD_PREMIUM`.
                           type: string
                       type: object
                     type: array
@@ -1714,7 +1714,7 @@ spec:
                               diskType:
                                 description: |-
                                   Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
-                                  Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
+                                  Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD`, `CLOUD_BSSD` and `LOCAL_NVME`.
                                 type: string
                               fileSystem:
                                 description: |-

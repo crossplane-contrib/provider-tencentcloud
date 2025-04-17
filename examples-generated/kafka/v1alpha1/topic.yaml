@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: kafka/v1alpha1/topic
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     cleanUpPolicy: delete
@@ -14,14 +14,14 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
     ipWhiteList:
-    - ip1
-    - ip2
-    maxMessageBytes: 0
+    - 1.1.1.1
+    - 2.2.2.2
+    maxMessageBytes: 4096
     note: topic note
-    partitionNum: 1
-    replicaNum: 2
+    partitionNum: 2
+    replicaNum: 4
     retention: 60000
-    segment: 3600000
-    syncReplicaMinNum: 1
-    topicName: example
+    segment: 86400000
+    syncReplicaMinNum: 2
+    topicName: tf-example
     uncleanLeaderElectionEnable: false
