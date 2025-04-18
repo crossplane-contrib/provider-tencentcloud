@@ -232,10 +232,6 @@ jobs:
       - name: Vendor Dependencies
         run: make vendor vendor.check
 
-      - name: Find the version
-        id: version
-        run: make common.buildvars >> $GITHUB_OUTPUT
-
       - name: Build Artifacts
         run: |-
           make -j XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" BRANCH_NAME="main" ${{ inputs.version != '' && format('VERSION={0}', inputs.version) || '' }} build.all
