@@ -6,7 +6,12 @@ on:
       - main
       - release-*
   pull_request: {}
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version string to use while publishing the package (e.g. v1.0.0-alpha.1)"
+        default: ''
+        required: false
 
 env:
   # Common versions
@@ -233,15 +238,21 @@ jobs:
 
       - name: Build Artifacts
         run: |-
-          make -j XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" BRANCH_NAME="main" ${{ steps.version.outputs.VERSION }} build.all
+          make -j XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" BRANCH_NAME="main" ${{ inputs.version != '' && format('VERSION={0}', inputs.version) || '' }} build.all
         env:
           # We're using docker buildx, which doesn't actually load the images it
           # builds by default. Specifying --load does so.
           BUILD_ARGS: "--load"
 
+      - name: Publish Artifacts to GitHub
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
+        with:
+          name: output
+          path: _output/**
+
       - name: Publish Artifacts
         run: |-
-          make -j XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" BRANCH_NAME="main" ${{ steps.version.outputs.VERSION }} publish
+          make -j2 XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" BRANCH_NAME="main" ${{ inputs.version != '' && format('VERSION={0}', inputs.version) || '' }} publish
 
   mirror-to-xpkg-upbound-io:
     needs: publish-artifacts
@@ -292,4 +303,4 @@ jobs:
 
       - name: Mirror to xpkg.upbound.io
         run: |
-          crane copy ${{ env.CROSSPLANE_REGORG }}/${{ env.PROVIDER_REPO }}:${{ needs.publish-artifacts.outputs.version }} ${{ env.UPBOUND_REGORG }}/${{ env.PROVIDER_REPO }}:${{ needs.publish-artifacts.outputs.version }} --allow-nondistributable-artifacts
+          crane copy ${{ env.CROSSPLANE_REGORG }}/${{ env.PROVIDER_REPO }}:${{ inputs.version }} ${{ env.UPBOUND_REGORG }}/${{ env.PROVIDER_REPO }}:${{ inputs.version }} --allow-nondistributable-artifacts
