@@ -23,6 +23,7 @@ env:
   UPBOUND_REGORG: 'xpkg.upbound.io/crossplane-contrib'
   PROVIDER_REPO: provider-tencentcloud
   UP_DOMAIN: "https://upbound.io"
+  UP_VERSION: 'v0.37.1'
 
 jobs:
   detect-noop:
