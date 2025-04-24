@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: HourdbInstance is the Schema for the HourdbInstances API. Provides
-          a resource to create a dcdb hourdb_instance
+          a resource to create a DCDB hourdb instance
         properties:
           apiVersion:
             description: |-

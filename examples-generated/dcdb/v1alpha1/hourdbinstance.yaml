@@ -4,20 +4,20 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dcdb/v1alpha1/hourdbinstance
   labels:
-    testing.upbound.io/example-name: hourdb_instance
-  name: hourdb-instance
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     dbVersionId: "8.0"
-    instanceName: test_dcdc_dc_instance
+    instanceName: tf-example
     resourceTags:
-    - tagKey: aaa
-      tagValue: bbb
-    securityGroupId: ${local.sg_id}
+    - tagKey: tagKey
+      tagValue: tagValue
+    securityGroupId: sg-4z20n68d
     shardCount: "2"
-    shardMemory: "2"
+    shardMemory: "4"
     shardNodeCount: "2"
-    shardStorage: "10"
+    shardStorage: "50"
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
@@ -25,5 +25,5 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
     zones:
-    - ap-guangzhou-5
     - ap-guangzhou-6
+    - ap-guangzhou-7
