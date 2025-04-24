@@ -17711,37 +17711,33 @@ resources:
         importStatements: []
     tencentcloud_dcdb_hourdb_instance:
         subCategory: TDSQL for MySQL(DCDB)
-        description: Provides a resource to create a dcdb hourdb_instance
+        description: Provides a resource to create a DCDB hourdb instance
         name: tencentcloud_dcdb_hourdb_instance
         title: tencentcloud_dcdb_hourdb_instance
         examples:
-            - name: hourdb_instance
+            - name: example
               manifest: |-
                 {
                   "db_version_id": "8.0",
-                  "instance_name": "test_dcdc_dc_instance",
+                  "instance_name": "tf-example",
                   "resource_tags": [
                     {
-                      "tag_key": "aaa",
-                      "tag_value": "bbb"
+                      "tag_key": "tagKey",
+                      "tag_value": "tagValue"
                     }
                   ],
-                  "security_group_id": "${local.sg_id}",
+                  "security_group_id": "sg-4z20n68d",
                   "shard_count": "2",
-                  "shard_memory": "2",
+                  "shard_memory": "4",
                   "shard_node_count": "2",
-                  "shard_storage": "10",
-                  "subnet_id": "${local.subnet_id}",
-                  "vpc_id": "${local.vpc_id}",
+                  "shard_storage": "50",
+                  "subnet_id": "subnet-hhi88a58",
+                  "vpc_id": "vpc-i5yyodl9",
                   "zones": [
-                    "ap-guangzhou-5",
-                    "ap-guangzhou-6"
+                    "ap-guangzhou-6",
+                    "ap-guangzhou-7"
                   ]
                 }
-              references:
-                security_group_id: local.sg_id
-                subnet_id: local.subnet_id
-                vpc_id: local.vpc_id
         argumentDocs:
             db_version_id: '- (Optional, String) db engine version, default to Percona 5.7.17.'
             dcn_instance_id: '- (Optional, String) DCN source instance ID.'
@@ -43666,12 +43662,16 @@ resources:
             collation: '- (Optional, String) System character set collation, default: Chinese_PRC_CI_AS.'
             cpu: '- (Required, Int) Cpu, unit: CORE.'
             db_version: '- (Optional, String) sqlserver version, currently all supported versions are: 2008R2 (SQL Server 2008 R2 Enterprise), 2012SP3 (SQL Server 2012 Enterprise), 201202 (SQL Server 2012 Standard), 2014SP2 (SQL Server 2014 Enterprise), 201402 (SQL Server 2014 Standard), 2016SP1 (SQL Server 2016 Enterprise), 201602 (SQL Server 2016 Standard), 2017 (SQL Server 2017 Enterprise), 201702 (SQL Server 2017 Standard), 2019 (SQL Server 2019 Enterprise), 201902 (SQL Server 2019 Standard). Each region supports different versions for sale, and the version information that can be sold in each region can be pulled through the DescribeProductConfig interface. If left blank, the default version is 2008R2.'
+            disk_encrypt_flag: '- (Optional, Int) Disk encryption identification, 0-not encrypted, 1-encrypted.'
             dns_pod_domain: '- Internet address domain name.'
+            dr_zones: '- (Optional, Set: [String]) The standby node availability area is empty by default. When MultiNodes = true, the primary node and standby node availability areas cannot all be the same. The minimum number of standby availability areas set is 2, and the maximum number is no more than 5.'
             ha_type: '- (Optional, String, Deprecated) It has been deprecated from version 1.81.2. Upgrade the high-availability architecture of sqlserver, upgrade from mirror disaster recovery to always on cluster disaster recovery, only support 2017 and above and support always on high-availability instances, do not support downgrading to mirror disaster recovery, CLUSTER-upgrade to always on capacity Disaster, if not filled, the high-availability architecture will not be modified.'
             id: '- ID of the resource.'
             instance_charge_type: '- (Optional, String) Payment mode, the value supports PREPAID (prepaid), POSTPAID (postpaid).'
             machine_type: '- (Required, String) The host disk type of the purchased instance, CLOUD_HSSD-enhanced SSD cloud disk for virtual machines, CLOUD_TSSD-extremely fast SSD cloud disk for virtual machines, CLOUD_BSSD-universal SSD cloud disk for virtual machines.'
             memory: '- (Required, Int) Memory, unit: GB.'
+            multi_nodes: '- (Optional, Bool) Whether it is a multi-node architecture instance, the default value is false. When MultiNodes = true, the parameter MultiZones must be true.'
+            multi_zones: '- (Optional, Bool) Whether to deploy across availability zones, the default value is false.'
             name: '- (Required, String) Name of the SQL Server instance.'
             period: '- (Optional, Int) Purchase instance period, the default value is 1, which means one month. The value cannot exceed 48. Valid only when the ''instance_charge_type'' parameter value is ''PREPAID''.'
             project_id: '- (Optional, Int) project ID.'
@@ -49194,11 +49194,11 @@ resources:
         importStatements: []
     tencentcloud_teo_l7_acc_rule:
         subCategory: TencentCloud EdgeOne(TEO)
-        description: Provides a resource to create a teo l7_acc_rule
+        description: Provides a resource to create a TEO l7 acc rule
         name: tencentcloud_teo_l7_acc_rule
         title: tencentcloud_teo_l7_acc_rule
         examples:
-            - name: teo_l7_acc_rule
+            - name: example
               manifest: |-
                 {
                   "rules": [
@@ -49716,7 +49716,7 @@ resources:
             WebSocket: ': WebSocket;'
             access_key_id: '- (Required, String) Authentication parameter access key id.'
             access_url_redirect_parameters: '- (Optional, List) The access url redirection configuration parameter. this parameter is required when name is accessurlredirect.'
-            action: '- (Optional, Int) Cache action. values: full: retain all; ignore: ignore all; includeCustom: retain partial parameters; excludeCustom: ignore partial parameters. note: when switch is on, this field is required. when switch is off, this field is not required and will not take effect if filled.'
+            action: '- (Optional, String) Cache action. values: full: retain all; ignore: ignore all; includeCustom: retain partial parameters; excludeCustom: ignore partial parameters. note: when switch is on, this field is required. when switch is off, this field is not required and will not take effect if filled.'
             actions: '- (Optional, List) Sub-Rule branch. this list currently supports filling in only one rule; multiple entries are invalid.'
             algorithms: '- (Optional, List) Supported compression algorithm list. this field is required when switch is on; otherwise, it is not effective. valid values: brotli: brotli algorithm; gzip: gzip algorithm.'
             auth_param: '- (Optional, String) Authentication parameters name. the node will validate the value corresponding to this parameter name. consists of 1-100 uppercase and lowercase letters, numbers, or underscores.note: this field is required when authtype is either typea or typed.'
@@ -50563,7 +50563,19 @@ resources:
                     {
                       "custom_rules": [
                         {
-                          "rules": [
+                          "basic_access_rules": [
+                            {
+                              "action": [
+                                {
+                                  "name": "Deny"
+                                }
+                              ],
+                              "condition": "${http.request.ip} in ['119.28.103.58']",
+                              "enabled": "off",
+                              "name": "rule2"
+                            }
+                          ],
+                          "precise_match_rules": [
                             {
                               "action": [
                                 {
@@ -50578,20 +50590,7 @@ resources:
                               "condition": "${http.request.host} contain ['abc']",
                               "enabled": "on",
                               "name": "rule1",
-                              "priority": 50,
-                              "rule_type": "PreciseMatchRule"
-                            },
-                            {
-                              "action": [
-                                {
-                                  "name": "Deny"
-                                }
-                              ],
-                              "condition": "${http.request.ip} in ['119.28.103.58']",
-                              "enabled": "off",
-                              "id": "2182252647",
-                              "name": "rule2",
-                              "rule_type": "BasicAccessRule"
+                              "priority": 50
                             }
                           ]
                         }
@@ -50776,7 +50775,19 @@ resources:
                     {
                       "custom_rules": [
                         {
-                          "rules": [
+                          "basic_access_rules": [
+                            {
+                              "action": [
+                                {
+                                  "name": "Deny"
+                                }
+                              ],
+                              "condition": "${http.request.ip} in ['119.28.103.58']",
+                              "enabled": "off",
+                              "name": "rule2"
+                            }
+                          ],
+                          "precise_match_rules": [
                             {
                               "action": [
                                 {
@@ -50791,20 +50802,7 @@ resources:
                               "condition": "${http.request.host} contain ['abc']",
                               "enabled": "on",
                               "name": "rule1",
-                              "priority": 50,
-                              "rule_type": "PreciseMatchRule"
-                            },
-                            {
-                              "action": [
-                                {
-                                  "name": "Deny"
-                                }
-                              ],
-                              "condition": "${http.request.ip} in ['119.28.103.58']",
-                              "enabled": "off",
-                              "id": "2182252647",
-                              "name": "rule2",
-                              "rule_type": "BasicAccessRule"
+                              "priority": 50
                             }
                           ]
                         }
@@ -50988,7 +50986,19 @@ resources:
                     {
                       "custom_rules": [
                         {
-                          "rules": [
+                          "basic_access_rules": [
+                            {
+                              "action": [
+                                {
+                                  "name": "Deny"
+                                }
+                              ],
+                              "condition": "${http.request.ip} in ['119.28.103.58']",
+                              "enabled": "off",
+                              "name": "rule2"
+                            }
+                          ],
+                          "precise_match_rules": [
                             {
                               "action": [
                                 {
@@ -51003,20 +51013,7 @@ resources:
                               "condition": "${http.request.host} contain ['abc']",
                               "enabled": "on",
                               "name": "rule1",
-                              "priority": 50,
-                              "rule_type": "PreciseMatchRule"
-                            },
-                            {
-                              "action": [
-                                {
-                                  "name": "Deny"
-                                }
-                              ],
-                              "condition": "${http.request.ip} in ['119.28.103.58']",
-                              "enabled": "off",
-                              "id": "2182252647",
-                              "name": "rule2",
-                              "rule_type": "BasicAccessRule"
+                              "priority": 50
                             }
                           ]
                         }
@@ -51194,9 +51191,11 @@ resources:
                   "zone_id": "zone-37u62pwxfo8s"
                 }
         argumentDocs:
+            action: '- (Required, List) Execution actions for custom rules. the Name parameter value of SecurityAction supports: Deny: block; Monitor: observe; ReturnCustomPage: block using a specified page; Redirect: Redirect to URL; BlockIP: IP blocking; JSChallenge: JavaScript challenge; ManagedChallenge: managed challenge; Allow: Allow..'
             auto_update_to_latest_version: '- (Required, String) Indicates whether to enable automatic update to the latest version. valid values: on: enabled off: disabled.'
             block_ip_action_parameters.action: '- (Required, List) Handling actions for managed rule groups. the Name parameter value of SecurityAction supports: Deny: block and respond with an interception page; Monitor: observe, do not process requests and record security events in logs; Disabled: not enabled, do not scan requests and skip this rule..'
             block_ip_action_parameters.auto_update: '- (Optional, List) Managed rule automatic update option.'
+            block_ip_action_parameters.basic_access_rules: '- (Optional, List) List of custom rule definitions. when modifying the Web protection configuration using ModifySecurityPolicy:  - if the Rules parameter is not specified or the parameter length of Rules is zero: clear all custom rule configurations.  - if the parameter value of CustomRules in the SecurityPolicy parameter is not specified: keep the existing custom rule configuration without modification.'
             block_ip_action_parameters.condition: '- (Required, String) The specific content of the custom rule must comply with the expression grammar. please refer to the product document for detailed specifications.'
             block_ip_action_parameters.custom_rules: '- (Optional, List) Custom rule configuration.'
             block_ip_action_parameters.detection_only: '- (Required, String) Indicates whether the evaluation mode is Enabled. it is valid only when the Enabled parameter is set to on. valid values: on: Enabled. all managed rules take effect in observation mode. off: disabled. all managed rules take effect according to the actual configuration..'
@@ -51208,19 +51207,23 @@ resources:
             block_ip_action_parameters.managed_rule_groups: '- (Optional, Set) Configuration of the managed rule group. if this structure is passed as an empty array or the GroupId is not included in the list, it will be processed based on the default method.'
             block_ip_action_parameters.managed_rules: '- (Optional, List) Managed rule configuration.'
             block_ip_action_parameters.name: '- (Required, String) The name of the custom rule.'
+            block_ip_action_parameters.precise_match_rules: '- (Optional, List) List of custom rule definitions. when modifying the Web protection configuration using ModifySecurityPolicy:  - if the Rules parameter is not specified or the parameter length of Rules is zero: clear all custom rule configurations.  - if the parameter value of CustomRules in the SecurityPolicy parameter is not specified: keep the existing custom rule configuration without modification.'
             block_ip_action_parameters.priority: '- (Optional, Int) Customizes the priority of rules. value range: 0-100. it defaults to 0. only supports rule_type is PreciseMatchRule.'
             block_ip_action_parameters.response_code: '- (Required, String) Response status code.'
             block_ip_action_parameters.rule_actions: '- (Optional, List) Specific configuration of rule items under the managed rule group. the configuration is effective only when SensitivityLevel is custom.'
             block_ip_action_parameters.rule_id: '- (Required, String) Specific items under the managed rule group, which are used to rewrite the configuration content of this individual rule item. refer to product documentation for details.'
             block_ip_action_parameters.rule_type: '- (Optional, String) Type of custom rule. valid values: BasicAccessRule: basic access control; PreciseMatchRule: exact matching rule, default; ManagedAccessRule: expert customized rule, for output only. the default value is PreciseMatchRule.'
-            block_ip_action_parameters.rules: '- (Optional, List) List of custom rule definitions. when modifying the Web protection configuration using ModifySecurityPolicy:  - if the Rules parameter is not specified or the parameter length of Rules is zero: clear all custom rule configurations.  - if the parameter value of CustomRules in the SecurityPolicy parameter is not specified: keep the existing custom rule configuration without modification.'
+            block_ip_action_parameters.rules: '- (Optional, List, Deprecated) It has been deprecated from version 1.81.184. Please use precise_match_rules or basic_access_rules instead. List of custom rule definitions. when modifying the Web protection configuration using ModifySecurityPolicy:  - if the Rules parameter is not specified or the parameter length of Rules is zero: clear all custom rule configurations.  - if the parameter value of CustomRules in the SecurityPolicy parameter is not specified: keep the existing custom rule configuration without modification.'
             block_ip_action_parameters.semantic_analysis: '- (Optional, String) Whether the managed rule semantic analysis option is Enabled is valid only when the Enabled parameter is on. valid values: on: enable. perform semantic analysis on requests before processing them; off: disable. process requests directly without semantic analysis. default off.'
             block_ip_action_parameters.sensitivity_level: '- (Required, String) Protection level of the managed rule group. valid values: loose: lenient, only contains ultra-high risk rules. at this point, configure Action, and RuleActions configuration is invalid; normal: normal, contains ultra-high risk and high-risk rules. at this point, configure Action, and RuleActions configuration is invalid; strict: strict, contains ultra-high risk, high-risk and medium-risk rules. at this point, configure Action, and RuleActions configuration is invalid; extreme: super strict, contains ultra-high risk, high-risk, medium-risk and low-risk rules. at this point, configure Action, and RuleActions configuration is invalid; custom: custom, refined strategy. configure the disposal method for each individual rule. at this point, the Action field is invalid. use RuleActions to configure the refined strategy for each individual rule..'
             block_ip_action_parameters.url: '- (Required, String) Redirect URL.'
+            condition: '- (Required, String) The specific content of the custom rule must comply with the expression grammar. please refer to the product document for detailed specifications.'
+            enabled: '- (Required, String) Indicates whether the custom rule is enabled. valid values: on: enabled off: disabled.'
             entity: '- (Optional, String, ForceNew) Security policy type. the following parameter values can be used: ZoneDefaultPolicy: used to specify a site-level policy; Template: used to specify a policy Template. you need to simultaneously specify the TemplateId parameter; Host: used to specify a domain-level policy (note: when using a domain name to specify a dns service policy, only dns services or policy templates that have applied a domain-level policy are supported)..'
             host: '- (Optional, String, ForceNew) Specifies the specified domain. when the Entity parameter value is Host, use the domain-level policy specified by this parameter. for example: use www.example.com to configure the domain-level policy of the domain.'
             id: '- ID of the resource.'
             name: '- (Required, String) Specific actions for safe execution. valid values:.'
+            priority: '- (Optional, Int) Customizes the priority of rules. value range: 0-100. it defaults to 0. only supports rule_type is PreciseMatchRule.'
             security_policy: '- (Optional, List) Security policy configuration. it is recommended to use for custom policies and managed rule configurations of Web protection. it supports configuring security policies with expression grammar.'
             template_id: '- (Optional, String, ForceNew) Specify the policy Template ID. use this parameter to specify the ID of the policy Template when the Entity parameter value is Template.'
             zone_id: '- (Required, String, ForceNew) Zone ID.'
