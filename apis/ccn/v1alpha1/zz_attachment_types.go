@@ -17,7 +17,16 @@ type AttachmentInitParameters struct {
 
 	// ID of the CCN.
 	// ID of the CCN.
+	// +crossplane:generate:reference:type=CCN
 	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
+
+	// Reference to a CCN to populate ccnId.
+	// +kubebuilder:validation:Optional
+	CcnIDRef *v1.Reference `json:"ccnIdRef,omitempty" tf:"-"`
+
+	// Selector for a CCN to populate ccnId.
+	// +kubebuilder:validation:Optional
+	CcnIDSelector *v1.Selector `json:"ccnIdSelector,omitempty" tf:"-"`
 
 	// Uin of the ccn attached. If not set, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
 	// Uin of the ccn attached. If not set, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
@@ -98,8 +107,17 @@ type AttachmentParameters struct {
 
 	// ID of the CCN.
 	// ID of the CCN.
+	// +crossplane:generate:reference:type=CCN
 	// +kubebuilder:validation:Optional
 	CcnID *string `json:"ccnId,omitempty" tf:"ccn_id,omitempty"`
+
+	// Reference to a CCN to populate ccnId.
+	// +kubebuilder:validation:Optional
+	CcnIDRef *v1.Reference `json:"ccnIdRef,omitempty" tf:"-"`
+
+	// Selector for a CCN to populate ccnId.
+	// +kubebuilder:validation:Optional
+	CcnIDSelector *v1.Selector `json:"ccnIdSelector,omitempty" tf:"-"`
 
 	// Uin of the ccn attached. If not set, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type VPC.
 	// Uin of the ccn attached. If not set, which means the uin of this account. This parameter is used with case when attaching ccn of other account to the instance of this account. For now only support instance type `VPC`.
@@ -168,7 +186,6 @@ type AttachmentStatus struct {
 type Attachment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ccnId) || (has(self.initProvider) && has(self.initProvider.ccnId))",message="spec.forProvider.ccnId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceRegion) || (has(self.initProvider) && has(self.initProvider.instanceRegion))",message="spec.forProvider.instanceRegion is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceType) || (has(self.initProvider) && has(self.initProvider.instanceType))",message="spec.forProvider.instanceType is a required parameter"

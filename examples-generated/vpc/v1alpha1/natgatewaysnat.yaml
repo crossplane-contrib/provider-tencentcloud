@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     description: terraform test
-    natGatewayId: ${tencentcloud_nat_gateway.my_nat.id}
+    natGatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_nat
     publicIpAddr:
     - ${tencentcloud_eip.eip_example1.public_ip}
     - ${tencentcloud_eip.eip_example2.public_ip}

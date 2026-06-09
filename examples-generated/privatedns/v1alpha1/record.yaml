@@ -14,7 +14,9 @@ spec:
     subDomain: www
     ttl: 300
     weight: 1
-    zoneId: ${tencentcloud_private_dns_zone.example.id}
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
 
 ---
 

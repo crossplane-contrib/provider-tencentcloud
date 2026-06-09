@@ -30,11 +30,71 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("tencentcloud_ccn_attachment", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCcn
 		r.Kind = "Attachment"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
 	})
 
 	p.AddResourceConfigurator("tencentcloud_ccn_bandwidth_limit", func(r *config.Resource) {
 		r.ShortGroup = shortGroupCcn
 		r.Kind = "BandwidthLimit"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_ccn_route_table", func(r *config.Resource) {
+		r.ShortGroup = shortGroupCcn
+		r.Kind = "RouteTable"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_ccn_route_table_associate_instance_config", func(r *config.Resource) {
+		r.ShortGroup = shortGroupCcn
+		r.Kind = "RouteTableAssociateInstanceConfig"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
+		r.References["route_table_id"] = config.Reference{
+			Type: "RouteTable",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_ccn_route_table_broadcast_policies", func(r *config.Resource) {
+		r.ShortGroup = shortGroupCcn
+		r.Kind = "RouteTableBroadcastPolicies"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
+		r.References["route_table_id"] = config.Reference{
+			Type: "RouteTable",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_ccn_route_table_input_policies", func(r *config.Resource) {
+		r.ShortGroup = shortGroupCcn
+		r.Kind = "RouteTableInputPolicies"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
+		r.References["route_table_id"] = config.Reference{
+			Type: "RouteTable",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_ccn_route_table_selection_policies", func(r *config.Resource) {
+		r.ShortGroup = shortGroupCcn
+		r.Kind = "RouteTableSelectionPolicies"
+		r.References["ccn_id"] = config.Reference{
+			Type: "CCN",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_ccn_routes", func(r *config.Resource) {
+		r.ShortGroup = shortGroupCcn
+		r.Kind = "Routes"
 		r.References["ccn_id"] = config.Reference{
 			Type: "CCN",
 		}

@@ -13,6 +13,9 @@ func (tr *AddonAttachment) Hub() {}
 func (tr *AuthAttachment) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *BackupStorageLocation) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Cluster) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -20,6 +23,18 @@ func (tr *ClusterAttachment) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *ClusterEndpoint) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *EncryptionProtection) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *HealthCheckPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *LogConfig) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NativeNodePool) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *NodePool) Hub() {}

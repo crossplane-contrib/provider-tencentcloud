@@ -1,6 +1,6 @@
 module github.com/crossplane-contrib/provider-tencentcloud
 
-go 1.20
+go 1.21
 
 require (
 	dario.cat/mergo v1.0.0
@@ -8,6 +8,8 @@ require (
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
 	github.com/crossplane/upjet v1.2.3
 	github.com/pkg/errors v0.9.1
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1145
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tcr v1.0.696
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.29.1
 	k8s.io/client-go v0.29.1

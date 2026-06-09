@@ -69,11 +69,17 @@ func Configure(p *config.Provider) {
 		r.References["vpc_id"] = config.Reference{
 			Type: "VPC",
 		}
+		r.References["subnet_id"] = config.Reference{
+			Type: "Subnet",
+		}
 	})
 
 	p.AddResourceConfigurator("tencentcloud_nat_gateway_snat", func(r *config.Resource) {
 		r.ShortGroup = shortGroupVpc
 		r.Kind = "NatGatewaySnat"
+		r.References["nat_gateway_id"] = config.Reference{
+			Type: "NatGateway",
+		}
 		r.References["subnet_id"] = config.Reference{
 			Type: "Subnet",
 		}
@@ -87,6 +93,61 @@ func Configure(p *config.Provider) {
 		}
 		r.References["nat_id"] = config.Reference{
 			Type: "NatGateway",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_vpc_end_point", func(r *config.Resource) {
+		r.ShortGroup = shortGroupVpc
+		r.Kind = "EndPoint"
+		r.References["vpc_id"] = config.Reference{
+			Type: "VPC",
+		}
+		r.References["subnet_id"] = config.Reference{
+			Type: "Subnet",
+		}
+		r.References["end_point_service_id"] = config.Reference{
+			Type: "EndPointService",
+		}
+		r.References["security_groups_ids"] = config.Reference{
+			Type: "SecurityGroup",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_vpc_end_point_service", func(r *config.Resource) {
+		r.ShortGroup = shortGroupVpc
+		r.Kind = "EndPointService"
+		r.References["vpc_id"] = config.Reference{
+			Type: "VPC",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_vpc_end_point_service_white_list", func(r *config.Resource) {
+		r.ShortGroup = shortGroupVpc
+		r.Kind = "EndPointServiceWhiteList"
+		r.References["end_point_service_id"] = config.Reference{
+			Type: "EndPointService",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_vpc_enable_end_point_connect", func(r *config.Resource) {
+		r.ShortGroup = shortGroupVpc
+		r.Kind = "EnableEndPointConnect"
+		r.References["end_point_id"] = config.Reference{
+			Type: "EndPoint",
+		}
+		r.References["end_point_service_id"] = config.Reference{
+			Type: "EndPointService",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_vpc_peer_connect_manager", func(r *config.Resource) {
+		r.ShortGroup = shortGroupVpc
+		r.Kind = "PeerConnectManager"
+		r.References["source_vpc_id"] = config.Reference{
+			Type: "VPC",
+		}
+		r.References["destination_vpc_id"] = config.Reference{
+			Type: "VPC",
 		}
 	})
 

@@ -1,0 +1,15 @@
+apiVersion: ccn.tencentcloud.crossplane.io/v1alpha1
+kind: Routes
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ccn/v1alpha1/routes
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    ccnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    routeId: ccnr-5uhewx1s
+    switch: "off"

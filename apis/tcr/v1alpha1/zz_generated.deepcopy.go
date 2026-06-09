@@ -918,6 +918,16 @@ func (in *TcrNamespaceInitParameters) DeepCopyInto(out *TcrNamespaceInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IsAutoScan != nil {
 		in, out := &in.IsAutoScan, &out.IsAutoScan
 		*out = new(bool)
@@ -1058,6 +1068,16 @@ func (in *TcrNamespaceParameters) DeepCopyInto(out *TcrNamespaceParameters) {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.IsAutoScan != nil {
 		in, out := &in.IsAutoScan, &out.IsAutoScan

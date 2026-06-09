@@ -239,7 +239,16 @@ type ClusterInitParameters struct {
 
 	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
 	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.SecurityGroup
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
+
+	// Reference to a SecurityGroup in vpc to populate clusterInternetSecurityGroup.
+	// +kubebuilder:validation:Optional
+	ClusterInternetSecurityGroupRef *v1.Reference `json:"clusterInternetSecurityGroupRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup in vpc to populate clusterInternetSecurityGroup.
+	// +kubebuilder:validation:Optional
+	ClusterInternetSecurityGroupSelector *v1.Selector `json:"clusterInternetSecurityGroupSelector,omitempty" tf:"-"`
 
 	// Open intranet access or not. If this field is set 'true', the field below worker_config must be set. Because only cluster with node is allowed enable access endpoint. You may open it through tencentcloud_kubernetes_cluster_endpoint.
 	// Open intranet access or not. If this field is set 'true', the field below `worker_config` must be set. Because only cluster with node is allowed enable access endpoint. You may open it through `tencentcloud_kubernetes_cluster_endpoint`.
@@ -251,7 +260,16 @@ type ClusterInitParameters struct {
 
 	// Subnet id who can access this independent cluster, this field must and can only set  when cluster_intranet is true. cluster_intranet_subnet_id can not modify once be set.
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	ClusterIntranetSubnetID *string `json:"clusterIntranetSubnetId,omitempty" tf:"cluster_intranet_subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate clusterIntranetSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSubnetIDRef *v1.Reference `json:"clusterIntranetSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate clusterIntranetSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSubnetIDSelector *v1.Selector `json:"clusterIntranetSubnetIdSelector,omitempty" tf:"-"`
 
 	// Indicates whether ipvs is enabled. Default is true. False means iptables is enabled.
 	// Indicates whether `ipvs` is enabled. Default is true. False means `iptables` is enabled.
@@ -283,7 +301,16 @@ type ClusterInitParameters struct {
 
 	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
 	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	ClusterSubnetID *string `json:"clusterSubnetId,omitempty" tf:"cluster_subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate clusterSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterSubnetIDRef *v1.Reference `json:"clusterSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate clusterSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterSubnetIDSelector *v1.Selector `json:"clusterSubnetIdSelector,omitempty" tf:"-"`
 
 	// Version of the cluster. Use tencentcloud_kubernetes_available_cluster_versions to get the upgradable cluster version.
 	// Version of the cluster. Use `tencentcloud_kubernetes_available_cluster_versions` to get the upgradable cluster version.
@@ -1154,8 +1181,17 @@ type ClusterParameters struct {
 
 	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
 	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
+
+	// Reference to a SecurityGroup in vpc to populate clusterInternetSecurityGroup.
+	// +kubebuilder:validation:Optional
+	ClusterInternetSecurityGroupRef *v1.Reference `json:"clusterInternetSecurityGroupRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup in vpc to populate clusterInternetSecurityGroup.
+	// +kubebuilder:validation:Optional
+	ClusterInternetSecurityGroupSelector *v1.Selector `json:"clusterInternetSecurityGroupSelector,omitempty" tf:"-"`
 
 	// Open intranet access or not. If this field is set 'true', the field below worker_config must be set. Because only cluster with node is allowed enable access endpoint. You may open it through tencentcloud_kubernetes_cluster_endpoint.
 	// Open intranet access or not. If this field is set 'true', the field below `worker_config` must be set. Because only cluster with node is allowed enable access endpoint. You may open it through `tencentcloud_kubernetes_cluster_endpoint`.
@@ -1169,8 +1205,17 @@ type ClusterParameters struct {
 
 	// Subnet id who can access this independent cluster, this field must and can only set  when cluster_intranet is true. cluster_intranet_subnet_id can not modify once be set.
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	ClusterIntranetSubnetID *string `json:"clusterIntranetSubnetId,omitempty" tf:"cluster_intranet_subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate clusterIntranetSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSubnetIDRef *v1.Reference `json:"clusterIntranetSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate clusterIntranetSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSubnetIDSelector *v1.Selector `json:"clusterIntranetSubnetIdSelector,omitempty" tf:"-"`
 
 	// Indicates whether ipvs is enabled. Default is true. False means iptables is enabled.
 	// Indicates whether `ipvs` is enabled. Default is true. False means `iptables` is enabled.
@@ -1209,8 +1254,17 @@ type ClusterParameters struct {
 
 	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
 	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	ClusterSubnetID *string `json:"clusterSubnetId,omitempty" tf:"cluster_subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate clusterSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterSubnetIDRef *v1.Reference `json:"clusterSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate clusterSubnetId.
+	// +kubebuilder:validation:Optional
+	ClusterSubnetIDSelector *v1.Selector `json:"clusterSubnetIdSelector,omitempty" tf:"-"`
 
 	// Version of the cluster. Use tencentcloud_kubernetes_available_cluster_versions to get the upgradable cluster version.
 	// Version of the cluster. Use `tencentcloud_kubernetes_available_cluster_versions` to get the upgradable cluster version.

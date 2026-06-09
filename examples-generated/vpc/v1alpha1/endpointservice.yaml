@@ -1,0 +1,17 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: EndPointService
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/endpointservice
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autoAcceptFlag: false
+    endPointServiceName: tf-example
+    serviceInstanceId: lb-jvb31e26
+    serviceType: CLB
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

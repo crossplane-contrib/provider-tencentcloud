@@ -1,0 +1,118 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: LogConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/logconfig
+  labels:
+    testing.upbound.io/example-name: kubernetes_log_config_cls
+  name: kubernetes-log-config-cls
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    logConfig: |-
+      ${jsonencode({
+          "apiVersion" : "cls.cloud.tencent.com/v1",
+          "kind" : "LogConfig",
+          "metadata" : {
+            "name" : "tf-test-cls"
+          },
+          "spec" : {
+            "clsDetail" : {
+              "extractRule" : {
+                "backtracking" : "0",
+                "isGBK" : "false",
+                "jsonStandard" : "false",
+                "unMatchUpload" : "false"
+              },
+              "indexs" : [
+                {
+                  "indexName" : "namespace"
+                },
+                {
+                  "indexName" : "pod_name"
+                },
+                {
+                  "indexName" : "container_name"
+                }
+              ],
+              "logFormat" : "default",
+              "logType" : "minimalist_log",
+              "maxSplitPartitions" : 0,
+              "region" : "ap-guangzhou",
+              "storageType" : "",
+              #   "topicId" : "c26b66bd-617e-4923-bea0-test"
+            },
+            "inputDetail" : {
+              "containerStdout" : {
+                "metadataContainer" : [
+                  "namespace",
+                  "pod_name",
+                  "pod_ip",
+                  "pod_uid",
+                  "container_id",
+                  "container_name",
+                  "image_name",
+                  "cluster_id"
+                ],
+                "nsLabelSelector" : "",
+                "workloads" : [
+                  {
+                    "kind" : "deployment",
+                    "name" : "testlog1",
+                    "namespace" : "default"
+                  }
+                ]
+              },
+              "type" : "container_stdout"
+            }
+          }
+        })}
+    logConfigName: tf-test-cls
+    logsetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: logset
+
+---
+
+apiVersion: cls.tencentcloud.crossplane.io/v1alpha1
+kind: Logset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/logconfig
+  labels:
+    testing.upbound.io/example-name: logset
+  name: logset
+spec:
+  forProvider:
+    logsetName: tf-test-example
+    tags:
+      createdBy: terraform
+
+---
+
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/logconfig
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterCidr: ${var.example_cluster_cidr}
+    clusterDeployType: MANAGED_CLUSTER
+    clusterDesc: example for tke cluster
+    clusterInternet: false
+    clusterMaxPodNum: 32
+    clusterMaxServiceNum: 32
+    clusterName: tf_example_cluster
+    clusterOs: tlinux2.2(tkernel3)x86_64
+    clusterVersion: 1.22.5
+    logAgent:
+    - enabled: true
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

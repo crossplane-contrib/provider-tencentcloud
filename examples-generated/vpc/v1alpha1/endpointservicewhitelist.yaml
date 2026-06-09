@@ -1,0 +1,15 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: EndPointServiceWhiteList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/endpointservicewhitelist
+  labels:
+    testing.upbound.io/example-name: end_point_service_white_list
+  name: end-point-service-white-list
+spec:
+  forProvider:
+    description: terraform for test
+    endPointServiceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    userUin: "100020512675"

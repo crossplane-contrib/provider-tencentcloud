@@ -10,7 +10,9 @@ spec:
   forProvider:
     cveWhitelistItems:
     - cveId: cve-xxxxx
-    instanceId: ${tencentcloud_tcr_instance.example.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     isAutoScan: true
     isPreventVul: true
     isPublic: true

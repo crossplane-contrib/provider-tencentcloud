@@ -14,3 +14,21 @@ func (tr *Attachment) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *BandwidthLimit) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *RouteTable) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *RouteTableAssociateInstanceConfig) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *RouteTableBroadcastPolicies) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *RouteTableInputPolicies) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *RouteTableSelectionPolicies) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *Routes) Hub() {}

@@ -1,0 +1,17 @@
+apiVersion: privatedns.tencentcloud.crossplane.io/v1alpha1
+kind: ExtendEndPoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privatedns/v1alpha1/extendendpoint
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    endPointName: tf-example
+    endPointRegion: ap-jakarta
+    forwardIp:
+    - accessType: CLB
+      host: 10.0.1.12
+      port: 9000
+      vpcId: vpc-1v2i79fc

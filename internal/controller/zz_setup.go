@@ -43,6 +43,12 @@ import (
 	attachmentccn "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/attachment"
 	bandwidthlimit "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/bandwidthlimit"
 	ccn "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/ccn"
+	routes "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/routes"
+	routetable "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/routetable"
+	routetableassociateinstanceconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/routetableassociateinstanceconfig"
+	routetablebroadcastpolicies "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/routetablebroadcastpolicies"
+	routetableinputpolicies "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/routetableinputpolicies"
+	routetableselectionpolicies "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/ccn/routetableselectionpolicies"
 	instance "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cdh/instance"
 	accessgroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cfs/accessgroup"
 	accessrule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/cfs/accessrule"
@@ -156,8 +162,12 @@ import (
 	readonlyattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/postgresql/readonlyattachment"
 	readonlygroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/postgresql/readonlygroup"
 	readonlyinstancepostgresql "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/postgresql/readonlyinstance"
+	endpoint "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/endpoint"
+	extendendpoint "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/extendendpoint"
+	forwardrule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/forwardrule"
 	recordprivatedns "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/record"
 	zone "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/zone"
+	zonevpcattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/privatedns/zonevpcattachment"
 	providerconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/providerconfig"
 	backupconfig "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/redis/backupconfig"
 	instanceredis "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/redis/instance"
@@ -215,9 +225,14 @@ import (
 	zonesetting "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/zonesetting"
 	addonattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/addonattachment"
 	authattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/authattachment"
+	backupstoragelocation "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/backupstoragelocation"
 	clustertke "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/cluster"
 	clusterattachmenttke "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/clusterattachment"
 	clusterendpoint "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/clusterendpoint"
+	encryptionprotection "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/encryptionprotection"
+	healthcheckpolicy "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/healthcheckpolicy"
+	logconfigtke "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/logconfig"
+	nativenodepool "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/nativenodepool"
 	nodepool "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/nodepool"
 	scaleworker "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/scaleworker"
 	adaptivedynamicstreamingtemplate "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vod/adaptivedynamicstreamingtemplate"
@@ -231,13 +246,18 @@ import (
 	dnat "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/dnat"
 	eip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eip"
 	eipassociation "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/eipassociation"
+	enableendpointconnect "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/enableendpointconnect"
+	endpointvpc "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/endpoint"
+	endpointservice "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/endpointservice"
+	endpointservicewhitelist "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/endpointservicewhitelist"
 	havip "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/havip"
 	natgateway "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/natgateway"
 	natgatewaysnat "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/natgatewaysnat"
+	peerconnectmanager "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/peerconnectmanager"
 	protocoltemplate "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/protocoltemplate"
 	protocoltemplategroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/protocoltemplategroup"
 	routeentry "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/routeentry"
-	routetable "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/routetable"
+	routetablevpc "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/routetable"
 	routetableentry "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/routetableentry"
 	securitygroup "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/securitygroup"
 	securitygroupliterule "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/vpc/securitygroupliterule"
@@ -298,6 +318,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		attachmentccn.Setup,
 		bandwidthlimit.Setup,
 		ccn.Setup,
+		routes.Setup,
+		routetable.Setup,
+		routetableassociateinstanceconfig.Setup,
+		routetablebroadcastpolicies.Setup,
+		routetableinputpolicies.Setup,
+		routetableselectionpolicies.Setup,
 		instance.Setup,
 		accessgroup.Setup,
 		accessrule.Setup,
@@ -411,8 +437,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		readonlyattachment.Setup,
 		readonlygroup.Setup,
 		readonlyinstancepostgresql.Setup,
+		endpoint.Setup,
+		extendendpoint.Setup,
+		forwardrule.Setup,
 		recordprivatedns.Setup,
 		zone.Setup,
+		zonevpcattachment.Setup,
 		providerconfig.Setup,
 		backupconfig.Setup,
 		instanceredis.Setup,
@@ -470,9 +500,14 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		zonesetting.Setup,
 		addonattachment.Setup,
 		authattachment.Setup,
+		backupstoragelocation.Setup,
 		clustertke.Setup,
 		clusterattachmenttke.Setup,
 		clusterendpoint.Setup,
+		encryptionprotection.Setup,
+		healthcheckpolicy.Setup,
+		logconfigtke.Setup,
+		nativenodepool.Setup,
 		nodepool.Setup,
 		scaleworker.Setup,
 		adaptivedynamicstreamingtemplate.Setup,
@@ -486,13 +521,18 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		dnat.Setup,
 		eip.Setup,
 		eipassociation.Setup,
+		enableendpointconnect.Setup,
+		endpointvpc.Setup,
+		endpointservice.Setup,
+		endpointservicewhitelist.Setup,
 		havip.Setup,
 		natgateway.Setup,
 		natgatewaysnat.Setup,
+		peerconnectmanager.Setup,
 		protocoltemplate.Setup,
 		protocoltemplategroup.Setup,
 		routeentry.Setup,
-		routetable.Setup,
+		routetablevpc.Setup,
 		routetableentry.Setup,
 		securitygroup.Setup,
 		securitygroupliterule.Setup,

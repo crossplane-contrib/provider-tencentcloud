@@ -12,8 +12,398 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this Attachment.
+func (mg *Attachment) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this BandwidthLimit.
 func (mg *BandwidthLimit) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this RouteTable.
+func (mg *RouteTable) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this RouteTableAssociateInstanceConfig.
+func (mg *RouteTableAssociateInstanceConfig) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.RouteTableIDRef,
+		Selector:     mg.Spec.ForProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RouteTableID")
+	}
+	mg.Spec.ForProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RouteTableIDRef,
+		Selector:     mg.Spec.InitProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RouteTableID")
+	}
+	mg.Spec.InitProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this RouteTableBroadcastPolicies.
+func (mg *RouteTableBroadcastPolicies) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.RouteTableIDRef,
+		Selector:     mg.Spec.ForProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RouteTableID")
+	}
+	mg.Spec.ForProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RouteTableIDRef,
+		Selector:     mg.Spec.InitProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RouteTableID")
+	}
+	mg.Spec.InitProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this RouteTableInputPolicies.
+func (mg *RouteTableInputPolicies) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.RouteTableIDRef,
+		Selector:     mg.Spec.ForProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RouteTableID")
+	}
+	mg.Spec.ForProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouteTableID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.RouteTableIDRef,
+		Selector:     mg.Spec.InitProvider.RouteTableIDSelector,
+		To: reference.To{
+			List:    &RouteTableList{},
+			Managed: &RouteTable{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RouteTableID")
+	}
+	mg.Spec.InitProvider.RouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouteTableIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this RouteTableSelectionPolicies.
+func (mg *RouteTableSelectionPolicies) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.CcnIDRef,
+		Selector:     mg.Spec.ForProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CcnID")
+	}
+	mg.Spec.ForProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CcnIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CcnID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.CcnIDRef,
+		Selector:     mg.Spec.InitProvider.CcnIDSelector,
+		To: reference.To{
+			List:    &CCNList{},
+			Managed: &CCN{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CcnID")
+	}
+	mg.Spec.InitProvider.CcnID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CcnIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Routes.
+func (mg *Routes) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse

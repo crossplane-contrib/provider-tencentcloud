@@ -1,0 +1,25 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: EndPoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    endPointName: tf-example
+    endPointServiceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    endPointVip: 10.0.2.1
+    securityGroupsIdsRefs:
+    - name: example
+    - name: example
+    - name: example
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

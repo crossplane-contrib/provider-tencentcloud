@@ -1,0 +1,14 @@
+apiVersion: privatedns.tencentcloud.crossplane.io/v1alpha1
+kind: EndPoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privatedns/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    endPointName: tf-example
+    endPointRegion: ap-guangzhou
+    endPointServiceId: vpcsvc-61wcwmar
+    ipNum: 1

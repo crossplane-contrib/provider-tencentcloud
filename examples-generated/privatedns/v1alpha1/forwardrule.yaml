@@ -1,0 +1,39 @@
+apiVersion: privatedns.tencentcloud.crossplane.io/v1alpha1
+kind: ForwardRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privatedns/v1alpha1/forwardrule
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    endPointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    ruleName: tf-example
+    ruleType: DOWN
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: privatedns.tencentcloud.crossplane.io/v1alpha1
+kind: ExtendEndPoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privatedns/v1alpha1/forwardrule
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    endPointName: tf-example
+    endPointRegion: ap-jakarta
+    forwardIp:
+    - accessGatewayId: ccn-eo13f8ub
+      accessType: CCN
+      host: 1.1.1.1
+      port: 8080
+      vpcId: vpc-2qjckjg2

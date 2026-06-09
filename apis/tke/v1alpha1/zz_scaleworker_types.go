@@ -683,7 +683,7 @@ type ScaleWorkerWorkerConfigInitParameters struct {
 
 	// Tag pairs.
 	// Tag pairs.
-	Tags []TagsInitParameters `json:"tags,omitempty" tf:"tags,omitempty"`
+	Tags []WorkerConfigTagsInitParameters `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
@@ -794,7 +794,7 @@ type ScaleWorkerWorkerConfigObservation struct {
 
 	// Tag pairs.
 	// Tag pairs.
-	Tags []TagsObservation `json:"tags,omitempty" tf:"tags,omitempty"`
+	Tags []WorkerConfigTagsObservation `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
@@ -936,7 +936,7 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// Tag pairs.
 	// Tag pairs.
 	// +kubebuilder:validation:Optional
-	Tags []TagsParameters `json:"tags,omitempty" tf:"tags,omitempty"`
+	Tags []WorkerConfigTagsParameters `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
 	// User data provided to instances, needs to be encoded in base64, and the maximum supported data size is 16KB.
@@ -968,7 +968,7 @@ type ScaleWorkerWorkerInstancesListObservation struct {
 type ScaleWorkerWorkerInstancesListParameters struct {
 }
 
-type TagsInitParameters struct {
+type WorkerConfigTagsInitParameters struct {
 
 	// Tag key.
 	// Tag key.
@@ -979,7 +979,7 @@ type TagsInitParameters struct {
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type TagsObservation struct {
+type WorkerConfigTagsObservation struct {
 
 	// Tag key.
 	// Tag key.
@@ -990,7 +990,7 @@ type TagsObservation struct {
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type TagsParameters struct {
+type WorkerConfigTagsParameters struct {
 
 	// Tag key.
 	// Tag key.

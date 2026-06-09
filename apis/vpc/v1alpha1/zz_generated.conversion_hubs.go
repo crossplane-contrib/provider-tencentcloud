@@ -73,6 +73,21 @@ func (tr *VPCBandwidthPackage) Hub() {}
 func (tr *VPCBandwidthPackageAttachment) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *EnableEndPointConnect) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *EndPoint) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *EndPointService) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *EndPointServiceWhiteList) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *PeerConnectManager) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *VPNConnection) Hub() {}
 
 // Hub marks this type as a conversion hub.

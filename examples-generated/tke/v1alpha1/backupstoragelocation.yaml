@@ -1,0 +1,13 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: BackupStorageLocation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/backupstoragelocation
+  labels:
+    testing.upbound.io/example-name: example_backup
+  name: example-backup
+spec:
+  forProvider:
+    bucket: tke-backup-example-1
+    name: example-backup-1
+    storageRegion: ap-guangzhou

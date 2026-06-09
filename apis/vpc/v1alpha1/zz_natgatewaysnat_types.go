@@ -29,7 +29,16 @@ type NatGatewaySnatInitParameters struct {
 
 	// NAT gateway ID.
 	// NAT gateway ID.
+	// +crossplane:generate:reference:type=NatGateway
 	NATGatewayID *string `json:"natGatewayId,omitempty" tf:"nat_gateway_id,omitempty"`
+
+	// Reference to a NatGateway to populate natGatewayId.
+	// +kubebuilder:validation:Optional
+	NATGatewayIDRef *v1.Reference `json:"natGatewayIdRef,omitempty" tf:"-"`
+
+	// Selector for a NatGateway to populate natGatewayId.
+	// +kubebuilder:validation:Optional
+	NATGatewayIDSelector *v1.Selector `json:"natGatewayIdSelector,omitempty" tf:"-"`
 
 	// Elastic IP address pool.
 	// Elastic IP address pool.
@@ -122,8 +131,17 @@ type NatGatewaySnatParameters struct {
 
 	// NAT gateway ID.
 	// NAT gateway ID.
+	// +crossplane:generate:reference:type=NatGateway
 	// +kubebuilder:validation:Optional
 	NATGatewayID *string `json:"natGatewayId,omitempty" tf:"nat_gateway_id,omitempty"`
+
+	// Reference to a NatGateway to populate natGatewayId.
+	// +kubebuilder:validation:Optional
+	NATGatewayIDRef *v1.Reference `json:"natGatewayIdRef,omitempty" tf:"-"`
+
+	// Selector for a NatGateway to populate natGatewayId.
+	// +kubebuilder:validation:Optional
+	NATGatewayIDSelector *v1.Selector `json:"natGatewayIdSelector,omitempty" tf:"-"`
 
 	// Elastic IP address pool.
 	// Elastic IP address pool.
@@ -192,7 +210,6 @@ type NatGatewaySnat struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.description) || (has(self.initProvider) && has(self.initProvider.description))",message="spec.forProvider.description is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.natGatewayId) || (has(self.initProvider) && has(self.initProvider.natGatewayId))",message="spec.forProvider.natGatewayId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.publicIpAddr) || (has(self.initProvider) && has(self.initProvider.publicIpAddr))",message="spec.forProvider.publicIpAddr is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resourceType) || (has(self.initProvider) && has(self.initProvider.resourceType))",message="spec.forProvider.resourceType is a required parameter"
 	Spec   NatGatewaySnatSpec   `json:"spec"`

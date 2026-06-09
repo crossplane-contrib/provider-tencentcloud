@@ -8,7 +8,9 @@ metadata:
   name: attachment
 spec:
   forProvider:
-    ccnId: ${tencentcloud_ccn.example.id}
+    ccnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     instanceId: ${tencentcloud_vpc.vpc.id}
     instanceRegion: ${var.region}
     instanceType: VPC

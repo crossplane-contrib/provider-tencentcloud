@@ -52,6 +52,42 @@ func (l *EipList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this EnableEndPointConnectList.
+func (l *EnableEndPointConnectList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this EndPointList.
+func (l *EndPointList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this EndPointServiceList.
+func (l *EndPointServiceList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this EndPointServiceWhiteListList.
+func (l *EndPointServiceWhiteListList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this HaVipList.
 func (l *HaVipList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -72,6 +108,15 @@ func (l *NatGatewayList) GetItems() []resource.Managed {
 
 // GetItems of this NatGatewaySnatList.
 func (l *NatGatewaySnatList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this PeerConnectManagerList.
+func (l *PeerConnectManagerList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

@@ -1,0 +1,16 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: EnableEndPointConnect
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/enableendpointconnect
+  labels:
+    testing.upbound.io/example-name: enable_end_point_connect
+  name: enable-end-point-connect
+spec:
+  forProvider:
+    acceptFlag: true
+    endPointIdRefs:
+    - name: example
+    endPointServiceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

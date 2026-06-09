@@ -29,6 +29,15 @@ func Configure(p *config.Provider) {
 		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
+		r.References["cluster_subnet_id"] = config.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
+		}
+		r.References["cluster_intranet_subnet_id"] = config.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
+		}
+		r.References["cluster_internet_security_group"] = config.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.SecurityGroup",
+		}
 	})
 
 	p.AddResourceConfigurator("tencentcloud_kubernetes_scale_worker", func(r *config.Resource) {
@@ -68,6 +77,9 @@ func Configure(p *config.Provider) {
 		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTke
 		r.Kind = "NodePool"
+		r.References["cluster_id"] = config.Reference{
+			Type: "Cluster",
+		}
 		r.References["vpc_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC",
 		}
@@ -80,6 +92,15 @@ func Configure(p *config.Provider) {
 		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTke
 		r.Kind = "AddonAttachment"
+		r.References["cluster_id"] = config.Reference{
+			Type: "Cluster",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_kubernetes_native_node_pool", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
+		r.ShortGroup = shortGroupTke
+		r.Kind = "NativeNodePool"
 		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}
@@ -103,6 +124,42 @@ func Configure(p *config.Provider) {
 		}
 		r.References["cluster_intranet_subnet_id"] = config.Reference{
 			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_kubernetes_encryption_protection", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
+		r.ShortGroup = shortGroupTke
+		r.Kind = "EncryptionProtection"
+		r.References["cluster_id"] = config.Reference{
+			Type: "Cluster",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_kubernetes_log_config", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
+		r.ShortGroup = shortGroupTke
+		r.Kind = "LogConfig"
+		r.References["cluster_id"] = config.Reference{
+			Type: "Cluster",
+		}
+		r.References["logset_id"] = config.Reference{
+			Type: "github.com/crossplane-contrib/provider-tencentcloud/apis/cls/v1alpha1.Logset",
+		}
+	})
+
+	p.AddResourceConfigurator("tencentcloud_kubernetes_backup_storage_location", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
+		r.ShortGroup = shortGroupTke
+		r.Kind = "BackupStorageLocation"
+	})
+
+	p.AddResourceConfigurator("tencentcloud_kubernetes_health_check_policy", func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
+		r.ShortGroup = shortGroupTke
+		r.Kind = "HealthCheckPolicy"
+		r.References["cluster_id"] = config.Reference{
+			Type: "Cluster",
 		}
 	})
 }

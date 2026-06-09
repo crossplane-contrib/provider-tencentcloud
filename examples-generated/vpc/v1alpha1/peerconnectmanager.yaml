@@ -1,0 +1,49 @@
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: PeerConnectManager
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/peerconnectmanager
+  labels:
+    testing.upbound.io/example-name: peer_connect_manager
+  name: peer-connect-manager
+spec:
+  forProvider:
+    destinationRegion: ap-guangzhou
+    destinationUin: ${local.owner_uin}
+    destinationVpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: des_vpc
+    peeringConnectionName: example-iac
+    sourceVpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/peerconnectmanager
+  labels:
+    testing.upbound.io/example-name: des_vpc
+  name: des-vpc
+spec:
+  forProvider:
+    cidrBlock: 172.16.0.0/16
+    name: tf-example-pcx-des
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/peerconnectmanager
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: tf-example-pcx

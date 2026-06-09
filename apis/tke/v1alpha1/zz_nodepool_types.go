@@ -13,41 +13,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type AnnotationsInitParameters struct {
-
-	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
-	// Name in the map table.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Value in the map table.
-	// Value in the map table.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
-}
-
-type AnnotationsObservation struct {
-
-	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
-	// Name in the map table.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Value in the map table.
-	// Value in the map table.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
-}
-
-type AnnotationsParameters struct {
-
-	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
-	// Name in the map table.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name" tf:"name,omitempty"`
-
-	// Value in the map table.
-	// Value in the map table.
-	// +kubebuilder:validation:Optional
-	Value *string `json:"value" tf:"value,omitempty"`
-}
-
 type AutoScalingConfigDataDiskInitParameters struct {
 
 	// Indicates whether the disk remove after instance terminated. Default is false.
@@ -763,11 +728,46 @@ type NodeConfigParameters struct {
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
+type NodePoolAnnotationsInitParameters struct {
+
+	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+	// Name in the map table.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Value in the map table.
+	// Value in the map table.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type NodePoolAnnotationsObservation struct {
+
+	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+	// Name in the map table.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Value in the map table.
+	// Value in the map table.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type NodePoolAnnotationsParameters struct {
+
+	// Name of the node pool. The name does not exceed 25 characters, and only supports Chinese, English, numbers, underscores, separators (-) and decimal points.
+	// Name in the map table.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// Value in the map table.
+	// Value in the map table.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type NodePoolInitParameters struct {
 
 	// Node Annotation List.
 	// Node Annotation List.
-	Annotations []AnnotationsInitParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
+	Annotations []NodePoolAnnotationsInitParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
 	// Auto scaling config parameters.
 	// Auto scaling config parameters.
@@ -779,7 +779,16 @@ type NodePoolInitParameters struct {
 
 	// ID of the cluster.
 	// ID of the cluster.
+	// +crossplane:generate:reference:type=Cluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// Seconds of scaling group cool down. Default value is 300.
 	// Seconds of scaling group cool down. Default value is `300`.
@@ -901,7 +910,7 @@ type NodePoolObservation struct {
 
 	// Node Annotation List.
 	// Node Annotation List.
-	Annotations []AnnotationsObservation `json:"annotations,omitempty" tf:"annotations,omitempty"`
+	Annotations []NodePoolAnnotationsObservation `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
 	// Auto scaling config parameters.
 	// Auto scaling config parameters.
@@ -1054,7 +1063,7 @@ type NodePoolParameters struct {
 	// Node Annotation List.
 	// Node Annotation List.
 	// +kubebuilder:validation:Optional
-	Annotations []AnnotationsParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
+	Annotations []NodePoolAnnotationsParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
 	// Auto scaling config parameters.
 	// Auto scaling config parameters.
@@ -1068,8 +1077,17 @@ type NodePoolParameters struct {
 
 	// ID of the cluster.
 	// ID of the cluster.
+	// +crossplane:generate:reference:type=Cluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a Cluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// Seconds of scaling group cool down. Default value is 300.
 	// Seconds of scaling group cool down. Default value is `300`.
@@ -1298,7 +1316,6 @@ type NodePool struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.autoScalingConfig) || (has(self.initProvider) && has(self.initProvider.autoScalingConfig))",message="spec.forProvider.autoScalingConfig is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.clusterId) || (has(self.initProvider) && has(self.initProvider.clusterId))",message="spec.forProvider.clusterId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.maxSize) || (has(self.initProvider) && has(self.initProvider.maxSize))",message="spec.forProvider.maxSize is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.minSize) || (has(self.initProvider) && has(self.initProvider.minSize))",message="spec.forProvider.minSize is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"

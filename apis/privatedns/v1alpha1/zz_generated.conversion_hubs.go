@@ -7,7 +7,19 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *EndPoint) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ExtendEndPoint) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ForwardRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Record) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Zone) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ZoneVPCAttachment) Hub() {}

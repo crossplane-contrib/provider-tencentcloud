@@ -25,10 +25,80 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal tencentcloud credentials as JSON"
-	keySecretID             = "secret_id"
-	keySecretKey            = "secret_key"
-	keyRegion               = "region"
 )
+
+const (
+	keyAllowedAccountIDs         = "allowed_account_ids"
+	keyAssumeRole                = "assume_role"
+	keyAssumeRoleWithSAML        = "assume_role_with_saml"
+	keyAssumeRoleWithWebIdentity = "assume_role_with_web_identity"
+	keyCAMRoleName               = "cam_role_name"
+	keyCOSDomain                 = "cos_domain"
+	keyDomain                    = "domain"
+	keyEnablePodOIDC             = "enable_pod_oidc"
+	keyForbiddenAccountIDs       = "forbidden_account_ids"
+	keyMFACertification          = "mfa_certification"
+	keyProfile                   = "profile"
+	keyProtocol                  = "protocol"
+	keyRegion                    = "region"
+	keySecretID                  = "secret_id"
+	keySecretKey                 = "secret_key"
+	keySecurityToken             = "security_token"
+	keySharedCredentialsDir      = "shared_credentials_dir"
+)
+
+var providerConfigurationKeys = map[string]struct{}{
+	keyAllowedAccountIDs:         {},
+	keyAssumeRole:                {},
+	keyAssumeRoleWithSAML:        {},
+	keyAssumeRoleWithWebIdentity: {},
+	keyCAMRoleName:               {},
+	keyCOSDomain:                 {},
+	keyDomain:                    {},
+	keyEnablePodOIDC:             {},
+	keyForbiddenAccountIDs:       {},
+	keyMFACertification:          {},
+	keyProfile:                   {},
+	keyProtocol:                  {},
+	keyRegion:                    {},
+	keySecretID:                  {},
+	keySecretKey:                 {},
+	keySecurityToken:             {},
+	keySharedCredentialsDir:      {},
+}
+
+var singletonBlockKeys = map[string]struct{}{
+	keyAssumeRole:                {},
+	keyAssumeRoleWithSAML:        {},
+	keyAssumeRoleWithWebIdentity: {},
+	keyMFACertification:          {},
+}
+
+func buildTerraformProviderConfiguration(creds map[string]interface{}) map[string]interface{} {
+	config := make(map[string]interface{}, len(creds))
+	for key, value := range creds {
+		if _, ok := providerConfigurationKeys[key]; !ok {
+			continue
+		}
+		if _, ok := singletonBlockKeys[key]; ok {
+			config[key] = normalizeSingletonBlock(value)
+			continue
+		}
+		config[key] = value
+	}
+	return config
+}
+
+func normalizeSingletonBlock(value interface{}) interface{} {
+	switch v := value.(type) {
+	case []interface{}:
+		return v
+	case map[string]interface{}:
+		return []interface{}{v}
+	default:
+		return value
+	}
+}
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
@@ -60,22 +130,12 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		creds := map[string]string{}
+		creds := map[string]interface{}{}
 		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// Set credentials in Terraform provider configuration.
-		ps.Configuration = map[string]interface{}{}
-		if v, ok := creds[keySecretID]; ok {
-			ps.Configuration[keySecretID] = v
-		}
-		if v, ok := creds[keySecretKey]; ok {
-			ps.Configuration[keySecretKey] = v
-		}
-		if v, ok := creds[keyRegion]; ok {
-			ps.Configuration[keyRegion] = v
-		}
+		ps.Configuration = buildTerraformProviderConfiguration(creds)
 		return ps, nil
 	}
 }

@@ -32,6 +32,9 @@ func Configure(p *config.Provider) {
 		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTcr
 		r.Kind = "TcrNamespace"
+		r.References["instance_id"] = config.Reference{
+			Type: "Instance",
+		}
 	})
 
 	p.AddResourceConfigurator("tencentcloud_tcr_repository", func(r *config.Resource) {

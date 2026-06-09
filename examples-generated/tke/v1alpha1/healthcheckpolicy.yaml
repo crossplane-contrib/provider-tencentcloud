@@ -1,0 +1,21 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: HealthCheckPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/healthcheckpolicy
+  labels:
+    testing.upbound.io/example-name: kubernetes_health_check_policy
+  name: kubernetes-health-check-policy
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: example
+    rules:
+    - autoRepairEnabled: true
+      enabled: true
+      name: OOMKilling
+    - autoRepairEnabled: true
+      enabled: true
+      name: KubeletUnhealthy

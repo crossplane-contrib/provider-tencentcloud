@@ -28,7 +28,9 @@ spec:
       publicIpAssigned: true
       systemDiskSize: "50"
       systemDiskType: CLOUD_PREMIUM
-    clusterId: ${tencentcloud_kubernetes_cluster.example.id}
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     desiredCapacity: 4
     enableAutoScale: true
     labels:

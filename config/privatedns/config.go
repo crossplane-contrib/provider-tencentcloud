@@ -22,12 +22,40 @@ const shortGroupPrivateDNS = "privatedns"
 
 // Configure configures the privatedns group
 func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("tencentcloud_private_dns_end_point", func(r *config.Resource) {
+		r.ShortGroup = shortGroupPrivateDNS
+		r.Kind = "EndPoint"
+	})
+	p.AddResourceConfigurator("tencentcloud_private_dns_extend_end_point", func(r *config.Resource) {
+		r.ShortGroup = shortGroupPrivateDNS
+		r.Kind = "ExtendEndPoint"
+	})
+	p.AddResourceConfigurator("tencentcloud_private_dns_forward_rule", func(r *config.Resource) {
+		r.ShortGroup = shortGroupPrivateDNS
+		r.Kind = "ForwardRule"
+		r.References["zone_id"] = config.Reference{
+			Type: "Zone",
+		}
+		r.References["end_point_id"] = config.Reference{
+			Type: "EndPoint",
+		}
+	})
 	p.AddResourceConfigurator("tencentcloud_private_dns_record", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPrivateDNS
 		r.Kind = "Record"
+		r.References["zone_id"] = config.Reference{
+			Type: "Zone",
+		}
 	})
 	p.AddResourceConfigurator("tencentcloud_private_dns_zone", func(r *config.Resource) {
 		r.ShortGroup = shortGroupPrivateDNS
 		r.Kind = "Zone"
+	})
+	p.AddResourceConfigurator("tencentcloud_private_dns_zone_vpc_attachment", func(r *config.Resource) {
+		r.ShortGroup = shortGroupPrivateDNS
+		r.Kind = "ZoneVPCAttachment"
+		r.References["zone_id"] = config.Reference{
+			Type: "Zone",
+		}
 	})
 }

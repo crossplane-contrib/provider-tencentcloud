@@ -1,0 +1,86 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: NativeNodePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/nativenodepool
+  labels:
+    testing.upbound.io/example-name: kubernetes_native_node_pool
+  name: kubernetes-native-node-pool
+spec:
+  forProvider:
+    annotations:
+    - name: node.tke.cloud.tencent.com/test-anno
+      value: test
+    - name: node.tke.cloud.tencent.com/test-label
+      value: test
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    deletionProtection: false
+    labels:
+    - name: test11
+      value: test21
+    name: native-node-pool
+    native:
+    - autoRepair: false
+      dataDisks:
+      - autoFormatAndMount: true
+        diskSize: 60
+        diskType: CLOUD_PREMIUM
+        fileSystem: ext4
+        mountTarget: /var/lib/containerd
+      enableAutoscaling: true
+      hostNamePattern: aaa{R:3}
+      instanceChargePrepaid:
+      - period: 1
+        renewFlag: NOTIFY_AND_MANUAL_RENEW
+      instanceChargeType: PREPAID
+      instanceTypes:
+      - SA2.MEDIUM2
+      internetAccessible:
+      - chargeType: TRAFFIC_POSTPAID_BY_HOUR
+        maxBandwidthOut: 50
+      keyIds:
+      - skey-9pcs2100
+      kubeletArgs:
+      - allowed-unsafe-sysctls=net.core.somaxconn
+      - root-dir=/var/lib/test
+      lifecycle:
+      - postInit: ZWNobyBoZWxsb3dvcmxk
+        preInit: ZWNobyBoZWxsb3dvcmxk
+      management:
+      - hosts:
+        - 192.168.2.42 static.fake.com
+        - 192.168.2.42 static.fake.com2
+        kernelArgs:
+        - kernel.pid_max=65535
+        - fs.file-max=400000
+        nameservers:
+        - 183.60.83.19
+        - 183.60.82.98
+      replicas: 2
+      runtimeRootDir: /var/lib/docker
+      scaling:
+      - createPolicy: ZoneEquality
+        maxReplicas: 10
+        minReplicas: 1
+      securityGroupIds:
+      - sg-7tum9120
+      subnetIds:
+      - subnet-itb6d123
+      systemDisk:
+      - diskSize: 50
+        diskType: CLOUD_SSD
+    tags:
+    - resourceType: machine
+      tags:
+      - key: keep-test-np1
+        value: test1
+      - key: keep-test-np3
+        value: test3
+    taints:
+    - effect: NoExecute
+      key: product
+      value: coderider
+    type: Native
+    unschedulable: false

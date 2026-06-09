@@ -1,0 +1,55 @@
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: EncryptionProtection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/encryptionprotection
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    kmsConfiguration:
+    - keyId: ${tencentcloud_kms_key.example.id}
+      kmsRegion: ${var.example_region}
+
+---
+
+apiVersion: kms.tencentcloud.crossplane.io/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/encryptionprotection
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    alias: tf-example-kms-key
+    description: example of kms key instance
+    isEnabled: true
+    keyUsage: ENCRYPT_DECRYPT
+
+---
+
+apiVersion: tke.tencentcloud.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tke/v1alpha1/encryptionprotection
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterCidr: ${var.example_cluster_cidr}
+    clusterDeployType: MANAGED_CLUSTER
+    clusterDesc: a tf example cluster for the kms test
+    clusterMaxPodNum: 32
+    clusterMaxServiceNum: 32
+    clusterName: tf_example_cluster
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tencentcloud_vpc_subnets
