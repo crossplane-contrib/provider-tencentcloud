@@ -33,4 +33,7 @@ spec:
     publicIpAssigned: true
     systemDiskSize: "50"
     systemDiskType: CLOUD_PREMIUM
+    tags:
+      createdBy: Terraform
+      owner: tf
     userData: dGVzdA==

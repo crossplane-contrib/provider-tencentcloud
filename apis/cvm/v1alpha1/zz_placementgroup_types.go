@@ -23,6 +23,14 @@ type PlacementGroupInitParameters struct {
 	// Name of the placement group, 1-60 characters in length.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Partition count of the placement group. Valid values: 2~30. Only valid when strategy is set to PARTITION.
+	// Partition count of the placement group. Valid values: 2~30. Only valid when `strategy` is set to `PARTITION`.
+	PartitionCount *float64 `json:"partitionCount,omitempty" tf:"partition_count,omitempty"`
+
+	// Strategy of the placement group. Valid values: SPREAD and PARTITION. SPREAD is the default strategy. When strategy is PARTITION, partition_count must be set. This field cannot be modified after creation.
+	// Strategy of the placement group. Valid values: `SPREAD` and `PARTITION`. `SPREAD` is the default strategy. When strategy is `PARTITION`, `partition_count` must be set. This field cannot be modified after creation.
+	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
+
 	// Tags of the placement group.
 	// Tags of the placement group.
 	// +mapType=granular
@@ -58,6 +66,14 @@ type PlacementGroupObservation struct {
 	// Name of the placement group, 1-60 characters in length.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Partition count of the placement group. Valid values: 2~30. Only valid when strategy is set to PARTITION.
+	// Partition count of the placement group. Valid values: 2~30. Only valid when `strategy` is set to `PARTITION`.
+	PartitionCount *float64 `json:"partitionCount,omitempty" tf:"partition_count,omitempty"`
+
+	// Strategy of the placement group. Valid values: SPREAD and PARTITION. SPREAD is the default strategy. When strategy is PARTITION, partition_count must be set. This field cannot be modified after creation.
+	// Strategy of the placement group. Valid values: `SPREAD` and `PARTITION`. `SPREAD` is the default strategy. When strategy is `PARTITION`, `partition_count` must be set. This field cannot be modified after creation.
+	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
+
 	// Tags of the placement group.
 	// Tags of the placement group.
 	// +mapType=granular
@@ -79,6 +95,16 @@ type PlacementGroupParameters struct {
 	// Name of the placement group, 1-60 characters in length.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Partition count of the placement group. Valid values: 2~30. Only valid when strategy is set to PARTITION.
+	// Partition count of the placement group. Valid values: 2~30. Only valid when `strategy` is set to `PARTITION`.
+	// +kubebuilder:validation:Optional
+	PartitionCount *float64 `json:"partitionCount,omitempty" tf:"partition_count,omitempty"`
+
+	// Strategy of the placement group. Valid values: SPREAD and PARTITION. SPREAD is the default strategy. When strategy is PARTITION, partition_count must be set. This field cannot be modified after creation.
+	// Strategy of the placement group. Valid values: `SPREAD` and `PARTITION`. `SPREAD` is the default strategy. When strategy is `PARTITION`, `partition_count` must be set. This field cannot be modified after creation.
+	// +kubebuilder:validation:Optional
+	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
 	// Tags of the placement group.
 	// Tags of the placement group.

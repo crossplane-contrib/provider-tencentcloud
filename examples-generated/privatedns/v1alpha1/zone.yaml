@@ -13,7 +13,7 @@ spec:
     domain: domain.com
     remark: remark.
     tags:
-      createdBy: terraform
+      createdBy: Terraform
     vpcSet:
     - region: ap-guangzhou
       uniqVpcId: ${tencentcloud_vpc.vpc.id}

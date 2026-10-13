@@ -19,6 +19,18 @@ type InstanceInitParameters struct {
 	// Indicate to delete the COS bucket which is auto-created with the instance or not.
 	DeleteBucket *bool `json:"deleteBucket,omitempty" tf:"delete_bucket,omitempty"`
 
+	// Whether to enable Instance Deletion Protection.
+	// Whether to enable Instance Deletion Protection.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Whether to enable COS bucket multi-AZ feature. Default is false.
+	// Whether to enable COS bucket multi-AZ feature. Default is `false`.
+	EnableCosMaz *bool `json:"enableCosMaz,omitempty" tf:"enable_cos_maz,omitempty"`
+
+	// Whether to enable COS bucket versioning. Advanced Edition Instances: Default is true (versioning enabled); Standard / Basic Edition Instances: Default is false (disabled).
+	// Whether to enable COS bucket versioning. Advanced Edition Instances: Default is `true` (versioning enabled); Standard / Basic Edition Instances: Default is `false` (disabled).
+	EnableCosVersioning *bool `json:"enableCosVersioning,omitempty" tf:"enable_cos_versioning,omitempty"`
+
 	// Length of time to purchase an instance (in month). Must set when registry_charge_type is prepaid.
 	// Length of time to purchase an instance (in month). Must set when registry_charge_type is prepaid.
 	InstanceChargeTypePrepaidPeriod *float64 `json:"instanceChargeTypePrepaidPeriod,omitempty" tf:"instance_charge_type_prepaid_period,omitempty"`
@@ -62,6 +74,18 @@ type InstanceObservation struct {
 	// Indicate to delete the COS bucket which is auto-created with the instance or not.
 	// Indicate to delete the COS bucket which is auto-created with the instance or not.
 	DeleteBucket *bool `json:"deleteBucket,omitempty" tf:"delete_bucket,omitempty"`
+
+	// Whether to enable Instance Deletion Protection.
+	// Whether to enable Instance Deletion Protection.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Whether to enable COS bucket multi-AZ feature. Default is false.
+	// Whether to enable COS bucket multi-AZ feature. Default is `false`.
+	EnableCosMaz *bool `json:"enableCosMaz,omitempty" tf:"enable_cos_maz,omitempty"`
+
+	// Whether to enable COS bucket versioning. Advanced Edition Instances: Default is true (versioning enabled); Standard / Basic Edition Instances: Default is false (disabled).
+	// Whether to enable COS bucket versioning. Advanced Edition Instances: Default is `true` (versioning enabled); Standard / Basic Edition Instances: Default is `false` (disabled).
+	EnableCosVersioning *bool `json:"enableCosVersioning,omitempty" tf:"enable_cos_versioning,omitempty"`
 
 	// Instance expiration time (prepaid).
 	// Instance expiration time (prepaid).
@@ -130,6 +154,21 @@ type InstanceParameters struct {
 	// Indicate to delete the COS bucket which is auto-created with the instance or not.
 	// +kubebuilder:validation:Optional
 	DeleteBucket *bool `json:"deleteBucket,omitempty" tf:"delete_bucket,omitempty"`
+
+	// Whether to enable Instance Deletion Protection.
+	// Whether to enable Instance Deletion Protection.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Whether to enable COS bucket multi-AZ feature. Default is false.
+	// Whether to enable COS bucket multi-AZ feature. Default is `false`.
+	// +kubebuilder:validation:Optional
+	EnableCosMaz *bool `json:"enableCosMaz,omitempty" tf:"enable_cos_maz,omitempty"`
+
+	// Whether to enable COS bucket versioning. Advanced Edition Instances: Default is true (versioning enabled); Standard / Basic Edition Instances: Default is false (disabled).
+	// Whether to enable COS bucket versioning. Advanced Edition Instances: Default is `true` (versioning enabled); Standard / Basic Edition Instances: Default is `false` (disabled).
+	// +kubebuilder:validation:Optional
+	EnableCosVersioning *bool `json:"enableCosVersioning,omitempty" tf:"enable_cos_versioning,omitempty"`
 
 	// Length of time to purchase an instance (in month). Must set when registry_charge_type is prepaid.
 	// Length of time to purchase an instance (in month). Must set when registry_charge_type is prepaid.
@@ -252,8 +291,10 @@ type SecurityPolicyObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// Index of policy.
+	// Index of policy.
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
+	// Version of policy.
 	// Version of policy.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }

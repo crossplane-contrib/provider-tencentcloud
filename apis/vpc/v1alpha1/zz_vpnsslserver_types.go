@@ -13,11 +13,54 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type DNSServersInitParameters struct {
+
+	// Primary DNS server address.
+	// Primary DNS server address.
+	PrimaryDNS *string `json:"primaryDns,omitempty" tf:"primary_dns,omitempty"`
+
+	// Secondary DNS server address.
+	// Secondary DNS server address.
+	SecondaryDNS *string `json:"secondaryDns,omitempty" tf:"secondary_dns,omitempty"`
+}
+
+type DNSServersObservation struct {
+
+	// Primary DNS server address.
+	// Primary DNS server address.
+	PrimaryDNS *string `json:"primaryDns,omitempty" tf:"primary_dns,omitempty"`
+
+	// Secondary DNS server address.
+	// Secondary DNS server address.
+	SecondaryDNS *string `json:"secondaryDns,omitempty" tf:"secondary_dns,omitempty"`
+}
+
+type DNSServersParameters struct {
+
+	// Primary DNS server address.
+	// Primary DNS server address.
+	// +kubebuilder:validation:Optional
+	PrimaryDNS *string `json:"primaryDns,omitempty" tf:"primary_dns,omitempty"`
+
+	// Secondary DNS server address.
+	// Secondary DNS server address.
+	// +kubebuilder:validation:Optional
+	SecondaryDNS *string `json:"secondaryDns,omitempty" tf:"secondary_dns,omitempty"`
+}
+
 type VPNSSLServerInitParameters struct {
+
+	// Enable access policy control. Default: false.
+	// Enable access policy control. Default: false.
+	AccessPolicyEnabled *bool `json:"accessPolicyEnabled,omitempty" tf:"access_policy_enabled,omitempty"`
 
 	// Need compressed. Currently is not supports compress. Default value: False.
 	// Need compressed. Currently is not supports compress. Default value: False.
 	Compress *bool `json:"compress,omitempty" tf:"compress,omitempty"`
+
+	// DNS server configuration.
+	// DNS server configuration.
+	DNSServers []DNSServersInitParameters `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
 	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
 	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
@@ -35,6 +78,10 @@ type VPNSSLServerInitParameters struct {
 	// Remote CIDR for client.
 	RemoteAddress *string `json:"remoteAddress,omitempty" tf:"remote_address,omitempty"`
 
+	// SAML-DATA. Required when sso_enabled is true.
+	// SAML-DATA. Required when sso_enabled is true.
+	SAMLData *string `json:"samlData,omitempty" tf:"saml_data,omitempty"`
+
 	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	SSLVPNPort *float64 `json:"sslVpnPort,omitempty" tf:"ssl_vpn_port,omitempty"`
@@ -46,6 +93,15 @@ type VPNSSLServerInitParameters struct {
 	// The name of ssl vpn server to be created.
 	// The name of ssl vpn server to be created.
 	SSLVPNServerName *string `json:"sslVpnServerName,omitempty" tf:"ssl_vpn_server_name,omitempty"`
+
+	// Enable SSO authentication. Default: false. This feature requires whitelist approval.
+	// Enable SSO authentication. Default: false. This feature requires whitelist approval.
+	SsoEnabled *bool `json:"ssoEnabled,omitempty" tf:"sso_enabled,omitempty"`
+
+	// Tags for resource management.
+	// Tags for resource management.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// VPN gateway ID.
 	// VPN gateway ID.
@@ -63,9 +119,17 @@ type VPNSSLServerInitParameters struct {
 
 type VPNSSLServerObservation struct {
 
+	// Enable access policy control. Default: false.
+	// Enable access policy control. Default: false.
+	AccessPolicyEnabled *bool `json:"accessPolicyEnabled,omitempty" tf:"access_policy_enabled,omitempty"`
+
 	// Need compressed. Currently is not supports compress. Default value: False.
 	// Need compressed. Currently is not supports compress. Default value: False.
 	Compress *bool `json:"compress,omitempty" tf:"compress,omitempty"`
+
+	// DNS server configuration.
+	// DNS server configuration.
+	DNSServers []DNSServersObservation `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
 	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
 	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
@@ -86,6 +150,10 @@ type VPNSSLServerObservation struct {
 	// Remote CIDR for client.
 	RemoteAddress *string `json:"remoteAddress,omitempty" tf:"remote_address,omitempty"`
 
+	// SAML-DATA. Required when sso_enabled is true.
+	// SAML-DATA. Required when sso_enabled is true.
+	SAMLData *string `json:"samlData,omitempty" tf:"saml_data,omitempty"`
+
 	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	SSLVPNPort *float64 `json:"sslVpnPort,omitempty" tf:"ssl_vpn_port,omitempty"`
@@ -98,6 +166,15 @@ type VPNSSLServerObservation struct {
 	// The name of ssl vpn server to be created.
 	SSLVPNServerName *string `json:"sslVpnServerName,omitempty" tf:"ssl_vpn_server_name,omitempty"`
 
+	// Enable SSO authentication. Default: false. This feature requires whitelist approval.
+	// Enable SSO authentication. Default: false. This feature requires whitelist approval.
+	SsoEnabled *bool `json:"ssoEnabled,omitempty" tf:"sso_enabled,omitempty"`
+
+	// Tags for resource management.
+	// Tags for resource management.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// VPN gateway ID.
 	// VPN gateway ID.
 	VPNGatewayID *string `json:"vpnGatewayId,omitempty" tf:"vpn_gateway_id,omitempty"`
@@ -105,10 +182,20 @@ type VPNSSLServerObservation struct {
 
 type VPNSSLServerParameters struct {
 
+	// Enable access policy control. Default: false.
+	// Enable access policy control. Default: false.
+	// +kubebuilder:validation:Optional
+	AccessPolicyEnabled *bool `json:"accessPolicyEnabled,omitempty" tf:"access_policy_enabled,omitempty"`
+
 	// Need compressed. Currently is not supports compress. Default value: False.
 	// Need compressed. Currently is not supports compress. Default value: False.
 	// +kubebuilder:validation:Optional
 	Compress *bool `json:"compress,omitempty" tf:"compress,omitempty"`
+
+	// DNS server configuration.
+	// DNS server configuration.
+	// +kubebuilder:validation:Optional
+	DNSServers []DNSServersParameters `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
 	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
 	// The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
@@ -130,6 +217,11 @@ type VPNSSLServerParameters struct {
 	// +kubebuilder:validation:Optional
 	RemoteAddress *string `json:"remoteAddress,omitempty" tf:"remote_address,omitempty"`
 
+	// SAML-DATA. Required when sso_enabled is true.
+	// SAML-DATA. Required when sso_enabled is true.
+	// +kubebuilder:validation:Optional
+	SAMLData *string `json:"samlData,omitempty" tf:"saml_data,omitempty"`
+
 	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	// The port of ssl vpn. Currently only supports UDP. Default value: 1194.
 	// +kubebuilder:validation:Optional
@@ -144,6 +236,17 @@ type VPNSSLServerParameters struct {
 	// The name of ssl vpn server to be created.
 	// +kubebuilder:validation:Optional
 	SSLVPNServerName *string `json:"sslVpnServerName,omitempty" tf:"ssl_vpn_server_name,omitempty"`
+
+	// Enable SSO authentication. Default: false. This feature requires whitelist approval.
+	// Enable SSO authentication. Default: false. This feature requires whitelist approval.
+	// +kubebuilder:validation:Optional
+	SsoEnabled *bool `json:"ssoEnabled,omitempty" tf:"sso_enabled,omitempty"`
+
+	// Tags for resource management.
+	// Tags for resource management.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// VPN gateway ID.
 	// VPN gateway ID.

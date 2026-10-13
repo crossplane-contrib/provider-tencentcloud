@@ -19,6 +19,10 @@ type StorageInitParameters struct {
 	// The available zone that the CBS instance locates at.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
+	// Whether to enable performance burst when creating a cloud disk.
+	// Whether to enable performance burst when creating a cloud disk.
+	BurstPerformance *bool `json:"burstPerformance,omitempty" tf:"burst_performance,omitempty"`
+
 	// The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
 	// The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
@@ -31,13 +35,25 @@ type StorageInitParameters struct {
 	// The quota of backup points of cloud disk.
 	DiskBackupQuota *float64 `json:"diskBackupQuota,omitempty" tf:"disk_backup_quota,omitempty"`
 
-	// Indicates whether CBS is encrypted.
-	// Indicates whether CBS is encrypted.
+	// Pass in this parameter to create an encrypted cloud disk.
+	// Pass in this parameter to create an encrypted cloud disk.
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// Specifies the cloud disk encryption type. The values are ENCRYPT_V1 and ENCRYPT_V2, which represent the first-generation and second-generation encryption technologies respectively. The two encryption technologies are incompatible with each other. It is recommended to use the second-generation encryption technology ENCRYPT_V2 first. The first-generation encryption technology is only supported on some older models. This parameter is only valid when creating an encrypted cloud disk. https://www.tencentcloud.com/document/product/362/33139?lang=en&pg=.
+	// Specifies the cloud disk encryption type. The values are `ENCRYPT_V1` and `ENCRYPT_V2`, which represent the first-generation and second-generation encryption technologies respectively. The two encryption technologies are incompatible with each other. It is recommended to use the second-generation encryption technology `ENCRYPT_V2` first. The first-generation encryption technology is only supported on some older models. This parameter is only valid when creating an encrypted cloud disk. https://www.tencentcloud.com/document/product/362/33139?lang=en&pg=.
+	EncryptType *string `json:"encryptType,omitempty" tf:"encrypt_type,omitempty"`
 
 	// Indicate whether to delete CBS instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
 	// Indicate whether to delete CBS instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
+	// Specifies the CVM instance ID for auto-mounting and auto-initializing the data disk during creation. When set, the disk will be automatically mounted to the specified CVM instance. This parameter maps to AutoMountConfiguration.InstanceId of the CreateDisks API. Note: 1. encrypted disks do not support auto-mounting, so this parameter cannot be used together with encrypt. 2.Cannot be used simultaneously with tencentcloud_cbs_storage_set_attachment. 3.Modification is not supported. The current field only supports binding to an instance when creating a CBS instance.
+	// Specifies the CVM instance ID for auto-mounting and auto-initializing the data disk during creation. When set, the disk will be automatically mounted to the specified CVM instance. This parameter maps to `AutoMountConfiguration.InstanceId` of the `CreateDisks` API. Note: 1. encrypted disks do not support auto-mounting, so this parameter cannot be used together with `encrypt`. 2.Cannot be used simultaneously with `tencentcloud_cbs_storage_set_attachment`. 3.Modification is not supported. The current field only supports binding to an instance when creating a CBS instance.
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// It has been deprecated from version 1.33.0. Set prepaid_period instead. The purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].
 	// The purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].
@@ -91,6 +107,10 @@ type StorageObservation struct {
 	// The available zone that the CBS instance locates at.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
+	// Whether to enable performance burst when creating a cloud disk.
+	// Whether to enable performance burst when creating a cloud disk.
+	BurstPerformance *bool `json:"burstPerformance,omitempty" tf:"burst_performance,omitempty"`
+
 	// The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
 	// The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
@@ -103,9 +123,13 @@ type StorageObservation struct {
 	// The quota of backup points of cloud disk.
 	DiskBackupQuota *float64 `json:"diskBackupQuota,omitempty" tf:"disk_backup_quota,omitempty"`
 
-	// Indicates whether CBS is encrypted.
-	// Indicates whether CBS is encrypted.
+	// Pass in this parameter to create an encrypted cloud disk.
+	// Pass in this parameter to create an encrypted cloud disk.
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// Specifies the cloud disk encryption type. The values are ENCRYPT_V1 and ENCRYPT_V2, which represent the first-generation and second-generation encryption technologies respectively. The two encryption technologies are incompatible with each other. It is recommended to use the second-generation encryption technology ENCRYPT_V2 first. The first-generation encryption technology is only supported on some older models. This parameter is only valid when creating an encrypted cloud disk. https://www.tencentcloud.com/document/product/362/33139?lang=en&pg=.
+	// Specifies the cloud disk encryption type. The values are `ENCRYPT_V1` and `ENCRYPT_V2`, which represent the first-generation and second-generation encryption technologies respectively. The two encryption technologies are incompatible with each other. It is recommended to use the second-generation encryption technology `ENCRYPT_V2` first. The first-generation encryption technology is only supported on some older models. This parameter is only valid when creating an encrypted cloud disk. https://www.tencentcloud.com/document/product/362/33139?lang=en&pg=.
+	EncryptType *string `json:"encryptType,omitempty" tf:"encrypt_type,omitempty"`
 
 	// Indicate whether to delete CBS instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
 	// Indicate whether to delete CBS instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
@@ -113,6 +137,14 @@ type StorageObservation struct {
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Specifies the CVM instance ID for auto-mounting and auto-initializing the data disk during creation. When set, the disk will be automatically mounted to the specified CVM instance. This parameter maps to AutoMountConfiguration.InstanceId of the CreateDisks API. Note: 1. encrypted disks do not support auto-mounting, so this parameter cannot be used together with encrypt. 2.Cannot be used simultaneously with tencentcloud_cbs_storage_set_attachment. 3.Modification is not supported. The current field only supports binding to an instance when creating a CBS instance.
+	// Specifies the CVM instance ID for auto-mounting and auto-initializing the data disk during creation. When set, the disk will be automatically mounted to the specified CVM instance. This parameter maps to `AutoMountConfiguration.InstanceId` of the `CreateDisks` API. Note: 1. encrypted disks do not support auto-mounting, so this parameter cannot be used together with `encrypt`. 2.Cannot be used simultaneously with `tencentcloud_cbs_storage_set_attachment`. 3.Modification is not supported. The current field only supports binding to an instance when creating a CBS instance.
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// It has been deprecated from version 1.33.0. Set prepaid_period instead. The purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].
 	// The purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].
@@ -167,6 +199,11 @@ type StorageParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
+	// Whether to enable performance burst when creating a cloud disk.
+	// Whether to enable performance burst when creating a cloud disk.
+	// +kubebuilder:validation:Optional
+	BurstPerformance *bool `json:"burstPerformance,omitempty" tf:"burst_performance,omitempty"`
+
 	// The charge type of CBS instance. Valid values are PREPAID, POSTPAID_BY_HOUR, CDCPAID and DEDICATED_CLUSTER_PAID. The default is POSTPAID_BY_HOUR.
 	// The charge type of CBS instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `CDCPAID` and `DEDICATED_CLUSTER_PAID`. The default is `POSTPAID_BY_HOUR`.
 	// +kubebuilder:validation:Optional
@@ -182,15 +219,30 @@ type StorageParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskBackupQuota *float64 `json:"diskBackupQuota,omitempty" tf:"disk_backup_quota,omitempty"`
 
-	// Indicates whether CBS is encrypted.
-	// Indicates whether CBS is encrypted.
+	// Pass in this parameter to create an encrypted cloud disk.
+	// Pass in this parameter to create an encrypted cloud disk.
 	// +kubebuilder:validation:Optional
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// Specifies the cloud disk encryption type. The values are ENCRYPT_V1 and ENCRYPT_V2, which represent the first-generation and second-generation encryption technologies respectively. The two encryption technologies are incompatible with each other. It is recommended to use the second-generation encryption technology ENCRYPT_V2 first. The first-generation encryption technology is only supported on some older models. This parameter is only valid when creating an encrypted cloud disk. https://www.tencentcloud.com/document/product/362/33139?lang=en&pg=.
+	// Specifies the cloud disk encryption type. The values are `ENCRYPT_V1` and `ENCRYPT_V2`, which represent the first-generation and second-generation encryption technologies respectively. The two encryption technologies are incompatible with each other. It is recommended to use the second-generation encryption technology `ENCRYPT_V2` first. The first-generation encryption technology is only supported on some older models. This parameter is only valid when creating an encrypted cloud disk. https://www.tencentcloud.com/document/product/362/33139?lang=en&pg=.
+	// +kubebuilder:validation:Optional
+	EncryptType *string `json:"encryptType,omitempty" tf:"encrypt_type,omitempty"`
 
 	// Indicate whether to delete CBS instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
 	// Indicate whether to delete CBS instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
+	// Specifies the CVM instance ID for auto-mounting and auto-initializing the data disk during creation. When set, the disk will be automatically mounted to the specified CVM instance. This parameter maps to AutoMountConfiguration.InstanceId of the CreateDisks API. Note: 1. encrypted disks do not support auto-mounting, so this parameter cannot be used together with encrypt. 2.Cannot be used simultaneously with tencentcloud_cbs_storage_set_attachment. 3.Modification is not supported. The current field only supports binding to an instance when creating a CBS instance.
+	// Specifies the CVM instance ID for auto-mounting and auto-initializing the data disk during creation. When set, the disk will be automatically mounted to the specified CVM instance. This parameter maps to `AutoMountConfiguration.InstanceId` of the `CreateDisks` API. Note: 1. encrypted disks do not support auto-mounting, so this parameter cannot be used together with `encrypt`. 2.Cannot be used simultaneously with `tencentcloud_cbs_storage_set_attachment`. 3.Modification is not supported. The current field only supports binding to an instance when creating a CBS instance.
+	// +kubebuilder:validation:Optional
+	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+	// +kubebuilder:validation:Optional
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// It has been deprecated from version 1.33.0. Set prepaid_period instead. The purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].
 	// The purchased usage period of CBS. Valid values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36].

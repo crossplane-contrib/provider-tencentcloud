@@ -28,8 +28,16 @@ type TableGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Name of the TcaplusDB table group. Name length should be between 1 and 30.
-	// Name of the TcaplusDB table group. Name length should be between 1 and 30.
+	// Set of table group tags.
+	// Set of table group tags.
+	ResourceTags []TableGroupResourceTagsInitParameters `json:"resourceTags,omitempty" tf:"resource_tags,omitempty"`
+
+	// ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+	// ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+	TableGroupID *string `json:"tableGroupId,omitempty" tf:"table_group_id,omitempty"`
+
+	// Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
+	// Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
 	TablegroupName *string `json:"tablegroupName,omitempty" tf:"tablegroup_name,omitempty"`
 }
 
@@ -46,12 +54,20 @@ type TableGroupObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Set of table group tags.
+	// Set of table group tags.
+	ResourceTags []TableGroupResourceTagsObservation `json:"resourceTags,omitempty" tf:"resource_tags,omitempty"`
+
 	// Number of tables.
 	// Number of tables.
 	TableCount *float64 `json:"tableCount,omitempty" tf:"table_count,omitempty"`
 
-	// Name of the TcaplusDB table group. Name length should be between 1 and 30.
-	// Name of the TcaplusDB table group. Name length should be between 1 and 30.
+	// ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+	// ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+	TableGroupID *string `json:"tableGroupId,omitempty" tf:"table_group_id,omitempty"`
+
+	// Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
+	// Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
 	TablegroupName *string `json:"tablegroupName,omitempty" tf:"tablegroup_name,omitempty"`
 
 	// Total storage size (MB).
@@ -75,10 +91,55 @@ type TableGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Name of the TcaplusDB table group. Name length should be between 1 and 30.
-	// Name of the TcaplusDB table group. Name length should be between 1 and 30.
+	// Set of table group tags.
+	// Set of table group tags.
+	// +kubebuilder:validation:Optional
+	ResourceTags []TableGroupResourceTagsParameters `json:"resourceTags,omitempty" tf:"resource_tags,omitempty"`
+
+	// ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+	// ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+	// +kubebuilder:validation:Optional
+	TableGroupID *string `json:"tableGroupId,omitempty" tf:"table_group_id,omitempty"`
+
+	// Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
+	// Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
 	// +kubebuilder:validation:Optional
 	TablegroupName *string `json:"tablegroupName,omitempty" tf:"tablegroup_name,omitempty"`
+}
+
+type TableGroupResourceTagsInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TableGroupResourceTagsObservation struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TableGroupResourceTagsParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	TagKey *string `json:"tagKey" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	TagValue *string `json:"tagValue" tf:"tag_value,omitempty"`
 }
 
 // TableGroupSpec defines the desired state of TableGroup

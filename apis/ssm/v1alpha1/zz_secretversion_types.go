@@ -15,20 +15,20 @@ import (
 
 type SecretVersionInitParameters struct {
 
-	// The base64-encoded binary secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is Disabled, this field will not update anymore.
-	// The base64-encoded binary secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is `Disabled`, this field will not update anymore.
+	// Binary credential information, encoded using Base64. You must set exactly one of SecretBinary or SecretString.
+	// Binary credential information, encoded using Base64. You must set exactly one of SecretBinary or SecretString.
 	SecretBinary *string `json:"secretBinary,omitempty" tf:"secret_binary,omitempty"`
 
-	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
-	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
+	// Specifies the name of the credential to which the new version is to be added.
+	// Specifies the name of the credential to which the new version is to be added.
 	SecretName *string `json:"secretName,omitempty" tf:"secret_name,omitempty"`
 
-	// The string text of secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is Disabled, this field will not update anymore.
-	// The string text of secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is `Disabled`, this field will not update anymore.
+	// Text-based credential information in plaintext (Base64 encoding is not required). You must set exactly one of SecretBinary or SecretString.
+	// Text-based credential information in plaintext (Base64 encoding is not required). You must set exactly one of SecretBinary or SecretString.
 	SecretString *string `json:"secretString,omitempty" tf:"secret_string,omitempty"`
 
-	// Version of secret. The maximum length is 64 bytes. The version_id can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
-	// Version of secret. The maximum length is 64 bytes. The version_id can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
+	// Specifies the version ID for the newly added version. It can be up to 64 bytes in length and must consist of a combination of letters, numbers, and the characters -, _, or ., starting with a letter or a number.
+	// Specifies the version ID for the newly added version. It can be up to 64 bytes in length and must consist of a combination of letters, numbers, and the characters `-`, `_`, or `.`, starting with a letter or a number.
 	VersionID *string `json:"versionId,omitempty" tf:"version_id,omitempty"`
 }
 
@@ -37,42 +37,42 @@ type SecretVersionObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The base64-encoded binary secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is Disabled, this field will not update anymore.
-	// The base64-encoded binary secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is `Disabled`, this field will not update anymore.
+	// Binary credential information, encoded using Base64. You must set exactly one of SecretBinary or SecretString.
+	// Binary credential information, encoded using Base64. You must set exactly one of SecretBinary or SecretString.
 	SecretBinary *string `json:"secretBinary,omitempty" tf:"secret_binary,omitempty"`
 
-	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
-	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
+	// Specifies the name of the credential to which the new version is to be added.
+	// Specifies the name of the credential to which the new version is to be added.
 	SecretName *string `json:"secretName,omitempty" tf:"secret_name,omitempty"`
 
-	// The string text of secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is Disabled, this field will not update anymore.
-	// The string text of secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is `Disabled`, this field will not update anymore.
+	// Text-based credential information in plaintext (Base64 encoding is not required). You must set exactly one of SecretBinary or SecretString.
+	// Text-based credential information in plaintext (Base64 encoding is not required). You must set exactly one of SecretBinary or SecretString.
 	SecretString *string `json:"secretString,omitempty" tf:"secret_string,omitempty"`
 
-	// Version of secret. The maximum length is 64 bytes. The version_id can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
-	// Version of secret. The maximum length is 64 bytes. The version_id can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
+	// Specifies the version ID for the newly added version. It can be up to 64 bytes in length and must consist of a combination of letters, numbers, and the characters -, _, or ., starting with a letter or a number.
+	// Specifies the version ID for the newly added version. It can be up to 64 bytes in length and must consist of a combination of letters, numbers, and the characters `-`, `_`, or `.`, starting with a letter or a number.
 	VersionID *string `json:"versionId,omitempty" tf:"version_id,omitempty"`
 }
 
 type SecretVersionParameters struct {
 
-	// The base64-encoded binary secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is Disabled, this field will not update anymore.
-	// The base64-encoded binary secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is `Disabled`, this field will not update anymore.
+	// Binary credential information, encoded using Base64. You must set exactly one of SecretBinary or SecretString.
+	// Binary credential information, encoded using Base64. You must set exactly one of SecretBinary or SecretString.
 	// +kubebuilder:validation:Optional
 	SecretBinary *string `json:"secretBinary,omitempty" tf:"secret_binary,omitempty"`
 
-	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
-	// Name of secret which cannot be repeated in the same region. The maximum length is 128 bytes. The name can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
+	// Specifies the name of the credential to which the new version is to be added.
+	// Specifies the name of the credential to which the new version is to be added.
 	// +kubebuilder:validation:Optional
 	SecretName *string `json:"secretName,omitempty" tf:"secret_name,omitempty"`
 
-	// The string text of secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is Disabled, this field will not update anymore.
-	// The string text of secret. secret_binary and secret_string must be set only one, and the maximum support is 4096 bytes. When secret status is `Disabled`, this field will not update anymore.
+	// Text-based credential information in plaintext (Base64 encoding is not required). You must set exactly one of SecretBinary or SecretString.
+	// Text-based credential information in plaintext (Base64 encoding is not required). You must set exactly one of SecretBinary or SecretString.
 	// +kubebuilder:validation:Optional
 	SecretString *string `json:"secretString,omitempty" tf:"secret_string,omitempty"`
 
-	// Version of secret. The maximum length is 64 bytes. The version_id can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
-	// Version of secret. The maximum length is 64 bytes. The version_id can only contain English letters, numbers, underscore and hyphen '-'. The first character must be a letter or number.
+	// Specifies the version ID for the newly added version. It can be up to 64 bytes in length and must consist of a combination of letters, numbers, and the characters -, _, or ., starting with a letter or a number.
+	// Specifies the version ID for the newly added version. It can be up to 64 bytes in length and must consist of a combination of letters, numbers, and the characters `-`, `_`, or `.`, starting with a letter or a number.
 	// +kubebuilder:validation:Optional
 	VersionID *string `json:"versionId,omitempty" tf:"version_id,omitempty"`
 }

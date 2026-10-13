@@ -66,7 +66,7 @@ type BackupPlanObservation struct {
 	// Specify days of the retention.
 	MonthlyBackupRetentionPeriod *float64 `json:"monthlyBackupRetentionPeriod,omitempty" tf:"monthly_backup_retention_period,omitempty"`
 
-	// ID of the resource.
+	// Monthly plan id.
 	// Monthly plan id.
 	MonthlyPlanID *string `json:"monthlyPlanId,omitempty" tf:"monthly_plan_id,omitempty"`
 }
@@ -166,7 +166,7 @@ type InstanceInitParameters struct {
 	// Availability zone. NOTE: This field could not be modified, please use `db_node_set` instead of modification. The changes on this field will be suppressed when using the `db_node_set`.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// Specify DB backup plan.
+	// This field is deprecated from version 1.83.9. Use resource tencentcloud_postgresql_backup_plan to manage PG instance backup plan. Specify DB backup plan.
 	// Specify DB backup plan.
 	BackupPlan []BackupPlanInitParameters `json:"backupPlan,omitempty" tf:"backup_plan,omitempty"`
 
@@ -201,6 +201,10 @@ type InstanceInitParameters struct {
 	// Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
 	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
+	// Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+	// Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+	KMSClusterID *string `json:"kmsClusterId,omitempty" tf:"kms_cluster_id,omitempty"`
 
 	// KeyId of the custom key.
 	// KeyId of the custom key.
@@ -254,6 +258,10 @@ type InstanceInitParameters struct {
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
 	Storage *float64 `json:"storage,omitempty" tf:"storage,omitempty"`
+
+	// Storage type of the instance. Valid values: PHYSICAL_LOCAL_SSD (default, local SSD), CLOUD_PREMIUM (premium cloud disk), CLOUD_SSD (cloud SSD), CLOUD_HSSD (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+	// Storage type of the instance. Valid values: `PHYSICAL_LOCAL_SSD` (default, local SSD), `CLOUD_PREMIUM` (premium cloud disk), `CLOUD_SSD` (cloud SSD), `CLOUD_HSSD` (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
 	// ID of subnet.
 	// ID of subnet.
@@ -309,7 +317,7 @@ type InstanceObservation struct {
 	// Availability zone. NOTE: This field could not be modified, please use `db_node_set` instead of modification. The changes on this field will be suppressed when using the `db_node_set`.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// Specify DB backup plan.
+	// This field is deprecated from version 1.83.9. Use resource tencentcloud_postgresql_backup_plan to manage PG instance backup plan. Specify DB backup plan.
 	// Specify DB backup plan.
 	BackupPlan []BackupPlanObservation `json:"backupPlan,omitempty" tf:"backup_plan,omitempty"`
 
@@ -355,6 +363,10 @@ type InstanceObservation struct {
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+	// Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+	KMSClusterID *string `json:"kmsClusterId,omitempty" tf:"kms_cluster_id,omitempty"`
 
 	// KeyId of the custom key.
 	// KeyId of the custom key.
@@ -425,6 +437,10 @@ type InstanceObservation struct {
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
 	Storage *float64 `json:"storage,omitempty" tf:"storage,omitempty"`
 
+	// Storage type of the instance. Valid values: PHYSICAL_LOCAL_SSD (default, local SSD), CLOUD_PREMIUM (premium cloud disk), CLOUD_SSD (cloud SSD), CLOUD_HSSD (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+	// Storage type of the instance. Valid values: `PHYSICAL_LOCAL_SSD` (default, local SSD), `CLOUD_PREMIUM` (premium cloud disk), `CLOUD_SSD` (cloud SSD), `CLOUD_HSSD` (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+
 	// ID of subnet.
 	// ID of subnet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -468,7 +484,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// Specify DB backup plan.
+	// This field is deprecated from version 1.83.9. Use resource tencentcloud_postgresql_backup_plan to manage PG instance backup plan. Specify DB backup plan.
 	// Specify DB backup plan.
 	// +kubebuilder:validation:Optional
 	BackupPlan []BackupPlanParameters `json:"backupPlan,omitempty" tf:"backup_plan,omitempty"`
@@ -512,6 +528,11 @@ type InstanceParameters struct {
 	// Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
+	// Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+	// Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+	// +kubebuilder:validation:Optional
+	KMSClusterID *string `json:"kmsClusterId,omitempty" tf:"kms_cluster_id,omitempty"`
 
 	// KeyId of the custom key.
 	// KeyId of the custom key.
@@ -583,6 +604,11 @@ type InstanceParameters struct {
 	// Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
 	// +kubebuilder:validation:Optional
 	Storage *float64 `json:"storage,omitempty" tf:"storage,omitempty"`
+
+	// Storage type of the instance. Valid values: PHYSICAL_LOCAL_SSD (default, local SSD), CLOUD_PREMIUM (premium cloud disk), CLOUD_SSD (cloud SSD), CLOUD_HSSD (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+	// Storage type of the instance. Valid values: `PHYSICAL_LOCAL_SSD` (default, local SSD), `CLOUD_PREMIUM` (premium cloud disk), `CLOUD_SSD` (cloud SSD), `CLOUD_HSSD` (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+	// +kubebuilder:validation:Optional
+	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
 	// ID of subnet.
 	// ID of subnet.

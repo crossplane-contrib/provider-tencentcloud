@@ -73,6 +73,11 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  diskUsage:
+                    description: |-
+                      The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+                      The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+                    type: string
                   snapshotName:
                     description: |-
                       Name of the snapshot.
@@ -179,6 +184,11 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  diskUsage:
+                    description: |-
+                      The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+                      The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+                    type: string
                   snapshotName:
                     description: |-
                       Name of the snapshot.
@@ -456,8 +466,13 @@ spec:
                     type: string
                   diskType:
                     description: |-
+                      (Deprecated) It has been deprecated from version 1.82.14. Please use disk_usage instead. Types of CBS which this snapshot created from.
                       Types of CBS which this snapshot created from.
-                      Types of CBS which this snapshot created from.
+                    type: string
+                  diskUsage:
+                    description: |-
+                      The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+                      The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
                     type: string
                   id:
                     description: ID of the resource.

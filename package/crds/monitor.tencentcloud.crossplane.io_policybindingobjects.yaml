@@ -84,6 +84,11 @@ spec:
                             Represents a collection of dimensions of an object instance, json format.eg:'{"unInstanceId":"ins-ot3cq4bi"}'.
                             Represents a collection of dimensions of an object instance, json format.eg:'{"unInstanceId":"ins-ot3cq4bi"}'.
                           type: string
+                        region:
+                          description: |-
+                            Region.
+                            Region.
+                          type: string
                       type: object
                     type: array
                   policyId:
@@ -189,6 +194,11 @@ spec:
                           description: |-
                             Represents a collection of dimensions of an object instance, json format.eg:'{"unInstanceId":"ins-ot3cq4bi"}'.
                             Represents a collection of dimensions of an object instance, json format.eg:'{"unInstanceId":"ins-ot3cq4bi"}'.
+                          type: string
+                        region:
+                          description: |-
+                            Region.
+                            Region.
                           type: string
                       type: object
                     type: array
@@ -460,9 +470,14 @@ spec:
                             Represents a collection of dimensions of an object instance, json format.eg:'{"unInstanceId":"ins-ot3cq4bi"}'.
                             Represents a collection of dimensions of an object instance, json format.eg:'{"unInstanceId":"ins-ot3cq4bi"}'.
                           type: string
+                        region:
+                          description: |-
+                            Region.
+                            Region.
+                          type: string
                         uniqueId:
                           description: |-
-                            ID of the resource.
+                            Object unique ID.
                             Object unique ID.
                           type: string
                       type: object

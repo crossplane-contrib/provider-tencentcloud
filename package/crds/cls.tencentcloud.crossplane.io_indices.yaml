@@ -144,19 +144,284 @@ spec:
                                   properties:
                                     key:
                                       description: |-
-                                        When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+                                        Field name of the json child node.
                                         When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
                                       type: string
                                     value:
                                       description: |-
-                                        Field index description information.
+                                        Field index description information of the json child node.
                                         Field index description information.
                                       items:
                                         properties:
+                                          alias:
+                                            description: |-
+                                              Field alias.
+                                              Field alias.
+                                            type: string
+                                          childNode:
+                                            description: |-
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: |-
+                                                    Field name of the json child node.
+                                                    Field name of the json child node.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    Field index description information of the json child node.
+                                                    Field index description information of the json child node.
+                                                  items:
+                                                    properties:
+                                                      alias:
+                                                        description: |-
+                                                          Field alias.
+                                                          Field alias.
+                                                        type: string
+                                                      childNode:
+                                                        description: |-
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: |-
+                                                                Field name of the json child node.
+                                                                Field name of the json child node.
+                                                              type: string
+                                                            value:
+                                                              description: |-
+                                                                Field index description information of the json child node.
+                                                                Field index description information of the json child node.
+                                                              items:
+                                                                properties:
+                                                                  alias:
+                                                                    description: |-
+                                                                      Field alias.
+                                                                      Field alias.
+                                                                    type: string
+                                                                  childNode:
+                                                                    description: |-
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                    items:
+                                                                      properties:
+                                                                        key:
+                                                                          description: |-
+                                                                            Field name of the json child node.
+                                                                            Field name of the json child node.
+                                                                          type: string
+                                                                        value:
+                                                                          description: |-
+                                                                            Field index description information of the json child node.
+                                                                            Field index description information of the json child node.
+                                                                          items:
+                                                                            properties:
+                                                                              alias:
+                                                                                description: |-
+                                                                                  Field alias.
+                                                                                  Field alias.
+                                                                                type: string
+                                                                              childNode:
+                                                                                description: |-
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                items:
+                                                                                  properties:
+                                                                                    key:
+                                                                                      description: |-
+                                                                                        Field name of the json child node.
+                                                                                        Field name of the json child node.
+                                                                                      type: string
+                                                                                    value:
+                                                                                      description: |-
+                                                                                        Field index description information of the json child node.
+                                                                                        Field index description information of the json child node.
+                                                                                      items:
+                                                                                        properties:
+                                                                                          alias:
+                                                                                            description: |-
+                                                                                              Field alias.
+                                                                                              Field alias.
+                                                                                            type: string
+                                                                                          childNode:
+                                                                                            description: |-
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                            items:
+                                                                                              properties:
+                                                                                                key:
+                                                                                                  description: |-
+                                                                                                    Field name of the json child node.
+                                                                                                    Field name of the json child node.
+                                                                                                  type: string
+                                                                                                value:
+                                                                                                  description: |-
+                                                                                                    Field index description information of the json child node.
+                                                                                                    Field index description information of the json child node.
+                                                                                                  items:
+                                                                                                    properties:
+                                                                                                      alias:
+                                                                                                        description: |-
+                                                                                                          Field alias.
+                                                                                                          Field alias.
+                                                                                                        type: string
+                                                                                                      containZH:
+                                                                                                        description: |-
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                        type: boolean
+                                                                                                      openIndexForChildOnly:
+                                                                                                        description: |-
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                        type: boolean
+                                                                                                      sqlFlag:
+                                                                                                        description: |-
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                        type: boolean
+                                                                                                      tokenizer:
+                                                                                                        description: |-
+                                                                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                                        type: string
+                                                                                                      type:
+                                                                                                        description: |-
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                        type: string
+                                                                                                    type: object
+                                                                                                  type: array
+                                                                                              type: object
+                                                                                            type: array
+                                                                                          containZH:
+                                                                                            description: |-
+                                                                                              Whether Chinese characters are contained.
+                                                                                              Whether Chinese characters are contained.
+                                                                                            type: boolean
+                                                                                          openIndexForChildOnly:
+                                                                                            description: |-
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                            type: boolean
+                                                                                          sqlFlag:
+                                                                                            description: |-
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                            type: boolean
+                                                                                          tokenizer:
+                                                                                            description: |-
+                                                                                              Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                              Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                            type: string
+                                                                                          type:
+                                                                                            description: |-
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                            type: string
+                                                                                        type: object
+                                                                                      type: array
+                                                                                  type: object
+                                                                                type: array
+                                                                              containZH:
+                                                                                description: |-
+                                                                                  Whether Chinese characters are contained.
+                                                                                  Whether Chinese characters are contained.
+                                                                                type: boolean
+                                                                              openIndexForChildOnly:
+                                                                                description: |-
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                type: boolean
+                                                                              sqlFlag:
+                                                                                description: |-
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                type: boolean
+                                                                              tokenizer:
+                                                                                description: |-
+                                                                                  Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                  Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                type: string
+                                                                              type:
+                                                                                description: |-
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                type: string
+                                                                            type: object
+                                                                          type: array
+                                                                      type: object
+                                                                    type: array
+                                                                  containZH:
+                                                                    description: |-
+                                                                      Whether Chinese characters are contained.
+                                                                      Whether Chinese characters are contained.
+                                                                    type: boolean
+                                                                  openIndexForChildOnly:
+                                                                    description: |-
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                    type: boolean
+                                                                  sqlFlag:
+                                                                    description: |-
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                    type: boolean
+                                                                  tokenizer:
+                                                                    description: |-
+                                                                      Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                      Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                    type: string
+                                                                  type:
+                                                                    description: |-
+                                                                      Field type. Valid values: long, text, double.
+                                                                      Field type. Valid values: long, text, double.
+                                                                    type: string
+                                                                type: object
+                                                              type: array
+                                                          type: object
+                                                        type: array
+                                                      containZH:
+                                                        description: |-
+                                                          Whether Chinese characters are contained.
+                                                          Whether Chinese characters are contained.
+                                                        type: boolean
+                                                      openIndexForChildOnly:
+                                                        description: |-
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                        type: boolean
+                                                      sqlFlag:
+                                                        description: |-
+                                                          Whether the analysis feature is enabled for the field.
+                                                          Whether the analysis feature is enabled for the field.
+                                                        type: boolean
+                                                      tokenizer:
+                                                        description: |-
+                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                        type: string
+                                                      type:
+                                                        description: |-
+                                                          Field type. Valid values: long, text, double.
+                                                          Field type. Valid values: long, text, double.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
                                           containZH:
                                             description: |-
                                               Whether Chinese characters are contained.
                                               Whether Chinese characters are contained.
+                                            type: boolean
+                                          openIndexForChildOnly:
+                                            description: |-
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
                                             type: boolean
                                           sqlFlag:
                                             description: |-
@@ -198,19 +463,284 @@ spec:
                                   properties:
                                     key:
                                       description: |-
-                                        When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+                                        Field name of the json child node.
                                         When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
                                       type: string
                                     value:
                                       description: |-
-                                        Field index description information.
+                                        Field index description information of the json child node.
                                         Field index description information.
                                       items:
                                         properties:
+                                          alias:
+                                            description: |-
+                                              Field alias.
+                                              Field alias.
+                                            type: string
+                                          childNode:
+                                            description: |-
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: |-
+                                                    Field name of the json child node.
+                                                    Field name of the json child node.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    Field index description information of the json child node.
+                                                    Field index description information of the json child node.
+                                                  items:
+                                                    properties:
+                                                      alias:
+                                                        description: |-
+                                                          Field alias.
+                                                          Field alias.
+                                                        type: string
+                                                      childNode:
+                                                        description: |-
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: |-
+                                                                Field name of the json child node.
+                                                                Field name of the json child node.
+                                                              type: string
+                                                            value:
+                                                              description: |-
+                                                                Field index description information of the json child node.
+                                                                Field index description information of the json child node.
+                                                              items:
+                                                                properties:
+                                                                  alias:
+                                                                    description: |-
+                                                                      Field alias.
+                                                                      Field alias.
+                                                                    type: string
+                                                                  childNode:
+                                                                    description: |-
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                    items:
+                                                                      properties:
+                                                                        key:
+                                                                          description: |-
+                                                                            Field name of the json child node.
+                                                                            Field name of the json child node.
+                                                                          type: string
+                                                                        value:
+                                                                          description: |-
+                                                                            Field index description information of the json child node.
+                                                                            Field index description information of the json child node.
+                                                                          items:
+                                                                            properties:
+                                                                              alias:
+                                                                                description: |-
+                                                                                  Field alias.
+                                                                                  Field alias.
+                                                                                type: string
+                                                                              childNode:
+                                                                                description: |-
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                items:
+                                                                                  properties:
+                                                                                    key:
+                                                                                      description: |-
+                                                                                        Field name of the json child node.
+                                                                                        Field name of the json child node.
+                                                                                      type: string
+                                                                                    value:
+                                                                                      description: |-
+                                                                                        Field index description information of the json child node.
+                                                                                        Field index description information of the json child node.
+                                                                                      items:
+                                                                                        properties:
+                                                                                          alias:
+                                                                                            description: |-
+                                                                                              Field alias.
+                                                                                              Field alias.
+                                                                                            type: string
+                                                                                          childNode:
+                                                                                            description: |-
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                            items:
+                                                                                              properties:
+                                                                                                key:
+                                                                                                  description: |-
+                                                                                                    Field name of the json child node.
+                                                                                                    Field name of the json child node.
+                                                                                                  type: string
+                                                                                                value:
+                                                                                                  description: |-
+                                                                                                    Field index description information of the json child node.
+                                                                                                    Field index description information of the json child node.
+                                                                                                  items:
+                                                                                                    properties:
+                                                                                                      alias:
+                                                                                                        description: |-
+                                                                                                          Field alias.
+                                                                                                          Field alias.
+                                                                                                        type: string
+                                                                                                      containZH:
+                                                                                                        description: |-
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                        type: boolean
+                                                                                                      openIndexForChildOnly:
+                                                                                                        description: |-
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                        type: boolean
+                                                                                                      sqlFlag:
+                                                                                                        description: |-
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                        type: boolean
+                                                                                                      tokenizer:
+                                                                                                        description: |-
+                                                                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                                        type: string
+                                                                                                      type:
+                                                                                                        description: |-
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                        type: string
+                                                                                                    type: object
+                                                                                                  type: array
+                                                                                              type: object
+                                                                                            type: array
+                                                                                          containZH:
+                                                                                            description: |-
+                                                                                              Whether Chinese characters are contained.
+                                                                                              Whether Chinese characters are contained.
+                                                                                            type: boolean
+                                                                                          openIndexForChildOnly:
+                                                                                            description: |-
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                            type: boolean
+                                                                                          sqlFlag:
+                                                                                            description: |-
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                            type: boolean
+                                                                                          tokenizer:
+                                                                                            description: |-
+                                                                                              Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                              Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                            type: string
+                                                                                          type:
+                                                                                            description: |-
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                            type: string
+                                                                                        type: object
+                                                                                      type: array
+                                                                                  type: object
+                                                                                type: array
+                                                                              containZH:
+                                                                                description: |-
+                                                                                  Whether Chinese characters are contained.
+                                                                                  Whether Chinese characters are contained.
+                                                                                type: boolean
+                                                                              openIndexForChildOnly:
+                                                                                description: |-
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                type: boolean
+                                                                              sqlFlag:
+                                                                                description: |-
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                type: boolean
+                                                                              tokenizer:
+                                                                                description: |-
+                                                                                  Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                  Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                type: string
+                                                                              type:
+                                                                                description: |-
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                type: string
+                                                                            type: object
+                                                                          type: array
+                                                                      type: object
+                                                                    type: array
+                                                                  containZH:
+                                                                    description: |-
+                                                                      Whether Chinese characters are contained.
+                                                                      Whether Chinese characters are contained.
+                                                                    type: boolean
+                                                                  openIndexForChildOnly:
+                                                                    description: |-
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                    type: boolean
+                                                                  sqlFlag:
+                                                                    description: |-
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                    type: boolean
+                                                                  tokenizer:
+                                                                    description: |-
+                                                                      Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                      Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                    type: string
+                                                                  type:
+                                                                    description: |-
+                                                                      Field type. Valid values: long, text, double.
+                                                                      Field type. Valid values: long, text, double.
+                                                                    type: string
+                                                                type: object
+                                                              type: array
+                                                          type: object
+                                                        type: array
+                                                      containZH:
+                                                        description: |-
+                                                          Whether Chinese characters are contained.
+                                                          Whether Chinese characters are contained.
+                                                        type: boolean
+                                                      openIndexForChildOnly:
+                                                        description: |-
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                        type: boolean
+                                                      sqlFlag:
+                                                        description: |-
+                                                          Whether the analysis feature is enabled for the field.
+                                                          Whether the analysis feature is enabled for the field.
+                                                        type: boolean
+                                                      tokenizer:
+                                                        description: |-
+                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                        type: string
+                                                      type:
+                                                        description: |-
+                                                          Field type. Valid values: long, text, double.
+                                                          Field type. Valid values: long, text, double.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
                                           containZH:
                                             description: |-
                                               Whether Chinese characters are contained.
                                               Whether Chinese characters are contained.
+                                            type: boolean
+                                          openIndexForChildOnly:
+                                            description: |-
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
                                             type: boolean
                                           sqlFlag:
                                             description: |-
@@ -404,19 +934,284 @@ spec:
                                   properties:
                                     key:
                                       description: |-
-                                        When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+                                        Field name of the json child node.
                                         When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
                                       type: string
                                     value:
                                       description: |-
-                                        Field index description information.
+                                        Field index description information of the json child node.
                                         Field index description information.
                                       items:
                                         properties:
+                                          alias:
+                                            description: |-
+                                              Field alias.
+                                              Field alias.
+                                            type: string
+                                          childNode:
+                                            description: |-
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: |-
+                                                    Field name of the json child node.
+                                                    Field name of the json child node.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    Field index description information of the json child node.
+                                                    Field index description information of the json child node.
+                                                  items:
+                                                    properties:
+                                                      alias:
+                                                        description: |-
+                                                          Field alias.
+                                                          Field alias.
+                                                        type: string
+                                                      childNode:
+                                                        description: |-
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: |-
+                                                                Field name of the json child node.
+                                                                Field name of the json child node.
+                                                              type: string
+                                                            value:
+                                                              description: |-
+                                                                Field index description information of the json child node.
+                                                                Field index description information of the json child node.
+                                                              items:
+                                                                properties:
+                                                                  alias:
+                                                                    description: |-
+                                                                      Field alias.
+                                                                      Field alias.
+                                                                    type: string
+                                                                  childNode:
+                                                                    description: |-
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                    items:
+                                                                      properties:
+                                                                        key:
+                                                                          description: |-
+                                                                            Field name of the json child node.
+                                                                            Field name of the json child node.
+                                                                          type: string
+                                                                        value:
+                                                                          description: |-
+                                                                            Field index description information of the json child node.
+                                                                            Field index description information of the json child node.
+                                                                          items:
+                                                                            properties:
+                                                                              alias:
+                                                                                description: |-
+                                                                                  Field alias.
+                                                                                  Field alias.
+                                                                                type: string
+                                                                              childNode:
+                                                                                description: |-
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                items:
+                                                                                  properties:
+                                                                                    key:
+                                                                                      description: |-
+                                                                                        Field name of the json child node.
+                                                                                        Field name of the json child node.
+                                                                                      type: string
+                                                                                    value:
+                                                                                      description: |-
+                                                                                        Field index description information of the json child node.
+                                                                                        Field index description information of the json child node.
+                                                                                      items:
+                                                                                        properties:
+                                                                                          alias:
+                                                                                            description: |-
+                                                                                              Field alias.
+                                                                                              Field alias.
+                                                                                            type: string
+                                                                                          childNode:
+                                                                                            description: |-
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                            items:
+                                                                                              properties:
+                                                                                                key:
+                                                                                                  description: |-
+                                                                                                    Field name of the json child node.
+                                                                                                    Field name of the json child node.
+                                                                                                  type: string
+                                                                                                value:
+                                                                                                  description: |-
+                                                                                                    Field index description information of the json child node.
+                                                                                                    Field index description information of the json child node.
+                                                                                                  items:
+                                                                                                    properties:
+                                                                                                      alias:
+                                                                                                        description: |-
+                                                                                                          Field alias.
+                                                                                                          Field alias.
+                                                                                                        type: string
+                                                                                                      containZH:
+                                                                                                        description: |-
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                        type: boolean
+                                                                                                      openIndexForChildOnly:
+                                                                                                        description: |-
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                        type: boolean
+                                                                                                      sqlFlag:
+                                                                                                        description: |-
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                        type: boolean
+                                                                                                      tokenizer:
+                                                                                                        description: |-
+                                                                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                                        type: string
+                                                                                                      type:
+                                                                                                        description: |-
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                        type: string
+                                                                                                    type: object
+                                                                                                  type: array
+                                                                                              type: object
+                                                                                            type: array
+                                                                                          containZH:
+                                                                                            description: |-
+                                                                                              Whether Chinese characters are contained.
+                                                                                              Whether Chinese characters are contained.
+                                                                                            type: boolean
+                                                                                          openIndexForChildOnly:
+                                                                                            description: |-
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                            type: boolean
+                                                                                          sqlFlag:
+                                                                                            description: |-
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                            type: boolean
+                                                                                          tokenizer:
+                                                                                            description: |-
+                                                                                              Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                              Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                            type: string
+                                                                                          type:
+                                                                                            description: |-
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                            type: string
+                                                                                        type: object
+                                                                                      type: array
+                                                                                  type: object
+                                                                                type: array
+                                                                              containZH:
+                                                                                description: |-
+                                                                                  Whether Chinese characters are contained.
+                                                                                  Whether Chinese characters are contained.
+                                                                                type: boolean
+                                                                              openIndexForChildOnly:
+                                                                                description: |-
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                type: boolean
+                                                                              sqlFlag:
+                                                                                description: |-
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                type: boolean
+                                                                              tokenizer:
+                                                                                description: |-
+                                                                                  Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                  Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                type: string
+                                                                              type:
+                                                                                description: |-
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                type: string
+                                                                            type: object
+                                                                          type: array
+                                                                      type: object
+                                                                    type: array
+                                                                  containZH:
+                                                                    description: |-
+                                                                      Whether Chinese characters are contained.
+                                                                      Whether Chinese characters are contained.
+                                                                    type: boolean
+                                                                  openIndexForChildOnly:
+                                                                    description: |-
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                    type: boolean
+                                                                  sqlFlag:
+                                                                    description: |-
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                    type: boolean
+                                                                  tokenizer:
+                                                                    description: |-
+                                                                      Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                      Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                    type: string
+                                                                  type:
+                                                                    description: |-
+                                                                      Field type. Valid values: long, text, double.
+                                                                      Field type. Valid values: long, text, double.
+                                                                    type: string
+                                                                type: object
+                                                              type: array
+                                                          type: object
+                                                        type: array
+                                                      containZH:
+                                                        description: |-
+                                                          Whether Chinese characters are contained.
+                                                          Whether Chinese characters are contained.
+                                                        type: boolean
+                                                      openIndexForChildOnly:
+                                                        description: |-
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                        type: boolean
+                                                      sqlFlag:
+                                                        description: |-
+                                                          Whether the analysis feature is enabled for the field.
+                                                          Whether the analysis feature is enabled for the field.
+                                                        type: boolean
+                                                      tokenizer:
+                                                        description: |-
+                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                        type: string
+                                                      type:
+                                                        description: |-
+                                                          Field type. Valid values: long, text, double.
+                                                          Field type. Valid values: long, text, double.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
                                           containZH:
                                             description: |-
                                               Whether Chinese characters are contained.
                                               Whether Chinese characters are contained.
+                                            type: boolean
+                                          openIndexForChildOnly:
+                                            description: |-
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
                                             type: boolean
                                           sqlFlag:
                                             description: |-
@@ -458,19 +1253,284 @@ spec:
                                   properties:
                                     key:
                                       description: |-
-                                        When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+                                        Field name of the json child node.
                                         When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
                                       type: string
                                     value:
                                       description: |-
-                                        Field index description information.
+                                        Field index description information of the json child node.
                                         Field index description information.
                                       items:
                                         properties:
+                                          alias:
+                                            description: |-
+                                              Field alias.
+                                              Field alias.
+                                            type: string
+                                          childNode:
+                                            description: |-
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: |-
+                                                    Field name of the json child node.
+                                                    Field name of the json child node.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    Field index description information of the json child node.
+                                                    Field index description information of the json child node.
+                                                  items:
+                                                    properties:
+                                                      alias:
+                                                        description: |-
+                                                          Field alias.
+                                                          Field alias.
+                                                        type: string
+                                                      childNode:
+                                                        description: |-
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: |-
+                                                                Field name of the json child node.
+                                                                Field name of the json child node.
+                                                              type: string
+                                                            value:
+                                                              description: |-
+                                                                Field index description information of the json child node.
+                                                                Field index description information of the json child node.
+                                                              items:
+                                                                properties:
+                                                                  alias:
+                                                                    description: |-
+                                                                      Field alias.
+                                                                      Field alias.
+                                                                    type: string
+                                                                  childNode:
+                                                                    description: |-
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                    items:
+                                                                      properties:
+                                                                        key:
+                                                                          description: |-
+                                                                            Field name of the json child node.
+                                                                            Field name of the json child node.
+                                                                          type: string
+                                                                        value:
+                                                                          description: |-
+                                                                            Field index description information of the json child node.
+                                                                            Field index description information of the json child node.
+                                                                          items:
+                                                                            properties:
+                                                                              alias:
+                                                                                description: |-
+                                                                                  Field alias.
+                                                                                  Field alias.
+                                                                                type: string
+                                                                              childNode:
+                                                                                description: |-
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                items:
+                                                                                  properties:
+                                                                                    key:
+                                                                                      description: |-
+                                                                                        Field name of the json child node.
+                                                                                        Field name of the json child node.
+                                                                                      type: string
+                                                                                    value:
+                                                                                      description: |-
+                                                                                        Field index description information of the json child node.
+                                                                                        Field index description information of the json child node.
+                                                                                      items:
+                                                                                        properties:
+                                                                                          alias:
+                                                                                            description: |-
+                                                                                              Field alias.
+                                                                                              Field alias.
+                                                                                            type: string
+                                                                                          childNode:
+                                                                                            description: |-
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                            items:
+                                                                                              properties:
+                                                                                                key:
+                                                                                                  description: |-
+                                                                                                    Field name of the json child node.
+                                                                                                    Field name of the json child node.
+                                                                                                  type: string
+                                                                                                value:
+                                                                                                  description: |-
+                                                                                                    Field index description information of the json child node.
+                                                                                                    Field index description information of the json child node.
+                                                                                                  items:
+                                                                                                    properties:
+                                                                                                      alias:
+                                                                                                        description: |-
+                                                                                                          Field alias.
+                                                                                                          Field alias.
+                                                                                                        type: string
+                                                                                                      containZH:
+                                                                                                        description: |-
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                        type: boolean
+                                                                                                      openIndexForChildOnly:
+                                                                                                        description: |-
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                        type: boolean
+                                                                                                      sqlFlag:
+                                                                                                        description: |-
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                        type: boolean
+                                                                                                      tokenizer:
+                                                                                                        description: |-
+                                                                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                                        type: string
+                                                                                                      type:
+                                                                                                        description: |-
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                        type: string
+                                                                                                    type: object
+                                                                                                  type: array
+                                                                                              type: object
+                                                                                            type: array
+                                                                                          containZH:
+                                                                                            description: |-
+                                                                                              Whether Chinese characters are contained.
+                                                                                              Whether Chinese characters are contained.
+                                                                                            type: boolean
+                                                                                          openIndexForChildOnly:
+                                                                                            description: |-
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                            type: boolean
+                                                                                          sqlFlag:
+                                                                                            description: |-
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                            type: boolean
+                                                                                          tokenizer:
+                                                                                            description: |-
+                                                                                              Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                              Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                            type: string
+                                                                                          type:
+                                                                                            description: |-
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                            type: string
+                                                                                        type: object
+                                                                                      type: array
+                                                                                  type: object
+                                                                                type: array
+                                                                              containZH:
+                                                                                description: |-
+                                                                                  Whether Chinese characters are contained.
+                                                                                  Whether Chinese characters are contained.
+                                                                                type: boolean
+                                                                              openIndexForChildOnly:
+                                                                                description: |-
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                type: boolean
+                                                                              sqlFlag:
+                                                                                description: |-
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                type: boolean
+                                                                              tokenizer:
+                                                                                description: |-
+                                                                                  Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                  Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                type: string
+                                                                              type:
+                                                                                description: |-
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                type: string
+                                                                            type: object
+                                                                          type: array
+                                                                      type: object
+                                                                    type: array
+                                                                  containZH:
+                                                                    description: |-
+                                                                      Whether Chinese characters are contained.
+                                                                      Whether Chinese characters are contained.
+                                                                    type: boolean
+                                                                  openIndexForChildOnly:
+                                                                    description: |-
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                    type: boolean
+                                                                  sqlFlag:
+                                                                    description: |-
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                    type: boolean
+                                                                  tokenizer:
+                                                                    description: |-
+                                                                      Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                      Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                    type: string
+                                                                  type:
+                                                                    description: |-
+                                                                      Field type. Valid values: long, text, double.
+                                                                      Field type. Valid values: long, text, double.
+                                                                    type: string
+                                                                type: object
+                                                              type: array
+                                                          type: object
+                                                        type: array
+                                                      containZH:
+                                                        description: |-
+                                                          Whether Chinese characters are contained.
+                                                          Whether Chinese characters are contained.
+                                                        type: boolean
+                                                      openIndexForChildOnly:
+                                                        description: |-
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                        type: boolean
+                                                      sqlFlag:
+                                                        description: |-
+                                                          Whether the analysis feature is enabled for the field.
+                                                          Whether the analysis feature is enabled for the field.
+                                                        type: boolean
+                                                      tokenizer:
+                                                        description: |-
+                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                        type: string
+                                                      type:
+                                                        description: |-
+                                                          Field type. Valid values: long, text, double.
+                                                          Field type. Valid values: long, text, double.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
                                           containZH:
                                             description: |-
                                               Whether Chinese characters are contained.
                                               Whether Chinese characters are contained.
+                                            type: boolean
+                                          openIndexForChildOnly:
+                                            description: |-
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
                                             type: boolean
                                           sqlFlag:
                                             description: |-
@@ -826,19 +1886,284 @@ spec:
                                   properties:
                                     key:
                                       description: |-
-                                        When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+                                        Field name of the json child node.
                                         When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
                                       type: string
                                     value:
                                       description: |-
-                                        Field index description information.
+                                        Field index description information of the json child node.
                                         Field index description information.
                                       items:
                                         properties:
+                                          alias:
+                                            description: |-
+                                              Field alias.
+                                              Field alias.
+                                            type: string
+                                          childNode:
+                                            description: |-
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: |-
+                                                    Field name of the json child node.
+                                                    Field name of the json child node.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    Field index description information of the json child node.
+                                                    Field index description information of the json child node.
+                                                  items:
+                                                    properties:
+                                                      alias:
+                                                        description: |-
+                                                          Field alias.
+                                                          Field alias.
+                                                        type: string
+                                                      childNode:
+                                                        description: |-
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: |-
+                                                                Field name of the json child node.
+                                                                Field name of the json child node.
+                                                              type: string
+                                                            value:
+                                                              description: |-
+                                                                Field index description information of the json child node.
+                                                                Field index description information of the json child node.
+                                                              items:
+                                                                properties:
+                                                                  alias:
+                                                                    description: |-
+                                                                      Field alias.
+                                                                      Field alias.
+                                                                    type: string
+                                                                  childNode:
+                                                                    description: |-
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                    items:
+                                                                      properties:
+                                                                        key:
+                                                                          description: |-
+                                                                            Field name of the json child node.
+                                                                            Field name of the json child node.
+                                                                          type: string
+                                                                        value:
+                                                                          description: |-
+                                                                            Field index description information of the json child node.
+                                                                            Field index description information of the json child node.
+                                                                          items:
+                                                                            properties:
+                                                                              alias:
+                                                                                description: |-
+                                                                                  Field alias.
+                                                                                  Field alias.
+                                                                                type: string
+                                                                              childNode:
+                                                                                description: |-
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                items:
+                                                                                  properties:
+                                                                                    key:
+                                                                                      description: |-
+                                                                                        Field name of the json child node.
+                                                                                        Field name of the json child node.
+                                                                                      type: string
+                                                                                    value:
+                                                                                      description: |-
+                                                                                        Field index description information of the json child node.
+                                                                                        Field index description information of the json child node.
+                                                                                      items:
+                                                                                        properties:
+                                                                                          alias:
+                                                                                            description: |-
+                                                                                              Field alias.
+                                                                                              Field alias.
+                                                                                            type: string
+                                                                                          childNode:
+                                                                                            description: |-
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                            items:
+                                                                                              properties:
+                                                                                                key:
+                                                                                                  description: |-
+                                                                                                    Field name of the json child node.
+                                                                                                    Field name of the json child node.
+                                                                                                  type: string
+                                                                                                value:
+                                                                                                  description: |-
+                                                                                                    Field index description information of the json child node.
+                                                                                                    Field index description information of the json child node.
+                                                                                                  items:
+                                                                                                    properties:
+                                                                                                      alias:
+                                                                                                        description: |-
+                                                                                                          Field alias.
+                                                                                                          Field alias.
+                                                                                                        type: string
+                                                                                                      containZH:
+                                                                                                        description: |-
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                        type: boolean
+                                                                                                      openIndexForChildOnly:
+                                                                                                        description: |-
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                        type: boolean
+                                                                                                      sqlFlag:
+                                                                                                        description: |-
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                        type: boolean
+                                                                                                      tokenizer:
+                                                                                                        description: |-
+                                                                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                                        type: string
+                                                                                                      type:
+                                                                                                        description: |-
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                        type: string
+                                                                                                    type: object
+                                                                                                  type: array
+                                                                                              type: object
+                                                                                            type: array
+                                                                                          containZH:
+                                                                                            description: |-
+                                                                                              Whether Chinese characters are contained.
+                                                                                              Whether Chinese characters are contained.
+                                                                                            type: boolean
+                                                                                          openIndexForChildOnly:
+                                                                                            description: |-
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                            type: boolean
+                                                                                          sqlFlag:
+                                                                                            description: |-
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                            type: boolean
+                                                                                          tokenizer:
+                                                                                            description: |-
+                                                                                              Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                              Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                            type: string
+                                                                                          type:
+                                                                                            description: |-
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                            type: string
+                                                                                        type: object
+                                                                                      type: array
+                                                                                  type: object
+                                                                                type: array
+                                                                              containZH:
+                                                                                description: |-
+                                                                                  Whether Chinese characters are contained.
+                                                                                  Whether Chinese characters are contained.
+                                                                                type: boolean
+                                                                              openIndexForChildOnly:
+                                                                                description: |-
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                type: boolean
+                                                                              sqlFlag:
+                                                                                description: |-
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                type: boolean
+                                                                              tokenizer:
+                                                                                description: |-
+                                                                                  Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                  Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                type: string
+                                                                              type:
+                                                                                description: |-
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                type: string
+                                                                            type: object
+                                                                          type: array
+                                                                      type: object
+                                                                    type: array
+                                                                  containZH:
+                                                                    description: |-
+                                                                      Whether Chinese characters are contained.
+                                                                      Whether Chinese characters are contained.
+                                                                    type: boolean
+                                                                  openIndexForChildOnly:
+                                                                    description: |-
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                    type: boolean
+                                                                  sqlFlag:
+                                                                    description: |-
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                    type: boolean
+                                                                  tokenizer:
+                                                                    description: |-
+                                                                      Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                      Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                    type: string
+                                                                  type:
+                                                                    description: |-
+                                                                      Field type. Valid values: long, text, double.
+                                                                      Field type. Valid values: long, text, double.
+                                                                    type: string
+                                                                type: object
+                                                              type: array
+                                                          type: object
+                                                        type: array
+                                                      containZH:
+                                                        description: |-
+                                                          Whether Chinese characters are contained.
+                                                          Whether Chinese characters are contained.
+                                                        type: boolean
+                                                      openIndexForChildOnly:
+                                                        description: |-
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                        type: boolean
+                                                      sqlFlag:
+                                                        description: |-
+                                                          Whether the analysis feature is enabled for the field.
+                                                          Whether the analysis feature is enabled for the field.
+                                                        type: boolean
+                                                      tokenizer:
+                                                        description: |-
+                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                        type: string
+                                                      type:
+                                                        description: |-
+                                                          Field type. Valid values: long, text, double.
+                                                          Field type. Valid values: long, text, double.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
                                           containZH:
                                             description: |-
                                               Whether Chinese characters are contained.
                                               Whether Chinese characters are contained.
+                                            type: boolean
+                                          openIndexForChildOnly:
+                                            description: |-
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
                                             type: boolean
                                           sqlFlag:
                                             description: |-
@@ -880,19 +2205,284 @@ spec:
                                   properties:
                                     key:
                                       description: |-
-                                        When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+                                        Field name of the json child node.
                                         When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
                                       type: string
                                     value:
                                       description: |-
-                                        Field index description information.
+                                        Field index description information of the json child node.
                                         Field index description information.
                                       items:
                                         properties:
+                                          alias:
+                                            description: |-
+                                              Field alias.
+                                              Field alias.
+                                            type: string
+                                          childNode:
+                                            description: |-
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: |-
+                                                    Field name of the json child node.
+                                                    Field name of the json child node.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    Field index description information of the json child node.
+                                                    Field index description information of the json child node.
+                                                  items:
+                                                    properties:
+                                                      alias:
+                                                        description: |-
+                                                          Field alias.
+                                                          Field alias.
+                                                        type: string
+                                                      childNode:
+                                                        description: |-
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                          Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: |-
+                                                                Field name of the json child node.
+                                                                Field name of the json child node.
+                                                              type: string
+                                                            value:
+                                                              description: |-
+                                                                Field index description information of the json child node.
+                                                                Field index description information of the json child node.
+                                                              items:
+                                                                properties:
+                                                                  alias:
+                                                                    description: |-
+                                                                      Field alias.
+                                                                      Field alias.
+                                                                    type: string
+                                                                  childNode:
+                                                                    description: |-
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                      Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                    items:
+                                                                      properties:
+                                                                        key:
+                                                                          description: |-
+                                                                            Field name of the json child node.
+                                                                            Field name of the json child node.
+                                                                          type: string
+                                                                        value:
+                                                                          description: |-
+                                                                            Field index description information of the json child node.
+                                                                            Field index description information of the json child node.
+                                                                          items:
+                                                                            properties:
+                                                                              alias:
+                                                                                description: |-
+                                                                                  Field alias.
+                                                                                  Field alias.
+                                                                                type: string
+                                                                              childNode:
+                                                                                description: |-
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                  Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                items:
+                                                                                  properties:
+                                                                                    key:
+                                                                                      description: |-
+                                                                                        Field name of the json child node.
+                                                                                        Field name of the json child node.
+                                                                                      type: string
+                                                                                    value:
+                                                                                      description: |-
+                                                                                        Field index description information of the json child node.
+                                                                                        Field index description information of the json child node.
+                                                                                      items:
+                                                                                        properties:
+                                                                                          alias:
+                                                                                            description: |-
+                                                                                              Field alias.
+                                                                                              Field alias.
+                                                                                            type: string
+                                                                                          childNode:
+                                                                                            description: |-
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                              Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+                                                                                            items:
+                                                                                              properties:
+                                                                                                key:
+                                                                                                  description: |-
+                                                                                                    Field name of the json child node.
+                                                                                                    Field name of the json child node.
+                                                                                                  type: string
+                                                                                                value:
+                                                                                                  description: |-
+                                                                                                    Field index description information of the json child node.
+                                                                                                    Field index description information of the json child node.
+                                                                                                  items:
+                                                                                                    properties:
+                                                                                                      alias:
+                                                                                                        description: |-
+                                                                                                          Field alias.
+                                                                                                          Field alias.
+                                                                                                        type: string
+                                                                                                      containZH:
+                                                                                                        description: |-
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                          Whether Chinese characters are contained.
+                                                                                                        type: boolean
+                                                                                                      openIndexForChildOnly:
+                                                                                                        description: |-
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                                        type: boolean
+                                                                                                      sqlFlag:
+                                                                                                        description: |-
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                          Whether the analysis feature is enabled for the field.
+                                                                                                        type: boolean
+                                                                                                      tokenizer:
+                                                                                                        description: |-
+                                                                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                                        type: string
+                                                                                                      type:
+                                                                                                        description: |-
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                          Field type. Valid values: long, text, double.
+                                                                                                        type: string
+                                                                                                    type: object
+                                                                                                  type: array
+                                                                                              type: object
+                                                                                            type: array
+                                                                                          containZH:
+                                                                                            description: |-
+                                                                                              Whether Chinese characters are contained.
+                                                                                              Whether Chinese characters are contained.
+                                                                                            type: boolean
+                                                                                          openIndexForChildOnly:
+                                                                                            description: |-
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                            type: boolean
+                                                                                          sqlFlag:
+                                                                                            description: |-
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                              Whether the analysis feature is enabled for the field.
+                                                                                            type: boolean
+                                                                                          tokenizer:
+                                                                                            description: |-
+                                                                                              Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                              Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                            type: string
+                                                                                          type:
+                                                                                            description: |-
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                              Field type. Valid values: long, text, double.
+                                                                                            type: string
+                                                                                        type: object
+                                                                                      type: array
+                                                                                  type: object
+                                                                                type: array
+                                                                              containZH:
+                                                                                description: |-
+                                                                                  Whether Chinese characters are contained.
+                                                                                  Whether Chinese characters are contained.
+                                                                                type: boolean
+                                                                              openIndexForChildOnly:
+                                                                                description: |-
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                  Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                                type: boolean
+                                                                              sqlFlag:
+                                                                                description: |-
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                  Whether the analysis feature is enabled for the field.
+                                                                                type: boolean
+                                                                              tokenizer:
+                                                                                description: |-
+                                                                                  Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                                  Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                                type: string
+                                                                              type:
+                                                                                description: |-
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                  Field type. Valid values: long, text, double.
+                                                                                type: string
+                                                                            type: object
+                                                                          type: array
+                                                                      type: object
+                                                                    type: array
+                                                                  containZH:
+                                                                    description: |-
+                                                                      Whether Chinese characters are contained.
+                                                                      Whether Chinese characters are contained.
+                                                                    type: boolean
+                                                                  openIndexForChildOnly:
+                                                                    description: |-
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                      Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                                    type: boolean
+                                                                  sqlFlag:
+                                                                    description: |-
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                      Whether the analysis feature is enabled for the field.
+                                                                    type: boolean
+                                                                  tokenizer:
+                                                                    description: |-
+                                                                      Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                                      Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                                    type: string
+                                                                  type:
+                                                                    description: |-
+                                                                      Field type. Valid values: long, text, double.
+                                                                      Field type. Valid values: long, text, double.
+                                                                    type: string
+                                                                type: object
+                                                              type: array
+                                                          type: object
+                                                        type: array
+                                                      containZH:
+                                                        description: |-
+                                                          Whether Chinese characters are contained.
+                                                          Whether Chinese characters are contained.
+                                                        type: boolean
+                                                      openIndexForChildOnly:
+                                                        description: |-
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                          Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                                        type: boolean
+                                                      sqlFlag:
+                                                        description: |-
+                                                          Whether the analysis feature is enabled for the field.
+                                                          Whether the analysis feature is enabled for the field.
+                                                        type: boolean
+                                                      tokenizer:
+                                                        description: |-
+                                                          Full-Text index delimiter. Each character in the string represents a delimiter.
+                                                          Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+                                                        type: string
+                                                      type:
+                                                        description: |-
+                                                          Field type. Valid values: long, text, double.
+                                                          Field type. Valid values: long, text, double.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
                                           containZH:
                                             description: |-
                                               Whether Chinese characters are contained.
                                               Whether Chinese characters are contained.
+                                            type: boolean
+                                          openIndexForChildOnly:
+                                            description: |-
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+                                              Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
                                             type: boolean
                                           sqlFlag:
                                             description: |-

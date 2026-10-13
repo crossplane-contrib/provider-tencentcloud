@@ -17,6 +17,7 @@ spec:
     imageId: ${data.tencentcloud_images.images.images.0.image_id}
     instanceName: tf-example
     instanceType: ${data.tencentcloud_instance_types.types.instance_types.0.instance_type}
+    kms_key_id: kms-xxxxxxxx
     projectId: 0
     subnetIdSelector:
       matchLabels:

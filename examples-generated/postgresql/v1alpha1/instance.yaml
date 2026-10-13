@@ -28,6 +28,9 @@ spec:
         testing.upbound.io/example-name: subnet
     tags:
       CreateBy: Terraform
+    timeouts:
+    - create: 60m
+      update: 60m
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vpc

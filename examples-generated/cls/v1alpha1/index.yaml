@@ -20,18 +20,50 @@ spec:
       keyValue:
       - caseSensitive: true
         keyValues:
-        - key: hello
+        - key: key1
           value:
-          - containZH: true
+          - alias: alias1
+            containZH: true
             sqlFlag: true
             tokenizer: ${local.tokenizer_value}
             type: text
-        - key: world
+        - key: key2
           value:
-          - containZH: true
+          - alias: alias2
+            childNode:
+            - key: key3
+              value:
+              - alias: alias3
+                childNode:
+                - key: key4
+                  value:
+                  - alias: alias4
+                    containZH: true
+                    sqlFlag: true
+                    tokenizer: ${local.tokenizer_value}
+                    type: text
+                - key: key5
+                  value:
+                  - alias: name5
+                    containZH: true
+                    sqlFlag: true
+                    tokenizer: ${local.tokenizer_value}
+                    type: text
+                containZH: true
+                sqlFlag: true
+                tokenizer: ${local.tokenizer_value}
+                type: json
+            - key: key6
+              value:
+              - alias: name6
+                containZH: true
+                sqlFlag: true
+                tokenizer: ${local.tokenizer_value}
+                type: text
+            containZH: true
             sqlFlag: true
             tokenizer: ${local.tokenizer_value}
-            type: text
+            type: json
       tag:
       - caseSensitive: true
         keyValues:

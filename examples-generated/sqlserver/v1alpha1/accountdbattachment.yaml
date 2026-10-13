@@ -8,7 +8,7 @@ metadata:
   name: example
 spec:
   forProvider:
-    accountName: tf_example_account
+    accountName: tf_example
     dbName: tf_example_db
     instanceIdSelector:
       matchLabels:

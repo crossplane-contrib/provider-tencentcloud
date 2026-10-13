@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Instance is the Schema for the Instances API. Use this resource
-          to create ckafka instance.
+          to create CKafka instance.
         properties:
           apiVersion:
             description: |-
@@ -106,6 +106,16 @@ spec:
                           type: number
                       type: object
                     type: array
+                  customSslCertId:
+                    description: |-
+                      Custom certificate ID, only effective when specifications_type is set to profession, supports custom certificate capabilities.
+                      Custom certificate ID, only effective when `specifications_type` is set to `profession`, supports custom certificate capabilities.
+                    type: string
+                  deleteProtectionEnable:
+                    description: |-
+                      Instance delete protection switch of ckafka instance: 1 enable, 0 disable.
+                      Instance delete protection switch of ckafka instance: `1` enable, `0` disable.
+                    type: number
                   diskSize:
                     description: |-
                       Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
@@ -113,8 +123,8 @@ spec:
                     type: number
                   diskType:
                     description: |-
-                      Type of disk.
-                      Type of disk.
+                      Disk type for Professional Edition instances; this field is not required for Standard Edition instances. CLOUD_SSD: SSD Cloud Disk; CLOUD_BASIC: High-Performance Cloud Disk. If not specified, the default value is CLOUD_BASIC.
+                      Disk type for Professional Edition instances; this field is not required for Standard Edition instances. `CLOUD_SSD`: SSD Cloud Disk; `CLOUD_BASIC`: High-Performance Cloud Disk. If not specified, the default value is `CLOUD_BASIC`.
                     type: string
                   dynamicRetentionConfig:
                     description: |-
@@ -196,7 +206,7 @@ spec:
                     type: number
                   rebalanceTime:
                     description: |-
-                      Modification of the rebalancing time after upgrade.
+                      It has been deprecated from version 1.82.37. Modification of the rebalancing time after upgrade.
                       Modification of the rebalancing time after upgrade.
                     type: number
                   renewFlag:
@@ -206,8 +216,8 @@ spec:
                     type: number
                   specificationsType:
                     description: |-
-                      Specifications type of instance. Allowed values are standard, profession. Default is profession.
-                      Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+                      Specifications type of instance. Allowed values are profession, premium. Default is profession.
+                      Specifications type of instance. Allowed values are `profession`, `premium`. Default is `profession`.
                     type: string
                   subnetId:
                     description: |-
@@ -460,6 +470,16 @@ spec:
                           type: number
                       type: object
                     type: array
+                  customSslCertId:
+                    description: |-
+                      Custom certificate ID, only effective when specifications_type is set to profession, supports custom certificate capabilities.
+                      Custom certificate ID, only effective when `specifications_type` is set to `profession`, supports custom certificate capabilities.
+                    type: string
+                  deleteProtectionEnable:
+                    description: |-
+                      Instance delete protection switch of ckafka instance: 1 enable, 0 disable.
+                      Instance delete protection switch of ckafka instance: `1` enable, `0` disable.
+                    type: number
                   diskSize:
                     description: |-
                       Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
@@ -467,8 +487,8 @@ spec:
                     type: number
                   diskType:
                     description: |-
-                      Type of disk.
-                      Type of disk.
+                      Disk type for Professional Edition instances; this field is not required for Standard Edition instances. CLOUD_SSD: SSD Cloud Disk; CLOUD_BASIC: High-Performance Cloud Disk. If not specified, the default value is CLOUD_BASIC.
+                      Disk type for Professional Edition instances; this field is not required for Standard Edition instances. `CLOUD_SSD`: SSD Cloud Disk; `CLOUD_BASIC`: High-Performance Cloud Disk. If not specified, the default value is `CLOUD_BASIC`.
                     type: string
                   dynamicRetentionConfig:
                     description: |-
@@ -550,7 +570,7 @@ spec:
                     type: number
                   rebalanceTime:
                     description: |-
-                      Modification of the rebalancing time after upgrade.
+                      It has been deprecated from version 1.82.37. Modification of the rebalancing time after upgrade.
                       Modification of the rebalancing time after upgrade.
                     type: number
                   renewFlag:
@@ -560,8 +580,8 @@ spec:
                     type: number
                   specificationsType:
                     description: |-
-                      Specifications type of instance. Allowed values are standard, profession. Default is profession.
-                      Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+                      Specifications type of instance. Allowed values are profession, premium. Default is profession.
+                      Specifications type of instance. Allowed values are `profession`, `premium`. Default is `profession`.
                     type: string
                   subnetId:
                     description: |-
@@ -982,6 +1002,16 @@ spec:
                           type: number
                       type: object
                     type: array
+                  customSslCertId:
+                    description: |-
+                      Custom certificate ID, only effective when specifications_type is set to profession, supports custom certificate capabilities.
+                      Custom certificate ID, only effective when `specifications_type` is set to `profession`, supports custom certificate capabilities.
+                    type: string
+                  deleteProtectionEnable:
+                    description: |-
+                      Instance delete protection switch of ckafka instance: 1 enable, 0 disable.
+                      Instance delete protection switch of ckafka instance: `1` enable, `0` disable.
+                    type: number
                   diskSize:
                     description: |-
                       Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
@@ -989,8 +1019,8 @@ spec:
                     type: number
                   diskType:
                     description: |-
-                      Type of disk.
-                      Type of disk.
+                      Disk type for Professional Edition instances; this field is not required for Standard Edition instances. CLOUD_SSD: SSD Cloud Disk; CLOUD_BASIC: High-Performance Cloud Disk. If not specified, the default value is CLOUD_BASIC.
+                      Disk type for Professional Edition instances; this field is not required for Standard Edition instances. `CLOUD_SSD`: SSD Cloud Disk; `CLOUD_BASIC`: High-Performance Cloud Disk. If not specified, the default value is `CLOUD_BASIC`.
                     type: string
                   dynamicRetentionConfig:
                     description: |-
@@ -1075,7 +1105,7 @@ spec:
                     type: number
                   rebalanceTime:
                     description: |-
-                      Modification of the rebalancing time after upgrade.
+                      It has been deprecated from version 1.82.37. Modification of the rebalancing time after upgrade.
                       Modification of the rebalancing time after upgrade.
                     type: number
                   renewFlag:
@@ -1085,8 +1115,8 @@ spec:
                     type: number
                   specificationsType:
                     description: |-
-                      Specifications type of instance. Allowed values are standard, profession. Default is profession.
-                      Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+                      Specifications type of instance. Allowed values are profession, premium. Default is profession.
+                      Specifications type of instance. Allowed values are `profession`, `premium`. Default is `profession`.
                     type: string
                   subnetId:
                     description: |-

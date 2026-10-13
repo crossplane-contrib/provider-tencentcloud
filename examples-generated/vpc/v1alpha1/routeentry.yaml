@@ -4,19 +4,19 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routeentry
   labels:
-    testing.upbound.io/example-name: rtb_entry_instance
-  name: rtb-entry-instance
+    testing.upbound.io/example-name: example1
+  name: example1
 spec:
   forProvider:
-    cidrBlock: 10.4.8.0/24
-    nextHub: 10.16.1.7
-    nextType: instance
+    cidrBlock: 192.168.0.0/24
+    nextHub: "0"
+    nextType: eip
     routeTableIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: r
+        testing.upbound.io/example-name: example
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: main
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -26,14 +26,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routeentry
   labels:
-    testing.upbound.io/example-name: r
-  name: r
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    name: Used to test the routing entry
+    name: tf-example
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: main
+        testing.upbound.io/example-name: vpc
 
 ---
 
@@ -43,9 +43,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1alpha1/routeentry
   labels:
-    testing.upbound.io/example-name: main
-  name: main
+    testing.upbound.io/example-name: vpc
+  name: vpc
 spec:
   forProvider:
-    cidrBlock: 10.4.0.0/16
-    name: Used to test the routing entry
+    cidrBlock: 10.0.0.0/16
+    name: tf-example

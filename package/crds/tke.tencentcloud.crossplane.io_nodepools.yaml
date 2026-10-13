@@ -114,6 +114,11 @@ spec:
                             Name of cam role.
                             Name of cam role.
                           type: string
+                        cdcId:
+                          description: |-
+                            CDC ID.
+                            CDC ID.
+                          type: string
                         dataDisk:
                           description: |-
                             Configurations of data disk.
@@ -174,8 +179,8 @@ spec:
                           type: string
                         instanceChargeType:
                           description: |-
-                            Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-                            Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+                            Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+                            Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: |-
@@ -212,6 +217,11 @@ spec:
                             Max bandwidth of Internet access in Mbps. Default is 0.
                             Max bandwidth of Internet access in Mbps. Default is `0`.
                           type: number
+                        ipv4AddressType:
+                          description: |-
+                            Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+                            Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+                          type: string
                         keyIds:
                           description: |-
                             ID list of keys.
@@ -399,8 +409,8 @@ spec:
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            Custom parameter information related to the node. This is a white-list parameter. It can be modified via the ModifyClusterNodePool API.
+                            Custom parameter information related to the node. This is a white-list parameter. It can be modified via the `ModifyClusterNodePool` API.
                           items:
                             type: string
                           type: array
@@ -473,8 +483,8 @@ spec:
                     type: array
                   nodeOs:
                     description: |-
-                      Operating system of the cluster. Please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
-                      Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+                      Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+                      Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
                     type: string
                   nodeOsType:
                     description: |-
@@ -702,6 +712,11 @@ spec:
                             Name of cam role.
                             Name of cam role.
                           type: string
+                        cdcId:
+                          description: |-
+                            CDC ID.
+                            CDC ID.
+                          type: string
                         dataDisk:
                           description: |-
                             Configurations of data disk.
@@ -762,8 +777,8 @@ spec:
                           type: string
                         instanceChargeType:
                           description: |-
-                            Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-                            Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+                            Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+                            Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: |-
@@ -800,6 +815,11 @@ spec:
                             Max bandwidth of Internet access in Mbps. Default is 0.
                             Max bandwidth of Internet access in Mbps. Default is `0`.
                           type: number
+                        ipv4AddressType:
+                          description: |-
+                            Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+                            Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+                          type: string
                         keyIds:
                           description: |-
                             ID list of keys.
@@ -968,8 +988,8 @@ spec:
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            Custom parameter information related to the node. This is a white-list parameter. It can be modified via the ModifyClusterNodePool API.
+                            Custom parameter information related to the node. This is a white-list parameter. It can be modified via the `ModifyClusterNodePool` API.
                           items:
                             type: string
                           type: array
@@ -1042,8 +1062,8 @@ spec:
                     type: array
                   nodeOs:
                     description: |-
-                      Operating system of the cluster. Please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
-                      Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+                      Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+                      Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
                     type: string
                   nodeOsType:
                     description: |-
@@ -1451,6 +1471,11 @@ spec:
                             Name of cam role.
                             Name of cam role.
                           type: string
+                        cdcId:
+                          description: |-
+                            CDC ID.
+                            CDC ID.
+                          type: string
                         dataDisk:
                           description: |-
                             Configurations of data disk.
@@ -1511,8 +1536,8 @@ spec:
                           type: string
                         instanceChargeType:
                           description: |-
-                            Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-                            Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+                            Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+                            Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: |-
@@ -1549,6 +1574,11 @@ spec:
                             Max bandwidth of Internet access in Mbps. Default is 0.
                             Max bandwidth of Internet access in Mbps. Default is `0`.
                           type: number
+                        ipv4AddressType:
+                          description: |-
+                            Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+                            Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+                          type: string
                         keyIds:
                           description: |-
                             ID list of keys.
@@ -1740,8 +1770,8 @@ spec:
                           type: string
                         extraArgs:
                           description: |-
-                            Custom parameter information related to the node. This is a white-list parameter.
-                            Custom parameter information related to the node. This is a white-list parameter.
+                            Custom parameter information related to the node. This is a white-list parameter. It can be modified via the ModifyClusterNodePool API.
+                            Custom parameter information related to the node. This is a white-list parameter. It can be modified via the `ModifyClusterNodePool` API.
                           items:
                             type: string
                           type: array
@@ -1819,8 +1849,8 @@ spec:
                     type: number
                   nodeOs:
                     description: |-
-                      Operating system of the cluster. Please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
-                      Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+                      Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+                      Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
                     type: string
                   nodeOsType:
                     description: |-

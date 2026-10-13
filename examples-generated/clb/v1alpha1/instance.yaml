@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: example1
+  name: example1
 spec:
   forProvider:
     clbName: tf-example

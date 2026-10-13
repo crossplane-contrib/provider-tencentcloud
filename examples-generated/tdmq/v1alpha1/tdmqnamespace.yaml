@@ -17,6 +17,9 @@ spec:
     retentionPolicy:
     - sizeInMb: 10
       timeInMinutes: 60
+    tags:
+    - tagKey: createdBy
+      tagValue: terraform
 
 ---
 

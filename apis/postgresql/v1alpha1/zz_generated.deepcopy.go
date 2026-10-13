@@ -373,6 +373,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSClusterID != nil {
+		in, out := &in.KMSClusterID, &out.KMSClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -442,6 +447,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 	if in.Storage != nil {
 		in, out := &in.Storage, &out.Storage
 		*out = new(float64)
+		**out = **in
+	}
+	if in.StorageType != nil {
+		in, out := &in.StorageType, &out.StorageType
+		*out = new(string)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -632,6 +642,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSClusterID != nil {
+		in, out := &in.KMSClusterID, &out.KMSClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -721,6 +736,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 	if in.Storage != nil {
 		in, out := &in.Storage, &out.Storage
 		*out = new(float64)
+		**out = **in
+	}
+	if in.StorageType != nil {
+		in, out := &in.StorageType, &out.StorageType
+		*out = new(string)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -849,6 +869,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSClusterID != nil {
+		in, out := &in.KMSClusterID, &out.KMSClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -919,6 +944,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.Storage != nil {
 		in, out := &in.Storage, &out.Storage
 		*out = new(float64)
+		**out = **in
+	}
+	if in.StorageType != nil {
+		in, out := &in.StorageType, &out.StorageType
+		*out = new(string)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -1816,6 +1846,22 @@ func (in *ReadonlyInstanceInitParameters) DeepCopyInto(out *ReadonlyInstanceInit
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID
 		*out = new(string)
@@ -2010,6 +2056,22 @@ func (in *ReadonlyInstanceObservation) DeepCopyInto(out *ReadonlyInstanceObserva
 		*out = new(string)
 		**out = **in
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID
 		*out = new(string)
@@ -2158,6 +2220,22 @@ func (in *ReadonlyInstanceParameters) DeepCopyInto(out *ReadonlyInstanceParamete
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
 	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID

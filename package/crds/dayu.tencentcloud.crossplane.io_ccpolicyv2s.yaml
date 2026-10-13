@@ -856,7 +856,7 @@ spec:
                           type: string
                         policyId:
                           description: |-
-                            ID of the resource.
+                            Policy Id.
                             Policy Id.
                           type: string
                         policys:
@@ -907,7 +907,7 @@ spec:
                           type: string
                         instanceId:
                           description: |-
-                            ID of the resource.
+                            Instance id.
                             Instance id.
                           type: string
                         ip:

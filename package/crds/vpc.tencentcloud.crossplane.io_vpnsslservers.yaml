@@ -73,11 +73,34 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  accessPolicyEnabled:
+                    description: |-
+                      Enable access policy control. Default: false.
+                      Enable access policy control. Default: false.
+                    type: boolean
                   compress:
                     description: |-
                       Need compressed. Currently is not supports compress. Default value: False.
                       Need compressed. Currently is not supports compress. Default value: False.
                     type: boolean
+                  dnsServers:
+                    description: |-
+                      DNS server configuration.
+                      DNS server configuration.
+                    items:
+                      properties:
+                        primaryDns:
+                          description: |-
+                            Primary DNS server address.
+                            Primary DNS server address.
+                          type: string
+                        secondaryDns:
+                          description: |-
+                            Secondary DNS server address.
+                            Secondary DNS server address.
+                          type: string
+                      type: object
+                    type: array
                   encryptAlgorithm:
                     description: |-
                       The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
@@ -100,6 +123,11 @@ spec:
                       Remote CIDR for client.
                       Remote CIDR for client.
                     type: string
+                  samlData:
+                    description: |-
+                      SAML-DATA. Required when sso_enabled is true.
+                      SAML-DATA. Required when sso_enabled is true.
+                    type: string
                   sslVpnPort:
                     description: |-
                       The port of ssl vpn. Currently only supports UDP. Default value: 1194.
@@ -115,6 +143,19 @@ spec:
                       The name of ssl vpn server to be created.
                       The name of ssl vpn server to be created.
                     type: string
+                  ssoEnabled:
+                    description: |-
+                      Enable SSO authentication. Default: false. This feature requires whitelist approval.
+                      Enable SSO authentication. Default: false. This feature requires whitelist approval.
+                    type: boolean
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags for resource management.
+                      Tags for resource management.
+                    type: object
+                    x-kubernetes-map-type: granular
                   vpnGatewayId:
                     description: |-
                       VPN gateway ID.
@@ -208,11 +249,34 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  accessPolicyEnabled:
+                    description: |-
+                      Enable access policy control. Default: false.
+                      Enable access policy control. Default: false.
+                    type: boolean
                   compress:
                     description: |-
                       Need compressed. Currently is not supports compress. Default value: False.
                       Need compressed. Currently is not supports compress. Default value: False.
                     type: boolean
+                  dnsServers:
+                    description: |-
+                      DNS server configuration.
+                      DNS server configuration.
+                    items:
+                      properties:
+                        primaryDns:
+                          description: |-
+                            Primary DNS server address.
+                            Primary DNS server address.
+                          type: string
+                        secondaryDns:
+                          description: |-
+                            Secondary DNS server address.
+                            Secondary DNS server address.
+                          type: string
+                      type: object
+                    type: array
                   encryptAlgorithm:
                     description: |-
                       The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
@@ -235,6 +299,11 @@ spec:
                       Remote CIDR for client.
                       Remote CIDR for client.
                     type: string
+                  samlData:
+                    description: |-
+                      SAML-DATA. Required when sso_enabled is true.
+                      SAML-DATA. Required when sso_enabled is true.
+                    type: string
                   sslVpnPort:
                     description: |-
                       The port of ssl vpn. Currently only supports UDP. Default value: 1194.
@@ -250,6 +319,19 @@ spec:
                       The name of ssl vpn server to be created.
                       The name of ssl vpn server to be created.
                     type: string
+                  ssoEnabled:
+                    description: |-
+                      Enable SSO authentication. Default: false. This feature requires whitelist approval.
+                      Enable SSO authentication. Default: false. This feature requires whitelist approval.
+                    type: boolean
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags for resource management.
+                      Tags for resource management.
+                    type: object
+                    x-kubernetes-map-type: granular
                   vpnGatewayId:
                     description: |-
                       VPN gateway ID.
@@ -515,11 +597,34 @@ spec:
             properties:
               atProvider:
                 properties:
+                  accessPolicyEnabled:
+                    description: |-
+                      Enable access policy control. Default: false.
+                      Enable access policy control. Default: false.
+                    type: boolean
                   compress:
                     description: |-
                       Need compressed. Currently is not supports compress. Default value: False.
                       Need compressed. Currently is not supports compress. Default value: False.
                     type: boolean
+                  dnsServers:
+                    description: |-
+                      DNS server configuration.
+                      DNS server configuration.
+                    items:
+                      properties:
+                        primaryDns:
+                          description: |-
+                            Primary DNS server address.
+                            Primary DNS server address.
+                          type: string
+                        secondaryDns:
+                          description: |-
+                            Secondary DNS server address.
+                            Secondary DNS server address.
+                          type: string
+                      type: object
+                    type: array
                   encryptAlgorithm:
                     description: |-
                       The encrypt algorithm. Valid values: AES-128-CBC, AES-192-CBC, AES-256-CBC.Default value: AES-128-CBC.
@@ -545,6 +650,11 @@ spec:
                       Remote CIDR for client.
                       Remote CIDR for client.
                     type: string
+                  samlData:
+                    description: |-
+                      SAML-DATA. Required when sso_enabled is true.
+                      SAML-DATA. Required when sso_enabled is true.
+                    type: string
                   sslVpnPort:
                     description: |-
                       The port of ssl vpn. Currently only supports UDP. Default value: 1194.
@@ -560,6 +670,19 @@ spec:
                       The name of ssl vpn server to be created.
                       The name of ssl vpn server to be created.
                     type: string
+                  ssoEnabled:
+                    description: |-
+                      Enable SSO authentication. Default: false. This feature requires whitelist approval.
+                      Enable SSO authentication. Default: false. This feature requires whitelist approval.
+                    type: boolean
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags for resource management.
+                      Tags for resource management.
+                    type: object
+                    x-kubernetes-map-type: granular
                   vpnGatewayId:
                     description: |-
                       VPN gateway ID.

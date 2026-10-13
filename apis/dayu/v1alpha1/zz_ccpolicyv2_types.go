@@ -340,7 +340,7 @@ type CcPrecisionPolicysObservation struct {
 	// Policy mode (discard or captcha).
 	PolicyAction *string `json:"policyAction,omitempty" tf:"policy_action,omitempty"`
 
-	// ID of the resource.
+	// Policy Id.
 	// Policy Id.
 	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
 
@@ -410,7 +410,7 @@ type CcPrecisionReqLimitsObservation struct {
 	// IP address.
 	IP *string `json:"ip,omitempty" tf:"ip,omitempty"`
 
-	// ID of the resource.
+	// Instance id.
 	// Instance id.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 

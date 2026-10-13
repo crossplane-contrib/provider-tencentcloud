@@ -58,7 +58,7 @@ type AgentsObservation struct {
 	// An id identify the cluster, like `cls-xxxxxx`.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// Indicator name.
+	// the name of the cluster.
 	// the name of the cluster.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
@@ -94,6 +94,7 @@ type AgentsObservation struct {
 	// Limitation of region.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// agent state, normal, abnormal.
 	// agent state, `normal`, `abnormal`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }

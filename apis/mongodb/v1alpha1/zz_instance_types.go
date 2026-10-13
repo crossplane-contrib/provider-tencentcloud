@@ -73,28 +73,42 @@ type InstanceInitParameters struct {
 	// Auto renew flag. Valid values are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW) and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`. Note: only works for PREPAID instance. Only supports`0` and `1` for creation.
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
-	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
-	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
-	// - Version 4.2 and above are not supported.
-	// - Read-only disaster recovery instances are not supported.
-	// - Basic network cannot be selected.
-	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
-	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
-	// - Version 4.2 and above are not supported.
-	// - Read-only disaster recovery instances are not supported.
-	// - Basic network cannot be selected.
+	// If cloud database instances are deployed in multiple availability zones, specify a list of multiple availability zones.
+	// If cloud database instances are deployed in multiple availability zones, specify a list of multiple availability zones.
+	// - To deploy an instance with multiple availability zones, the parameter Zone specifies the primary availability zone information of the instance; Availability ZoneList specifies all availability zone information, including the primary availability zone. The input format is as follows: [ap-Guangzhou-2,ap-Guangzhou-3,ap-Guangzhou-4].
+	// - You can obtain availability zone information planned in different regions of the cloud database through the interface DescribeSpecInfo, so as to specify effective availability zones.
+	// - Multiple availability zone deployment nodes can only be deployed in 3 different availability zones. Deploying most nodes of a cluster in the same availability zone is not supported. For example, a 3-node cluster does not support 2 nodes deployed in the same zone.
 	AvailabilityZoneList []*string `json:"availabilityZoneList,omitempty" tf:"availability_zone_list,omitempty"`
 
 	// The available zone of the Mongodb.
 	// The available zone of the Mongodb.
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
-	// Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
+
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+	// - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+	// - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+	// - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+	// - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+	// - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+	// - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
 	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
@@ -111,6 +125,14 @@ type InstanceInitParameters struct {
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of Mongodb instance, and available values include HIO(or GIO which will be deprecated, represents high IO) and HIO10G(or TGIO which will be deprecated, represents 10-gigabit high IO).
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
@@ -197,21 +219,20 @@ type InstanceObservation struct {
 	// Auto renew flag. Valid values are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW) and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`. Note: only works for PREPAID instance. Only supports`0` and `1` for creation.
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
-	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
-	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
-	// - Version 4.2 and above are not supported.
-	// - Read-only disaster recovery instances are not supported.
-	// - Basic network cannot be selected.
-	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
-	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
-	// - Version 4.2 and above are not supported.
-	// - Read-only disaster recovery instances are not supported.
-	// - Basic network cannot be selected.
+	// If cloud database instances are deployed in multiple availability zones, specify a list of multiple availability zones.
+	// If cloud database instances are deployed in multiple availability zones, specify a list of multiple availability zones.
+	// - To deploy an instance with multiple availability zones, the parameter Zone specifies the primary availability zone information of the instance; Availability ZoneList specifies all availability zone information, including the primary availability zone. The input format is as follows: [ap-Guangzhou-2,ap-Guangzhou-3,ap-Guangzhou-4].
+	// - You can obtain availability zone information planned in different regions of the cloud database through the interface DescribeSpecInfo, so as to specify effective availability zones.
+	// - Multiple availability zone deployment nodes can only be deployed in 3 different availability zones. Deploying most nodes of a cluster in the same availability zone is not supported. For example, a 3-node cluster does not support 2 nodes deployed in the same zone.
 	AvailabilityZoneList []*string `json:"availabilityZoneList,omitempty" tf:"availability_zone_list,omitempty"`
 
 	// The available zone of the Mongodb.
 	// The available zone of the Mongodb.
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
+
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
 
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
@@ -221,8 +242,23 @@ type InstanceObservation struct {
 	// Creation time of the Mongodb instance.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
+
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+	// - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+	// - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+	// - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+	// - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+	// - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+	// - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
 	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
@@ -242,6 +278,14 @@ type InstanceObservation struct {
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of Mongodb instance, and available values include HIO(or GIO which will be deprecated, represents high IO) and HIO10G(or TGIO which will be deprecated, represents 10-gigabit high IO).
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
@@ -328,16 +372,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
 
-	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
-	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
-	// - Version 4.2 and above are not supported.
-	// - Read-only disaster recovery instances are not supported.
-	// - Basic network cannot be selected.
-	// A list of nodes deployed in multiple availability zones. For more information, please use the API DescribeSpecInfo.
-	// - Multi-availability zone deployment nodes can only be deployed in 3 different availability zones. It is not supported to deploy most nodes of the cluster in the same availability zone. For example, a 3-node cluster does not support the deployment of 2 nodes in the same zone.
-	// - Version 4.2 and above are not supported.
-	// - Read-only disaster recovery instances are not supported.
-	// - Basic network cannot be selected.
+	// If cloud database instances are deployed in multiple availability zones, specify a list of multiple availability zones.
+	// If cloud database instances are deployed in multiple availability zones, specify a list of multiple availability zones.
+	// - To deploy an instance with multiple availability zones, the parameter Zone specifies the primary availability zone information of the instance; Availability ZoneList specifies all availability zone information, including the primary availability zone. The input format is as follows: [ap-Guangzhou-2,ap-Guangzhou-3,ap-Guangzhou-4].
+	// - You can obtain availability zone information planned in different regions of the cloud database through the interface DescribeSpecInfo, so as to specify effective availability zones.
+	// - Multiple availability zone deployment nodes can only be deployed in 3 different availability zones. Deploying most nodes of a cluster in the same availability zone is not supported. For example, a 3-node cluster does not support 2 nodes deployed in the same zone.
 	// +kubebuilder:validation:Optional
 	AvailabilityZoneList []*string `json:"availabilityZoneList,omitempty" tf:"availability_zone_list,omitempty"`
 
@@ -346,13 +385,35 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// +kubebuilder:validation:Optional
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
-	// Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
+
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+	// - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+	// - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+	// - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+	// - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+	// - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+	// - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
@@ -373,6 +434,16 @@ type InstanceParameters struct {
 	// Name of the Mongodb instance.
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of Mongodb instance, and available values include HIO(or GIO which will be deprecated, represents high IO) and HIO10G(or TGIO which will be deprecated, represents 10-gigabit high IO).
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).

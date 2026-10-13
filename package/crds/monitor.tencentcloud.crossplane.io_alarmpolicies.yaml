@@ -274,6 +274,32 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  hierarchicalNotices:
+                    description: |-
+                      Alarm hierarchical notice rules configuration.
+                      Alarm hierarchical notice rules configuration.
+                    items:
+                      properties:
+                        classification:
+                          description: |-
+                            Notification level list, e.g. ["Remind", "Serious"].
+                            Notification level list, e.g. ["Remind", "Serious"].
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        noticeId:
+                          description: |-
+                            Notification template ID.
+                            Notification template ID.
+                          type: string
+                      type: object
+                    type: array
+                  isBindAll:
+                    description: |-
+                      Whether to bind all objects. If yes, no need to pass filter or call BindPolicyObject. Valid values: 0 (no, default), 1 (yes). Not all policy types support binding all objects. Immutable after creation.
+                      Whether to bind all objects. If yes, no need to pass `filter` or call `BindPolicyObject`. Valid values: `0` (no, default), `1` (yes). Not all policy types support binding all objects. Immutable after creation.
+                    type: number
                   monitorType:
                     description: |-
                       The type of monitor.
@@ -284,6 +310,24 @@ spec:
                       The type of alarm.
                       The type of alarm.
                     type: string
+                  noticeContentTmplBindInfos:
+                    description: |-
+                      Notice content template binding info.
+                      Notice content template binding info.
+                    items:
+                      properties:
+                        contentTmplId:
+                          description: |-
+                            Notification content template ID.
+                            Notification content template ID.
+                          type: string
+                        noticeId:
+                          description: |-
+                            Notification template ID.
+                            Notification template ID.
+                          type: string
+                      type: object
+                    type: array
                   noticeIds:
                     description: |-
                       List of notification rule IDs.
@@ -634,6 +678,32 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  hierarchicalNotices:
+                    description: |-
+                      Alarm hierarchical notice rules configuration.
+                      Alarm hierarchical notice rules configuration.
+                    items:
+                      properties:
+                        classification:
+                          description: |-
+                            Notification level list, e.g. ["Remind", "Serious"].
+                            Notification level list, e.g. ["Remind", "Serious"].
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        noticeId:
+                          description: |-
+                            Notification template ID.
+                            Notification template ID.
+                          type: string
+                      type: object
+                    type: array
+                  isBindAll:
+                    description: |-
+                      Whether to bind all objects. If yes, no need to pass filter or call BindPolicyObject. Valid values: 0 (no, default), 1 (yes). Not all policy types support binding all objects. Immutable after creation.
+                      Whether to bind all objects. If yes, no need to pass `filter` or call `BindPolicyObject`. Valid values: `0` (no, default), `1` (yes). Not all policy types support binding all objects. Immutable after creation.
+                    type: number
                   monitorType:
                     description: |-
                       The type of monitor.
@@ -644,6 +714,24 @@ spec:
                       The type of alarm.
                       The type of alarm.
                     type: string
+                  noticeContentTmplBindInfos:
+                    description: |-
+                      Notice content template binding info.
+                      Notice content template binding info.
+                    items:
+                      properties:
+                        contentTmplId:
+                          description: |-
+                            Notification content template ID.
+                            Notification content template ID.
+                          type: string
+                        noticeId:
+                          description: |-
+                            Notification template ID.
+                            Notification template ID.
+                          type: string
+                      type: object
+                    type: array
                   noticeIds:
                     description: |-
                       List of notification rule IDs.
@@ -1171,9 +1259,35 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  hierarchicalNotices:
+                    description: |-
+                      Alarm hierarchical notice rules configuration.
+                      Alarm hierarchical notice rules configuration.
+                    items:
+                      properties:
+                        classification:
+                          description: |-
+                            Notification level list, e.g. ["Remind", "Serious"].
+                            Notification level list, e.g. ["Remind", "Serious"].
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        noticeId:
+                          description: |-
+                            Notification template ID.
+                            Notification template ID.
+                          type: string
+                      type: object
+                    type: array
                   id:
                     description: ID of the resource.
                     type: string
+                  isBindAll:
+                    description: |-
+                      Whether to bind all objects. If yes, no need to pass filter or call BindPolicyObject. Valid values: 0 (no, default), 1 (yes). Not all policy types support binding all objects. Immutable after creation.
+                      Whether to bind all objects. If yes, no need to pass `filter` or call `BindPolicyObject`. Valid values: `0` (no, default), `1` (yes). Not all policy types support binding all objects. Immutable after creation.
+                    type: number
                   monitorType:
                     description: |-
                       The type of monitor.
@@ -1184,6 +1298,24 @@ spec:
                       The type of alarm.
                       The type of alarm.
                     type: string
+                  noticeContentTmplBindInfos:
+                    description: |-
+                      Notice content template binding info.
+                      Notice content template binding info.
+                    items:
+                      properties:
+                        contentTmplId:
+                          description: |-
+                            Notification content template ID.
+                            Notification content template ID.
+                          type: string
+                        noticeId:
+                          description: |-
+                            Notification template ID.
+                            Notification template ID.
+                          type: string
+                      type: object
+                    type: array
                   noticeIds:
                     description: |-
                       List of notification rule IDs.

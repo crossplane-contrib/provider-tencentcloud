@@ -8,13 +8,17 @@ metadata:
   name: example
 spec:
   forProvider:
-    clusterName: tf_example_tcaplus_cluster
-    idlType: PROTO
+    clusterName: tf_example
+    clusterType: 1
+    idlType: MIX
     oldPasswordExpireLast: 3600
     passwordSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
+    resourceTags:
+    - tagKey: createBy
+      tagValue: Terraform
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

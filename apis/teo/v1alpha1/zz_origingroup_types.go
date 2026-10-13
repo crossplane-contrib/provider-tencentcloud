@@ -284,6 +284,9 @@ type ReferencesInitParameters struct {
 
 type ReferencesObservation struct {
 
+	// The alias zone name of the referenced instance.
+	AliasZoneName *string `json:"aliasZoneName,omitempty" tf:"alias_zone_name,omitempty"`
+
 	// The instance ID of the reference type.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
@@ -292,6 +295,12 @@ type ReferencesObservation struct {
 
 	// Reference service type, the values are:
 	InstanceType *string `json:"instanceType,omitempty" tf:"instance_type,omitempty"`
+
+	// Site ID.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// The zone name of the referenced instance.
+	ZoneName *string `json:"zoneName,omitempty" tf:"zone_name,omitempty"`
 }
 
 type ReferencesParameters struct {
@@ -324,7 +333,7 @@ type OriginGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// OriginGroup is the Schema for the OriginGroups API. Provides a resource to create a teo origin_group
+// OriginGroup is the Schema for the OriginGroups API. Provides a resource to create a TEO origin_group
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

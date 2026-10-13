@@ -21,7 +21,7 @@ func (mg *BucketDomainCertificateAttachment) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this BucketDomainCertificateAttachment
 func (tr *BucketDomainCertificateAttachment) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"domain_certificate[*].certificate[*].custom_cert[*].cert": "spec.forProvider.domainCertificate[*].certificate[*].customCert[*].certSecretRef", "domain_certificate[*].certificate[*].custom_cert[*].private_key": "spec.forProvider.domainCertificate[*].certificate[*].customCert[*].privateKeySecretRef"}
 }
 
 // GetObservation of this BucketDomainCertificateAttachment

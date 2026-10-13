@@ -21,7 +21,7 @@ func (mg *ClusterEndpoint) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this ClusterEndpoint
 func (tr *ClusterEndpoint) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"password": "status.atProvider.password"}
+	return map[string]string{"kube_config": "status.atProvider.kubeConfig", "kube_config_intranet": "status.atProvider.kubeConfigIntranet", "password": "status.atProvider.password"}
 }
 
 // GetObservation of this ClusterEndpoint

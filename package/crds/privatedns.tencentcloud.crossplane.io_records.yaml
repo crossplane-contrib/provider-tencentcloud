@@ -88,6 +88,11 @@ spec:
                       Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
                       Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
                     type: string
+                  status:
+                    description: |-
+                      Record status. Valid values: enabled, disabled.
+                      Record status. Valid values: `enabled`, `disabled`.
+                    type: string
                   subDomain:
                     description: |-
                       Subdomain, such as www, m, and @.
@@ -136,6 +141,11 @@ spec:
                     description: |-
                       Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
                       Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
+                    type: string
+                  status:
+                    description: |-
+                      Record status. Valid values: enabled, disabled.
+                      Record status. Valid values: `enabled`, `disabled`.
                     type: string
                   subDomain:
                     description: |-
@@ -364,6 +374,11 @@ spec:
                     description: |-
                       Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
                       Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
+                    type: string
+                  status:
+                    description: |-
+                      Record status. Valid values: enabled, disabled.
+                      Record status. Valid values: `enabled`, `disabled`.
                     type: string
                   subDomain:
                     description: |-

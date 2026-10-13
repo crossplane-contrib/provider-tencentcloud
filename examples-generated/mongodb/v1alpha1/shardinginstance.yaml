@@ -4,13 +4,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mongodb/v1alpha1/shardinginstance
   labels:
-    testing.upbound.io/example-name: mongodb
-  name: mongodb
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availableZone: ap-guangzhou-3
-    engineVersion: MONGO_36_WT
-    instanceName: mongodb
+    availableZone: ap-guangzhou-6
+    engineVersion: MONGO_40_WT
+    instanceName: tf-example
     machineType: HIO10G
     memory: 4
     mongosCpu: 1

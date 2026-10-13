@@ -23,9 +23,21 @@ type StandbyInstanceInitParameters struct {
 	// The available zone of the Mongodb standby instance. NOTE: must not be same with father instance's.
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
 
 	// Indicates the main instance ID of standby instances.
 	// Indicates the main instance ID of standby instances.
@@ -54,6 +66,14 @@ type StandbyInstanceInitParameters struct {
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
@@ -100,6 +120,10 @@ type StandbyInstanceObservation struct {
 	// The available zone of the Mongodb standby instance. NOTE: must not be same with father instance's.
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
@@ -107,6 +131,14 @@ type StandbyInstanceObservation struct {
 	// Creation time of the Mongodb instance.
 	// Creation time of the Mongodb instance.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
+
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
 
 	// Version of the standby Mongodb instance and must be same as the version of main instance.
 	// Version of the standby Mongodb instance and must be same as the version of main instance.
@@ -133,6 +165,14 @@ type StandbyInstanceObservation struct {
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of standby Mongodb instance and must be same as the type of main instance.
 	// Type of standby Mongodb instance and must be same as the type of main instance.
@@ -197,10 +237,25 @@ type StandbyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// +kubebuilder:validation:Optional
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
+
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
 
 	// Indicates the main instance ID of standby instances.
 	// Indicates the main instance ID of standby instances.
@@ -233,6 +288,16 @@ type StandbyInstanceParameters struct {
 	// Name of the Mongodb instance.
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// Memory size. The minimum value is 2, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.

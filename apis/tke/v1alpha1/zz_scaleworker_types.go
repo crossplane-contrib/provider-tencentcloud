@@ -593,6 +593,10 @@ type ScaleWorkerWorkerConfigInitParameters struct {
 	// CAM role name authorized to access.
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Number of cvm.
 	// Number of cvm.
 	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
@@ -629,8 +633,8 @@ type ScaleWorkerWorkerConfigInitParameters struct {
 	// The valid image id, format of img-xxx.
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
-	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
 	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
@@ -704,6 +708,10 @@ type ScaleWorkerWorkerConfigObservation struct {
 	// CAM role name authorized to access.
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Number of cvm.
 	// Number of cvm.
 	Count *float64 `json:"count,omitempty" tf:"count,omitempty"`
@@ -740,8 +748,8 @@ type ScaleWorkerWorkerConfigObservation struct {
 	// The valid image id, format of img-xxx.
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
-	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
 	// The tenancy (time unit is month) of the prepaid instance. NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
@@ -818,6 +826,11 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	// +kubebuilder:validation:Optional
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Number of cvm.
 	// Number of cvm.
 	// +kubebuilder:validation:Optional
@@ -863,8 +876,8 @@ type ScaleWorkerWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	ImgID *string `json:"imgId,omitempty" tf:"img_id,omitempty"`
 
-	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+	// The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
 	// +kubebuilder:validation:Optional
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 

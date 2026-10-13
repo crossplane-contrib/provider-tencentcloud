@@ -146,6 +146,14 @@ type InstanceNameSettingsParameters struct {
 
 type ScalingConfigInitParameters struct {
 
+	// Anti-DDoS service package ID. This is required when you want to request an AntiDDoS IP.
+	// Anti-DDoS service package ID. This is required when you want to request an AntiDDoS IP.
+	AntiDdosPackageID *string `json:"antiDdosPackageId,omitempty" tf:"anti_ddos_package_id,omitempty"`
+
+	// Bandwidth package ID.
+	// Bandwidth package ID.
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
+
 	// CAM role name authorized to access.
 	// CAM role name authorized to access.
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
@@ -185,6 +193,10 @@ type ScalingConfigInitParameters struct {
 	// Related settings of the cloud server hostname (HostName).
 	// Related settings of the cloud server hostname (HostName).
 	HostNameSettings []HostNameSettingsInitParameters `json:"hostNameSettings,omitempty" tf:"host_name_settings,omitempty"`
+
+	// AddressType. Default value: WanIP. For beta users of dedicated IP. the value can be: HighQualityEIP: Dedicated IP. Note that dedicated IPs are only available in partial regions. For beta users of Anti-DDoS IP, the value can be: AntiDDoSEIP: Anti-DDoS EIP. Note that Anti-DDoS IPs are only available in partial regions.
+	// AddressType. Default value: WanIP. For beta users of dedicated IP. the value can be: HighQualityEIP: Dedicated IP. Note that dedicated IPs are only available in partial regions. For beta users of Anti-DDoS IP, the value can be: AntiDDoSEIP: Anti-DDoS EIP. Note that Anti-DDoS IPs are only available in partial regions.
+	IPv4AddressType *string `json:"ipv4AddressType,omitempty" tf:"ipv4_address_type,omitempty"`
 
 	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
 	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
@@ -227,6 +239,10 @@ type ScalingConfigInitParameters struct {
 	// Max bandwidth of Internet access in Mbps. Default is `0`.
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
+	// Whether to delete the bound EIP when the instance is destroyed. Range of values: True: retain the EIP; False: not retain the EIP. Note that when the IPv4AddressType field specifies the EIP type, the default behavior is not to retain the EIP. WanIP is unaffected by this field and will always be deleted with the instance. Changing this field configuration will take effect immediately for resources already bound to a scaling group.
+	// Whether to delete the bound EIP when the instance is destroyed. Range of values: True: retain the EIP; False: not retain the EIP. Note that when the IPv4AddressType field specifies the EIP type, the default behavior is not to retain the EIP. WanIP is unaffected by this field and will always be deleted with the instance. Changing this field configuration will take effect immediately for resources already bound to a scaling group.
+	IsKeepEIP *bool `json:"isKeepEip,omitempty" tf:"is_keep_eip,omitempty"`
+
 	// Specify whether to keep original settings of a CVM image. And it can't be used with password or key_ids together.
 	// Specify whether to keep original settings of a CVM image. And it can't be used with password or key_ids together.
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
@@ -263,12 +279,25 @@ type ScalingConfigInitParameters struct {
 	// Type of a CVM disk. Valid values: `CLOUD_PREMIUM` and `CLOUD_SSD`. Default is `CLOUD_PREMIUM`. valid when disk_type_policy is ORIGINAL.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
+	// Tags of launch configuration.
+	// Tags of launch configuration.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// ase64-encoded User Data text, the length limit is 16KB.
 	// ase64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
 type ScalingConfigObservation struct {
+
+	// Anti-DDoS service package ID. This is required when you want to request an AntiDDoS IP.
+	// Anti-DDoS service package ID. This is required when you want to request an AntiDDoS IP.
+	AntiDdosPackageID *string `json:"antiDdosPackageId,omitempty" tf:"anti_ddos_package_id,omitempty"`
+
+	// Bandwidth package ID.
+	// Bandwidth package ID.
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
 
 	// CAM role name authorized to access.
 	// CAM role name authorized to access.
@@ -317,6 +346,10 @@ type ScalingConfigObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// AddressType. Default value: WanIP. For beta users of dedicated IP. the value can be: HighQualityEIP: Dedicated IP. Note that dedicated IPs are only available in partial regions. For beta users of Anti-DDoS IP, the value can be: AntiDDoSEIP: Anti-DDoS EIP. Note that Anti-DDoS IPs are only available in partial regions.
+	// AddressType. Default value: WanIP. For beta users of dedicated IP. the value can be: HighQualityEIP: Dedicated IP. Note that dedicated IPs are only available in partial regions. For beta users of Anti-DDoS IP, the value can be: AntiDDoSEIP: Anti-DDoS EIP. Note that Anti-DDoS IPs are only available in partial regions.
+	IPv4AddressType *string `json:"ipv4AddressType,omitempty" tf:"ipv4_address_type,omitempty"`
+
 	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
 	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
 	ImageFamily *string `json:"imageFamily,omitempty" tf:"image_family,omitempty"`
@@ -358,6 +391,10 @@ type ScalingConfigObservation struct {
 	// Max bandwidth of Internet access in Mbps. Default is `0`.
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
+	// Whether to delete the bound EIP when the instance is destroyed. Range of values: True: retain the EIP; False: not retain the EIP. Note that when the IPv4AddressType field specifies the EIP type, the default behavior is not to retain the EIP. WanIP is unaffected by this field and will always be deleted with the instance. Changing this field configuration will take effect immediately for resources already bound to a scaling group.
+	// Whether to delete the bound EIP when the instance is destroyed. Range of values: True: retain the EIP; False: not retain the EIP. Note that when the IPv4AddressType field specifies the EIP type, the default behavior is not to retain the EIP. WanIP is unaffected by this field and will always be deleted with the instance. Changing this field configuration will take effect immediately for resources already bound to a scaling group.
+	IsKeepEIP *bool `json:"isKeepEip,omitempty" tf:"is_keep_eip,omitempty"`
+
 	// Specify whether to keep original settings of a CVM image. And it can't be used with password or key_ids together.
 	// Specify whether to keep original settings of a CVM image. And it can't be used with password or key_ids together.
 	KeepImageLogin *bool `json:"keepImageLogin,omitempty" tf:"keep_image_login,omitempty"`
@@ -398,12 +435,27 @@ type ScalingConfigObservation struct {
 	// Type of a CVM disk. Valid values: `CLOUD_PREMIUM` and `CLOUD_SSD`. Default is `CLOUD_PREMIUM`. valid when disk_type_policy is ORIGINAL.
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
 
+	// Tags of launch configuration.
+	// Tags of launch configuration.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// ase64-encoded User Data text, the length limit is 16KB.
 	// ase64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
 type ScalingConfigParameters struct {
+
+	// Anti-DDoS service package ID. This is required when you want to request an AntiDDoS IP.
+	// Anti-DDoS service package ID. This is required when you want to request an AntiDDoS IP.
+	// +kubebuilder:validation:Optional
+	AntiDdosPackageID *string `json:"antiDdosPackageId,omitempty" tf:"anti_ddos_package_id,omitempty"`
+
+	// Bandwidth package ID.
+	// Bandwidth package ID.
+	// +kubebuilder:validation:Optional
+	BandwidthPackageID *string `json:"bandwidthPackageId,omitempty" tf:"bandwidth_package_id,omitempty"`
 
 	// CAM role name authorized to access.
 	// CAM role name authorized to access.
@@ -454,6 +506,11 @@ type ScalingConfigParameters struct {
 	// Related settings of the cloud server hostname (HostName).
 	// +kubebuilder:validation:Optional
 	HostNameSettings []HostNameSettingsParameters `json:"hostNameSettings,omitempty" tf:"host_name_settings,omitempty"`
+
+	// AddressType. Default value: WanIP. For beta users of dedicated IP. the value can be: HighQualityEIP: Dedicated IP. Note that dedicated IPs are only available in partial regions. For beta users of Anti-DDoS IP, the value can be: AntiDDoSEIP: Anti-DDoS EIP. Note that Anti-DDoS IPs are only available in partial regions.
+	// AddressType. Default value: WanIP. For beta users of dedicated IP. the value can be: HighQualityEIP: Dedicated IP. Note that dedicated IPs are only available in partial regions. For beta users of Anti-DDoS IP, the value can be: AntiDDoSEIP: Anti-DDoS EIP. Note that Anti-DDoS IPs are only available in partial regions.
+	// +kubebuilder:validation:Optional
+	IPv4AddressType *string `json:"ipv4AddressType,omitempty" tf:"ipv4_address_type,omitempty"`
 
 	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
 	// Image Family Name. Either Image ID or Image Family Name must be provided, but not both.
@@ -506,6 +563,11 @@ type ScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	InternetMaxBandwidthOut *float64 `json:"internetMaxBandwidthOut,omitempty" tf:"internet_max_bandwidth_out,omitempty"`
 
+	// Whether to delete the bound EIP when the instance is destroyed. Range of values: True: retain the EIP; False: not retain the EIP. Note that when the IPv4AddressType field specifies the EIP type, the default behavior is not to retain the EIP. WanIP is unaffected by this field and will always be deleted with the instance. Changing this field configuration will take effect immediately for resources already bound to a scaling group.
+	// Whether to delete the bound EIP when the instance is destroyed. Range of values: True: retain the EIP; False: not retain the EIP. Note that when the IPv4AddressType field specifies the EIP type, the default behavior is not to retain the EIP. WanIP is unaffected by this field and will always be deleted with the instance. Changing this field configuration will take effect immediately for resources already bound to a scaling group.
+	// +kubebuilder:validation:Optional
+	IsKeepEIP *bool `json:"isKeepEip,omitempty" tf:"is_keep_eip,omitempty"`
+
 	// Specify whether to keep original settings of a CVM image. And it can't be used with password or key_ids together.
 	// Specify whether to keep original settings of a CVM image. And it can't be used with password or key_ids together.
 	// +kubebuilder:validation:Optional
@@ -555,6 +617,12 @@ type ScalingConfigParameters struct {
 	// Type of a CVM disk. Valid values: `CLOUD_PREMIUM` and `CLOUD_SSD`. Default is `CLOUD_PREMIUM`. valid when disk_type_policy is ORIGINAL.
 	// +kubebuilder:validation:Optional
 	SystemDiskType *string `json:"systemDiskType,omitempty" tf:"system_disk_type,omitempty"`
+
+	// Tags of launch configuration.
+	// Tags of launch configuration.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// ase64-encoded User Data text, the length limit is 16KB.
 	// ase64-encoded User Data text, the length limit is 16KB.

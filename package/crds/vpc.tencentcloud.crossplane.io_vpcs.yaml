@@ -94,10 +94,20 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  enableRouteVpcPublish:
+                    description: |-
+                      Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                      Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                    type: boolean
+                  enableRouteVpcPublishIpv6:
+                    description: |-
+                      Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                      Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                    type: boolean
                   isMulticast:
                     description: |-
-                      Indicates whether VPC multicast is enabled. The default value is 'true'.
-                      Indicates whether VPC multicast is enabled. The default value is 'true'.
+                      Indicates whether VPC multicast is enabled. The default value is false. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
+                      Indicates whether VPC multicast is enabled. The default value is `false`. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
                     type: boolean
                   name:
                     description: |-
@@ -147,10 +157,20 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  enableRouteVpcPublish:
+                    description: |-
+                      Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                      Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                    type: boolean
+                  enableRouteVpcPublishIpv6:
+                    description: |-
+                      Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                      Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                    type: boolean
                   isMulticast:
                     description: |-
-                      Indicates whether VPC multicast is enabled. The default value is 'true'.
-                      Indicates whether VPC multicast is enabled. The default value is 'true'.
+                      Indicates whether VPC multicast is enabled. The default value is false. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
+                      Indicates whether VPC multicast is enabled. The default value is `false`. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
                     type: boolean
                   name:
                     description: |-
@@ -385,6 +405,16 @@ spec:
                     items:
                       type: string
                     type: array
+                  enableRouteVpcPublish:
+                    description: |-
+                      Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                      Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                    type: boolean
+                  enableRouteVpcPublishIpv6:
+                    description: |-
+                      Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                      Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+                    type: boolean
                   id:
                     description: ID of the resource.
                     type: string
@@ -395,8 +425,8 @@ spec:
                     type: boolean
                   isMulticast:
                     description: |-
-                      Indicates whether VPC multicast is enabled. The default value is 'true'.
-                      Indicates whether VPC multicast is enabled. The default value is 'true'.
+                      Indicates whether VPC multicast is enabled. The default value is false. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
+                      Indicates whether VPC multicast is enabled. The default value is `false`. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
                     type: boolean
                   name:
                     description: |-

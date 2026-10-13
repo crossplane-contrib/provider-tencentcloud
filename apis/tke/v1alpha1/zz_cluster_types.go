@@ -19,12 +19,12 @@ type AuthOptionsInitParameters struct {
 	// If set to `true`, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
 	AutoCreateDiscoveryAnonymousAuth *bool `json:"autoCreateDiscoveryAnonymousAuth,omitempty" tf:"auto_create_discovery_anonymous_auth,omitempty"`
 
-	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+	// Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
 	JwksURI *string `json:"jwksUri,omitempty" tf:"jwks_uri,omitempty"`
 
 	// If set to true, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri, and they will be ignored.
@@ -38,12 +38,12 @@ type AuthOptionsObservation struct {
 	// If set to `true`, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
 	AutoCreateDiscoveryAnonymousAuth *bool `json:"autoCreateDiscoveryAnonymousAuth,omitempty" tf:"auto_create_discovery_anonymous_auth,omitempty"`
 
-	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+	// Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
 	JwksURI *string `json:"jwksUri,omitempty" tf:"jwks_uri,omitempty"`
 
 	// If set to true, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri, and they will be ignored.
@@ -58,13 +58,13 @@ type AuthOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoCreateDiscoveryAnonymousAuth *bool `json:"autoCreateDiscoveryAnonymousAuth,omitempty" tf:"auto_create_discovery_anonymous_auth,omitempty"`
 
-	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+	// Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+	// Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
 	// +kubebuilder:validation:Optional
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+	// Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+	// Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
 	// +kubebuilder:validation:Optional
 	JwksURI *string `json:"jwksUri,omitempty" tf:"jwks_uri,omitempty"`
 
@@ -281,21 +281,29 @@ type ClusterInitParameters struct {
 	// Image type of the cluster os, the available values include: 'GENERAL'. Default is 'GENERAL'.
 	ClusterOsType *string `json:"clusterOsType,omitempty" tf:"cluster_os_type,omitempty"`
 
-	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
-	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+	// Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
+	// Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
 	ClusterSubnetID *string `json:"clusterSubnetId,omitempty" tf:"cluster_subnet_id,omitempty"`
 
 	// Version of the cluster. Use tencentcloud_kubernetes_available_cluster_versions to get the upgradable cluster version.
 	// Version of the cluster. Use `tencentcloud_kubernetes_available_cluster_versions` to get the upgradable cluster version.
 	ClusterVersion *string `json:"clusterVersion,omitempty" tf:"cluster_version,omitempty"`
 
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is docker for versions below v1.24 and containerd for versions above v1.24.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is `docker` for versions below v1.24 and `containerd` for versions above v1.24.
 	ContainerRuntime *string `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
+	// Whether to enable DataPlaneV2 (replace kube-proxy with cilium). data_plane_v2 and cluster_ipvs should not be set at the same time.
+	// Whether to enable DataPlaneV2 (replace kube-proxy with cilium). `data_plane_v2` and `cluster_ipvs` should not be set at the same time.
+	DataPlaneV2 *bool `json:"dataPlaneV2,omitempty" tf:"data_plane_v2,omitempty"`
 
 	// Indicates whether cluster deletion protection is enabled. Default is false.
 	// Indicates whether cluster deletion protection is enabled. Default is false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+	// To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+	DisableAddons []*string `json:"disableAddons,omitempty" tf:"disable_addons,omitempty"`
 
 	// Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
@@ -313,12 +321,12 @@ type ClusterInitParameters struct {
 	// Specify cluster Event Persistence config. NOTE: Please make sure your TKE CamRole have permission to access CLS service.
 	EventPersistence []EventPersistenceInitParameters `json:"eventPersistence,omitempty" tf:"event_persistence,omitempty"`
 
-	// create tke cluster by existed instances.
-	// create tke cluster by existed instances.
+	// Create tke cluster by existed instances.
+	// Create tke cluster by existed instances.
 	ExistInstance []ExistInstanceInitParameters `json:"existInstance,omitempty" tf:"exist_instance,omitempty"`
 
-	// Information of the add-on to be installed.
-	// Information of the add-on to be installed.
+	// Information of the add-on to be installed. It is recommended to use resource tencentcloud_kubernetes_addon management cluster addon.
+	// Information of the add-on to be installed. It is recommended to use resource `tencentcloud_kubernetes_addon` management cluster addon.
 	ExtensionAddon []ExtensionAddonInitParameters `json:"extensionAddon,omitempty" tf:"extension_addon,omitempty"`
 
 	// Custom parameter information related to the node.
@@ -340,6 +348,10 @@ type ClusterInitParameters struct {
 	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
 	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
 	InstanceDeleteMode *string `json:"instanceDeleteMode,omitempty" tf:"instance_delete_mode,omitempty"`
+
+	// In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+	// In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+	IsDualStack *bool `json:"isDualStack,omitempty" tf:"is_dual_stack,omitempty"`
 
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
@@ -411,8 +423,8 @@ type ClusterInitParameters struct {
 	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
-	// Indicates whether upgrade all instances when cluster_version change. Default is false.
-	// Indicates whether upgrade all instances when cluster_version change. Default is false.
+	// Indicates whether upgrade all cluster instances. Default is false.
+	// Indicates whether upgrade all cluster instances. Default is false.
 	UpgradeInstancesFollowCluster *bool `json:"upgradeInstancesFollowCluster,omitempty" tf:"upgrade_instances_follow_cluster,omitempty"`
 
 	// Distinguish between shared network card multi-IP mode and independent network card mode. Fill in tke-route-eni for shared network card multi-IP mode and tke-direct-eni for independent network card mode. The default is shared network card mode. When it is necessary to turn off the vpc-cni container network capability, both eni_subnet_ids and vpc_cni_type must be set to empty.
@@ -903,21 +915,29 @@ type ClusterObservation struct {
 	// Image type of the cluster os, the available values include: 'GENERAL'. Default is 'GENERAL'.
 	ClusterOsType *string `json:"clusterOsType,omitempty" tf:"cluster_os_type,omitempty"`
 
-	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
-	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+	// Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
+	// Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
 	ClusterSubnetID *string `json:"clusterSubnetId,omitempty" tf:"cluster_subnet_id,omitempty"`
 
 	// Version of the cluster. Use tencentcloud_kubernetes_available_cluster_versions to get the upgradable cluster version.
 	// Version of the cluster. Use `tencentcloud_kubernetes_available_cluster_versions` to get the upgradable cluster version.
 	ClusterVersion *string `json:"clusterVersion,omitempty" tf:"cluster_version,omitempty"`
 
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is docker for versions below v1.24 and containerd for versions above v1.24.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is `docker` for versions below v1.24 and `containerd` for versions above v1.24.
 	ContainerRuntime *string `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
+	// Whether to enable DataPlaneV2 (replace kube-proxy with cilium). data_plane_v2 and cluster_ipvs should not be set at the same time.
+	// Whether to enable DataPlaneV2 (replace kube-proxy with cilium). `data_plane_v2` and `cluster_ipvs` should not be set at the same time.
+	DataPlaneV2 *bool `json:"dataPlaneV2,omitempty" tf:"data_plane_v2,omitempty"`
 
 	// Indicates whether cluster deletion protection is enabled. Default is false.
 	// Indicates whether cluster deletion protection is enabled. Default is false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+	// To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+	DisableAddons []*string `json:"disableAddons,omitempty" tf:"disable_addons,omitempty"`
 
 	// Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
@@ -939,12 +959,12 @@ type ClusterObservation struct {
 	// Specify cluster Event Persistence config. NOTE: Please make sure your TKE CamRole have permission to access CLS service.
 	EventPersistence []EventPersistenceObservation `json:"eventPersistence,omitempty" tf:"event_persistence,omitempty"`
 
-	// create tke cluster by existed instances.
-	// create tke cluster by existed instances.
+	// Create tke cluster by existed instances.
+	// Create tke cluster by existed instances.
 	ExistInstance []ExistInstanceObservation `json:"existInstance,omitempty" tf:"exist_instance,omitempty"`
 
-	// Information of the add-on to be installed.
-	// Information of the add-on to be installed.
+	// Information of the add-on to be installed. It is recommended to use resource tencentcloud_kubernetes_addon management cluster addon.
+	// Information of the add-on to be installed. It is recommended to use resource `tencentcloud_kubernetes_addon` management cluster addon.
 	ExtensionAddon []ExtensionAddonObservation `json:"extensionAddon,omitempty" tf:"extension_addon,omitempty"`
 
 	// Custom parameter information related to the node.
@@ -970,17 +990,13 @@ type ClusterObservation struct {
 	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
 	InstanceDeleteMode *string `json:"instanceDeleteMode,omitempty" tf:"instance_delete_mode,omitempty"`
 
+	// In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+	// In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+	IsDualStack *bool `json:"isDualStack,omitempty" tf:"is_dual_stack,omitempty"`
+
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	IsNonStaticIPMode *bool `json:"isNonStaticIpMode,omitempty" tf:"is_non_static_ip_mode,omitempty"`
-
-	// Kubernetes config.
-	// Kubernetes config.
-	KubeConfig *string `json:"kubeConfig,omitempty" tf:"kube_config,omitempty"`
-
-	// Kubernetes config of private network.
-	// Kubernetes config of private network.
-	KubeConfigIntranet *string `json:"kubeConfigIntranet,omitempty" tf:"kube_config_intranet,omitempty"`
 
 	// Cluster kube-proxy mode, the available values include: 'kube-proxy-bpf'. Default is not set.When set to kube-proxy-bpf, cluster version greater than 1.14 and with Tencent Linux 2.4 is required.
 	// Cluster kube-proxy mode, the available values include: 'kube-proxy-bpf'. Default is not set.When set to kube-proxy-bpf, cluster version greater than 1.14 and with Tencent Linux 2.4 is required.
@@ -1060,8 +1076,8 @@ type ClusterObservation struct {
 	// Sets whether the joining node participates in the schedule. Default is '0'. Participate in scheduling.
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
-	// Indicates whether upgrade all instances when cluster_version change. Default is false.
-	// Indicates whether upgrade all instances when cluster_version change. Default is false.
+	// Indicates whether upgrade all cluster instances. Default is false.
+	// Indicates whether upgrade all cluster instances. Default is false.
 	UpgradeInstancesFollowCluster *bool `json:"upgradeInstancesFollowCluster,omitempty" tf:"upgrade_instances_follow_cluster,omitempty"`
 
 	// User name of account.
@@ -1207,8 +1223,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterOsType *string `json:"clusterOsType,omitempty" tf:"cluster_os_type,omitempty"`
 
-	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
-	// Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+	// Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
+	// Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
 	// +kubebuilder:validation:Optional
 	ClusterSubnetID *string `json:"clusterSubnetId,omitempty" tf:"cluster_subnet_id,omitempty"`
 
@@ -1217,15 +1233,25 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterVersion *string `json:"clusterVersion,omitempty" tf:"cluster_version,omitempty"`
 
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
-	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is docker for versions below v1.24 and containerd for versions above v1.24.
+	// Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is `docker` for versions below v1.24 and `containerd` for versions above v1.24.
 	// +kubebuilder:validation:Optional
 	ContainerRuntime *string `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
+	// Whether to enable DataPlaneV2 (replace kube-proxy with cilium). data_plane_v2 and cluster_ipvs should not be set at the same time.
+	// Whether to enable DataPlaneV2 (replace kube-proxy with cilium). `data_plane_v2` and `cluster_ipvs` should not be set at the same time.
+	// +kubebuilder:validation:Optional
+	DataPlaneV2 *bool `json:"dataPlaneV2,omitempty" tf:"data_plane_v2,omitempty"`
 
 	// Indicates whether cluster deletion protection is enabled. Default is false.
 	// Indicates whether cluster deletion protection is enabled. Default is false.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+	// To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+	// +kubebuilder:validation:Optional
+	DisableAddons []*string `json:"disableAddons,omitempty" tf:"disable_addons,omitempty"`
 
 	// Docker graph path. Default is /var/lib/docker.
 	// Docker graph path. Default is `/var/lib/docker`.
@@ -1247,13 +1273,13 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	EventPersistence []EventPersistenceParameters `json:"eventPersistence,omitempty" tf:"event_persistence,omitempty"`
 
-	// create tke cluster by existed instances.
-	// create tke cluster by existed instances.
+	// Create tke cluster by existed instances.
+	// Create tke cluster by existed instances.
 	// +kubebuilder:validation:Optional
 	ExistInstance []ExistInstanceParameters `json:"existInstance,omitempty" tf:"exist_instance,omitempty"`
 
-	// Information of the add-on to be installed.
-	// Information of the add-on to be installed.
+	// Information of the add-on to be installed. It is recommended to use resource tencentcloud_kubernetes_addon management cluster addon.
+	// Information of the add-on to be installed. It is recommended to use resource `tencentcloud_kubernetes_addon` management cluster addon.
 	// +kubebuilder:validation:Optional
 	ExtensionAddon []ExtensionAddonParameters `json:"extensionAddon,omitempty" tf:"extension_addon,omitempty"`
 
@@ -1281,6 +1307,11 @@ type ClusterParameters struct {
 	// The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
 	// +kubebuilder:validation:Optional
 	InstanceDeleteMode *string `json:"instanceDeleteMode,omitempty" tf:"instance_delete_mode,omitempty"`
+
+	// In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+	// In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+	// +kubebuilder:validation:Optional
+	IsDualStack *bool `json:"isDualStack,omitempty" tf:"is_dual_stack,omitempty"`
 
 	// Indicates whether non-static ip mode is enabled. Default is false.
 	// Indicates whether non-static ip mode is enabled. Default is false.
@@ -1369,8 +1400,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Unschedulable *float64 `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 
-	// Indicates whether upgrade all instances when cluster_version change. Default is false.
-	// Indicates whether upgrade all instances when cluster_version change. Default is false.
+	// Indicates whether upgrade all cluster instances. Default is false.
+	// Indicates whether upgrade all cluster instances. Default is false.
 	// +kubebuilder:validation:Optional
 	UpgradeInstancesFollowCluster *bool `json:"upgradeInstancesFollowCluster,omitempty" tf:"upgrade_instances_follow_cluster,omitempty"`
 
@@ -1405,7 +1436,7 @@ type DataDiskInitParameters struct {
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -1413,7 +1444,7 @@ type DataDiskInitParameters struct {
 	// Volume of disk in GB. Default is `0`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -1432,7 +1463,7 @@ type DataDiskObservation struct {
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -1440,7 +1471,7 @@ type DataDiskObservation struct {
 	// Volume of disk in GB. Default is `0`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -1460,7 +1491,7 @@ type DataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// +kubebuilder:validation:Optional
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
@@ -1470,7 +1501,7 @@ type DataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
@@ -1557,8 +1588,8 @@ type ExistInstanceInitParameters struct {
 	// Reinstallation parameters of an existing instance.
 	InstancesPara []InstancesParaInitParameters `json:"instancesPara,omitempty" tf:"instances_para,omitempty"`
 
-	// Role of existed node. value:MASTER_ETCD or WORKER.
-	// Role of existed node. value:MASTER_ETCD or WORKER.
+	// Role of existed node. Value: MASTER_ETCD or WORKER.
+	// Role of existed node. Value: MASTER_ETCD or WORKER.
 	NodeRole *string `json:"nodeRole,omitempty" tf:"node_role,omitempty"`
 }
 
@@ -1572,8 +1603,8 @@ type ExistInstanceObservation struct {
 	// Reinstallation parameters of an existing instance.
 	InstancesPara []InstancesParaObservation `json:"instancesPara,omitempty" tf:"instances_para,omitempty"`
 
-	// Role of existed node. value:MASTER_ETCD or WORKER.
-	// Role of existed node. value:MASTER_ETCD or WORKER.
+	// Role of existed node. Value: MASTER_ETCD or WORKER.
+	// Role of existed node. Value: MASTER_ETCD or WORKER.
 	NodeRole *string `json:"nodeRole,omitempty" tf:"node_role,omitempty"`
 }
 
@@ -1589,8 +1620,8 @@ type ExistInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	InstancesPara []InstancesParaParameters `json:"instancesPara,omitempty" tf:"instances_para,omitempty"`
 
-	// Role of existed node. value:MASTER_ETCD or WORKER.
-	// Role of existed node. value:MASTER_ETCD or WORKER.
+	// Role of existed node. Value: MASTER_ETCD or WORKER.
+	// Role of existed node. Value: MASTER_ETCD or WORKER.
 	// +kubebuilder:validation:Optional
 	NodeRole *string `json:"nodeRole,omitempty" tf:"node_role,omitempty"`
 }
@@ -1906,7 +1937,7 @@ type MasterConfigDataDiskInitParameters struct {
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -1914,7 +1945,7 @@ type MasterConfigDataDiskInitParameters struct {
 	// Volume of disk in GB. Default is `0`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -1945,7 +1976,7 @@ type MasterConfigDataDiskObservation struct {
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -1953,7 +1984,7 @@ type MasterConfigDataDiskObservation struct {
 	// Volume of disk in GB. Default is `0`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -1985,7 +2016,7 @@ type MasterConfigDataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount.
 	// +kubebuilder:validation:Optional
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
@@ -1995,7 +2026,7 @@ type MasterConfigDataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
@@ -2393,7 +2424,7 @@ type WorkerConfigDataDiskInitParameters struct {
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -2401,7 +2432,7 @@ type WorkerConfigDataDiskInitParameters struct {
 	// Volume of disk in GB. Default is `0`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -2432,7 +2463,7 @@ type WorkerConfigDataDiskObservation struct {
 	// Indicate whether to auto format and mount or not. Default is `false`.
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount.
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
 
@@ -2440,7 +2471,7 @@ type WorkerConfigDataDiskObservation struct {
 	// Volume of disk in GB. Default is `0`.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -2472,7 +2503,7 @@ type WorkerConfigDataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoFormatAndMount *bool `json:"autoFormatAndMount,omitempty" tf:"auto_format_and_mount,omitempty"`
 
-	// The name of the device or partition to mount.
+	// The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
 	// The name of the device or partition to mount.
 	// +kubebuilder:validation:Optional
 	DiskPartition *string `json:"diskPartition,omitempty" tf:"disk_partition,omitempty"`
@@ -2482,7 +2513,7 @@ type WorkerConfigDataDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+	// Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
 	// Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`

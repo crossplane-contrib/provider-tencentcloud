@@ -4,21 +4,20 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mariadb/v1alpha1/hourdbinstance
   labels:
-    testing.upbound.io/example-name: basic
-  name: basic
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    dbVersionId: "10.0"
-    instanceName: db-test-del
-    memory: 2
+    instanceName: tf-example
+    memory: 4
     nodeCount: 2
-    storage: 10
+    storage: 100
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
     tags:
-      createdBy: terraform
-    vip: 10.0.0.197
+      createdBy: Terraform
+    vip: 10.0.0.8
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

@@ -537,6 +537,11 @@ func (in *BasicInstanceInitParameters) DeepCopyInto(out *BasicInstanceInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskEncryptFlag != nil {
+		in, out := &in.DiskEncryptFlag, &out.DiskEncryptFlag
+		*out = new(float64)
+		**out = **in
+	}
 	if in.EngineVersion != nil {
 		in, out := &in.EngineVersion, &out.EngineVersion
 		*out = new(string)
@@ -634,6 +639,11 @@ func (in *BasicInstanceInitParameters) DeepCopyInto(out *BasicInstanceInitParame
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.TimeZone != nil {
+		in, out := &in.TimeZone, &out.TimeZone
+		*out = new(string)
+		**out = **in
 	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID
@@ -748,6 +758,11 @@ func (in *BasicInstanceObservation) DeepCopyInto(out *BasicInstanceObservation) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskEncryptFlag != nil {
+		in, out := &in.DiskEncryptFlag, &out.DiskEncryptFlag
+		*out = new(float64)
+		**out = **in
+	}
 	if in.EngineVersion != nil {
 		in, out := &in.EngineVersion, &out.EngineVersion
 		*out = new(string)
@@ -851,6 +866,11 @@ func (in *BasicInstanceObservation) DeepCopyInto(out *BasicInstanceObservation) 
 		*out = new(float64)
 		**out = **in
 	}
+	if in.TimeZone != nil {
+		in, out := &in.TimeZone, &out.TimeZone
+		*out = new(string)
+		**out = **in
+	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID
 		*out = new(string)
@@ -920,6 +940,11 @@ func (in *BasicInstanceParameters) DeepCopyInto(out *BasicInstanceParameters) {
 	if in.Collation != nil {
 		in, out := &in.Collation, &out.Collation
 		*out = new(string)
+		**out = **in
+	}
+	if in.DiskEncryptFlag != nil {
+		in, out := &in.DiskEncryptFlag, &out.DiskEncryptFlag
+		*out = new(float64)
 		**out = **in
 	}
 	if in.EngineVersion != nil {
@@ -1019,6 +1044,11 @@ func (in *BasicInstanceParameters) DeepCopyInto(out *BasicInstanceParameters) {
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.TimeZone != nil {
+		in, out := &in.TimeZone, &out.TimeZone
+		*out = new(string)
+		**out = **in
 	}
 	if in.VPCID != nil {
 		in, out := &in.VPCID, &out.VPCID

@@ -35,6 +35,76 @@ type AbortIncompleteMultipartUploadParameters struct {
 	DaysAfterInitiation *float64 `json:"daysAfterInitiation" tf:"days_after_initiation,omitempty"`
 }
 
+type AndInitParameters struct {
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	Tag []TagInitParameters `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type AndObservation struct {
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	Tag []TagObservation `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type AndParameters struct {
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// +kubebuilder:validation:Optional
+	Tag []TagParameters `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type AndTagInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AndTagObservation struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AndTagParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type BucketInitParameters struct {
 
 	// The canned ACL to apply. Valid values: private, public-read, and public-read-write. Defaults to private.
@@ -57,6 +127,14 @@ type BucketInitParameters struct {
 	// CDC cluster ID.
 	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
+	// Indicates whether to create a bucket of metadata acceleration. For more information, please refer to https://www.tencentcloud.com/document/product/436/43305.
+	// Indicates whether to create a bucket of metadata acceleration. For more information, please refer to `https://www.tencentcloud.com/document/product/436/43305`.
+	ChdfsOfs *bool `json:"chdfsOfs,omitempty" tf:"chdfs_ofs,omitempty"`
+
+	// Whether to return the Vary: Origin header in the CORS response. Valid values: true, false.
+	// Whether to return the `Vary: Origin` header in the CORS response. Valid values: `true`, `false`.
+	CorsResponseVary *string `json:"corsResponseVary,omitempty" tf:"cors_response_vary,omitempty"`
+
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRules []CorsRulesInitParameters `json:"corsRules,omitempty" tf:"cors_rules,omitempty"`
@@ -72,6 +150,10 @@ type BucketInitParameters struct {
 	// Force cleanup all objects before delete bucket.
 	// Force cleanup all objects before delete bucket.
 	ForceClean *bool `json:"forceClean,omitempty" tf:"force_clean,omitempty"`
+
+	// List of intelligent tiered storage, archiving, and deep archiving rules. NOTE: only enable_intelligent_tiering is true can configure this argument.
+	// List of intelligent tiered storage, archiving, and deep archiving rules. NOTE: only `enable_intelligent_tiering` is true can configure this argument.
+	IntelligentTieringArchivingRuleList []IntelligentTieringArchivingRuleListInitParameters `json:"intelligentTieringArchivingRuleList,omitempty" tf:"intelligent_tiering_archiving_rule_list,omitempty"`
 
 	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
 	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
@@ -104,6 +186,10 @@ type BucketInitParameters struct {
 	// Indicates whether to create a bucket of multi available zone.
 	// Indicates whether to create a bucket of multi available zone.
 	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
+
+	// Object locking configuration. Once enabled, this feature cannot be disabled.
+	// Object locking configuration. Once enabled, this feature cannot be disabled.
+	ObjectLockConfiguration []ObjectLockConfigurationInitParameters `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
 
 	// Bucket Origin Domain settings.
 	// Bucket Origin Domain settings.
@@ -157,6 +243,14 @@ type BucketObservation struct {
 	// CDC cluster ID.
 	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
+	// Indicates whether to create a bucket of metadata acceleration. For more information, please refer to https://www.tencentcloud.com/document/product/436/43305.
+	// Indicates whether to create a bucket of metadata acceleration. For more information, please refer to `https://www.tencentcloud.com/document/product/436/43305`.
+	ChdfsOfs *bool `json:"chdfsOfs,omitempty" tf:"chdfs_ofs,omitempty"`
+
+	// Whether to return the Vary: Origin header in the CORS response. Valid values: true, false.
+	// Whether to return the `Vary: Origin` header in the CORS response. Valid values: `true`, `false`.
+	CorsResponseVary *string `json:"corsResponseVary,omitempty" tf:"cors_response_vary,omitempty"`
+
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRules []CorsRulesObservation `json:"corsRules,omitempty" tf:"cors_rules,omitempty"`
@@ -179,6 +273,10 @@ type BucketObservation struct {
 
 	// A unique identifier for the rule. It can be up to 255 characters.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// List of intelligent tiered storage, archiving, and deep archiving rules. NOTE: only enable_intelligent_tiering is true can configure this argument.
+	// List of intelligent tiered storage, archiving, and deep archiving rules. NOTE: only `enable_intelligent_tiering` is true can configure this argument.
+	IntelligentTieringArchivingRuleList []IntelligentTieringArchivingRuleListObservation `json:"intelligentTieringArchivingRuleList,omitempty" tf:"intelligent_tiering_archiving_rule_list,omitempty"`
 
 	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
 	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
@@ -211,6 +309,10 @@ type BucketObservation struct {
 	// Indicates whether to create a bucket of multi available zone.
 	// Indicates whether to create a bucket of multi available zone.
 	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
+
+	// Object locking configuration. Once enabled, this feature cannot be disabled.
+	// Object locking configuration. Once enabled, this feature cannot be disabled.
+	ObjectLockConfiguration []ObjectLockConfigurationObservation `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
 
 	// Bucket Origin Domain settings.
 	// Bucket Origin Domain settings.
@@ -269,6 +371,16 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
 
+	// Indicates whether to create a bucket of metadata acceleration. For more information, please refer to https://www.tencentcloud.com/document/product/436/43305.
+	// Indicates whether to create a bucket of metadata acceleration. For more information, please refer to `https://www.tencentcloud.com/document/product/436/43305`.
+	// +kubebuilder:validation:Optional
+	ChdfsOfs *bool `json:"chdfsOfs,omitempty" tf:"chdfs_ofs,omitempty"`
+
+	// Whether to return the Vary: Origin header in the CORS response. Valid values: true, false.
+	// Whether to return the `Vary: Origin` header in the CORS response. Valid values: `true`, `false`.
+	// +kubebuilder:validation:Optional
+	CorsResponseVary *string `json:"corsResponseVary,omitempty" tf:"cors_response_vary,omitempty"`
+
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	// +kubebuilder:validation:Optional
@@ -288,6 +400,11 @@ type BucketParameters struct {
 	// Force cleanup all objects before delete bucket.
 	// +kubebuilder:validation:Optional
 	ForceClean *bool `json:"forceClean,omitempty" tf:"force_clean,omitempty"`
+
+	// List of intelligent tiered storage, archiving, and deep archiving rules. NOTE: only enable_intelligent_tiering is true can configure this argument.
+	// List of intelligent tiered storage, archiving, and deep archiving rules. NOTE: only `enable_intelligent_tiering` is true can configure this argument.
+	// +kubebuilder:validation:Optional
+	IntelligentTieringArchivingRuleList []IntelligentTieringArchivingRuleListParameters `json:"intelligentTieringArchivingRuleList,omitempty" tf:"intelligent_tiering_archiving_rule_list,omitempty"`
 
 	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
 	// Specifies the limit of days for standard-tier data to low-frequency data in an intelligent tiered storage configuration, with optional days of 30, 60, 90. Default value is 30.
@@ -328,6 +445,11 @@ type BucketParameters struct {
 	// Indicates whether to create a bucket of multi available zone.
 	// +kubebuilder:validation:Optional
 	MultiAz *bool `json:"multiAz,omitempty" tf:"multi_az,omitempty"`
+
+	// Object locking configuration. Once enabled, this feature cannot be disabled.
+	// Object locking configuration. Once enabled, this feature cannot be disabled.
+	// +kubebuilder:validation:Optional
+	ObjectLockConfiguration []ObjectLockConfigurationParameters `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
 
 	// Bucket Origin Domain settings.
 	// Bucket Origin Domain settings.
@@ -440,6 +562,28 @@ type CorsRulesParameters struct {
 	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
+type DeleteMarkerReplicationInitParameters struct {
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type DeleteMarkerReplicationObservation struct {
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type DeleteMarkerReplicationParameters struct {
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// +kubebuilder:validation:Optional
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
 type ExpirationInitParameters struct {
 
 	// Specifies the date after which you want the corresponding action to take effect.
@@ -486,6 +630,185 @@ type ExpirationParameters struct {
 	// Indicates whether the delete marker of an expired object will be removed.
 	// +kubebuilder:validation:Optional
 	DeleteMarker *bool `json:"deleteMarker,omitempty" tf:"delete_marker,omitempty"`
+}
+
+type FilterAndInitParameters struct {
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects to be copied, you can use object tags (multiple tags are supported) as filtering criteria, with a maximum of 10 tags allowed. After adding tags as filtering criteria, the `delete_marker_replication.status` option must be set to false.
+	Tag []AndTagInitParameters `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type FilterAndObservation struct {
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects to be copied, you can use object tags (multiple tags are supported) as filtering criteria, with a maximum of 10 tags allowed. After adding tags as filtering criteria, the `delete_marker_replication.status` option must be set to false.
+	Tag []AndTagObservation `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type FilterAndParameters struct {
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects to be copied, you can use object tags (multiple tags are supported) as filtering criteria, with a maximum of 10 tags allowed. After adding tags as filtering criteria, the `delete_marker_replication.status` option must be set to false.
+	// +kubebuilder:validation:Optional
+	Tag []AndTagParameters `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type FilterInitParameters struct {
+
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an And operator.
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an `And` operator.
+	And []AndInitParameters `json:"and,omitempty" tf:"and,omitempty"`
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	Tag []FilterTagInitParameters `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type FilterObservation struct {
+
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an And operator.
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an `And` operator.
+	And []AndObservation `json:"and,omitempty" tf:"and,omitempty"`
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	Tag []FilterTagObservation `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type FilterParameters struct {
+
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an And operator.
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an `And` operator.
+	// +kubebuilder:validation:Optional
+	And []AndParameters `json:"and,omitempty" tf:"and,omitempty"`
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// When filtering objects for analysis, you can use object tags (multiple tags are supported) as filtering criteria.
+	// +kubebuilder:validation:Optional
+	Tag []FilterTagParameters `json:"tag,omitempty" tf:"tag,omitempty"`
+}
+
+type FilterTagInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type FilterTagObservation struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type FilterTagParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
+type IntelligentTieringArchivingRuleListInitParameters struct {
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	Filter []FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// The name of the intelligent tiering rule name list task, with the ID set to a non-default string, indicates that this rule is a conversion rule for archive and deep archive tiers.
+	// The name of the intelligent tiering rule name list task, with the ID set to a non-default string, indicates that this rule is a conversion rule for archive and deep archive tiers.
+	RuleID *string `json:"ruleId,omitempty" tf:"rule_id,omitempty"`
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Indicates whether the intelligent tiering rule is enabled. Possible values: Enabled, Disabled. When the ID is `default`, only `Enabled` is supported.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	Tiering []TieringInitParameters `json:"tiering,omitempty" tf:"tiering,omitempty"`
+}
+
+type IntelligentTieringArchivingRuleListObservation struct {
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	Filter []FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// The name of the intelligent tiering rule name list task, with the ID set to a non-default string, indicates that this rule is a conversion rule for archive and deep archive tiers.
+	// The name of the intelligent tiering rule name list task, with the ID set to a non-default string, indicates that this rule is a conversion rule for archive and deep archive tiers.
+	RuleID *string `json:"ruleId,omitempty" tf:"rule_id,omitempty"`
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Indicates whether the intelligent tiering rule is enabled. Possible values: Enabled, Disabled. When the ID is `default`, only `Enabled` is supported.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	Tiering []TieringObservation `json:"tiering,omitempty" tf:"tiering,omitempty"`
+}
+
+type IntelligentTieringArchivingRuleListParameters struct {
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// +kubebuilder:validation:Optional
+	Filter []FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// The name of the intelligent tiering rule name list task, with the ID set to a non-default string, indicates that this rule is a conversion rule for archive and deep archive tiers.
+	// The name of the intelligent tiering rule name list task, with the ID set to a non-default string, indicates that this rule is a conversion rule for archive and deep archive tiers.
+	// +kubebuilder:validation:Optional
+	RuleID *string `json:"ruleId" tf:"rule_id,omitempty"`
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Indicates whether the intelligent tiering rule is enabled. Possible values: Enabled, Disabled. When the ID is `default`, only `Enabled` is supported.
+	// +kubebuilder:validation:Optional
+	Status *string `json:"status" tf:"status,omitempty"`
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// +kubebuilder:validation:Optional
+	Tiering []TieringParameters `json:"tiering" tf:"tiering,omitempty"`
 }
 
 type LifecycleRulesInitParameters struct {
@@ -565,7 +888,7 @@ type LifecycleRulesParameters struct {
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
-	FilterPrefix *string `json:"filterPrefix" tf:"filter_prefix,omitempty"`
+	FilterPrefix *string `json:"filterPrefix,omitempty" tf:"filter_prefix,omitempty"`
 
 	// A unique identifier for the rule. It can be up to 255 characters.
 	// A unique identifier for the rule. It can be up to 255 characters.
@@ -645,13 +968,48 @@ type NonCurrentTransitionParameters struct {
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
 
+type ObjectLockConfigurationInitParameters struct {
+
+	// Enable object lock configuration.
+	// Enable object lock configuration.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Object locking configuration.
+	// Object locking configuration.
+	Rule []RuleInitParameters `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ObjectLockConfigurationObservation struct {
+
+	// Enable object lock configuration.
+	// Enable object lock configuration.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Object locking configuration.
+	// Object locking configuration.
+	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ObjectLockConfigurationParameters struct {
+
+	// Enable object lock configuration.
+	// Enable object lock configuration.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+
+	// Object locking configuration.
+	// Object locking configuration.
+	// +kubebuilder:validation:Optional
+	Rule []RuleParameters `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
 type OriginDomainRulesInitParameters struct {
 
 	// Specify domain host.
 	// Specify domain host.
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
-	// Domain status, default: ENABLED.
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
 	// Domain status, default: `ENABLED`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -666,7 +1024,7 @@ type OriginDomainRulesObservation struct {
 	// Specify domain host.
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
-	// Domain status, default: ENABLED.
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
 	// Domain status, default: `ENABLED`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -682,7 +1040,7 @@ type OriginDomainRulesParameters struct {
 	// +kubebuilder:validation:Optional
 	Domain *string `json:"domain" tf:"domain,omitempty"`
 
-	// Domain status, default: ENABLED.
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
 	// Domain status, default: `ENABLED`.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -695,6 +1053,10 @@ type OriginDomainRulesParameters struct {
 
 type OriginPullRulesInitParameters struct {
 
+	// Back to source mode. Allow value: Proxy, Mirror, Redirect.
+	// Back to source mode. Allow value: Proxy, Mirror, Redirect.
+	BackToSourceMode *string `json:"backToSourceMode,omitempty" tf:"back_to_source_mode,omitempty"`
+
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// +mapType=granular
@@ -713,11 +1075,15 @@ type OriginPullRulesInitParameters struct {
 	// Specifies whether to follow 3XX redirect to another origin server to pull data from.
 	FollowRedirection *bool `json:"followRedirection,omitempty" tf:"follow_redirection,omitempty"`
 
+	// Redirect code. Effective when back_to_source_mode is Redirect. ex: 301, 302, 307. Default is 302.
+	// Redirect code. Effective when `back_to_source_mode` is `Redirect`. ex: 301, 302, 307. Default is 302.
+	HTTPRedirectCode *string `json:"httpRedirectCode,omitempty" tf:"http_redirect_code,omitempty"`
+
 	// Allows only a domain name or IP address. You can optionally append a port number to the address.
 	// Allows only a domain name or IP address. You can optionally append a port number to the address.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
-	// Triggers the origin-pull rule when the requested file name matches this prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
 	// Triggers the origin-pull rule when the requested file name matches this prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
@@ -729,13 +1095,17 @@ type OriginPullRulesInitParameters struct {
 	// the protocol used for COS to access the specified origin server. The available value include `HTTP`, `HTTPS` and `FOLLOW`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// If true, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
+	// It has been deprecated from version 1.81.196. Please use back_to_source_mode instead. If true, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
 	// If `true`, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
 	SyncBackToSource *bool `json:"syncBackToSource,omitempty" tf:"sync_back_to_source,omitempty"`
 }
 
 type OriginPullRulesObservation struct {
 
+	// Back to source mode. Allow value: Proxy, Mirror, Redirect.
+	// Back to source mode. Allow value: Proxy, Mirror, Redirect.
+	BackToSourceMode *string `json:"backToSourceMode,omitempty" tf:"back_to_source_mode,omitempty"`
+
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// +mapType=granular
@@ -754,11 +1124,15 @@ type OriginPullRulesObservation struct {
 	// Specifies whether to follow 3XX redirect to another origin server to pull data from.
 	FollowRedirection *bool `json:"followRedirection,omitempty" tf:"follow_redirection,omitempty"`
 
+	// Redirect code. Effective when back_to_source_mode is Redirect. ex: 301, 302, 307. Default is 302.
+	// Redirect code. Effective when `back_to_source_mode` is `Redirect`. ex: 301, 302, 307. Default is 302.
+	HTTPRedirectCode *string `json:"httpRedirectCode,omitempty" tf:"http_redirect_code,omitempty"`
+
 	// Allows only a domain name or IP address. You can optionally append a port number to the address.
 	// Allows only a domain name or IP address. You can optionally append a port number to the address.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
-	// Triggers the origin-pull rule when the requested file name matches this prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
 	// Triggers the origin-pull rule when the requested file name matches this prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
@@ -770,12 +1144,17 @@ type OriginPullRulesObservation struct {
 	// the protocol used for COS to access the specified origin server. The available value include `HTTP`, `HTTPS` and `FOLLOW`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// If true, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
+	// It has been deprecated from version 1.81.196. Please use back_to_source_mode instead. If true, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
 	// If `true`, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
 	SyncBackToSource *bool `json:"syncBackToSource,omitempty" tf:"sync_back_to_source,omitempty"`
 }
 
 type OriginPullRulesParameters struct {
+
+	// Back to source mode. Allow value: Proxy, Mirror, Redirect.
+	// Back to source mode. Allow value: Proxy, Mirror, Redirect.
+	// +kubebuilder:validation:Optional
+	BackToSourceMode *string `json:"backToSourceMode,omitempty" tf:"back_to_source_mode,omitempty"`
 
 	// Specifies the custom headers that you can add for COS to access your origin server.
 	// Specifies the custom headers that you can add for COS to access your origin server.
@@ -799,12 +1178,17 @@ type OriginPullRulesParameters struct {
 	// +kubebuilder:validation:Optional
 	FollowRedirection *bool `json:"followRedirection,omitempty" tf:"follow_redirection,omitempty"`
 
+	// Redirect code. Effective when back_to_source_mode is Redirect. ex: 301, 302, 307. Default is 302.
+	// Redirect code. Effective when `back_to_source_mode` is `Redirect`. ex: 301, 302, 307. Default is 302.
+	// +kubebuilder:validation:Optional
+	HTTPRedirectCode *string `json:"httpRedirectCode,omitempty" tf:"http_redirect_code,omitempty"`
+
 	// Allows only a domain name or IP address. You can optionally append a port number to the address.
 	// Allows only a domain name or IP address. You can optionally append a port number to the address.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host" tf:"host,omitempty"`
 
-	// Triggers the origin-pull rule when the requested file name matches this prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
 	// Triggers the origin-pull rule when the requested file name matches this prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -819,84 +1203,184 @@ type OriginPullRulesParameters struct {
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// If true, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
+	// It has been deprecated from version 1.81.196. Please use back_to_source_mode instead. If true, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
 	// If `true`, COS will not return 3XX status code when pulling data from an origin server. Current available zone: ap-beijing, ap-shanghai, ap-singapore, ap-mumbai.
 	// +kubebuilder:validation:Optional
 	SyncBackToSource *bool `json:"syncBackToSource,omitempty" tf:"sync_back_to_source,omitempty"`
 }
 
+type ReplicaRulesFilterInitParameters struct {
+
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an And operator.
+	// When filtering objects to be copied, if both prefix and object tag conditions are required simultaneously, or if multiple object tag conditions are needed, they must be enclosed in an `And` statement.
+	And []FilterAndInitParameters `json:"and,omitempty" tf:"and,omitempty"`
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type ReplicaRulesFilterObservation struct {
+
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an And operator.
+	// When filtering objects to be copied, if both prefix and object tag conditions are required simultaneously, or if multiple object tag conditions are needed, they must be enclosed in an `And` statement.
+	And []FilterAndObservation `json:"and,omitempty" tf:"and,omitempty"`
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type ReplicaRulesFilterParameters struct {
+
+	// For filtering conditions, if both prefix and object tag conditions are required simultaneously, they need to be wrapped with an And operator.
+	// When filtering objects to be copied, if both prefix and object tag conditions are required simultaneously, or if multiple object tag conditions are needed, they must be enclosed in an `And` statement.
+	// +kubebuilder:validation:Optional
+	And []FilterAndParameters `json:"and,omitempty" tf:"and,omitempty"`
+
+	// Filter objects by prefix; you can specify at most one prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
 type ReplicaRulesInitParameters struct {
+
+	// Synchronized deletion marker.
+	// Synchronized deletion marker.
+	DeleteMarkerReplication []DeleteMarkerReplicationInitParameters `json:"deleteMarkerReplication,omitempty" tf:"delete_marker_replication,omitempty"`
 
 	// Destination bucket identifier, format: qcs::cos:<region>::<bucketname-appid>. NOTE: destination bucket must enable versioning.
 	// Destination bucket identifier, format: `qcs::cos:<region>::<bucketname-appid>`. NOTE: destination bucket must enable versioning.
 	DestinationBucket *string `json:"destinationBucket,omitempty" tf:"destination_bucket,omitempty"`
 
-	// Storage class of destination, available values: STANDARD, INTELLIGENT_TIERING, STANDARD_IA. default is following current class of destination.
-	// Storage class of destination, available values: `STANDARD`, `INTELLIGENT_TIERING`, `STANDARD_IA`. default is following current class of destination.
+	// This field must be included when source_selection_criteria.sse_kms_encrypted_objects.status is set to Enabled. It is used to specify the KMS key used for KMS-encrypted objects copied to the destination bucket.
+	// This field must be included when `source_selection_criteria.sse_kms_encrypted_objects.status` is set to Enabled. It is used to specify the KMS key used for KMS-encrypted objects copied to the destination bucket.
+	DestinationEncryptionKMSKeyID *string `json:"destinationEncryptionKmsKeyId,omitempty" tf:"destination_encryption_kms_key_id,omitempty"`
+
+	// Storage class of destination, available values: Standard, Intelligent_Tiering, Standard_IA. default is following current class of destination.
+	// Storage class of destination, available values: `Standard`, `Intelligent_Tiering`, `Standard_IA`. default is following current class of destination.
 	DestinationStorageClass *string `json:"destinationStorageClass,omitempty" tf:"destination_storage_class,omitempty"`
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Filter the objects to be copied. The bucket feature will copy objects that match the prefixes and tags specified in the Filter settings.
+	Filter []ReplicaRulesFilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A unique identifier for the rule. It can be up to 255 characters.
 	// Name of a specific rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Triggers the origin-pull rule when the requested file name matches this prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
 	// Prefix matching policy. Policies cannot overlap; otherwise, an error will be returned. To match the root directory, leave this parameter empty.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// Domain status, default: ENABLED.
+	// Priority of origin-pull rules, do not set the same value for multiple rules.
+	// Execution priority, used to handle scenarios where the target storage buckets are the same and multiple replication rules match the same object. Note: Supports setting positive integers in the range of 1-1000. The Priority values of different rules cannot be duplicated. Storage bucket replication rules must either all have Priority set or all not have Priority set. When all rules have Priority set, overlapping prefixes are allowed for different rules when the target storage buckets are the same. When different rules match the same object, the rule with the smallest Priority value will be triggered first. When none of the rules have Priority set, overlapping prefixes are not allowed for different rules.
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// This is used to specify additional conditions for objects supported by bucket replication rules. Currently, only the option to replicate KMS-encrypted objects is supported.
+	// This is used to specify additional conditions for objects supported by bucket replication rules. Currently, only the option to replicate KMS-encrypted objects is supported.
+	SourceSelectionCriteria []SourceSelectionCriteriaInitParameters `json:"sourceSelectionCriteria,omitempty" tf:"source_selection_criteria,omitempty"`
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
 	// Status identifier, available values: `Enabled`, `Disabled`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type ReplicaRulesObservation struct {
 
+	// Synchronized deletion marker.
+	// Synchronized deletion marker.
+	DeleteMarkerReplication []DeleteMarkerReplicationObservation `json:"deleteMarkerReplication,omitempty" tf:"delete_marker_replication,omitempty"`
+
 	// Destination bucket identifier, format: qcs::cos:<region>::<bucketname-appid>. NOTE: destination bucket must enable versioning.
 	// Destination bucket identifier, format: `qcs::cos:<region>::<bucketname-appid>`. NOTE: destination bucket must enable versioning.
 	DestinationBucket *string `json:"destinationBucket,omitempty" tf:"destination_bucket,omitempty"`
 
-	// Storage class of destination, available values: STANDARD, INTELLIGENT_TIERING, STANDARD_IA. default is following current class of destination.
-	// Storage class of destination, available values: `STANDARD`, `INTELLIGENT_TIERING`, `STANDARD_IA`. default is following current class of destination.
+	// This field must be included when source_selection_criteria.sse_kms_encrypted_objects.status is set to Enabled. It is used to specify the KMS key used for KMS-encrypted objects copied to the destination bucket.
+	// This field must be included when `source_selection_criteria.sse_kms_encrypted_objects.status` is set to Enabled. It is used to specify the KMS key used for KMS-encrypted objects copied to the destination bucket.
+	DestinationEncryptionKMSKeyID *string `json:"destinationEncryptionKmsKeyId,omitempty" tf:"destination_encryption_kms_key_id,omitempty"`
+
+	// Storage class of destination, available values: Standard, Intelligent_Tiering, Standard_IA. default is following current class of destination.
+	// Storage class of destination, available values: `Standard`, `Intelligent_Tiering`, `Standard_IA`. default is following current class of destination.
 	DestinationStorageClass *string `json:"destinationStorageClass,omitempty" tf:"destination_storage_class,omitempty"`
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Filter the objects to be copied. The bucket feature will copy objects that match the prefixes and tags specified in the Filter settings.
+	Filter []ReplicaRulesFilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A unique identifier for the rule. It can be up to 255 characters.
 	// Name of a specific rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Triggers the origin-pull rule when the requested file name matches this prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
 	// Prefix matching policy. Policies cannot overlap; otherwise, an error will be returned. To match the root directory, leave this parameter empty.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// Domain status, default: ENABLED.
+	// Priority of origin-pull rules, do not set the same value for multiple rules.
+	// Execution priority, used to handle scenarios where the target storage buckets are the same and multiple replication rules match the same object. Note: Supports setting positive integers in the range of 1-1000. The Priority values of different rules cannot be duplicated. Storage bucket replication rules must either all have Priority set or all not have Priority set. When all rules have Priority set, overlapping prefixes are allowed for different rules when the target storage buckets are the same. When different rules match the same object, the rule with the smallest Priority value will be triggered first. When none of the rules have Priority set, overlapping prefixes are not allowed for different rules.
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// This is used to specify additional conditions for objects supported by bucket replication rules. Currently, only the option to replicate KMS-encrypted objects is supported.
+	// This is used to specify additional conditions for objects supported by bucket replication rules. Currently, only the option to replicate KMS-encrypted objects is supported.
+	SourceSelectionCriteria []SourceSelectionCriteriaObservation `json:"sourceSelectionCriteria,omitempty" tf:"source_selection_criteria,omitempty"`
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
 	// Status identifier, available values: `Enabled`, `Disabled`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type ReplicaRulesParameters struct {
 
+	// Synchronized deletion marker.
+	// Synchronized deletion marker.
+	// +kubebuilder:validation:Optional
+	DeleteMarkerReplication []DeleteMarkerReplicationParameters `json:"deleteMarkerReplication,omitempty" tf:"delete_marker_replication,omitempty"`
+
 	// Destination bucket identifier, format: qcs::cos:<region>::<bucketname-appid>. NOTE: destination bucket must enable versioning.
 	// Destination bucket identifier, format: `qcs::cos:<region>::<bucketname-appid>`. NOTE: destination bucket must enable versioning.
 	// +kubebuilder:validation:Optional
 	DestinationBucket *string `json:"destinationBucket" tf:"destination_bucket,omitempty"`
 
-	// Storage class of destination, available values: STANDARD, INTELLIGENT_TIERING, STANDARD_IA. default is following current class of destination.
-	// Storage class of destination, available values: `STANDARD`, `INTELLIGENT_TIERING`, `STANDARD_IA`. default is following current class of destination.
+	// This field must be included when source_selection_criteria.sse_kms_encrypted_objects.status is set to Enabled. It is used to specify the KMS key used for KMS-encrypted objects copied to the destination bucket.
+	// This field must be included when `source_selection_criteria.sse_kms_encrypted_objects.status` is set to Enabled. It is used to specify the KMS key used for KMS-encrypted objects copied to the destination bucket.
+	// +kubebuilder:validation:Optional
+	DestinationEncryptionKMSKeyID *string `json:"destinationEncryptionKmsKeyId,omitempty" tf:"destination_encryption_kms_key_id,omitempty"`
+
+	// Storage class of destination, available values: Standard, Intelligent_Tiering, Standard_IA. default is following current class of destination.
+	// Storage class of destination, available values: `Standard`, `Intelligent_Tiering`, `Standard_IA`. default is following current class of destination.
 	// +kubebuilder:validation:Optional
 	DestinationStorageClass *string `json:"destinationStorageClass,omitempty" tf:"destination_storage_class,omitempty"`
+
+	// Specifies configuration information related to data transformation in the intelligent tiered storage configuration.
+	// Filter the objects to be copied. The bucket feature will copy objects that match the prefixes and tags specified in the Filter settings.
+	// +kubebuilder:validation:Optional
+	Filter []ReplicaRulesFilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A unique identifier for the rule. It can be up to 255 characters.
 	// Name of a specific rule.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Triggers the origin-pull rule when the requested file name matches this prefix.
+	// Filter objects by prefix; you can specify at most one prefix.
 	// Prefix matching policy. Policies cannot overlap; otherwise, an error will be returned. To match the root directory, leave this parameter empty.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// Domain status, default: ENABLED.
+	// Priority of origin-pull rules, do not set the same value for multiple rules.
+	// Execution priority, used to handle scenarios where the target storage buckets are the same and multiple replication rules match the same object. Note: Supports setting positive integers in the range of 1-1000. The Priority values of different rules cannot be duplicated. Storage bucket replication rules must either all have Priority set or all not have Priority set. When all rules have Priority set, overlapping prefixes are allowed for different rules when the target storage buckets are the same. When different rules match the same object, the rule with the smallest Priority value will be triggered first. When none of the rules have Priority set, overlapping prefixes are not allowed for different rules.
+	// +kubebuilder:validation:Optional
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// This is used to specify additional conditions for objects supported by bucket replication rules. Currently, only the option to replicate KMS-encrypted objects is supported.
+	// This is used to specify additional conditions for objects supported by bucket replication rules. Currently, only the option to replicate KMS-encrypted objects is supported.
+	// +kubebuilder:validation:Optional
+	SourceSelectionCriteria []SourceSelectionCriteriaParameters `json:"sourceSelectionCriteria,omitempty" tf:"source_selection_criteria,omitempty"`
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
 	// Status identifier, available values: `Enabled`, `Disabled`.
 	// +kubebuilder:validation:Optional
-	Status *string `json:"status" tf:"status,omitempty"`
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type RoutingRulesInitParameters struct {
@@ -919,6 +1403,28 @@ type RoutingRulesParameters struct {
 	// Routing rule list.
 	// +kubebuilder:validation:Optional
 	Rules []RulesParameters `json:"rules" tf:"rules,omitempty"`
+}
+
+type RuleInitParameters struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Object lock default duration (range: 1-36500).
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+}
+
+type RuleObservation struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Object lock default duration (range: 1-36500).
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+}
+
+type RuleParameters struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Object lock default duration (range: 1-36500).
+	// +kubebuilder:validation:Optional
+	Days *float64 `json:"days" tf:"days,omitempty"`
 }
 
 type RulesInitParameters struct {
@@ -995,6 +1501,120 @@ type RulesParameters struct {
 	RedirectReplaceKeyPrefix *string `json:"redirectReplaceKeyPrefix,omitempty" tf:"redirect_replace_key_prefix,omitempty"`
 }
 
+type SourceSelectionCriteriaInitParameters struct {
+
+	// Choose whether to copy the KMS-encrypted objects.
+	// Choose whether to copy the KMS-encrypted objects.
+	SseKMSEncryptedObjects []SseKMSEncryptedObjectsInitParameters `json:"sseKmsEncryptedObjects,omitempty" tf:"sse_kms_encrypted_objects,omitempty"`
+}
+
+type SourceSelectionCriteriaObservation struct {
+
+	// Choose whether to copy the KMS-encrypted objects.
+	// Choose whether to copy the KMS-encrypted objects.
+	SseKMSEncryptedObjects []SseKMSEncryptedObjectsObservation `json:"sseKmsEncryptedObjects,omitempty" tf:"sse_kms_encrypted_objects,omitempty"`
+}
+
+type SourceSelectionCriteriaParameters struct {
+
+	// Choose whether to copy the KMS-encrypted objects.
+	// Choose whether to copy the KMS-encrypted objects.
+	// +kubebuilder:validation:Optional
+	SseKMSEncryptedObjects []SseKMSEncryptedObjectsParameters `json:"sseKmsEncryptedObjects,omitempty" tf:"sse_kms_encrypted_objects,omitempty"`
+}
+
+type SseKMSEncryptedObjectsInitParameters struct {
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Choose whether to copy KMS encrypted objects; supported values are Enabled and Disabled.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type SseKMSEncryptedObjectsObservation struct {
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Choose whether to copy KMS encrypted objects; supported values are Enabled and Disabled.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type SseKMSEncryptedObjectsParameters struct {
+
+	// Whether to synchronously delete the tag, supports Disabled or Enabled. The default value is Enabled, meaning the tag will be deleted synchronously.
+	// Choose whether to copy KMS encrypted objects; supported values are Enabled and Disabled.
+	// +kubebuilder:validation:Optional
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type TagInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TagObservation struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TagParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
+type TieringInitParameters struct {
+
+	// When rule_id is not default, this parameter is used to specify the archiving or deep archiving tier.  The possible value are: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS.
+	// When `rule_id` is not `default`, this parameter is used to specify the archiving or deep archiving tier.  The possible value are: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS.
+	AccessTier *string `json:"accessTier,omitempty" tf:"access_tier,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// When the `rule_id` is not set to default, this specifies the number of days after which data is transitioned to the archive or deep archive tier in the intelligent tiering storage configuration. The archive tier (ARCHIVE_ACCESS) supports a range of 91 to 730 days. The deep archive tier (DEEP_ARCHIVE_ACCESS) supports a range of 180 to 730 days. Within the same rule, the number of days for the deep archive tier must be greater than the number of days for the archive tier.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+}
+
+type TieringObservation struct {
+
+	// When rule_id is not default, this parameter is used to specify the archiving or deep archiving tier.  The possible value are: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS.
+	// When `rule_id` is not `default`, this parameter is used to specify the archiving or deep archiving tier.  The possible value are: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS.
+	AccessTier *string `json:"accessTier,omitempty" tf:"access_tier,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// When the `rule_id` is not set to default, this specifies the number of days after which data is transitioned to the archive or deep archive tier in the intelligent tiering storage configuration. The archive tier (ARCHIVE_ACCESS) supports a range of 91 to 730 days. The deep archive tier (DEEP_ARCHIVE_ACCESS) supports a range of 180 to 730 days. Within the same rule, the number of days for the deep archive tier must be greater than the number of days for the archive tier.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+}
+
+type TieringParameters struct {
+
+	// When rule_id is not default, this parameter is used to specify the archiving or deep archiving tier.  The possible value are: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS.
+	// When `rule_id` is not `default`, this parameter is used to specify the archiving or deep archiving tier.  The possible value are: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS.
+	// +kubebuilder:validation:Optional
+	AccessTier *string `json:"accessTier" tf:"access_tier,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// When the `rule_id` is not set to default, this specifies the number of days after which data is transitioned to the archive or deep archive tier in the intelligent tiering storage configuration. The archive tier (ARCHIVE_ACCESS) supports a range of 91 to 730 days. The deep archive tier (DEEP_ARCHIVE_ACCESS) supports a range of 180 to 730 days. Within the same rule, the number of days for the deep archive tier must be greater than the number of days for the archive tier.
+	// +kubebuilder:validation:Optional
+	Days *float64 `json:"days" tf:"days,omitempty"`
+}
+
 type TransitionInitParameters struct {
 
 	// Specifies the date after which you want the corresponding action to take effect.
@@ -1064,6 +1684,7 @@ type WebsiteInitParameters struct {
 
 type WebsiteObservation struct {
 
+	// Endpoint of the static website.
 	// `Endpoint` of the static website.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 

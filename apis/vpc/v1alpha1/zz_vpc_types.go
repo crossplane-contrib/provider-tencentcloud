@@ -29,8 +29,16 @@ type VPCInitParameters struct {
 	// +listType=set
 	DNSServers []*string `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
-	// Indicates whether VPC multicast is enabled. The default value is 'true'.
-	// Indicates whether VPC multicast is enabled. The default value is 'true'.
+	// Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	EnableRouteVPCPublish *bool `json:"enableRouteVpcPublish,omitempty" tf:"enable_route_vpc_publish,omitempty"`
+
+	// Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	EnableRouteVPCPublishIPv6 *bool `json:"enableRouteVpcPublishIpv6,omitempty" tf:"enable_route_vpc_publish_ipv6,omitempty"`
+
+	// Indicates whether VPC multicast is enabled. The default value is false. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
+	// Indicates whether VPC multicast is enabled. The default value is `false`. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
 	IsMulticast *bool `json:"isMulticast,omitempty" tf:"is_multicast,omitempty"`
 
 	// The name of the VPC.
@@ -71,6 +79,14 @@ type VPCObservation struct {
 	// List of Docker Assistant CIDR.
 	DockerAssistantCidrs []*string `json:"dockerAssistantCidrs,omitempty" tf:"docker_assistant_cidrs,omitempty"`
 
+	// Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	EnableRouteVPCPublish *bool `json:"enableRouteVpcPublish,omitempty" tf:"enable_route_vpc_publish,omitempty"`
+
+	// Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	EnableRouteVPCPublishIPv6 *bool `json:"enableRouteVpcPublishIpv6,omitempty" tf:"enable_route_vpc_publish_ipv6,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -78,8 +94,8 @@ type VPCObservation struct {
 	// Indicates whether it is the default VPC for this region.
 	IsDefault *bool `json:"isDefault,omitempty" tf:"is_default,omitempty"`
 
-	// Indicates whether VPC multicast is enabled. The default value is 'true'.
-	// Indicates whether VPC multicast is enabled. The default value is 'true'.
+	// Indicates whether VPC multicast is enabled. The default value is false. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
+	// Indicates whether VPC multicast is enabled. The default value is `false`. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
 	IsMulticast *bool `json:"isMulticast,omitempty" tf:"is_multicast,omitempty"`
 
 	// The name of the VPC.
@@ -111,8 +127,18 @@ type VPCParameters struct {
 	// +listType=set
 	DNSServers []*string `json:"dnsServers,omitempty" tf:"dns_servers,omitempty"`
 
-	// Indicates whether VPC multicast is enabled. The default value is 'true'.
-	// Indicates whether VPC multicast is enabled. The default value is 'true'.
+	// Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// Vpc association with CCN route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// +kubebuilder:validation:Optional
+	EnableRouteVPCPublish *bool `json:"enableRouteVpcPublish,omitempty" tf:"enable_route_vpc_publish,omitempty"`
+
+	// Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// Vpc association with CCN IPV6 route publish policy. true: enables cidr route publishing. false: enables subnet route publishing. default is subnet route publishing when creating a vpc. to select cidr route publishing, submit a ticket for adding to allowlist.
+	// +kubebuilder:validation:Optional
+	EnableRouteVPCPublishIPv6 *bool `json:"enableRouteVpcPublishIpv6,omitempty" tf:"enable_route_vpc_publish_ipv6,omitempty"`
+
+	// Indicates whether VPC multicast is enabled. The default value is false. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
+	// Indicates whether VPC multicast is enabled. The default value is `false`. Multicast are whitelist-restricted. We recommend disabling these features if they are not applicable to your environment.
 	// +kubebuilder:validation:Optional
 	IsMulticast *bool `json:"isMulticast,omitempty" tf:"is_multicast,omitempty"`
 

@@ -76,15 +76,6 @@ func Configure(p *config.Provider) {
 		}
 	})
 
-	p.AddResourceConfigurator("tencentcloud_kubernetes_addon_attachment", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.ShortGroup = shortGroupTke
-		r.Kind = "AddonAttachment"
-		r.References["cluster_id"] = config.Reference{
-			Type: "Cluster",
-		}
-	})
-
 	p.AddResourceConfigurator("tencentcloud_kubernetes_auth_attachment", func(r *config.Resource) {
 		r.ExternalName = config.IdentifierFromProvider
 		r.ShortGroup = shortGroupTke

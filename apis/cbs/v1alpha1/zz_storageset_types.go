@@ -35,6 +35,10 @@ type StorageSetInitParameters struct {
 	// Indicates whether CBS is encrypted.
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
 
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
 	// ID of the project to which the instance belongs.
 	// ID of the project to which the instance belongs.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
@@ -93,6 +97,10 @@ type StorageSetObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
 	// ID of the project to which the instance belongs.
 	// ID of the project to which the instance belongs.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
@@ -148,6 +156,11 @@ type StorageSetParameters struct {
 	// Indicates whether CBS is encrypted.
 	// +kubebuilder:validation:Optional
 	Encrypt *bool `json:"encrypt,omitempty" tf:"encrypt,omitempty"`
+
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+	// Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+	// +kubebuilder:validation:Optional
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// ID of the project to which the instance belongs.
 	// ID of the project to which the instance belongs.

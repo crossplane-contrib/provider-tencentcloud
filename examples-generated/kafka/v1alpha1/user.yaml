@@ -4,11 +4,11 @@ metadata:
   annotations:
     meta.upbound.io/example-id: kafka/v1alpha1/user
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    accountName: tf-test
+    accountName: tf-example
     instanceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

@@ -15,10 +15,8 @@ spec:
     - certificate:
       - certType: CustomCert
         customCert:
-        - cert: '-----BEGIN CERTIFICATE-----'
-          certId: Mbx45wts
-          privateKey: '-----BEGIN RSA PRIVATE_KEY-----'
-      domain: www.example.com
+        - certId: JG65alUy
+      domain: ${var.custom_origin_domain}
 
 ---
 
@@ -35,3 +33,7 @@ spec:
     acl: private
     bucket: private-bucket-${local.app_id}
     forceClean: true
+    originDomainRules:
+    - domain: ${var.custom_origin_domain}
+      status: ENABLED
+      type: REST

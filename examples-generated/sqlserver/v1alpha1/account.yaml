@@ -11,12 +11,12 @@ spec:
     instanceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    name: tf_example_account
+    name: tf_example
     passwordSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    remark: test-remark
+    remark: remark.
 
 ---
 

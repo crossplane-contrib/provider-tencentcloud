@@ -13,6 +13,533 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ChildNodeValueChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueChildNodeValueChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ChildNodeValueChildNodeValueChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ChildNodeValueChildNodeValueChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeValueChildNodeValueChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeValueChildNodeValueChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ValueChildNodeValueChildNodeValueChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ValueChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
 type DynamicIndexInitParameters struct {
 
 	// Whether to take effect. Default value: true.
@@ -215,44 +742,326 @@ type KeyValueParameters struct {
 
 type KeyValuesInitParameters struct {
 
-	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+	// Field name of the json child node.
 	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Field index description information.
+	// Field index description information of the json child node.
 	// Field index description information.
 	Value []ValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type KeyValuesObservation struct {
 
-	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+	// Field name of the json child node.
 	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Field index description information.
+	// Field index description information of the json child node.
 	// Field index description information.
 	Value []ValueObservation `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type KeyValuesParameters struct {
 
-	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+	// Field name of the json child node.
 	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key" tf:"key,omitempty"`
 
-	// Field index description information.
+	// Field index description information of the json child node.
 	// Field index description information.
 	// +kubebuilder:validation:Optional
 	Value []ValueParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type KeyValuesValueInitParameters struct {
+type KeyValuesValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []KeyValuesValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type KeyValuesValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []KeyValuesValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type KeyValuesValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []KeyValuesValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []KeyValuesValueChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []KeyValuesValueChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []KeyValuesValueChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeValueChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
 
 	// Whether Chinese characters are contained.
 	// Whether Chinese characters are contained.
 	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ValueChildNodeValueChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ValueChildNodeValueChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []KeyValuesValueChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []KeyValuesValueChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type KeyValuesValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []KeyValuesValueChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type KeyValuesValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []KeyValuesValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
 
 	// Whether the analysis feature is enabled for the field.
 	// Whether the analysis feature is enabled for the field.
@@ -269,9 +1078,21 @@ type KeyValuesValueInitParameters struct {
 
 type KeyValuesValueObservation struct {
 
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []KeyValuesValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
 	// Whether Chinese characters are contained.
 	// Whether Chinese characters are contained.
 	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
 
 	// Whether the analysis feature is enabled for the field.
 	// Whether the analysis feature is enabled for the field.
@@ -288,10 +1109,25 @@ type KeyValuesValueObservation struct {
 
 type KeyValuesValueParameters struct {
 
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []KeyValuesValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
 	// Whether Chinese characters are contained.
 	// Whether Chinese characters are contained.
 	// +kubebuilder:validation:Optional
 	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
 
 	// Whether the analysis feature is enabled for the field.
 	// Whether the analysis feature is enabled for the field.
@@ -383,34 +1219,34 @@ type TagInitParameters struct {
 
 type TagKeyValuesInitParameters struct {
 
-	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+	// Field name of the json child node.
 	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Field index description information.
+	// Field index description information of the json child node.
 	// Field index description information.
 	Value []KeyValuesValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type TagKeyValuesObservation struct {
 
-	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+	// Field name of the json child node.
 	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Field index description information.
+	// Field index description information of the json child node.
 	// Field index description information.
 	Value []KeyValuesValueObservation `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type TagKeyValuesParameters struct {
 
-	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with TAG. and is consistent with the one when logs are uploaded. TAG. will be prefixed automatically for display in the console..
+	// Field name of the json child node.
 	// When a key value or metafield index needs to be configured for a field, the metafield Key does not need to be prefixed with __TAG__. and is consistent with the one when logs are uploaded. __TAG__. will be prefixed automatically for display in the console..
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key" tf:"key,omitempty"`
 
-	// Field index description information.
+	// Field index description information of the json child node.
 	// Field index description information.
 	// +kubebuilder:validation:Optional
 	Value []KeyValuesValueParameters `json:"value,omitempty" tf:"value,omitempty"`
@@ -440,11 +1276,550 @@ type TagParameters struct {
 	KeyValues []TagKeyValuesParameters `json:"keyValues,omitempty" tf:"key_values,omitempty"`
 }
 
-type ValueInitParameters struct {
+type ValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ValueChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ValueChildNodeValueChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueChildNodeInitParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueChildNodeValueChildNodeValueChildNodeValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueChildNodeObservation struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	Value []ValueChildNodeValueChildNodeValueChildNodeValueChildNodeValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueChildNodeParameters struct {
+
+	// Field name of the json child node.
+	// Field name of the json child node.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field index description information of the json child node.
+	// Field index description information of the json child node.
+	// +kubebuilder:validation:Optional
+	Value []ValueChildNodeValueChildNodeValueChildNodeValueChildNodeValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
 	// Whether Chinese characters are contained.
 	// Whether Chinese characters are contained.
 	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeValueChildNodeValueChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeValueChildNodeValueChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ChildNodeValueChildNodeValueChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeValueChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeValueChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ChildNodeValueChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeValueChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueObservation struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeValueChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ValueChildNodeValueParameters struct {
+
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ChildNodeValueChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	// +kubebuilder:validation:Optional
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
+
+	// Whether the analysis feature is enabled for the field.
+	// Whether the analysis feature is enabled for the field.
+	// +kubebuilder:validation:Optional
+	SQLFlag *bool `json:"sqlFlag,omitempty" tf:"sql_flag,omitempty"`
+
+	// Full-Text index delimiter. Each character in the string represents a delimiter.
+	// Field delimiter, which is meaningful only if the field type is text. Each character in the entered string represents a delimiter.
+	// +kubebuilder:validation:Optional
+	Tokenizer *string `json:"tokenizer,omitempty" tf:"tokenizer,omitempty"`
+
+	// Field type. Valid values: long, text, double.
+	// Field type. Valid values: long, text, double.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ValueInitParameters struct {
+
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeInitParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
+	// Whether Chinese characters are contained.
+	// Whether Chinese characters are contained.
+	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
 
 	// Whether the analysis feature is enabled for the field.
 	// Whether the analysis feature is enabled for the field.
@@ -461,9 +1836,21 @@ type ValueInitParameters struct {
 
 type ValueObservation struct {
 
+	// Field alias.
+	// Field alias.
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	ChildNode []ChildNodeObservation `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
 	// Whether Chinese characters are contained.
 	// Whether Chinese characters are contained.
 	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
 
 	// Whether the analysis feature is enabled for the field.
 	// Whether the analysis feature is enabled for the field.
@@ -480,10 +1867,25 @@ type ValueObservation struct {
 
 type ValueParameters struct {
 
+	// Field alias.
+	// Field alias.
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// Json child node list (recursive, up to 5 levels). Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	ChildNode []ChildNodeParameters `json:"childNode,omitempty" tf:"child_node,omitempty"`
+
 	// Whether Chinese characters are contained.
 	// Whether Chinese characters are contained.
 	// +kubebuilder:validation:Optional
 	ContainZH *bool `json:"containZH,omitempty" tf:"contain_z_h,omitempty"`
+
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// Only enable index for child nodes, this field itself is not enabled. Note: only json type fields can configure this parameter.
+	// +kubebuilder:validation:Optional
+	OpenIndexForChildOnly *bool `json:"openIndexForChildOnly,omitempty" tf:"open_index_for_child_only,omitempty"`
 
 	// Whether the analysis feature is enabled for the field.
 	// Whether the analysis feature is enabled for the field.

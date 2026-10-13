@@ -78,6 +78,11 @@ spec:
                       It's only applicable to public network CLB instances. IP version. Values: IPV4, IPV6 and IPv6FullChain (case-insensitive). Default: IPV4. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
                       It's only applicable to public network CLB instances. IP version. Values: `IPV4`, `IPV6` and `IPv6FullChain` (case-insensitive). Default: `IPV4`. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
                     type: string
+                  associateEndpoint:
+                    description: |-
+                      The associated terminal node ID; passing an empty string indicates unassociating the node.
+                      The associated terminal node ID; passing an empty string indicates unassociating the node.
+                    type: string
                   bandwidthPackageId:
                     description: |-
                       Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
@@ -108,10 +113,107 @@ spec:
                       The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
                       The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
                     type: string
+                  exclusiveCluster:
+                    description: |-
+                      Information about the dedicated CLB instance. You must specify this parameter when you create a dedicated CLB instance in a private network.
+                      Information about the dedicated CLB instance. You must specify this parameter when you create a dedicated CLB instance in a private network.
+                    items:
+                      properties:
+                        classicalCluster:
+                          description: |-
+                            vpcgw cluster
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            vpcgw cluster
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                        l4Clusters:
+                          description: |-
+                            Layer-4 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            Layer-4 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                        l7Clusters:
+                          description: |-
+                            Layer-7 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            Layer-7 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  force:
+                    description: |-
+                      Whether to forcibly upgrade the CLB instance, default is false. This parameter only takes effect when sla_type changes.
+                      Whether to forcibly upgrade the CLB instance, default is `false`. This parameter only takes effect when `sla_type` changes.
+                    type: boolean
                   internetBandwidthMaxOut:
                     description: |-
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+                      Maximum outbound bandwidth, in Mbps. This parameter is valid only for public network shared, LCU-supported, and exclusive CLB instances and private network LCU-supported CLB instances.
+                      Maximum outbound bandwidth, in Mbps. This parameter is valid only for public network shared, LCU-supported, and exclusive CLB instances and private network LCU-supported CLB instances.
+                      - The range of the maximum outbound bandwidth for public network shared and exclusive CLB instances is 1-2,048 Mbps.
+                      - The range of the maximum outbound bandwidth for public network and private network LCU-supported CLB instances is 1-61,440 Mbps.
+                      (Default to 10Mbps when CreateLoadBalancer is call.).
                     type: number
                   internetChargeType:
                     description: |-
@@ -398,6 +500,11 @@ spec:
                       It's only applicable to public network CLB instances. IP version. Values: IPV4, IPV6 and IPv6FullChain (case-insensitive). Default: IPV4. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
                       It's only applicable to public network CLB instances. IP version. Values: `IPV4`, `IPV6` and `IPv6FullChain` (case-insensitive). Default: `IPV4`. Note: IPV6 indicates IPv6 NAT64, while IPv6FullChain indicates IPv6.
                     type: string
+                  associateEndpoint:
+                    description: |-
+                      The associated terminal node ID; passing an empty string indicates unassociating the node.
+                      The associated terminal node ID; passing an empty string indicates unassociating the node.
+                    type: string
                   bandwidthPackageId:
                     description: |-
                       Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
@@ -428,10 +535,107 @@ spec:
                       The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
                       The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
                     type: string
+                  exclusiveCluster:
+                    description: |-
+                      Information about the dedicated CLB instance. You must specify this parameter when you create a dedicated CLB instance in a private network.
+                      Information about the dedicated CLB instance. You must specify this parameter when you create a dedicated CLB instance in a private network.
+                    items:
+                      properties:
+                        classicalCluster:
+                          description: |-
+                            vpcgw cluster
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            vpcgw cluster
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                        l4Clusters:
+                          description: |-
+                            Layer-4 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            Layer-4 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                        l7Clusters:
+                          description: |-
+                            Layer-7 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            Layer-7 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  force:
+                    description: |-
+                      Whether to forcibly upgrade the CLB instance, default is false. This parameter only takes effect when sla_type changes.
+                      Whether to forcibly upgrade the CLB instance, default is `false`. This parameter only takes effect when `sla_type` changes.
+                    type: boolean
                   internetBandwidthMaxOut:
                     description: |-
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+                      Maximum outbound bandwidth, in Mbps. This parameter is valid only for public network shared, LCU-supported, and exclusive CLB instances and private network LCU-supported CLB instances.
+                      Maximum outbound bandwidth, in Mbps. This parameter is valid only for public network shared, LCU-supported, and exclusive CLB instances and private network LCU-supported CLB instances.
+                      - The range of the maximum outbound bandwidth for public network shared and exclusive CLB instances is 1-2,048 Mbps.
+                      - The range of the maximum outbound bandwidth for public network and private network LCU-supported CLB instances is 1-61,440 Mbps.
+                      (Default to 10Mbps when CreateLoadBalancer is call.).
                     type: number
                   internetChargeType:
                     description: |-
@@ -891,6 +1095,11 @@ spec:
                       The IPv6 address of the load balancing instance.
                       The IPv6 address of the load balancing instance.
                     type: string
+                  associateEndpoint:
+                    description: |-
+                      The associated terminal node ID; passing an empty string indicates unassociating the node.
+                      The associated terminal node ID; passing an empty string indicates unassociating the node.
+                    type: string
                   bandwidthPackageId:
                     description: |-
                       Bandwidth package id. If set, the internet_charge_type must be BANDWIDTH_PACKAGE.
@@ -933,13 +1142,110 @@ spec:
                       The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
                       The unique ID of the EIP, such as eip-1v2rmbwk, is only applicable to the intranet load balancing binding EIP. During the EIP change, there may be a brief network interruption.
                     type: string
+                  exclusiveCluster:
+                    description: |-
+                      Information about the dedicated CLB instance. You must specify this parameter when you create a dedicated CLB instance in a private network.
+                      Information about the dedicated CLB instance. You must specify this parameter when you create a dedicated CLB instance in a private network.
+                    items:
+                      properties:
+                        classicalCluster:
+                          description: |-
+                            vpcgw cluster
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            vpcgw cluster
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                        l4Clusters:
+                          description: |-
+                            Layer-4 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            Layer-4 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                        l7Clusters:
+                          description: |-
+                            Layer-7 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                            Layer-7 dedicated cluster list
+                            Note: this field may return null, indicating that no valid values can be obtained.
+                          items:
+                            properties:
+                              clusterId:
+                                description: |-
+                                  Cluster ID.
+                                  Unique cluster ID.
+                                type: string
+                              clusterName:
+                                description: |-
+                                  Cluster name.
+                                  Cluster name.
+                                type: string
+                              zone:
+                                description: |-
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                  Cluster AZ, such as ap-guangzhou-1
+                                  Note: this field may return null, indicating that no valid values can be obtained.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  force:
+                    description: |-
+                      Whether to forcibly upgrade the CLB instance, default is false. This parameter only takes effect when sla_type changes.
+                      Whether to forcibly upgrade the CLB instance, default is `false`. This parameter only takes effect when `sla_type` changes.
+                    type: boolean
                   id:
                     description: ID of the resource.
                     type: string
                   internetBandwidthMaxOut:
                     description: |-
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
-                      Max bandwidth out, only applicable to open CLB. Valid value ranges is [1, 2048]. Unit is Mbps.
+                      Maximum outbound bandwidth, in Mbps. This parameter is valid only for public network shared, LCU-supported, and exclusive CLB instances and private network LCU-supported CLB instances.
+                      Maximum outbound bandwidth, in Mbps. This parameter is valid only for public network shared, LCU-supported, and exclusive CLB instances and private network LCU-supported CLB instances.
+                      - The range of the maximum outbound bandwidth for public network shared and exclusive CLB instances is 1-2,048 Mbps.
+                      - The range of the maximum outbound bandwidth for public network and private network LCU-supported CLB instances is 1-61,440 Mbps.
+                      (Default to 10Mbps when CreateLoadBalancer is call.).
                     type: number
                   internetChargeType:
                     description: |-

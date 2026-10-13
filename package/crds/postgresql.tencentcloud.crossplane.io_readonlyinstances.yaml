@@ -308,6 +308,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags.
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
                   voucherIds:
                     description: |-
                       Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.
@@ -653,6 +661,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags.
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
                   voucherIds:
                     description: |-
                       Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.
@@ -1057,6 +1073,14 @@ spec:
                       VPC subnet ID.
                       VPC subnet ID.
                     type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags.
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
                   voucherIds:
                     description: |-
                       Specify Voucher Ids if auto_voucher was 1, only support using 1 vouchers for now.

@@ -73,6 +73,24 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  addNodeList:
+                    description: |-
+                      Add node list. Node type and availability zone information.
+                      Add node list. Node type and availability zone information.
+                    items:
+                      properties:
+                        role:
+                          description: |-
+                            Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+                            Node role to add. Valid values: `SECONDARY` (Mongod node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+                          type: string
+                        zone:
+                          description: |-
+                            The availability zone for the new node.
+                            The availability zone for the new node.
+                          type: string
+                      type: object
+                    type: array
                   autoRenewFlag:
                     description: |-
                       Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW), 1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is 0. Note: only works for PREPAID instance. Only supports0 and 1 for creation.
@@ -103,10 +121,32 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
                     type: string
+                  cpu:
+                    description: |-
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                    type: number
+                  dataEncryption:
+                    description: |-
+                      Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  encryptionKeySource:
+                    description: |-
+                      If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                      If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
                   engineVersion:
                     description: |-
-                      Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-                      Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+                      Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+                      Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+                      - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+                      - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+                      - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+                      - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+                      - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+                      - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+                      - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
                     type: string
                   hiddenZone:
                     description: |-
@@ -125,6 +165,16 @@ spec:
                     description: |-
                       Name of the Mongodb instance.
                       Name of the Mongodb instance.
+                    type: string
+                  keyId:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  kmsRegion:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   machineType:
                     description: |-
@@ -153,8 +203,8 @@ spec:
                     type: number
                   nodesPerShard:
                     description: |-
-                      Number of nodes per shard, at least 3(one master and two slaves).
-                      Number of nodes per shard, at least 3(one master and two slaves).
+                      Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
+                      Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
                     type: number
                   passwordSecretRef:
                     description: |-
@@ -185,6 +235,29 @@ spec:
                       ID of the project which the instance belongs.
                       ID of the project which the instance belongs.
                     type: number
+                  removeNodeList:
+                    description: |-
+                      Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., cmgo-xxxx_0-node-readonly0 will remove the first readonly node of each shard.
+                      Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., `cmgo-xxxx_0-node-readonly0` will remove the first readonly node of each shard.
+                    items:
+                      properties:
+                        nodeName:
+                          description: |-
+                            Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: cmgo-xxxx_0-node-readonly0.
+                            Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: `cmgo-xxxx_0-node-readonly0`.
+                          type: string
+                        role:
+                          description: |-
+                            Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+                            Node role to remove. Valid values: `SECONDARY` (Mongod secondary node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+                          type: string
+                        zone:
+                          description: |-
+                            The availability zone for the new node.
+                            The availability zone of the node to remove.
+                          type: string
+                      type: object
+                    type: array
                   securityGroups:
                     description: |-
                       ID of the security group.
@@ -383,6 +456,24 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  addNodeList:
+                    description: |-
+                      Add node list. Node type and availability zone information.
+                      Add node list. Node type and availability zone information.
+                    items:
+                      properties:
+                        role:
+                          description: |-
+                            Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+                            Node role to add. Valid values: `SECONDARY` (Mongod node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+                          type: string
+                        zone:
+                          description: |-
+                            The availability zone for the new node.
+                            The availability zone for the new node.
+                          type: string
+                      type: object
+                    type: array
                   autoRenewFlag:
                     description: |-
                       Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW), 1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is 0. Note: only works for PREPAID instance. Only supports0 and 1 for creation.
@@ -413,10 +504,32 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
                     type: string
+                  cpu:
+                    description: |-
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                    type: number
+                  dataEncryption:
+                    description: |-
+                      Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  encryptionKeySource:
+                    description: |-
+                      If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                      If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
                   engineVersion:
                     description: |-
-                      Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-                      Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+                      Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+                      Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+                      - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+                      - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+                      - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+                      - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+                      - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+                      - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+                      - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
                     type: string
                   hiddenZone:
                     description: |-
@@ -435,6 +548,16 @@ spec:
                     description: |-
                       Name of the Mongodb instance.
                       Name of the Mongodb instance.
+                    type: string
+                  keyId:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  kmsRegion:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   machineType:
                     description: |-
@@ -463,8 +586,8 @@ spec:
                     type: number
                   nodesPerShard:
                     description: |-
-                      Number of nodes per shard, at least 3(one master and two slaves).
-                      Number of nodes per shard, at least 3(one master and two slaves).
+                      Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
+                      Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
                     type: number
                   prepaidPeriod:
                     description: |-
@@ -476,6 +599,29 @@ spec:
                       ID of the project which the instance belongs.
                       ID of the project which the instance belongs.
                     type: number
+                  removeNodeList:
+                    description: |-
+                      Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., cmgo-xxxx_0-node-readonly0 will remove the first readonly node of each shard.
+                      Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., `cmgo-xxxx_0-node-readonly0` will remove the first readonly node of each shard.
+                    items:
+                      properties:
+                        nodeName:
+                          description: |-
+                            Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: cmgo-xxxx_0-node-readonly0.
+                            Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: `cmgo-xxxx_0-node-readonly0`.
+                          type: string
+                        role:
+                          description: |-
+                            Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+                            Node role to remove. Valid values: `SECONDARY` (Mongod secondary node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+                          type: string
+                        zone:
+                          description: |-
+                            The availability zone for the new node.
+                            The availability zone of the node to remove.
+                          type: string
+                      type: object
+                    type: array
                   securityGroups:
                     description: |-
                       ID of the security group.
@@ -866,6 +1012,24 @@ spec:
             properties:
               atProvider:
                 properties:
+                  addNodeList:
+                    description: |-
+                      Add node list. Node type and availability zone information.
+                      Add node list. Node type and availability zone information.
+                    items:
+                      properties:
+                        role:
+                          description: |-
+                            Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+                            Node role to add. Valid values: `SECONDARY` (Mongod node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+                          type: string
+                        zone:
+                          description: |-
+                            The availability zone for the new node.
+                            The availability zone for the new node.
+                          type: string
+                      type: object
+                    type: array
                   autoRenewFlag:
                     description: |-
                       Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW), 1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is 0. Note: only works for PREPAID instance. Only supports0 and 1 for creation.
@@ -896,15 +1060,37 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
                     type: string
+                  cpu:
+                    description: |-
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                    type: number
                   createTime:
                     description: |-
                       Creation time of the Mongodb instance.
                       Creation time of the Mongodb instance.
                     type: string
+                  dataEncryption:
+                    description: |-
+                      Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  encryptionKeySource:
+                    description: |-
+                      If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                      If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
                   engineVersion:
                     description: |-
-                      Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-                      Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+                      Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+                      Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+                      - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+                      - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+                      - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+                      - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+                      - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+                      - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+                      - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
                     type: string
                   hiddenZone:
                     description: |-
@@ -926,6 +1112,16 @@ spec:
                     description: |-
                       Name of the Mongodb instance.
                       Name of the Mongodb instance.
+                    type: string
+                  keyId:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  kmsRegion:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   machineType:
                     description: |-
@@ -954,8 +1150,8 @@ spec:
                     type: number
                   nodesPerShard:
                     description: |-
-                      Number of nodes per shard, at least 3(one master and two slaves).
-                      Number of nodes per shard, at least 3(one master and two slaves).
+                      Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
+                      Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
                     type: number
                   prepaidPeriod:
                     description: |-
@@ -967,6 +1163,29 @@ spec:
                       ID of the project which the instance belongs.
                       ID of the project which the instance belongs.
                     type: number
+                  removeNodeList:
+                    description: |-
+                      Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., cmgo-xxxx_0-node-readonly0 will remove the first readonly node of each shard.
+                      Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., `cmgo-xxxx_0-node-readonly0` will remove the first readonly node of each shard.
+                    items:
+                      properties:
+                        nodeName:
+                          description: |-
+                            Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: cmgo-xxxx_0-node-readonly0.
+                            Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: `cmgo-xxxx_0-node-readonly0`.
+                          type: string
+                        role:
+                          description: |-
+                            Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+                            Node role to remove. Valid values: `SECONDARY` (Mongod secondary node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+                          type: string
+                        zone:
+                          description: |-
+                            The availability zone for the new node.
+                            The availability zone of the node to remove.
+                          type: string
+                      type: object
+                    type: array
                   securityGroups:
                     description: |-
                       ID of the security group.

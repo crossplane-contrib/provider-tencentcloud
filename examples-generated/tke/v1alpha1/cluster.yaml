@@ -23,44 +23,6 @@ spec:
     vpcIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    workerConfig:
-    - availabilityZone: ${var.availability_zone_first}
-      count: 1
-      dataDisk:
-      - diskSize: 50
-        diskType: CLOUD_PREMIUM
-      enhancedMonitorService: false
-      enhancedSecurityService: false
-      instanceType: ${var.default_instance_type}
-      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
-      internetMaxBandwidthOut: 100
-      passwordSecretRef:
-        key: example-key
-        name: example-secret
-        namespace: upbound-system
-      publicIpAssigned: true
-      subnetId: ${local.first_subnet_id}
-      systemDiskSize: 60
-      systemDiskType: CLOUD_SSD
-      userData: dGVzdA==
-    - availabilityZone: ${var.availability_zone_second}
-      camRoleName: CVM_QcsRole
-      count: 1
-      dataDisk:
-      - diskSize: 50
-        diskType: CLOUD_PREMIUM
-      enhancedMonitorService: false
-      enhancedSecurityService: false
-      instanceType: ${var.default_instance_type}
-      internetChargeType: TRAFFIC_POSTPAID_BY_HOUR
-      internetMaxBandwidthOut: 100
-      keyIds:
-      - skey-11112222
-      publicIpAssigned: true
-      subnetId: ${local.second_subnet_id}
-      systemDiskSize: 60
-      systemDiskType: CLOUD_SSD
-      userData: dGVzdA==
 
 ---
 

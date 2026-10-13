@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: HourDBInstance is the Schema for the HourDBInstances API. Provides
-          a resource to create a mariadb hour_db_instance
+          a resource to create a MariaDB hour db instance
         properties:
           apiVersion:
             description: |-
@@ -78,6 +78,24 @@ spec:
                       db engine version, default to 10.1.9.
                       db engine version, default to 10.1.9.
                     type: string
+                  initParams:
+                    description: |-
+                      parameter list. This interface's optional values include: character_set_server (character set, required), lower_case_table_names (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), innodb_page_size (innodb data page, default 16K), sync_mode (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+                      parameter list. This interface's optional values include: `character_set_server` (character set, required), `lower_case_table_names` (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), `innodb_page_size` (innodb data page, default 16K), `sync_mode` (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+                    items:
+                      properties:
+                        param:
+                          description: |-
+                            parameter name.
+                            parameter name.
+                          type: string
+                        value:
+                          description: |-
+                            parameter value.
+                            parameter value.
+                          type: string
+                      type: object
+                    type: array
                   instanceName:
                     description: |-
                       name of this instance.
@@ -300,6 +318,24 @@ spec:
                       db engine version, default to 10.1.9.
                       db engine version, default to 10.1.9.
                     type: string
+                  initParams:
+                    description: |-
+                      parameter list. This interface's optional values include: character_set_server (character set, required), lower_case_table_names (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), innodb_page_size (innodb data page, default 16K), sync_mode (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+                      parameter list. This interface's optional values include: `character_set_server` (character set, required), `lower_case_table_names` (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), `innodb_page_size` (innodb data page, default 16K), `sync_mode` (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+                    items:
+                      properties:
+                        param:
+                          description: |-
+                            parameter name.
+                            parameter name.
+                          type: string
+                        value:
+                          description: |-
+                            parameter value.
+                            parameter value.
+                          type: string
+                      type: object
+                    type: array
                   instanceName:
                     description: |-
                       name of this instance.
@@ -701,6 +737,24 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  initParams:
+                    description: |-
+                      parameter list. This interface's optional values include: character_set_server (character set, required), lower_case_table_names (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), innodb_page_size (innodb data page, default 16K), sync_mode (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+                      parameter list. This interface's optional values include: `character_set_server` (character set, required), `lower_case_table_names` (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), `innodb_page_size` (innodb data page, default 16K), `sync_mode` (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+                    items:
+                      properties:
+                        param:
+                          description: |-
+                            parameter name.
+                            parameter name.
+                          type: string
+                        value:
+                          description: |-
+                            parameter value.
+                            parameter value.
+                          type: string
+                      type: object
+                    type: array
                   instanceName:
                     description: |-
                       name of this instance.

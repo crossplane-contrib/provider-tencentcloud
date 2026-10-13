@@ -47,6 +47,7 @@ type CfsConfigObservation struct {
 	CfsID *string `json:"cfsId,omitempty" tf:"cfs_id,omitempty"`
 
 	// (Readonly) File system ip address.
+	// (Readonly) File system ip address.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
 	// Local mount directory.
@@ -57,11 +58,11 @@ type CfsConfigObservation struct {
 	// File system mount instance ID.
 	MountInsID *string `json:"mountInsId,omitempty" tf:"mount_ins_id,omitempty"`
 
-	// Subnet ID of the SCF function.
+	// (Readonly) File system subnet ID.
 	// (Readonly) File system subnet ID.
 	MountSubnetID *string `json:"mountSubnetId,omitempty" tf:"mount_subnet_id,omitempty"`
 
-	// VPC ID of the SCF function.
+	// (Readonly) File system virtual private network ID.
 	// (Readonly) File system virtual private network ID.
 	MountVPCID *string `json:"mountVpcId,omitempty" tf:"mount_vpc_id,omitempty"`
 
@@ -173,6 +174,10 @@ type FunctionInitParameters struct {
 	// Image of the SCF function, conflict with cos_bucket_name, cos_object_name, cos_bucket_region, zip_file.
 	// Image of the SCF function, conflict with `cos_bucket_name`, `cos_object_name`, `cos_bucket_region`, `zip_file`.
 	ImageConfig []ImageConfigInitParameters `json:"imageConfig,omitempty" tf:"image_config,omitempty"`
+
+	// Instance concurrency configuration for the function.
+	// Instance concurrency configuration for the function.
+	InstanceConcurrencyConfig []InstanceConcurrencyConfigInitParameters `json:"instanceConcurrencyConfig,omitempty" tf:"instance_concurrency_config,omitempty"`
 
 	// Intranet access configuration.
 	// Intranet access configuration.
@@ -334,6 +339,10 @@ type FunctionObservation struct {
 	// Whether to automatically install dependencies.
 	InstallDependency *bool `json:"installDependency,omitempty" tf:"install_dependency,omitempty"`
 
+	// Instance concurrency configuration for the function.
+	// Instance concurrency configuration for the function.
+	InstanceConcurrencyConfig []InstanceConcurrencyConfigObservation `json:"instanceConcurrencyConfig,omitempty" tf:"instance_concurrency_config,omitempty"`
+
 	// Intranet access configuration.
 	// Intranet access configuration.
 	IntranetConfig []IntranetConfigObservation `json:"intranetConfig,omitempty" tf:"intranet_config,omitempty"`
@@ -490,6 +499,11 @@ type FunctionParameters struct {
 	// +kubebuilder:validation:Optional
 	ImageConfig []ImageConfigParameters `json:"imageConfig,omitempty" tf:"image_config,omitempty"`
 
+	// Instance concurrency configuration for the function.
+	// Instance concurrency configuration for the function.
+	// +kubebuilder:validation:Optional
+	InstanceConcurrencyConfig []InstanceConcurrencyConfigParameters `json:"instanceConcurrencyConfig,omitempty" tf:"instance_concurrency_config,omitempty"`
+
 	// Intranet access configuration.
 	// Intranet access configuration.
 	// +kubebuilder:validation:Optional
@@ -588,8 +602,11 @@ type ImageConfigInitParameters struct {
 	// The image type. personal or enterprise.
 	ImageType *string `json:"imageType,omitempty" tf:"image_type,omitempty"`
 
-	// The uri of image.
-	// The uri of image.
+	// The uri of image. Supports three formats:
+	// The uri of image. Supports three formats:
+	// - Format A: registry/repo:tag
+	// - Format B: registry/repo@sha256:digest
+	// - Format C: registry/repo:tag@sha256:digest.
 	ImageURI *string `json:"imageUri,omitempty" tf:"image_uri,omitempty"`
 
 	// The registry id of TCR. When image type is enterprise, it must be set.
@@ -623,8 +640,11 @@ type ImageConfigObservation struct {
 	// The image type. personal or enterprise.
 	ImageType *string `json:"imageType,omitempty" tf:"image_type,omitempty"`
 
-	// The uri of image.
-	// The uri of image.
+	// The uri of image. Supports three formats:
+	// The uri of image. Supports three formats:
+	// - Format A: registry/repo:tag
+	// - Format B: registry/repo@sha256:digest
+	// - Format C: registry/repo:tag@sha256:digest.
 	ImageURI *string `json:"imageUri,omitempty" tf:"image_uri,omitempty"`
 
 	// The registry id of TCR. When image type is enterprise, it must be set.
@@ -664,8 +684,11 @@ type ImageConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	ImageType *string `json:"imageType" tf:"image_type,omitempty"`
 
-	// The uri of image.
-	// The uri of image.
+	// The uri of image. Supports three formats:
+	// The uri of image. Supports three formats:
+	// - Format A: registry/repo:tag
+	// - Format B: registry/repo@sha256:digest
+	// - Format C: registry/repo:tag@sha256:digest.
 	// +kubebuilder:validation:Optional
 	ImageURI *string `json:"imageUri" tf:"image_uri,omitempty"`
 
@@ -673,6 +696,93 @@ type ImageConfigParameters struct {
 	// The registry id of TCR. When image type is enterprise, it must be set.
 	// +kubebuilder:validation:Optional
 	RegistryID *string `json:"registryId,omitempty" tf:"registry_id,omitempty"`
+}
+
+type InstanceConcurrencyConfigInitParameters struct {
+
+	// Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+	// Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+	DynamicEnabled *string `json:"dynamicEnabled,omitempty" tf:"dynamic_enabled,omitempty"`
+
+	// Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+	// Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+	InstanceIsolationEnabled *string `json:"instanceIsolationEnabled,omitempty" tf:"instance_isolation_enabled,omitempty"`
+
+	// Maximum single-instance concurrency, range: 1-100.
+	// Maximum single-instance concurrency, range: 1-100.
+	MaxConcurrency *float64 `json:"maxConcurrency,omitempty" tf:"max_concurrency,omitempty"`
+
+	// Dynamic concurrency configuration parameters.
+	// Dynamic concurrency configuration parameters.
+	MixNodeConfig []MixNodeConfigInitParameters `json:"mixNodeConfig,omitempty" tf:"mix_node_config,omitempty"`
+
+	// Session configuration parameters.
+	// Session configuration parameters.
+	SessionConfig []SessionConfigInitParameters `json:"sessionConfig,omitempty" tf:"session_config,omitempty"`
+
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type InstanceConcurrencyConfigObservation struct {
+
+	// Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+	// Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+	DynamicEnabled *string `json:"dynamicEnabled,omitempty" tf:"dynamic_enabled,omitempty"`
+
+	// Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+	// Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+	InstanceIsolationEnabled *string `json:"instanceIsolationEnabled,omitempty" tf:"instance_isolation_enabled,omitempty"`
+
+	// Maximum single-instance concurrency, range: 1-100.
+	// Maximum single-instance concurrency, range: 1-100.
+	MaxConcurrency *float64 `json:"maxConcurrency,omitempty" tf:"max_concurrency,omitempty"`
+
+	// Dynamic concurrency configuration parameters.
+	// Dynamic concurrency configuration parameters.
+	MixNodeConfig []MixNodeConfigObservation `json:"mixNodeConfig,omitempty" tf:"mix_node_config,omitempty"`
+
+	// Session configuration parameters.
+	// Session configuration parameters.
+	SessionConfig []SessionConfigObservation `json:"sessionConfig,omitempty" tf:"session_config,omitempty"`
+
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type InstanceConcurrencyConfigParameters struct {
+
+	// Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+	// Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+	// +kubebuilder:validation:Optional
+	DynamicEnabled *string `json:"dynamicEnabled,omitempty" tf:"dynamic_enabled,omitempty"`
+
+	// Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+	// Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+	// +kubebuilder:validation:Optional
+	InstanceIsolationEnabled *string `json:"instanceIsolationEnabled,omitempty" tf:"instance_isolation_enabled,omitempty"`
+
+	// Maximum single-instance concurrency, range: 1-100.
+	// Maximum single-instance concurrency, range: 1-100.
+	// +kubebuilder:validation:Optional
+	MaxConcurrency *float64 `json:"maxConcurrency,omitempty" tf:"max_concurrency,omitempty"`
+
+	// Dynamic concurrency configuration parameters.
+	// Dynamic concurrency configuration parameters.
+	// +kubebuilder:validation:Optional
+	MixNodeConfig []MixNodeConfigParameters `json:"mixNodeConfig,omitempty" tf:"mix_node_config,omitempty"`
+
+	// Session configuration parameters.
+	// Session configuration parameters.
+	// +kubebuilder:validation:Optional
+	SessionConfig []SessionConfigParameters `json:"sessionConfig,omitempty" tf:"session_config,omitempty"`
+
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type IntranetConfigInitParameters struct {
@@ -684,6 +794,7 @@ type IntranetConfigInitParameters struct {
 
 type IntranetConfigObservation struct {
 
+	// (Readonly) File system ip address.
 	// If fixed intranet IP is enabled, this field returns the IP list used.
 	IPAddress []*string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
@@ -735,6 +846,141 @@ type LayersParameters struct {
 	LayerVersion *float64 `json:"layerVersion" tf:"layer_version,omitempty"`
 }
 
+type MixNodeConfigInitParameters struct {
+
+	// GPU model name.
+	// GPU model name.
+	NodeSpec *string `json:"nodeSpec,omitempty" tf:"node_spec,omitempty"`
+
+	// Number of concurrent instances.
+	// Number of concurrent instances.
+	Num *float64 `json:"num,omitempty" tf:"num,omitempty"`
+}
+
+type MixNodeConfigObservation struct {
+
+	// GPU model name.
+	// GPU model name.
+	NodeSpec *string `json:"nodeSpec,omitempty" tf:"node_spec,omitempty"`
+
+	// Number of concurrent instances.
+	// Number of concurrent instances.
+	Num *float64 `json:"num,omitempty" tf:"num,omitempty"`
+}
+
+type MixNodeConfigParameters struct {
+
+	// GPU model name.
+	// GPU model name.
+	// +kubebuilder:validation:Optional
+	NodeSpec *string `json:"nodeSpec,omitempty" tf:"node_spec,omitempty"`
+
+	// Number of concurrent instances.
+	// Number of concurrent instances.
+	// +kubebuilder:validation:Optional
+	Num *float64 `json:"num,omitempty" tf:"num,omitempty"`
+}
+
+type SessionConfigInitParameters struct {
+
+	// Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+	// Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+	IdleTimeoutStrategy *string `json:"idleTimeoutStrategy,omitempty" tf:"idle_timeout_strategy,omitempty"`
+
+	// Maximum number of concurrent sessions per instance.
+	// Maximum number of concurrent sessions per instance.
+	MaximumConcurrencySessionPerInstance *float64 `json:"maximumConcurrencySessionPerInstance,omitempty" tf:"maximum_concurrency_session_per_instance,omitempty"`
+
+	// Session idle timeout in seconds.
+	// Session idle timeout in seconds.
+	MaximumIdleTimeInSeconds *float64 `json:"maximumIdleTimeInSeconds,omitempty" tf:"maximum_idle_time_in_seconds,omitempty"`
+
+	// Session lifecycle in seconds.
+	// Session lifecycle in seconds.
+	MaximumTTLInSeconds *float64 `json:"maximumTtlInSeconds,omitempty" tf:"maximum_ttl_in_seconds,omitempty"`
+
+	// Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+	// Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+	SessionName *string `json:"sessionName,omitempty" tf:"session_name,omitempty"`
+
+	// Session path information.
+	// Session path information.
+	SessionPath *string `json:"sessionPath,omitempty" tf:"session_path,omitempty"`
+
+	// Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+	// Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+	SessionSource *string `json:"sessionSource,omitempty" tf:"session_source,omitempty"`
+}
+
+type SessionConfigObservation struct {
+
+	// Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+	// Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+	IdleTimeoutStrategy *string `json:"idleTimeoutStrategy,omitempty" tf:"idle_timeout_strategy,omitempty"`
+
+	// Maximum number of concurrent sessions per instance.
+	// Maximum number of concurrent sessions per instance.
+	MaximumConcurrencySessionPerInstance *float64 `json:"maximumConcurrencySessionPerInstance,omitempty" tf:"maximum_concurrency_session_per_instance,omitempty"`
+
+	// Session idle timeout in seconds.
+	// Session idle timeout in seconds.
+	MaximumIdleTimeInSeconds *float64 `json:"maximumIdleTimeInSeconds,omitempty" tf:"maximum_idle_time_in_seconds,omitempty"`
+
+	// Session lifecycle in seconds.
+	// Session lifecycle in seconds.
+	MaximumTTLInSeconds *float64 `json:"maximumTtlInSeconds,omitempty" tf:"maximum_ttl_in_seconds,omitempty"`
+
+	// Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+	// Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+	SessionName *string `json:"sessionName,omitempty" tf:"session_name,omitempty"`
+
+	// Session path information.
+	// Session path information.
+	SessionPath *string `json:"sessionPath,omitempty" tf:"session_path,omitempty"`
+
+	// Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+	// Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+	SessionSource *string `json:"sessionSource,omitempty" tf:"session_source,omitempty"`
+}
+
+type SessionConfigParameters struct {
+
+	// Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+	// Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+	// +kubebuilder:validation:Optional
+	IdleTimeoutStrategy *string `json:"idleTimeoutStrategy,omitempty" tf:"idle_timeout_strategy,omitempty"`
+
+	// Maximum number of concurrent sessions per instance.
+	// Maximum number of concurrent sessions per instance.
+	// +kubebuilder:validation:Optional
+	MaximumConcurrencySessionPerInstance *float64 `json:"maximumConcurrencySessionPerInstance,omitempty" tf:"maximum_concurrency_session_per_instance,omitempty"`
+
+	// Session idle timeout in seconds.
+	// Session idle timeout in seconds.
+	// +kubebuilder:validation:Optional
+	MaximumIdleTimeInSeconds *float64 `json:"maximumIdleTimeInSeconds,omitempty" tf:"maximum_idle_time_in_seconds,omitempty"`
+
+	// Session lifecycle in seconds.
+	// Session lifecycle in seconds.
+	// +kubebuilder:validation:Optional
+	MaximumTTLInSeconds *float64 `json:"maximumTtlInSeconds,omitempty" tf:"maximum_ttl_in_seconds,omitempty"`
+
+	// Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+	// Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+	// +kubebuilder:validation:Optional
+	SessionName *string `json:"sessionName,omitempty" tf:"session_name,omitempty"`
+
+	// Session path information.
+	// Session path information.
+	// +kubebuilder:validation:Optional
+	SessionPath *string `json:"sessionPath,omitempty" tf:"session_path,omitempty"`
+
+	// Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+	// Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+	// +kubebuilder:validation:Optional
+	SessionSource *string `json:"sessionSource,omitempty" tf:"session_source,omitempty"`
+}
+
 type TriggerInfoInitParameters struct {
 }
 
@@ -758,7 +1004,7 @@ type TriggerInfoObservation struct {
 	// TriggerDesc of the SCF function trigger, parameter format of timer is linux cron expression; parameter of cos type is json string {"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}, where bucketUrl is cos bucket , event is the cos event trigger, Prefix is the corresponding file prefix filter condition, Suffix is the suffix filter condition, if not need filter condition can not pass; cmq type does not pass this parameter; ckafka type parameter format is json string {"maxMsgNum":"1","offset":"latest"}; apigw type parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
 	TriggerDesc *string `json:"triggerDesc,omitempty" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -779,7 +1025,7 @@ type TriggersInitParameters struct {
 	// TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
 	TriggerDesc *string `json:"triggerDesc,omitempty" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
 	// Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -798,7 +1044,7 @@ type TriggersObservation struct {
 	// TriggerDesc of the SCF function trigger, parameter format of `timer` is linux cron expression; parameter of `cos` type is json string `{"bucketUrl":"<name-appid>.cos.<region>.myqcloud.com","event":"cos:ObjectCreated:*","filter":{"Prefix":"","Suffix":""}}`, where `bucketUrl` is cos bucket (optional), `event` is the cos event trigger, `Prefix` is the corresponding file prefix filter condition, `Suffix` is the suffix filter condition, if not need filter condition can not pass; `cmq` type does not pass this parameter; `ckafka` type parameter format is json string `{"maxMsgNum":"1","offset":"latest"}`; `apigw` type parameter format is json string `{"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}`.
 	TriggerDesc *string `json:"triggerDesc,omitempty" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
 	// Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -820,7 +1066,7 @@ type TriggersParameters struct {
 	// +kubebuilder:validation:Optional
 	TriggerDesc *string `json:"triggerDesc" tf:"trigger_desc,omitempty"`
 
-	// Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+	// Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
 	// Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`

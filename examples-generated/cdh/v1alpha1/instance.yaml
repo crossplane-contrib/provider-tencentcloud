@@ -4,13 +4,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cdh/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availabilityZone: ${var.availability_zone}
+    availabilityZone: ap-guangzhou-6
     chargeType: PREPAID
-    hostName: test
+    hostName: tf-example
     hostType: HC20
     prepaidPeriod: 1
     prepaidRenewFlag: NOTIFY_AND_MANUAL_RENEW

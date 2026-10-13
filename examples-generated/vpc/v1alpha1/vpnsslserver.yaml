@@ -8,14 +8,9 @@ metadata:
   name: example
 spec:
   forProvider:
-    compress: true
-    encryptAlgorithm: AES-128-CBC
-    integrityAlgorithm: MD5
     localAddress:
-    - 10.0.0.0/17
-    remoteAddress: 11.0.0.0/16
-    sslVpnPort: 1194
-    sslVpnProtocol: UDP
+    - 10.0.200.0/24
+    remoteAddress: 192.168.100.0/24
     sslVpnServerName: helloworld
     vpnGatewayIdSelector:
       matchLabels:

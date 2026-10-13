@@ -78,6 +78,21 @@ spec:
                       Indicate to delete the COS bucket which is auto-created with the instance or not.
                       Indicate to delete the COS bucket which is auto-created with the instance or not.
                     type: boolean
+                  deletionProtection:
+                    description: |-
+                      Whether to enable Instance Deletion Protection.
+                      Whether to enable Instance Deletion Protection.
+                    type: boolean
+                  enableCosMaz:
+                    description: |-
+                      Whether to enable COS bucket multi-AZ feature. Default is false.
+                      Whether to enable COS bucket multi-AZ feature. Default is `false`.
+                    type: boolean
+                  enableCosVersioning:
+                    description: |-
+                      Whether to enable COS bucket versioning. Advanced Edition Instances: Default is true (versioning enabled); Standard / Basic Edition Instances: Default is false (disabled).
+                      Whether to enable COS bucket versioning. Advanced Edition Instances: Default is `true` (versioning enabled); Standard / Basic Edition Instances: Default is `false` (disabled).
+                    type: boolean
                   instanceChargeTypePrepaidPeriod:
                     description: |-
                       Length of time to purchase an instance (in month). Must set when registry_charge_type is prepaid.
@@ -175,6 +190,21 @@ spec:
                     description: |-
                       Indicate to delete the COS bucket which is auto-created with the instance or not.
                       Indicate to delete the COS bucket which is auto-created with the instance or not.
+                    type: boolean
+                  deletionProtection:
+                    description: |-
+                      Whether to enable Instance Deletion Protection.
+                      Whether to enable Instance Deletion Protection.
+                    type: boolean
+                  enableCosMaz:
+                    description: |-
+                      Whether to enable COS bucket multi-AZ feature. Default is false.
+                      Whether to enable COS bucket multi-AZ feature. Default is `false`.
+                    type: boolean
+                  enableCosVersioning:
+                    description: |-
+                      Whether to enable COS bucket versioning. Advanced Edition Instances: Default is true (versioning enabled); Standard / Basic Edition Instances: Default is false (disabled).
+                      Whether to enable COS bucket versioning. Advanced Edition Instances: Default is `true` (versioning enabled); Standard / Basic Edition Instances: Default is `false` (disabled).
                     type: boolean
                   instanceChargeTypePrepaidPeriod:
                     description: |-
@@ -442,6 +472,21 @@ spec:
                       Indicate to delete the COS bucket which is auto-created with the instance or not.
                       Indicate to delete the COS bucket which is auto-created with the instance or not.
                     type: boolean
+                  deletionProtection:
+                    description: |-
+                      Whether to enable Instance Deletion Protection.
+                      Whether to enable Instance Deletion Protection.
+                    type: boolean
+                  enableCosMaz:
+                    description: |-
+                      Whether to enable COS bucket multi-AZ feature. Default is false.
+                      Whether to enable COS bucket multi-AZ feature. Default is `false`.
+                    type: boolean
+                  enableCosVersioning:
+                    description: |-
+                      Whether to enable COS bucket versioning. Advanced Edition Instances: Default is true (versioning enabled); Standard / Basic Edition Instances: Default is false (disabled).
+                      Whether to enable COS bucket versioning. Advanced Edition Instances: Default is `true` (versioning enabled); Standard / Basic Edition Instances: Default is `false` (disabled).
+                    type: boolean
                   expiredAt:
                     description: |-
                       Instance expiration time (prepaid).
@@ -540,10 +585,14 @@ spec:
                             Remarks of policy.
                           type: string
                         index:
-                          description: Index of policy.
+                          description: |-
+                            Index of policy.
+                            Index of policy.
                           type: number
                         version:
-                          description: Version of policy.
+                          description: |-
+                            Version of policy.
+                            Version of policy.
                           type: string
                       type: object
                     type: array

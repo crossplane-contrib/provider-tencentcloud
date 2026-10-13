@@ -19,7 +19,11 @@ type LogsetInitParameters struct {
 	// Logset name, which must be unique.
 	LogsetName *string `json:"logsetName,omitempty" tf:"logset_name,omitempty"`
 
-	// Tag description list.
+	// Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+	// Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+	TagList []TagListInitParameters `json:"tagList,omitempty" tf:"tag_list,omitempty"`
+
+	// It is recommended to use tag_list because the current tags field is binding resources by calling the tag API. Tag description list.
 	// Tag description list.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -42,7 +46,11 @@ type LogsetObservation struct {
 	// If assumer_uin is not empty, it indicates the service provider who creates the logset.
 	RoleName *string `json:"roleName,omitempty" tf:"role_name,omitempty"`
 
-	// Tag description list.
+	// Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+	// Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+	TagList []TagListObservation `json:"tagList,omitempty" tf:"tag_list,omitempty"`
+
+	// It is recommended to use tag_list because the current tags field is binding resources by calling the tag API. Tag description list.
 	// Tag description list.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -59,11 +67,51 @@ type LogsetParameters struct {
 	// +kubebuilder:validation:Optional
 	LogsetName *string `json:"logsetName,omitempty" tf:"logset_name,omitempty"`
 
-	// Tag description list.
+	// Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+	// Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+	// +kubebuilder:validation:Optional
+	TagList []TagListParameters `json:"tagList,omitempty" tf:"tag_list,omitempty"`
+
+	// It is recommended to use tag_list because the current tags field is binding resources by calling the tag API. Tag description list.
 	// Tag description list.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
+type TagListInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TagListObservation struct {
+
+	// Tag key.
+	// Tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TagListParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 // LogsetSpec defines the desired state of Logset

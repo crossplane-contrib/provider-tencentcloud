@@ -12,6 +12,9 @@ spec:
     name: tf-example
     networkInstanceId: ${tencentcloud_vpc.vpc.id}
     networkType: VPC
+    tags:
+      Environment: production
+      Owner: ops-team
 
 ---
 

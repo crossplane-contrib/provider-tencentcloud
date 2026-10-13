@@ -8,6 +8,7 @@ metadata:
   name: example
 spec:
   forProvider:
+    diskUsage: DATA_DISK
     snapshotName: tf-example
     storageIdSelector:
       matchLabels:

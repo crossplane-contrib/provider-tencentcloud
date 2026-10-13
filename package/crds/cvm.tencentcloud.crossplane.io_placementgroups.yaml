@@ -83,6 +83,16 @@ spec:
                       Name of the placement group, 1-60 characters in length.
                       Name of the placement group, 1-60 characters in length.
                     type: string
+                  partitionCount:
+                    description: |-
+                      Partition count of the placement group. Valid values: 2~30. Only valid when strategy is set to PARTITION.
+                      Partition count of the placement group. Valid values: 2~30. Only valid when `strategy` is set to `PARTITION`.
+                    type: number
+                  strategy:
+                    description: |-
+                      Strategy of the placement group. Valid values: SPREAD and PARTITION. SPREAD is the default strategy. When strategy is PARTITION, partition_count must be set. This field cannot be modified after creation.
+                      Strategy of the placement group. Valid values: `SPREAD` and `PARTITION`. `SPREAD` is the default strategy. When strategy is `PARTITION`, `partition_count` must be set. This field cannot be modified after creation.
+                    type: string
                   tags:
                     additionalProperties:
                       type: string
@@ -119,6 +129,16 @@ spec:
                     description: |-
                       Name of the placement group, 1-60 characters in length.
                       Name of the placement group, 1-60 characters in length.
+                    type: string
+                  partitionCount:
+                    description: |-
+                      Partition count of the placement group. Valid values: 2~30. Only valid when strategy is set to PARTITION.
+                      Partition count of the placement group. Valid values: 2~30. Only valid when `strategy` is set to `PARTITION`.
+                    type: number
+                  strategy:
+                    description: |-
+                      Strategy of the placement group. Valid values: SPREAD and PARTITION. SPREAD is the default strategy. When strategy is PARTITION, partition_count must be set. This field cannot be modified after creation.
+                      Strategy of the placement group. Valid values: `SPREAD` and `PARTITION`. `SPREAD` is the default strategy. When strategy is `PARTITION`, `partition_count` must be set. This field cannot be modified after creation.
                     type: string
                   tags:
                     additionalProperties:
@@ -342,6 +362,16 @@ spec:
                     description: |-
                       Name of the placement group, 1-60 characters in length.
                       Name of the placement group, 1-60 characters in length.
+                    type: string
+                  partitionCount:
+                    description: |-
+                      Partition count of the placement group. Valid values: 2~30. Only valid when strategy is set to PARTITION.
+                      Partition count of the placement group. Valid values: 2~30. Only valid when `strategy` is set to `PARTITION`.
+                    type: number
+                  strategy:
+                    description: |-
+                      Strategy of the placement group. Valid values: SPREAD and PARTITION. SPREAD is the default strategy. When strategy is PARTITION, partition_count must be set. This field cannot be modified after creation.
+                      Strategy of the placement group. Valid values: `SPREAD` and `PARTITION`. `SPREAD` is the default strategy. When strategy is `PARTITION`, `partition_count` must be set. This field cannot be modified after creation.
                     type: string
                   tags:
                     additionalProperties:

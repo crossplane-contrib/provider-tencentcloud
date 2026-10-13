@@ -73,6 +73,11 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  checkAssociate:
+                    description: |-
+                      Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+                      Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+                    type: boolean
                   name:
                     description: |-
                       Name of the HA VIP. The length of character is limited to 1-60.
@@ -255,6 +260,11 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  checkAssociate:
+                    description: |-
+                      Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+                      Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+                    type: boolean
                   name:
                     description: |-
                       Name of the HA VIP. The length of character is limited to 1-60.
@@ -606,6 +616,11 @@ spec:
                       EIP that is associated.
                       EIP that is associated.
                     type: string
+                  checkAssociate:
+                    description: |-
+                      Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+                      Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+                    type: boolean
                   createTime:
                     description: |-
                       Create time of the HA VIP.

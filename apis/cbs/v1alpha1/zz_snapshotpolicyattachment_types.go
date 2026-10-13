@@ -40,6 +40,11 @@ type SnapshotPolicyAttachmentInitParameters struct {
 	// Selector for a Storage to populate storageId.
 	// +kubebuilder:validation:Optional
 	StorageIDSelector *v1.Selector `json:"storageIdSelector,omitempty" tf:"-"`
+
+	// IDs of CBS.
+	// IDs of CBS.
+	// +listType=set
+	StorageIds []*string `json:"storageIds,omitempty" tf:"storage_ids,omitempty"`
 }
 
 type SnapshotPolicyAttachmentObservation struct {
@@ -54,6 +59,11 @@ type SnapshotPolicyAttachmentObservation struct {
 	// ID of CBS.
 	// ID of CBS.
 	StorageID *string `json:"storageId,omitempty" tf:"storage_id,omitempty"`
+
+	// IDs of CBS.
+	// IDs of CBS.
+	// +listType=set
+	StorageIds []*string `json:"storageIds,omitempty" tf:"storage_ids,omitempty"`
 }
 
 type SnapshotPolicyAttachmentParameters struct {
@@ -85,6 +95,12 @@ type SnapshotPolicyAttachmentParameters struct {
 	// Selector for a Storage to populate storageId.
 	// +kubebuilder:validation:Optional
 	StorageIDSelector *v1.Selector `json:"storageIdSelector,omitempty" tf:"-"`
+
+	// IDs of CBS.
+	// IDs of CBS.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	StorageIds []*string `json:"storageIds,omitempty" tf:"storage_ids,omitempty"`
 }
 
 // SnapshotPolicyAttachmentSpec defines the desired state of SnapshotPolicyAttachment

@@ -524,6 +524,16 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.CustomSSLCertID != nil {
+		in, out := &in.CustomSSLCertID, &out.CustomSSLCertID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DeleteProtectionEnable != nil {
+		in, out := &in.DeleteProtectionEnable, &out.DeleteProtectionEnable
+		*out = new(float64)
+		**out = **in
+	}
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
 		*out = new(float64)
@@ -744,6 +754,16 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.CustomSSLCertID != nil {
+		in, out := &in.CustomSSLCertID, &out.CustomSSLCertID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DeleteProtectionEnable != nil {
+		in, out := &in.DeleteProtectionEnable, &out.DeleteProtectionEnable
+		*out = new(float64)
+		**out = **in
+	}
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
 		*out = new(float64)
@@ -926,6 +946,16 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.CustomSSLCertID != nil {
+		in, out := &in.CustomSSLCertID, &out.CustomSSLCertID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DeleteProtectionEnable != nil {
+		in, out := &in.DeleteProtectionEnable, &out.DeleteProtectionEnable
+		*out = new(float64)
+		**out = **in
 	}
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize

@@ -24,6 +24,7 @@ spec:
     partition: /%Y/%m/%d/%H/
     prefix: ap-guangzhou-fffsasad-1649734752
     shipperName: ap-guangzhou-fffsasad-1649734752
+    timeZone: GMT+08:00
     topicIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

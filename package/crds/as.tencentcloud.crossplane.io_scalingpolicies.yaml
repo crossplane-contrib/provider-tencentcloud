@@ -96,7 +96,17 @@ spec:
                   cooldown:
                     description: |-
                       Cooldwon time in second. Default is 300.
-                      Cooldwon time in second. Default is `30`0.
+                      Cooldwon time in second. Default is `300`.
+                    type: number
+                  disableScaleIn:
+                    description: |-
+                      Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+                      Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+                    type: boolean
+                  estimatedInstanceWarmup:
+                    description: |-
+                      Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+                      Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
                     type: number
                   metricName:
                     description: |-
@@ -119,6 +129,16 @@ spec:
                     description: |-
                       Name of a policy used to define a reaction when an alarm is triggered.
                       Name of a policy used to define a reaction when an alarm is triggered.
+                    type: string
+                  policyType:
+                    description: |-
+                      Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+                      Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+                    type: string
+                  predefinedMetricType:
+                    description: |-
+                      Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+                      Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
                     type: string
                   scalingGroupId:
                     description: |-
@@ -204,6 +224,11 @@ spec:
                       Statistic types. Valid values: AVERAGE, MAXIMUM and MINIMUM. Default is AVERAGE.
                       Statistic types. Valid values: `AVERAGE`, `MAXIMUM` and `MINIMUM`. Default is `AVERAGE`.
                     type: string
+                  targetValue:
+                    description: |-
+                      Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+                      Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+                    type: number
                   threshold:
                     description: |-
                       Alarm threshold.
@@ -246,7 +271,17 @@ spec:
                   cooldown:
                     description: |-
                       Cooldwon time in second. Default is 300.
-                      Cooldwon time in second. Default is `30`0.
+                      Cooldwon time in second. Default is `300`.
+                    type: number
+                  disableScaleIn:
+                    description: |-
+                      Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+                      Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+                    type: boolean
+                  estimatedInstanceWarmup:
+                    description: |-
+                      Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+                      Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
                     type: number
                   metricName:
                     description: |-
@@ -269,6 +304,16 @@ spec:
                     description: |-
                       Name of a policy used to define a reaction when an alarm is triggered.
                       Name of a policy used to define a reaction when an alarm is triggered.
+                    type: string
+                  policyType:
+                    description: |-
+                      Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+                      Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+                    type: string
+                  predefinedMetricType:
+                    description: |-
+                      Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+                      Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
                     type: string
                   scalingGroupId:
                     description: |-
@@ -354,6 +399,11 @@ spec:
                       Statistic types. Valid values: AVERAGE, MAXIMUM and MINIMUM. Default is AVERAGE.
                       Statistic types. Valid values: `AVERAGE`, `MAXIMUM` and `MINIMUM`. Default is `AVERAGE`.
                     type: string
+                  targetValue:
+                    description: |-
+                      Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+                      Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+                    type: number
                   threshold:
                     description: |-
                       Alarm threshold.
@@ -528,38 +578,10 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.adjustmentType is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.adjustmentType)
-                || (has(self.initProvider) && has(self.initProvider.adjustmentType))'
-            - message: spec.forProvider.adjustmentValue is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.adjustmentValue)
-                || (has(self.initProvider) && has(self.initProvider.adjustmentValue))'
-            - message: spec.forProvider.comparisonOperator is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.comparisonOperator)
-                || (has(self.initProvider) && has(self.initProvider.comparisonOperator))'
-            - message: spec.forProvider.continuousTime is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.continuousTime)
-                || (has(self.initProvider) && has(self.initProvider.continuousTime))'
-            - message: spec.forProvider.metricName is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.metricName)
-                || (has(self.initProvider) && has(self.initProvider.metricName))'
-            - message: spec.forProvider.period is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.period)
-                || (has(self.initProvider) && has(self.initProvider.period))'
             - message: spec.forProvider.policyName is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.policyName)
                 || (has(self.initProvider) && has(self.initProvider.policyName))'
-            - message: spec.forProvider.threshold is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.threshold)
-                || (has(self.initProvider) && has(self.initProvider.threshold))'
           status:
             description: ScalingPolicyStatus defines the observed state of ScalingPolicy.
             properties:
@@ -588,7 +610,17 @@ spec:
                   cooldown:
                     description: |-
                       Cooldwon time in second. Default is 300.
-                      Cooldwon time in second. Default is `30`0.
+                      Cooldwon time in second. Default is `300`.
+                    type: number
+                  disableScaleIn:
+                    description: |-
+                      Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+                      Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+                    type: boolean
+                  estimatedInstanceWarmup:
+                    description: |-
+                      Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+                      Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
                     type: number
                   id:
                     description: ID of the resource.
@@ -615,6 +647,16 @@ spec:
                       Name of a policy used to define a reaction when an alarm is triggered.
                       Name of a policy used to define a reaction when an alarm is triggered.
                     type: string
+                  policyType:
+                    description: |-
+                      Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+                      Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+                    type: string
+                  predefinedMetricType:
+                    description: |-
+                      Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+                      Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+                    type: string
                   scalingGroupId:
                     description: |-
                       ID of a scaling group.
@@ -625,6 +667,11 @@ spec:
                       Statistic types. Valid values: AVERAGE, MAXIMUM and MINIMUM. Default is AVERAGE.
                       Statistic types. Valid values: `AVERAGE`, `MAXIMUM` and `MINIMUM`. Default is `AVERAGE`.
                     type: string
+                  targetValue:
+                    description: |-
+                      Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+                      Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+                    type: number
                   threshold:
                     description: |-
                       Alarm threshold.

@@ -280,8 +280,8 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-	// Docker graph path. Default is `/var/lib/docker`.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+	// Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
 	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
@@ -311,6 +311,10 @@ type ClusterAttachmentWorkerConfigInitParameters struct {
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+
+	// A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the /data/ccs_userscript/ directory on the node. If the node should only join the scheduling pool after initialization is complete, the unschedulable parameter can be used; in this case, add the command kubectl uncordon nodename --kubeconfig=/root/.kube/config at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: #!/bin/sh echo "hello world".
+	// A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the `/data/ccs_userscript/` directory on the node. If the node should only join the scheduling pool after initialization is complete, the `unschedulable` parameter can be used; in this case, add the command `kubectl uncordon nodename --kubeconfig=/root/.kube/config` at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: `#!/bin/sh echo "hello world"`.
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 }
 
 type ClusterAttachmentWorkerConfigObservation struct {
@@ -323,8 +327,8 @@ type ClusterAttachmentWorkerConfigObservation struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-	// Docker graph path. Default is `/var/lib/docker`.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+	// Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
 	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
@@ -354,6 +358,10 @@ type ClusterAttachmentWorkerConfigObservation struct {
 	// This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
 	// Base64-encoded User Data text, the length limit is 16KB.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+
+	// A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the /data/ccs_userscript/ directory on the node. If the node should only join the scheduling pool after initialization is complete, the unschedulable parameter can be used; in this case, add the command kubectl uncordon nodename --kubeconfig=/root/.kube/config at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: #!/bin/sh echo "hello world".
+	// A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the `/data/ccs_userscript/` directory on the node. If the node should only join the scheduling pool after initialization is complete, the `unschedulable` parameter can be used; in this case, add the command `kubectl uncordon nodename --kubeconfig=/root/.kube/config` at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: `#!/bin/sh echo "hello world"`.
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 }
 
 type ClusterAttachmentWorkerConfigParameters struct {
@@ -368,8 +376,8 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-	// Docker graph path. Default is `/var/lib/docker`.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+	// Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
 	// +kubebuilder:validation:Optional
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
@@ -407,6 +415,11 @@ type ClusterAttachmentWorkerConfigParameters struct {
 	// Base64-encoded User Data text, the length limit is 16KB.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+
+	// A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the /data/ccs_userscript/ directory on the node. If the node should only join the scheduling pool after initialization is complete, the unschedulable parameter can be used; in this case, add the command kubectl uncordon nodename --kubeconfig=/root/.kube/config at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: #!/bin/sh echo "hello world".
+	// A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the `/data/ccs_userscript/` directory on the node. If the node should only join the scheduling pool after initialization is complete, the `unschedulable` parameter can be used; in this case, add the command `kubectl uncordon nodename --kubeconfig=/root/.kube/config` at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: `#!/bin/sh echo "hello world"`.
+	// +kubebuilder:validation:Optional
+	UserScript *string `json:"userScript,omitempty" tf:"user_script,omitempty"`
 }
 
 type WorkerConfigGpuArgsInitParameters struct {
@@ -678,8 +691,8 @@ type WorkerConfigOverridesInitParameters struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-	// Docker graph path. Default is `/var/lib/docker`.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+	// Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
 	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
@@ -717,8 +730,8 @@ type WorkerConfigOverridesObservation struct {
 	// Indicate to set desired pod number in node. valid when the cluster is podCIDR.
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-	// Docker graph path. Default is `/var/lib/docker`.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+	// Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
 	// This argument was no longer supported by TencentCloud TKE. Custom parameter information related to the node. This is a white-list parameter.
@@ -758,8 +771,8 @@ type WorkerConfigOverridesParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredPodNum *float64 `json:"desiredPodNum,omitempty" tf:"desired_pod_num,omitempty"`
 
-	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-	// Docker graph path. Default is `/var/lib/docker`.
+	// This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+	// Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
 	// +kubebuilder:validation:Optional
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 

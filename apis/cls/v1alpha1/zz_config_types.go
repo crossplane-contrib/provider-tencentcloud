@@ -23,8 +23,12 @@ type ConfigInitParameters struct {
 	// Extraction rule. If ExtractRule is set, LogType must be set.
 	ExtractRule []ExtractRuleInitParameters `json:"extractRule,omitempty" tf:"extract_rule,omitempty"`
 
-	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
-	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
+	// Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+	// Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+	InputType *string `json:"inputType,omitempty" tf:"input_type,omitempty"`
+
+	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
+	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
 	LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
 
 	// Collection configuration name.
@@ -57,8 +61,12 @@ type ConfigObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
-	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
+	// Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+	// Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+	InputType *string `json:"inputType,omitempty" tf:"input_type,omitempty"`
+
+	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
+	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
 	LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
 
 	// Collection configuration name.
@@ -90,8 +98,13 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	ExtractRule []ExtractRuleParameters `json:"extractRule,omitempty" tf:"extract_rule,omitempty"`
 
-	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
-	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
+	// Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+	// Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+	// +kubebuilder:validation:Optional
+	InputType *string `json:"inputType,omitempty" tf:"input_type,omitempty"`
+
+	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
+	// Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
 	// +kubebuilder:validation:Optional
 	LogType *string `json:"logType,omitempty" tf:"log_type,omitempty"`
 
@@ -494,7 +507,7 @@ type ConfigStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Config is the Schema for the Configs API. Provides a resource to create a cls config
+// Config is the Schema for the Configs API. Provides a resource to create a CLS config
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

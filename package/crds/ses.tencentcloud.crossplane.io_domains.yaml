@@ -73,11 +73,34 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  dkimOption:
+                    description: |-
+                      DKIM key length. 0: 1024-bit, 1: 2048-bit.
+                      DKIM key length. 0: 1024-bit, 1: 2048-bit.
+                    type: number
                   emailIdentity:
                     description: |-
                       Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
                       Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
                     type: string
+                  tagList:
+                    description: |-
+                      Tag list.
+                      Tag list.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               initProvider:
                 description: |-
@@ -92,11 +115,34 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  dkimOption:
+                    description: |-
+                      DKIM key length. 0: 1024-bit, 1: 2048-bit.
+                      DKIM key length. 0: 1024-bit, 1: 2048-bit.
+                    type: number
                   emailIdentity:
                     description: |-
                       Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
                       Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
                     type: string
+                  tagList:
+                    description: |-
+                      Tag list.
+                      Tag list.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               managementPolicies:
                 default:
@@ -292,6 +338,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  dkimOption:
+                    description: |-
+                      DKIM key length. 0: 1024-bit, 1: 2048-bit.
+                      DKIM key length. 0: 1024-bit, 1: 2048-bit.
+                    type: number
                   emailIdentity:
                     description: |-
                       Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
@@ -300,6 +351,24 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  tagList:
+                    description: |-
+                      Tag list.
+                      Tag list.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

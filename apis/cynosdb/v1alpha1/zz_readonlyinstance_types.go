@@ -53,8 +53,8 @@ type ReadonlyInstanceInitParameters struct {
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
 
-	// Name of instance.
-	// Name of instance.
+	// Instance name.
+	// Instance name.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
 	// ID of the subnet within this VPC.
@@ -100,8 +100,8 @@ type ReadonlyInstanceObservation struct {
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
 
-	// Name of instance.
-	// Name of instance.
+	// Instance name.
+	// Instance name.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
 	// Status of the instance.
@@ -168,8 +168,8 @@ type ReadonlyInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
 
-	// Name of instance.
-	// Name of instance.
+	// Instance name.
+	// Instance name.
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 

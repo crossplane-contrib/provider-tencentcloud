@@ -106,50 +106,34 @@ type CertificateParameters struct {
 
 type CustomCertInitParameters struct {
 
-	// Public key of certificate.
-	// Public key of certificate.
-	Cert *string `json:"cert,omitempty" tf:"cert,omitempty"`
-
 	// ID of certificate.
 	// ID of certificate.
 	CertID *string `json:"certId,omitempty" tf:"cert_id,omitempty"`
-
-	// Private key of certificate.
-	// Private key of certificate.
-	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
 }
 
 type CustomCertObservation struct {
 
-	// Public key of certificate.
-	// Public key of certificate.
-	Cert *string `json:"cert,omitempty" tf:"cert,omitempty"`
-
 	// ID of certificate.
 	// ID of certificate.
 	CertID *string `json:"certId,omitempty" tf:"cert_id,omitempty"`
-
-	// Private key of certificate.
-	// Private key of certificate.
-	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
 }
 
 type CustomCertParameters struct {
 
-	// Public key of certificate.
-	// Public key of certificate.
-	// +kubebuilder:validation:Optional
-	Cert *string `json:"cert" tf:"cert,omitempty"`
-
 	// ID of certificate.
 	// ID of certificate.
 	// +kubebuilder:validation:Optional
 	CertID *string `json:"certId,omitempty" tf:"cert_id,omitempty"`
 
+	// Public key of certificate.
+	// Public key of certificate.
+	// +kubebuilder:validation:Optional
+	CertSecretRef *v1.SecretKeySelector `json:"certSecretRef,omitempty" tf:"-"`
+
 	// Private key of certificate.
 	// Private key of certificate.
 	// +kubebuilder:validation:Optional
-	PrivateKey *string `json:"privateKey" tf:"private_key,omitempty"`
+	PrivateKeySecretRef *v1.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 }
 
 type DomainCertificateInitParameters struct {

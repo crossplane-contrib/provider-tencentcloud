@@ -108,6 +108,376 @@ spec:
                     - name
                     - namespace
                     type: object
+                  multiZone:
+                    description: |-
+                      true means that cross-AZ deployment is enabled; it is only a user parameter when creating a new cluster, and no subsequent adjustment is supported.
+                      true means that cross-AZ deployment is enabled; it is only a user parameter when creating a new cluster, and no subsequent adjustment is supported.
+                    type: boolean
+                  multiZoneSetting:
+                    description: |-
+                      The specification of node resources is as follows: fill in a few available areas. In order, the first one is the main available area, the second one is the backup available area, and the third one is the arbitration available area.
+                      The specification of node resources is as follows: fill in a few available areas. In order, the first one is the main available area, the second one is the backup available area, and the third one is the arbitration available area.
+                    items:
+                      properties:
+                        placement:
+                          description: |-
+                            It will be deprecated in later versions. Use placement_info instead. The location of the instance.
+                            The location of the instance.
+                          items:
+                            properties:
+                              zone:
+                                description: |-
+                                  Zone.
+                                  Zone.
+                                type: string
+                            type: object
+                          type: array
+                        resourceSpec:
+                          description: |-
+                            Resource specification of EMR instance.
+                            Resource specification of EMR instance.
+                          items:
+                            properties:
+                              commonCount:
+                                description: |-
+                                  The number of common node.
+                                  The number of common node.
+                                type: number
+                              commonResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              coreCount:
+                                description: |-
+                                  The number of core node.
+                                  The number of core node.
+                                type: number
+                              coreResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              masterCount:
+                                description: |-
+                                  The number of master node.
+                                  The number of master node.
+                                type: number
+                              masterResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              taskCount:
+                                description: |-
+                                  The number of core node.
+                                  The number of core node.
+                                type: number
+                              taskResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vpcSettings:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            The private net config of EMR instance.
+                            The private net config of EMR instance.
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
                   needMasterWan:
                     description: |-
                       Whether to enable the cluster Master node public network. Value range:
@@ -664,6 +1034,376 @@ spec:
                       Name of the instance, which can contain 6 to 36 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 6 to 36 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                     type: string
+                  multiZone:
+                    description: |-
+                      true means that cross-AZ deployment is enabled; it is only a user parameter when creating a new cluster, and no subsequent adjustment is supported.
+                      true means that cross-AZ deployment is enabled; it is only a user parameter when creating a new cluster, and no subsequent adjustment is supported.
+                    type: boolean
+                  multiZoneSetting:
+                    description: |-
+                      The specification of node resources is as follows: fill in a few available areas. In order, the first one is the main available area, the second one is the backup available area, and the third one is the arbitration available area.
+                      The specification of node resources is as follows: fill in a few available areas. In order, the first one is the main available area, the second one is the backup available area, and the third one is the arbitration available area.
+                    items:
+                      properties:
+                        placement:
+                          description: |-
+                            It will be deprecated in later versions. Use placement_info instead. The location of the instance.
+                            The location of the instance.
+                          items:
+                            properties:
+                              zone:
+                                description: |-
+                                  Zone.
+                                  Zone.
+                                type: string
+                            type: object
+                          type: array
+                        resourceSpec:
+                          description: |-
+                            Resource specification of EMR instance.
+                            Resource specification of EMR instance.
+                          items:
+                            properties:
+                              commonCount:
+                                description: |-
+                                  The number of common node.
+                                  The number of common node.
+                                type: number
+                              commonResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              coreCount:
+                                description: |-
+                                  The number of core node.
+                                  The number of core node.
+                                type: number
+                              coreResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              masterCount:
+                                description: |-
+                                  The number of master node.
+                                  The number of master node.
+                                type: number
+                              masterResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              taskCount:
+                                description: |-
+                                  The number of core node.
+                                  The number of core node.
+                                type: number
+                              taskResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vpcSettings:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            The private net config of EMR instance.
+                            The private net config of EMR instance.
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
                   needMasterWan:
                     description: |-
                       Whether to enable the cluster Master node public network. Value range:
@@ -1412,6 +2152,376 @@ spec:
                       Name of the instance, which can contain 6 to 36 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 6 to 36 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                     type: string
+                  multiZone:
+                    description: |-
+                      true means that cross-AZ deployment is enabled; it is only a user parameter when creating a new cluster, and no subsequent adjustment is supported.
+                      true means that cross-AZ deployment is enabled; it is only a user parameter when creating a new cluster, and no subsequent adjustment is supported.
+                    type: boolean
+                  multiZoneSetting:
+                    description: |-
+                      The specification of node resources is as follows: fill in a few available areas. In order, the first one is the main available area, the second one is the backup available area, and the third one is the arbitration available area.
+                      The specification of node resources is as follows: fill in a few available areas. In order, the first one is the main available area, the second one is the backup available area, and the third one is the arbitration available area.
+                    items:
+                      properties:
+                        placement:
+                          description: |-
+                            It will be deprecated in later versions. Use placement_info instead. The location of the instance.
+                            The location of the instance.
+                          items:
+                            properties:
+                              zone:
+                                description: |-
+                                  Zone.
+                                  Zone.
+                                type: string
+                            type: object
+                          type: array
+                        resourceSpec:
+                          description: |-
+                            Resource specification of EMR instance.
+                            Resource specification of EMR instance.
+                          items:
+                            properties:
+                              commonCount:
+                                description: |-
+                                  The number of common node.
+                                  The number of common node.
+                                type: number
+                              commonResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              coreCount:
+                                description: |-
+                                  The number of core node.
+                                  The number of core node.
+                                type: number
+                              coreResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              masterCount:
+                                description: |-
+                                  The number of master node.
+                                  The number of master node.
+                                type: number
+                              masterResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                              taskCount:
+                                description: |-
+                                  The number of core node.
+                                  The number of core node.
+                                type: number
+                              taskResourceSpec:
+                                description: |-
+                                  Resource details.
+                                  Resource details.
+                                items:
+                                  properties:
+                                    cpu:
+                                      description: |-
+                                        Number of CPU cores.
+                                        Number of CPU cores.
+                                      type: number
+                                    diskSize:
+                                      description: |-
+                                        Data disk capacity.
+                                        Data disk capacity.
+                                      type: number
+                                    diskType:
+                                      description: |-
+                                        disk types. Value range:
+                                        disk types. Value range:
+                                        - CLOUD_SSD: Represents cloud SSD;
+                                        - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                        - CLOUD_BASIC: Represents Cloud Block Storage.
+                                      type: string
+                                    memSize:
+                                      description: |-
+                                        Memory size in M.
+                                        Memory size in M.
+                                      type: number
+                                    multiDisks:
+                                      description: |-
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                        Cloud disk list. When the data disk is a cloud disk, use disk_type and disk_size parameters directly, and use multi_disks for excess parts.
+                                      items:
+                                        properties:
+                                          count:
+                                            description: |-
+                                              Number of cloud disks of this type.
+                                              Number of cloud disks of this type.
+                                            type: number
+                                          diskType:
+                                            description: |-
+                                              disk types. Value range:
+                                              Cloud disk type
+                                              - CLOUD_SSD: Represents cloud SSD;
+                                              - CLOUD_PREMIUM: Represents efficient cloud disk;
+                                              - CLOUD_HSSD: Represents enhanced SSD Cloud Block Storage.
+                                            type: string
+                                          volume:
+                                            description: |-
+                                              Cloud disk size.
+                                              Cloud disk size.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    rootSize:
+                                      description: |-
+                                        Root disk capacity.
+                                        Root disk capacity.
+                                      type: number
+                                    spec:
+                                      description: |-
+                                        Node specification description, such as CVM.SA2.
+                                        Node specification description, such as CVM.SA2.
+                                      type: string
+                                    storageType:
+                                      description: |-
+                                        Storage type. Value range:
+                                        Storage type. Value range:
+                                        - 4: Represents cloud SSD;
+                                        - 5: Represents efficient cloud disk;
+                                        - 6: Represents enhanced SSD Cloud Block Storage;
+                                        - 11: Represents throughput Cloud Block Storage;
+                                        - 12: Represents extremely fast SSD Cloud Block Storage.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vpcSettings:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            The private net config of EMR instance.
+                            The private net config of EMR instance.
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
                   needMasterWan:
                     description: |-
                       Whether to enable the cluster Master node public network. Value range:

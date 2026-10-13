@@ -15,6 +15,10 @@ import (
 
 type HaVipInitParameters struct {
 
+	// Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+	// Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+	CheckAssociate *bool `json:"checkAssociate,omitempty" tf:"check_associate,omitempty"`
+
 	// Name of the HA VIP. The length of character is limited to 1-60.
 	// Name of the HA VIP. The length of character is limited to 1-60.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -56,6 +60,10 @@ type HaVipObservation struct {
 	// EIP that is associated.
 	AddressIP *string `json:"addressIp,omitempty" tf:"address_ip,omitempty"`
 
+	// Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+	// Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+	CheckAssociate *bool `json:"checkAssociate,omitempty" tf:"check_associate,omitempty"`
+
 	// Create time of the HA VIP.
 	// Create time of the HA VIP.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
@@ -93,6 +101,11 @@ type HaVipObservation struct {
 }
 
 type HaVipParameters struct {
+
+	// Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+	// Whether to enable verification of the submachine or network card range during HAVIP drift. Not enabled by default.
+	// +kubebuilder:validation:Optional
+	CheckAssociate *bool `json:"checkAssociate,omitempty" tf:"check_associate,omitempty"`
 
 	// Name of the HA VIP. The length of character is limited to 1-60.
 	// Name of the HA VIP. The length of character is limited to 1-60.

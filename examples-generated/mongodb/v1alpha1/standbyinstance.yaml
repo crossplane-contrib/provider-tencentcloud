@@ -4,22 +4,28 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mongodb/v1alpha1/standbyinstance
   labels:
-    testing.upbound.io/example-name: mongodb
-  name: mongodb
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availableZone: ap-shanghai-2
+    availableZone: ap-guangzhou-7
+    cpu: 2
+    dataEncryption: TDE
+    encryptionKeySource: manual
     fatherInstanceIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: mongodb
+        testing.upbound.io/example-name: example
     fatherInstanceRegion: ap-guangzhou
-    instanceName: tf-mongodb-standby-test
+    instanceName: tf-example
+    keyId: KMS-MONGODB
+    kmsRegion: ap-guangzhou
     memory: 4
     projectId: 0
-    provider: ${tencentcloud.shanghai}
+    subnetId: subnet-d4umunpy
     tags:
-      test: test
+      createBy: Terraform
     volume: 100
+    vpcId: vpc-i5yyodl9
 
 ---
 
@@ -29,20 +35,29 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mongodb/v1alpha1/standbyinstance
   labels:
-    testing.upbound.io/example-name: mongodb
-  name: mongodb
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    availableZone: ${var.availability_zone}
-    engineVersion: MONGO_40_WT
-    instanceName: tf-mongodb-test
-    machineType: HIO10G
+    availableZone: ap-guangzhou-6
+    cpu: 2
+    dataEncryption: TDE
+    encryptionKeySource: manual
+    engineVersion: MONGO_80_WT
+    instanceName: tf-example
+    keyId: KMS-MONGODB
+    kmsRegion: ap-guangzhou
+    machineType: GE.LD.T1
     memory: 4
     passwordSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
     projectId: 0
-    tags:
-      test: test
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     volume: 100
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

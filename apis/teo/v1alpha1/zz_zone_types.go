@@ -43,6 +43,41 @@ type OwnershipVerificationObservation struct {
 type OwnershipVerificationParameters struct {
 }
 
+type WorkModeInfosInitParameters struct {
+
+	// Configuration group type. Options are as follows:l7_acceleration: layer-7 acceleration configuration group;edge_functions: edge function configuration group;web_security: web protection configuration group.
+	// Configuration group type. Options are as follows:`l7_acceleration`: layer-7 acceleration configuration group;`edge_functions`: edge function configuration group;`web_security`: web protection configuration group.
+	ConfigGroupType *string `json:"configGroupType,omitempty" tf:"config_group_type,omitempty"`
+
+	// Working mode. options are as follows:immediate_effect: immediate effect mode;version_control: version control mode.
+	// Working mode. options are as follows:`immediate_effect`: immediate effect mode;`version_control`: version control mode.
+	WorkMode *string `json:"workMode,omitempty" tf:"work_mode,omitempty"`
+}
+
+type WorkModeInfosObservation struct {
+
+	// Configuration group type. Options are as follows:l7_acceleration: layer-7 acceleration configuration group;edge_functions: edge function configuration group;web_security: web protection configuration group.
+	// Configuration group type. Options are as follows:`l7_acceleration`: layer-7 acceleration configuration group;`edge_functions`: edge function configuration group;`web_security`: web protection configuration group.
+	ConfigGroupType *string `json:"configGroupType,omitempty" tf:"config_group_type,omitempty"`
+
+	// Working mode. options are as follows:immediate_effect: immediate effect mode;version_control: version control mode.
+	// Working mode. options are as follows:`immediate_effect`: immediate effect mode;`version_control`: version control mode.
+	WorkMode *string `json:"workMode,omitempty" tf:"work_mode,omitempty"`
+}
+
+type WorkModeInfosParameters struct {
+
+	// Configuration group type. Options are as follows:l7_acceleration: layer-7 acceleration configuration group;edge_functions: edge function configuration group;web_security: web protection configuration group.
+	// Configuration group type. Options are as follows:`l7_acceleration`: layer-7 acceleration configuration group;`edge_functions`: edge function configuration group;`web_security`: web protection configuration group.
+	// +kubebuilder:validation:Optional
+	ConfigGroupType *string `json:"configGroupType" tf:"config_group_type,omitempty"`
+
+	// Working mode. options are as follows:immediate_effect: immediate effect mode;version_control: version control mode.
+	// Working mode. options are as follows:`immediate_effect`: immediate effect mode;`version_control`: version control mode.
+	// +kubebuilder:validation:Optional
+	WorkMode *string `json:"workMode" tf:"work_mode,omitempty"`
+}
+
 type ZoneInitParameters struct {
 
 	// Alias site identifier. Limit the input to a combination of numbers, English, - and _, within 20 characters. For details, refer to the alias site identifier. If there is no such usage scenario, leave this field empty.
@@ -69,9 +104,19 @@ type ZoneInitParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+	// Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is partial:
+	// Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is `partial`:
+	//
+	// - `partial`: CNAME Access;
+	// - `full`: NS Access;
+	// - `noDomainAccess`: No-Domain Access;
+	// - `dnsPodAccess`: DNSPod Managed Access (this mode requires your domain to already be hosted on DNSPod);
+	// - `ai`: Edge Inference Access.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to Version Management.
+	// Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to [Version Management](https://cloud.tencent.com/document/product/1552/113690).
+	WorkModeInfos []WorkModeInfosInitParameters `json:"workModeInfos,omitempty" tf:"work_mode_infos,omitempty"`
 
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
@@ -119,9 +164,23 @@ type ZoneObservation struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+	// Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is partial:
+	// Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is `partial`:
+	//
+	// - `partial`: CNAME Access;
+	// - `full`: NS Access;
+	// - `noDomainAccess`: No-Domain Access;
+	// - `dnsPodAccess`: DNSPod Managed Access (this mode requires your domain to already be hosted on DNSPod);
+	// - `ai`: Edge Inference Access.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to Version Management.
+	// Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to [Version Management](https://cloud.tencent.com/document/product/1552/113690).
+	WorkModeInfos []WorkModeInfosObservation `json:"workModeInfos,omitempty" tf:"work_mode_infos,omitempty"`
+
+	// Site ID.
+	// Site ID.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
@@ -159,10 +218,21 @@ type ZoneParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-	// Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+	// Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is partial:
+	// Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is `partial`:
+	//
+	// - `partial`: CNAME Access;
+	// - `full`: NS Access;
+	// - `noDomainAccess`: No-Domain Access;
+	// - `dnsPodAccess`: DNSPod Managed Access (this mode requires your domain to already be hosted on DNSPod);
+	// - `ai`: Edge Inference Access.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to Version Management.
+	// Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to [Version Management](https://cloud.tencent.com/document/product/1552/113690).
+	// +kubebuilder:validation:Optional
+	WorkModeInfos []WorkModeInfosParameters `json:"workModeInfos,omitempty" tf:"work_mode_infos,omitempty"`
 
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
 	// Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.

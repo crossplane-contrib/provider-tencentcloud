@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: OriginGroup is the Schema for the OriginGroups API. Provides
-          a resource to create a teo origin_group
+          a resource to create a TEO origin_group
         properties:
           apiVersion:
             description: |-
@@ -670,6 +670,9 @@ spec:
                       List of referenced instances of the origin site group.
                     items:
                       properties:
+                        aliasZoneName:
+                          description: The alias zone name of the referenced instance.
+                          type: string
                         instanceId:
                           description: The instance ID of the reference type.
                           type: string
@@ -678,6 +681,12 @@ spec:
                           type: string
                         instanceType:
                           description: 'Reference service type, the values are:'
+                          type: string
+                        zoneId:
+                          description: Site ID.
+                          type: string
+                        zoneName:
+                          description: The zone name of the referenced instance.
                           type: string
                       type: object
                     type: array

@@ -361,7 +361,6 @@ type PayCertificateDvAuthsObservation struct {
 	// DV authentication value.
 	DvAuthValue *string `json:"dvAuthValue,omitempty" tf:"dv_auth_value,omitempty"`
 
-	// Certificate verification method. Valid values: DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, DNS means manual DNS verification, FILE means file verification.
 	// DV authentication type.
 	DvAuthVerifyType *string `json:"dvAuthVerifyType,omitempty" tf:"dv_auth_verify_type,omitempty"`
 }
@@ -382,10 +381,6 @@ type PayCertificateInitParameters struct {
 	// Number of domain names included in the certificate.
 	// Number of domain names included in the certificate.
 	DomainNum *float64 `json:"domainNum,omitempty" tf:"domain_num,omitempty"`
-
-	// DV certification information.
-	// DV certification information.
-	DvAuths []PayCertificateDvAuthsInitParameters `json:"dvAuths,omitempty" tf:"dv_auths,omitempty"`
 
 	// Certificate information.
 	// Certificate information.
@@ -470,11 +465,6 @@ type PayCertificateParameters struct {
 	// Number of domain names included in the certificate.
 	// +kubebuilder:validation:Optional
 	DomainNum *float64 `json:"domainNum,omitempty" tf:"domain_num,omitempty"`
-
-	// DV certification information.
-	// DV certification information.
-	// +kubebuilder:validation:Optional
-	DvAuths []PayCertificateDvAuthsParameters `json:"dvAuths,omitempty" tf:"dv_auths,omitempty"`
 
 	// Certificate information.
 	// Certificate information.

@@ -152,10 +152,33 @@ spec:
                             type: string
                         type: object
                     type: object
+                  resourceTags:
+                    description: |-
+                      Set of table group tags.
+                      Set of table group tags.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  tableGroupId:
+                    description: |-
+                      ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+                      ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+                    type: string
                   tablegroupName:
                     description: |-
-                      Name of the TcaplusDB table group. Name length should be between 1 and 30.
-                      Name of the TcaplusDB table group. Name length should be between 1 and 30.
+                      Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
+                      Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
                     type: string
                 type: object
               initProvider:
@@ -250,10 +273,33 @@ spec:
                             type: string
                         type: object
                     type: object
+                  resourceTags:
+                    description: |-
+                      Set of table group tags.
+                      Set of table group tags.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  tableGroupId:
+                    description: |-
+                      ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+                      ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+                    type: string
                   tablegroupName:
                     description: |-
-                      Name of the TcaplusDB table group. Name length should be between 1 and 30.
-                      Name of the TcaplusDB table group. Name length should be between 1 and 30.
+                      Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
+                      Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
                     type: string
                 type: object
               managementPolicies:
@@ -446,15 +492,38 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  resourceTags:
+                    description: |-
+                      Set of table group tags.
+                      Set of table group tags.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   tableCount:
                     description: |-
                       Number of tables.
                       Number of tables.
                     type: number
+                  tableGroupId:
+                    description: |-
+                      ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+                      ID of the TcaplusDB table group, can be user-specified (must be unique within the cluster) or auto-incremented by the API when not set. Immutable after creation.
+                    type: string
                   tablegroupName:
                     description: |-
-                      Name of the TcaplusDB table group. Name length should be between 1 and 30.
-                      Name of the TcaplusDB table group. Name length should be between 1 and 30.
+                      Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
+                      Table group name; may consist of Chinese characters, English letters, or numeric characters, with a maximum length of 32 characters.
                     type: string
                   totalSize:
                     description: |-

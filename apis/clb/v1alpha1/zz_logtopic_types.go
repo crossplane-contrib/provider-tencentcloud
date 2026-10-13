@@ -28,6 +28,19 @@ type LogTopicInitParameters struct {
 	// +kubebuilder:validation:Optional
 	LogSetIDSelector *v1.Selector `json:"logSetIdSelector,omitempty" tf:"-"`
 
+	// Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+	// Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
+	// The status of log topic. true: enable; false: disable. Default is true.
+	// The status of log topic. true: enable; false: disable. Default is true.
+	Status *bool `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Tags of clb log topic.
+	// Tags of clb log topic.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Log topic of CLB instance.
 	// Log topic of CLB instance.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
@@ -46,9 +59,18 @@ type LogTopicObservation struct {
 	// Log topic of CLB instance.
 	LogSetID *string `json:"logSetId,omitempty" tf:"log_set_id,omitempty"`
 
-	// The status of log topic.
-	// The status of log topic.
+	// Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+	// Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
+	// The status of log topic. true: enable; false: disable. Default is true.
+	// The status of log topic. true: enable; false: disable. Default is true.
 	Status *bool `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Tags of clb log topic.
+	// Tags of clb log topic.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Log topic of CLB instance.
 	// Log topic of CLB instance.
@@ -70,6 +92,22 @@ type LogTopicParameters struct {
 	// Selector for a LogSet to populate logSetId.
 	// +kubebuilder:validation:Optional
 	LogSetIDSelector *v1.Selector `json:"logSetIdSelector,omitempty" tf:"-"`
+
+	// Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+	// Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+	// +kubebuilder:validation:Optional
+	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
+	// The status of log topic. true: enable; false: disable. Default is true.
+	// The status of log topic. true: enable; false: disable. Default is true.
+	// +kubebuilder:validation:Optional
+	Status *bool `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Tags of clb log topic.
+	// Tags of clb log topic.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Log topic of CLB instance.
 	// Log topic of CLB instance.
@@ -104,7 +142,7 @@ type LogTopicStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// LogTopic is the Schema for the LogTopics API. Provides a resource to create a CLB instance topic.
+// LogTopic is the Schema for the LogTopics API. Provides a resource to create a CLB log topic.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

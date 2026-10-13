@@ -563,6 +563,11 @@ func (in *CCNInitParameters) DeepCopyInto(out *CCNInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceMeteringType != nil {
+		in, out := &in.InstanceMeteringType, &out.InstanceMeteringType
+		*out = new(string)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -676,6 +681,11 @@ func (in *CCNObservation) DeepCopyInto(out *CCNObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.InstanceMeteringType != nil {
+		in, out := &in.InstanceMeteringType, &out.InstanceMeteringType
+		*out = new(string)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -744,6 +754,11 @@ func (in *CCNParameters) DeepCopyInto(out *CCNParameters) {
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceMeteringType != nil {
+		in, out := &in.InstanceMeteringType, &out.InstanceMeteringType
 		*out = new(string)
 		**out = **in
 	}

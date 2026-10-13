@@ -23,6 +23,10 @@ type ExternalKeyInitParameters struct {
 	// Description of CMK. The maximum is 1024 bytes.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The HSM cluster ID corresponding to KMS Advanced Edition (only valid for KMS Exclusive/Managed Edition service instances).
+	// The HSM cluster ID corresponding to KMS Advanced Edition (only valid for KMS Exclusive/Managed Edition service instances).
+	HSMClusterID *string `json:"hsmClusterId,omitempty" tf:"hsm_cluster_id,omitempty"`
+
 	// Specify whether to archive key. Default value is false. This field is conflict with is_enabled, valid when key_state is Enabled, Disabled, Archived.
 	// Specify whether to archive key. Default value is `false`. This field is conflict with `is_enabled`, valid when key_state is `Enabled`, `Disabled`, `Archived`.
 	IsArchived *bool `json:"isArchived,omitempty" tf:"is_archived,omitempty"`
@@ -58,6 +62,10 @@ type ExternalKeyObservation struct {
 	// Description of CMK. The maximum is 1024 bytes.
 	// Description of CMK. The maximum is 1024 bytes.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The HSM cluster ID corresponding to KMS Advanced Edition (only valid for KMS Exclusive/Managed Edition service instances).
+	// The HSM cluster ID corresponding to KMS Advanced Edition (only valid for KMS Exclusive/Managed Edition service instances).
+	HSMClusterID *string `json:"hsmClusterId,omitempty" tf:"hsm_cluster_id,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -103,6 +111,11 @@ type ExternalKeyParameters struct {
 	// Description of CMK. The maximum is 1024 bytes.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The HSM cluster ID corresponding to KMS Advanced Edition (only valid for KMS Exclusive/Managed Edition service instances).
+	// The HSM cluster ID corresponding to KMS Advanced Edition (only valid for KMS Exclusive/Managed Edition service instances).
+	// +kubebuilder:validation:Optional
+	HSMClusterID *string `json:"hsmClusterId,omitempty" tf:"hsm_cluster_id,omitempty"`
 
 	// Specify whether to archive key. Default value is false. This field is conflict with is_enabled, valid when key_state is Enabled, Disabled, Archived.
 	// Specify whether to archive key. Default value is `false`. This field is conflict with `is_enabled`, valid when key_state is `Enabled`, `Disabled`, `Archived`.

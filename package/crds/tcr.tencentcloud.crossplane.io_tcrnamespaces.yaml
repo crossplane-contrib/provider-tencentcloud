@@ -116,6 +116,14 @@ spec:
                       Block vulnerability level, currently only supports low, medium, high.
                       Block vulnerability level, currently only supports `low`, `medium`, `high`.
                     type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tag key-value pairs for the TCR namespace.
+                      Tag key-value pairs for the TCR namespace.
+                    type: object
+                    x-kubernetes-map-type: granular
                 type: object
               initProvider:
                 description: |-
@@ -173,6 +181,14 @@ spec:
                       Block vulnerability level, currently only supports low, medium, high.
                       Block vulnerability level, currently only supports `low`, `medium`, `high`.
                     type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tag key-value pairs for the TCR namespace.
+                      Tag key-value pairs for the TCR namespace.
+                    type: object
+                    x-kubernetes-map-type: granular
                 type: object
               managementPolicies:
                 default:
@@ -401,6 +417,14 @@ spec:
                       Block vulnerability level, currently only supports low, medium, high.
                       Block vulnerability level, currently only supports `low`, `medium`, `high`.
                     type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tag key-value pairs for the TCR namespace.
+                      Tag key-value pairs for the TCR namespace.
+                    type: object
+                    x-kubernetes-map-type: granular
                 type: object
               conditions:
                 description: Conditions of the resource.

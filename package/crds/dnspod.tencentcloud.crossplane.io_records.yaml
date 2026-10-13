@@ -120,8 +120,8 @@ spec:
                     type: string
                   weight:
                     description: |-
-                      Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
-                      Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
+                      Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
+                      Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
                     type: number
                 type: object
               initProvider:
@@ -184,8 +184,8 @@ spec:
                     type: string
                   weight:
                     description: |-
-                      Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
-                      Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
+                      Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
+                      Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
                     type: number
                 type: object
               managementPolicies:
@@ -395,6 +395,11 @@ spec:
                       MX priority, valid when the record type is MX, range 1-20. Note: must set when record type equal MX.
                       MX priority, valid when the record type is MX, range 1-20. Note: must set when record type equal MX.
                     type: number
+                  recordId:
+                    description: |-
+                      ID of the record.
+                      ID of the record.
+                    type: string
                   recordLine:
                     description: |-
                       The record line.
@@ -425,6 +430,11 @@ spec:
                       TTL, the range is 1-604800, and the minimum value of different levels of domain names is different. Default is 600.
                       TTL, the range is 1-604800, and the minimum value of different levels of domain names is different. Default is 600.
                     type: number
+                  updatedOn:
+                    description: |-
+                      Last update time of the record.
+                      Last update time of the record.
+                    type: string
                   value:
                     description: |-
                       The record value.
@@ -432,8 +442,8 @@ spec:
                     type: string
                   weight:
                     description: |-
-                      Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
-                      Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
+                      Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
+                      Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
                     type: number
                 type: object
               conditions:

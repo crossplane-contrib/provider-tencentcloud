@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: kafka/v1alpha1/acl
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     host: '*'
@@ -14,6 +14,27 @@ spec:
         testing.upbound.io/example-name: example
     operationType: WRITE
     permissionType: ALLOW
-    principal: ${tencentcloud_ckafka_user.foo.account_name}
-    resourceName: topic-tf-test
+    principal: ${tencentcloud_ckafka_user.example.account_name}
+    resourceName: tf-example-resource
     resourceType: TOPIC
+
+---
+
+apiVersion: kafka.tencentcloud.crossplane.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/acl
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accountName: tf-example
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

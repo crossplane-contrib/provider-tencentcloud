@@ -90,8 +90,8 @@ spec:
                     type: string
                   isMulticast:
                     description: |-
-                      Indicates whether multicast is enabled. The default value is 'true'.
-                      Indicates whether multicast is enabled. The default value is 'true'.
+                      Indicates whether multicast is enabled. The default value is false. We recommend disabling these features if they are not applicable to your environment.
+                      Indicates whether multicast is enabled. The default value is `false`. We recommend disabling these features if they are not applicable to your environment.
                     type: boolean
                   name:
                     description: |-
@@ -221,8 +221,8 @@ spec:
                     type: string
                   isMulticast:
                     description: |-
-                      Indicates whether multicast is enabled. The default value is 'true'.
-                      Indicates whether multicast is enabled. The default value is 'true'.
+                      Indicates whether multicast is enabled. The default value is false. We recommend disabling these features if they are not applicable to your environment.
+                      Indicates whether multicast is enabled. The default value is `false`. We recommend disabling these features if they are not applicable to your environment.
                     type: boolean
                   name:
                     description: |-
@@ -542,8 +542,8 @@ spec:
                     type: boolean
                   isMulticast:
                     description: |-
-                      Indicates whether multicast is enabled. The default value is 'true'.
-                      Indicates whether multicast is enabled. The default value is 'true'.
+                      Indicates whether multicast is enabled. The default value is false. We recommend disabling these features if they are not applicable to your environment.
+                      Indicates whether multicast is enabled. The default value is `false`. We recommend disabling these features if they are not applicable to your environment.
                     type: boolean
                   name:
                     description: |-

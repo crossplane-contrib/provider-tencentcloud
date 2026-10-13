@@ -666,7 +666,7 @@ spec:
                           type: string
                         clusterName:
                           description: |-
-                            Indicator name.
+                            the name of the cluster.
                             the name of the cluster.
                           type: string
                         clusterType:
@@ -772,7 +772,9 @@ spec:
                             Limitation of region.
                           type: string
                         status:
-                          description: agent state, `normal`, `abnormal`.
+                          description: |-
+                            agent state, normal, abnormal.
+                            agent state, `normal`, `abnormal`.
                           type: string
                       type: object
                     type: array

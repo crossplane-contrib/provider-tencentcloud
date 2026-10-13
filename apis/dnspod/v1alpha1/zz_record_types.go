@@ -51,8 +51,8 @@ type RecordInitParameters struct {
 	// The record value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
-	// Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
-	// Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
+	// Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
+	// Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
@@ -72,6 +72,10 @@ type RecordObservation struct {
 	// MX priority, valid when the record type is MX, range 1-20. Note: must set when record type equal MX.
 	// MX priority, valid when the record type is MX, range 1-20. Note: must set when record type equal MX.
 	Mx *float64 `json:"mx,omitempty" tf:"mx,omitempty"`
+
+	// ID of the record.
+	// ID of the record.
+	RecordID *string `json:"recordId,omitempty" tf:"record_id,omitempty"`
 
 	// The record line.
 	// The record line.
@@ -97,12 +101,16 @@ type RecordObservation struct {
 	// TTL, the range is 1-604800, and the minimum value of different levels of domain names is different. Default is 600.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 
+	// Last update time of the record.
+	// Last update time of the record.
+	UpdatedOn *string `json:"updatedOn,omitempty" tf:"updated_on,omitempty"`
+
 	// The record value.
 	// The record value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
-	// Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
-	// Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
+	// Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
+	// Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
@@ -153,8 +161,8 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
-	// Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
-	// Weight information. An integer from 0 to 100. Only enterprise VIP domain names are available, 0 means off, does not pass this parameter, means that the weight information is not set. Default is 0.
+	// Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
+	// Weight information. An integer from 1 to 100. Only enterprise VIP domain names are available, does not pass this parameter, means that the weight information is not set.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }

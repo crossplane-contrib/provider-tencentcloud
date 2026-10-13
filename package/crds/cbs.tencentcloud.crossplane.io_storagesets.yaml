@@ -98,6 +98,11 @@ spec:
                       Indicates whether CBS is encrypted.
                       Indicates whether CBS is encrypted.
                     type: boolean
+                  kmsKeyId:
+                    description: |-
+                      Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+                      Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+                    type: string
                   projectId:
                     description: |-
                       ID of the project to which the instance belongs.
@@ -167,6 +172,11 @@ spec:
                       Indicates whether CBS is encrypted.
                       Indicates whether CBS is encrypted.
                     type: boolean
+                  kmsKeyId:
+                    description: |-
+                      Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+                      Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
+                    type: string
                   projectId:
                     description: |-
                       ID of the project to which the instance belongs.
@@ -426,6 +436,11 @@ spec:
                     type: boolean
                   id:
                     description: ID of the resource.
+                    type: string
+                  kmsKeyId:
+                    description: |-
+                      Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the encrypt parameter need be set.
+                      Optional parameters. When purchasing an encryption disk, customize the key. When this parameter is passed in, the `encrypt` parameter need be set.
                     type: string
                   projectId:
                     description: |-

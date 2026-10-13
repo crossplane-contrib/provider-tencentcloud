@@ -8,12 +8,13 @@ metadata:
   name: example
 spec:
   forProvider:
-    briefDesc: "111"
-    description: "111111111111111111111111111111111111"
+    briefDesc: desc.
+    description: description.
+    forceDelete: true
     instanceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    name: test
+    name: tf-example
     namespaceName: example
 
 ---
@@ -29,8 +30,10 @@ metadata:
 spec:
   forProvider:
     deleteBucket: true
-    instanceType: premium
-    name: tf-example-tcr
+    instanceType: standard
+    name: tf-example
+    tags:
+      createdBy: Terraform
 
 ---
 
@@ -44,11 +47,6 @@ metadata:
   name: example
 spec:
   forProvider:
-    cveWhitelistItems:
-    - cveId: cve-xxxxx
     instanceId: ${tencentcloud_tcr_instance.example.id}
-    isAutoScan: true
-    isPreventVul: true
-    isPublic: true
-    name: tf_example_ns
+    name: tf_example
     severity: medium

@@ -325,8 +325,8 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-                            Docker graph path. Default is `/var/lib/docker`.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+                            Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
                           type: string
                         extraArgs:
                           description: |-
@@ -423,6 +423,11 @@ spec:
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
+                        userScript:
+                          description: |-
+                            A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the /data/ccs_userscript/ directory on the node. If the node should only join the scheduling pool after initialization is complete, the unschedulable parameter can be used; in this case, add the command kubectl uncordon nodename --kubeconfig=/root/.kube/config at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: #!/bin/sh echo "hello world".
+                            A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the `/data/ccs_userscript/` directory on the node. If the node should only join the scheduling pool after initialization is complete, the `unschedulable` parameter can be used; in this case, add the command `kubectl uncordon nodename --kubeconfig=/root/.kube/config` at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: `#!/bin/sh echo "hello world"`.
+                          type: string
                       type: object
                     type: array
                   workerConfigOverrides:
@@ -476,8 +481,8 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-                            Docker graph path. Default is `/var/lib/docker`.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+                            Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
                           type: string
                         extraArgs:
                           description: |-
@@ -800,8 +805,8 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-                            Docker graph path. Default is `/var/lib/docker`.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+                            Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
                           type: string
                         extraArgs:
                           description: |-
@@ -898,6 +903,11 @@ spec:
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
+                        userScript:
+                          description: |-
+                            A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the /data/ccs_userscript/ directory on the node. If the node should only join the scheduling pool after initialization is complete, the unschedulable parameter can be used; in this case, add the command kubectl uncordon nodename --kubeconfig=/root/.kube/config at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: #!/bin/sh echo "hello world".
+                            A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the `/data/ccs_userscript/` directory on the node. If the node should only join the scheduling pool after initialization is complete, the `unschedulable` parameter can be used; in this case, add the command `kubectl uncordon nodename --kubeconfig=/root/.kube/config` at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: `#!/bin/sh echo "hello world"`.
+                          type: string
                       type: object
                     type: array
                   workerConfigOverrides:
@@ -951,8 +961,8 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-                            Docker graph path. Default is `/var/lib/docker`.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+                            Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
                           type: string
                         extraArgs:
                           description: |-
@@ -1312,8 +1322,8 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-                            Docker graph path. Default is `/var/lib/docker`.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+                            Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
                           type: string
                         extraArgs:
                           description: |-
@@ -1410,6 +1420,11 @@ spec:
                             This argument was no longer supported by TencentCloud TKE. Base64-encoded User Data text, the length limit is 16KB.
                             Base64-encoded User Data text, the length limit is 16KB.
                           type: string
+                        userScript:
+                          description: |-
+                            A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the /data/ccs_userscript/ directory on the node. If the node should only join the scheduling pool after initialization is complete, the unschedulable parameter can be used; in this case, add the command kubectl uncordon nodename --kubeconfig=/root/.kube/config at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: #!/bin/sh echo "hello world".
+                            A Base64-encoded user script that executes after Kubernetes components start. Users must ensure the script supports re-entrancy and retry logic. The script and its generated log files can be found in the `/data/ccs_userscript/` directory on the node. If the node should only join the scheduling pool after initialization is complete, the `unschedulable` parameter can be used; in this case, add the command `kubectl uncordon nodename --kubeconfig=/root/.kube/config` at the end of the user script to enable scheduling on the node. Note: This field may return null, indicating that no valid value is available. Example value: `#!/bin/sh echo "hello world"`.
+                          type: string
                       type: object
                     type: array
                   workerConfigOverrides:
@@ -1463,8 +1478,8 @@ spec:
                           type: number
                         dockerGraphPath:
                           description: |-
-                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is /var/lib/docker.
-                            Docker graph path. Default is `/var/lib/docker`.
+                            This argument was no longer supported by TencentCloud TKE. Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
+                            Docker graph path. Default is determined by the platform (currently /var/lib/containerd for containerd-based nodes).
                           type: string
                         extraArgs:
                           description: |-

@@ -129,6 +129,11 @@ func (in *DomainInstanceObservation) DeepCopyInto(out *DomainInstanceObservation
 		*out = new(float64)
 		**out = **in
 	}
+	if in.Grade != nil {
+		in, out := &in.Grade, &out.Grade
+		*out = new(string)
+		**out = **in
+	}
 	if in.GroupID != nil {
 		in, out := &in.GroupID, &out.GroupID
 		*out = new(float64)
@@ -144,6 +149,11 @@ func (in *DomainInstanceObservation) DeepCopyInto(out *DomainInstanceObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.RecordCount != nil {
+		in, out := &in.RecordCount, &out.RecordCount
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Remark != nil {
 		in, out := &in.Remark, &out.Remark
 		*out = new(string)
@@ -156,6 +166,11 @@ func (in *DomainInstanceObservation) DeepCopyInto(out *DomainInstanceObservation
 	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status
+		*out = new(string)
+		**out = **in
+	}
+	if in.UpdatedOn != nil {
+		in, out := &in.UpdatedOn, &out.UpdatedOn
 		*out = new(string)
 		**out = **in
 	}
@@ -393,6 +408,11 @@ func (in *RecordObservation) DeepCopyInto(out *RecordObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.RecordID != nil {
+		in, out := &in.RecordID, &out.RecordID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RecordLine != nil {
 		in, out := &in.RecordLine, &out.RecordLine
 		*out = new(string)
@@ -421,6 +441,11 @@ func (in *RecordObservation) DeepCopyInto(out *RecordObservation) {
 	if in.TTL != nil {
 		in, out := &in.TTL, &out.TTL
 		*out = new(float64)
+		**out = **in
+	}
+	if in.UpdatedOn != nil {
+		in, out := &in.UpdatedOn, &out.UpdatedOn
+		*out = new(string)
 		**out = **in
 	}
 	if in.Value != nil {

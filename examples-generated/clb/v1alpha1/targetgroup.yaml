@@ -8,5 +8,8 @@ metadata:
   name: test
 spec:
   forProvider:
-    port: 33
-    targetGroupName: test
+    port: 80
+    tags:
+      createdBy: terraform
+    targetGroupName: test-v1
+    type: v1

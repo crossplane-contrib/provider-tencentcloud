@@ -107,7 +107,7 @@ type SecurityGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityGroup is the Schema for the SecurityGroups API. Provides a resource to create security group.
+// SecurityGroup is the Schema for the SecurityGroups API. Provides a resource to create Security group.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

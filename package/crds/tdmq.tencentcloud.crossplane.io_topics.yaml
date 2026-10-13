@@ -34,7 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Topic is the Schema for the Topics API. Provide a resource to
+        description: Topic is the Schema for the Topics API. Provides a resource to
           create a TDMQ topic.
         properties:
           apiVersion:
@@ -246,6 +246,24 @@ spec:
                       Description of the namespace.
                       Description of the namespace.
                     type: string
+                  tags:
+                    description: |-
+                      Tag description list.
+                      Tag description list.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   topicName:
                     description: |-
                       The name of topic to be created.
@@ -438,6 +456,24 @@ spec:
                       Description of the namespace.
                       Description of the namespace.
                     type: string
+                  tags:
+                    description: |-
+                      Tag description list.
+                      Tag description list.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   topicName:
                     description: |-
                       The name of topic to be created.
@@ -658,6 +694,24 @@ spec:
                       Description of the namespace.
                       Description of the namespace.
                     type: string
+                  tags:
+                    description: |-
+                      Tag description list.
+                      Tag description list.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   topicName:
                     description: |-
                       The name of topic to be created.

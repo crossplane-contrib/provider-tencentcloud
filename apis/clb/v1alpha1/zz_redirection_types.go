@@ -36,6 +36,14 @@ type RedirectionInitParameters struct {
 	// Indicates whether automatic forwarding is enable, default is `false`. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
 	IsAutoRewrite *bool `json:"isAutoRewrite,omitempty" tf:"is_auto_rewrite,omitempty"`
 
+	// Redirection status codes, with possible values of 301, 302, 307.
+	// Redirection status codes, with possible values of `301`, `302`, `307`.
+	RewriteCode *float64 `json:"rewriteCode,omitempty" tf:"rewrite_code,omitempty"`
+
+	// The domain name for source forwarding must be the domain name corresponding to source_rule_id, which is required when configuring rewrite_code. Only support is_auto_rewrite is false.
+	// The domain name for source forwarding must be the domain name corresponding to `source_rule_id`, which is required when configuring `rewrite_code`. Only support `is_auto_rewrite` is `false`.
+	SourceDomian *string `json:"sourceDomian,omitempty" tf:"source_domian,omitempty"`
+
 	// ID of source listener.
 	// ID of source listener.
 	// +crossplane:generate:reference:type=Listener
@@ -61,6 +69,10 @@ type RedirectionInitParameters struct {
 	// Selector for a ListenerRule to populate sourceRuleId.
 	// +kubebuilder:validation:Optional
 	SourceRuleIDSelector *v1.Selector `json:"sourceRuleIdSelector,omitempty" tf:"-"`
+
+	// Whether the redirect carries a matching URL is required when configuring rewrite_code.
+	// Whether the redirect carries a matching URL is required when configuring `rewrite_code`.
+	TakeURL *bool `json:"takeUrl,omitempty" tf:"take_url,omitempty"`
 
 	// ID of source listener.
 	// ID of source listener.
@@ -106,6 +118,14 @@ type RedirectionObservation struct {
 	// Indicates whether automatic forwarding is enable, default is `false`. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
 	IsAutoRewrite *bool `json:"isAutoRewrite,omitempty" tf:"is_auto_rewrite,omitempty"`
 
+	// Redirection status codes, with possible values of 301, 302, 307.
+	// Redirection status codes, with possible values of `301`, `302`, `307`.
+	RewriteCode *float64 `json:"rewriteCode,omitempty" tf:"rewrite_code,omitempty"`
+
+	// The domain name for source forwarding must be the domain name corresponding to source_rule_id, which is required when configuring rewrite_code. Only support is_auto_rewrite is false.
+	// The domain name for source forwarding must be the domain name corresponding to `source_rule_id`, which is required when configuring `rewrite_code`. Only support `is_auto_rewrite` is `false`.
+	SourceDomian *string `json:"sourceDomian,omitempty" tf:"source_domian,omitempty"`
+
 	// ID of source listener.
 	// ID of source listener.
 	SourceListenerID *string `json:"sourceListenerId,omitempty" tf:"source_listener_id,omitempty"`
@@ -113,6 +133,10 @@ type RedirectionObservation struct {
 	// Rule ID of source listener.
 	// Rule ID of source listener.
 	SourceRuleID *string `json:"sourceRuleId,omitempty" tf:"source_rule_id,omitempty"`
+
+	// Whether the redirect carries a matching URL is required when configuring rewrite_code.
+	// Whether the redirect carries a matching URL is required when configuring `rewrite_code`.
+	TakeURL *bool `json:"takeUrl,omitempty" tf:"take_url,omitempty"`
 
 	// ID of source listener.
 	// ID of source listener.
@@ -149,6 +173,16 @@ type RedirectionParameters struct {
 	// +kubebuilder:validation:Optional
 	IsAutoRewrite *bool `json:"isAutoRewrite,omitempty" tf:"is_auto_rewrite,omitempty"`
 
+	// Redirection status codes, with possible values of 301, 302, 307.
+	// Redirection status codes, with possible values of `301`, `302`, `307`.
+	// +kubebuilder:validation:Optional
+	RewriteCode *float64 `json:"rewriteCode,omitempty" tf:"rewrite_code,omitempty"`
+
+	// The domain name for source forwarding must be the domain name corresponding to source_rule_id, which is required when configuring rewrite_code. Only support is_auto_rewrite is false.
+	// The domain name for source forwarding must be the domain name corresponding to `source_rule_id`, which is required when configuring `rewrite_code`. Only support `is_auto_rewrite` is `false`.
+	// +kubebuilder:validation:Optional
+	SourceDomian *string `json:"sourceDomian,omitempty" tf:"source_domian,omitempty"`
+
 	// ID of source listener.
 	// ID of source listener.
 	// +crossplane:generate:reference:type=Listener
@@ -176,6 +210,11 @@ type RedirectionParameters struct {
 	// Selector for a ListenerRule to populate sourceRuleId.
 	// +kubebuilder:validation:Optional
 	SourceRuleIDSelector *v1.Selector `json:"sourceRuleIdSelector,omitempty" tf:"-"`
+
+	// Whether the redirect carries a matching URL is required when configuring rewrite_code.
+	// Whether the redirect carries a matching URL is required when configuring `rewrite_code`.
+	// +kubebuilder:validation:Optional
+	TakeURL *bool `json:"takeUrl,omitempty" tf:"take_url,omitempty"`
 
 	// ID of source listener.
 	// ID of source listener.

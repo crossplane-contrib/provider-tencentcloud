@@ -53,6 +53,11 @@ func (in *ExternalKeyInitParameters) DeepCopyInto(out *ExternalKeyInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.HSMClusterID != nil {
+		in, out := &in.HSMClusterID, &out.HSMClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.IsArchived != nil {
 		in, out := &in.IsArchived, &out.IsArchived
 		*out = new(bool)
@@ -151,6 +156,11 @@ func (in *ExternalKeyObservation) DeepCopyInto(out *ExternalKeyObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.HSMClusterID != nil {
+		in, out := &in.HSMClusterID, &out.HSMClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -224,6 +234,11 @@ func (in *ExternalKeyParameters) DeepCopyInto(out *ExternalKeyParameters) {
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
+	if in.HSMClusterID != nil {
+		in, out := &in.HSMClusterID, &out.HSMClusterID
 		*out = new(string)
 		**out = **in
 	}
@@ -360,6 +375,11 @@ func (in *KeyInitParameters) DeepCopyInto(out *KeyInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.HSMClusterID != nil {
+		in, out := &in.HSMClusterID, &out.HSMClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.IsArchived != nil {
 		in, out := &in.IsArchived, &out.IsArchived
 		*out = new(bool)
@@ -458,6 +478,11 @@ func (in *KeyObservation) DeepCopyInto(out *KeyObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.HSMClusterID != nil {
+		in, out := &in.HSMClusterID, &out.HSMClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -531,6 +556,11 @@ func (in *KeyParameters) DeepCopyInto(out *KeyParameters) {
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
+	if in.HSMClusterID != nil {
+		in, out := &in.HSMClusterID, &out.HSMClusterID
 		*out = new(string)
 		**out = **in
 	}

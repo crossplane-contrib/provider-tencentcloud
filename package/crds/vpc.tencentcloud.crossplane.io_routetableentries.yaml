@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: RouteTableEntry is the Schema for the RouteTableEntrys API. Provides
-          a resource to create an entry of a routing table.
+          a resource to create a Route table entry.
         properties:
           apiVersion:
             description: |-
@@ -95,8 +95,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
-                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
+                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT, USER_CCN and GWLB_ENDPOINT.
+                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT`, `USER_CCN` and `GWLB_ENDPOINT`.
                     type: string
                   routeTableId:
                     description: |-
@@ -213,8 +213,8 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
-                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
+                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT, USER_CCN and GWLB_ENDPOINT.
+                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT`, `USER_CCN` and `GWLB_ENDPOINT`.
                     type: string
                   routeTableId:
                     description: |-
@@ -506,9 +506,14 @@ spec:
                     type: string
                   nextType:
                     description: |-
-                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
-                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
+                      Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT, USER_CCN and GWLB_ENDPOINT.
+                      Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT`, `USER_CCN` and `GWLB_ENDPOINT`.
                     type: string
+                  routeEntryId:
+                    description: |-
+                      ID of route entry.
+                      ID of route entry.
+                    type: number
                   routeItemId:
                     description: |-
                       ID of route table entry.

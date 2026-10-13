@@ -27,8 +27,8 @@ type SubnetInitParameters struct {
 	// A network address block of the subnet.
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// Indicates whether multicast is enabled. The default value is 'true'.
-	// Indicates whether multicast is enabled. The default value is 'true'.
+	// Indicates whether multicast is enabled. The default value is false. We recommend disabling these features if they are not applicable to your environment.
+	// Indicates whether multicast is enabled. The default value is `false`. We recommend disabling these features if they are not applicable to your environment.
 	IsMulticast *bool `json:"isMulticast,omitempty" tf:"is_multicast,omitempty"`
 
 	// The name of subnet to be created.
@@ -87,8 +87,8 @@ type SubnetObservation struct {
 	// Indicates whether it is the default VPC for this region.
 	IsDefault *bool `json:"isDefault,omitempty" tf:"is_default,omitempty"`
 
-	// Indicates whether multicast is enabled. The default value is 'true'.
-	// Indicates whether multicast is enabled. The default value is 'true'.
+	// Indicates whether multicast is enabled. The default value is false. We recommend disabling these features if they are not applicable to your environment.
+	// Indicates whether multicast is enabled. The default value is `false`. We recommend disabling these features if they are not applicable to your environment.
 	IsMulticast *bool `json:"isMulticast,omitempty" tf:"is_multicast,omitempty"`
 
 	// The name of subnet to be created.
@@ -126,8 +126,8 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// Indicates whether multicast is enabled. The default value is 'true'.
-	// Indicates whether multicast is enabled. The default value is 'true'.
+	// Indicates whether multicast is enabled. The default value is false. We recommend disabling these features if they are not applicable to your environment.
+	// Indicates whether multicast is enabled. The default value is `false`. We recommend disabling these features if they are not applicable to your environment.
 	// +kubebuilder:validation:Optional
 	IsMulticast *bool `json:"isMulticast,omitempty" tf:"is_multicast,omitempty"`
 

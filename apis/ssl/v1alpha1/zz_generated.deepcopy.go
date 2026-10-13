@@ -1295,11 +1295,6 @@ func (in *PayCertificateInitParameters) DeepCopyInto(out *PayCertificateInitPara
 		*out = new(float64)
 		**out = **in
 	}
-	if in.DvAuths != nil {
-		in, out := &in.DvAuths, &out.DvAuths
-		*out = make([]PayCertificateDvAuthsInitParameters, len(*in))
-		copy(*out, *in)
-	}
 	if in.Information != nil {
 		in, out := &in.Information, &out.Information
 		*out = make([]InformationInitParameters, len(*in))
@@ -1462,11 +1457,6 @@ func (in *PayCertificateParameters) DeepCopyInto(out *PayCertificateParameters) 
 		in, out := &in.DomainNum, &out.DomainNum
 		*out = new(float64)
 		**out = **in
-	}
-	if in.DvAuths != nil {
-		in, out := &in.DvAuths, &out.DvAuths
-		*out = make([]PayCertificateDvAuthsParameters, len(*in))
-		copy(*out, *in)
 	}
 	if in.Information != nil {
 		in, out := &in.Information, &out.Information

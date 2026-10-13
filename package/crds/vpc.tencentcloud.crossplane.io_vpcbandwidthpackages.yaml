@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: VPCBandwidthPackage is the Schema for the VPCBandwidthPackages
-          API. Provides a resource to create a vpc bandwidth_package
+          API. Provides a resource to create a VPC bandwidth package
         properties:
           apiVersion:
             description: |-
@@ -98,11 +98,19 @@ spec:
                       Bandwidth packet type, default: BGP. Optional value: BGP: common BGP shared bandwidth package; HIGH_QUALITY_BGP: High Quality BGP Shared Bandwidth Package; SINGLEISP_CMCC: CMCC shared bandwidth package; SINGLEISP_CTCC:: CTCC shared bandwidth package; SINGLEISP_CUCC: CUCC shared bandwidth package.
                       Bandwidth packet type, default: `BGP`. Optional value: `BGP`: common BGP shared bandwidth package; `HIGH_QUALITY_BGP`: High Quality BGP Shared Bandwidth Package; `SINGLEISP_CMCC`: CMCC shared bandwidth package; `SINGLEISP_CTCC:`: CTCC shared bandwidth package; `SINGLEISP_CUCC`: CUCC shared bandwidth package.
                     type: string
-                  tags:
+                  tag:
                     additionalProperties:
                       type: string
                     description: |-
                       Tag description list.
+                      Tag description list.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Use tag instead. Tag description list.
                       Tag description list.
                     type: object
                     x-kubernetes-map-type: granular
@@ -150,11 +158,19 @@ spec:
                       Bandwidth packet type, default: BGP. Optional value: BGP: common BGP shared bandwidth package; HIGH_QUALITY_BGP: High Quality BGP Shared Bandwidth Package; SINGLEISP_CMCC: CMCC shared bandwidth package; SINGLEISP_CTCC:: CTCC shared bandwidth package; SINGLEISP_CUCC: CUCC shared bandwidth package.
                       Bandwidth packet type, default: `BGP`. Optional value: `BGP`: common BGP shared bandwidth package; `HIGH_QUALITY_BGP`: High Quality BGP Shared Bandwidth Package; `SINGLEISP_CMCC`: CMCC shared bandwidth package; `SINGLEISP_CTCC:`: CTCC shared bandwidth package; `SINGLEISP_CUCC`: CUCC shared bandwidth package.
                     type: string
-                  tags:
+                  tag:
                     additionalProperties:
                       type: string
                     description: |-
                       Tag description list.
+                      Tag description list.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Use tag instead. Tag description list.
                       Tag description list.
                     type: object
                     x-kubernetes-map-type: granular
@@ -364,11 +380,19 @@ spec:
                       Bandwidth packet type, default: BGP. Optional value: BGP: common BGP shared bandwidth package; HIGH_QUALITY_BGP: High Quality BGP Shared Bandwidth Package; SINGLEISP_CMCC: CMCC shared bandwidth package; SINGLEISP_CTCC:: CTCC shared bandwidth package; SINGLEISP_CUCC: CUCC shared bandwidth package.
                       Bandwidth packet type, default: `BGP`. Optional value: `BGP`: common BGP shared bandwidth package; `HIGH_QUALITY_BGP`: High Quality BGP Shared Bandwidth Package; `SINGLEISP_CMCC`: CMCC shared bandwidth package; `SINGLEISP_CTCC:`: CTCC shared bandwidth package; `SINGLEISP_CUCC`: CUCC shared bandwidth package.
                     type: string
-                  tags:
+                  tag:
                     additionalProperties:
                       type: string
                     description: |-
                       Tag description list.
+                      Tag description list.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Use tag instead. Tag description list.
                       Tag description list.
                     type: object
                     x-kubernetes-map-type: granular
