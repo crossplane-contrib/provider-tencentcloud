@@ -9,5 +9,6 @@ organization](https://github.com/upbound/) will list their repository maintainer
 
 * hellertang <hellertang@upbound.com> ([hellertang](https://github.com/hellertang))
 * mikatong <mikatong@tencent.com> ([tongyiming](https://github.com/tongyiming))
+* seanyyan <seanyyan@tencent.com> ([SevenEarth](https://github.com/SevenEarth))
 
 See [CODEOWNERS](./CODEOWNERS) for automatic PR assignment.
