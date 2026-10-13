@@ -4,11 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: clb/v1alpha1/logtopic
   labels:
-    testing.upbound.io/example-name: topic
-  name: topic
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     logSetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: set
-    topicName: clb-topic
+        testing.upbound.io/example-name: example
+    period: 30
+    status: true
+    tags:
+      env: prod
+    topicName: tf-example

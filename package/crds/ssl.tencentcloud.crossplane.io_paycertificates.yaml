@@ -88,13 +88,6 @@ spec:
                       Number of domain names included in the certificate.
                       Number of domain names included in the certificate.
                     type: number
-                  dvAuths:
-                    description: |-
-                      DV certification information.
-                      DV certification information.
-                    items:
-                      type: object
-                    type: array
                   information:
                     description: |-
                       Certificate information.
@@ -275,13 +268,6 @@ spec:
                       Number of domain names included in the certificate.
                       Number of domain names included in the certificate.
                     type: number
-                  dvAuths:
-                    description: |-
-                      DV certification information.
-                      DV certification information.
-                    items:
-                      type: object
-                    type: array
                   information:
                     description: |-
                       Certificate information.
@@ -652,9 +638,7 @@ spec:
                           description: DV authentication value.
                           type: string
                         dvAuthVerifyType:
-                          description: |-
-                            Certificate verification method. Valid values: DNS_AUTO, DNS, FILE. DNS_AUTO means automatic DNS verification, this verification type is only supported for domain names resolved by Tencent Cloud and the resolution status is normal, DNS means manual DNS verification, FILE means file verification.
-                            DV authentication type.
+                          description: DV authentication type.
                           type: string
                       type: object
                     type: array

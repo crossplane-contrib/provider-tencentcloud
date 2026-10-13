@@ -42,12 +42,16 @@ type ContentInitParameters struct {
 	Csv []CsvInitParameters `json:"csv,omitempty" tf:"csv,omitempty"`
 
 	// Compression format. Valid values: gzip, lzop, none (no compression).
-	// Content format. Valid values: json, csv.
+	// Content format. Valid values: json, csv, parquet.
 	Format *string `json:"format,omitempty" tf:"format,omitempty"`
 
 	// JSON format content description.Note: this field may return null, indicating that no valid values can be obtained.
 	// JSON format content description.Note: this field may return null, indicating that no valid values can be obtained.
 	JSON []JSONInitParameters `json:"json,omitempty" tf:"json,omitempty"`
+
+	// Parquet format content description.Note: this field may return null, indicating that no valid values can be obtained.
+	// Parquet format content description.Note: this field may return null, indicating that no valid values can be obtained.
+	Parquet []ParquetInitParameters `json:"parquet,omitempty" tf:"parquet,omitempty"`
 }
 
 type ContentObservation struct {
@@ -57,12 +61,16 @@ type ContentObservation struct {
 	Csv []CsvObservation `json:"csv,omitempty" tf:"csv,omitempty"`
 
 	// Compression format. Valid values: gzip, lzop, none (no compression).
-	// Content format. Valid values: json, csv.
+	// Content format. Valid values: json, csv, parquet.
 	Format *string `json:"format,omitempty" tf:"format,omitempty"`
 
 	// JSON format content description.Note: this field may return null, indicating that no valid values can be obtained.
 	// JSON format content description.Note: this field may return null, indicating that no valid values can be obtained.
 	JSON []JSONObservation `json:"json,omitempty" tf:"json,omitempty"`
+
+	// Parquet format content description.Note: this field may return null, indicating that no valid values can be obtained.
+	// Parquet format content description.Note: this field may return null, indicating that no valid values can be obtained.
+	Parquet []ParquetObservation `json:"parquet,omitempty" tf:"parquet,omitempty"`
 }
 
 type ContentParameters struct {
@@ -73,7 +81,7 @@ type ContentParameters struct {
 	Csv []CsvParameters `json:"csv,omitempty" tf:"csv,omitempty"`
 
 	// Compression format. Valid values: gzip, lzop, none (no compression).
-	// Content format. Valid values: json, csv.
+	// Content format. Valid values: json, csv, parquet.
 	// +kubebuilder:validation:Optional
 	Format *string `json:"format" tf:"format,omitempty"`
 
@@ -81,6 +89,11 @@ type ContentParameters struct {
 	// JSON format content description.Note: this field may return null, indicating that no valid values can be obtained.
 	// +kubebuilder:validation:Optional
 	JSON []JSONParameters `json:"json,omitempty" tf:"json,omitempty"`
+
+	// Parquet format content description.Note: this field may return null, indicating that no valid values can be obtained.
+	// Parquet format content description.Note: this field may return null, indicating that no valid values can be obtained.
+	// +kubebuilder:validation:Optional
+	Parquet []ParquetParameters `json:"parquet,omitempty" tf:"parquet,omitempty"`
 }
 
 type CosShipperInitParameters struct {
@@ -136,6 +149,10 @@ type CosShipperInitParameters struct {
 	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
 	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+
+	// Timezone used to generate the time variable in the COS file path when shipping logs. Supports GMT and UTC timezone formats, e.g., GMT+08:00, UTC+08:00.
+	// Timezone used to generate the time variable in the COS file path when shipping logs. Supports GMT and UTC timezone formats, e.g., `GMT+08:00`, `UTC+08:00`.
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// ID of the log topic to which the shipping rule to be created belongs.
 	// ID of the log topic to which the shipping rule to be created belongs.
@@ -208,6 +225,10 @@ type CosShipperObservation struct {
 	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
+	// Timezone used to generate the time variable in the COS file path when shipping logs. Supports GMT and UTC timezone formats, e.g., GMT+08:00, UTC+08:00.
+	// Timezone used to generate the time variable in the COS file path when shipping logs. Supports GMT and UTC timezone formats, e.g., `GMT+08:00`, `UTC+08:00`.
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
 	// ID of the log topic to which the shipping rule to be created belongs.
 	// ID of the log topic to which the shipping rule to be created belongs.
 	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
@@ -279,6 +300,11 @@ type CosShipperParameters struct {
 	// COS bucket storage type. support: STANDARD_IA, ARCHIVE, DEEP_ARCHIVE, STANDARD, MAZ_STANDARD, MAZ_STANDARD_IA, INTELLIGENT_TIERING.
 	// +kubebuilder:validation:Optional
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
+
+	// Timezone used to generate the time variable in the COS file path when shipping logs. Supports GMT and UTC timezone formats, e.g., GMT+08:00, UTC+08:00.
+	// Timezone used to generate the time variable in the COS file path when shipping logs. Supports GMT and UTC timezone formats, e.g., `GMT+08:00`, `UTC+08:00`.
+	// +kubebuilder:validation:Optional
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// ID of the log topic to which the shipping rule to be created belongs.
 	// ID of the log topic to which the shipping rule to be created belongs.
@@ -462,6 +488,76 @@ type JSONParameters struct {
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	MetaFields []*string `json:"metaFields" tf:"meta_fields,omitempty"`
+}
+
+type ParquetInitParameters struct {
+
+	// Array of Parquet column definitions.
+	// Array of Parquet column definitions.
+	ParquetKeyInfo []ParquetKeyInfoInitParameters `json:"parquetKeyInfo,omitempty" tf:"parquet_key_info,omitempty"`
+}
+
+type ParquetKeyInfoInitParameters struct {
+
+	// Column name in the Parquet file.
+	// Column name in the Parquet file.
+	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
+
+	// Value to assign when the field does not exist or parsing fails.
+	// Value to assign when the field does not exist or parsing fails.
+	KeyNonExistingField *string `json:"keyNonExistingField,omitempty" tf:"key_non_existing_field,omitempty"`
+
+	// Data type of the column. Valid values: string, boolean, int32, int64, float, double.
+	// Data type of the column. Valid values: string, boolean, int32, int64, float, double.
+	KeyType *string `json:"keyType,omitempty" tf:"key_type,omitempty"`
+}
+
+type ParquetKeyInfoObservation struct {
+
+	// Column name in the Parquet file.
+	// Column name in the Parquet file.
+	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
+
+	// Value to assign when the field does not exist or parsing fails.
+	// Value to assign when the field does not exist or parsing fails.
+	KeyNonExistingField *string `json:"keyNonExistingField,omitempty" tf:"key_non_existing_field,omitempty"`
+
+	// Data type of the column. Valid values: string, boolean, int32, int64, float, double.
+	// Data type of the column. Valid values: string, boolean, int32, int64, float, double.
+	KeyType *string `json:"keyType,omitempty" tf:"key_type,omitempty"`
+}
+
+type ParquetKeyInfoParameters struct {
+
+	// Column name in the Parquet file.
+	// Column name in the Parquet file.
+	// +kubebuilder:validation:Optional
+	KeyName *string `json:"keyName" tf:"key_name,omitempty"`
+
+	// Value to assign when the field does not exist or parsing fails.
+	// Value to assign when the field does not exist or parsing fails.
+	// +kubebuilder:validation:Optional
+	KeyNonExistingField *string `json:"keyNonExistingField,omitempty" tf:"key_non_existing_field,omitempty"`
+
+	// Data type of the column. Valid values: string, boolean, int32, int64, float, double.
+	// Data type of the column. Valid values: string, boolean, int32, int64, float, double.
+	// +kubebuilder:validation:Optional
+	KeyType *string `json:"keyType" tf:"key_type,omitempty"`
+}
+
+type ParquetObservation struct {
+
+	// Array of Parquet column definitions.
+	// Array of Parquet column definitions.
+	ParquetKeyInfo []ParquetKeyInfoObservation `json:"parquetKeyInfo,omitempty" tf:"parquet_key_info,omitempty"`
+}
+
+type ParquetParameters struct {
+
+	// Array of Parquet column definitions.
+	// Array of Parquet column definitions.
+	// +kubebuilder:validation:Optional
+	ParquetKeyInfo []ParquetKeyInfoParameters `json:"parquetKeyInfo" tf:"parquet_key_info,omitempty"`
 }
 
 // CosShipperSpec defines the desired state of CosShipper

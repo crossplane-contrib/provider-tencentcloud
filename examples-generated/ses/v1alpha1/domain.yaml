@@ -8,4 +8,8 @@ metadata:
   name: domain
 spec:
   forProvider:
+    dkimOption: 1
     emailIdentity: iac.cloud
+    tagList:
+    - tagKey: env
+      tagValue: prod

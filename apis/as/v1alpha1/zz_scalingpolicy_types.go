@@ -32,8 +32,16 @@ type ScalingPolicyInitParameters struct {
 	ContinuousTime *float64 `json:"continuousTime,omitempty" tf:"continuous_time,omitempty"`
 
 	// Cooldwon time in second. Default is 300.
-	// Cooldwon time in second. Default is `30`0.
+	// Cooldwon time in second. Default is `300`.
 	Cooldown *float64 `json:"cooldown,omitempty" tf:"cooldown,omitempty"`
+
+	// Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+	// Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+	DisableScaleIn *bool `json:"disableScaleIn,omitempty" tf:"disable_scale_in,omitempty"`
+
+	// Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+	// Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+	EstimatedInstanceWarmup *float64 `json:"estimatedInstanceWarmup,omitempty" tf:"estimated_instance_warmup,omitempty"`
 
 	// Name of an indicator. Valid values: CPU_UTILIZATION, MEM_UTILIZATION, LAN_TRAFFIC_OUT, LAN_TRAFFIC_IN, WAN_TRAFFIC_OUT and WAN_TRAFFIC_IN.
 	// Name of an indicator. Valid values: `CPU_UTILIZATION`, `MEM_UTILIZATION`, `LAN_TRAFFIC_OUT`, `LAN_TRAFFIC_IN`, `WAN_TRAFFIC_OUT` and `WAN_TRAFFIC_IN`.
@@ -51,6 +59,14 @@ type ScalingPolicyInitParameters struct {
 	// Name of a policy used to define a reaction when an alarm is triggered.
 	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
 
+	// Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+	// Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+	PolicyType *string `json:"policyType,omitempty" tf:"policy_type,omitempty"`
+
+	// Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+	// Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+	PredefinedMetricType *string `json:"predefinedMetricType,omitempty" tf:"predefined_metric_type,omitempty"`
+
 	// ID of a scaling group.
 	// ID of a scaling group.
 	// +crossplane:generate:reference:type=ScalingGroup
@@ -67,6 +83,10 @@ type ScalingPolicyInitParameters struct {
 	// Statistic types. Valid values: AVERAGE, MAXIMUM and MINIMUM. Default is AVERAGE.
 	// Statistic types. Valid values: `AVERAGE`, `MAXIMUM` and `MINIMUM`. Default is `AVERAGE`.
 	Statistic *string `json:"statistic,omitempty" tf:"statistic,omitempty"`
+
+	// Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+	// Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+	TargetValue *float64 `json:"targetValue,omitempty" tf:"target_value,omitempty"`
 
 	// Alarm threshold.
 	// Alarm threshold.
@@ -92,8 +112,16 @@ type ScalingPolicyObservation struct {
 	ContinuousTime *float64 `json:"continuousTime,omitempty" tf:"continuous_time,omitempty"`
 
 	// Cooldwon time in second. Default is 300.
-	// Cooldwon time in second. Default is `30`0.
+	// Cooldwon time in second. Default is `300`.
 	Cooldown *float64 `json:"cooldown,omitempty" tf:"cooldown,omitempty"`
+
+	// Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+	// Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+	DisableScaleIn *bool `json:"disableScaleIn,omitempty" tf:"disable_scale_in,omitempty"`
+
+	// Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+	// Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+	EstimatedInstanceWarmup *float64 `json:"estimatedInstanceWarmup,omitempty" tf:"estimated_instance_warmup,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -114,6 +142,14 @@ type ScalingPolicyObservation struct {
 	// Name of a policy used to define a reaction when an alarm is triggered.
 	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
 
+	// Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+	// Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+	PolicyType *string `json:"policyType,omitempty" tf:"policy_type,omitempty"`
+
+	// Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+	// Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+	PredefinedMetricType *string `json:"predefinedMetricType,omitempty" tf:"predefined_metric_type,omitempty"`
+
 	// ID of a scaling group.
 	// ID of a scaling group.
 	ScalingGroupID *string `json:"scalingGroupId,omitempty" tf:"scaling_group_id,omitempty"`
@@ -121,6 +157,10 @@ type ScalingPolicyObservation struct {
 	// Statistic types. Valid values: AVERAGE, MAXIMUM and MINIMUM. Default is AVERAGE.
 	// Statistic types. Valid values: `AVERAGE`, `MAXIMUM` and `MINIMUM`. Default is `AVERAGE`.
 	Statistic *string `json:"statistic,omitempty" tf:"statistic,omitempty"`
+
+	// Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+	// Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+	TargetValue *float64 `json:"targetValue,omitempty" tf:"target_value,omitempty"`
 
 	// Alarm threshold.
 	// Alarm threshold.
@@ -150,9 +190,19 @@ type ScalingPolicyParameters struct {
 	ContinuousTime *float64 `json:"continuousTime,omitempty" tf:"continuous_time,omitempty"`
 
 	// Cooldwon time in second. Default is 300.
-	// Cooldwon time in second. Default is `30`0.
+	// Cooldwon time in second. Default is `300`.
 	// +kubebuilder:validation:Optional
 	Cooldown *float64 `json:"cooldown,omitempty" tf:"cooldown,omitempty"`
+
+	// Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+	// Whether to disable scaling down applies only to the target tracking strategy; the default value is false. Value range: true: The target tracking strategy only triggers scaling up; false: The target tracking strategy triggers both scaling up and scaling down.
+	// +kubebuilder:validation:Optional
+	DisableScaleIn *bool `json:"disableScaleIn,omitempty" tf:"disable_scale_in,omitempty"`
+
+	// Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+	// Instance warm-up time, in seconds, applicable only to target tracking strategies. Value range is 0-3600, with a default warm-up time of 300 seconds.
+	// +kubebuilder:validation:Optional
+	EstimatedInstanceWarmup *float64 `json:"estimatedInstanceWarmup,omitempty" tf:"estimated_instance_warmup,omitempty"`
 
 	// Name of an indicator. Valid values: CPU_UTILIZATION, MEM_UTILIZATION, LAN_TRAFFIC_OUT, LAN_TRAFFIC_IN, WAN_TRAFFIC_OUT and WAN_TRAFFIC_IN.
 	// Name of an indicator. Valid values: `CPU_UTILIZATION`, `MEM_UTILIZATION`, `LAN_TRAFFIC_OUT`, `LAN_TRAFFIC_IN`, `WAN_TRAFFIC_OUT` and `WAN_TRAFFIC_IN`.
@@ -174,6 +224,16 @@ type ScalingPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
 
+	// Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+	// Alarm triggering policy type, the default type is SIMPLE. Value range: SIMPLE: Simple policy; TARGET_TRACKING: Target tracking policy.
+	// +kubebuilder:validation:Optional
+	PolicyType *string `json:"policyType,omitempty" tf:"policy_type,omitempty"`
+
+	// Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+	// Predefined monitoring items, applicable only to target tracking policies, and required in target tracking policy scenarios. Value range: ASG_AVG_CPU_UTILIZATION: Average CPU utilization; ASG_AVG_LAN_TRAFFIC_OUT: Average intranet outbound bandwidth; ASG_AVG_LAN_TRAFFIC_IN: Average intranet inbound bandwidth; ASG_AVG_WAN_TRAFFIC_OUT: Average internet outbound bandwidth; ASG_AVG_WAN_TRAFFIC_IN: Average internet inbound bandwidth.
+	// +kubebuilder:validation:Optional
+	PredefinedMetricType *string `json:"predefinedMetricType,omitempty" tf:"predefined_metric_type,omitempty"`
+
 	// ID of a scaling group.
 	// ID of a scaling group.
 	// +crossplane:generate:reference:type=ScalingGroup
@@ -192,6 +252,11 @@ type ScalingPolicyParameters struct {
 	// Statistic types. Valid values: `AVERAGE`, `MAXIMUM` and `MINIMUM`. Default is `AVERAGE`.
 	// +kubebuilder:validation:Optional
 	Statistic *string `json:"statistic,omitempty" tf:"statistic,omitempty"`
+
+	// Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+	// Target value, applicable only to target tracking strategies, and required in target tracking strategy scenarios. ASG_AVG_CPU_UTILIZATION: [1, 100), Unit: %; ASG_AVG_LAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_LAN_TRAFFIC_IN: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_OUT: >0, Unit: Mbps; ASG_AVG_WAN_TRAFFIC_IN: >0, Unit: Mbps.
+	// +kubebuilder:validation:Optional
+	TargetValue *float64 `json:"targetValue,omitempty" tf:"target_value,omitempty"`
 
 	// Alarm threshold.
 	// Alarm threshold.
@@ -235,14 +300,7 @@ type ScalingPolicyStatus struct {
 type ScalingPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.adjustmentType) || (has(self.initProvider) && has(self.initProvider.adjustmentType))",message="spec.forProvider.adjustmentType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.adjustmentValue) || (has(self.initProvider) && has(self.initProvider.adjustmentValue))",message="spec.forProvider.adjustmentValue is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.comparisonOperator) || (has(self.initProvider) && has(self.initProvider.comparisonOperator))",message="spec.forProvider.comparisonOperator is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.continuousTime) || (has(self.initProvider) && has(self.initProvider.continuousTime))",message="spec.forProvider.continuousTime is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.metricName) || (has(self.initProvider) && has(self.initProvider.metricName))",message="spec.forProvider.metricName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.period) || (has(self.initProvider) && has(self.initProvider.period))",message="spec.forProvider.period is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.policyName) || (has(self.initProvider) && has(self.initProvider.policyName))",message="spec.forProvider.policyName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.threshold) || (has(self.initProvider) && has(self.initProvider.threshold))",message="spec.forProvider.threshold is a required parameter"
 	Spec   ScalingPolicySpec   `json:"spec"`
 	Status ScalingPolicyStatus `json:"status,omitempty"`
 }

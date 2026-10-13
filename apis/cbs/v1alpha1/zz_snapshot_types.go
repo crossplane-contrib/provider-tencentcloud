@@ -15,6 +15,10 @@ import (
 
 type SnapshotInitParameters struct {
 
+	// The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+	// The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+	DiskUsage *string `json:"diskUsage,omitempty" tf:"disk_usage,omitempty"`
+
 	// Name of the snapshot.
 	// Name of the snapshot.
 	SnapshotName *string `json:"snapshotName,omitempty" tf:"snapshot_name,omitempty"`
@@ -44,9 +48,13 @@ type SnapshotObservation struct {
 	// Creation time of snapshot.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Types of CBS which this snapshot created from.
+	// (Deprecated) It has been deprecated from version 1.82.14. Please use disk_usage instead. Types of CBS which this snapshot created from.
 	// Types of CBS which this snapshot created from.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
+	// The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+	// The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+	DiskUsage *string `json:"diskUsage,omitempty" tf:"disk_usage,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -78,6 +86,11 @@ type SnapshotObservation struct {
 }
 
 type SnapshotParameters struct {
+
+	// The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+	// The type of cloud disk associated with the snapshot: SYSTEM_DISK: system disk; DATA_DISK: data disk. If not filled in, the snapshot type will be consistent with the cloud disk type. This parameter is used in some scenarios where users need to create a data disk snapshot from the system disk for shared use.
+	// +kubebuilder:validation:Optional
+	DiskUsage *string `json:"diskUsage,omitempty" tf:"disk_usage,omitempty"`
 
 	// Name of the snapshot.
 	// Name of the snapshot.

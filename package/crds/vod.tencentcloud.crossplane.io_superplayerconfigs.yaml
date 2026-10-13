@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: SuperPlayerConfig is the Schema for the SuperPlayerConfigs API.
-          Provide a resource to create a VOD super player config.
+          <no value>
         properties:
           apiVersion:
             description: |-
@@ -74,75 +74,74 @@ spec:
               forProvider:
                 properties:
                   adaptiveDynamicStreamingDefinition:
-                    description: |-
-                      ID of the unencrypted adaptive bitrate streaming template that allows output, which is required if drm_switch is false.
-                      ID of the unencrypted adaptive bitrate streaming template that allows output, which is required if `drm_switch` is `false`.
+                    description: ID of the unencrypted adaptive bitrate streaming
+                      template that allows output, which is required if `drm_switch`
+                      is `false`.
                     type: string
                   comment:
-                    description: |-
-                      Template description. Length limit: 256 characters.
-                      Template description. Length limit: 256 characters.
+                    description: 'Template description. Length limit: 256 characters.'
                     type: string
                   domain:
-                    description: |-
-                      Domain name used for playback. If it is left empty or set to Default, the domain name configured in Default Distribution Configuration will be used. Default by default.
-                      Domain name used for playback. If it is left empty or set to `Default`, the domain name configured in [Default Distribution Configuration](https://cloud.tencent.com/document/product/266/33373) will be used. `Default` by default.
+                    description: Domain name used for playback. If it is left empty
+                      or set to `Default`, the domain name configured in [Default
+                      Distribution Configuration](https://cloud.tencent.com/document/product/266/33373)
+                      will be used. `Default` by default.
                     type: string
                   drmStreamingInfo:
-                    description: |-
-                      Content of the DRM-protected adaptive bitrate streaming template that allows output, which is required if drm_switch is true.
-                      Content of the DRM-protected adaptive bitrate streaming template that allows output, which is required if `drm_switch` is `true`.
+                    description: Content of the DRM-protected adaptive bitrate streaming
+                      template that allows output, which is required if `drm_switch`
+                      is `true`.
                     items:
                       properties:
                         simpleAesDefinition:
-                          description: |-
-                            ID of the adaptive dynamic streaming template whose protection type is SimpleAES.
-                            ID of the adaptive dynamic streaming template whose protection type is `SimpleAES`.
+                          description: ID of the adaptive dynamic streaming template
+                            whose protection type is `SimpleAES`.
                           type: string
                       type: object
                     type: array
                   drmSwitch:
-                    description: |-
-                      Switch of DRM-protected adaptive bitstream playback: true: enabled, indicating to play back only output adaptive bitstreams protected by DRM; false: disabled, indicating to play back unencrypted output adaptive bitstreams. Default value: false.
-                      Switch of DRM-protected adaptive bitstream playback: `true`: enabled, indicating to play back only output adaptive bitstreams protected by DRM; `false`: disabled, indicating to play back unencrypted output adaptive bitstreams. Default value: `false`.
+                    description: 'Switch of DRM-protected adaptive bitstream playback:
+                      `true`: enabled, indicating to play back only output adaptive
+                      bitstreams protected by DRM; `false`: disabled, indicating to
+                      play back unencrypted output adaptive bitstreams. Default value:
+                      `false`.'
                     type: boolean
                   imageSpriteDefinition:
-                    description: |-
-                      ID of the image sprite template that allows output.
-                      ID of the image sprite template that allows output.
+                    description: ID of the image sprite template that allows output.
                     type: string
                   name:
-                    description: |-
-                      Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
-                      Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
+                    description: Player configuration name, which can contain up to
+                      64 letters, digits, underscores, and hyphens (such as test_ABC-123)
+                      and must be unique under a user.
                     type: string
                   resolutionNames:
-                    description: |-
-                      Display name of player for substreams with different resolutions. If this parameter is left empty or an empty array, the default configuration will be used: min_edge_length: 240, name: LD; min_edge_length: 480, name: SD; min_edge_length: 720, name: HD; min_edge_length: 1080, name: FHD; min_edge_length: 1440, name: 2K; min_edge_length: 2160, name: 4K; min_edge_length: 4320, name: 8K.
-                      Display name of player for substreams with different resolutions. If this parameter is left empty or an empty array, the default configuration will be used: `min_edge_length: 240, name: LD`; `min_edge_length: 480, name: SD`; `min_edge_length: 720, name: HD`; `min_edge_length: 1080, name: FHD`; `min_edge_length: 1440, name: 2K`; `min_edge_length: 2160, name: 4K`; `min_edge_length: 4320, name: 8K`.
+                    description: 'Display name of player for substreams with different
+                      resolutions. If this parameter is left empty or an empty array,
+                      the default configuration will be used: `min_edge_length: 240,
+                      name: LD`; `min_edge_length: 480, name: SD`; `min_edge_length:
+                      720, name: HD`; `min_edge_length: 1080, name: FHD`; `min_edge_length:
+                      1440, name: 2K`; `min_edge_length: 2160, name: 4K`; `min_edge_length:
+                      4320, name: 8K`.'
                     items:
                       properties:
                         minEdgeLength:
-                          description: |-
-                            Length of video short side in px.
-                            Length of video short side in px.
+                          description: Length of video short side in px.
                           type: number
                         name:
-                          description: |-
-                            Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
-                            Display name.
+                          description: Display name.
                           type: string
                       type: object
                     type: array
                   scheme:
-                    description: |-
-                      Scheme used for playback. If it is left empty or set to Default, the scheme configured in Default Distribution Configuration will be used. Other valid values: HTTP; HTTPS.
-                      Scheme used for playback. If it is left empty or set to `Default`, the scheme configured in [Default Distribution Configuration](https://cloud.tencent.com/document/product/266/33373) will be used. Other valid values: `HTTP`; `HTTPS`.
+                    description: 'Scheme used for playback. If it is left empty or
+                      set to `Default`, the scheme configured in [Default Distribution
+                      Configuration](https://cloud.tencent.com/document/product/266/33373)
+                      will be used. Other valid values: `HTTP`; `HTTPS`.'
                     type: string
                   subAppId:
-                    description: |-
-                      Subapplication ID in VOD. If you need to access a resource in a subapplication, enter the subapplication ID in this field; otherwise, leave it empty.
-                      Subapplication ID in VOD. If you need to access a resource in a subapplication, enter the subapplication ID in this field; otherwise, leave it empty.
+                    description: Subapplication ID in VOD. If you need to access a
+                      resource in a subapplication, enter the subapplication ID in
+                      this field; otherwise, leave it empty.
                     type: number
                 type: object
               initProvider:
@@ -159,75 +158,74 @@ spec:
                   autoscaler.
                 properties:
                   adaptiveDynamicStreamingDefinition:
-                    description: |-
-                      ID of the unencrypted adaptive bitrate streaming template that allows output, which is required if drm_switch is false.
-                      ID of the unencrypted adaptive bitrate streaming template that allows output, which is required if `drm_switch` is `false`.
+                    description: ID of the unencrypted adaptive bitrate streaming
+                      template that allows output, which is required if `drm_switch`
+                      is `false`.
                     type: string
                   comment:
-                    description: |-
-                      Template description. Length limit: 256 characters.
-                      Template description. Length limit: 256 characters.
+                    description: 'Template description. Length limit: 256 characters.'
                     type: string
                   domain:
-                    description: |-
-                      Domain name used for playback. If it is left empty or set to Default, the domain name configured in Default Distribution Configuration will be used. Default by default.
-                      Domain name used for playback. If it is left empty or set to `Default`, the domain name configured in [Default Distribution Configuration](https://cloud.tencent.com/document/product/266/33373) will be used. `Default` by default.
+                    description: Domain name used for playback. If it is left empty
+                      or set to `Default`, the domain name configured in [Default
+                      Distribution Configuration](https://cloud.tencent.com/document/product/266/33373)
+                      will be used. `Default` by default.
                     type: string
                   drmStreamingInfo:
-                    description: |-
-                      Content of the DRM-protected adaptive bitrate streaming template that allows output, which is required if drm_switch is true.
-                      Content of the DRM-protected adaptive bitrate streaming template that allows output, which is required if `drm_switch` is `true`.
+                    description: Content of the DRM-protected adaptive bitrate streaming
+                      template that allows output, which is required if `drm_switch`
+                      is `true`.
                     items:
                       properties:
                         simpleAesDefinition:
-                          description: |-
-                            ID of the adaptive dynamic streaming template whose protection type is SimpleAES.
-                            ID of the adaptive dynamic streaming template whose protection type is `SimpleAES`.
+                          description: ID of the adaptive dynamic streaming template
+                            whose protection type is `SimpleAES`.
                           type: string
                       type: object
                     type: array
                   drmSwitch:
-                    description: |-
-                      Switch of DRM-protected adaptive bitstream playback: true: enabled, indicating to play back only output adaptive bitstreams protected by DRM; false: disabled, indicating to play back unencrypted output adaptive bitstreams. Default value: false.
-                      Switch of DRM-protected adaptive bitstream playback: `true`: enabled, indicating to play back only output adaptive bitstreams protected by DRM; `false`: disabled, indicating to play back unencrypted output adaptive bitstreams. Default value: `false`.
+                    description: 'Switch of DRM-protected adaptive bitstream playback:
+                      `true`: enabled, indicating to play back only output adaptive
+                      bitstreams protected by DRM; `false`: disabled, indicating to
+                      play back unencrypted output adaptive bitstreams. Default value:
+                      `false`.'
                     type: boolean
                   imageSpriteDefinition:
-                    description: |-
-                      ID of the image sprite template that allows output.
-                      ID of the image sprite template that allows output.
+                    description: ID of the image sprite template that allows output.
                     type: string
                   name:
-                    description: |-
-                      Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
-                      Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
+                    description: Player configuration name, which can contain up to
+                      64 letters, digits, underscores, and hyphens (such as test_ABC-123)
+                      and must be unique under a user.
                     type: string
                   resolutionNames:
-                    description: |-
-                      Display name of player for substreams with different resolutions. If this parameter is left empty or an empty array, the default configuration will be used: min_edge_length: 240, name: LD; min_edge_length: 480, name: SD; min_edge_length: 720, name: HD; min_edge_length: 1080, name: FHD; min_edge_length: 1440, name: 2K; min_edge_length: 2160, name: 4K; min_edge_length: 4320, name: 8K.
-                      Display name of player for substreams with different resolutions. If this parameter is left empty or an empty array, the default configuration will be used: `min_edge_length: 240, name: LD`; `min_edge_length: 480, name: SD`; `min_edge_length: 720, name: HD`; `min_edge_length: 1080, name: FHD`; `min_edge_length: 1440, name: 2K`; `min_edge_length: 2160, name: 4K`; `min_edge_length: 4320, name: 8K`.
+                    description: 'Display name of player for substreams with different
+                      resolutions. If this parameter is left empty or an empty array,
+                      the default configuration will be used: `min_edge_length: 240,
+                      name: LD`; `min_edge_length: 480, name: SD`; `min_edge_length:
+                      720, name: HD`; `min_edge_length: 1080, name: FHD`; `min_edge_length:
+                      1440, name: 2K`; `min_edge_length: 2160, name: 4K`; `min_edge_length:
+                      4320, name: 8K`.'
                     items:
                       properties:
                         minEdgeLength:
-                          description: |-
-                            Length of video short side in px.
-                            Length of video short side in px.
+                          description: Length of video short side in px.
                           type: number
                         name:
-                          description: |-
-                            Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
-                            Display name.
+                          description: Display name.
                           type: string
                       type: object
                     type: array
                   scheme:
-                    description: |-
-                      Scheme used for playback. If it is left empty or set to Default, the scheme configured in Default Distribution Configuration will be used. Other valid values: HTTP; HTTPS.
-                      Scheme used for playback. If it is left empty or set to `Default`, the scheme configured in [Default Distribution Configuration](https://cloud.tencent.com/document/product/266/33373) will be used. Other valid values: `HTTP`; `HTTPS`.
+                    description: 'Scheme used for playback. If it is left empty or
+                      set to `Default`, the scheme configured in [Default Distribution
+                      Configuration](https://cloud.tencent.com/document/product/266/33373)
+                      will be used. Other valid values: `HTTP`; `HTTPS`.'
                     type: string
                   subAppId:
-                    description: |-
-                      Subapplication ID in VOD. If you need to access a resource in a subapplication, enter the subapplication ID in this field; otherwise, leave it empty.
-                      Subapplication ID in VOD. If you need to access a resource in a subapplication, enter the subapplication ID in this field; otherwise, leave it empty.
+                    description: Subapplication ID in VOD. If you need to access a
+                      resource in a subapplication, enter the subapplication ID in
+                      this field; otherwise, leave it empty.
                     type: number
                 type: object
               managementPolicies:
@@ -408,88 +406,82 @@ spec:
               atProvider:
                 properties:
                   adaptiveDynamicStreamingDefinition:
-                    description: |-
-                      ID of the unencrypted adaptive bitrate streaming template that allows output, which is required if drm_switch is false.
-                      ID of the unencrypted adaptive bitrate streaming template that allows output, which is required if `drm_switch` is `false`.
+                    description: ID of the unencrypted adaptive bitrate streaming
+                      template that allows output, which is required if `drm_switch`
+                      is `false`.
                     type: string
                   comment:
-                    description: |-
-                      Template description. Length limit: 256 characters.
-                      Template description. Length limit: 256 characters.
+                    description: 'Template description. Length limit: 256 characters.'
                     type: string
                   createTime:
-                    description: |-
-                      Creation time of template in ISO date format.
-                      Creation time of template in ISO date format.
+                    description: Creation time of template in ISO date format.
                     type: string
                   domain:
-                    description: |-
-                      Domain name used for playback. If it is left empty or set to Default, the domain name configured in Default Distribution Configuration will be used. Default by default.
-                      Domain name used for playback. If it is left empty or set to `Default`, the domain name configured in [Default Distribution Configuration](https://cloud.tencent.com/document/product/266/33373) will be used. `Default` by default.
+                    description: Domain name used for playback. If it is left empty
+                      or set to `Default`, the domain name configured in [Default
+                      Distribution Configuration](https://cloud.tencent.com/document/product/266/33373)
+                      will be used. `Default` by default.
                     type: string
                   drmStreamingInfo:
-                    description: |-
-                      Content of the DRM-protected adaptive bitrate streaming template that allows output, which is required if drm_switch is true.
-                      Content of the DRM-protected adaptive bitrate streaming template that allows output, which is required if `drm_switch` is `true`.
+                    description: Content of the DRM-protected adaptive bitrate streaming
+                      template that allows output, which is required if `drm_switch`
+                      is `true`.
                     items:
                       properties:
                         simpleAesDefinition:
-                          description: |-
-                            ID of the adaptive dynamic streaming template whose protection type is SimpleAES.
-                            ID of the adaptive dynamic streaming template whose protection type is `SimpleAES`.
+                          description: ID of the adaptive dynamic streaming template
+                            whose protection type is `SimpleAES`.
                           type: string
                       type: object
                     type: array
                   drmSwitch:
-                    description: |-
-                      Switch of DRM-protected adaptive bitstream playback: true: enabled, indicating to play back only output adaptive bitstreams protected by DRM; false: disabled, indicating to play back unencrypted output adaptive bitstreams. Default value: false.
-                      Switch of DRM-protected adaptive bitstream playback: `true`: enabled, indicating to play back only output adaptive bitstreams protected by DRM; `false`: disabled, indicating to play back unencrypted output adaptive bitstreams. Default value: `false`.
+                    description: 'Switch of DRM-protected adaptive bitstream playback:
+                      `true`: enabled, indicating to play back only output adaptive
+                      bitstreams protected by DRM; `false`: disabled, indicating to
+                      play back unencrypted output adaptive bitstreams. Default value:
+                      `false`.'
                     type: boolean
                   id:
-                    description: ID of the resource.
                     type: string
                   imageSpriteDefinition:
-                    description: |-
-                      ID of the image sprite template that allows output.
-                      ID of the image sprite template that allows output.
+                    description: ID of the image sprite template that allows output.
                     type: string
                   name:
-                    description: |-
-                      Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
-                      Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
+                    description: Player configuration name, which can contain up to
+                      64 letters, digits, underscores, and hyphens (such as test_ABC-123)
+                      and must be unique under a user.
                     type: string
                   resolutionNames:
-                    description: |-
-                      Display name of player for substreams with different resolutions. If this parameter is left empty or an empty array, the default configuration will be used: min_edge_length: 240, name: LD; min_edge_length: 480, name: SD; min_edge_length: 720, name: HD; min_edge_length: 1080, name: FHD; min_edge_length: 1440, name: 2K; min_edge_length: 2160, name: 4K; min_edge_length: 4320, name: 8K.
-                      Display name of player for substreams with different resolutions. If this parameter is left empty or an empty array, the default configuration will be used: `min_edge_length: 240, name: LD`; `min_edge_length: 480, name: SD`; `min_edge_length: 720, name: HD`; `min_edge_length: 1080, name: FHD`; `min_edge_length: 1440, name: 2K`; `min_edge_length: 2160, name: 4K`; `min_edge_length: 4320, name: 8K`.
+                    description: 'Display name of player for substreams with different
+                      resolutions. If this parameter is left empty or an empty array,
+                      the default configuration will be used: `min_edge_length: 240,
+                      name: LD`; `min_edge_length: 480, name: SD`; `min_edge_length:
+                      720, name: HD`; `min_edge_length: 1080, name: FHD`; `min_edge_length:
+                      1440, name: 2K`; `min_edge_length: 2160, name: 4K`; `min_edge_length:
+                      4320, name: 8K`.'
                     items:
                       properties:
                         minEdgeLength:
-                          description: |-
-                            Length of video short side in px.
-                            Length of video short side in px.
+                          description: Length of video short side in px.
                           type: number
                         name:
-                          description: |-
-                            Player configuration name, which can contain up to 64 letters, digits, underscores, and hyphens (such as test_ABC-123) and must be unique under a user.
-                            Display name.
+                          description: Display name.
                           type: string
                       type: object
                     type: array
                   scheme:
-                    description: |-
-                      Scheme used for playback. If it is left empty or set to Default, the scheme configured in Default Distribution Configuration will be used. Other valid values: HTTP; HTTPS.
-                      Scheme used for playback. If it is left empty or set to `Default`, the scheme configured in [Default Distribution Configuration](https://cloud.tencent.com/document/product/266/33373) will be used. Other valid values: `HTTP`; `HTTPS`.
+                    description: 'Scheme used for playback. If it is left empty or
+                      set to `Default`, the scheme configured in [Default Distribution
+                      Configuration](https://cloud.tencent.com/document/product/266/33373)
+                      will be used. Other valid values: `HTTP`; `HTTPS`.'
                     type: string
                   subAppId:
-                    description: |-
-                      Subapplication ID in VOD. If you need to access a resource in a subapplication, enter the subapplication ID in this field; otherwise, leave it empty.
-                      Subapplication ID in VOD. If you need to access a resource in a subapplication, enter the subapplication ID in this field; otherwise, leave it empty.
+                    description: Subapplication ID in VOD. If you need to access a
+                      resource in a subapplication, enter the subapplication ID in
+                      this field; otherwise, leave it empty.
                     type: number
                   updateTime:
-                    description: |-
-                      Last modified time of template in ISO date format.
-                      Last modified time of template in ISO date format.
+                    description: Last modified time of template in ISO date format.
                     type: string
                 type: object
               conditions:

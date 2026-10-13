@@ -186,13 +186,13 @@ spec:
                     type: number
                   replicaNum:
                     description: |-
-                      The number of replica.
-                      The number of replica.
+                      The number of replica. Maximum is 3.
+                      The number of replica. Maximum is 3.
                     type: number
                   retention:
                     description: |-
-                      Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
-                      Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
+                      Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
+                      Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
                     type: number
                   segment:
                     description: |-
@@ -341,13 +341,13 @@ spec:
                     type: number
                   replicaNum:
                     description: |-
-                      The number of replica.
-                      The number of replica.
+                      The number of replica. Maximum is 3.
+                      The number of replica. Maximum is 3.
                     type: number
                   retention:
                     description: |-
-                      Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
-                      Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
+                      Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
+                      Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
                     type: number
                   segment:
                     description: |-
@@ -622,13 +622,13 @@ spec:
                     type: number
                   replicaNum:
                     description: |-
-                      The number of replica.
-                      The number of replica.
+                      The number of replica. Maximum is 3.
+                      The number of replica. Maximum is 3.
                     type: number
                   retention:
                     description: |-
-                      Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
-                      Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
+                      Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
+                      Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
                     type: number
                   segment:
                     description: |-

@@ -38,6 +38,11 @@ type VPCBandwidthPackageInitParameters struct {
 	// Tag description list.
 	// Tag description list.
 	// +mapType=granular
+	Tag map[string]*string `json:"tag,omitempty" tf:"tag,omitempty"`
+
+	// Use tag instead. Tag description list.
+	// Tag description list.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The purchase duration of the prepaid monthly bandwidth package, unit: month, value range: 1~60.
@@ -71,6 +76,11 @@ type VPCBandwidthPackageObservation struct {
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
 	// Tag description list.
+	// Tag description list.
+	// +mapType=granular
+	Tag map[string]*string `json:"tag,omitempty" tf:"tag,omitempty"`
+
+	// Use tag instead. Tag description list.
 	// Tag description list.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -111,6 +121,12 @@ type VPCBandwidthPackageParameters struct {
 	// Tag description list.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
+	Tag map[string]*string `json:"tag,omitempty" tf:"tag,omitempty"`
+
+	// Use tag instead. Tag description list.
+	// Tag description list.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The purchase duration of the prepaid monthly bandwidth package, unit: month, value range: 1~60.
@@ -146,7 +162,7 @@ type VPCBandwidthPackageStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// VPCBandwidthPackage is the Schema for the VPCBandwidthPackages API. Provides a resource to create a vpc bandwidth_package
+// VPCBandwidthPackage is the Schema for the VPCBandwidthPackages API. Provides a resource to create a VPC bandwidth package
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

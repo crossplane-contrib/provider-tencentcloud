@@ -208,8 +208,8 @@ spec:
                       properties:
                         autoGeneratePassword:
                           description: |-
-                            whether auto generate password. if false, need set password.
-                            whether auto generate password. if false, need set password.
+                            YES represents selecting to automatically generate a password, without specifying the Password field. NO represents selecting a custom password, in which case the Password field needs to be specified.
+                            `YES` represents selecting to automatically generate a password, without specifying the Password field. `NO` represents selecting a custom password, in which case the Password field needs to be specified.
                           type: string
                         password:
                           description: |-
@@ -387,8 +387,8 @@ spec:
                       properties:
                         autoGeneratePassword:
                           description: |-
-                            whether auto generate password. if false, need set password.
-                            whether auto generate password. if false, need set password.
+                            YES represents selecting to automatically generate a password, without specifying the Password field. NO represents selecting a custom password, in which case the Password field needs to be specified.
+                            `YES` represents selecting to automatically generate a password, without specifying the Password field. `NO` represents selecting a custom password, in which case the Password field needs to be specified.
                           type: string
                         password:
                           description: |-
@@ -745,8 +745,8 @@ spec:
                       properties:
                         autoGeneratePassword:
                           description: |-
-                            whether auto generate password. if false, need set password.
-                            whether auto generate password. if false, need set password.
+                            YES represents selecting to automatically generate a password, without specifying the Password field. NO represents selecting a custom password, in which case the Password field needs to be specified.
+                            `YES` represents selecting to automatically generate a password, without specifying the Password field. `NO` represents selecting a custom password, in which case the Password field needs to be specified.
                           type: string
                         password:
                           description: |-

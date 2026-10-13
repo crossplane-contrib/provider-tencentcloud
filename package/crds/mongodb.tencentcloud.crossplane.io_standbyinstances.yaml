@@ -88,6 +88,21 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
                     type: string
+                  cpu:
+                    description: |-
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                    type: number
+                  dataEncryption:
+                    description: |-
+                      Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  encryptionKeySource:
+                    description: |-
+                      If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                      If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
                   fatherInstanceId:
                     description: |-
                       Indicates the main instance ID of standby instances.
@@ -184,6 +199,16 @@ spec:
                     description: |-
                       Name of the Mongodb instance.
                       Name of the Mongodb instance.
+                    type: string
+                  keyId:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  kmsRegion:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   memory:
                     description: |-
@@ -260,6 +285,21 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
                     type: string
+                  cpu:
+                    description: |-
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                    type: number
+                  dataEncryption:
+                    description: |-
+                      Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  encryptionKeySource:
+                    description: |-
+                      If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                      If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
                   fatherInstanceId:
                     description: |-
                       Indicates the main instance ID of standby instances.
@@ -356,6 +396,16 @@ spec:
                     description: |-
                       Name of the Mongodb instance.
                       Name of the Mongodb instance.
+                    type: string
+                  keyId:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  kmsRegion:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   memory:
                     description: |-
@@ -612,10 +662,25 @@ spec:
                       The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
                       The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
                     type: string
+                  cpu:
+                    description: |-
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                      The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+                    type: number
                   createTime:
                     description: |-
                       Creation time of the Mongodb instance.
                       Creation time of the Mongodb instance.
+                    type: string
+                  dataEncryption:
+                    description: |-
+                      Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  encryptionKeySource:
+                    description: |-
+                      If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+                      If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   engineVersion:
                     description: |-
@@ -647,6 +712,16 @@ spec:
                     description: |-
                       Name of the Mongodb instance.
                       Name of the Mongodb instance.
+                    type: string
+                  keyId:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+                    type: string
+                  kmsRegion:
+                    description: |-
+                      Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+                      Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
                     type: string
                   machineType:
                     description: |-

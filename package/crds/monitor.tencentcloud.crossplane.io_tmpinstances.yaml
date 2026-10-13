@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TmpInstance is the Schema for the TmpInstances API. Provides
-          a resource to create a monitor tmpInstance
+          a resource to create a monitor (Cloud Monitor) tmpInstance
         properties:
           apiVersion:
             description: |-
@@ -75,14 +75,19 @@ spec:
                 properties:
                   dataRetentionTime:
                     description: |-
-                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
-                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
                     type: number
                   instanceName:
                     description: |-
                       Instance name.
                       Instance name.
                     type: string
+                  longTermStorageRetentionTime:
+                    description: |-
+                      Long-term storage retention time(in days). Value range: 60-730.
+                      Long-term storage retention time(in days). Value range: 60-730.
+                    type: number
                   subnetId:
                     description: |-
                       Subnet Id.
@@ -270,14 +275,19 @@ spec:
                 properties:
                   dataRetentionTime:
                     description: |-
-                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
-                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
                     type: number
                   instanceName:
                     description: |-
                       Instance name.
                       Instance name.
                     type: string
+                  longTermStorageRetentionTime:
+                    description: |-
+                      Long-term storage retention time(in days). Value range: 60-730.
+                      Long-term storage retention time(in days). Value range: 60-730.
+                    type: number
                   subnetId:
                     description: |-
                       Subnet Id.
@@ -642,8 +652,8 @@ spec:
                     type: string
                   dataRetentionTime:
                     description: |-
-                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
-                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
+                      Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
                     type: number
                   id:
                     description: ID of the resource.
@@ -658,6 +668,11 @@ spec:
                       Instance IPv4 address.
                       Instance IPv4 address.
                     type: string
+                  longTermStorageRetentionTime:
+                    description: |-
+                      Long-term storage retention time(in days). Value range: 60-730.
+                      Long-term storage retention time(in days). Value range: 60-730.
+                    type: number
                   proxyAddress:
                     description: |-
                       Proxy address.

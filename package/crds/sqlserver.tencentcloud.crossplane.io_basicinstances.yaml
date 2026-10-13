@@ -103,6 +103,11 @@ spec:
                       The CPU number of the SQL Server basic instance.
                       The CPU number of the SQL Server basic instance.
                     type: number
+                  diskEncryptFlag:
+                    description: |-
+                      Disk encryption flag. 0 - Disabled (default), 1 - Enabled. Disk encryption cannot be changed after instance creation.
+                      Disk encryption flag. `0` - Disabled (default), `1` - Enabled. Disk encryption cannot be changed after instance creation.
+                    type: number
                   engineVersion:
                     description: |-
                       Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
@@ -251,6 +256,11 @@ spec:
                       The tags of the SQL Server basic instance.
                     type: object
                     x-kubernetes-map-type: granular
+                  timeZone:
+                    description: |-
+                      System timezone for the SQL Server instance. Default is China Standard Time. This setting cannot be changed after creation.
+                      System timezone for the SQL Server instance. Default is `China Standard Time`. This setting cannot be changed after creation.
+                    type: string
                   voucherIds:
                     description: |-
                       An array of voucher IDs, currently only one can be used for a single order.
@@ -382,6 +392,11 @@ spec:
                       The CPU number of the SQL Server basic instance.
                       The CPU number of the SQL Server basic instance.
                     type: number
+                  diskEncryptFlag:
+                    description: |-
+                      Disk encryption flag. 0 - Disabled (default), 1 - Enabled. Disk encryption cannot be changed after instance creation.
+                      Disk encryption flag. `0` - Disabled (default), `1` - Enabled. Disk encryption cannot be changed after instance creation.
+                    type: number
                   engineVersion:
                     description: |-
                       Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
@@ -530,6 +545,11 @@ spec:
                       The tags of the SQL Server basic instance.
                     type: object
                     x-kubernetes-map-type: granular
+                  timeZone:
+                    description: |-
+                      System timezone for the SQL Server instance. Default is China Standard Time. This setting cannot be changed after creation.
+                      System timezone for the SQL Server instance. Default is `China Standard Time`. This setting cannot be changed after creation.
+                    type: string
                   voucherIds:
                     description: |-
                       An array of voucher IDs, currently only one can be used for a single order.
@@ -846,6 +866,11 @@ spec:
                       Create time of the SQL Server basic instance.
                       Create time of the SQL Server basic instance.
                     type: string
+                  diskEncryptFlag:
+                    description: |-
+                      Disk encryption flag. 0 - Disabled (default), 1 - Enabled. Disk encryption cannot be changed after instance creation.
+                      Disk encryption flag. `0` - Disabled (default), `1` - Enabled. Disk encryption cannot be changed after instance creation.
+                    type: number
                   dnsPodDomain:
                     description: |-
                       Internet address domain name.
@@ -938,6 +963,11 @@ spec:
                       External port number.
                       External port number.
                     type: number
+                  timeZone:
+                    description: |-
+                      System timezone for the SQL Server instance. Default is China Standard Time. This setting cannot be changed after creation.
+                      System timezone for the SQL Server instance. Default is `China Standard Time`. This setting cannot be changed after creation.
+                    type: string
                   vip:
                     description: |-
                       IP for private access.

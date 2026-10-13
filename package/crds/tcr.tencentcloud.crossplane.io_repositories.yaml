@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Repository is the Schema for the Repositorys API. Use this resource
-          to create tcr repository.
+          to create TCR repository.
         properties:
           apiVersion:
             description: |-
@@ -83,6 +83,11 @@ spec:
                       Description of the repository. Valid length is [1~1000].
                       Description of the repository. Valid length is [1~1000].
                     type: string
+                  forceDelete:
+                    description: |-
+                      The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+                      The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+                    type: boolean
                   instanceId:
                     description: |-
                       ID of the TCR instance.
@@ -196,6 +201,11 @@ spec:
                       Description of the repository. Valid length is [1~1000].
                       Description of the repository. Valid length is [1~1000].
                     type: string
+                  forceDelete:
+                    description: |-
+                      The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+                      The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+                    type: boolean
                   instanceId:
                     description: |-
                       ID of the TCR instance.
@@ -482,6 +492,11 @@ spec:
                       Description of the repository. Valid length is [1~1000].
                       Description of the repository. Valid length is [1~1000].
                     type: string
+                  forceDelete:
+                    description: |-
+                      The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+                      The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+                    type: boolean
                   id:
                     description: ID of the resource.
                     type: string

@@ -187,8 +187,8 @@ spec:
                     type: number
                   instanceName:
                     description: |-
-                      Name of instance.
-                      Name of instance.
+                      Instance name.
+                      Instance name.
                     type: string
                   subnetId:
                     description: |-
@@ -328,8 +328,8 @@ spec:
                     type: number
                   instanceName:
                     description: |-
-                      Name of instance.
-                      Name of instance.
+                      Instance name.
+                      Instance name.
                     type: string
                   subnetId:
                     description: |-
@@ -562,8 +562,8 @@ spec:
                     type: number
                   instanceName:
                     description: |-
-                      Name of instance.
-                      Name of instance.
+                      Instance name.
+                      Instance name.
                     type: string
                   instanceStatus:
                     description: |-

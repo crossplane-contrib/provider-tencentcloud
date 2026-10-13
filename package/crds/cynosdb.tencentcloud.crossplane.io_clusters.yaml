@@ -105,8 +105,8 @@ spec:
                     type: string
                   cynosVersion:
                     description: |-
-                      Kernel version, you can enter it when modifying.
-                      Kernel version, you can enter it when modifying.
+                      Kernel minor version, like 3.1.16.002.
+                      Kernel minor version, like `3.1.16.002`.
                     type: string
                   dbMode:
                     description: |-
@@ -128,6 +128,11 @@ spec:
                       Indicate whether to delete cluster instance directly or not. Default is false. If set true, the cluster and its All RELATED INSTANCES will be deleted instead of staying recycle bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
                       Indicate whether to delete cluster instance directly or not. Default is false. If set true, the cluster and its `All RELATED INSTANCES` will be deleted instead of staying recycle bin. Note: works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.
                     type: boolean
+                  instanceCount:
+                    description: |-
+                      The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+                      The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+                    type: number
                   instanceCpuCore:
                     description: |-
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
@@ -151,7 +156,7 @@ spec:
                           type: string
                         instanceCount:
                           description: |-
-                            Instance count. Range: [1, 15].
+                            The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
                             Instance count. Range: [1, 15].
                           type: number
                         instanceType:
@@ -209,6 +214,11 @@ spec:
                       Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                       Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                     type: number
+                  instanceName:
+                    description: |-
+                      Name of instance. Only supported when modifying.
+                      Name of instance. Only supported when modifying.
+                    type: string
                   maxCpu:
                     description: |-
                       Maximum CPU core count, required while db_mode is SERVERLESS, request DescribeServerlessInstanceSpecs for more reference.
@@ -305,6 +315,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  semiSyncTimeout:
+                    description: |-
+                      Semi-sync timeout in ms. Value range: [1000, 4294967295], default 10000.
+                      Semi-sync timeout in ms. Value range: `[1000, 4294967295]`, default `10000`.
+                    type: number
                   serverlessStatusFlag:
                     description: |-
                       Specify whether to pause or resume serverless cluster. values: resume, pause.
@@ -404,6 +419,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  syncWay:
+                    description: |-
+                      Synchronization way. Valid values: async, semisync, sync.
+                      Synchronization way. Valid values: `async`, `semisync`, `sync`.
+                    type: string
                   tags:
                     additionalProperties:
                       type: string
@@ -537,8 +557,8 @@ spec:
                     type: string
                   cynosVersion:
                     description: |-
-                      Kernel version, you can enter it when modifying.
-                      Kernel version, you can enter it when modifying.
+                      Kernel minor version, like 3.1.16.002.
+                      Kernel minor version, like `3.1.16.002`.
                     type: string
                   dbMode:
                     description: |-
@@ -560,6 +580,11 @@ spec:
                       Indicate whether to delete cluster instance directly or not. Default is false. If set true, the cluster and its All RELATED INSTANCES will be deleted instead of staying recycle bin. Note: works for both PREPAID and POSTPAID_BY_HOUR cluster.
                       Indicate whether to delete cluster instance directly or not. Default is false. If set true, the cluster and its `All RELATED INSTANCES` will be deleted instead of staying recycle bin. Note: works for both `PREPAID` and `POSTPAID_BY_HOUR` cluster.
                     type: boolean
+                  instanceCount:
+                    description: |-
+                      The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+                      The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+                    type: number
                   instanceCpuCore:
                     description: |-
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
@@ -583,7 +608,7 @@ spec:
                           type: string
                         instanceCount:
                           description: |-
-                            Instance count. Range: [1, 15].
+                            The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
                             Instance count. Range: [1, 15].
                           type: number
                         instanceType:
@@ -641,6 +666,11 @@ spec:
                       Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                       Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
                     type: number
+                  instanceName:
+                    description: |-
+                      Name of instance. Only supported when modifying.
+                      Name of instance. Only supported when modifying.
+                    type: string
                   maxCpu:
                     description: |-
                       Maximum CPU core count, required while db_mode is SERVERLESS, request DescribeServerlessInstanceSpecs for more reference.
@@ -718,6 +748,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  semiSyncTimeout:
+                    description: |-
+                      Semi-sync timeout in ms. Value range: [1000, 4294967295], default 10000.
+                      Semi-sync timeout in ms. Value range: `[1000, 4294967295]`, default `10000`.
+                    type: number
                   serverlessStatusFlag:
                     description: |-
                       Specify whether to pause or resume serverless cluster. values: resume, pause.
@@ -817,6 +852,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  syncWay:
+                    description: |-
+                      Synchronization way. Valid values: async, semisync, sync.
+                      Synchronization way. Valid values: `async`, `semisync`, `sync`.
+                    type: string
                   tags:
                     additionalProperties:
                       type: string
@@ -1144,8 +1184,8 @@ spec:
                     type: string
                   cynosVersion:
                     description: |-
-                      Kernel version, you can enter it when modifying.
-                      Kernel version, you can enter it when modifying.
+                      Kernel minor version, like 3.1.16.002.
+                      Kernel minor version, like `3.1.16.002`.
                     type: string
                   dbMode:
                     description: |-
@@ -1170,6 +1210,11 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  instanceCount:
+                    description: |-
+                      The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+                      The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+                    type: number
                   instanceCpuCore:
                     description: |-
                       The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
@@ -1198,7 +1243,7 @@ spec:
                           type: string
                         instanceCount:
                           description: |-
-                            Instance count. Range: [1, 15].
+                            The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
                             Instance count. Range: [1, 15].
                           type: number
                         instanceType:
@@ -1258,8 +1303,8 @@ spec:
                     type: number
                   instanceName:
                     description: |-
-                      Name of instance.
-                      Name of instance.
+                      Name of instance. Only supported when modifying.
+                      Name of instance. Only supported when modifying.
                     type: string
                   instanceStatus:
                     description: |-
@@ -1363,7 +1408,7 @@ spec:
                           description: ID of instance.
                           type: string
                         instanceName:
-                          description: Name of instance.
+                          description: Name of instance. Only supported when modifying.
                           type: string
                       type: object
                     type: array
@@ -1403,7 +1448,7 @@ spec:
                           description: ID of instance.
                           type: string
                         instanceName:
-                          description: Name of instance.
+                          description: Name of instance. Only supported when modifying.
                           type: string
                       type: object
                     type: array
@@ -1414,6 +1459,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  semiSyncTimeout:
+                    description: |-
+                      Semi-sync timeout in ms. Value range: [1000, 4294967295], default 10000.
+                      Semi-sync timeout in ms. Value range: `[1000, 4294967295]`, default `10000`.
+                    type: number
                   serverlessStatus:
                     description: |-
                       Serverless cluster status. NOTE: This is a readonly attribute, to modify, please set serverless_status_flag.
@@ -1448,6 +1498,11 @@ spec:
                     description: |-
                       ID of the subnet within this VPC.
                       ID of the subnet within this VPC.
+                    type: string
+                  syncWay:
+                    description: |-
+                      Synchronization way. Valid values: async, semisync, sync.
+                      Synchronization way. Valid values: `async`, `semisync`, `sync`.
                     type: string
                   tags:
                     additionalProperties:

@@ -52,12 +52,12 @@ type TopicInitParameters struct {
 	// The number of partition.
 	PartitionNum *float64 `json:"partitionNum,omitempty" tf:"partition_num,omitempty"`
 
-	// The number of replica.
-	// The number of replica.
+	// The number of replica. Maximum is 3.
+	// The number of replica. Maximum is 3.
 	ReplicaNum *float64 `json:"replicaNum,omitempty" tf:"replica_num,omitempty"`
 
-	// Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
-	// Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
+	// Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
+	// Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
 	Retention *float64 `json:"retention,omitempty" tf:"retention,omitempty"`
 
 	// Segment scrolling time, in ms, the current minimum is 3600000ms.
@@ -130,12 +130,12 @@ type TopicObservation struct {
 	// The number of partition.
 	PartitionNum *float64 `json:"partitionNum,omitempty" tf:"partition_num,omitempty"`
 
-	// The number of replica.
-	// The number of replica.
+	// The number of replica. Maximum is 3.
+	// The number of replica. Maximum is 3.
 	ReplicaNum *float64 `json:"replicaNum,omitempty" tf:"replica_num,omitempty"`
 
-	// Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
-	// Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
+	// Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
+	// Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
 	Retention *float64 `json:"retention,omitempty" tf:"retention,omitempty"`
 
 	// Segment scrolling time, in ms, the current minimum is 3600000ms.
@@ -205,13 +205,13 @@ type TopicParameters struct {
 	// +kubebuilder:validation:Optional
 	PartitionNum *float64 `json:"partitionNum,omitempty" tf:"partition_num,omitempty"`
 
-	// The number of replica.
-	// The number of replica.
+	// The number of replica. Maximum is 3.
+	// The number of replica. Maximum is 3.
 	// +kubebuilder:validation:Optional
 	ReplicaNum *float64 `json:"replicaNum,omitempty" tf:"replica_num,omitempty"`
 
-	// Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
-	// Message can be selected. Retention time, unit is ms, the current minimum value is 60000ms.
+	// Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
+	// Optional parameter: Message retention time. Value range: [60000, 7776000000]. Unit: milliseconds. Default value: 7200000.
 	// +kubebuilder:validation:Optional
 	Retention *float64 `json:"retention,omitempty" tf:"retention,omitempty"`
 

@@ -50,6 +50,10 @@ type DomainInstanceObservation struct {
 	// ID of the domain.
 	DomainID *float64 `json:"domainId,omitempty" tf:"domain_id,omitempty"`
 
+	// The DNS plan/package grade of the domain (e.g., DP_Free, DP_Plus).
+	// The DNS plan/package grade of the domain (e.g., DP_Free, DP_Plus).
+	Grade *string `json:"grade,omitempty" tf:"grade,omitempty"`
+
 	// The Group Id of Domain.
 	// The Group Id of Domain.
 	GroupID *float64 `json:"groupId,omitempty" tf:"group_id,omitempty"`
@@ -60,6 +64,10 @@ type DomainInstanceObservation struct {
 	// Whether to Mark the Domain.
 	// Whether to Mark the Domain.
 	IsMark *string `json:"isMark,omitempty" tf:"is_mark,omitempty"`
+
+	// Number of DNS records under this domain.
+	// Number of DNS records under this domain.
+	RecordCount *float64 `json:"recordCount,omitempty" tf:"record_count,omitempty"`
 
 	// The remark of Domain.
 	// The remark of Domain.
@@ -72,6 +80,10 @@ type DomainInstanceObservation struct {
 	// The status of Domain.
 	// The status of Domain.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Last modification time of the domain.
+	// Last modification time of the domain.
+	UpdatedOn *string `json:"updatedOn,omitempty" tf:"updated_on,omitempty"`
 }
 
 type DomainInstanceParameters struct {

@@ -11,7 +11,7 @@ spec:
     description: eni desc.
     ipv4Count: 1
     name: tf-example-eni
-    securityGroups:
+    orderlySecurityGroups:
     - ${tencentcloud_security_group.example1.id}
     - ${tencentcloud_security_group.example2.id}
     subnetIdSelector:

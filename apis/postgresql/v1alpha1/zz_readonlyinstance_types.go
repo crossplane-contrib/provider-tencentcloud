@@ -98,6 +98,11 @@ type ReadonlyInstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// Tags.
+	// Tags.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// VPC ID.
 	// VPC ID.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
@@ -209,6 +214,11 @@ type ReadonlyInstanceObservation struct {
 	// VPC subnet ID.
 	// VPC subnet ID.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Tags.
+	// Tags.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// VPC ID.
 	// VPC ID.
@@ -327,6 +337,12 @@ type ReadonlyInstanceParameters struct {
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// Tags.
+	// Tags.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// VPC ID.
 	// VPC ID.

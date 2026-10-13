@@ -4,16 +4,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: redis/v1alpha1/backupconfig
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    backupPeriod:
-    - Monday
     backupTime: 04:00-05:00
     redisIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: foo
+        testing.upbound.io/example-name: example
 
 ---
 
@@ -23,13 +21,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: redis/v1alpha1/backupconfig
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     availabilityZone: ${data.tencentcloud_redis_zone_config.zone.list[1].zone}
     memSize: 8192
-    name: terrform_test
+    name: tf_example
     passwordSecretRef:
       key: example-key
       name: example-secret

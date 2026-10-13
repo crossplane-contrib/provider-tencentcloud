@@ -13,11 +13,226 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type HealthCheckInitParameters struct {
+
+	// Unhealthy threshold. Number of consecutive failed health checks required before marking the backend as unhealthy. Range: [2, 10]. Default: 3.
+	// Unhealthy threshold. Number of consecutive failed health checks required before marking the backend as unhealthy. Range: [2, 10]. Default: 3.
+	BadLimit *float64 `json:"badLimit,omitempty" tf:"bad_limit,omitempty"`
+
+	// Extended status code for health check.
+	// Extended status code for health check.
+	ExtendedCode *string `json:"extendedCode,omitempty" tf:"extended_code,omitempty"`
+
+	// Health check interval in seconds. Range: [2, 300]. Default: 5.
+	// Health check interval in seconds. Range: [2, 300]. Default: 5.
+	GapTime *float64 `json:"gapTime,omitempty" tf:"gap_time,omitempty"`
+
+	// Healthy threshold. Number of consecutive successful health checks required before marking the backend as healthy. Range: [2, 10]. Default: 3.
+	// Healthy threshold. Number of consecutive successful health checks required before marking the backend as healthy. Range: [2, 10]. Default: 3.
+	GoodLimit *float64 `json:"goodLimit,omitempty" tf:"good_limit,omitempty"`
+
+	// Health check domain. For HTTP/HTTPS protocol.
+	// Health check domain. For HTTP/HTTPS protocol.
+	HTTPCheckDomain *string `json:"httpCheckDomain,omitempty" tf:"http_check_domain,omitempty"`
+
+	// Health check HTTP method. For HTTP/HTTPS protocol. Valid values: HEAD, GET. Default: HEAD.
+	// Health check HTTP method. For HTTP/HTTPS protocol. Valid values: HEAD, GET. Default: HEAD.
+	HTTPCheckMethod *string `json:"httpCheckMethod,omitempty" tf:"http_check_method,omitempty"`
+
+	// Health check path. For HTTP/HTTPS protocol. Must start with /. If not specified, / is used by default.
+	// Health check path. For HTTP/HTTPS protocol. Must start with /. If not specified, / is used by default.
+	HTTPCheckPath *string `json:"httpCheckPath,omitempty" tf:"http_check_path,omitempty"`
+
+	// HTTP status codes indicating health. For HTTP/HTTPS protocol. Example: 1 (1xx), 2 (2xx), 4 (3xx), 8 (4xx), 16 (5xx). Multiple values can be combined, e.g., 7 (1xx, 2xx, 3xx).
+	// HTTP status codes indicating health. For HTTP/HTTPS protocol. Example: 1 (1xx), 2 (2xx), 4 (3xx), 8 (4xx), 16 (5xx). Multiple values can be combined, e.g., 7 (1xx, 2xx, 3xx).
+	HTTPCode *float64 `json:"httpCode,omitempty" tf:"http_code,omitempty"`
+
+	// HTTP version for health check. Required when health check protocol is HTTP. Valid values: HTTP/1.0, HTTP/1.1. Only valid for TCP target groups.
+	// HTTP version for health check. Required when health check protocol is HTTP. Valid values: HTTP/1.0, HTTP/1.1. Only valid for TCP target groups.
+	HTTPVersion *string `json:"httpVersion,omitempty" tf:"http_version,omitempty"`
+
+	// Whether to enable health check. true: enable, false: disable.
+	// Whether to enable health check. true: enable, false: disable.
+	HealthSwitch *bool `json:"healthSwitch,omitempty" tf:"health_switch,omitempty"`
+
+	// The default port of target group, add server after can use it.
+	// Health check port. If not specified, the backend server port is used by default.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// Health check protocol. Valid values: TCP, HTTP, HTTPS, PING, CUSTOM, GRPC. Valid for v2 target groups.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// Health check response timeout in seconds. Range: [2, 60]. Default: 2.
+	// Health check response timeout in seconds. Range: [2, 60]. Default: 2.
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+}
+
+type HealthCheckObservation struct {
+
+	// Unhealthy threshold. Number of consecutive failed health checks required before marking the backend as unhealthy. Range: [2, 10]. Default: 3.
+	// Unhealthy threshold. Number of consecutive failed health checks required before marking the backend as unhealthy. Range: [2, 10]. Default: 3.
+	BadLimit *float64 `json:"badLimit,omitempty" tf:"bad_limit,omitempty"`
+
+	// Extended status code for health check.
+	// Extended status code for health check.
+	ExtendedCode *string `json:"extendedCode,omitempty" tf:"extended_code,omitempty"`
+
+	// Health check interval in seconds. Range: [2, 300]. Default: 5.
+	// Health check interval in seconds. Range: [2, 300]. Default: 5.
+	GapTime *float64 `json:"gapTime,omitempty" tf:"gap_time,omitempty"`
+
+	// Healthy threshold. Number of consecutive successful health checks required before marking the backend as healthy. Range: [2, 10]. Default: 3.
+	// Healthy threshold. Number of consecutive successful health checks required before marking the backend as healthy. Range: [2, 10]. Default: 3.
+	GoodLimit *float64 `json:"goodLimit,omitempty" tf:"good_limit,omitempty"`
+
+	// Health check domain. For HTTP/HTTPS protocol.
+	// Health check domain. For HTTP/HTTPS protocol.
+	HTTPCheckDomain *string `json:"httpCheckDomain,omitempty" tf:"http_check_domain,omitempty"`
+
+	// Health check HTTP method. For HTTP/HTTPS protocol. Valid values: HEAD, GET. Default: HEAD.
+	// Health check HTTP method. For HTTP/HTTPS protocol. Valid values: HEAD, GET. Default: HEAD.
+	HTTPCheckMethod *string `json:"httpCheckMethod,omitempty" tf:"http_check_method,omitempty"`
+
+	// Health check path. For HTTP/HTTPS protocol. Must start with /. If not specified, / is used by default.
+	// Health check path. For HTTP/HTTPS protocol. Must start with /. If not specified, / is used by default.
+	HTTPCheckPath *string `json:"httpCheckPath,omitempty" tf:"http_check_path,omitempty"`
+
+	// HTTP status codes indicating health. For HTTP/HTTPS protocol. Example: 1 (1xx), 2 (2xx), 4 (3xx), 8 (4xx), 16 (5xx). Multiple values can be combined, e.g., 7 (1xx, 2xx, 3xx).
+	// HTTP status codes indicating health. For HTTP/HTTPS protocol. Example: 1 (1xx), 2 (2xx), 4 (3xx), 8 (4xx), 16 (5xx). Multiple values can be combined, e.g., 7 (1xx, 2xx, 3xx).
+	HTTPCode *float64 `json:"httpCode,omitempty" tf:"http_code,omitempty"`
+
+	// HTTP version for health check. Required when health check protocol is HTTP. Valid values: HTTP/1.0, HTTP/1.1. Only valid for TCP target groups.
+	// HTTP version for health check. Required when health check protocol is HTTP. Valid values: HTTP/1.0, HTTP/1.1. Only valid for TCP target groups.
+	HTTPVersion *string `json:"httpVersion,omitempty" tf:"http_version,omitempty"`
+
+	// Whether to enable health check. true: enable, false: disable.
+	// Whether to enable health check. true: enable, false: disable.
+	HealthSwitch *bool `json:"healthSwitch,omitempty" tf:"health_switch,omitempty"`
+
+	// The default port of target group, add server after can use it.
+	// Health check port. If not specified, the backend server port is used by default.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// Health check protocol. Valid values: TCP, HTTP, HTTPS, PING, CUSTOM, GRPC. Valid for v2 target groups.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// Health check response timeout in seconds. Range: [2, 60]. Default: 2.
+	// Health check response timeout in seconds. Range: [2, 60]. Default: 2.
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+}
+
+type HealthCheckParameters struct {
+
+	// Unhealthy threshold. Number of consecutive failed health checks required before marking the backend as unhealthy. Range: [2, 10]. Default: 3.
+	// Unhealthy threshold. Number of consecutive failed health checks required before marking the backend as unhealthy. Range: [2, 10]. Default: 3.
+	// +kubebuilder:validation:Optional
+	BadLimit *float64 `json:"badLimit,omitempty" tf:"bad_limit,omitempty"`
+
+	// Extended status code for health check.
+	// Extended status code for health check.
+	// +kubebuilder:validation:Optional
+	ExtendedCode *string `json:"extendedCode,omitempty" tf:"extended_code,omitempty"`
+
+	// Health check interval in seconds. Range: [2, 300]. Default: 5.
+	// Health check interval in seconds. Range: [2, 300]. Default: 5.
+	// +kubebuilder:validation:Optional
+	GapTime *float64 `json:"gapTime,omitempty" tf:"gap_time,omitempty"`
+
+	// Healthy threshold. Number of consecutive successful health checks required before marking the backend as healthy. Range: [2, 10]. Default: 3.
+	// Healthy threshold. Number of consecutive successful health checks required before marking the backend as healthy. Range: [2, 10]. Default: 3.
+	// +kubebuilder:validation:Optional
+	GoodLimit *float64 `json:"goodLimit,omitempty" tf:"good_limit,omitempty"`
+
+	// Health check domain. For HTTP/HTTPS protocol.
+	// Health check domain. For HTTP/HTTPS protocol.
+	// +kubebuilder:validation:Optional
+	HTTPCheckDomain *string `json:"httpCheckDomain,omitempty" tf:"http_check_domain,omitempty"`
+
+	// Health check HTTP method. For HTTP/HTTPS protocol. Valid values: HEAD, GET. Default: HEAD.
+	// Health check HTTP method. For HTTP/HTTPS protocol. Valid values: HEAD, GET. Default: HEAD.
+	// +kubebuilder:validation:Optional
+	HTTPCheckMethod *string `json:"httpCheckMethod,omitempty" tf:"http_check_method,omitempty"`
+
+	// Health check path. For HTTP/HTTPS protocol. Must start with /. If not specified, / is used by default.
+	// Health check path. For HTTP/HTTPS protocol. Must start with /. If not specified, / is used by default.
+	// +kubebuilder:validation:Optional
+	HTTPCheckPath *string `json:"httpCheckPath,omitempty" tf:"http_check_path,omitempty"`
+
+	// HTTP status codes indicating health. For HTTP/HTTPS protocol. Example: 1 (1xx), 2 (2xx), 4 (3xx), 8 (4xx), 16 (5xx). Multiple values can be combined, e.g., 7 (1xx, 2xx, 3xx).
+	// HTTP status codes indicating health. For HTTP/HTTPS protocol. Example: 1 (1xx), 2 (2xx), 4 (3xx), 8 (4xx), 16 (5xx). Multiple values can be combined, e.g., 7 (1xx, 2xx, 3xx).
+	// +kubebuilder:validation:Optional
+	HTTPCode *float64 `json:"httpCode,omitempty" tf:"http_code,omitempty"`
+
+	// HTTP version for health check. Required when health check protocol is HTTP. Valid values: HTTP/1.0, HTTP/1.1. Only valid for TCP target groups.
+	// HTTP version for health check. Required when health check protocol is HTTP. Valid values: HTTP/1.0, HTTP/1.1. Only valid for TCP target groups.
+	// +kubebuilder:validation:Optional
+	HTTPVersion *string `json:"httpVersion,omitempty" tf:"http_version,omitempty"`
+
+	// Whether to enable health check. true: enable, false: disable.
+	// Whether to enable health check. true: enable, false: disable.
+	// +kubebuilder:validation:Optional
+	HealthSwitch *bool `json:"healthSwitch" tf:"health_switch,omitempty"`
+
+	// The default port of target group, add server after can use it.
+	// Health check port. If not specified, the backend server port is used by default.
+	// +kubebuilder:validation:Optional
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// Health check protocol. Valid values: TCP, HTTP, HTTPS, PING, CUSTOM, GRPC. Valid for v2 target groups.
+	// +kubebuilder:validation:Optional
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// Health check response timeout in seconds. Range: [2, 60]. Default: 2.
+	// Health check response timeout in seconds. Range: [2, 60]. Default: 2.
+	// +kubebuilder:validation:Optional
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+}
+
 type TargetGroupInitParameters struct {
+
+	// Whether this is a full listener target group. Only valid for v2 target groups. true: full listener target group, false: normal target group.
+	// Whether this is a full listener target group. Only valid for v2 target groups. true: full listener target group, false: normal target group.
+	FullListenSwitch *bool `json:"fullListenSwitch,omitempty" tf:"full_listen_switch,omitempty"`
+
+	// Health check configuration.
+	// Health check configuration.
+	HealthCheck []HealthCheckInitParameters `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
+
+	// IP version type. Common values: IPv4, IPv6, IPv6FullChain.
+	// IP version type. Common values: IPv4, IPv6, IPv6FullChain.
+	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
+
+	// Enable keep-alive connections. Only valid for HTTP/HTTPS target groups. true: enable, false: disable. Default: false.
+	// Enable keep-alive connections. Only valid for HTTP/HTTPS target groups. true: enable, false: disable. Default: false.
+	KeepaliveEnable *bool `json:"keepaliveEnable,omitempty" tf:"keepalive_enable,omitempty"`
 
 	// The default port of target group, add server after can use it.
 	// The default port of target group, add server after can use it.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// Scheduling algorithm. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Valid values: WRR (weighted round robin), LEAST_CONN (least connections), IP_HASH (IP hash). Default: WRR.
+	// Scheduling algorithm. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Valid values: WRR (weighted round robin), LEAST_CONN (least connections), IP_HASH (IP hash). Default: WRR.
+	ScheduleAlgorithm *string `json:"scheduleAlgorithm,omitempty" tf:"schedule_algorithm,omitempty"`
+
+	// Session persistence time in seconds. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Range: 30-3600 or 0 (disabled). Default: 0 (disabled).
+	// Session persistence time in seconds. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Range: 30-3600 or 0 (disabled). Default: 0 (disabled).
+	SessionExpireTime *float64 `json:"sessionExpireTime,omitempty" tf:"session_expire_time,omitempty"`
+
+	// Whether to enable SNAT (Source Network Address Translation) for the target group. true: enable, false: disable. Whether SNAT actually takes effect depends on the target group type (v1/v2) and protocol; the cloud side determines applicability.
+	// Whether to enable SNAT (Source Network Address Translation) for the target group. true: enable, false: disable. Whether SNAT actually takes effect depends on the target group type (v1/v2) and protocol; the cloud side determines applicability.
+	SnatEnable *bool `json:"snatEnable,omitempty" tf:"snat_enable,omitempty"`
+
+	// Resource tags for the target group.
+	// Resource tags for the target group.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// It has been deprecated from version 1.77.3. please use tencentcloud_clb_target_group_instance_attachment instead. The backend server of target group bind.
 	// The backend server of target group bind.
@@ -27,9 +242,17 @@ type TargetGroupInitParameters struct {
 	// Target group name.
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 
+	// Target group type, currently supported v1 (legacy version target group) and v2 (new version target group), defaults to v1 (legacy version target group).
+	// Target group type, currently supported v1 (legacy version target group) and v2 (new version target group), defaults to v1 (legacy version target group).
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
 	// VPC ID, default is based on the network.
 	// VPC ID, default is based on the network.
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
+	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
 type TargetGroupInstancesInitParameters struct {
@@ -46,7 +269,7 @@ type TargetGroupInstancesInitParameters struct {
 	// The port of target group instance.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The weight of target group instance.
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
 	// The weight of target group instance.
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
@@ -65,7 +288,7 @@ type TargetGroupInstancesObservation struct {
 	// The port of target group instance.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// The weight of target group instance.
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
 	// The weight of target group instance.
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
@@ -87,7 +310,7 @@ type TargetGroupInstancesParameters struct {
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`
 
-	// The weight of target group instance.
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
 	// The weight of target group instance.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
@@ -95,12 +318,49 @@ type TargetGroupInstancesParameters struct {
 
 type TargetGroupObservation struct {
 
+	// Whether this is a full listener target group. Only valid for v2 target groups. true: full listener target group, false: normal target group.
+	// Whether this is a full listener target group. Only valid for v2 target groups. true: full listener target group, false: normal target group.
+	FullListenSwitch *bool `json:"fullListenSwitch,omitempty" tf:"full_listen_switch,omitempty"`
+
+	// Health check configuration.
+	// Health check configuration.
+	HealthCheck []HealthCheckObservation `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// IP version type. Common values: IPv4, IPv6, IPv6FullChain.
+	// IP version type. Common values: IPv4, IPv6, IPv6FullChain.
+	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
+
+	// Enable keep-alive connections. Only valid for HTTP/HTTPS target groups. true: enable, false: disable. Default: false.
+	// Enable keep-alive connections. Only valid for HTTP/HTTPS target groups. true: enable, false: disable. Default: false.
+	KeepaliveEnable *bool `json:"keepaliveEnable,omitempty" tf:"keepalive_enable,omitempty"`
 
 	// The default port of target group, add server after can use it.
 	// The default port of target group, add server after can use it.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// Scheduling algorithm. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Valid values: WRR (weighted round robin), LEAST_CONN (least connections), IP_HASH (IP hash). Default: WRR.
+	// Scheduling algorithm. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Valid values: WRR (weighted round robin), LEAST_CONN (least connections), IP_HASH (IP hash). Default: WRR.
+	ScheduleAlgorithm *string `json:"scheduleAlgorithm,omitempty" tf:"schedule_algorithm,omitempty"`
+
+	// Session persistence time in seconds. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Range: 30-3600 or 0 (disabled). Default: 0 (disabled).
+	// Session persistence time in seconds. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Range: 30-3600 or 0 (disabled). Default: 0 (disabled).
+	SessionExpireTime *float64 `json:"sessionExpireTime,omitempty" tf:"session_expire_time,omitempty"`
+
+	// Whether to enable SNAT (Source Network Address Translation) for the target group. true: enable, false: disable. Whether SNAT actually takes effect depends on the target group type (v1/v2) and protocol; the cloud side determines applicability.
+	// Whether to enable SNAT (Source Network Address Translation) for the target group. true: enable, false: disable. Whether SNAT actually takes effect depends on the target group type (v1/v2) and protocol; the cloud side determines applicability.
+	SnatEnable *bool `json:"snatEnable,omitempty" tf:"snat_enable,omitempty"`
+
+	// Resource tags for the target group.
+	// Resource tags for the target group.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// It has been deprecated from version 1.77.3. please use tencentcloud_clb_target_group_instance_attachment instead. The backend server of target group bind.
 	// The backend server of target group bind.
@@ -110,17 +370,71 @@ type TargetGroupObservation struct {
 	// Target group name.
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 
+	// Target group type, currently supported v1 (legacy version target group) and v2 (new version target group), defaults to v1 (legacy version target group).
+	// Target group type, currently supported v1 (legacy version target group) and v2 (new version target group), defaults to v1 (legacy version target group).
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
 	// VPC ID, default is based on the network.
 	// VPC ID, default is based on the network.
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
+	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
 type TargetGroupParameters struct {
+
+	// Whether this is a full listener target group. Only valid for v2 target groups. true: full listener target group, false: normal target group.
+	// Whether this is a full listener target group. Only valid for v2 target groups. true: full listener target group, false: normal target group.
+	// +kubebuilder:validation:Optional
+	FullListenSwitch *bool `json:"fullListenSwitch,omitempty" tf:"full_listen_switch,omitempty"`
+
+	// Health check configuration.
+	// Health check configuration.
+	// +kubebuilder:validation:Optional
+	HealthCheck []HealthCheckParameters `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
+
+	// IP version type. Common values: IPv4, IPv6, IPv6FullChain.
+	// IP version type. Common values: IPv4, IPv6, IPv6FullChain.
+	// +kubebuilder:validation:Optional
+	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
+
+	// Enable keep-alive connections. Only valid for HTTP/HTTPS target groups. true: enable, false: disable. Default: false.
+	// Enable keep-alive connections. Only valid for HTTP/HTTPS target groups. true: enable, false: disable. Default: false.
+	// +kubebuilder:validation:Optional
+	KeepaliveEnable *bool `json:"keepaliveEnable,omitempty" tf:"keepalive_enable,omitempty"`
 
 	// The default port of target group, add server after can use it.
 	// The default port of target group, add server after can use it.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// Backend forwarding protocol of the target group. this field is required for the new version (v2) target group. currently supports TCP, UDP, HTTP, HTTPS, GRPC.
+	// +kubebuilder:validation:Optional
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// Scheduling algorithm. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Valid values: WRR (weighted round robin), LEAST_CONN (least connections), IP_HASH (IP hash). Default: WRR.
+	// Scheduling algorithm. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Valid values: WRR (weighted round robin), LEAST_CONN (least connections), IP_HASH (IP hash). Default: WRR.
+	// +kubebuilder:validation:Optional
+	ScheduleAlgorithm *string `json:"scheduleAlgorithm,omitempty" tf:"schedule_algorithm,omitempty"`
+
+	// Session persistence time in seconds. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Range: 30-3600 or 0 (disabled). Default: 0 (disabled).
+	// Session persistence time in seconds. Only valid for v2 target groups with HTTP/HTTPS/GRPC protocols. Range: 30-3600 or 0 (disabled). Default: 0 (disabled).
+	// +kubebuilder:validation:Optional
+	SessionExpireTime *float64 `json:"sessionExpireTime,omitempty" tf:"session_expire_time,omitempty"`
+
+	// Whether to enable SNAT (Source Network Address Translation) for the target group. true: enable, false: disable. Whether SNAT actually takes effect depends on the target group type (v1/v2) and protocol; the cloud side determines applicability.
+	// Whether to enable SNAT (Source Network Address Translation) for the target group. true: enable, false: disable. Whether SNAT actually takes effect depends on the target group type (v1/v2) and protocol; the cloud side determines applicability.
+	// +kubebuilder:validation:Optional
+	SnatEnable *bool `json:"snatEnable,omitempty" tf:"snat_enable,omitempty"`
+
+	// Resource tags for the target group.
+	// Resource tags for the target group.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// It has been deprecated from version 1.77.3. please use tencentcloud_clb_target_group_instance_attachment instead. The backend server of target group bind.
 	// The backend server of target group bind.
@@ -132,10 +446,20 @@ type TargetGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 
+	// Target group type, currently supported v1 (legacy version target group) and v2 (new version target group), defaults to v1 (legacy version target group).
+	// Target group type, currently supported v1 (legacy version target group) and v2 (new version target group), defaults to v1 (legacy version target group).
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
 	// VPC ID, default is based on the network.
 	// VPC ID, default is based on the network.
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
+
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
+	// Default backend server weight. Range: [0, 100]. Only valid for v2 target groups. When set, backend servers added to the target group will use this default weight if not specified.
+	// +kubebuilder:validation:Optional
+	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
 // TargetGroupSpec defines the desired state of TargetGroup

@@ -111,9 +111,16 @@ spec:
                       Name of the ENI, maximum length 60.
                       Name of the ENI, maximum length 60.
                     type: string
+                  orderlySecurityGroups:
+                    description: |-
+                      List of security group IDs.
+                      List of security group IDs.
+                    items:
+                      type: string
+                    type: array
                   securityGroups:
                     description: |-
-                      A set of security group IDs.
+                      It has been deprecated from version 1.82.15. Use orderly_security_groups instead. A set of security group IDs.
                       A set of security group IDs.
                     items:
                       type: string
@@ -337,9 +344,16 @@ spec:
                       Name of the ENI, maximum length 60.
                       Name of the ENI, maximum length 60.
                     type: string
+                  orderlySecurityGroups:
+                    description: |-
+                      List of security group IDs.
+                      List of security group IDs.
+                    items:
+                      type: string
+                    type: array
                   securityGroups:
                     description: |-
-                      A set of security group IDs.
+                      It has been deprecated from version 1.82.15. Use orderly_security_groups instead. A set of security group IDs.
                       A set of security group IDs.
                     items:
                       type: string
@@ -762,6 +776,13 @@ spec:
                       Name of the ENI, maximum length 60.
                       Name of the ENI, maximum length 60.
                     type: string
+                  orderlySecurityGroups:
+                    description: |-
+                      List of security group IDs.
+                      List of security group IDs.
+                    items:
+                      type: string
+                    type: array
                   primary:
                     description: |-
                       Indicates whether the IP is primary.
@@ -769,7 +790,7 @@ spec:
                     type: boolean
                   securityGroups:
                     description: |-
-                      A set of security group IDs.
+                      It has been deprecated from version 1.82.15. Use orderly_security_groups instead. A set of security group IDs.
                       A set of security group IDs.
                     items:
                       type: string

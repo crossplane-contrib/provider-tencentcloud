@@ -13,7 +13,46 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ShardingInstanceAddNodeListInitParameters struct {
+
+	// Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+	// Node role to add. Valid values: `SECONDARY` (Mongod node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The availability zone for the new node.
+	// The availability zone for the new node.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type ShardingInstanceAddNodeListObservation struct {
+
+	// Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+	// Node role to add. Valid values: `SECONDARY` (Mongod node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The availability zone for the new node.
+	// The availability zone for the new node.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type ShardingInstanceAddNodeListParameters struct {
+
+	// Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+	// Node role to add. Valid values: `SECONDARY` (Mongod node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+	// +kubebuilder:validation:Optional
+	Role *string `json:"role" tf:"role,omitempty"`
+
+	// The availability zone for the new node.
+	// The availability zone for the new node.
+	// +kubebuilder:validation:Optional
+	Zone *string `json:"zone" tf:"zone,omitempty"`
+}
+
 type ShardingInstanceInitParameters struct {
+
+	// Add node list. Node type and availability zone information.
+	// Add node list. Node type and availability zone information.
+	AddNodeList []ShardingInstanceAddNodeListInitParameters `json:"addNodeList,omitempty" tf:"add_node_list,omitempty"`
 
 	// Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW), 1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is 0. Note: only works for PREPAID instance. Only supports0 and 1 for creation.
 	// Auto renew flag. Valid values are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW) and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`. Note: only works for PREPAID instance. Only supports`0` and `1` for creation.
@@ -35,12 +74,31 @@ type ShardingInstanceInitParameters struct {
 	// The available zone of the Mongodb.
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
-	// Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
+
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+	// - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+	// - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+	// - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+	// - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+	// - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+	// - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
 	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
@@ -57,6 +115,14 @@ type ShardingInstanceInitParameters struct {
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of Mongodb instance, and available values include HIO(or GIO which will be deprecated, represents high IO) and HIO10G(or TGIO which will be deprecated, represents 10-gigabit high IO).
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
@@ -78,8 +144,8 @@ type ShardingInstanceInitParameters struct {
 	// Number of mongos.
 	MongosNodeNum *float64 `json:"mongosNodeNum,omitempty" tf:"mongos_node_num,omitempty"`
 
-	// Number of nodes per shard, at least 3(one master and two slaves).
-	// Number of nodes per shard, at least 3(one master and two slaves).
+	// Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
+	// Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
 	NodesPerShard *float64 `json:"nodesPerShard,omitempty" tf:"nodes_per_shard,omitempty"`
 
 	// The tenancy (time unit is month) of the prepaid instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
@@ -89,6 +155,10 @@ type ShardingInstanceInitParameters struct {
 	// ID of the project which the instance belongs.
 	// ID of the project which the instance belongs.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., cmgo-xxxx_0-node-readonly0 will remove the first readonly node of each shard.
+	// Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., `cmgo-xxxx_0-node-readonly0` will remove the first readonly node of each shard.
+	RemoveNodeList []ShardingInstanceRemoveNodeListInitParameters `json:"removeNodeList,omitempty" tf:"remove_node_list,omitempty"`
 
 	// ID of the security group.
 	// ID of the security group.
@@ -137,6 +207,10 @@ type ShardingInstanceInitParameters struct {
 
 type ShardingInstanceObservation struct {
 
+	// Add node list. Node type and availability zone information.
+	// Add node list. Node type and availability zone information.
+	AddNodeList []ShardingInstanceAddNodeListObservation `json:"addNodeList,omitempty" tf:"add_node_list,omitempty"`
+
 	// Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW), 1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is 0. Note: only works for PREPAID instance. Only supports0 and 1 for creation.
 	// Auto renew flag. Valid values are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW) and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`. Note: only works for PREPAID instance. Only supports`0` and `1` for creation.
 	AutoRenewFlag *float64 `json:"autoRenewFlag,omitempty" tf:"auto_renew_flag,omitempty"`
@@ -157,6 +231,10 @@ type ShardingInstanceObservation struct {
 	// The available zone of the Mongodb.
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
@@ -165,8 +243,23 @@ type ShardingInstanceObservation struct {
 	// Creation time of the Mongodb instance.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
+
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+	// - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+	// - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+	// - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+	// - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+	// - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+	// - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
 	// The availability zone to which the Hidden node belongs. This parameter is required in cross-AZ instance deployment.
@@ -186,6 +279,14 @@ type ShardingInstanceObservation struct {
 	// Name of the Mongodb instance.
 	// Name of the Mongodb instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of Mongodb instance, and available values include HIO(or GIO which will be deprecated, represents high IO) and HIO10G(or TGIO which will be deprecated, represents 10-gigabit high IO).
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
@@ -207,8 +308,8 @@ type ShardingInstanceObservation struct {
 	// Number of mongos.
 	MongosNodeNum *float64 `json:"mongosNodeNum,omitempty" tf:"mongos_node_num,omitempty"`
 
-	// Number of nodes per shard, at least 3(one master and two slaves).
-	// Number of nodes per shard, at least 3(one master and two slaves).
+	// Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
+	// Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
 	NodesPerShard *float64 `json:"nodesPerShard,omitempty" tf:"nodes_per_shard,omitempty"`
 
 	// The tenancy (time unit is month) of the prepaid instance. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36. NOTE: it only works when charge_type is set to PREPAID.
@@ -218,6 +319,10 @@ type ShardingInstanceObservation struct {
 	// ID of the project which the instance belongs.
 	// ID of the project which the instance belongs.
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., cmgo-xxxx_0-node-readonly0 will remove the first readonly node of each shard.
+	// Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., `cmgo-xxxx_0-node-readonly0` will remove the first readonly node of each shard.
+	RemoveNodeList []ShardingInstanceRemoveNodeListObservation `json:"removeNodeList,omitempty" tf:"remove_node_list,omitempty"`
 
 	// ID of the security group.
 	// ID of the security group.
@@ -260,6 +365,11 @@ type ShardingInstanceObservation struct {
 
 type ShardingInstanceParameters struct {
 
+	// Add node list. Node type and availability zone information.
+	// Add node list. Node type and availability zone information.
+	// +kubebuilder:validation:Optional
+	AddNodeList []ShardingInstanceAddNodeListParameters `json:"addNodeList,omitempty" tf:"add_node_list,omitempty"`
+
 	// Auto renew flag. Valid values are 0(NOTIFY_AND_MANUAL_RENEW), 1(NOTIFY_AND_AUTO_RENEW) and 2(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is 0. Note: only works for PREPAID instance. Only supports0 and 1 for creation.
 	// Auto renew flag. Valid values are `0`(NOTIFY_AND_MANUAL_RENEW), `1`(NOTIFY_AND_AUTO_RENEW) and `2`(DISABLE_NOTIFY_AND_MANUAL_RENEW). Default value is `0`. Note: only works for PREPAID instance. Only supports`0` and `1` for creation.
 	// +kubebuilder:validation:Optional
@@ -283,13 +393,35 @@ type ShardingInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailableZone *string `json:"availableZone,omitempty" tf:"available_zone,omitempty"`
 
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// The CPU core count of the MongoDB instance after the configuration change. Unit: C. When this parameter is empty, the current CPU size of the instance is used by default. The supported CPU specifications can be obtained through the DescribeSpecInfo API.
+	// +kubebuilder:validation:Optional
+	CPU *float64 `json:"cpu,omitempty" tf:"cpu,omitempty"`
+
 	// The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. Default value is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. Default value is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`. Caution that update operation on this field will delete old instances and create new one with new charge type.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
-	// Version of the Mongodb, and available values include MONGO_36_WT (MongoDB 3.6 WiredTiger Edition), MONGO_40_WT (MongoDB 4.0 WiredTiger Edition) and MONGO_42_WT  (MongoDB 4.2 WiredTiger Edition). NOTE: MONGO_3_WT (MongoDB 3.2 WiredTiger Edition) and MONGO_3_ROCKS (MongoDB 3.2 RocksDB Edition) will deprecated.
-	// Version of the Mongodb, and available values include `MONGO_36_WT` (MongoDB 3.6 WiredTiger Edition), `MONGO_40_WT` (MongoDB 4.0 WiredTiger Edition) and `MONGO_42_WT`  (MongoDB 4.2 WiredTiger Edition). NOTE: `MONGO_3_WT` (MongoDB 3.2 WiredTiger Edition) and `MONGO_3_ROCKS` (MongoDB 3.2 RocksDB Edition) will deprecated.
+	// Database storage encryption setting. No_Encryption: Storage encryption is not used. TDE: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Database storage encryption setting. `No_Encryption`: Storage encryption is not used. `TDE`: Enables TDE storage encryption. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	DataEncryption *string `json:"dataEncryption,omitempty" tf:"data_encryption,omitempty"`
+
+	// If TDE storage encryption is selected, the key source must be specified. auto: Automatically generate the key. manual: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// If TDE storage encryption is selected, the key source must be specified. `auto`: Automatically generate the key. `manual`: Manually specify the key. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	EncryptionKeySource *string `json:"encryptionKeySource,omitempty" tf:"encryption_key_source,omitempty"`
+
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// Refers to version information. The DescribeSpecInfo API can be called to obtain detailed information about the supported versions.
+	// - MONGO_40_WT: version of the MongoDB 4.0 WiredTiger storage engine.
+	// - MONGO_42_WT: version of the MongoDB 4.2 WiredTiger storage engine.
+	// - MONGO_44_WT: version of the MongoDB 4.4 WiredTiger storage engine.
+	// - MONGO_50_WT: version of the MongoDB 5.0 WiredTiger storage engine.
+	// - MONGO_60_WT: version of the MongoDB 6.0 WiredTiger storage engine.
+	// - MONGO_70_WT: version of the MongoDB 7.0 WiredTiger storage engine.
+	// - MONGO_80_WT: version of the MongoDB 8.0 WiredTiger storage engine.
 	// +kubebuilder:validation:Optional
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
 
@@ -310,6 +442,16 @@ type ShardingInstanceParameters struct {
 	// Name of the Mongodb instance.
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key region. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+
+	// Key ID. If manual is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// Key ID. If `manual` is selected as the key resource, you must enter the specified key ID. Note: this field does not support update, please recreate the resource if you need to change it.
+	// +kubebuilder:validation:Optional
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Type of Mongodb instance, and available values include HIO(or GIO which will be deprecated, represents high IO) and HIO10G(or TGIO which will be deprecated, represents 10-gigabit high IO).
 	// Type of Mongodb instance, and available values include `HIO`(or `GIO` which will be deprecated, represents high IO) and `HIO10G`(or `TGIO` which will be deprecated, represents 10-gigabit high IO).
@@ -336,8 +478,8 @@ type ShardingInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	MongosNodeNum *float64 `json:"mongosNodeNum,omitempty" tf:"mongos_node_num,omitempty"`
 
-	// Number of nodes per shard, at least 3(one master and two slaves).
-	// Number of nodes per shard, at least 3(one master and two slaves).
+	// Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
+	// Number of nodes per shard, at least 3(one master and two slaves). Allow value[3, 5, 7].
 	// +kubebuilder:validation:Optional
 	NodesPerShard *float64 `json:"nodesPerShard,omitempty" tf:"nodes_per_shard,omitempty"`
 
@@ -355,6 +497,11 @@ type ShardingInstanceParameters struct {
 	// ID of the project which the instance belongs.
 	// +kubebuilder:validation:Optional
 	ProjectID *float64 `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., cmgo-xxxx_0-node-readonly0 will remove the first readonly node of each shard.
+	// Remove node list. Node type, node name, and availability zone information. Note: Based on the consistency principle of each shard node in a sharding instance, when removing nodes, you only need to specify the node corresponding to shard 0, e.g., `cmgo-xxxx_0-node-readonly0` will remove the first readonly node of each shard.
+	// +kubebuilder:validation:Optional
+	RemoveNodeList []ShardingInstanceRemoveNodeListParameters `json:"removeNodeList,omitempty" tf:"remove_node_list,omitempty"`
 
 	// ID of the security group.
 	// ID of the security group.
@@ -405,6 +552,54 @@ type ShardingInstanceParameters struct {
 	// Disk size. The minimum value is 25, and unit is GB. Memory and volume must be upgraded or degraded simultaneously.
 	// +kubebuilder:validation:Optional
 	Volume *float64 `json:"volume,omitempty" tf:"volume,omitempty"`
+}
+
+type ShardingInstanceRemoveNodeListInitParameters struct {
+
+	// Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: cmgo-xxxx_0-node-readonly0.
+	// Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: `cmgo-xxxx_0-node-readonly0`.
+	NodeName *string `json:"nodeName,omitempty" tf:"node_name,omitempty"`
+
+	// Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+	// Node role to remove. Valid values: `SECONDARY` (Mongod secondary node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The availability zone for the new node.
+	// The availability zone of the node to remove.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type ShardingInstanceRemoveNodeListObservation struct {
+
+	// Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: cmgo-xxxx_0-node-readonly0.
+	// Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: `cmgo-xxxx_0-node-readonly0`.
+	NodeName *string `json:"nodeName,omitempty" tf:"node_name,omitempty"`
+
+	// Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+	// Node role to remove. Valid values: `SECONDARY` (Mongod secondary node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The availability zone for the new node.
+	// The availability zone of the node to remove.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type ShardingInstanceRemoveNodeListParameters struct {
+
+	// Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: cmgo-xxxx_0-node-readonly0.
+	// Node ID to remove. For sharding cluster, specify the node name corresponding to one shard group. For example: `cmgo-xxxx_0-node-readonly0`.
+	// +kubebuilder:validation:Optional
+	NodeName *string `json:"nodeName" tf:"node_name,omitempty"`
+
+	// Node role to add. Valid values: SECONDARY (Mongod node), READONLY (read-only node), MONGOS (Mongos node).
+	// Node role to remove. Valid values: `SECONDARY` (Mongod secondary node), `READONLY` (read-only node), `MONGOS` (Mongos node).
+	// +kubebuilder:validation:Optional
+	Role *string `json:"role" tf:"role,omitempty"`
+
+	// The availability zone for the new node.
+	// The availability zone of the node to remove.
+	// +kubebuilder:validation:Optional
+	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
 // ShardingInstanceSpec defines the desired state of ShardingInstance

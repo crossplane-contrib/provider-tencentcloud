@@ -28,8 +28,12 @@ type EipAssociationInitParameters struct {
 	// +kubebuilder:validation:Optional
 	EIPIDSelector *v1.Selector `json:"eipIdSelector,omitempty" tf:"-"`
 
-	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with network_interface_id and private_ip fields.
-	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with `network_interface_id` and `private_ip fields`.
+	// The ID of the target resource to associate with the Elastic IP (EIP). Supported targets include a CVM instance, SaaS WAF instance, CLB instance, or a VPC endpoint.
+	// Limitation (GWLB VPC endpoint): Only an EIP in the bound state can be associated with a GWLB-type VPC endpoint through this field, enabling more advanced networking scenarios.
+	// Mutual exclusivity: This field conflicts with network_interface_id and private_ip. Only one association target can be specified per request.
+	// The ID of the target resource to associate with the Elastic IP (EIP). Supported targets include a CVM instance, SaaS WAF instance, CLB instance, or a VPC endpoint.
+	// Limitation (GWLB VPC endpoint): Only an EIP in the bound state can be associated with a GWLB-type VPC endpoint through this field, enabling more advanced networking scenarios.
+	// Mutual exclusivity: This field conflicts with `network_interface_id` and `private_ip`. Only one association target can be specified per request.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
 	// Indicates the network interface id like eni-xxxxxx. This field is conflict with instance_id.
@@ -43,6 +47,10 @@ type EipAssociationInitParameters struct {
 
 type EipAssociationObservation struct {
 
+	// ID of the dedicated cluster.
+	// ID of the dedicated cluster.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// The ID of EIP.
 	// The ID of EIP.
 	EIPID *string `json:"eipId,omitempty" tf:"eip_id,omitempty"`
@@ -50,8 +58,12 @@ type EipAssociationObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with network_interface_id and private_ip fields.
-	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with `network_interface_id` and `private_ip fields`.
+	// The ID of the target resource to associate with the Elastic IP (EIP). Supported targets include a CVM instance, SaaS WAF instance, CLB instance, or a VPC endpoint.
+	// Limitation (GWLB VPC endpoint): Only an EIP in the bound state can be associated with a GWLB-type VPC endpoint through this field, enabling more advanced networking scenarios.
+	// Mutual exclusivity: This field conflicts with network_interface_id and private_ip. Only one association target can be specified per request.
+	// The ID of the target resource to associate with the Elastic IP (EIP). Supported targets include a CVM instance, SaaS WAF instance, CLB instance, or a VPC endpoint.
+	// Limitation (GWLB VPC endpoint): Only an EIP in the bound state can be associated with a GWLB-type VPC endpoint through this field, enabling more advanced networking scenarios.
+	// Mutual exclusivity: This field conflicts with `network_interface_id` and `private_ip`. Only one association target can be specified per request.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
 	// Indicates the network interface id like eni-xxxxxx. This field is conflict with instance_id.
@@ -79,8 +91,12 @@ type EipAssociationParameters struct {
 	// +kubebuilder:validation:Optional
 	EIPIDSelector *v1.Selector `json:"eipIdSelector,omitempty" tf:"-"`
 
-	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with network_interface_id and private_ip fields.
-	// The CVM or CLB instance id going to bind with the EIP. This field is conflict with `network_interface_id` and `private_ip fields`.
+	// The ID of the target resource to associate with the Elastic IP (EIP). Supported targets include a CVM instance, SaaS WAF instance, CLB instance, or a VPC endpoint.
+	// Limitation (GWLB VPC endpoint): Only an EIP in the bound state can be associated with a GWLB-type VPC endpoint through this field, enabling more advanced networking scenarios.
+	// Mutual exclusivity: This field conflicts with network_interface_id and private_ip. Only one association target can be specified per request.
+	// The ID of the target resource to associate with the Elastic IP (EIP). Supported targets include a CVM instance, SaaS WAF instance, CLB instance, or a VPC endpoint.
+	// Limitation (GWLB VPC endpoint): Only an EIP in the bound state can be associated with a GWLB-type VPC endpoint through this field, enabling more advanced networking scenarios.
+	// Mutual exclusivity: This field conflicts with `network_interface_id` and `private_ip`. Only one association target can be specified per request.
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 

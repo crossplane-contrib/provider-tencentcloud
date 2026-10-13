@@ -22,6 +22,11 @@ type VPNSSLClientInitParameters struct {
 	// VPN ssl server id.
 	// VPN ssl server id.
 	SSLVPNServerID *string `json:"sslVpnServerId,omitempty" tf:"ssl_vpn_server_id,omitempty"`
+
+	// Tags of the VPN SSL client.
+	// Tags of the VPN SSL client.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type VPNSSLClientObservation struct {
@@ -36,6 +41,11 @@ type VPNSSLClientObservation struct {
 	// VPN ssl server id.
 	// VPN ssl server id.
 	SSLVPNServerID *string `json:"sslVpnServerId,omitempty" tf:"ssl_vpn_server_id,omitempty"`
+
+	// Tags of the VPN SSL client.
+	// Tags of the VPN SSL client.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type VPNSSLClientParameters struct {
@@ -49,6 +59,12 @@ type VPNSSLClientParameters struct {
 	// VPN ssl server id.
 	// +kubebuilder:validation:Optional
 	SSLVPNServerID *string `json:"sslVpnServerId,omitempty" tf:"ssl_vpn_server_id,omitempty"`
+
+	// Tags of the VPN SSL client.
+	// Tags of the VPN SSL client.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 // VPNSSLClientSpec defines the desired state of VPNSSLClient

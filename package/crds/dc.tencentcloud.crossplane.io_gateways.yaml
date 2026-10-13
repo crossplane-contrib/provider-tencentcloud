@@ -73,10 +73,30 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  cnnRouteType:
+                    description: |-
+                      Type of CCN route. Valid value: BGP and STATIC. The property is available when the DCG type is CCN gateway and BGP enabled.
+                      Type of CCN route. Valid value: `BGP` and `STATIC`. The property is available when the DCG type is CCN gateway and BGP enabled.
+                    type: string
+                  gatewayAsn:
+                    description: |-
+                      Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+                      Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+                    type: number
                   gatewayType:
                     description: |-
                       Type of the gateway. Valid value: NORMAL and NAT. Default is NORMAL. NOTES: CCN only supports NORMAL and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
                       Type of the gateway. Valid value: `NORMAL` and `NAT`. Default is `NORMAL`. NOTES: CCN only supports `NORMAL` and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
+                    type: string
+                  haZoneGroupId:
+                    description: |-
+                      ID of DC highly available placement group.
+                      ID of DC highly available placement group.
+                    type: string
+                  modeType:
+                    description: |-
+                      CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+                      CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
                     type: string
                   name:
                     description: |-
@@ -92,6 +112,19 @@ spec:
                     description: |-
                       Type of associated network. Valid value: VPC and CCN.
                       Type of associated network. Valid value: `VPC` and `CCN`.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tag key-value pairs for the DC gateway. Multiple tags can be set.
+                      Tag key-value pairs for the DC gateway. Multiple tags can be set.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  zone:
+                    description: |-
+                      Availability zone where the direct connect gateway resides.
+                      Availability zone where the direct connect gateway resides.
                     type: string
                 type: object
               initProvider:
@@ -107,10 +140,30 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  cnnRouteType:
+                    description: |-
+                      Type of CCN route. Valid value: BGP and STATIC. The property is available when the DCG type is CCN gateway and BGP enabled.
+                      Type of CCN route. Valid value: `BGP` and `STATIC`. The property is available when the DCG type is CCN gateway and BGP enabled.
+                    type: string
+                  gatewayAsn:
+                    description: |-
+                      Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+                      Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+                    type: number
                   gatewayType:
                     description: |-
                       Type of the gateway. Valid value: NORMAL and NAT. Default is NORMAL. NOTES: CCN only supports NORMAL and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
                       Type of the gateway. Valid value: `NORMAL` and `NAT`. Default is `NORMAL`. NOTES: CCN only supports `NORMAL` and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
+                    type: string
+                  haZoneGroupId:
+                    description: |-
+                      ID of DC highly available placement group.
+                      ID of DC highly available placement group.
+                    type: string
+                  modeType:
+                    description: |-
+                      CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+                      CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
                     type: string
                   name:
                     description: |-
@@ -126,6 +179,19 @@ spec:
                     description: |-
                       Type of associated network. Valid value: VPC and CCN.
                       Type of associated network. Valid value: `VPC` and `CCN`.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tag key-value pairs for the DC gateway. Multiple tags can be set.
+                      Tag key-value pairs for the DC gateway. Multiple tags can be set.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  zone:
+                    description: |-
+                      Availability zone where the direct connect gateway resides.
+                      Availability zone where the direct connect gateway resides.
                     type: string
                 type: object
               managementPolicies:
@@ -328,13 +394,28 @@ spec:
                       Indicates whether the BGP is enabled.
                       Indicates whether the BGP is enabled.
                     type: boolean
+                  gatewayAsn:
+                    description: |-
+                      Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+                      Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+                    type: number
                   gatewayType:
                     description: |-
                       Type of the gateway. Valid value: NORMAL and NAT. Default is NORMAL. NOTES: CCN only supports NORMAL and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
                       Type of the gateway. Valid value: `NORMAL` and `NAT`. Default is `NORMAL`. NOTES: CCN only supports `NORMAL` and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
                     type: string
+                  haZoneGroupId:
+                    description: |-
+                      ID of DC highly available placement group.
+                      ID of DC highly available placement group.
+                    type: string
                   id:
                     description: ID of the resource.
+                    type: string
+                  modeType:
+                    description: |-
+                      CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+                      CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
                     type: string
                   name:
                     description: |-
@@ -350,6 +431,19 @@ spec:
                     description: |-
                       Type of associated network. Valid value: VPC and CCN.
                       Type of associated network. Valid value: `VPC` and `CCN`.
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tag key-value pairs for the DC gateway. Multiple tags can be set.
+                      Tag key-value pairs for the DC gateway. Multiple tags can be set.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  zone:
+                    description: |-
+                      Availability zone where the direct connect gateway resides.
+                      Availability zone where the direct connect gateway resides.
                     type: string
                 type: object
               conditions:

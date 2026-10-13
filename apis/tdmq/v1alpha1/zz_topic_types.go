@@ -53,6 +53,10 @@ type TopicInitParameters struct {
 	// Description of the namespace.
 	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
 
+	// Tag description list.
+	// Tag description list.
+	Tags []TopicTagsInitParameters `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// The name of topic to be created.
 	// The name of topic to be created.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
@@ -86,6 +90,10 @@ type TopicObservation struct {
 	// Description of the namespace.
 	// Description of the namespace.
 	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
+
+	// Tag description list.
+	// Tag description list.
+	Tags []TopicTagsObservation `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The name of topic to be created.
 	// The name of topic to be created.
@@ -141,10 +149,50 @@ type TopicParameters struct {
 	// +kubebuilder:validation:Optional
 	Remark *string `json:"remark,omitempty" tf:"remark,omitempty"`
 
+	// Tag description list.
+	// Tag description list.
+	// +kubebuilder:validation:Optional
+	Tags []TopicTagsParameters `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// The name of topic to be created.
 	// The name of topic to be created.
 	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
+}
+
+type TopicTagsInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TopicTagsObservation struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TopicTagsParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	TagKey *string `json:"tagKey" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	TagValue *string `json:"tagValue" tf:"tag_value,omitempty"`
 }
 
 // TopicSpec defines the desired state of Topic
@@ -174,7 +222,7 @@ type TopicStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Topic is the Schema for the Topics API. Provide a resource to create a TDMQ topic.
+// Topic is the Schema for the Topics API. Provides a resource to create a TDMQ topic.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

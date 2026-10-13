@@ -15,4 +15,4 @@ spec:
     storageSize: 100
     storageType: CLOUD_SSD
     tags:
-      createBy: terraform
+      createBy: Terraform

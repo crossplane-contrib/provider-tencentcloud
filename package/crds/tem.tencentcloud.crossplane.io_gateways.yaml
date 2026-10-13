@@ -522,7 +522,9 @@ spec:
                             related CLB ID, support binding existing clb, does not support modification.
                           type: string
                         createTime:
-                          description: creation time.
+                          description: |-
+                            creation time.
+                            creation time.
                           type: string
                         environmentId:
                           description: |-
@@ -628,7 +630,9 @@ spec:
                             type: object
                           type: array
                         vip:
-                          description: gateway vip.
+                          description: |-
+                            gateway vip.
+                            gateway vip.
                           type: string
                       type: object
                     type: array

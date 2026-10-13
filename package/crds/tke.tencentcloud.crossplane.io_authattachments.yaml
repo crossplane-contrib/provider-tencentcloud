@@ -83,8 +83,8 @@ spec:
                     x-kubernetes-list-type: set
                   autoCreateDiscoveryAnonymousAuth:
                     description: |-
-                      If set to true, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
-                      If set to `true`, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
+                      If set to true, the rbac rule will be created automatically which allow anonymous user to access /.well-known/openid-configuration and /openid/v1/jwks.
+                      If set to `true`, the rbac rule will be created automatically which allow anonymous user to access `/.well-known/openid-configuration` and `/openid/v1/jwks`.
                     type: boolean
                   autoCreateOidcConfig:
                     description: |-
@@ -178,17 +178,17 @@ spec:
                   issuer:
                     description: |-
                       Specify service-account-issuer. If use_tke_default is set to true, please do not set this field.
-                      Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field.
+                      Specify service-account-issuer. If `use_tke_default` is set to `true`, please do not set this field.
                     type: string
                   jwksUri:
                     description: |-
                       Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field.
-                      Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field.
+                      Specify service-account-jwks-uri. If `use_tke_default` is set to `true`, please do not set this field.
                     type: string
                   useTkeDefault:
                     description: |-
                       If set to true, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
-                      If set to `true`, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
+                      If set to `true`, the `issuer` and `jwks_uri` will be generated automatically by tke, please do not set `issuer` and `jwks_uri`.
                     type: boolean
                 type: object
               initProvider:
@@ -214,8 +214,8 @@ spec:
                     x-kubernetes-list-type: set
                   autoCreateDiscoveryAnonymousAuth:
                     description: |-
-                      If set to true, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
-                      If set to `true`, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
+                      If set to true, the rbac rule will be created automatically which allow anonymous user to access /.well-known/openid-configuration and /openid/v1/jwks.
+                      If set to `true`, the rbac rule will be created automatically which allow anonymous user to access `/.well-known/openid-configuration` and `/openid/v1/jwks`.
                     type: boolean
                   autoCreateOidcConfig:
                     description: |-
@@ -309,17 +309,17 @@ spec:
                   issuer:
                     description: |-
                       Specify service-account-issuer. If use_tke_default is set to true, please do not set this field.
-                      Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field.
+                      Specify service-account-issuer. If `use_tke_default` is set to `true`, please do not set this field.
                     type: string
                   jwksUri:
                     description: |-
                       Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field.
-                      Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field.
+                      Specify service-account-jwks-uri. If `use_tke_default` is set to `true`, please do not set this field.
                     type: string
                   useTkeDefault:
                     description: |-
                       If set to true, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
-                      If set to `true`, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
+                      If set to `true`, the `issuer` and `jwks_uri` will be generated automatically by tke, please do not set `issuer` and `jwks_uri`.
                     type: boolean
                 type: object
               managementPolicies:
@@ -504,8 +504,8 @@ spec:
                     x-kubernetes-list-type: set
                   autoCreateDiscoveryAnonymousAuth:
                     description: |-
-                      If set to true, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
-                      If set to `true`, the rbac rule will be created automatically which allow anonymous user to access '/.well-known/openid-configuration' and '/openid/v1/jwks'.
+                      If set to true, the rbac rule will be created automatically which allow anonymous user to access /.well-known/openid-configuration and /openid/v1/jwks.
+                      If set to `true`, the rbac rule will be created automatically which allow anonymous user to access `/.well-known/openid-configuration` and `/openid/v1/jwks`.
                     type: boolean
                   autoCreateOidcConfig:
                     description: |-
@@ -528,27 +528,27 @@ spec:
                   issuer:
                     description: |-
                       Specify service-account-issuer. If use_tke_default is set to true, please do not set this field.
-                      Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field.
+                      Specify service-account-issuer. If `use_tke_default` is set to `true`, please do not set this field.
                     type: string
                   jwksUri:
                     description: |-
                       Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field.
-                      Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field.
+                      Specify service-account-jwks-uri. If `use_tke_default` is set to `true`, please do not set this field.
                     type: string
                   tkeDefaultIssuer:
                     description: |-
                       The default issuer of tke. If use_tke_default is set to true, this parameter will be set to the default value.
-                      The default issuer of tke. If use_tke_default is set to `true`, this parameter will be set to the default value.
+                      The default issuer of tke. If `use_tke_default` is set to `true`, this parameter will be set to the default value.
                     type: string
                   tkeDefaultJwksUri:
                     description: |-
                       The default jwks_uri of tke. If use_tke_default is set to true, this parameter will be set to the default value.
-                      The default jwks_uri of tke. If use_tke_default is set to `true`, this parameter will be set to the default value.
+                      The default jwks_uri of tke. If `use_tke_default` is set to `true`, this parameter will be set to the default value.
                     type: string
                   useTkeDefault:
                     description: |-
                       If set to true, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
-                      If set to `true`, the issuer and jwks_uri will be generated automatically by tke, please do not set issuer and jwks_uri.
+                      If set to `true`, the `issuer` and `jwks_uri` will be generated automatically by tke, please do not set `issuer` and `jwks_uri`.
                     type: boolean
                 type: object
               conditions:

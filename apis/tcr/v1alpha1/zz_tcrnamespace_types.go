@@ -64,6 +64,11 @@ type TcrNamespaceInitParameters struct {
 	// Block vulnerability level, currently only supports low, medium, high.
 	// Block vulnerability level, currently only supports `low`, `medium`, `high`.
 	Severity *string `json:"severity,omitempty" tf:"severity,omitempty"`
+
+	// Tag key-value pairs for the TCR namespace.
+	// Tag key-value pairs for the TCR namespace.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type TcrNamespaceObservation struct {
@@ -98,6 +103,11 @@ type TcrNamespaceObservation struct {
 	// Block vulnerability level, currently only supports low, medium, high.
 	// Block vulnerability level, currently only supports `low`, `medium`, `high`.
 	Severity *string `json:"severity,omitempty" tf:"severity,omitempty"`
+
+	// Tag key-value pairs for the TCR namespace.
+	// Tag key-value pairs for the TCR namespace.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type TcrNamespaceParameters struct {
@@ -136,6 +146,12 @@ type TcrNamespaceParameters struct {
 	// Block vulnerability level, currently only supports `low`, `medium`, `high`.
 	// +kubebuilder:validation:Optional
 	Severity *string `json:"severity,omitempty" tf:"severity,omitempty"`
+
+	// Tag key-value pairs for the TCR namespace.
+	// Tag key-value pairs for the TCR namespace.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 // TcrNamespaceSpec defines the desired state of TcrNamespace

@@ -10,6 +10,7 @@ spec:
   forProvider:
     dataRetentionTime: 30
     instanceName: tf-tmp-instance
+    longTermStorageRetentionTime: 90
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: subnet

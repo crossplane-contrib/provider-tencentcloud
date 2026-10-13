@@ -279,6 +279,17 @@ func (in *EniInitParameters) DeepCopyInto(out *EniInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OrderlySecurityGroups != nil {
+		in, out := &in.OrderlySecurityGroups, &out.OrderlySecurityGroups
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.SecurityGroups != nil {
 		in, out := &in.SecurityGroups, &out.SecurityGroups
 		*out = make([]*string, len(*in))
@@ -432,6 +443,17 @@ func (in *EniObservation) DeepCopyInto(out *EniObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OrderlySecurityGroups != nil {
+		in, out := &in.OrderlySecurityGroups, &out.OrderlySecurityGroups
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Primary != nil {
 		in, out := &in.Primary, &out.Primary
 		*out = new(bool)
@@ -515,6 +537,17 @@ func (in *EniParameters) DeepCopyInto(out *EniParameters) {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrderlySecurityGroups != nil {
+		in, out := &in.OrderlySecurityGroups, &out.OrderlySecurityGroups
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.SecurityGroups != nil {
 		in, out := &in.SecurityGroups, &out.SecurityGroups

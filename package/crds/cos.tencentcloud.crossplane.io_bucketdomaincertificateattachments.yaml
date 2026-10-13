@@ -177,21 +177,49 @@ spec:
                                   Custom certificate.
                                 items:
                                   properties:
-                                    cert:
-                                      description: |-
-                                        Public key of certificate.
-                                        Public key of certificate.
-                                      type: string
                                     certId:
                                       description: |-
                                         ID of certificate.
                                         ID of certificate.
                                       type: string
-                                    privateKey:
+                                    certSecretRef:
+                                      description: |-
+                                        Public key of certificate.
+                                        Public key of certificate.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    privateKeySecretRef:
                                       description: |-
                                         Private key of certificate.
                                         Private key of certificate.
-                                      type: string
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
                                   type: object
                                 type: array
                             type: object
@@ -319,20 +347,10 @@ spec:
                                   Custom certificate.
                                 items:
                                   properties:
-                                    cert:
-                                      description: |-
-                                        Public key of certificate.
-                                        Public key of certificate.
-                                      type: string
                                     certId:
                                       description: |-
                                         ID of certificate.
                                         ID of certificate.
-                                      type: string
-                                    privateKey:
-                                      description: |-
-                                        Private key of certificate.
-                                        Private key of certificate.
                                       type: string
                                   type: object
                                 type: array
@@ -552,20 +570,10 @@ spec:
                                   Custom certificate.
                                 items:
                                   properties:
-                                    cert:
-                                      description: |-
-                                        Public key of certificate.
-                                        Public key of certificate.
-                                      type: string
                                     certId:
                                       description: |-
                                         ID of certificate.
                                         ID of certificate.
-                                      type: string
-                                    privateKey:
-                                      description: |-
-                                        Private key of certificate.
-                                        Private key of certificate.
                                       type: string
                                   type: object
                                 type: array

@@ -106,9 +106,34 @@ spec:
                     x-kubernetes-map-type: granular
                   type:
                     description: |-
-                      Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-                      Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+                      Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is partial:
+                      Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is `partial`:
+
+
+                      - `partial`: CNAME Access;
+                      - `full`: NS Access;
+                      - `noDomainAccess`: No-Domain Access;
+                      - `dnsPodAccess`: DNSPod Managed Access (this mode requires your domain to already be hosted on DNSPod);
+                      - `ai`: Edge Inference Access.
                     type: string
+                  workModeInfos:
+                    description: |-
+                      Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to Version Management.
+                      Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to [Version Management](https://cloud.tencent.com/document/product/1552/113690).
+                    items:
+                      properties:
+                        configGroupType:
+                          description: |-
+                            Configuration group type. Options are as follows:l7_acceleration: layer-7 acceleration configuration group;edge_functions: edge function configuration group;web_security: web protection configuration group.
+                            Configuration group type. Options are as follows:`l7_acceleration`: layer-7 acceleration configuration group;`edge_functions`: edge function configuration group;`web_security`: web protection configuration group.
+                          type: string
+                        workMode:
+                          description: |-
+                            Working mode. options are as follows:immediate_effect: immediate effect mode;version_control: version control mode.
+                            Working mode. options are as follows:`immediate_effect`: immediate effect mode;`version_control`: version control mode.
+                          type: string
+                      type: object
+                    type: array
                   zoneName:
                     description: |-
                       Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
@@ -161,9 +186,34 @@ spec:
                     x-kubernetes-map-type: granular
                   type:
                     description: |-
-                      Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-                      Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+                      Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is partial:
+                      Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is `partial`:
+
+
+                      - `partial`: CNAME Access;
+                      - `full`: NS Access;
+                      - `noDomainAccess`: No-Domain Access;
+                      - `dnsPodAccess`: DNSPod Managed Access (this mode requires your domain to already be hosted on DNSPod);
+                      - `ai`: Edge Inference Access.
                     type: string
+                  workModeInfos:
+                    description: |-
+                      Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to Version Management.
+                      Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to [Version Management](https://cloud.tencent.com/document/product/1552/113690).
+                    items:
+                      properties:
+                        configGroupType:
+                          description: |-
+                            Configuration group type. Options are as follows:l7_acceleration: layer-7 acceleration configuration group;edge_functions: edge function configuration group;web_security: web protection configuration group.
+                            Configuration group type. Options are as follows:`l7_acceleration`: layer-7 acceleration configuration group;`edge_functions`: edge function configuration group;`web_security`: web protection configuration group.
+                          type: string
+                        workMode:
+                          description: |-
+                            Working mode. options are as follows:immediate_effect: immediate effect mode;version_control: version control mode.
+                            Working mode. options are as follows:`immediate_effect`: immediate effect mode;`version_control`: version control mode.
+                          type: string
+                      type: object
+                    type: array
                   zoneName:
                     description: |-
                       Site name. When accessing CNAME/NS, please pass the second-level domain (example.com) as the site name; when accessing without a domain name, please leave this value empty.
@@ -434,8 +484,38 @@ spec:
                     x-kubernetes-map-type: granular
                   type:
                     description: |-
-                      Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
-                      Site access type. The value of this parameter is as follows, and the default is partial if not filled in:partial: CNAME access; full: NS access; noDomainAccess: No domain access.
+                      Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is partial:
+                      Site Access Type. The possible values for this parameter are as follows; if left unspecified, the default value is `partial`:
+
+
+                      - `partial`: CNAME Access;
+                      - `full`: NS Access;
+                      - `noDomainAccess`: No-Domain Access;
+                      - `dnsPodAccess`: DNSPod Managed Access (this mode requires your domain to already be hosted on DNSPod);
+                      - `ai`: Edge Inference Access.
+                    type: string
+                  workModeInfos:
+                    description: |-
+                      Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to Version Management.
+                      Configuration group work mode. Each configuration module of the site can enable version control mode or immediate effect mode according to the configuration group dimension. For details, please refer to [Version Management](https://cloud.tencent.com/document/product/1552/113690).
+                    items:
+                      properties:
+                        configGroupType:
+                          description: |-
+                            Configuration group type. Options are as follows:l7_acceleration: layer-7 acceleration configuration group;edge_functions: edge function configuration group;web_security: web protection configuration group.
+                            Configuration group type. Options are as follows:`l7_acceleration`: layer-7 acceleration configuration group;`edge_functions`: edge function configuration group;`web_security`: web protection configuration group.
+                          type: string
+                        workMode:
+                          description: |-
+                            Working mode. options are as follows:immediate_effect: immediate effect mode;version_control: version control mode.
+                            Working mode. options are as follows:`immediate_effect`: immediate effect mode;`version_control`: version control mode.
+                          type: string
+                      type: object
+                    type: array
+                  zoneId:
+                    description: |-
+                      Site ID.
+                      Site ID.
                     type: string
                   zoneName:
                     description: |-

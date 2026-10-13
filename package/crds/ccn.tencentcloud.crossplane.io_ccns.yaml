@@ -88,6 +88,11 @@ spec:
                       Description of CCN, and maximum length does not exceed 100 bytes.
                       Description of CCN, and maximum length does not exceed 100 bytes.
                     type: string
+                  instanceMeteringType:
+                    description: |-
+                      Instance metering type. Valid values: BANDWIDTH (bandwidth billing), TRAFFIC (traffic billing). This parameter cannot be modified after creation.
+                      Instance metering type. Valid values: `BANDWIDTH` (bandwidth billing), `TRAFFIC` (traffic billing). This parameter cannot be modified after creation.
+                    type: string
                   name:
                     description: |-
                       Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
@@ -100,13 +105,13 @@ spec:
                     type: string
                   routeEcmpFlag:
                     description: |-
-                      Whether to enable the equivalent routing function. true: enabled, false: disabled.
-                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+                      Whether to enable the equivalent routing function. true: enabled, false: disabled. Default is false.
+                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled. Default is false.
                     type: boolean
                   routeOverlapFlag:
                     description: |-
-                      Whether to enable the routing overlap function. true: enabled, false: disabled.
-                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+                      Whether to enable the routing overlap function. true: enabled, false: disabled. Default is true, cannot set to false.
+                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled. Default is true, cannot set to false.
                     type: boolean
                   tags:
                     additionalProperties:
@@ -145,6 +150,11 @@ spec:
                       Description of CCN, and maximum length does not exceed 100 bytes.
                       Description of CCN, and maximum length does not exceed 100 bytes.
                     type: string
+                  instanceMeteringType:
+                    description: |-
+                      Instance metering type. Valid values: BANDWIDTH (bandwidth billing), TRAFFIC (traffic billing). This parameter cannot be modified after creation.
+                      Instance metering type. Valid values: `BANDWIDTH` (bandwidth billing), `TRAFFIC` (traffic billing). This parameter cannot be modified after creation.
+                    type: string
                   name:
                     description: |-
                       Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
@@ -157,13 +167,13 @@ spec:
                     type: string
                   routeEcmpFlag:
                     description: |-
-                      Whether to enable the equivalent routing function. true: enabled, false: disabled.
-                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+                      Whether to enable the equivalent routing function. true: enabled, false: disabled. Default is false.
+                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled. Default is false.
                     type: boolean
                   routeOverlapFlag:
                     description: |-
-                      Whether to enable the routing overlap function. true: enabled, false: disabled.
-                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+                      Whether to enable the routing overlap function. true: enabled, false: disabled. Default is true, cannot set to false.
+                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled. Default is true, cannot set to false.
                     type: boolean
                   tags:
                     additionalProperties:
@@ -379,6 +389,11 @@ spec:
                       Number of attached instances.
                       Number of attached instances.
                     type: number
+                  instanceMeteringType:
+                    description: |-
+                      Instance metering type. Valid values: BANDWIDTH (bandwidth billing), TRAFFIC (traffic billing). This parameter cannot be modified after creation.
+                      Instance metering type. Valid values: `BANDWIDTH` (bandwidth billing), `TRAFFIC` (traffic billing). This parameter cannot be modified after creation.
+                    type: string
                   name:
                     description: |-
                       Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
@@ -391,13 +406,13 @@ spec:
                     type: string
                   routeEcmpFlag:
                     description: |-
-                      Whether to enable the equivalent routing function. true: enabled, false: disabled.
-                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+                      Whether to enable the equivalent routing function. true: enabled, false: disabled. Default is false.
+                      Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled. Default is false.
                     type: boolean
                   routeOverlapFlag:
                     description: |-
-                      Whether to enable the routing overlap function. true: enabled, false: disabled.
-                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+                      Whether to enable the routing overlap function. true: enabled, false: disabled. Default is true, cannot set to false.
+                      Whether to enable the routing overlap function. `true`: enabled, `false`: disabled. Default is true, cannot set to false.
                     type: boolean
                   state:
                     description: |-

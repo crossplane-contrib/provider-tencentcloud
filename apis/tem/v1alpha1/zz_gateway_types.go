@@ -141,6 +141,7 @@ type IngressObservation struct {
 	ClbID *string `json:"clbId,omitempty" tf:"clb_id,omitempty"`
 
 	// creation time.
+	// creation time.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	// environment ID.
@@ -167,6 +168,7 @@ type IngressObservation struct {
 	// ingress TLS configurations.
 	TLS []TLSObservation `json:"tls,omitempty" tf:"tls,omitempty"`
 
+	// gateway vip.
 	// gateway vip.
 	Vip *string `json:"vip,omitempty" tf:"vip,omitempty"`
 }

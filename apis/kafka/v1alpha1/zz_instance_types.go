@@ -136,12 +136,20 @@ type InstanceInitParameters struct {
 	// Instance configuration.
 	Config []ConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
+	// Custom certificate ID, only effective when specifications_type is set to profession, supports custom certificate capabilities.
+	// Custom certificate ID, only effective when `specifications_type` is set to `profession`, supports custom certificate capabilities.
+	CustomSSLCertID *string `json:"customSslCertId,omitempty" tf:"custom_ssl_cert_id,omitempty"`
+
+	// Instance delete protection switch of ckafka instance: 1 enable, 0 disable.
+	// Instance delete protection switch of ckafka instance: `1` enable, `0` disable.
+	DeleteProtectionEnable *float64 `json:"deleteProtectionEnable,omitempty" tf:"delete_protection_enable,omitempty"`
+
 	// Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
 	// Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of disk.
-	// Type of disk.
+	// Disk type for Professional Edition instances; this field is not required for Standard Edition instances. CLOUD_SSD: SSD Cloud Disk; CLOUD_BASIC: High-Performance Cloud Disk. If not specified, the default value is CLOUD_BASIC.
+	// Disk type for Professional Edition instances; this field is not required for Standard Edition instances. `CLOUD_SSD`: SSD Cloud Disk; `CLOUD_BASIC`: High-Performance Cloud Disk. If not specified, the default value is `CLOUD_BASIC`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// Dynamic message retention policy configuration.
@@ -188,7 +196,7 @@ type InstanceInitParameters struct {
 	// Bandwidth of the public network.
 	PublicNetwork *float64 `json:"publicNetwork,omitempty" tf:"public_network,omitempty"`
 
-	// Modification of the rebalancing time after upgrade.
+	// It has been deprecated from version 1.82.37. Modification of the rebalancing time after upgrade.
 	// Modification of the rebalancing time after upgrade.
 	RebalanceTime *float64 `json:"rebalanceTime,omitempty" tf:"rebalance_time,omitempty"`
 
@@ -196,8 +204,8 @@ type InstanceInitParameters struct {
 	// Prepaid automatic renewal mark, 0 means the default state, the initial state, 1 means automatic renewal, 2 means clear no automatic renewal (user setting).
 	RenewFlag *float64 `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// Specifications type of instance. Allowed values are standard, profession. Default is profession.
-	// Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+	// Specifications type of instance. Allowed values are profession, premium. Default is profession.
+	// Specifications type of instance. Allowed values are `profession`, `premium`. Default is `profession`.
 	SpecificationsType *string `json:"specificationsType,omitempty" tf:"specifications_type,omitempty"`
 
 	// Subnet id, it will be basic network if not set.
@@ -265,12 +273,20 @@ type InstanceObservation struct {
 	// Instance configuration.
 	Config []ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
+	// Custom certificate ID, only effective when specifications_type is set to profession, supports custom certificate capabilities.
+	// Custom certificate ID, only effective when `specifications_type` is set to `profession`, supports custom certificate capabilities.
+	CustomSSLCertID *string `json:"customSslCertId,omitempty" tf:"custom_ssl_cert_id,omitempty"`
+
+	// Instance delete protection switch of ckafka instance: 1 enable, 0 disable.
+	// Instance delete protection switch of ckafka instance: `1` enable, `0` disable.
+	DeleteProtectionEnable *float64 `json:"deleteProtectionEnable,omitempty" tf:"delete_protection_enable,omitempty"`
+
 	// Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
 	// Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of disk.
-	// Type of disk.
+	// Disk type for Professional Edition instances; this field is not required for Standard Edition instances. CLOUD_SSD: SSD Cloud Disk; CLOUD_BASIC: High-Performance Cloud Disk. If not specified, the default value is CLOUD_BASIC.
+	// Disk type for Professional Edition instances; this field is not required for Standard Edition instances. `CLOUD_SSD`: SSD Cloud Disk; `CLOUD_BASIC`: High-Performance Cloud Disk. If not specified, the default value is `CLOUD_BASIC`.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// Dynamic message retention policy configuration.
@@ -320,7 +336,7 @@ type InstanceObservation struct {
 	// Bandwidth of the public network.
 	PublicNetwork *float64 `json:"publicNetwork,omitempty" tf:"public_network,omitempty"`
 
-	// Modification of the rebalancing time after upgrade.
+	// It has been deprecated from version 1.82.37. Modification of the rebalancing time after upgrade.
 	// Modification of the rebalancing time after upgrade.
 	RebalanceTime *float64 `json:"rebalanceTime,omitempty" tf:"rebalance_time,omitempty"`
 
@@ -328,8 +344,8 @@ type InstanceObservation struct {
 	// Prepaid automatic renewal mark, 0 means the default state, the initial state, 1 means automatic renewal, 2 means clear no automatic renewal (user setting).
 	RenewFlag *float64 `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// Specifications type of instance. Allowed values are standard, profession. Default is profession.
-	// Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+	// Specifications type of instance. Allowed values are profession, premium. Default is profession.
+	// Specifications type of instance. Allowed values are `profession`, `premium`. Default is `profession`.
 	SpecificationsType *string `json:"specificationsType,omitempty" tf:"specifications_type,omitempty"`
 
 	// Subnet id, it will be basic network if not set.
@@ -390,13 +406,23 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Config []ConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
+	// Custom certificate ID, only effective when specifications_type is set to profession, supports custom certificate capabilities.
+	// Custom certificate ID, only effective when `specifications_type` is set to `profession`, supports custom certificate capabilities.
+	// +kubebuilder:validation:Optional
+	CustomSSLCertID *string `json:"customSslCertId,omitempty" tf:"custom_ssl_cert_id,omitempty"`
+
+	// Instance delete protection switch of ckafka instance: 1 enable, 0 disable.
+	// Instance delete protection switch of ckafka instance: `1` enable, `0` disable.
+	// +kubebuilder:validation:Optional
+	DeleteProtectionEnable *float64 `json:"deleteProtectionEnable,omitempty" tf:"delete_protection_enable,omitempty"`
+
 	// Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
 	// Disk Size. Its interval varies with bandwidth, and the input must be within the interval, which can be viewed through the control. If it is not within the interval, the plan will cause a change when first created.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of disk.
-	// Type of disk.
+	// Disk type for Professional Edition instances; this field is not required for Standard Edition instances. CLOUD_SSD: SSD Cloud Disk; CLOUD_BASIC: High-Performance Cloud Disk. If not specified, the default value is CLOUD_BASIC.
+	// Disk type for Professional Edition instances; this field is not required for Standard Edition instances. `CLOUD_SSD`: SSD Cloud Disk; `CLOUD_BASIC`: High-Performance Cloud Disk. If not specified, the default value is `CLOUD_BASIC`.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -455,7 +481,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	PublicNetwork *float64 `json:"publicNetwork,omitempty" tf:"public_network,omitempty"`
 
-	// Modification of the rebalancing time after upgrade.
+	// It has been deprecated from version 1.82.37. Modification of the rebalancing time after upgrade.
 	// Modification of the rebalancing time after upgrade.
 	// +kubebuilder:validation:Optional
 	RebalanceTime *float64 `json:"rebalanceTime,omitempty" tf:"rebalance_time,omitempty"`
@@ -465,8 +491,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	RenewFlag *float64 `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// Specifications type of instance. Allowed values are standard, profession. Default is profession.
-	// Specifications type of instance. Allowed values are `standard`, `profession`. Default is `profession`.
+	// Specifications type of instance. Allowed values are profession, premium. Default is profession.
+	// Specifications type of instance. Allowed values are `profession`, `premium`. Default is `profession`.
 	// +kubebuilder:validation:Optional
 	SpecificationsType *string `json:"specificationsType,omitempty" tf:"specifications_type,omitempty"`
 
@@ -590,7 +616,7 @@ type InstanceStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Instance is the Schema for the Instances API. Use this resource to create ckafka instance.
+// Instance is the Schema for the Instances API. Use this resource to create CKafka instance.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -21,7 +21,7 @@ func (mg *Role) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Role
 func (tr *Role) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"token": "status.atProvider.token"}
 }
 
 // GetObservation of this Role

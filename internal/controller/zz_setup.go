@@ -213,7 +213,6 @@ import (
 	ruleengine "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/ruleengine"
 	zoneteo "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/zone"
 	zonesetting "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/teo/zonesetting"
-	addonattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/addonattachment"
 	authattachment "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/authattachment"
 	clustertke "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/cluster"
 	clusterattachmenttke "github.com/crossplane-contrib/provider-tencentcloud/internal/controller/tke/clusterattachment"
@@ -468,7 +467,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		ruleengine.Setup,
 		zoneteo.Setup,
 		zonesetting.Setup,
-		addonattachment.Setup,
 		authattachment.Setup,
 		clustertke.Setup,
 		clusterattachmenttke.Setup,

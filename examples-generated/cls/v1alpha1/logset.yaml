@@ -9,5 +9,6 @@ metadata:
 spec:
   forProvider:
     logsetName: tf-example
-    tags:
-      createdBy: Terraform
+    tagList:
+    - key: createdBy
+      value: Terraform

@@ -40,7 +40,7 @@ type IpsParameters struct {
 	// Snat IP.
 	// Snat IP.
 	// +kubebuilder:validation:Optional
-	IP *string `json:"ip" tf:"ip,omitempty"`
+	IP *string `json:"ip,omitempty" tf:"ip,omitempty"`
 
 	// Subnet ID.
 	// Subnet ID.

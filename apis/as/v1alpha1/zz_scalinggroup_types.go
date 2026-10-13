@@ -76,6 +76,10 @@ type ForwardBalancerIdsParameters struct {
 
 type ScalingGroupInitParameters struct {
 
+	// The concurrent expansion function that matches the expected number cannot be set when instance_allocation_policy is in bidding SPOT_MIXED mode, nor can it be set when scaling_mode is in expansion priority boot mode(WAKE_UP_STOPPED_SCALING). At present, only two matching expected expansion activities are supported concurrently, and other types of activities such as specified quantity expansion and contraction are not supported. The default value is False, indicating that it is not turned on.
+	// The concurrent expansion function that matches the expected number cannot be set when `instance_allocation_policy` is in bidding `SPOT_MIXED` mode, nor can it be set when `scaling_mode` is in expansion priority boot mode(`WAKE_UP_STOPPED_SCALING`). At present, only two matching expected expansion activities are supported concurrently, and other types of activities such as specified quantity expansion and contraction are not supported. The default value is False, indicating that it is not turned on.
+	ConcurrentScaleOutForDesiredCapacity *bool `json:"concurrentScaleOutForDesiredCapacity,omitempty" tf:"concurrent_scale_out_for_desired_capacity,omitempty"`
+
 	// An available ID for a launch configuration.
 	// An available ID for a launch configuration.
 	// +crossplane:generate:reference:type=ScalingConfig
@@ -109,6 +113,14 @@ type ScalingGroupInitParameters struct {
 	// Health check type of instances in a scaling group.<br><li>CVM: confirm whether an instance is healthy based on the network status. If the pinged instance is unreachable, the instance will be considered unhealthy. For more information, see [Instance Health Check](https://intl.cloud.tencent.com/document/product/377/8553?from_cn_redirect=1)<br><li>CLB: confirm whether an instance is healthy based on the CLB health check status. For more information, see [Health Check Overview](https://intl.cloud.tencent.com/document/product/214/6097?from_cn_redirect=1).<br>If the parameter is set to `CLB`, the scaling group will check both the network status and the CLB health check status. If the network check indicates unhealthy, the `HealthStatus` field will return `UNHEALTHY`. If the CLB health check indicates unhealthy, the `HealthStatus` field will return `CLB_UNHEALTHY`. If both checks indicate unhealthy, the `HealthStatus` field will return `UNHEALTHY|CLB_UNHEALTHY`. Default value: `CLB`.
 	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
 
+	// Instance allocation strategy, with values including LAUNCH_CONFIGURATION and SPOT_MIXED, defaults to LAUNCH_CONFIGURATION.
+	// LAUNCH_CONFIGURATION: Represents the traditional startup configuration mode;
+	// SPOT_MIXED: Representing the bidding mixed mode. At present, only hybrid mode is supported when the startup configuration is set to pay by volume mode. In hybrid mode, the scaling group will expand according to the set pay by volume or bidding models. When using hybrid mode, the billing type of the associated startup configuration cannot be modified.
+	// Instance allocation strategy, with values including `LAUNCH_CONFIGURATION` and `SPOT_MIXED`, defaults to `LAUNCH_CONFIGURATION`.
+	// `LAUNCH_CONFIGURATION`: Represents the traditional startup configuration mode;
+	// `SPOT_MIXED`: Representing the bidding mixed mode. At present, only hybrid mode is supported when the startup configuration is set to pay by volume mode. In hybrid mode, the scaling group will expand according to the set pay by volume or bidding models. When using hybrid mode, the billing type of the associated startup configuration cannot be modified.
+	InstanceAllocationPolicy *string `json:"instanceAllocationPolicy,omitempty" tf:"instance_allocation_policy,omitempty"`
+
 	// Grace period of the CLB health check during which the IN_SERVICE instances added will not be marked as CLB_UNHEALTHY.Valid range: 0-7200, in seconds. Default value: 0.
 	// Grace period of the CLB health check during which the `IN_SERVICE` instances added will not be marked as `CLB_UNHEALTHY`.<br>Valid range: 0-7200, in seconds. Default value: `0`.
 	LBHealthCheckGracePeriod *float64 `json:"lbHealthCheckGracePeriod,omitempty" tf:"lb_health_check_grace_period,omitempty"`
@@ -126,8 +138,12 @@ type ScalingGroupInitParameters struct {
 	MinSize *float64 `json:"minSize,omitempty" tf:"min_size,omitempty"`
 
 	// Multi zone or subnet strategy, Valid values: PRIORITY and EQUALITY.
-	// Multi zone or subnet strategy, Valid values: PRIORITY and EQUALITY.
+	// Multi zone or subnet strategy, Valid values: `PRIORITY` and `EQUALITY`.
 	MultiZoneSubnetPolicy *string `json:"multiZoneSubnetPolicy,omitempty" tf:"multi_zone_subnet_policy,omitempty"`
+
+	// Whether to enable priority for unhealthy instances during scale-in operations. If set to true, unhealthy instances will be removed first when scaling in.
+	// Whether to enable priority for unhealthy instances during scale-in operations. If set to `true`, unhealthy instances will be removed first when scaling in.
+	PriorityScaleInUnhealthy *bool `json:"priorityScaleInUnhealthy,omitempty" tf:"priority_scale_in_unhealthy,omitempty"`
 
 	// Specifies to which project the scaling group belongs.
 	// Specifies to which project the scaling group belongs.
@@ -181,6 +197,14 @@ type ScalingGroupInitParameters struct {
 
 type ScalingGroupObservation struct {
 
+	// ID of a scaling group.
+	// ID of a scaling group.
+	AutoScalingGroupID *string `json:"autoScalingGroupId,omitempty" tf:"auto_scaling_group_id,omitempty"`
+
+	// The concurrent expansion function that matches the expected number cannot be set when instance_allocation_policy is in bidding SPOT_MIXED mode, nor can it be set when scaling_mode is in expansion priority boot mode(WAKE_UP_STOPPED_SCALING). At present, only two matching expected expansion activities are supported concurrently, and other types of activities such as specified quantity expansion and contraction are not supported. The default value is False, indicating that it is not turned on.
+	// The concurrent expansion function that matches the expected number cannot be set when `instance_allocation_policy` is in bidding `SPOT_MIXED` mode, nor can it be set when `scaling_mode` is in expansion priority boot mode(`WAKE_UP_STOPPED_SCALING`). At present, only two matching expected expansion activities are supported concurrently, and other types of activities such as specified quantity expansion and contraction are not supported. The default value is False, indicating that it is not turned on.
+	ConcurrentScaleOutForDesiredCapacity *bool `json:"concurrentScaleOutForDesiredCapacity,omitempty" tf:"concurrent_scale_out_for_desired_capacity,omitempty"`
+
 	// An available ID for a launch configuration.
 	// An available ID for a launch configuration.
 	ConfigurationID *string `json:"configurationId,omitempty" tf:"configuration_id,omitempty"`
@@ -212,6 +236,14 @@ type ScalingGroupObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Instance allocation strategy, with values including LAUNCH_CONFIGURATION and SPOT_MIXED, defaults to LAUNCH_CONFIGURATION.
+	// LAUNCH_CONFIGURATION: Represents the traditional startup configuration mode;
+	// SPOT_MIXED: Representing the bidding mixed mode. At present, only hybrid mode is supported when the startup configuration is set to pay by volume mode. In hybrid mode, the scaling group will expand according to the set pay by volume or bidding models. When using hybrid mode, the billing type of the associated startup configuration cannot be modified.
+	// Instance allocation strategy, with values including `LAUNCH_CONFIGURATION` and `SPOT_MIXED`, defaults to `LAUNCH_CONFIGURATION`.
+	// `LAUNCH_CONFIGURATION`: Represents the traditional startup configuration mode;
+	// `SPOT_MIXED`: Representing the bidding mixed mode. At present, only hybrid mode is supported when the startup configuration is set to pay by volume mode. In hybrid mode, the scaling group will expand according to the set pay by volume or bidding models. When using hybrid mode, the billing type of the associated startup configuration cannot be modified.
+	InstanceAllocationPolicy *string `json:"instanceAllocationPolicy,omitempty" tf:"instance_allocation_policy,omitempty"`
+
 	// Instance number of a scaling group.
 	// Instance number of a scaling group.
 	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
@@ -233,8 +265,12 @@ type ScalingGroupObservation struct {
 	MinSize *float64 `json:"minSize,omitempty" tf:"min_size,omitempty"`
 
 	// Multi zone or subnet strategy, Valid values: PRIORITY and EQUALITY.
-	// Multi zone or subnet strategy, Valid values: PRIORITY and EQUALITY.
+	// Multi zone or subnet strategy, Valid values: `PRIORITY` and `EQUALITY`.
 	MultiZoneSubnetPolicy *string `json:"multiZoneSubnetPolicy,omitempty" tf:"multi_zone_subnet_policy,omitempty"`
+
+	// Whether to enable priority for unhealthy instances during scale-in operations. If set to true, unhealthy instances will be removed first when scaling in.
+	// Whether to enable priority for unhealthy instances during scale-in operations. If set to `true`, unhealthy instances will be removed first when scaling in.
+	PriorityScaleInUnhealthy *bool `json:"priorityScaleInUnhealthy,omitempty" tf:"priority_scale_in_unhealthy,omitempty"`
 
 	// Specifies to which project the scaling group belongs.
 	// Specifies to which project the scaling group belongs.
@@ -292,6 +328,11 @@ type ScalingGroupObservation struct {
 
 type ScalingGroupParameters struct {
 
+	// The concurrent expansion function that matches the expected number cannot be set when instance_allocation_policy is in bidding SPOT_MIXED mode, nor can it be set when scaling_mode is in expansion priority boot mode(WAKE_UP_STOPPED_SCALING). At present, only two matching expected expansion activities are supported concurrently, and other types of activities such as specified quantity expansion and contraction are not supported. The default value is False, indicating that it is not turned on.
+	// The concurrent expansion function that matches the expected number cannot be set when `instance_allocation_policy` is in bidding `SPOT_MIXED` mode, nor can it be set when `scaling_mode` is in expansion priority boot mode(`WAKE_UP_STOPPED_SCALING`). At present, only two matching expected expansion activities are supported concurrently, and other types of activities such as specified quantity expansion and contraction are not supported. The default value is False, indicating that it is not turned on.
+	// +kubebuilder:validation:Optional
+	ConcurrentScaleOutForDesiredCapacity *bool `json:"concurrentScaleOutForDesiredCapacity,omitempty" tf:"concurrent_scale_out_for_desired_capacity,omitempty"`
+
 	// An available ID for a launch configuration.
 	// An available ID for a launch configuration.
 	// +crossplane:generate:reference:type=ScalingConfig
@@ -331,6 +372,15 @@ type ScalingGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	HealthCheckType *string `json:"healthCheckType,omitempty" tf:"health_check_type,omitempty"`
 
+	// Instance allocation strategy, with values including LAUNCH_CONFIGURATION and SPOT_MIXED, defaults to LAUNCH_CONFIGURATION.
+	// LAUNCH_CONFIGURATION: Represents the traditional startup configuration mode;
+	// SPOT_MIXED: Representing the bidding mixed mode. At present, only hybrid mode is supported when the startup configuration is set to pay by volume mode. In hybrid mode, the scaling group will expand according to the set pay by volume or bidding models. When using hybrid mode, the billing type of the associated startup configuration cannot be modified.
+	// Instance allocation strategy, with values including `LAUNCH_CONFIGURATION` and `SPOT_MIXED`, defaults to `LAUNCH_CONFIGURATION`.
+	// `LAUNCH_CONFIGURATION`: Represents the traditional startup configuration mode;
+	// `SPOT_MIXED`: Representing the bidding mixed mode. At present, only hybrid mode is supported when the startup configuration is set to pay by volume mode. In hybrid mode, the scaling group will expand according to the set pay by volume or bidding models. When using hybrid mode, the billing type of the associated startup configuration cannot be modified.
+	// +kubebuilder:validation:Optional
+	InstanceAllocationPolicy *string `json:"instanceAllocationPolicy,omitempty" tf:"instance_allocation_policy,omitempty"`
+
 	// Grace period of the CLB health check during which the IN_SERVICE instances added will not be marked as CLB_UNHEALTHY.Valid range: 0-7200, in seconds. Default value: 0.
 	// Grace period of the CLB health check during which the `IN_SERVICE` instances added will not be marked as `CLB_UNHEALTHY`.<br>Valid range: 0-7200, in seconds. Default value: `0`.
 	// +kubebuilder:validation:Optional
@@ -352,9 +402,14 @@ type ScalingGroupParameters struct {
 	MinSize *float64 `json:"minSize,omitempty" tf:"min_size,omitempty"`
 
 	// Multi zone or subnet strategy, Valid values: PRIORITY and EQUALITY.
-	// Multi zone or subnet strategy, Valid values: PRIORITY and EQUALITY.
+	// Multi zone or subnet strategy, Valid values: `PRIORITY` and `EQUALITY`.
 	// +kubebuilder:validation:Optional
 	MultiZoneSubnetPolicy *string `json:"multiZoneSubnetPolicy,omitempty" tf:"multi_zone_subnet_policy,omitempty"`
+
+	// Whether to enable priority for unhealthy instances during scale-in operations. If set to true, unhealthy instances will be removed first when scaling in.
+	// Whether to enable priority for unhealthy instances during scale-in operations. If set to `true`, unhealthy instances will be removed first when scaling in.
+	// +kubebuilder:validation:Optional
+	PriorityScaleInUnhealthy *bool `json:"priorityScaleInUnhealthy,omitempty" tf:"priority_scale_in_unhealthy,omitempty"`
 
 	// Specifies to which project the scaling group belongs.
 	// Specifies to which project the scaling group belongs.

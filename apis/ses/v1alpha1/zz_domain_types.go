@@ -33,9 +33,17 @@ type AttributesParameters struct {
 
 type DomainInitParameters struct {
 
+	// DKIM key length. 0: 1024-bit, 1: 2048-bit.
+	// DKIM key length. 0: 1024-bit, 1: 2048-bit.
+	DKIMOption *float64 `json:"dkimOption,omitempty" tf:"dkim_option,omitempty"`
+
 	// Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
 	// Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
 	EmailIdentity *string `json:"emailIdentity,omitempty" tf:"email_identity,omitempty"`
+
+	// Tag list.
+	// Tag list.
+	TagList []TagListInitParameters `json:"tagList,omitempty" tf:"tag_list,omitempty"`
 }
 
 type DomainObservation struct {
@@ -44,20 +52,73 @@ type DomainObservation struct {
 	// DNS configuration details.
 	Attributes []AttributesObservation `json:"attributes,omitempty" tf:"attributes,omitempty"`
 
+	// DKIM key length. 0: 1024-bit, 1: 2048-bit.
+	// DKIM key length. 0: 1024-bit, 1: 2048-bit.
+	DKIMOption *float64 `json:"dkimOption,omitempty" tf:"dkim_option,omitempty"`
+
 	// Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
 	// Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
 	EmailIdentity *string `json:"emailIdentity,omitempty" tf:"email_identity,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Tag list.
+	// Tag list.
+	TagList []TagListObservation `json:"tagList,omitempty" tf:"tag_list,omitempty"`
 }
 
 type DomainParameters struct {
+
+	// DKIM key length. 0: 1024-bit, 1: 2048-bit.
+	// DKIM key length. 0: 1024-bit, 1: 2048-bit.
+	// +kubebuilder:validation:Optional
+	DKIMOption *float64 `json:"dkimOption,omitempty" tf:"dkim_option,omitempty"`
 
 	// Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
 	// Your sender domain. You are advised to use a third-level domain, for example, mail.qcloud.com.
 	// +kubebuilder:validation:Optional
 	EmailIdentity *string `json:"emailIdentity,omitempty" tf:"email_identity,omitempty"`
+
+	// Tag list.
+	// Tag list.
+	// +kubebuilder:validation:Optional
+	TagList []TagListParameters `json:"tagList,omitempty" tf:"tag_list,omitempty"`
+}
+
+type TagListInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TagListObservation struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TagListParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	TagKey *string `json:"tagKey" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	TagValue *string `json:"tagValue" tf:"tag_value,omitempty"`
 }
 
 // DomainSpec defines the desired state of Domain

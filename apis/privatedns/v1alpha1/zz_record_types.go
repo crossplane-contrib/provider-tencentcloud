@@ -27,6 +27,10 @@ type RecordInitParameters struct {
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
 
+	// Record status. Valid values: enabled, disabled.
+	// Record status. Valid values: `enabled`, `disabled`.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
 	// Subdomain, such as www, m, and @.
 	// Subdomain, such as `www`, `m`, and `@`.
 	SubDomain *string `json:"subDomain,omitempty" tf:"sub_domain,omitempty"`
@@ -61,6 +65,10 @@ type RecordObservation struct {
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
 
+	// Record status. Valid values: enabled, disabled.
+	// Record status. Valid values: `enabled`, `disabled`.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
 	// Subdomain, such as www, m, and @.
 	// Subdomain, such as `www`, `m`, and `@`.
 	SubDomain *string `json:"subDomain,omitempty" tf:"sub_domain,omitempty"`
@@ -94,6 +102,11 @@ type RecordParameters struct {
 	// Record value, such as IP: 192.168.10.2, CNAME: cname.qcloud.com, and MX: mail.qcloud.com.
 	// +kubebuilder:validation:Optional
 	RecordValue *string `json:"recordValue,omitempty" tf:"record_value,omitempty"`
+
+	// Record status. Valid values: enabled, disabled.
+	// Record status. Valid values: `enabled`, `disabled`.
+	// +kubebuilder:validation:Optional
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// Subdomain, such as www, m, and @.
 	// Subdomain, such as `www`, `m`, and `@`.

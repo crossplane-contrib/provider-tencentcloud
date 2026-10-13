@@ -4,13 +4,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cam/v1alpha1/rolesso
   labels:
-    testing.upbound.io/example-name: foo
-  name: foo
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
+    autoRotateKey: 1
     clientIds:
-    - '...'
+    - 61adcf00620c31e3ddbc9546
     description: this is a description
-    identityKey: '...'
+    identityKey: baz****
     identityUrl: https://login.microsoftonline.com/.../v2.0
-    name: tf_cam_role_sso
+    name: tf_example

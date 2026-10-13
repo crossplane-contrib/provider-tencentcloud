@@ -9,4 +9,4 @@ metadata:
 spec:
   forProvider:
     description: sg test
-    name: tf-example-sg
+    name: tf-example

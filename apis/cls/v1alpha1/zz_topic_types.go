@@ -96,6 +96,41 @@ type ConditionsParameters struct {
 	Rule *float64 `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
+type CustomKMSInfoInitParameters struct {
+
+	// KMS key ID.
+	// KMS key ID.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// KMS region. Refer to Tencent Cloud KMS documentation for supported regions. Format: ap-guangzhou.
+	// KMS region. Refer to Tencent Cloud KMS documentation for supported regions. Format: `ap-guangzhou`.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+}
+
+type CustomKMSInfoObservation struct {
+
+	// KMS key ID.
+	// KMS key ID.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// KMS region. Refer to Tencent Cloud KMS documentation for supported regions. Format: ap-guangzhou.
+	// KMS region. Refer to Tencent Cloud KMS documentation for supported regions. Format: `ap-guangzhou`.
+	KMSRegion *string `json:"kmsRegion,omitempty" tf:"kms_region,omitempty"`
+}
+
+type CustomKMSInfoParameters struct {
+
+	// KMS key ID.
+	// KMS key ID.
+	// +kubebuilder:validation:Optional
+	KMSKeyID *string `json:"kmsKeyId" tf:"kms_key_id,omitempty"`
+
+	// KMS region. Refer to Tencent Cloud KMS documentation for supported regions. Format: ap-guangzhou.
+	// KMS region. Refer to Tencent Cloud KMS documentation for supported regions. Format: `ap-guangzhou`.
+	// +kubebuilder:validation:Optional
+	KMSRegion *string `json:"kmsRegion" tf:"kms_region,omitempty"`
+}
+
 type ExtendsInitParameters struct {
 
 	// Log topic authentication free configuration information.
@@ -121,27 +156,39 @@ type ExtendsParameters struct {
 type TopicInitParameters struct {
 
 	// Whether to enable automatic split. Default value: true.
-	// Whether to enable automatic split. Default value: true.
+	// Whether to enable automatic split. Default value: `true`.
 	AutoSplit *bool `json:"autoSplit,omitempty" tf:"auto_split,omitempty"`
 
-	// Log Topic Description.
-	// Log Topic Description.
+	// Topic type. 0: log topic (default), 1: metric topic.
+	// Topic type. `0`: log topic (default), `1`: metric topic.
+	BizType *float64 `json:"bizType,omitempty" tf:"biz_type,omitempty"`
+
+	// User-defined KMS key information. If empty, the default key (alias KMS-CLS) is used.
+	// User-defined KMS key information. If empty, the default key (alias `KMS-CLS`) is used.
+	CustomKMSInfo []CustomKMSInfoInitParameters `json:"customKmsInfo,omitempty" tf:"custom_kms_info,omitempty"`
+
+	// Log topic description.
+	// Log topic description.
 	Describes *string `json:"describes,omitempty" tf:"describes,omitempty"`
 
-	// Log Subject Extension Information.
-	// Log Subject Extension Information.
+	// Encryption-related parameters. Supported for encryption-enabled regions and allowlisted users; cannot be passed in other scenarios. 0 or not passed: no encryption; 1: kms-cls cloud product key encryption. Once enabled, it cannot be disabled. Supported regions: ap-beijing, ap-guangzhou, ap-shanghai, ap-singapore, ap-bangkok, ap-jakarta, eu-frankfurt, ap-seoul, ap-tokyo.
+	// Encryption-related parameters. Supported for encryption-enabled regions and allowlisted users; cannot be passed in other scenarios. `0` or not passed: no encryption; `1`: kms-cls cloud product key encryption. Once enabled, it cannot be disabled. Supported regions: ap-beijing, ap-guangzhou, ap-shanghai, ap-singapore, ap-bangkok, ap-jakarta, eu-frankfurt, ap-seoul, ap-tokyo.
+	Encryption *float64 `json:"encryption,omitempty" tf:"encryption,omitempty"`
+
+	// Topic extension information.
+	// Topic extension information.
 	Extends []ExtendsInitParameters `json:"extends,omitempty" tf:"extends,omitempty"`
 
-	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
-	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
+	// 0: turn off log settling. Non-0: the number of days of standard storage after enabling log settling. HotPeriod must be greater than or equal to 7 and less than Period. Only effective when storage_type is hot. Not supported for metric topics.
+	// `0`: turn off log settling. Non-`0`: the number of days of standard storage after enabling log settling. HotPeriod must be greater than or equal to 7 and less than Period. Only effective when `storage_type` is `hot`. Not supported for metric topics.
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
 
-	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
-	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// Free authentication switch. false: closed (default); true: enabled. When enabled, anonymous access to the log topic will be supported for specified operations. Not supported for metric topics.
+	// Free authentication switch. `false`: closed (default); `true`: enabled. When enabled, anonymous access to the log topic will be supported for specified operations. Not supported for metric topics.
 	IsWebTracking *bool `json:"isWebTracking,omitempty" tf:"is_web_tracking,omitempty"`
 
-	// Logset ID.
-	// Logset ID.
+	// Logset ID. Get the logset ID via DescribeLogsets API.
+	// Logset ID. Get the logset ID via `DescribeLogsets` API.
 	// +crossplane:generate:reference:type=Logset
 	LogsetID *string `json:"logsetId,omitempty" tf:"logset_id,omitempty"`
 
@@ -153,116 +200,143 @@ type TopicInitParameters struct {
 	// +kubebuilder:validation:Optional
 	LogsetIDSelector *v1.Selector `json:"logsetIdSelector,omitempty" tf:"-"`
 
-	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
-	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
+	// Maximum number of partitions allowed for the topic if automatic split is enabled. Default value: 50.
+	// Maximum number of partitions allowed for the topic if automatic split is enabled. Default value: `50`.
 	MaxSplitPartitions *float64 `json:"maxSplitPartitions,omitempty" tf:"max_split_partitions,omitempty"`
 
-	// Number of log topic partitions. Default value: 1. Maximum value: 10.
-	// Number of log topic partitions. Default value: 1. Maximum value: 10.
+	// Number of log topic partitions. Default: 1, maximum: 10.
+	// Number of log topic partitions. Default: 1, maximum: 10.
 	PartitionCount *float64 `json:"partitionCount,omitempty" tf:"partition_count,omitempty"`
 
-	// Lifecycle in days. Value range: 1~366. Default value: 30.
-	// Lifecycle in days. Value range: 1~366. Default value: 30.
+	// Retention period, unit: days. Log topic (standard storage): 1 to 3600 days, value 3640 means permanent retention. Log topic (infrequent storage): 7 to 3600 days, value 3640 means permanent retention. Metric topic: 1 to 3600 days, value 3640 means permanent retention.
+	// Retention period, unit: days. Log topic (standard storage): 1 to 3600 days, value `3640` means permanent retention. Log topic (infrequent storage): 7 to 3600 days, value `3640` means permanent retention. Metric topic: 1 to 3600 days, value `3640` means permanent retention.
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
 
-	// Log topic storage class. Valid values: hot: real-time storage; cold: offline storage. Default value: hot. If cold is passed in, please contact the customer service to add the log topic to the allowlist first.
-	// Log topic storage class. Valid values: hot: real-time storage; cold: offline storage. Default value: hot. If cold is passed in, please contact the customer service to add the log topic to the allowlist first.
+	// Log topic storage type. Valid values: hot: standard storage; cold: infrequent storage. Default value: hot. Not supported for metric topics.
+	// Log topic storage type. Valid values: `hot`: standard storage; `cold`: infrequent storage. Default value: `hot`. Not supported for metric topics.
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
-	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// Tag description list. Up to 10 tag key-value pairs are supported, and the same resource can only be bound to the same tag key.
+	// Tag description list. Up to 10 tag key-value pairs are supported, and the same resource can only be bound to the same tag key.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Log topic name.
-	// Log topic name.
+	// Log topic name. Constraints: cannot be an empty string, cannot contain the | character, and cannot use the following reserved names: cls_service_log, loglistener_status, loglistener_alarm, loglistener_business, cls_service_metric.
+	// Log topic name. Constraints: cannot be an empty string, cannot contain the `|` character, and cannot use the following reserved names: `cls_service_log`, `loglistener_status`, `loglistener_alarm`, `loglistener_business`, `cls_service_metric`.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
 type TopicObservation struct {
 
 	// Whether to enable automatic split. Default value: true.
-	// Whether to enable automatic split. Default value: true.
+	// Whether to enable automatic split. Default value: `true`.
 	AutoSplit *bool `json:"autoSplit,omitempty" tf:"auto_split,omitempty"`
 
-	// Log Topic Description.
-	// Log Topic Description.
+	// Topic type. 0: log topic (default), 1: metric topic.
+	// Topic type. `0`: log topic (default), `1`: metric topic.
+	BizType *float64 `json:"bizType,omitempty" tf:"biz_type,omitempty"`
+
+	// User-defined KMS key information. If empty, the default key (alias KMS-CLS) is used.
+	// User-defined KMS key information. If empty, the default key (alias `KMS-CLS`) is used.
+	CustomKMSInfo []CustomKMSInfoObservation `json:"customKmsInfo,omitempty" tf:"custom_kms_info,omitempty"`
+
+	// Log topic description.
+	// Log topic description.
 	Describes *string `json:"describes,omitempty" tf:"describes,omitempty"`
 
-	// Log Subject Extension Information.
-	// Log Subject Extension Information.
+	// Encryption-related parameters. Supported for encryption-enabled regions and allowlisted users; cannot be passed in other scenarios. 0 or not passed: no encryption; 1: kms-cls cloud product key encryption. Once enabled, it cannot be disabled. Supported regions: ap-beijing, ap-guangzhou, ap-shanghai, ap-singapore, ap-bangkok, ap-jakarta, eu-frankfurt, ap-seoul, ap-tokyo.
+	// Encryption-related parameters. Supported for encryption-enabled regions and allowlisted users; cannot be passed in other scenarios. `0` or not passed: no encryption; `1`: kms-cls cloud product key encryption. Once enabled, it cannot be disabled. Supported regions: ap-beijing, ap-guangzhou, ap-shanghai, ap-singapore, ap-bangkok, ap-jakarta, eu-frankfurt, ap-seoul, ap-tokyo.
+	Encryption *float64 `json:"encryption,omitempty" tf:"encryption,omitempty"`
+
+	// Topic extension information.
+	// Topic extension information.
 	Extends []ExtendsObservation `json:"extends,omitempty" tf:"extends,omitempty"`
 
-	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
-	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
+	// 0: turn off log settling. Non-0: the number of days of standard storage after enabling log settling. HotPeriod must be greater than or equal to 7 and less than Period. Only effective when storage_type is hot. Not supported for metric topics.
+	// `0`: turn off log settling. Non-`0`: the number of days of standard storage after enabling log settling. HotPeriod must be greater than or equal to 7 and less than Period. Only effective when `storage_type` is `hot`. Not supported for metric topics.
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
-	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// Free authentication switch. false: closed (default); true: enabled. When enabled, anonymous access to the log topic will be supported for specified operations. Not supported for metric topics.
+	// Free authentication switch. `false`: closed (default); `true`: enabled. When enabled, anonymous access to the log topic will be supported for specified operations. Not supported for metric topics.
 	IsWebTracking *bool `json:"isWebTracking,omitempty" tf:"is_web_tracking,omitempty"`
 
-	// Logset ID.
-	// Logset ID.
+	// Logset ID. Get the logset ID via DescribeLogsets API.
+	// Logset ID. Get the logset ID via `DescribeLogsets` API.
 	LogsetID *string `json:"logsetId,omitempty" tf:"logset_id,omitempty"`
 
-	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
-	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
+	// Maximum number of partitions allowed for the topic if automatic split is enabled. Default value: 50.
+	// Maximum number of partitions allowed for the topic if automatic split is enabled. Default value: `50`.
 	MaxSplitPartitions *float64 `json:"maxSplitPartitions,omitempty" tf:"max_split_partitions,omitempty"`
 
-	// Number of log topic partitions. Default value: 1. Maximum value: 10.
-	// Number of log topic partitions. Default value: 1. Maximum value: 10.
+	// Number of log topic partitions. Default: 1, maximum: 10.
+	// Number of log topic partitions. Default: 1, maximum: 10.
 	PartitionCount *float64 `json:"partitionCount,omitempty" tf:"partition_count,omitempty"`
 
-	// Lifecycle in days. Value range: 1~366. Default value: 30.
-	// Lifecycle in days. Value range: 1~366. Default value: 30.
+	// Retention period, unit: days. Log topic (standard storage): 1 to 3600 days, value 3640 means permanent retention. Log topic (infrequent storage): 7 to 3600 days, value 3640 means permanent retention. Metric topic: 1 to 3600 days, value 3640 means permanent retention.
+	// Retention period, unit: days. Log topic (standard storage): 1 to 3600 days, value `3640` means permanent retention. Log topic (infrequent storage): 7 to 3600 days, value `3640` means permanent retention. Metric topic: 1 to 3600 days, value `3640` means permanent retention.
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
 
-	// Log topic storage class. Valid values: hot: real-time storage; cold: offline storage. Default value: hot. If cold is passed in, please contact the customer service to add the log topic to the allowlist first.
-	// Log topic storage class. Valid values: hot: real-time storage; cold: offline storage. Default value: hot. If cold is passed in, please contact the customer service to add the log topic to the allowlist first.
+	// Log topic storage type. Valid values: hot: standard storage; cold: infrequent storage. Default value: hot. Not supported for metric topics.
+	// Log topic storage type. Valid values: `hot`: standard storage; `cold`: infrequent storage. Default value: `hot`. Not supported for metric topics.
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
-	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// Tag description list. Up to 10 tag key-value pairs are supported, and the same resource can only be bound to the same tag key.
+	// Tag description list. Up to 10 tag key-value pairs are supported, and the same resource can only be bound to the same tag key.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Log topic name.
-	// Log topic name.
+	// Log topic name. Constraints: cannot be an empty string, cannot contain the | character, and cannot use the following reserved names: cls_service_log, loglistener_status, loglistener_alarm, loglistener_business, cls_service_metric.
+	// Log topic name. Constraints: cannot be an empty string, cannot contain the `|` character, and cannot use the following reserved names: `cls_service_log`, `loglistener_status`, `loglistener_alarm`, `loglistener_business`, `cls_service_metric`.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
 type TopicParameters struct {
 
 	// Whether to enable automatic split. Default value: true.
-	// Whether to enable automatic split. Default value: true.
+	// Whether to enable automatic split. Default value: `true`.
 	// +kubebuilder:validation:Optional
 	AutoSplit *bool `json:"autoSplit,omitempty" tf:"auto_split,omitempty"`
 
-	// Log Topic Description.
-	// Log Topic Description.
+	// Topic type. 0: log topic (default), 1: metric topic.
+	// Topic type. `0`: log topic (default), `1`: metric topic.
+	// +kubebuilder:validation:Optional
+	BizType *float64 `json:"bizType,omitempty" tf:"biz_type,omitempty"`
+
+	// User-defined KMS key information. If empty, the default key (alias KMS-CLS) is used.
+	// User-defined KMS key information. If empty, the default key (alias `KMS-CLS`) is used.
+	// +kubebuilder:validation:Optional
+	CustomKMSInfo []CustomKMSInfoParameters `json:"customKmsInfo,omitempty" tf:"custom_kms_info,omitempty"`
+
+	// Log topic description.
+	// Log topic description.
 	// +kubebuilder:validation:Optional
 	Describes *string `json:"describes,omitempty" tf:"describes,omitempty"`
 
-	// Log Subject Extension Information.
-	// Log Subject Extension Information.
+	// Encryption-related parameters. Supported for encryption-enabled regions and allowlisted users; cannot be passed in other scenarios. 0 or not passed: no encryption; 1: kms-cls cloud product key encryption. Once enabled, it cannot be disabled. Supported regions: ap-beijing, ap-guangzhou, ap-shanghai, ap-singapore, ap-bangkok, ap-jakarta, eu-frankfurt, ap-seoul, ap-tokyo.
+	// Encryption-related parameters. Supported for encryption-enabled regions and allowlisted users; cannot be passed in other scenarios. `0` or not passed: no encryption; `1`: kms-cls cloud product key encryption. Once enabled, it cannot be disabled. Supported regions: ap-beijing, ap-guangzhou, ap-shanghai, ap-singapore, ap-bangkok, ap-jakarta, eu-frankfurt, ap-seoul, ap-tokyo.
+	// +kubebuilder:validation:Optional
+	Encryption *float64 `json:"encryption,omitempty" tf:"encryption,omitempty"`
+
+	// Topic extension information.
+	// Topic extension information.
 	// +kubebuilder:validation:Optional
 	Extends []ExtendsParameters `json:"extends,omitempty" tf:"extends,omitempty"`
 
-	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
-	// 0: Turn off log sinking. Non 0: The number of days of standard storage after enabling log settling. HotPeriod needs to be greater than or equal to 7 and less than Period. Only effective when StorageType is hot.
+	// 0: turn off log settling. Non-0: the number of days of standard storage after enabling log settling. HotPeriod must be greater than or equal to 7 and less than Period. Only effective when storage_type is hot. Not supported for metric topics.
+	// `0`: turn off log settling. Non-`0`: the number of days of standard storage after enabling log settling. HotPeriod must be greater than or equal to 7 and less than Period. Only effective when `storage_type` is `hot`. Not supported for metric topics.
 	// +kubebuilder:validation:Optional
 	HotPeriod *float64 `json:"hotPeriod,omitempty" tf:"hot_period,omitempty"`
 
-	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
-	// No authentication switch. False: closed; True: Enable. The default is false. After activation, anonymous access to the log topic will be supported for specified operations.
+	// Free authentication switch. false: closed (default); true: enabled. When enabled, anonymous access to the log topic will be supported for specified operations. Not supported for metric topics.
+	// Free authentication switch. `false`: closed (default); `true`: enabled. When enabled, anonymous access to the log topic will be supported for specified operations. Not supported for metric topics.
 	// +kubebuilder:validation:Optional
 	IsWebTracking *bool `json:"isWebTracking,omitempty" tf:"is_web_tracking,omitempty"`
 
-	// Logset ID.
-	// Logset ID.
+	// Logset ID. Get the logset ID via DescribeLogsets API.
+	// Logset ID. Get the logset ID via `DescribeLogsets` API.
 	// +crossplane:generate:reference:type=Logset
 	// +kubebuilder:validation:Optional
 	LogsetID *string `json:"logsetId,omitempty" tf:"logset_id,omitempty"`
@@ -275,34 +349,34 @@ type TopicParameters struct {
 	// +kubebuilder:validation:Optional
 	LogsetIDSelector *v1.Selector `json:"logsetIdSelector,omitempty" tf:"-"`
 
-	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
-	// Maximum number of partitions to split into for this topic if automatic split is enabled. Default value: 50.
+	// Maximum number of partitions allowed for the topic if automatic split is enabled. Default value: 50.
+	// Maximum number of partitions allowed for the topic if automatic split is enabled. Default value: `50`.
 	// +kubebuilder:validation:Optional
 	MaxSplitPartitions *float64 `json:"maxSplitPartitions,omitempty" tf:"max_split_partitions,omitempty"`
 
-	// Number of log topic partitions. Default value: 1. Maximum value: 10.
-	// Number of log topic partitions. Default value: 1. Maximum value: 10.
+	// Number of log topic partitions. Default: 1, maximum: 10.
+	// Number of log topic partitions. Default: 1, maximum: 10.
 	// +kubebuilder:validation:Optional
 	PartitionCount *float64 `json:"partitionCount,omitempty" tf:"partition_count,omitempty"`
 
-	// Lifecycle in days. Value range: 1~366. Default value: 30.
-	// Lifecycle in days. Value range: 1~366. Default value: 30.
+	// Retention period, unit: days. Log topic (standard storage): 1 to 3600 days, value 3640 means permanent retention. Log topic (infrequent storage): 7 to 3600 days, value 3640 means permanent retention. Metric topic: 1 to 3600 days, value 3640 means permanent retention.
+	// Retention period, unit: days. Log topic (standard storage): 1 to 3600 days, value `3640` means permanent retention. Log topic (infrequent storage): 7 to 3600 days, value `3640` means permanent retention. Metric topic: 1 to 3600 days, value `3640` means permanent retention.
 	// +kubebuilder:validation:Optional
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
 
-	// Log topic storage class. Valid values: hot: real-time storage; cold: offline storage. Default value: hot. If cold is passed in, please contact the customer service to add the log topic to the allowlist first.
-	// Log topic storage class. Valid values: hot: real-time storage; cold: offline storage. Default value: hot. If cold is passed in, please contact the customer service to add the log topic to the allowlist first.
+	// Log topic storage type. Valid values: hot: standard storage; cold: infrequent storage. Default value: hot. Not supported for metric topics.
+	// Log topic storage type. Valid values: `hot`: standard storage; `cold`: infrequent storage. Default value: `hot`. Not supported for metric topics.
 	// +kubebuilder:validation:Optional
 	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
 
-	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
-	// Tag description list. Up to 10 tag key-value pairs are supported and must be unique.
+	// Tag description list. Up to 10 tag key-value pairs are supported, and the same resource can only be bound to the same tag key.
+	// Tag description list. Up to 10 tag key-value pairs are supported, and the same resource can only be bound to the same tag key.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// Log topic name.
-	// Log topic name.
+	// Log topic name. Constraints: cannot be an empty string, cannot contain the | character, and cannot use the following reserved names: cls_service_log, loglistener_status, loglistener_alarm, loglistener_business, cls_service_metric.
+	// Log topic name. Constraints: cannot be an empty string, cannot contain the `|` character, and cannot use the following reserved names: `cls_service_log`, `loglistener_status`, `loglistener_alarm`, `loglistener_business`, `cls_service_metric`.
 	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }

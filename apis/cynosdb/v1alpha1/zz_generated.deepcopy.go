@@ -103,6 +103,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.InstanceCount != nil {
+		in, out := &in.InstanceCount, &out.InstanceCount
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceInitInfos != nil {
 		in, out := &in.InstanceInitInfos, &out.InstanceInitInfos
 		*out = make([]InstanceInitInfosInitParameters, len(*in))
@@ -134,6 +139,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 	if in.InstanceMemorySize != nil {
 		in, out := &in.InstanceMemorySize, &out.InstanceMemorySize
 		*out = new(float64)
+		**out = **in
+	}
+	if in.InstanceName != nil {
+		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
 		**out = **in
 	}
 	if in.MaxCPU != nil {
@@ -205,6 +215,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 			}
 		}
 	}
+	if in.SemiSyncTimeout != nil {
+		in, out := &in.SemiSyncTimeout, &out.SemiSyncTimeout
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ServerlessStatusFlag != nil {
 		in, out := &in.ServerlessStatusFlag, &out.ServerlessStatusFlag
 		*out = new(string)
@@ -239,6 +254,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.SyncWay != nil {
+		in, out := &in.SyncWay, &out.SyncWay
+		*out = new(string)
+		**out = **in
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
@@ -395,6 +415,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 	}
 	if in.InstanceCPUCore != nil {
 		in, out := &in.InstanceCPUCore, &out.InstanceCPUCore
+		*out = new(float64)
+		**out = **in
+	}
+	if in.InstanceCount != nil {
+		in, out := &in.InstanceCount, &out.InstanceCount
 		*out = new(float64)
 		**out = **in
 	}
@@ -558,6 +583,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 			}
 		}
 	}
+	if in.SemiSyncTimeout != nil {
+		in, out := &in.SemiSyncTimeout, &out.SemiSyncTimeout
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ServerlessStatus != nil {
 		in, out := &in.ServerlessStatus, &out.ServerlessStatus
 		*out = new(string)
@@ -590,6 +620,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SyncWay != nil {
+		in, out := &in.SyncWay, &out.SyncWay
 		*out = new(string)
 		**out = **in
 	}
@@ -689,6 +724,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.InstanceCount != nil {
+		in, out := &in.InstanceCount, &out.InstanceCount
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InstanceInitInfos != nil {
 		in, out := &in.InstanceInitInfos, &out.InstanceInitInfos
 		*out = make([]InstanceInitInfosParameters, len(*in))
@@ -720,6 +760,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	if in.InstanceMemorySize != nil {
 		in, out := &in.InstanceMemorySize, &out.InstanceMemorySize
 		*out = new(float64)
+		**out = **in
+	}
+	if in.InstanceName != nil {
+		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
 		**out = **in
 	}
 	if in.MaxCPU != nil {
@@ -792,6 +837,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 			}
 		}
 	}
+	if in.SemiSyncTimeout != nil {
+		in, out := &in.SemiSyncTimeout, &out.SemiSyncTimeout
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ServerlessStatusFlag != nil {
 		in, out := &in.ServerlessStatusFlag, &out.ServerlessStatusFlag
 		*out = new(string)
@@ -826,6 +876,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.SyncWay != nil {
+		in, out := &in.SyncWay, &out.SyncWay
+		*out = new(string)
+		**out = **in
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags

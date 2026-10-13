@@ -91,13 +91,13 @@ spec:
                           type: boolean
                         issuer:
                           description: |-
-                            Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-                            Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+                            Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+                            Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
                           type: string
                         jwksUri:
                           description: |-
-                            Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-                            Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+                            Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+                            Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
                           type: string
                         useTkeDefault:
                           description: |-
@@ -265,8 +265,8 @@ spec:
                     type: string
                   clusterSubnetId:
                     description: |-
-                      Subnet ID of the cluster, such as: subnet-b3p7d7q5.
-                      Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+                      Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
+                      Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
                     type: string
                   clusterVersion:
                     description: |-
@@ -275,14 +275,26 @@ spec:
                     type: string
                   containerRuntime:
                     description: |-
-                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
-                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
+                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is docker for versions below v1.24 and containerd for versions above v1.24.
+                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is `docker` for versions below v1.24 and `containerd` for versions above v1.24.
                     type: string
+                  dataPlaneV2:
+                    description: |-
+                      Whether to enable DataPlaneV2 (replace kube-proxy with cilium). data_plane_v2 and cluster_ipvs should not be set at the same time.
+                      Whether to enable DataPlaneV2 (replace kube-proxy with cilium). `data_plane_v2` and `cluster_ipvs` should not be set at the same time.
+                    type: boolean
                   deletionProtection:
                     description: |-
                       Indicates whether cluster deletion protection is enabled. Default is false.
                       Indicates whether cluster deletion protection is enabled. Default is false.
                     type: boolean
+                  disableAddons:
+                    description: |-
+                      To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+                      To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+                    items:
+                      type: string
+                    type: array
                   dockerGraphPath:
                     description: |-
                       Docker graph path. Default is /var/lib/docker.
@@ -330,8 +342,8 @@ spec:
                     type: array
                   existInstance:
                     description: |-
-                      create tke cluster by existed instances.
-                      create tke cluster by existed instances.
+                      Create tke cluster by existed instances.
+                      Create tke cluster by existed instances.
                     items:
                       properties:
                         desiredPodNumbers:
@@ -390,7 +402,7 @@ spec:
                                             type: boolean
                                           diskPartition:
                                             description: |-
-                                              The name of the device or partition to mount.
+                                              The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                               The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                             type: string
                                           diskSize:
@@ -400,7 +412,7 @@ spec:
                                             type: number
                                           diskType:
                                             description: |-
-                                              Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                              Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                               Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
                                             type: string
                                           fileSystem:
@@ -573,15 +585,15 @@ spec:
                           type: array
                         nodeRole:
                           description: |-
-                            Role of existed node. value:MASTER_ETCD or WORKER.
-                            Role of existed node. value:MASTER_ETCD or WORKER.
+                            Role of existed node. Value: MASTER_ETCD or WORKER.
+                            Role of existed node. Value: MASTER_ETCD or WORKER.
                           type: string
                       type: object
                     type: array
                   extensionAddon:
                     description: |-
-                      Information of the add-on to be installed.
-                      Information of the add-on to be installed.
+                      Information of the add-on to be installed. It is recommended to use resource tencentcloud_kubernetes_addon management cluster addon.
+                      Information of the add-on to be installed. It is recommended to use resource `tencentcloud_kubernetes_addon` management cluster addon.
                     items:
                       properties:
                         name:
@@ -623,6 +635,11 @@ spec:
                       The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
                       The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
                     type: string
+                  isDualStack:
+                    description: |-
+                      In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+                      In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+                    type: boolean
                   isNonStaticIpMode:
                     description: |-
                       Indicates whether non-static ip mode is enabled. Default is false.
@@ -705,7 +722,7 @@ spec:
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -715,7 +732,7 @@ spec:
                                 type: number
                               diskType:
                                 description: |-
-                                  Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                  Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                   Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
                                 type: string
                               encrypt:
@@ -1003,8 +1020,8 @@ spec:
                     type: number
                   upgradeInstancesFollowCluster:
                     description: |-
-                      Indicates whether upgrade all instances when cluster_version change. Default is false.
-                      Indicates whether upgrade all instances when cluster_version change. Default is false.
+                      Indicates whether upgrade all cluster instances. Default is false.
+                      Indicates whether upgrade all cluster instances. Default is false.
                     type: boolean
                   vpcCniType:
                     description: |-
@@ -1129,7 +1146,7 @@ spec:
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -1139,7 +1156,7 @@ spec:
                                 type: number
                               diskType:
                                 description: |-
-                                  Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                  Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                   Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
                                 type: string
                               encrypt:
@@ -1333,13 +1350,13 @@ spec:
                           type: boolean
                         issuer:
                           description: |-
-                            Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-                            Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+                            Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+                            Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
                           type: string
                         jwksUri:
                           description: |-
-                            Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-                            Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+                            Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+                            Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
                           type: string
                         useTkeDefault:
                           description: |-
@@ -1507,8 +1524,8 @@ spec:
                     type: string
                   clusterSubnetId:
                     description: |-
-                      Subnet ID of the cluster, such as: subnet-b3p7d7q5.
-                      Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+                      Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
+                      Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
                     type: string
                   clusterVersion:
                     description: |-
@@ -1517,14 +1534,26 @@ spec:
                     type: string
                   containerRuntime:
                     description: |-
-                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
-                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
+                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is docker for versions below v1.24 and containerd for versions above v1.24.
+                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is `docker` for versions below v1.24 and `containerd` for versions above v1.24.
                     type: string
+                  dataPlaneV2:
+                    description: |-
+                      Whether to enable DataPlaneV2 (replace kube-proxy with cilium). data_plane_v2 and cluster_ipvs should not be set at the same time.
+                      Whether to enable DataPlaneV2 (replace kube-proxy with cilium). `data_plane_v2` and `cluster_ipvs` should not be set at the same time.
+                    type: boolean
                   deletionProtection:
                     description: |-
                       Indicates whether cluster deletion protection is enabled. Default is false.
                       Indicates whether cluster deletion protection is enabled. Default is false.
                     type: boolean
+                  disableAddons:
+                    description: |-
+                      To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+                      To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+                    items:
+                      type: string
+                    type: array
                   dockerGraphPath:
                     description: |-
                       Docker graph path. Default is /var/lib/docker.
@@ -1572,8 +1601,8 @@ spec:
                     type: array
                   existInstance:
                     description: |-
-                      create tke cluster by existed instances.
-                      create tke cluster by existed instances.
+                      Create tke cluster by existed instances.
+                      Create tke cluster by existed instances.
                     items:
                       properties:
                         desiredPodNumbers:
@@ -1632,7 +1661,7 @@ spec:
                                             type: boolean
                                           diskPartition:
                                             description: |-
-                                              The name of the device or partition to mount.
+                                              The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                               The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                             type: string
                                           diskSize:
@@ -1642,7 +1671,7 @@ spec:
                                             type: number
                                           diskType:
                                             description: |-
-                                              Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                              Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                               Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
                                             type: string
                                           fileSystem:
@@ -1796,15 +1825,15 @@ spec:
                           type: array
                         nodeRole:
                           description: |-
-                            Role of existed node. value:MASTER_ETCD or WORKER.
-                            Role of existed node. value:MASTER_ETCD or WORKER.
+                            Role of existed node. Value: MASTER_ETCD or WORKER.
+                            Role of existed node. Value: MASTER_ETCD or WORKER.
                           type: string
                       type: object
                     type: array
                   extensionAddon:
                     description: |-
-                      Information of the add-on to be installed.
-                      Information of the add-on to be installed.
+                      Information of the add-on to be installed. It is recommended to use resource tencentcloud_kubernetes_addon management cluster addon.
+                      Information of the add-on to be installed. It is recommended to use resource `tencentcloud_kubernetes_addon` management cluster addon.
                     items:
                       properties:
                         name:
@@ -1846,6 +1875,11 @@ spec:
                       The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
                       The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
                     type: string
+                  isDualStack:
+                    description: |-
+                      In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+                      In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+                    type: boolean
                   isNonStaticIpMode:
                     description: |-
                       Indicates whether non-static ip mode is enabled. Default is false.
@@ -1928,7 +1962,7 @@ spec:
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -1938,7 +1972,7 @@ spec:
                                 type: number
                               diskType:
                                 description: |-
-                                  Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                  Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                   Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
                                 type: string
                               encrypt:
@@ -2207,8 +2241,8 @@ spec:
                     type: number
                   upgradeInstancesFollowCluster:
                     description: |-
-                      Indicates whether upgrade all instances when cluster_version change. Default is false.
-                      Indicates whether upgrade all instances when cluster_version change. Default is false.
+                      Indicates whether upgrade all cluster instances. Default is false.
+                      Indicates whether upgrade all cluster instances. Default is false.
                     type: boolean
                   vpcCniType:
                     description: |-
@@ -2333,7 +2367,7 @@ spec:
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -2343,7 +2377,7 @@ spec:
                                 type: number
                               diskType:
                                 description: |-
-                                  Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                  Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                   Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
                                 type: string
                               encrypt:
@@ -2677,13 +2711,13 @@ spec:
                           type: boolean
                         issuer:
                           description: |-
-                            Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-                            Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+                            Specify service-account-issuer. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+                            Specify service-account-issuer. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
                           type: string
                         jwksUri:
                           description: |-
-                            Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway.
-                            Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway.
+                            Specify service-account-jwks-uri. If use_tke_default is set to true, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is true, TKE will auto-generate the value and it will be read back into state.
+                            Specify service-account-jwks-uri. If use_tke_default is set to `true`, please do not set this field, it will be ignored anyway. This field is also computed: when use_tke_default is `true`, TKE will auto-generate the value and it will be read back into state.
                           type: string
                         useTkeDefault:
                           description: |-
@@ -2871,8 +2905,8 @@ spec:
                     type: string
                   clusterSubnetId:
                     description: |-
-                      Subnet ID of the cluster, such as: subnet-b3p7d7q5.
-                      Subnet ID of the cluster, such as: subnet-b3p7d7q5.
+                      Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
+                      Control Plane Subnet Information. This field is required only in the following scenarios: When the container network plugin is CiliumOverlay, TKE will obtain 2 IPs from this subnet to create an internal load balancer; When creating a managed cluster that supports CDC with the VPC-CNI network plugin, at least 12 IPs must be reserved.
                     type: string
                   clusterVersion:
                     description: |-
@@ -2881,14 +2915,26 @@ spec:
                     type: string
                   containerRuntime:
                     description: |-
-                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
-                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher.Default is 'docker'.
+                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is docker for versions below v1.24 and containerd for versions above v1.24.
+                      Runtime type of the cluster, the available values include: 'docker' and 'containerd'.The Kubernetes v1.24 has removed dockershim, so please use containerd in v1.24 or higher. The default value is `docker` for versions below v1.24 and `containerd` for versions above v1.24.
                     type: string
+                  dataPlaneV2:
+                    description: |-
+                      Whether to enable DataPlaneV2 (replace kube-proxy with cilium). data_plane_v2 and cluster_ipvs should not be set at the same time.
+                      Whether to enable DataPlaneV2 (replace kube-proxy with cilium). `data_plane_v2` and `cluster_ipvs` should not be set at the same time.
+                    type: boolean
                   deletionProtection:
                     description: |-
                       Indicates whether cluster deletion protection is enabled. Default is false.
                       Indicates whether cluster deletion protection is enabled. Default is false.
                     type: boolean
+                  disableAddons:
+                    description: |-
+                      To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+                      To prevent the installation of a specific Addon component, enter the corresponding AddonName.
+                    items:
+                      type: string
+                    type: array
                   dockerGraphPath:
                     description: |-
                       Docker graph path. Default is /var/lib/docker.
@@ -2941,8 +2987,8 @@ spec:
                     type: array
                   existInstance:
                     description: |-
-                      create tke cluster by existed instances.
-                      create tke cluster by existed instances.
+                      Create tke cluster by existed instances.
+                      Create tke cluster by existed instances.
                     items:
                       properties:
                         desiredPodNumbers:
@@ -3001,7 +3047,7 @@ spec:
                                             type: boolean
                                           diskPartition:
                                             description: |-
-                                              The name of the device or partition to mount.
+                                              The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                               The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                             type: string
                                           diskSize:
@@ -3011,7 +3057,7 @@ spec:
                                             type: number
                                           diskType:
                                             description: |-
-                                              Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                              Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                               Types of disk. Valid value: `LOCAL_BASIC`, `LOCAL_SSD`, `CLOUD_BASIC`, `CLOUD_PREMIUM`, `CLOUD_SSD`, `CLOUD_HSSD`, `CLOUD_TSSD` and `CLOUD_BSSD`.
                                             type: string
                                           fileSystem:
@@ -3165,15 +3211,15 @@ spec:
                           type: array
                         nodeRole:
                           description: |-
-                            Role of existed node. value:MASTER_ETCD or WORKER.
-                            Role of existed node. value:MASTER_ETCD or WORKER.
+                            Role of existed node. Value: MASTER_ETCD or WORKER.
+                            Role of existed node. Value: MASTER_ETCD or WORKER.
                           type: string
                       type: object
                     type: array
                   extensionAddon:
                     description: |-
-                      Information of the add-on to be installed.
-                      Information of the add-on to be installed.
+                      Information of the add-on to be installed. It is recommended to use resource tencentcloud_kubernetes_addon management cluster addon.
+                      Information of the add-on to be installed. It is recommended to use resource `tencentcloud_kubernetes_addon` management cluster addon.
                     items:
                       properties:
                         name:
@@ -3218,21 +3264,16 @@ spec:
                       The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
                       The strategy for deleting cluster instances: terminate (destroy instances, only support pay as you go cloud host instances) retain (remove only, keep instances), Default is terminate.
                     type: string
+                  isDualStack:
+                    description: |-
+                      In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+                      In the VPC-CNI mode of the cluster, the dual stack cluster status defaults to false, indicating a non dual stack cluster.
+                    type: boolean
                   isNonStaticIpMode:
                     description: |-
                       Indicates whether non-static ip mode is enabled. Default is false.
                       Indicates whether non-static ip mode is enabled. Default is false.
                     type: boolean
-                  kubeConfig:
-                    description: |-
-                      Kubernetes config.
-                      Kubernetes config.
-                    type: string
-                  kubeConfigIntranet:
-                    description: |-
-                      Kubernetes config of private network.
-                      Kubernetes config of private network.
-                    type: string
                   kubeProxyMode:
                     description: |-
                       Cluster kube-proxy mode, the available values include: 'kube-proxy-bpf'. Default is not set.When set to kube-proxy-bpf, cluster version greater than 1.14 and with Tencent Linux 2.4 is required.
@@ -3310,7 +3351,7 @@ spec:
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -3320,7 +3361,7 @@ spec:
                                 type: number
                               diskType:
                                 description: |-
-                                  Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                  Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                   Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
                                 type: string
                               encrypt:
@@ -3606,8 +3647,8 @@ spec:
                     type: number
                   upgradeInstancesFollowCluster:
                     description: |-
-                      Indicates whether upgrade all instances when cluster_version change. Default is false.
-                      Indicates whether upgrade all instances when cluster_version change. Default is false.
+                      Indicates whether upgrade all cluster instances. Default is false.
+                      Indicates whether upgrade all cluster instances. Default is false.
                     type: boolean
                   userName:
                     description: |-
@@ -3663,7 +3704,7 @@ spec:
                                 type: boolean
                               diskPartition:
                                 description: |-
-                                  The name of the device or partition to mount.
+                                  The name of the device or partition to mount. NOTE: this argument doesn't support setting in node pool, or will leads to mount error.
                                   The name of the device or partition to mount.
                                 type: string
                               diskSize:
@@ -3673,7 +3714,7 @@ spec:
                                 type: number
                               diskType:
                                 description: |-
-                                  Types of disk, available values: CLOUD_PREMIUM and CLOUD_SSD and CLOUD_HSSD and CLOUD_TSSD.
+                                  Types of disk. Valid value: LOCAL_BASIC, LOCAL_SSD, CLOUD_BASIC, CLOUD_PREMIUM, CLOUD_SSD, CLOUD_HSSD, CLOUD_TSSD and CLOUD_BSSD.
                                   Types of disk, available values: `CLOUD_PREMIUM` and `CLOUD_SSD` and `CLOUD_HSSD` and `CLOUD_TSSD`.
                                 type: string
                               encrypt:

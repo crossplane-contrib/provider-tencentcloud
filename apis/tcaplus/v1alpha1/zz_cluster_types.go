@@ -15,20 +15,36 @@ import (
 
 type ClusterInitParameters struct {
 
-	// Name of the TcaplusDB cluster. Name length should be between 1 and 30.
-	// Name of the TcaplusDB cluster. Name length should be between 1 and 30.
+	// Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
+	// Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// IDL type of the TcaplusDB cluster. Valid values: PROTO and TDR.
-	// IDL type of the TcaplusDB cluster. Valid values: `PROTO` and `TDR`.
+	// Cluster type: 1 shared, 2 dedicated.
+	// Cluster type: `1` shared, `2` dedicated.
+	ClusterType *float64 `json:"clusterType,omitempty" tf:"cluster_type,omitempty"`
+
+	// Cluster data description language type, uniformly filled with MIX, enumeration value: MIX: supports both PROTO and TDR tables.
+	// Cluster data description language type, uniformly filled with `MIX`, enumeration value: `MIX`: supports both `PROTO` and `TDR` tables.
 	IdlType *string `json:"idlType,omitempty" tf:"idl_type,omitempty"`
 
 	// Expiration time of old password after password update, unit: second.
 	// Expiration time of old password after password update, unit: second.
 	OldPasswordExpireLast *float64 `json:"oldPasswordExpireLast,omitempty" tf:"old_password_expire_last,omitempty"`
 
-	// Subnet id of the TcaplusDB cluster.
-	// Subnet id of the TcaplusDB cluster.
+	// Dedicated cluster occupied proxy machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+	// Dedicated cluster occupied proxy machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+	ProxyList []ProxyListInitParameters `json:"proxyList,omitempty" tf:"proxy_list,omitempty"`
+
+	// Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+	// Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+	ResourceTags []ResourceTagsInitParameters `json:"resourceTags,omitempty" tf:"resource_tags,omitempty"`
+
+	// Dedicated cluster occupied svr machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+	// Dedicated cluster occupied svr machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+	ServerList []ServerListInitParameters `json:"serverList,omitempty" tf:"server_list,omitempty"`
+
+	// The subnet instance ID bound to the cluster, such as: subnet-pxir56ns.
+	// The subnet instance ID bound to the cluster, such as: `subnet-pxir56ns`.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -40,8 +56,8 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// VPC id of the TcaplusDB cluster.
-	// VPC id of the TcaplusDB cluster.
+	// The private network instance ID bound to the cluster, such as: vpc-f49l6u0z.
+	// The private network instance ID bound to the cluster, such as: `vpc-f49l6u0z`.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 
@@ -56,21 +72,29 @@ type ClusterInitParameters struct {
 
 type ClusterObservation struct {
 
-	// Access ID of the TcaplusDB cluster.For TcaplusDB SDK connect.
-	// Access ID of the TcaplusDB cluster.For TcaplusDB SDK connect.
+	// Access ID of the TcaplusDB cluster. For TcaplusDB SDK connect.
+	// Access ID of the TcaplusDB cluster. For TcaplusDB SDK connect.
 	APIAccessID *string `json:"apiAccessId,omitempty" tf:"api_access_id,omitempty"`
 
-	// Access IP of the TcaplusDB cluster.For TcaplusDB SDK connect.
-	// Access IP of the TcaplusDB cluster.For TcaplusDB SDK connect.
+	// Access IP of the TcaplusDB cluster. For TcaplusDB SDK connect.
+	// Access IP of the TcaplusDB cluster. For TcaplusDB SDK connect.
 	APIAccessIP *string `json:"apiAccessIp,omitempty" tf:"api_access_ip,omitempty"`
 
-	// Access port of the TcaplusDB cluster.For TcaplusDB SDK connect.
-	// Access port of the TcaplusDB cluster.For TcaplusDB SDK connect.
+	// Access port of the TcaplusDB cluster. For TcaplusDB SDK connect.
+	// Access port of the TcaplusDB cluster. For TcaplusDB SDK connect.
 	APIAccessPort *float64 `json:"apiAccessPort,omitempty" tf:"api_access_port,omitempty"`
 
-	// Name of the TcaplusDB cluster. Name length should be between 1 and 30.
-	// Name of the TcaplusDB cluster. Name length should be between 1 and 30.
+	// Cluster ID.
+	// Cluster ID.
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
+	// Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
+
+	// Cluster type: 1 shared, 2 dedicated.
+	// Cluster type: `1` shared, `2` dedicated.
+	ClusterType *float64 `json:"clusterType,omitempty" tf:"cluster_type,omitempty"`
 
 	// Create time of the TcaplusDB cluster.
 	// Create time of the TcaplusDB cluster.
@@ -79,8 +103,8 @@ type ClusterObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// IDL type of the TcaplusDB cluster. Valid values: PROTO and TDR.
-	// IDL type of the TcaplusDB cluster. Valid values: `PROTO` and `TDR`.
+	// Cluster data description language type, uniformly filled with MIX, enumeration value: MIX: supports both PROTO and TDR tables.
+	// Cluster data description language type, uniformly filled with `MIX`, enumeration value: `MIX`: supports both `PROTO` and `TDR` tables.
 	IdlType *string `json:"idlType,omitempty" tf:"idl_type,omitempty"`
 
 	// Network type of the TcaplusDB cluster.
@@ -99,24 +123,41 @@ type ClusterObservation struct {
 	// Password status of the TcaplusDB cluster. Valid values: `unmodifiable`, `modifiable`. `unmodifiable`. which means the password can not be changed in this moment; `modifiable`, which means the password can be changed in this moment.
 	PasswordStatus *string `json:"passwordStatus,omitempty" tf:"password_status,omitempty"`
 
-	// Subnet id of the TcaplusDB cluster.
-	// Subnet id of the TcaplusDB cluster.
+	// Dedicated cluster occupied proxy machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+	// Dedicated cluster occupied proxy machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+	ProxyList []ProxyListObservation `json:"proxyList,omitempty" tf:"proxy_list,omitempty"`
+
+	// Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+	// Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+	ResourceTags []ResourceTagsObservation `json:"resourceTags,omitempty" tf:"resource_tags,omitempty"`
+
+	// Dedicated cluster occupied svr machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+	// Dedicated cluster occupied svr machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+	ServerList []ServerListObservation `json:"serverList,omitempty" tf:"server_list,omitempty"`
+
+	// The subnet instance ID bound to the cluster, such as: subnet-pxir56ns.
+	// The subnet instance ID bound to the cluster, such as: `subnet-pxir56ns`.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// VPC id of the TcaplusDB cluster.
-	// VPC id of the TcaplusDB cluster.
+	// The private network instance ID bound to the cluster, such as: vpc-f49l6u0z.
+	// The private network instance ID bound to the cluster, such as: `vpc-f49l6u0z`.
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
 }
 
 type ClusterParameters struct {
 
-	// Name of the TcaplusDB cluster. Name length should be between 1 and 30.
-	// Name of the TcaplusDB cluster. Name length should be between 1 and 30.
+	// Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
+	// Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// IDL type of the TcaplusDB cluster. Valid values: PROTO and TDR.
-	// IDL type of the TcaplusDB cluster. Valid values: `PROTO` and `TDR`.
+	// Cluster type: 1 shared, 2 dedicated.
+	// Cluster type: `1` shared, `2` dedicated.
+	// +kubebuilder:validation:Optional
+	ClusterType *float64 `json:"clusterType,omitempty" tf:"cluster_type,omitempty"`
+
+	// Cluster data description language type, uniformly filled with MIX, enumeration value: MIX: supports both PROTO and TDR tables.
+	// Cluster data description language type, uniformly filled with `MIX`, enumeration value: `MIX`: supports both `PROTO` and `TDR` tables.
 	// +kubebuilder:validation:Optional
 	IdlType *string `json:"idlType,omitempty" tf:"idl_type,omitempty"`
 
@@ -125,13 +166,28 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	OldPasswordExpireLast *float64 `json:"oldPasswordExpireLast,omitempty" tf:"old_password_expire_last,omitempty"`
 
-	// Password of the TcaplusDB cluster. Password length should be between 12 and 16. The password must be a mix of uppercase letters (A-Z), lowercase letters (a-z) and numbers (0-9).
-	// Password of the TcaplusDB cluster. Password length should be between 12 and 16. The password must be a *mix* of uppercase letters (A-Z), lowercase *letters* (a-z) and *numbers* (0-9).
+	// Cluster access password, must be a-zA-Z0-9 characters, and must contain numbers, uppercase and lowercase letters.
+	// Cluster access password, must be `a-zA-Z0-9` characters, and must contain numbers, uppercase and lowercase letters.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Subnet id of the TcaplusDB cluster.
-	// Subnet id of the TcaplusDB cluster.
+	// Dedicated cluster occupied proxy machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+	// Dedicated cluster occupied proxy machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+	// +kubebuilder:validation:Optional
+	ProxyList []ProxyListParameters `json:"proxyList,omitempty" tf:"proxy_list,omitempty"`
+
+	// Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+	// Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+	// +kubebuilder:validation:Optional
+	ResourceTags []ResourceTagsParameters `json:"resourceTags,omitempty" tf:"resource_tags,omitempty"`
+
+	// Dedicated cluster occupied svr machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+	// Dedicated cluster occupied svr machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+	// +kubebuilder:validation:Optional
+	ServerList []ServerListParameters `json:"serverList,omitempty" tf:"server_list,omitempty"`
+
+	// The subnet instance ID bound to the cluster, such as: subnet-pxir56ns.
+	// The subnet instance ID bound to the cluster, such as: `subnet-pxir56ns`.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -144,8 +200,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// VPC id of the TcaplusDB cluster.
-	// VPC id of the TcaplusDB cluster.
+	// The private network instance ID bound to the cluster, such as: vpc-f49l6u0z.
+	// The private network instance ID bound to the cluster, such as: `vpc-f49l6u0z`.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
 	// +kubebuilder:validation:Optional
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
@@ -157,6 +213,111 @@ type ClusterParameters struct {
 	// Selector for a VPC in vpc to populate vpcId.
 	// +kubebuilder:validation:Optional
 	VPCIDSelector *v1.Selector `json:"vpcIdSelector,omitempty" tf:"-"`
+}
+
+type ProxyListInitParameters struct {
+
+	// Machine quantity.
+	// Machine quantity.
+	MachineNum *float64 `json:"machineNum,omitempty" tf:"machine_num,omitempty"`
+
+	// Machine type.
+	// Machine type.
+	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
+}
+
+type ProxyListObservation struct {
+
+	// Machine quantity.
+	// Machine quantity.
+	MachineNum *float64 `json:"machineNum,omitempty" tf:"machine_num,omitempty"`
+
+	// Machine type.
+	// Machine type.
+	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
+}
+
+type ProxyListParameters struct {
+
+	// Machine quantity.
+	// Machine quantity.
+	// +kubebuilder:validation:Optional
+	MachineNum *float64 `json:"machineNum,omitempty" tf:"machine_num,omitempty"`
+
+	// Machine type.
+	// Machine type.
+	// +kubebuilder:validation:Optional
+	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
+}
+
+type ResourceTagsInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type ResourceTagsObservation struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type ResourceTagsParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	TagKey *string `json:"tagKey" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type ServerListInitParameters struct {
+
+	// Machine quantity.
+	// Machine quantity.
+	MachineNum *float64 `json:"machineNum,omitempty" tf:"machine_num,omitempty"`
+
+	// Machine type.
+	// Machine type.
+	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
+}
+
+type ServerListObservation struct {
+
+	// Machine quantity.
+	// Machine quantity.
+	MachineNum *float64 `json:"machineNum,omitempty" tf:"machine_num,omitempty"`
+
+	// Machine type.
+	// Machine type.
+	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
+}
+
+type ServerListParameters struct {
+
+	// Machine quantity.
+	// Machine quantity.
+	// +kubebuilder:validation:Optional
+	MachineNum *float64 `json:"machineNum,omitempty" tf:"machine_num,omitempty"`
+
+	// Machine type.
+	// Machine type.
+	// +kubebuilder:validation:Optional
+	MachineType *string `json:"machineType,omitempty" tf:"machine_type,omitempty"`
 }
 
 // ClusterSpec defines the desired state of Cluster
@@ -186,7 +347,7 @@ type ClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Cluster is the Schema for the Clusters API. Use this resource to create TcaplusDB cluster.
+// Cluster is the Schema for the Clusters API. Provides a resource to create a TcaplusDB cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

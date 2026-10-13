@@ -142,8 +142,8 @@ spec:
                     x-kubernetes-map-type: granular
                   type:
                     description: |-
-                      The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP. Default is EIP.
-                      The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
+                      The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP and ResidentialEIP. Default is EIP.
+                      The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP` and `ResidentialEIP`. Default is `EIP`.
                     type: string
                 type: object
               initProvider:
@@ -229,8 +229,8 @@ spec:
                     x-kubernetes-map-type: granular
                   type:
                     description: |-
-                      The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP. Default is EIP.
-                      The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
+                      The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP and ResidentialEIP. Default is EIP.
+                      The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP` and `ResidentialEIP`. Default is `EIP`.
                     type: string
                 type: object
               managementPolicies:
@@ -488,8 +488,8 @@ spec:
                     x-kubernetes-map-type: granular
                   type:
                     description: |-
-                      The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP. Default is EIP.
-                      The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
+                      The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP and ResidentialEIP. Default is EIP.
+                      The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP` and `ResidentialEIP`. Default is `EIP`.
                     type: string
                 type: object
               conditions:

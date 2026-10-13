@@ -90,7 +90,7 @@ spec:
                     type: string
                   backupPlan:
                     description: |-
-                      Specify DB backup plan.
+                      This field is deprecated from version 1.83.9. Use resource tencentcloud_postgresql_backup_plan to manage PG instance backup plan. Specify DB backup plan.
                       Specify DB backup plan.
                     items:
                       properties:
@@ -188,6 +188,11 @@ spec:
                       Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
                       Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
                     type: string
+                  kmsClusterId:
+                    description: |-
+                      Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+                      Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+                    type: string
                   kmsKeyId:
                     description: |-
                       KeyId of the custom key.
@@ -275,6 +280,11 @@ spec:
                       Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
                       Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
                     type: number
+                  storageType:
+                    description: |-
+                      Storage type of the instance. Valid values: PHYSICAL_LOCAL_SSD (default, local SSD), CLOUD_PREMIUM (premium cloud disk), CLOUD_SSD (cloud SSD), CLOUD_HSSD (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+                      Storage type of the instance. Valid values: `PHYSICAL_LOCAL_SSD` (default, local SSD), `CLOUD_PREMIUM` (premium cloud disk), `CLOUD_SSD` (cloud SSD), `CLOUD_HSSD` (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+                    type: string
                   subnetId:
                     description: |-
                       ID of subnet.
@@ -484,7 +494,7 @@ spec:
                     type: string
                   backupPlan:
                     description: |-
-                      Specify DB backup plan.
+                      This field is deprecated from version 1.83.9. Use resource tencentcloud_postgresql_backup_plan to manage PG instance backup plan. Specify DB backup plan.
                       Specify DB backup plan.
                     items:
                       properties:
@@ -582,6 +592,11 @@ spec:
                       Version of the postgresql database engine. Valid values: 10.4, 10.17, 10.23, 11.8, 11.12, 11.22, 12.4, 12.7, 12.18, 13.3, 14.2, 14.11, 15.1, 16.0.
                       Version of the postgresql database engine. Valid values: `10.4`, `10.17`, `10.23`, `11.8`, `11.12`, `11.22`, `12.4`, `12.7`, `12.18`, `13.3`, `14.2`, `14.11`, `15.1`, `16.0`.
                     type: string
+                  kmsClusterId:
+                    description: |-
+                      Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+                      Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+                    type: string
                   kmsKeyId:
                     description: |-
                       KeyId of the custom key.
@@ -650,6 +665,11 @@ spec:
                       Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
                       Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
                     type: number
+                  storageType:
+                    description: |-
+                      Storage type of the instance. Valid values: PHYSICAL_LOCAL_SSD (default, local SSD), CLOUD_PREMIUM (premium cloud disk), CLOUD_SSD (cloud SSD), CLOUD_HSSD (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+                      Storage type of the instance. Valid values: `PHYSICAL_LOCAL_SSD` (default, local SSD), `CLOUD_PREMIUM` (premium cloud disk), `CLOUD_SSD` (cloud SSD), `CLOUD_HSSD` (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+                    type: string
                   subnetId:
                     description: |-
                       ID of subnet.
@@ -1038,7 +1058,7 @@ spec:
                     type: string
                   backupPlan:
                     description: |-
-                      Specify DB backup plan.
+                      This field is deprecated from version 1.83.9. Use resource tencentcloud_postgresql_backup_plan to manage PG instance backup plan. Specify DB backup plan.
                       Specify DB backup plan.
                     items:
                       properties:
@@ -1078,7 +1098,7 @@ spec:
                           type: number
                         monthlyPlanId:
                           description: |-
-                            ID of the resource.
+                            Monthly plan id.
                             Monthly plan id.
                           type: string
                       type: object
@@ -1153,6 +1173,11 @@ spec:
                     type: string
                   id:
                     description: ID of the resource.
+                    type: string
+                  kmsClusterId:
+                    description: |-
+                      Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
+                      Specify the cluster served by KMS. If KMSClusterId is blank, use the KMS of the default cluster. If you choose to specify a KMS cluster, you need to pass in KMSClusterId.
                     type: string
                   kmsKeyId:
                     description: |-
@@ -1242,6 +1267,11 @@ spec:
                       Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of storage_min and storage_max which data source tencentcloud_postgresql_specinfos provides.
                       Volume size(in GB). Allowed value must be a multiple of 10. The storage must be set with the limit of `storage_min` and `storage_max` which data source `tencentcloud_postgresql_specinfos` provides.
                     type: number
+                  storageType:
+                    description: |-
+                      Storage type of the instance. Valid values: PHYSICAL_LOCAL_SSD (default, local SSD), CLOUD_PREMIUM (premium cloud disk), CLOUD_SSD (cloud SSD), CLOUD_HSSD (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+                      Storage type of the instance. Valid values: `PHYSICAL_LOCAL_SSD` (default, local SSD), `CLOUD_PREMIUM` (premium cloud disk), `CLOUD_SSD` (cloud SSD), `CLOUD_HSSD` (enhanced cloud SSD). NOTE: This field will force new resource when modified.
+                    type: string
                   subnetId:
                     description: |-
                       ID of subnet.

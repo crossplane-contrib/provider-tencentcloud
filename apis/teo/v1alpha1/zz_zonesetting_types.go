@@ -1076,6 +1076,10 @@ type ZoneSettingObservation struct {
 	// Site ID.
 	// Site ID.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Zone name.
+	// Zone name.
+	ZoneName *string `json:"zoneName,omitempty" tf:"zone_name,omitempty"`
 }
 
 type ZoneSettingParameters struct {

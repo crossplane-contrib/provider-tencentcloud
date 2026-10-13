@@ -317,6 +317,21 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CerebroPrivateAccess != nil {
+		in, out := &in.CerebroPrivateAccess, &out.CerebroPrivateAccess
+		*out = new(string)
+		**out = **in
+	}
+	if in.CerebroPrivateDomain != nil {
+		in, out := &in.CerebroPrivateDomain, &out.CerebroPrivateDomain
+		*out = new(string)
+		**out = **in
+	}
+	if in.CerebroPublicAccess != nil {
+		in, out := &in.CerebroPublicAccess, &out.CerebroPublicAccess
+		*out = new(string)
+		**out = **in
+	}
 	if in.ChargePeriod != nil {
 		in, out := &in.ChargePeriod, &out.ChargePeriod
 		*out = new(float64)
@@ -339,6 +354,16 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.EnableCerebro != nil {
+		in, out := &in.EnableCerebro, &out.EnableCerebro
+		*out = new(bool)
+		**out = **in
+	}
+	if in.EnableDestroyProtection != nil {
+		in, out := &in.EnableDestroyProtection, &out.EnableDestroyProtection
+		*out = new(string)
+		**out = **in
+	}
 	if in.EsACL != nil {
 		in, out := &in.EsACL, &out.EsACL
 		*out = make([]EsACLInitParameters, len(*in))
@@ -353,8 +378,18 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ForceDelete != nil {
+		in, out := &in.ForceDelete, &out.ForceDelete
+		*out = new(bool)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
+		**out = **in
+	}
+	if in.KibanaPrivateAccess != nil {
+		in, out := &in.KibanaPrivateAccess, &out.KibanaPrivateAccess
 		*out = new(string)
 		**out = **in
 	}
@@ -382,6 +417,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Protocol != nil {
+		in, out := &in.Protocol, &out.Protocol
+		*out = new(string)
+		**out = **in
+	}
 	if in.PublicAccess != nil {
 		in, out := &in.PublicAccess, &out.PublicAccess
 		*out = new(string)
@@ -390,6 +430,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 	if in.RenewFlag != nil {
 		in, out := &in.RenewFlag, &out.RenewFlag
 		*out = new(string)
+		**out = **in
+	}
+	if in.SceneType != nil {
+		in, out := &in.SceneType, &out.SceneType
+		*out = new(float64)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -507,6 +552,21 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CerebroPrivateAccess != nil {
+		in, out := &in.CerebroPrivateAccess, &out.CerebroPrivateAccess
+		*out = new(string)
+		**out = **in
+	}
+	if in.CerebroPrivateDomain != nil {
+		in, out := &in.CerebroPrivateDomain, &out.CerebroPrivateDomain
+		*out = new(string)
+		**out = **in
+	}
+	if in.CerebroPublicAccess != nil {
+		in, out := &in.CerebroPublicAccess, &out.CerebroPublicAccess
+		*out = new(string)
+		**out = **in
+	}
 	if in.ChargePeriod != nil {
 		in, out := &in.ChargePeriod, &out.ChargePeriod
 		*out = new(float64)
@@ -549,6 +609,16 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnableCerebro != nil {
+		in, out := &in.EnableCerebro, &out.EnableCerebro
+		*out = new(bool)
+		**out = **in
+	}
+	if in.EnableDestroyProtection != nil {
+		in, out := &in.EnableDestroyProtection, &out.EnableDestroyProtection
+		*out = new(string)
+		**out = **in
+	}
 	if in.EsACL != nil {
 		in, out := &in.EsACL, &out.EsACL
 		*out = make([]EsACLObservation, len(*in))
@@ -568,6 +638,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ForceDelete != nil {
+		in, out := &in.ForceDelete, &out.ForceDelete
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -575,6 +650,16 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
+		**out = **in
+	}
+	if in.KibanaPrivateAccess != nil {
+		in, out := &in.KibanaPrivateAccess, &out.KibanaPrivateAccess
+		*out = new(string)
+		**out = **in
+	}
+	if in.KibanaPrivateURL != nil {
+		in, out := &in.KibanaPrivateURL, &out.KibanaPrivateURL
 		*out = new(string)
 		**out = **in
 	}
@@ -607,6 +692,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Protocol != nil {
+		in, out := &in.Protocol, &out.Protocol
+		*out = new(string)
+		**out = **in
+	}
 	if in.PublicAccess != nil {
 		in, out := &in.PublicAccess, &out.PublicAccess
 		*out = new(string)
@@ -615,6 +705,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 	if in.RenewFlag != nil {
 		in, out := &in.RenewFlag, &out.RenewFlag
 		*out = new(string)
+		**out = **in
+	}
+	if in.SceneType != nil {
+		in, out := &in.SceneType, &out.SceneType
+		*out = new(float64)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -680,6 +775,21 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CerebroPrivateAccess != nil {
+		in, out := &in.CerebroPrivateAccess, &out.CerebroPrivateAccess
+		*out = new(string)
+		**out = **in
+	}
+	if in.CerebroPrivateDomain != nil {
+		in, out := &in.CerebroPrivateDomain, &out.CerebroPrivateDomain
+		*out = new(string)
+		**out = **in
+	}
+	if in.CerebroPublicAccess != nil {
+		in, out := &in.CerebroPublicAccess, &out.CerebroPublicAccess
+		*out = new(string)
+		**out = **in
+	}
 	if in.ChargePeriod != nil {
 		in, out := &in.ChargePeriod, &out.ChargePeriod
 		*out = new(float64)
@@ -702,6 +812,16 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.EnableCerebro != nil {
+		in, out := &in.EnableCerebro, &out.EnableCerebro
+		*out = new(bool)
+		**out = **in
+	}
+	if in.EnableDestroyProtection != nil {
+		in, out := &in.EnableDestroyProtection, &out.EnableDestroyProtection
+		*out = new(string)
+		**out = **in
+	}
 	if in.EsACL != nil {
 		in, out := &in.EsACL, &out.EsACL
 		*out = make([]EsACLParameters, len(*in))
@@ -716,8 +836,18 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ForceDelete != nil {
+		in, out := &in.ForceDelete, &out.ForceDelete
+		*out = new(bool)
+		**out = **in
+	}
 	if in.InstanceName != nil {
 		in, out := &in.InstanceName, &out.InstanceName
+		*out = new(string)
+		**out = **in
+	}
+	if in.KibanaPrivateAccess != nil {
+		in, out := &in.KibanaPrivateAccess, &out.KibanaPrivateAccess
 		*out = new(string)
 		**out = **in
 	}
@@ -746,6 +876,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		}
 	}
 	out.PasswordSecretRef = in.PasswordSecretRef
+	if in.Protocol != nil {
+		in, out := &in.Protocol, &out.Protocol
+		*out = new(string)
+		**out = **in
+	}
 	if in.PublicAccess != nil {
 		in, out := &in.PublicAccess, &out.PublicAccess
 		*out = new(string)
@@ -754,6 +889,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 	if in.RenewFlag != nil {
 		in, out := &in.RenewFlag, &out.RenewFlag
 		*out = new(string)
+		**out = **in
+	}
+	if in.SceneType != nil {
+		in, out := &in.SceneType, &out.SceneType
+		*out = new(float64)
 		**out = **in
 	}
 	if in.SubnetID != nil {

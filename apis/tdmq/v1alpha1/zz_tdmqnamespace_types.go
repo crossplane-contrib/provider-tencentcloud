@@ -48,6 +48,41 @@ type RetentionPolicyParameters struct {
 	TimeInMinutes *float64 `json:"timeInMinutes,omitempty" tf:"time_in_minutes,omitempty"`
 }
 
+type TagsInitParameters struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TagsObservation struct {
+
+	// Tag key.
+	// Tag key.
+	TagKey *string `json:"tagKey,omitempty" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	TagValue *string `json:"tagValue,omitempty" tf:"tag_value,omitempty"`
+}
+
+type TagsParameters struct {
+
+	// Tag key.
+	// Tag key.
+	// +kubebuilder:validation:Optional
+	TagKey *string `json:"tagKey" tf:"tag_key,omitempty"`
+
+	// Tag value.
+	// Tag value.
+	// +kubebuilder:validation:Optional
+	TagValue *string `json:"tagValue" tf:"tag_value,omitempty"`
+}
+
 type TdmqNamespaceInitParameters struct {
 
 	// The Dedicated Cluster Id.
@@ -78,6 +113,10 @@ type TdmqNamespaceInitParameters struct {
 	// The Policy of message to retain. Format like: {time_in_minutes: Int, size_in_mb: Int}. time_in_minutes: the time of message to retain; size_in_mb: the size of message to retain.
 	// The Policy of message to retain. Format like: `{time_in_minutes: Int, size_in_mb: Int}`. `time_in_minutes`: the time of message to retain; `size_in_mb`: the size of message to retain.
 	RetentionPolicy []RetentionPolicyInitParameters `json:"retentionPolicy,omitempty" tf:"retention_policy,omitempty"`
+
+	// The tags of the tencentcloud_tdmq_namespace.
+	// The tags of the tencentcloud_tdmq_namespace.
+	Tags []TagsInitParameters `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type TdmqNamespaceObservation struct {
@@ -104,6 +143,10 @@ type TdmqNamespaceObservation struct {
 	// The Policy of message to retain. Format like: {time_in_minutes: Int, size_in_mb: Int}. time_in_minutes: the time of message to retain; size_in_mb: the size of message to retain.
 	// The Policy of message to retain. Format like: `{time_in_minutes: Int, size_in_mb: Int}`. `time_in_minutes`: the time of message to retain; `size_in_mb`: the size of message to retain.
 	RetentionPolicy []RetentionPolicyObservation `json:"retentionPolicy,omitempty" tf:"retention_policy,omitempty"`
+
+	// The tags of the tencentcloud_tdmq_namespace.
+	// The tags of the tencentcloud_tdmq_namespace.
+	Tags []TagsObservation `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type TdmqNamespaceParameters struct {
@@ -141,6 +184,11 @@ type TdmqNamespaceParameters struct {
 	// The Policy of message to retain. Format like: `{time_in_minutes: Int, size_in_mb: Int}`. `time_in_minutes`: the time of message to retain; `size_in_mb`: the size of message to retain.
 	// +kubebuilder:validation:Optional
 	RetentionPolicy []RetentionPolicyParameters `json:"retentionPolicy,omitempty" tf:"retention_policy,omitempty"`
+
+	// The tags of the tencentcloud_tdmq_namespace.
+	// The tags of the tencentcloud_tdmq_namespace.
+	// +kubebuilder:validation:Optional
+	Tags []TagsParameters `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 // TdmqNamespaceSpec defines the desired state of TdmqNamespace

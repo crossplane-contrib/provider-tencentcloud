@@ -11,9 +11,10 @@ spec:
     mx: 0
     recordType: A
     recordValue: 192.168.1.2
+    status: disabled
     subDomain: www
     ttl: 300
-    weight: 1
+    weight: 20
     zoneId: ${tencentcloud_private_dns_zone.example.id}
 
 ---
@@ -33,7 +34,7 @@ spec:
     domain: domain.com
     remark: remark.
     tags:
-      createdBy: terraform
+      createdBy: Terraform
     vpcSet:
     - region: ap-guangzhou
       uniqVpcId: ${tencentcloud_vpc.vpc.id}

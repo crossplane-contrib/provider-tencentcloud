@@ -36,8 +36,8 @@ type ClusterEndpointInitParameters struct {
 	// Domain name for cluster Kube-apiserver internet access.  Be careful if you modify value of this parameter, the cluster_external_endpoint value may be changed automatically too.
 	ClusterInternetDomain *string `json:"clusterInternetDomain,omitempty" tf:"cluster_internet_domain,omitempty"`
 
-	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
-	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
+	// Security group ID for internet cluster endpoint. NOTE: This argument must not be empty if cluster internet enabled.
+	// Security group ID for internet cluster endpoint. NOTE: This argument must not be empty if cluster internet enabled.
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
 
 	// Open intranet access or not.
@@ -47,6 +47,10 @@ type ClusterEndpointInitParameters struct {
 	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
 	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
 	ClusterIntranetDomain *string `json:"clusterIntranetDomain,omitempty" tf:"cluster_intranet_domain,omitempty"`
+
+	// Security group ID for intranet cluster endpoint.
+	// Security group ID for intranet cluster endpoint.
+	ClusterIntranetSecurityGroup *string `json:"clusterIntranetSecurityGroup,omitempty" tf:"cluster_intranet_security_group,omitempty"`
 
 	// Subnet id who can access this independent cluster, this field must and can only set  when cluster_intranet is true. cluster_intranet_subnet_id can not modify once be set.
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
@@ -60,6 +64,10 @@ type ClusterEndpointInitParameters struct {
 	// Selector for a Subnet in vpc to populate clusterIntranetSubnetId.
 	// +kubebuilder:validation:Optional
 	ClusterIntranetSubnetIDSelector *v1.Selector `json:"clusterIntranetSubnetIdSelector,omitempty" tf:"-"`
+
+	// Enable internal or external access using an existing CLB.
+	// Enable internal or external access using an existing CLB.
+	ExistedLoadBalancerID *string `json:"existedLoadBalancerId,omitempty" tf:"existed_load_balancer_id,omitempty"`
 
 	// The LB parameter. Only used for public network access.
 	// The LB parameter. Only used for public network access.
@@ -96,8 +104,8 @@ type ClusterEndpointObservation struct {
 	// Domain name for cluster Kube-apiserver internet access.  Be careful if you modify value of this parameter, the cluster_external_endpoint value may be changed automatically too.
 	ClusterInternetDomain *string `json:"clusterInternetDomain,omitempty" tf:"cluster_internet_domain,omitempty"`
 
-	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
-	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
+	// Security group ID for internet cluster endpoint. NOTE: This argument must not be empty if cluster internet enabled.
+	// Security group ID for internet cluster endpoint. NOTE: This argument must not be empty if cluster internet enabled.
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
 
 	// Open intranet access or not.
@@ -108,6 +116,10 @@ type ClusterEndpointObservation struct {
 	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
 	ClusterIntranetDomain *string `json:"clusterIntranetDomain,omitempty" tf:"cluster_intranet_domain,omitempty"`
 
+	// Security group ID for intranet cluster endpoint.
+	// Security group ID for intranet cluster endpoint.
+	ClusterIntranetSecurityGroup *string `json:"clusterIntranetSecurityGroup,omitempty" tf:"cluster_intranet_security_group,omitempty"`
+
 	// Subnet id who can access this independent cluster, this field must and can only set  when cluster_intranet is true. cluster_intranet_subnet_id can not modify once be set.
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
 	ClusterIntranetSubnetID *string `json:"clusterIntranetSubnetId,omitempty" tf:"cluster_intranet_subnet_id,omitempty"`
@@ -116,20 +128,16 @@ type ClusterEndpointObservation struct {
 	// Domain name for access.
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
+	// Enable internal or external access using an existing CLB.
+	// Enable internal or external access using an existing CLB.
+	ExistedLoadBalancerID *string `json:"existedLoadBalancerId,omitempty" tf:"existed_load_balancer_id,omitempty"`
+
 	// The LB parameter. Only used for public network access.
 	// The LB parameter. Only used for public network access.
 	ExtensiveParameters *string `json:"extensiveParameters,omitempty" tf:"extensive_parameters,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// The Intranet address used for access.
-	// The Intranet address used for access.
-	KubeConfig *string `json:"kubeConfig,omitempty" tf:"kube_config,omitempty"`
-
-	// Kubernetes config of private network.
-	// Kubernetes config of private network.
-	KubeConfigIntranet *string `json:"kubeConfigIntranet,omitempty" tf:"kube_config_intranet,omitempty"`
 
 	// this argument was deprecated, use cluster_internet_security_group instead. Security policies for managed cluster internet, like:'192.168.1.0/24' or '113.116.51.27', '0.0.0.0/0' means all. This field can only set when field cluster_deploy_type is 'MANAGED_CLUSTER' and cluster_internet is true. managed_cluster_internet_security_policies can not delete or empty once be set.
 	// Security policies for managed cluster internet, like:'192.168.1.0/24' or '113.116.51.27', '0.0.0.0/0' means all. This field can only set when field `cluster_deploy_type` is 'MANAGED_CLUSTER' and `cluster_internet` is true. `managed_cluster_internet_security_policies` can not delete or empty once be set.
@@ -170,8 +178,8 @@ type ClusterEndpointParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterInternetDomain *string `json:"clusterInternetDomain,omitempty" tf:"cluster_internet_domain,omitempty"`
 
-	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
-	// Specify security group, NOTE: This argument must not be empty if cluster internet enabled.
+	// Security group ID for internet cluster endpoint. NOTE: This argument must not be empty if cluster internet enabled.
+	// Security group ID for internet cluster endpoint. NOTE: This argument must not be empty if cluster internet enabled.
 	// +kubebuilder:validation:Optional
 	ClusterInternetSecurityGroup *string `json:"clusterInternetSecurityGroup,omitempty" tf:"cluster_internet_security_group,omitempty"`
 
@@ -184,6 +192,11 @@ type ClusterEndpointParameters struct {
 	// Domain name for cluster Kube-apiserver intranet access. Be careful if you modify value of this parameter, the pgw_endpoint value may be changed automatically too.
 	// +kubebuilder:validation:Optional
 	ClusterIntranetDomain *string `json:"clusterIntranetDomain,omitempty" tf:"cluster_intranet_domain,omitempty"`
+
+	// Security group ID for intranet cluster endpoint.
+	// Security group ID for intranet cluster endpoint.
+	// +kubebuilder:validation:Optional
+	ClusterIntranetSecurityGroup *string `json:"clusterIntranetSecurityGroup,omitempty" tf:"cluster_intranet_security_group,omitempty"`
 
 	// Subnet id who can access this independent cluster, this field must and can only set  when cluster_intranet is true. cluster_intranet_subnet_id can not modify once be set.
 	// Subnet id who can access this independent cluster, this field must and can only set  when `cluster_intranet` is true. `cluster_intranet_subnet_id` can not modify once be set.
@@ -198,6 +211,11 @@ type ClusterEndpointParameters struct {
 	// Selector for a Subnet in vpc to populate clusterIntranetSubnetId.
 	// +kubebuilder:validation:Optional
 	ClusterIntranetSubnetIDSelector *v1.Selector `json:"clusterIntranetSubnetIdSelector,omitempty" tf:"-"`
+
+	// Enable internal or external access using an existing CLB.
+	// Enable internal or external access using an existing CLB.
+	// +kubebuilder:validation:Optional
+	ExistedLoadBalancerID *string `json:"existedLoadBalancerId,omitempty" tf:"existed_load_balancer_id,omitempty"`
 
 	// The LB parameter. Only used for public network access.
 	// The LB parameter. Only used for public network access.

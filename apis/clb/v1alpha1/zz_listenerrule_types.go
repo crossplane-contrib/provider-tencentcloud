@@ -130,16 +130,16 @@ type ListenerRuleInitParameters struct {
 	// Whether to enable QUIC. Note: QUIC can be enabled only for HTTPS domain names.
 	Quic *bool `json:"quic,omitempty" tf:"quic,omitempty"`
 
-	// Scheduling method of the CLB listener rules. Valid values: WRR, IP HASH, LEAST_CONN. The default is WRR.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
-	// Scheduling method of the CLB listener rules. Valid values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Scheduling method of the CLB listener rules. Valid values: WRR, IP HASH, LEAST_CONN. The default is WRR when target_type is not TARGETGROUP-V2.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
+	// Scheduling method of the CLB listener rules. Valid values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR` when `target_type` is not `TARGETGROUP-V2`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
 
-	// Time of session persistence within the CLB listener. NOTES: Available when scheduler is specified as WRR, and not available when listener protocol is TCP_SSL.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
-	// Time of session persistence within the CLB listener. NOTES: Available when scheduler is specified as `WRR`, and not available when listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Session Persistence Duration. Setting this to 0 disables session persistence; to enable it, the value must be between 30 and 86,400 (inclusive), in seconds.
+	// Session Persistence Duration. Setting this to 0 disables session persistence; to enable it, the value must be between 30 and 86,400 (inclusive), in seconds.
 	SessionExpireTime *float64 `json:"sessionExpireTime,omitempty" tf:"session_expire_time,omitempty"`
 
-	// Backend target type. Valid values: NODE, TARGETGROUP. NODE means to bind ordinary nodes, TARGETGROUP means to bind target group.
-	// Backend target type. Valid values: `NODE`, `TARGETGROUP`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group.
+	// Backend target type. Valid values: NODE, TARGETGROUP, TARGETGROUP-V2. NODE means to bind ordinary nodes, TARGETGROUP means to bind target group.
+	// Backend target type. Valid values: `NODE`, `TARGETGROUP`, `TARGETGROUP-V2`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group.
 	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
 
 	// Url of the listener rule.
@@ -291,16 +291,16 @@ type ListenerRuleObservation struct {
 	// ID of this CLB listener rule.
 	RuleID *string `json:"ruleId,omitempty" tf:"rule_id,omitempty"`
 
-	// Scheduling method of the CLB listener rules. Valid values: WRR, IP HASH, LEAST_CONN. The default is WRR.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
-	// Scheduling method of the CLB listener rules. Valid values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Scheduling method of the CLB listener rules. Valid values: WRR, IP HASH, LEAST_CONN. The default is WRR when target_type is not TARGETGROUP-V2.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
+	// Scheduling method of the CLB listener rules. Valid values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR` when `target_type` is not `TARGETGROUP-V2`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
 
-	// Time of session persistence within the CLB listener. NOTES: Available when scheduler is specified as WRR, and not available when listener protocol is TCP_SSL.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
-	// Time of session persistence within the CLB listener. NOTES: Available when scheduler is specified as `WRR`, and not available when listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Session Persistence Duration. Setting this to 0 disables session persistence; to enable it, the value must be between 30 and 86,400 (inclusive), in seconds.
+	// Session Persistence Duration. Setting this to 0 disables session persistence; to enable it, the value must be between 30 and 86,400 (inclusive), in seconds.
 	SessionExpireTime *float64 `json:"sessionExpireTime,omitempty" tf:"session_expire_time,omitempty"`
 
-	// Backend target type. Valid values: NODE, TARGETGROUP. NODE means to bind ordinary nodes, TARGETGROUP means to bind target group.
-	// Backend target type. Valid values: `NODE`, `TARGETGROUP`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group.
+	// Backend target type. Valid values: NODE, TARGETGROUP, TARGETGROUP-V2. NODE means to bind ordinary nodes, TARGETGROUP means to bind target group.
+	// Backend target type. Valid values: `NODE`, `TARGETGROUP`, `TARGETGROUP-V2`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group.
 	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
 
 	// Url of the listener rule.
@@ -449,18 +449,18 @@ type ListenerRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	Quic *bool `json:"quic,omitempty" tf:"quic,omitempty"`
 
-	// Scheduling method of the CLB listener rules. Valid values: WRR, IP HASH, LEAST_CONN. The default is WRR.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
-	// Scheduling method of the CLB listener rules. Valid values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Scheduling method of the CLB listener rules. Valid values: WRR, IP HASH, LEAST_CONN. The default is WRR when target_type is not TARGETGROUP-V2.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
+	// Scheduling method of the CLB listener rules. Valid values: `WRR`, `IP HASH`, `LEAST_CONN`. The default is `WRR` when `target_type` is not `TARGETGROUP-V2`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
 	// +kubebuilder:validation:Optional
 	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
 
-	// Time of session persistence within the CLB listener. NOTES: Available when scheduler is specified as WRR, and not available when listener protocol is TCP_SSL.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in tencentcloud_clb_listener_rule.
-	// Time of session persistence within the CLB listener. NOTES: Available when scheduler is specified as `WRR`, and not available when listener protocol is `TCP_SSL`.  NOTES: TCP/UDP/TCP_SSL listener allows direct configuration, HTTP/HTTPS listener needs to be configured in `tencentcloud_clb_listener_rule`.
+	// Session Persistence Duration. Setting this to 0 disables session persistence; to enable it, the value must be between 30 and 86,400 (inclusive), in seconds.
+	// Session Persistence Duration. Setting this to 0 disables session persistence; to enable it, the value must be between 30 and 86,400 (inclusive), in seconds.
 	// +kubebuilder:validation:Optional
 	SessionExpireTime *float64 `json:"sessionExpireTime,omitempty" tf:"session_expire_time,omitempty"`
 
-	// Backend target type. Valid values: NODE, TARGETGROUP. NODE means to bind ordinary nodes, TARGETGROUP means to bind target group.
-	// Backend target type. Valid values: `NODE`, `TARGETGROUP`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group.
+	// Backend target type. Valid values: NODE, TARGETGROUP, TARGETGROUP-V2. NODE means to bind ordinary nodes, TARGETGROUP means to bind target group.
+	// Backend target type. Valid values: `NODE`, `TARGETGROUP`, `TARGETGROUP-V2`. `NODE` means to bind ordinary nodes, `TARGETGROUP` means to bind target group.
 	// +kubebuilder:validation:Optional
 	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
 

@@ -16,6 +16,9 @@ spec:
     isPublic: true
     name: example
     severity: medium
+    tags:
+      createdBy: terraform
+      env: production
 
 ---
 

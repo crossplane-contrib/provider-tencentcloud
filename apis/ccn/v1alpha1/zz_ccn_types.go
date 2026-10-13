@@ -27,6 +27,10 @@ type CCNInitParameters struct {
 	// Description of CCN, and maximum length does not exceed 100 bytes.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Instance metering type. Valid values: BANDWIDTH (bandwidth billing), TRAFFIC (traffic billing). This parameter cannot be modified after creation.
+	// Instance metering type. Valid values: `BANDWIDTH` (bandwidth billing), `TRAFFIC` (traffic billing). This parameter cannot be modified after creation.
+	InstanceMeteringType *string `json:"instanceMeteringType,omitempty" tf:"instance_metering_type,omitempty"`
+
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -35,12 +39,12 @@ type CCNInitParameters struct {
 	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
-	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
-	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+	// Whether to enable the equivalent routing function. true: enabled, false: disabled. Default is false.
+	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled. Default is false.
 	RouteEcmpFlag *bool `json:"routeEcmpFlag,omitempty" tf:"route_ecmp_flag,omitempty"`
 
-	// Whether to enable the routing overlap function. true: enabled, false: disabled.
-	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+	// Whether to enable the routing overlap function. true: enabled, false: disabled. Default is true, cannot set to false.
+	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled. Default is true, cannot set to false.
 	RouteOverlapFlag *bool `json:"routeOverlapFlag,omitempty" tf:"route_overlap_flag,omitempty"`
 
 	// Instance tag.
@@ -74,6 +78,10 @@ type CCNObservation struct {
 	// Number of attached instances.
 	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
 
+	// Instance metering type. Valid values: BANDWIDTH (bandwidth billing), TRAFFIC (traffic billing). This parameter cannot be modified after creation.
+	// Instance metering type. Valid values: `BANDWIDTH` (bandwidth billing), `TRAFFIC` (traffic billing). This parameter cannot be modified after creation.
+	InstanceMeteringType *string `json:"instanceMeteringType,omitempty" tf:"instance_metering_type,omitempty"`
+
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -82,12 +90,12 @@ type CCNObservation struct {
 	// CCN service quality, 'PT': Platinum, 'AU': Gold, 'AG': Silver. The default is 'AU'.
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
-	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
-	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+	// Whether to enable the equivalent routing function. true: enabled, false: disabled. Default is false.
+	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled. Default is false.
 	RouteEcmpFlag *bool `json:"routeEcmpFlag,omitempty" tf:"route_ecmp_flag,omitempty"`
 
-	// Whether to enable the routing overlap function. true: enabled, false: disabled.
-	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+	// Whether to enable the routing overlap function. true: enabled, false: disabled. Default is true, cannot set to false.
+	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled. Default is true, cannot set to false.
 	RouteOverlapFlag *bool `json:"routeOverlapFlag,omitempty" tf:"route_overlap_flag,omitempty"`
 
 	// States of instance. Valid values: ISOLATED(arrears) and AVAILABLE.
@@ -117,6 +125,11 @@ type CCNParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Instance metering type. Valid values: BANDWIDTH (bandwidth billing), TRAFFIC (traffic billing). This parameter cannot be modified after creation.
+	// Instance metering type. Valid values: `BANDWIDTH` (bandwidth billing), `TRAFFIC` (traffic billing). This parameter cannot be modified after creation.
+	// +kubebuilder:validation:Optional
+	InstanceMeteringType *string `json:"instanceMeteringType,omitempty" tf:"instance_metering_type,omitempty"`
+
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	// Name of the CCN to be queried, and maximum length does not exceed 60 bytes.
 	// +kubebuilder:validation:Optional
@@ -127,13 +140,13 @@ type CCNParameters struct {
 	// +kubebuilder:validation:Optional
 	Qos *string `json:"qos,omitempty" tf:"qos,omitempty"`
 
-	// Whether to enable the equivalent routing function. true: enabled, false: disabled.
-	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled.
+	// Whether to enable the equivalent routing function. true: enabled, false: disabled. Default is false.
+	// Whether to enable the equivalent routing function. `true`: enabled, `false`: disabled. Default is false.
 	// +kubebuilder:validation:Optional
 	RouteEcmpFlag *bool `json:"routeEcmpFlag,omitempty" tf:"route_ecmp_flag,omitempty"`
 
-	// Whether to enable the routing overlap function. true: enabled, false: disabled.
-	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled.
+	// Whether to enable the routing overlap function. true: enabled, false: disabled. Default is true, cannot set to false.
+	// Whether to enable the routing overlap function. `true`: enabled, `false`: disabled. Default is true, cannot set to false.
 	// +kubebuilder:validation:Optional
 	RouteOverlapFlag *bool `json:"routeOverlapFlag,omitempty" tf:"route_overlap_flag,omitempty"`
 

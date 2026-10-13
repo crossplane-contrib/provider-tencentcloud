@@ -339,8 +339,8 @@ type InstanceParameters struct {
 
 type LoginConfigurationInitParameters struct {
 
-	// whether auto generate password. if false, need set password.
-	// whether auto generate password. if false, need set password.
+	// YES represents selecting to automatically generate a password, without specifying the Password field. NO represents selecting a custom password, in which case the Password field needs to be specified.
+	// `YES` represents selecting to automatically generate a password, without specifying the Password field. `NO` represents selecting a custom password, in which case the Password field needs to be specified.
 	AutoGeneratePassword *string `json:"autoGeneratePassword,omitempty" tf:"auto_generate_password,omitempty"`
 
 	// Login password.
@@ -350,8 +350,8 @@ type LoginConfigurationInitParameters struct {
 
 type LoginConfigurationObservation struct {
 
-	// whether auto generate password. if false, need set password.
-	// whether auto generate password. if false, need set password.
+	// YES represents selecting to automatically generate a password, without specifying the Password field. NO represents selecting a custom password, in which case the Password field needs to be specified.
+	// `YES` represents selecting to automatically generate a password, without specifying the Password field. `NO` represents selecting a custom password, in which case the Password field needs to be specified.
 	AutoGeneratePassword *string `json:"autoGeneratePassword,omitempty" tf:"auto_generate_password,omitempty"`
 
 	// Login password.
@@ -361,8 +361,8 @@ type LoginConfigurationObservation struct {
 
 type LoginConfigurationParameters struct {
 
-	// whether auto generate password. if false, need set password.
-	// whether auto generate password. if false, need set password.
+	// YES represents selecting to automatically generate a password, without specifying the Password field. NO represents selecting a custom password, in which case the Password field needs to be specified.
+	// `YES` represents selecting to automatically generate a password, without specifying the Password field. `NO` represents selecting a custom password, in which case the Password field needs to be specified.
 	// +kubebuilder:validation:Optional
 	AutoGeneratePassword *string `json:"autoGeneratePassword" tf:"auto_generate_password,omitempty"`
 

@@ -162,6 +162,16 @@ spec:
                       Indicates whether automatic forwarding is enable, default is false. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
                       Indicates whether automatic forwarding is enable, default is `false`. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
                     type: boolean
+                  rewriteCode:
+                    description: |-
+                      Redirection status codes, with possible values of 301, 302, 307.
+                      Redirection status codes, with possible values of `301`, `302`, `307`.
+                    type: number
+                  sourceDomian:
+                    description: |-
+                      The domain name for source forwarding must be the domain name corresponding to source_rule_id, which is required when configuring rewrite_code. Only support is_auto_rewrite is false.
+                      The domain name for source forwarding must be the domain name corresponding to `source_rule_id`, which is required when configuring `rewrite_code`. Only support `is_auto_rewrite` is `false`.
+                    type: string
                   sourceListenerId:
                     description: |-
                       ID of source listener.
@@ -320,6 +330,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  takeUrl:
+                    description: |-
+                      Whether the redirect carries a matching URL is required when configuring rewrite_code.
+                      Whether the redirect carries a matching URL is required when configuring `rewrite_code`.
+                    type: boolean
                   targetListenerId:
                     description: |-
                       ID of source listener.
@@ -581,6 +596,16 @@ spec:
                       Indicates whether automatic forwarding is enable, default is false. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
                       Indicates whether automatic forwarding is enable, default is `false`. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
                     type: boolean
+                  rewriteCode:
+                    description: |-
+                      Redirection status codes, with possible values of 301, 302, 307.
+                      Redirection status codes, with possible values of `301`, `302`, `307`.
+                    type: number
+                  sourceDomian:
+                    description: |-
+                      The domain name for source forwarding must be the domain name corresponding to source_rule_id, which is required when configuring rewrite_code. Only support is_auto_rewrite is false.
+                      The domain name for source forwarding must be the domain name corresponding to `source_rule_id`, which is required when configuring `rewrite_code`. Only support `is_auto_rewrite` is `false`.
+                    type: string
                   sourceListenerId:
                     description: |-
                       ID of source listener.
@@ -739,6 +764,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  takeUrl:
+                    description: |-
+                      Whether the redirect carries a matching URL is required when configuring rewrite_code.
+                      Whether the redirect carries a matching URL is required when configuring `rewrite_code`.
+                    type: boolean
                   targetListenerId:
                     description: |-
                       ID of source listener.
@@ -1088,6 +1118,16 @@ spec:
                       Indicates whether automatic forwarding is enable, default is false. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
                       Indicates whether automatic forwarding is enable, default is `false`. If enabled, the source listener and location should be empty, the target listener must be https protocol and port is 443.
                     type: boolean
+                  rewriteCode:
+                    description: |-
+                      Redirection status codes, with possible values of 301, 302, 307.
+                      Redirection status codes, with possible values of `301`, `302`, `307`.
+                    type: number
+                  sourceDomian:
+                    description: |-
+                      The domain name for source forwarding must be the domain name corresponding to source_rule_id, which is required when configuring rewrite_code. Only support is_auto_rewrite is false.
+                      The domain name for source forwarding must be the domain name corresponding to `source_rule_id`, which is required when configuring `rewrite_code`. Only support `is_auto_rewrite` is `false`.
+                    type: string
                   sourceListenerId:
                     description: |-
                       ID of source listener.
@@ -1098,6 +1138,11 @@ spec:
                       Rule ID of source listener.
                       Rule ID of source listener.
                     type: string
+                  takeUrl:
+                    description: |-
+                      Whether the redirect carries a matching URL is required when configuring rewrite_code.
+                      Whether the redirect carries a matching URL is required when configuring `rewrite_code`.
+                    type: boolean
                   targetListenerId:
                     description: |-
                       ID of source listener.

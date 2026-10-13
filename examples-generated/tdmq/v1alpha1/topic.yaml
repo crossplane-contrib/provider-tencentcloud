@@ -17,6 +17,9 @@ spec:
     partitions: 6
     pulsarTopicType: 3
     remark: remark.
+    tags:
+      env: test
+      team: backend
     topicName: tf-example-topic
 
 ---

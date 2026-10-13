@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: RoleSSO is the Schema for the RoleSSOs API. Provides a resource
-          to create a CAM-ROLE-SSO (Only support OIDC).
+          to create a CAM-ROLE-SSO(Only support OIDC).
         properties:
           apiVersion:
             description: |-
@@ -73,6 +73,11 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  autoRotateKey:
+                    description: |-
+                      OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+                      OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+                    type: number
                   clientIds:
                     description: |-
                       Client ids.
@@ -88,8 +93,8 @@ spec:
                     type: string
                   identityKey:
                     description: |-
-                      Sign the public key.
-                      Sign the public key.
+                      Sign the public key. Base64 encryption is required.
+                      Sign the public key. Base64 encryption is required.
                     type: string
                   identityUrl:
                     description: |-
@@ -115,6 +120,11 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  autoRotateKey:
+                    description: |-
+                      OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+                      OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+                    type: number
                   clientIds:
                     description: |-
                       Client ids.
@@ -130,8 +140,8 @@ spec:
                     type: string
                   identityKey:
                     description: |-
-                      Sign the public key.
-                      Sign the public key.
+                      Sign the public key. Base64 encryption is required.
+                      Sign the public key. Base64 encryption is required.
                     type: string
                   identityUrl:
                     description: |-
@@ -333,6 +343,11 @@ spec:
             properties:
               atProvider:
                 properties:
+                  autoRotateKey:
+                    description: |-
+                      OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+                      OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+                    type: number
                   clientIds:
                     description: |-
                       Client ids.
@@ -351,8 +366,8 @@ spec:
                     type: string
                   identityKey:
                     description: |-
-                      Sign the public key.
-                      Sign the public key.
+                      Sign the public key. Base64 encryption is required.
+                      Sign the public key. Base64 encryption is required.
                     type: string
                   identityUrl:
                     description: |-

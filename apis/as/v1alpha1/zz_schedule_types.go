@@ -19,6 +19,17 @@ type ScheduleInitParameters struct {
 	// The desired number of CVM instances that should be running in the group.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// This flag disables the normal update of the DesiredCapacityproperty that would otherwise occur when a scheduled scaling task is triggered.
+	// Specifies whether the scheduled task triggers proactive modification of the DesiredCapacity when the value is True. DesiredCapacity may be modified by the minSize and maxSize mechanism.
+	// The following cases assume that DisableUpdateDesiredCapacity is True:
+	// This flag disables the normal update of the DesiredCapacityproperty that would otherwise occur when a scheduled scaling task is triggered.
+	// Specifies whether the scheduled task triggers proactive modification of the DesiredCapacity when the value is True. DesiredCapacity may be modified by the minSize and maxSize mechanism.
+	// The following cases assume that DisableUpdateDesiredCapacity is True:
+	// - When scheduled task triggered, the original DesiredCapacity is 5. The scheduled task changes the minSize to 10, the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect. However, the original DesiredCapacity 5 is less than minSize 10, so the final new DesiredCapacity is 10.
+	// - When scheduled task triggered, the original DesiredCapacity is 25. The scheduled task changes the minSize to 10 and the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect. However, the original DesiredCapacity 25 is greater than the maxSize 20, so the final new DesiredCapacity is 20.
+	// - When scheduled task triggered, the original DesiredCapacity is 13. The scheduled task changes the minSize to 10 and the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect, and the DesiredCapacity is still 13.
+	DisableUpdateDesiredCapacity *bool `json:"disableUpdateDesiredCapacity,omitempty" tf:"disable_update_desired_capacity,omitempty"`
+
 	// The time for this action to end, in "YYYY-MM-DDThh:mm:ss+08:00" format (UTC+8).
 	// The time for this action to end, in "YYYY-MM-DDThh:mm:ss+08:00" format (UTC+8).
 	EndTime *string `json:"endTime,omitempty" tf:"end_time,omitempty"`
@@ -63,6 +74,17 @@ type ScheduleObservation struct {
 	// The desired number of CVM instances that should be running in the group.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// This flag disables the normal update of the DesiredCapacityproperty that would otherwise occur when a scheduled scaling task is triggered.
+	// Specifies whether the scheduled task triggers proactive modification of the DesiredCapacity when the value is True. DesiredCapacity may be modified by the minSize and maxSize mechanism.
+	// The following cases assume that DisableUpdateDesiredCapacity is True:
+	// This flag disables the normal update of the DesiredCapacityproperty that would otherwise occur when a scheduled scaling task is triggered.
+	// Specifies whether the scheduled task triggers proactive modification of the DesiredCapacity when the value is True. DesiredCapacity may be modified by the minSize and maxSize mechanism.
+	// The following cases assume that DisableUpdateDesiredCapacity is True:
+	// - When scheduled task triggered, the original DesiredCapacity is 5. The scheduled task changes the minSize to 10, the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect. However, the original DesiredCapacity 5 is less than minSize 10, so the final new DesiredCapacity is 10.
+	// - When scheduled task triggered, the original DesiredCapacity is 25. The scheduled task changes the minSize to 10 and the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect. However, the original DesiredCapacity 25 is greater than the maxSize 20, so the final new DesiredCapacity is 20.
+	// - When scheduled task triggered, the original DesiredCapacity is 13. The scheduled task changes the minSize to 10 and the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect, and the DesiredCapacity is still 13.
+	DisableUpdateDesiredCapacity *bool `json:"disableUpdateDesiredCapacity,omitempty" tf:"disable_update_desired_capacity,omitempty"`
+
 	// The time for this action to end, in "YYYY-MM-DDThh:mm:ss+08:00" format (UTC+8).
 	// The time for this action to end, in "YYYY-MM-DDThh:mm:ss+08:00" format (UTC+8).
 	EndTime *string `json:"endTime,omitempty" tf:"end_time,omitempty"`
@@ -101,6 +123,18 @@ type ScheduleParameters struct {
 	// The desired number of CVM instances that should be running in the group.
 	// +kubebuilder:validation:Optional
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
+
+	// This flag disables the normal update of the DesiredCapacityproperty that would otherwise occur when a scheduled scaling task is triggered.
+	// Specifies whether the scheduled task triggers proactive modification of the DesiredCapacity when the value is True. DesiredCapacity may be modified by the minSize and maxSize mechanism.
+	// The following cases assume that DisableUpdateDesiredCapacity is True:
+	// This flag disables the normal update of the DesiredCapacityproperty that would otherwise occur when a scheduled scaling task is triggered.
+	// Specifies whether the scheduled task triggers proactive modification of the DesiredCapacity when the value is True. DesiredCapacity may be modified by the minSize and maxSize mechanism.
+	// The following cases assume that DisableUpdateDesiredCapacity is True:
+	// - When scheduled task triggered, the original DesiredCapacity is 5. The scheduled task changes the minSize to 10, the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect. However, the original DesiredCapacity 5 is less than minSize 10, so the final new DesiredCapacity is 10.
+	// - When scheduled task triggered, the original DesiredCapacity is 25. The scheduled task changes the minSize to 10 and the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect. However, the original DesiredCapacity 25 is greater than the maxSize 20, so the final new DesiredCapacity is 20.
+	// - When scheduled task triggered, the original DesiredCapacity is 13. The scheduled task changes the minSize to 10 and the maxSize to 20, and the DesiredCapacity to 15. Since the DesiredCapacity update is disabled, 15 does not take effect, and the DesiredCapacity is still 13.
+	// +kubebuilder:validation:Optional
+	DisableUpdateDesiredCapacity *bool `json:"disableUpdateDesiredCapacity,omitempty" tf:"disable_update_desired_capacity,omitempty"`
 
 	// The time for this action to end, in "YYYY-MM-DDThh:mm:ss+08:00" format (UTC+8).
 	// The time for this action to end, in "YYYY-MM-DDThh:mm:ss+08:00" format (UTC+8).

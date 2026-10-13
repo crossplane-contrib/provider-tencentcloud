@@ -23,8 +23,8 @@ type InstanceInitParameters struct {
 	// The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID. Note: TencentCloud International only supports POSTPAID. Caution that update operation on this field will delete old instances and create new with new charge type.
-	// The charge type of instance. Valid values: `PREPAID` and `POSTPAID`. Default value is `POSTPAID`. Note: TencentCloud International only supports `POSTPAID`. Caution that update operation on this field will delete old instances and create new with new charge type.
+	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID.
+	// The charge type of instance. Valid values: `PREPAID` and `POSTPAID`. Default value is `POSTPAID`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
 	// Indicate whether to delete Redis instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin.
@@ -113,8 +113,8 @@ type InstanceInitParameters struct {
 	// Instance type. Available values: `cluster_ckv`,`cluster_redis5.0`,`cluster_redis`,`master_slave_ckv`,`master_slave_redis4.0`,`master_slave_redis5.0`,`master_slave_redis`,`standalone_redis`, specific region support specific types, need to refer data `tencentcloud_redis_zone_config`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Instance type. Available values reference data source tencentcloud_redis_zone_config or document, toggle immediately when modified.
-	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.
+	// Instance type. Available values reference data source tencentcloud_redis_zone_config or document, toggle immediately when modified.2: Redis 2.8 Memory Edition (standard architecture); 3: CKV 3.2 Memory Edition (standard architecture); 4: CKV 3.2 Memory Edition (cluster architecture); 6: Redis 4.0 Memory Edition (standard architecture); 7: Redis 4.0 Memory Edition (cluster architecture); 8: Redis 5.0 Memory Edition (standard architecture); 9: Redis 5.0 Memory Edition (cluster architecture); 15: Redis 6.2 Memory Edition (standard architecture); 16: Redis 6.2 Memory Edition (cluster architecture); 17: Redis 7.0 Memory Edition (standard architecture); 18: Redis 7.0 Memory Edition (cluster architecture).  200: Memcached 1.6 Memory Edition (cluster architecture). Note: The CKV version is currently used by existing users and is temporarily retained..
+	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.<ul><li>2: Redis 2.8 Memory Edition (standard architecture);</li> <li>3: CKV 3.2 Memory Edition (standard architecture);</li> <li>4: CKV 3.2 Memory Edition (cluster architecture);</li> <li>6: Redis 4.0 Memory Edition (standard architecture);</li> <li>7: Redis 4.0 Memory Edition (cluster architecture);</li> <li>8: Redis 5.0 Memory Edition (standard architecture);</li> <li>9: Redis 5.0 Memory Edition (cluster architecture);</li> <li>15: Redis 6.2 Memory Edition (standard architecture);</li> <li>16: Redis 6.2 Memory Edition (cluster architecture);</li> <li>17: Redis 7.0 Memory Edition (standard architecture);</li> <li>18: Redis 7.0 Memory Edition (cluster architecture). </li> <li>200: Memcached 1.6 Memory Edition (cluster architecture). </li>Note: The CKV version is currently used by existing users and is temporarily retained.</ul>.
 	TypeID *float64 `json:"typeId,omitempty" tf:"type_id,omitempty"`
 
 	// ID of the vpc with which the instance is to be associated. When the operation_network is changeVpc or changeBaseToVpc, this parameter needs to be configured.
@@ -140,8 +140,8 @@ type InstanceObservation struct {
 	// The available zone of an instance to be created, like `ap-beijing-7`, please refer to `tencentcloud_redis_zone_config.list`.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID. Note: TencentCloud International only supports POSTPAID. Caution that update operation on this field will delete old instances and create new with new charge type.
-	// The charge type of instance. Valid values: `PREPAID` and `POSTPAID`. Default value is `POSTPAID`. Note: TencentCloud International only supports `POSTPAID`. Caution that update operation on this field will delete old instances and create new with new charge type.
+	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID.
+	// The charge type of instance. Valid values: `PREPAID` and `POSTPAID`. Default value is `POSTPAID`.
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
 	// The time when the instance was created.
@@ -249,8 +249,8 @@ type InstanceObservation struct {
 	// Instance type. Available values: `cluster_ckv`,`cluster_redis5.0`,`cluster_redis`,`master_slave_ckv`,`master_slave_redis4.0`,`master_slave_redis5.0`,`master_slave_redis`,`standalone_redis`, specific region support specific types, need to refer data `tencentcloud_redis_zone_config`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Instance type. Available values reference data source tencentcloud_redis_zone_config or document, toggle immediately when modified.
-	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.
+	// Instance type. Available values reference data source tencentcloud_redis_zone_config or document, toggle immediately when modified.2: Redis 2.8 Memory Edition (standard architecture); 3: CKV 3.2 Memory Edition (standard architecture); 4: CKV 3.2 Memory Edition (cluster architecture); 6: Redis 4.0 Memory Edition (standard architecture); 7: Redis 4.0 Memory Edition (cluster architecture); 8: Redis 5.0 Memory Edition (standard architecture); 9: Redis 5.0 Memory Edition (cluster architecture); 15: Redis 6.2 Memory Edition (standard architecture); 16: Redis 6.2 Memory Edition (cluster architecture); 17: Redis 7.0 Memory Edition (standard architecture); 18: Redis 7.0 Memory Edition (cluster architecture).  200: Memcached 1.6 Memory Edition (cluster architecture). Note: The CKV version is currently used by existing users and is temporarily retained..
+	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.<ul><li>2: Redis 2.8 Memory Edition (standard architecture);</li> <li>3: CKV 3.2 Memory Edition (standard architecture);</li> <li>4: CKV 3.2 Memory Edition (cluster architecture);</li> <li>6: Redis 4.0 Memory Edition (standard architecture);</li> <li>7: Redis 4.0 Memory Edition (cluster architecture);</li> <li>8: Redis 5.0 Memory Edition (standard architecture);</li> <li>9: Redis 5.0 Memory Edition (cluster architecture);</li> <li>15: Redis 6.2 Memory Edition (standard architecture);</li> <li>16: Redis 6.2 Memory Edition (cluster architecture);</li> <li>17: Redis 7.0 Memory Edition (standard architecture);</li> <li>18: Redis 7.0 Memory Edition (cluster architecture). </li> <li>200: Memcached 1.6 Memory Edition (cluster architecture). </li>Note: The CKV version is currently used by existing users and is temporarily retained.</ul>.
 	TypeID *float64 `json:"typeId,omitempty" tf:"type_id,omitempty"`
 
 	// ID of the vpc with which the instance is to be associated. When the operation_network is changeVpc or changeBaseToVpc, this parameter needs to be configured.
@@ -282,8 +282,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID. Note: TencentCloud International only supports POSTPAID. Caution that update operation on this field will delete old instances and create new with new charge type.
-	// The charge type of instance. Valid values: `PREPAID` and `POSTPAID`. Default value is `POSTPAID`. Note: TencentCloud International only supports `POSTPAID`. Caution that update operation on this field will delete old instances and create new with new charge type.
+	// The charge type of instance. Valid values: PREPAID and POSTPAID. Default value is POSTPAID.
+	// The charge type of instance. Valid values: `PREPAID` and `POSTPAID`. Default value is `POSTPAID`.
 	// +kubebuilder:validation:Optional
 	ChargeType *string `json:"chargeType,omitempty" tf:"charge_type,omitempty"`
 
@@ -399,8 +399,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// Instance type. Available values reference data source tencentcloud_redis_zone_config or document, toggle immediately when modified.
-	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.
+	// Instance type. Available values reference data source tencentcloud_redis_zone_config or document, toggle immediately when modified.2: Redis 2.8 Memory Edition (standard architecture); 3: CKV 3.2 Memory Edition (standard architecture); 4: CKV 3.2 Memory Edition (cluster architecture); 6: Redis 4.0 Memory Edition (standard architecture); 7: Redis 4.0 Memory Edition (cluster architecture); 8: Redis 5.0 Memory Edition (standard architecture); 9: Redis 5.0 Memory Edition (cluster architecture); 15: Redis 6.2 Memory Edition (standard architecture); 16: Redis 6.2 Memory Edition (cluster architecture); 17: Redis 7.0 Memory Edition (standard architecture); 18: Redis 7.0 Memory Edition (cluster architecture).  200: Memcached 1.6 Memory Edition (cluster architecture). Note: The CKV version is currently used by existing users and is temporarily retained..
+	// Instance type. Available values reference data source `tencentcloud_redis_zone_config` or [document](https://intl.cloud.tencent.com/document/product/239/32069), toggle immediately when modified.<ul><li>2: Redis 2.8 Memory Edition (standard architecture);</li> <li>3: CKV 3.2 Memory Edition (standard architecture);</li> <li>4: CKV 3.2 Memory Edition (cluster architecture);</li> <li>6: Redis 4.0 Memory Edition (standard architecture);</li> <li>7: Redis 4.0 Memory Edition (cluster architecture);</li> <li>8: Redis 5.0 Memory Edition (standard architecture);</li> <li>9: Redis 5.0 Memory Edition (cluster architecture);</li> <li>15: Redis 6.2 Memory Edition (standard architecture);</li> <li>16: Redis 6.2 Memory Edition (cluster architecture);</li> <li>17: Redis 7.0 Memory Edition (standard architecture);</li> <li>18: Redis 7.0 Memory Edition (cluster architecture). </li> <li>200: Memcached 1.6 Memory Edition (cluster architecture). </li>Note: The CKV version is currently used by existing users and is temporarily retained.</ul>.
 	// +kubebuilder:validation:Optional
 	TypeID *float64 `json:"typeId,omitempty" tf:"type_id,omitempty"`
 

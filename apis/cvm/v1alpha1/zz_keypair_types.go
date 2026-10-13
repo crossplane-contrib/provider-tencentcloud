@@ -15,6 +15,10 @@ import (
 
 type KeyPairInitParameters struct {
 
+	// Whether to forcibly shut down a running instance. Default is false. Forcing a shutdown is equivalent to switching off the power button on a physical computer. Forcing a shutdown may result in data loss or file system corruption; therefore, please use this option only when the server cannot be shut down normally.
+	// Whether to forcibly shut down a running instance. Default is false. Forcing a shutdown is equivalent to switching off the power button on a physical computer. Forcing a shutdown may result in data loss or file system corruption; therefore, please use this option only when the server cannot be shut down normally.
+	ForceStop *bool `json:"forceStop,omitempty" tf:"force_stop,omitempty"`
+
 	// The key pair's name. It is the only in one TencentCloud account.
 	// The key pair's name. It is the only in one TencentCloud account.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
@@ -35,12 +39,24 @@ type KeyPairInitParameters struct {
 
 type KeyPairObservation struct {
 
+	// Creation time, which follows the ISO8601 standard and uses UTC time in the format of YYYY-MM-DDThh:mm:ssZ.
+	// Creation time, which follows the `ISO8601` standard and uses `UTC` time in the format of `YYYY-MM-DDThh:mm:ssZ`.
+	CreatedTime *string `json:"createdTime,omitempty" tf:"created_time,omitempty"`
+
+	// Whether to forcibly shut down a running instance. Default is false. Forcing a shutdown is equivalent to switching off the power button on a physical computer. Forcing a shutdown may result in data loss or file system corruption; therefore, please use this option only when the server cannot be shut down normally.
+	// Whether to forcibly shut down a running instance. Default is false. Forcing a shutdown is equivalent to switching off the power button on a physical computer. Forcing a shutdown may result in data loss or file system corruption; therefore, please use this option only when the server cannot be shut down normally.
+	ForceStop *bool `json:"forceStop,omitempty" tf:"force_stop,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The key pair's name. It is the only in one TencentCloud account.
 	// The key pair's name. It is the only in one TencentCloud account.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
+
+	// Content of private key in a key pair. Tencent Cloud do not keep private keys. Please keep it properly.
+	// Content of private key in a key pair. Tencent Cloud do not keep private keys. Please keep it properly.
+	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
 
 	// Specifys to which project the key pair belongs.
 	// Specifys to which project the key pair belongs.
@@ -57,6 +73,11 @@ type KeyPairObservation struct {
 }
 
 type KeyPairParameters struct {
+
+	// Whether to forcibly shut down a running instance. Default is false. Forcing a shutdown is equivalent to switching off the power button on a physical computer. Forcing a shutdown may result in data loss or file system corruption; therefore, please use this option only when the server cannot be shut down normally.
+	// Whether to forcibly shut down a running instance. Default is false. Forcing a shutdown is equivalent to switching off the power button on a physical computer. Forcing a shutdown may result in data loss or file system corruption; therefore, please use this option only when the server cannot be shut down normally.
+	// +kubebuilder:validation:Optional
+	ForceStop *bool `json:"forceStop,omitempty" tf:"force_stop,omitempty"`
 
 	// The key pair's name. It is the only in one TencentCloud account.
 	// The key pair's name. It is the only in one TencentCloud account.

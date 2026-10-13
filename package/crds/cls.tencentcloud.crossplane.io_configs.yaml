@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Config is the Schema for the Configs API. Provides a resource
-          to create a cls config
+          to create a CLS config
         properties:
           apiVersion:
             description: |-
@@ -218,10 +218,15 @@ spec:
                           type: boolean
                       type: object
                     type: array
+                  inputType:
+                    description: |-
+                      Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+                      Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+                    type: string
                   logType:
                     description: |-
-                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
-                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
+                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
+                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
                     type: string
                   name:
                     description: |-
@@ -402,10 +407,15 @@ spec:
                           type: boolean
                       type: object
                     type: array
+                  inputType:
+                    description: |-
+                      Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+                      Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+                    type: string
                   logType:
                     description: |-
-                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
-                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
+                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
+                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
                     type: string
                   name:
                     description: |-
@@ -757,10 +767,15 @@ spec:
                   id:
                     description: ID of the resource.
                     type: string
+                  inputType:
+                    description: |-
+                      Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+                      Log input type. Valid values: file: file type collection; windows_event: Windows event collection; syslog: system log collection.
+                    type: string
                   logType:
                     description: |-
-                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
-                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format. Default value: minimalist_log.
+                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
+                      Type of the log to be collected. Valid values: json_log: log in JSON format; delimiter_log: log in delimited format; minimalist_log: minimalist log; multiline_log: log in multi-line format; fullregex_log: log in full regex format; multiline_fullregex_log: log in multi-line and full regex format. Default value: minimalist_log.
                     type: string
                   name:
                     description: |-

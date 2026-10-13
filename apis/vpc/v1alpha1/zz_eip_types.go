@@ -68,8 +68,8 @@ type EipInitParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP. Default is EIP.
-	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
+	// The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP and ResidentialEIP. Default is EIP.
+	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP` and `ResidentialEIP`. Default is `EIP`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -139,8 +139,8 @@ type EipObservation struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP. Default is EIP.
-	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
+	// The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP and ResidentialEIP. Default is EIP.
+	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP` and `ResidentialEIP`. Default is `EIP`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -212,8 +212,8 @@ type EipParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP. Default is EIP.
-	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP`. Default is `EIP`.
+	// The type of eip. Valid value:  EIP and AnycastEIP and HighQualityEIP and AntiDDoSEIP and ResidentialEIP. Default is EIP.
+	// The type of eip. Valid value:  `EIP` and `AnycastEIP` and `HighQualityEIP` and `AntiDDoSEIP` and `ResidentialEIP`. Default is `EIP`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }

@@ -75,6 +75,14 @@ type AlarmPolicyInitParameters struct {
 	// +listType=set
 	GroupBy []*string `json:"groupBy,omitempty" tf:"group_by,omitempty"`
 
+	// Alarm hierarchical notice rules configuration.
+	// Alarm hierarchical notice rules configuration.
+	HierarchicalNotices []HierarchicalNoticesInitParameters `json:"hierarchicalNotices,omitempty" tf:"hierarchical_notices,omitempty"`
+
+	// Whether to bind all objects. If yes, no need to pass filter or call BindPolicyObject. Valid values: 0 (no, default), 1 (yes). Not all policy types support binding all objects. Immutable after creation.
+	// Whether to bind all objects. If yes, no need to pass `filter` or call `BindPolicyObject`. Valid values: `0` (no, default), `1` (yes). Not all policy types support binding all objects. Immutable after creation.
+	IsBindAll *float64 `json:"isBindAll,omitempty" tf:"is_bind_all,omitempty"`
+
 	// The type of monitor.
 	// The type of monitor.
 	MonitorType *string `json:"monitorType,omitempty" tf:"monitor_type,omitempty"`
@@ -82,6 +90,10 @@ type AlarmPolicyInitParameters struct {
 	// The type of alarm.
 	// The type of alarm.
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// Notice content template binding info.
+	// Notice content template binding info.
+	NoticeContentTmplBindInfos []NoticeContentTmplBindInfosInitParameters `json:"noticeContentTmplBindInfos,omitempty" tf:"notice_content_tmpl_bind_infos,omitempty"`
 
 	// List of notification rule IDs.
 	// List of notification rule IDs.
@@ -148,8 +160,16 @@ type AlarmPolicyObservation struct {
 	// +listType=set
 	GroupBy []*string `json:"groupBy,omitempty" tf:"group_by,omitempty"`
 
+	// Alarm hierarchical notice rules configuration.
+	// Alarm hierarchical notice rules configuration.
+	HierarchicalNotices []HierarchicalNoticesObservation `json:"hierarchicalNotices,omitempty" tf:"hierarchical_notices,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Whether to bind all objects. If yes, no need to pass filter or call BindPolicyObject. Valid values: 0 (no, default), 1 (yes). Not all policy types support binding all objects. Immutable after creation.
+	// Whether to bind all objects. If yes, no need to pass `filter` or call `BindPolicyObject`. Valid values: `0` (no, default), `1` (yes). Not all policy types support binding all objects. Immutable after creation.
+	IsBindAll *float64 `json:"isBindAll,omitempty" tf:"is_bind_all,omitempty"`
 
 	// The type of monitor.
 	// The type of monitor.
@@ -158,6 +178,10 @@ type AlarmPolicyObservation struct {
 	// The type of alarm.
 	// The type of alarm.
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// Notice content template binding info.
+	// Notice content template binding info.
+	NoticeContentTmplBindInfos []NoticeContentTmplBindInfosObservation `json:"noticeContentTmplBindInfos,omitempty" tf:"notice_content_tmpl_bind_infos,omitempty"`
 
 	// List of notification rule IDs.
 	// List of notification rule IDs.
@@ -221,6 +245,16 @@ type AlarmPolicyParameters struct {
 	// +listType=set
 	GroupBy []*string `json:"groupBy,omitempty" tf:"group_by,omitempty"`
 
+	// Alarm hierarchical notice rules configuration.
+	// Alarm hierarchical notice rules configuration.
+	// +kubebuilder:validation:Optional
+	HierarchicalNotices []HierarchicalNoticesParameters `json:"hierarchicalNotices,omitempty" tf:"hierarchical_notices,omitempty"`
+
+	// Whether to bind all objects. If yes, no need to pass filter or call BindPolicyObject. Valid values: 0 (no, default), 1 (yes). Not all policy types support binding all objects. Immutable after creation.
+	// Whether to bind all objects. If yes, no need to pass `filter` or call `BindPolicyObject`. Valid values: `0` (no, default), `1` (yes). Not all policy types support binding all objects. Immutable after creation.
+	// +kubebuilder:validation:Optional
+	IsBindAll *float64 `json:"isBindAll,omitempty" tf:"is_bind_all,omitempty"`
+
 	// The type of monitor.
 	// The type of monitor.
 	// +kubebuilder:validation:Optional
@@ -230,6 +264,11 @@ type AlarmPolicyParameters struct {
 	// The type of alarm.
 	// +kubebuilder:validation:Optional
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// Notice content template binding info.
+	// Notice content template binding info.
+	// +kubebuilder:validation:Optional
+	NoticeContentTmplBindInfos []NoticeContentTmplBindInfosParameters `json:"noticeContentTmplBindInfos,omitempty" tf:"notice_content_tmpl_bind_infos,omitempty"`
 
 	// List of notification rule IDs.
 	// List of notification rule IDs.
@@ -526,6 +565,79 @@ type FilterParameters struct {
 	// Filter condition type. Valid values: DIMENSION (uses dimensions for filtering).
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type HierarchicalNoticesInitParameters struct {
+
+	// Notification level list, e.g. ["Remind", "Serious"].
+	// Notification level list, e.g. ["Remind", "Serious"].
+	// +listType=set
+	Classification []*string `json:"classification,omitempty" tf:"classification,omitempty"`
+
+	// Notification template ID.
+	// Notification template ID.
+	NoticeID *string `json:"noticeId,omitempty" tf:"notice_id,omitempty"`
+}
+
+type HierarchicalNoticesObservation struct {
+
+	// Notification level list, e.g. ["Remind", "Serious"].
+	// Notification level list, e.g. ["Remind", "Serious"].
+	// +listType=set
+	Classification []*string `json:"classification,omitempty" tf:"classification,omitempty"`
+
+	// Notification template ID.
+	// Notification template ID.
+	NoticeID *string `json:"noticeId,omitempty" tf:"notice_id,omitempty"`
+}
+
+type HierarchicalNoticesParameters struct {
+
+	// Notification level list, e.g. ["Remind", "Serious"].
+	// Notification level list, e.g. ["Remind", "Serious"].
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	Classification []*string `json:"classification,omitempty" tf:"classification,omitempty"`
+
+	// Notification template ID.
+	// Notification template ID.
+	// +kubebuilder:validation:Optional
+	NoticeID *string `json:"noticeId" tf:"notice_id,omitempty"`
+}
+
+type NoticeContentTmplBindInfosInitParameters struct {
+
+	// Notification content template ID.
+	// Notification content template ID.
+	ContentTmplID *string `json:"contentTmplId,omitempty" tf:"content_tmpl_id,omitempty"`
+
+	// Notification template ID.
+	// Notification template ID.
+	NoticeID *string `json:"noticeId,omitempty" tf:"notice_id,omitempty"`
+}
+
+type NoticeContentTmplBindInfosObservation struct {
+
+	// Notification content template ID.
+	// Notification content template ID.
+	ContentTmplID *string `json:"contentTmplId,omitempty" tf:"content_tmpl_id,omitempty"`
+
+	// Notification template ID.
+	// Notification template ID.
+	NoticeID *string `json:"noticeId,omitempty" tf:"notice_id,omitempty"`
+}
+
+type NoticeContentTmplBindInfosParameters struct {
+
+	// Notification content template ID.
+	// Notification content template ID.
+	// +kubebuilder:validation:Optional
+	ContentTmplID *string `json:"contentTmplId" tf:"content_tmpl_id,omitempty"`
+
+	// Notification template ID.
+	// Notification template ID.
+	// +kubebuilder:validation:Optional
+	NoticeID *string `json:"noticeId" tf:"notice_id,omitempty"`
 }
 
 type PolicyTagInitParameters struct {

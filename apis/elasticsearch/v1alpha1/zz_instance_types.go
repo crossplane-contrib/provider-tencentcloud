@@ -116,13 +116,25 @@ type EsPublicACLParameters struct {
 
 type InstanceInitParameters struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted or -.
-	// Availability zone. When create multi-az es, this parameter must be omitted or `-`.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
 	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are 1 and 2. 1 is disabled, 2 is enabled, and default value is 1. Notice: this parameter is only take effect on basic license.
 	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
 	BasicSecurityType *float64 `json:"basicSecurityType,omitempty" tf:"basic_security_type,omitempty"`
+
+	// Cerebro private network access status. Valid values are OPEN and CLOSE.
+	// Cerebro private network access status. Valid values are `OPEN` and `CLOSE`.
+	CerebroPrivateAccess *string `json:"cerebroPrivateAccess,omitempty" tf:"cerebro_private_access,omitempty"`
+
+	// Cerebro private network custom domain.
+	// Cerebro private network custom domain.
+	CerebroPrivateDomain *string `json:"cerebroPrivateDomain,omitempty" tf:"cerebro_private_domain,omitempty"`
+
+	// Cerebro public network access status. Valid values are OPEN and CLOSE.
+	// Cerebro public network access status. Valid values are `OPEN` and `CLOSE`.
+	CerebroPublicAccess *string `json:"cerebroPublicAccess,omitempty" tf:"cerebro_public_access,omitempty"`
 
 	// The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to PREPAID.
 	// The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to `PREPAID`.
@@ -140,6 +152,14 @@ type InstanceInitParameters struct {
 	// Cluster deployment mode. Valid values are `0` and `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment. Default value is `0`.
 	DeployMode *float64 `json:"deployMode,omitempty" tf:"deploy_mode,omitempty"`
 
+	// Whether to enable Cerebro.
+	// Whether to enable Cerebro.
+	EnableCerebro *bool `json:"enableCerebro,omitempty" tf:"enable_cerebro,omitempty"`
+
+	// Cluster destroy protection status. Valid values are OPEN (enable protection) and CLOSE (disable protection).
+	// Cluster destroy protection status. Valid values are `OPEN` (enable protection) and `CLOSE` (disable protection).
+	EnableDestroyProtection *string `json:"enableDestroyProtection,omitempty" tf:"enable_destroy_protection,omitempty"`
+
 	// Kibana Access Control Configuration.
 	// Kibana Access Control Configuration.
 	EsACL []EsACLInitParameters `json:"esAcl,omitempty" tf:"es_acl,omitempty"`
@@ -148,9 +168,17 @@ type InstanceInitParameters struct {
 	// Public network access control list.
 	EsPublicACL []EsPublicACLInitParameters `json:"esPublicAcl,omitempty" tf:"es_public_acl,omitempty"`
 
+	// Whether to force delete the instance. Default is false. Set it to true while deleting the instance.
+	// Whether to force delete the instance. Default is `false`. Set it to `true` while deleting the instance.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Kibana private network access status. Valid values are OPEN and CLOSE.
+	// Kibana private network access status. Valid values are `OPEN` and `CLOSE`.
+	KibanaPrivateAccess *string `json:"kibanaPrivateAccess,omitempty" tf:"kibana_private_access,omitempty"`
 
 	// Kibana public network access status. Valid values are OPEN and CLOSE.
 	// Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
@@ -168,6 +196,10 @@ type InstanceInitParameters struct {
 	// Node information list, which is used to describe the specification information of various types of nodes in the cluster, such as node type, node quantity, node specification, disk type, and disk size.
 	NodeInfoList []NodeInfoListInitParameters `json:"nodeInfoList,omitempty" tf:"node_info_list,omitempty"`
 
+	// Create an https cluster, default is http.
+	// Create an https cluster, default is http.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
 	// ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
 	// ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
 	PublicAccess *string `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
@@ -176,8 +208,12 @@ type InstanceInitParameters struct {
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
 	RenewFlag *string `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+	// Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+	// Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+	SceneType *float64 `json:"sceneType,omitempty" tf:"scene_type,omitempty"`
+
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -218,13 +254,25 @@ type InstanceInitParameters struct {
 
 type InstanceObservation struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted or -.
-	// Availability zone. When create multi-az es, this parameter must be omitted or `-`.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
 	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are 1 and 2. 1 is disabled, 2 is enabled, and default value is 1. Notice: this parameter is only take effect on basic license.
 	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
 	BasicSecurityType *float64 `json:"basicSecurityType,omitempty" tf:"basic_security_type,omitempty"`
+
+	// Cerebro private network access status. Valid values are OPEN and CLOSE.
+	// Cerebro private network access status. Valid values are `OPEN` and `CLOSE`.
+	CerebroPrivateAccess *string `json:"cerebroPrivateAccess,omitempty" tf:"cerebro_private_access,omitempty"`
+
+	// Cerebro private network custom domain.
+	// Cerebro private network custom domain.
+	CerebroPrivateDomain *string `json:"cerebroPrivateDomain,omitempty" tf:"cerebro_private_domain,omitempty"`
+
+	// Cerebro public network access status. Valid values are OPEN and CLOSE.
+	// Cerebro public network access status. Valid values are `OPEN` and `CLOSE`.
+	CerebroPublicAccess *string `json:"cerebroPublicAccess,omitempty" tf:"cerebro_public_access,omitempty"`
 
 	// The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to PREPAID.
 	// The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to `PREPAID`.
@@ -258,6 +306,14 @@ type InstanceObservation struct {
 	// Elasticsearch VIP.
 	ElasticsearchVip *string `json:"elasticsearchVip,omitempty" tf:"elasticsearch_vip,omitempty"`
 
+	// Whether to enable Cerebro.
+	// Whether to enable Cerebro.
+	EnableCerebro *bool `json:"enableCerebro,omitempty" tf:"enable_cerebro,omitempty"`
+
+	// Cluster destroy protection status. Valid values are OPEN (enable protection) and CLOSE (disable protection).
+	// Cluster destroy protection status. Valid values are `OPEN` (enable protection) and `CLOSE` (disable protection).
+	EnableDestroyProtection *string `json:"enableDestroyProtection,omitempty" tf:"enable_destroy_protection,omitempty"`
+
 	// Kibana Access Control Configuration.
 	// Kibana Access Control Configuration.
 	EsACL []EsACLObservation `json:"esAcl,omitempty" tf:"es_acl,omitempty"`
@@ -270,12 +326,24 @@ type InstanceObservation struct {
 	// Es public network address.
 	EsPublicURL *string `json:"esPublicUrl,omitempty" tf:"es_public_url,omitempty"`
 
+	// Whether to force delete the instance. Default is false. Set it to true while deleting the instance.
+	// Whether to force delete the instance. Default is `false`. Set it to `true` while deleting the instance.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Kibana private network access status. Valid values are OPEN and CLOSE.
+	// Kibana private network access status. Valid values are `OPEN` and `CLOSE`.
+	KibanaPrivateAccess *string `json:"kibanaPrivateAccess,omitempty" tf:"kibana_private_access,omitempty"`
+
+	// Kibana private URL.
+	// Kibana private URL.
+	KibanaPrivateURL *string `json:"kibanaPrivateUrl,omitempty" tf:"kibana_private_url,omitempty"`
 
 	// Kibana public network access status. Valid values are OPEN and CLOSE.
 	// Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
@@ -297,6 +365,10 @@ type InstanceObservation struct {
 	// Node information list, which is used to describe the specification information of various types of nodes in the cluster, such as node type, node quantity, node specification, disk type, and disk size.
 	NodeInfoList []NodeInfoListObservation `json:"nodeInfoList,omitempty" tf:"node_info_list,omitempty"`
 
+	// Create an https cluster, default is http.
+	// Create an https cluster, default is http.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
 	// ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
 	// ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
 	PublicAccess *string `json:"publicAccess,omitempty" tf:"public_access,omitempty"`
@@ -305,8 +377,12 @@ type InstanceObservation struct {
 	// When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
 	RenewFlag *string `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+	// Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+	// Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+	SceneType *float64 `json:"sceneType,omitempty" tf:"scene_type,omitempty"`
+
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// A mapping of tags to assign to the instance. For tag limits, please refer to Use Limits.
@@ -329,8 +405,8 @@ type InstanceObservation struct {
 
 type InstanceParameters struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted or -.
-	// Availability zone. When create multi-az es, this parameter must be omitted or `-`.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
@@ -338,6 +414,21 @@ type InstanceParameters struct {
 	// Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
 	// +kubebuilder:validation:Optional
 	BasicSecurityType *float64 `json:"basicSecurityType,omitempty" tf:"basic_security_type,omitempty"`
+
+	// Cerebro private network access status. Valid values are OPEN and CLOSE.
+	// Cerebro private network access status. Valid values are `OPEN` and `CLOSE`.
+	// +kubebuilder:validation:Optional
+	CerebroPrivateAccess *string `json:"cerebroPrivateAccess,omitempty" tf:"cerebro_private_access,omitempty"`
+
+	// Cerebro private network custom domain.
+	// Cerebro private network custom domain.
+	// +kubebuilder:validation:Optional
+	CerebroPrivateDomain *string `json:"cerebroPrivateDomain,omitempty" tf:"cerebro_private_domain,omitempty"`
+
+	// Cerebro public network access status. Valid values are OPEN and CLOSE.
+	// Cerebro public network access status. Valid values are `OPEN` and `CLOSE`.
+	// +kubebuilder:validation:Optional
+	CerebroPublicAccess *string `json:"cerebroPublicAccess,omitempty" tf:"cerebro_public_access,omitempty"`
 
 	// The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to PREPAID.
 	// The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to `PREPAID`.
@@ -359,6 +450,16 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	DeployMode *float64 `json:"deployMode,omitempty" tf:"deploy_mode,omitempty"`
 
+	// Whether to enable Cerebro.
+	// Whether to enable Cerebro.
+	// +kubebuilder:validation:Optional
+	EnableCerebro *bool `json:"enableCerebro,omitempty" tf:"enable_cerebro,omitempty"`
+
+	// Cluster destroy protection status. Valid values are OPEN (enable protection) and CLOSE (disable protection).
+	// Cluster destroy protection status. Valid values are `OPEN` (enable protection) and `CLOSE` (disable protection).
+	// +kubebuilder:validation:Optional
+	EnableDestroyProtection *string `json:"enableDestroyProtection,omitempty" tf:"enable_destroy_protection,omitempty"`
+
 	// Kibana Access Control Configuration.
 	// Kibana Access Control Configuration.
 	// +kubebuilder:validation:Optional
@@ -369,10 +470,20 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	EsPublicACL []EsPublicACLParameters `json:"esPublicAcl,omitempty" tf:"es_public_acl,omitempty"`
 
+	// Whether to force delete the instance. Default is false. Set it to true while deleting the instance.
+	// Whether to force delete the instance. Default is `false`. Set it to `true` while deleting the instance.
+	// +kubebuilder:validation:Optional
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Kibana private network access status. Valid values are OPEN and CLOSE.
+	// Kibana private network access status. Valid values are `OPEN` and `CLOSE`.
+	// +kubebuilder:validation:Optional
+	KibanaPrivateAccess *string `json:"kibanaPrivateAccess,omitempty" tf:"kibana_private_access,omitempty"`
 
 	// Kibana public network access status. Valid values are OPEN and CLOSE.
 	// Kibana public network access status. Valid values are `OPEN` and `CLOSE`.
@@ -399,6 +510,11 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// Create an https cluster, default is http.
+	// Create an https cluster, default is http.
+	// +kubebuilder:validation:Optional
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
 	// ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
 	// ES cluster public network access status. Valid values are `OPEN` and `CLOSE`. Cannot be changed at the same time as `es_acl`.
 	// +kubebuilder:validation:Optional
@@ -409,8 +525,13 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	RenewFlag *string `json:"renewFlag,omitempty" tf:"renew_flag,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+	// Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+	// Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+	// +kubebuilder:validation:Optional
+	SceneType *float64 `json:"sceneType,omitempty" tf:"scene_type,omitempty"`
+
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -456,34 +577,34 @@ type InstanceParameters struct {
 
 type MultiZoneInfosInitParameters struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted or -.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
 	// Availability zone.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
 	// The ID of a VPC subnetwork.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type MultiZoneInfosObservation struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted or -.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
 	// Availability zone.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
 	// The ID of a VPC subnetwork.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type MultiZoneInfosParameters struct {
 
-	// Availability zone. When create multi-az es, this parameter must be omitted or -.
+	// Availability zone. When create multi-az es, this parameter must be the primary availability zone.
 	// Availability zone.
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone" tf:"availability_zone,omitempty"`
 
-	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+	// The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
 	// The ID of a VPC subnetwork.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
@@ -491,12 +612,12 @@ type MultiZoneInfosParameters struct {
 
 type NodeInfoListInitParameters struct {
 
-	// Node disk size. Unit is GB, and default value is 100.
-	// Node disk size. Unit is GB, and default value is `100`.
+	// Node disk size. Unit is GB, and default value is 100. Big Data and High IO models do not support the specified disk size and have no default values.
+	// Node disk size. Unit is GB, and default value is `100`. Big Data and High IO models do not support the specified disk size and have no default values.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
-	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD. Big Data and High IO models do not support the specified disk type and have no default values.
+	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`. Big Data and High IO models do not support the specified disk type and have no default values.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// Decides to encrypt this disk or not.
@@ -511,19 +632,19 @@ type NodeInfoListInitParameters struct {
 	// Node specification, and valid values refer to [document of tencentcloud](https://intl.cloud.tencent.com/document/product/845/18376).
 	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// Node type. Valid values are hotData, warmData and dedicatedMaster. The default value is 'hotData`.
-	// Node type. Valid values are `hotData`, `warmData` and `dedicatedMaster`. The default value is 'hotData`.
+	// Node type. Valid values are hotData, warmData, dedicatedMaster, dedicatedCoordinating and dedicatedMl. The default value is hotData.
+	// Node type. Valid values are `hotData`, `warmData`, `dedicatedMaster`, `dedicatedCoordinating` and `dedicatedMl`. The default value is `hotData`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NodeInfoListObservation struct {
 
-	// Node disk size. Unit is GB, and default value is 100.
-	// Node disk size. Unit is GB, and default value is `100`.
+	// Node disk size. Unit is GB, and default value is 100. Big Data and High IO models do not support the specified disk size and have no default values.
+	// Node disk size. Unit is GB, and default value is `100`. Big Data and High IO models do not support the specified disk size and have no default values.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
-	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD. Big Data and High IO models do not support the specified disk type and have no default values.
+	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`. Big Data and High IO models do not support the specified disk type and have no default values.
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
 	// Decides to encrypt this disk or not.
@@ -538,20 +659,20 @@ type NodeInfoListObservation struct {
 	// Node specification, and valid values refer to [document of tencentcloud](https://intl.cloud.tencent.com/document/product/845/18376).
 	NodeType *string `json:"nodeType,omitempty" tf:"node_type,omitempty"`
 
-	// Node type. Valid values are hotData, warmData and dedicatedMaster. The default value is 'hotData`.
-	// Node type. Valid values are `hotData`, `warmData` and `dedicatedMaster`. The default value is 'hotData`.
+	// Node type. Valid values are hotData, warmData, dedicatedMaster, dedicatedCoordinating and dedicatedMl. The default value is hotData.
+	// Node type. Valid values are `hotData`, `warmData`, `dedicatedMaster`, `dedicatedCoordinating` and `dedicatedMl`. The default value is `hotData`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NodeInfoListParameters struct {
 
-	// Node disk size. Unit is GB, and default value is 100.
-	// Node disk size. Unit is GB, and default value is `100`.
+	// Node disk size. Unit is GB, and default value is 100. Big Data and High IO models do not support the specified disk size and have no default values.
+	// Node disk size. Unit is GB, and default value is `100`. Big Data and High IO models do not support the specified disk size and have no default values.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
-	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
+	// Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD. Big Data and High IO models do not support the specified disk type and have no default values.
+	// Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`. Big Data and High IO models do not support the specified disk type and have no default values.
 	// +kubebuilder:validation:Optional
 	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
 
@@ -570,8 +691,8 @@ type NodeInfoListParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeType *string `json:"nodeType" tf:"node_type,omitempty"`
 
-	// Node type. Valid values are hotData, warmData and dedicatedMaster. The default value is 'hotData`.
-	// Node type. Valid values are `hotData`, `warmData` and `dedicatedMaster`. The default value is 'hotData`.
+	// Node type. Valid values are hotData, warmData, dedicatedMaster, dedicatedCoordinating and dedicatedMl. The default value is hotData.
+	// Node type. Valid values are `hotData`, `warmData`, `dedicatedMaster`, `dedicatedCoordinating` and `dedicatedMl`. The default value is `hotData`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -647,7 +768,6 @@ type InstanceStatus struct {
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nodeInfoList) || (has(self.initProvider) && has(self.initProvider.nodeInfoList))",message="spec.forProvider.nodeInfoList is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.version) || (has(self.initProvider) && has(self.initProvider.version))",message="spec.forProvider.version is a required parameter"
 	Spec   InstanceSpec   `json:"spec"`

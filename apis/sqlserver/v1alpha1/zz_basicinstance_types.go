@@ -39,6 +39,10 @@ type BasicInstanceInitParameters struct {
 	// System character set sorting rule, default: Chinese_PRC_CI_AS.
 	Collation *string `json:"collation,omitempty" tf:"collation,omitempty"`
 
+	// Disk encryption flag. 0 - Disabled (default), 1 - Enabled. Disk encryption cannot be changed after instance creation.
+	// Disk encryption flag. `0` - Disabled (default), `1` - Enabled. Disk encryption cannot be changed after instance creation.
+	DiskEncryptFlag *float64 `json:"diskEncryptFlag,omitempty" tf:"disk_encrypt_flag,omitempty"`
+
 	// Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
 	// Version of the SQL Server basic database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
 	EngineVersion *string `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
@@ -103,6 +107,10 @@ type BasicInstanceInitParameters struct {
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
+	// System timezone for the SQL Server instance. Default is China Standard Time. This setting cannot be changed after creation.
+	// System timezone for the SQL Server instance. Default is `China Standard Time`. This setting cannot be changed after creation.
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
 	// ID of VPC.
 	// ID of VPC.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-tencentcloud/apis/vpc/v1alpha1.VPC
@@ -155,6 +163,10 @@ type BasicInstanceObservation struct {
 	// Internet address domain name.
 	// Internet address domain name.
 	DNSPodDomain *string `json:"dnsPodDomain,omitempty" tf:"dns_pod_domain,omitempty"`
+
+	// Disk encryption flag. 0 - Disabled (default), 1 - Enabled. Disk encryption cannot be changed after instance creation.
+	// Disk encryption flag. `0` - Disabled (default), `1` - Enabled. Disk encryption cannot be changed after instance creation.
+	DiskEncryptFlag *float64 `json:"diskEncryptFlag,omitempty" tf:"disk_encrypt_flag,omitempty"`
 
 	// Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
 	// Version of the SQL Server basic database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
@@ -222,6 +234,10 @@ type BasicInstanceObservation struct {
 	// External port number.
 	TgwWanVport *float64 `json:"tgwWanVport,omitempty" tf:"tgw_wan_vport,omitempty"`
 
+	// System timezone for the SQL Server instance. Default is China Standard Time. This setting cannot be changed after creation.
+	// System timezone for the SQL Server instance. Default is `China Standard Time`. This setting cannot be changed after creation.
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
 	// ID of VPC.
 	// ID of VPC.
 	VPCID *string `json:"vpcId,omitempty" tf:"vpc_id,omitempty"`
@@ -271,6 +287,11 @@ type BasicInstanceParameters struct {
 	// System character set sorting rule, default: Chinese_PRC_CI_AS.
 	// +kubebuilder:validation:Optional
 	Collation *string `json:"collation,omitempty" tf:"collation,omitempty"`
+
+	// Disk encryption flag. 0 - Disabled (default), 1 - Enabled. Disk encryption cannot be changed after instance creation.
+	// Disk encryption flag. `0` - Disabled (default), `1` - Enabled. Disk encryption cannot be changed after instance creation.
+	// +kubebuilder:validation:Optional
+	DiskEncryptFlag *float64 `json:"diskEncryptFlag,omitempty" tf:"disk_encrypt_flag,omitempty"`
 
 	// Version of the SQL Server basic database engine. Allowed values are 2008R2(SQL Server 2008 Enterprise), 2012SP3(SQL Server 2012 Enterprise), 2016SP1 (SQL Server 2016 Enterprise), 201602(SQL Server 2016 Standard) and 2017(SQL Server 2017 Enterprise). Default is 2008R2.
 	// Version of the SQL Server basic database engine. Allowed values are `2008R2`(SQL Server 2008 Enterprise), `2012SP3`(SQL Server 2012 Enterprise), `2016SP1` (SQL Server 2016 Enterprise), `201602`(SQL Server 2016 Standard) and `2017`(SQL Server 2017 Enterprise). Default is `2008R2`.
@@ -348,6 +369,11 @@ type BasicInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// System timezone for the SQL Server instance. Default is China Standard Time. This setting cannot be changed after creation.
+	// System timezone for the SQL Server instance. Default is `China Standard Time`. This setting cannot be changed after creation.
+	// +kubebuilder:validation:Optional
+	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// ID of VPC.
 	// ID of VPC.

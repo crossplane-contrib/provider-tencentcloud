@@ -15,9 +15,25 @@ import (
 
 type GatewayInitParameters struct {
 
+	// Type of CCN route. Valid value: BGP and STATIC. The property is available when the DCG type is CCN gateway and BGP enabled.
+	// Type of CCN route. Valid value: `BGP` and `STATIC`. The property is available when the DCG type is CCN gateway and BGP enabled.
+	CnnRouteType *string `json:"cnnRouteType,omitempty" tf:"cnn_route_type,omitempty"`
+
+	// Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+	// Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+	GatewayAsn *float64 `json:"gatewayAsn,omitempty" tf:"gateway_asn,omitempty"`
+
 	// Type of the gateway. Valid value: NORMAL and NAT. Default is NORMAL. NOTES: CCN only supports NORMAL and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
 	// Type of the gateway. Valid value: `NORMAL` and `NAT`. Default is `NORMAL`. NOTES: CCN only supports `NORMAL` and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
 	GatewayType *string `json:"gatewayType,omitempty" tf:"gateway_type,omitempty"`
+
+	// ID of DC highly available placement group.
+	// ID of DC highly available placement group.
+	HaZoneGroupID *string `json:"haZoneGroupId,omitempty" tf:"ha_zone_group_id,omitempty"`
+
+	// CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+	// CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+	ModeType *string `json:"modeType,omitempty" tf:"mode_type,omitempty"`
 
 	// Name of the DCG.
 	// Name of the DCG.
@@ -30,6 +46,15 @@ type GatewayInitParameters struct {
 	// Type of associated network. Valid value: VPC and CCN.
 	// Type of associated network. Valid value: `VPC` and `CCN`.
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+
+	// Tag key-value pairs for the DC gateway. Multiple tags can be set.
+	// Tag key-value pairs for the DC gateway. Multiple tags can be set.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Availability zone where the direct connect gateway resides.
+	// Availability zone where the direct connect gateway resides.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type GatewayObservation struct {
@@ -46,13 +71,25 @@ type GatewayObservation struct {
 	// Indicates whether the BGP is enabled.
 	EnableBGP *bool `json:"enableBgp,omitempty" tf:"enable_bgp,omitempty"`
 
+	// Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+	// Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+	GatewayAsn *float64 `json:"gatewayAsn,omitempty" tf:"gateway_asn,omitempty"`
+
 	// Type of the gateway. Valid value: NORMAL and NAT. Default is NORMAL. NOTES: CCN only supports NORMAL and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
 	// Type of the gateway. Valid value: `NORMAL` and `NAT`. Default is `NORMAL`. NOTES: CCN only supports `NORMAL` and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
 	GatewayType *string `json:"gatewayType,omitempty" tf:"gateway_type,omitempty"`
+
+	// ID of DC highly available placement group.
+	// ID of DC highly available placement group.
+	HaZoneGroupID *string `json:"haZoneGroupId,omitempty" tf:"ha_zone_group_id,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+	// CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+	ModeType *string `json:"modeType,omitempty" tf:"mode_type,omitempty"`
+
 	// Name of the DCG.
 	// Name of the DCG.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -64,15 +101,44 @@ type GatewayObservation struct {
 	// Type of associated network. Valid value: VPC and CCN.
 	// Type of associated network. Valid value: `VPC` and `CCN`.
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+
+	// Tag key-value pairs for the DC gateway. Multiple tags can be set.
+	// Tag key-value pairs for the DC gateway. Multiple tags can be set.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Availability zone where the direct connect gateway resides.
+	// Availability zone where the direct connect gateway resides.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type GatewayParameters struct {
+
+	// Type of CCN route. Valid value: BGP and STATIC. The property is available when the DCG type is CCN gateway and BGP enabled.
+	// Type of CCN route. Valid value: `BGP` and `STATIC`. The property is available when the DCG type is CCN gateway and BGP enabled.
+	// +kubebuilder:validation:Optional
+	CnnRouteType *string `json:"cnnRouteType,omitempty" tf:"cnn_route_type,omitempty"`
+
+	// Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+	// Dedicated connection gateway custom ASN, range: 45090, 64512-65534 and 4200000000-4294967294.
+	// +kubebuilder:validation:Optional
+	GatewayAsn *float64 `json:"gatewayAsn,omitempty" tf:"gateway_asn,omitempty"`
 
 	// Type of the gateway. Valid value: NORMAL and NAT. Default is NORMAL. NOTES: CCN only supports NORMAL and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
 	// Type of the gateway. Valid value: `NORMAL` and `NAT`. Default is `NORMAL`. NOTES: CCN only supports `NORMAL` and a VPC can create two DCGs, the one is NAT type and the other is non-NAT type.
 	// +kubebuilder:validation:Optional
 	GatewayType *string `json:"gatewayType,omitempty" tf:"gateway_type,omitempty"`
 
+	// ID of DC highly available placement group.
+	// ID of DC highly available placement group.
+	// +kubebuilder:validation:Optional
+	HaZoneGroupID *string `json:"haZoneGroupId,omitempty" tf:"ha_zone_group_id,omitempty"`
+
+	// CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+	// CCN route publishing method. Valid values: standard and exquisite. This parameter is only valid for the CCN direct connect gateway.
+	// +kubebuilder:validation:Optional
+	ModeType *string `json:"modeType,omitempty" tf:"mode_type,omitempty"`
+
 	// Name of the DCG.
 	// Name of the DCG.
 	// +kubebuilder:validation:Optional
@@ -87,6 +153,17 @@ type GatewayParameters struct {
 	// Type of associated network. Valid value: `VPC` and `CCN`.
 	// +kubebuilder:validation:Optional
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
+
+	// Tag key-value pairs for the DC gateway. Multiple tags can be set.
+	// Tag key-value pairs for the DC gateway. Multiple tags can be set.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Availability zone where the direct connect gateway resides.
+	// Availability zone where the direct connect gateway resides.
+	// +kubebuilder:validation:Optional
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 // GatewaySpec defines the desired state of Gateway

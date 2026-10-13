@@ -75,15 +75,15 @@ spec:
                 properties:
                   egress:
                     description: |-
-                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
-                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
+                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of action is ACCEPT and DROP. The cidr_ip must be an IP address network or segment. The port valid format is 80, 80-90 or ALL. The available value of protocol is TCP, UDP, ICMP and ALL. When protocol is ICMP or ALL, the port must be ALL. The description content must be in uppercase.
+                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of `action` is `ACCEPT` and `DROP`. The `cidr_ip` must be an IP address network or segment. The `port` valid format is `80`, `80-90` or `ALL`. The available value of `protocol` is `TCP`, `UDP`, `ICMP` and `ALL`. When `protocol` is `ICMP` or `ALL`, the `port` must be `ALL`. The `description` content must be in uppercase.
                     items:
                       type: string
                     type: array
                   ingress:
                     description: |-
-                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
-                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
+                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of action is ACCEPT and DROP. The cidr_ip must be an IP address network or segment. The port valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When protocol is ICMP or ALL, the 'port' must be ALL. The description content must be in uppercase.
+                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of `action` is `ACCEPT` and `DROP`. The `cidr_ip` must be an IP address network or segment. The `port` valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When `protocol` is `ICMP` or `ALL`, the 'port' must be `ALL`. The `description` content must be in uppercase.
                     items:
                       type: string
                     type: array
@@ -195,15 +195,15 @@ spec:
                 properties:
                   egress:
                     description: |-
-                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
-                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
+                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of action is ACCEPT and DROP. The cidr_ip must be an IP address network or segment. The port valid format is 80, 80-90 or ALL. The available value of protocol is TCP, UDP, ICMP and ALL. When protocol is ICMP or ALL, the port must be ALL. The description content must be in uppercase.
+                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of `action` is `ACCEPT` and `DROP`. The `cidr_ip` must be an IP address network or segment. The `port` valid format is `80`, `80-90` or `ALL`. The available value of `protocol` is `TCP`, `UDP`, `ICMP` and `ALL`. When `protocol` is `ICMP` or `ALL`, the `port` must be `ALL`. The `description` content must be in uppercase.
                     items:
                       type: string
                     type: array
                   ingress:
                     description: |-
-                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
-                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
+                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of action is ACCEPT and DROP. The cidr_ip must be an IP address network or segment. The port valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When protocol is ICMP or ALL, the 'port' must be ALL. The description content must be in uppercase.
+                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of `action` is `ACCEPT` and `DROP`. The `cidr_ip` must be an IP address network or segment. The `port` valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When `protocol` is `ICMP` or `ALL`, the 'port' must be `ALL`. The `description` content must be in uppercase.
                     items:
                       type: string
                     type: array
@@ -484,8 +484,8 @@ spec:
                     type: string
                   egress:
                     description: |-
-                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
-                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
+                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of action is ACCEPT and DROP. The cidr_ip must be an IP address network or segment. The port valid format is 80, 80-90 or ALL. The available value of protocol is TCP, UDP, ICMP and ALL. When protocol is ICMP or ALL, the port must be ALL. The description content must be in uppercase.
+                      Egress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of `action` is `ACCEPT` and `DROP`. The `cidr_ip` must be an IP address network or segment. The `port` valid format is `80`, `80-90` or `ALL`. The available value of `protocol` is `TCP`, `UDP`, `ICMP` and `ALL`. When `protocol` is `ICMP` or `ALL`, the `port` must be `ALL`. The `description` content must be in uppercase.
                     items:
                       type: string
                     type: array
@@ -494,8 +494,8 @@ spec:
                     type: string
                   ingress:
                     description: |-
-                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is ACCEPT and DROP. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When 'protocol' is ICMP or ALL, the 'port' must be ALL.
-                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]. The available value of 'action' is `ACCEPT` and `DROP`. The 'cidr_ip' must be an IP address network or segment. The 'port' valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When 'protocol' is `ICMP` or `ALL`, the 'port' must be `ALL`.
+                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of action is ACCEPT and DROP. The cidr_ip must be an IP address network or segment. The port valid format is 80, 80-90 or ALL. The available value of 'protocol' is TCP, UDP, ICMP and ALL. When protocol is ICMP or ALL, the 'port' must be ALL. The description content must be in uppercase.
+                      Ingress rules. A rule must match the following format: [action]#[cidr_ip]#[port]#[protocol]#[description]. The available value of `action` is `ACCEPT` and `DROP`. The `cidr_ip` must be an IP address network or segment. The `port` valid format is `80`, `80-90` or `ALL`. The available value of 'protocol' is `TCP`, `UDP`, `ICMP` and `ALL`. When `protocol` is `ICMP` or `ALL`, the 'port' must be `ALL`. The `description` content must be in uppercase.
                     items:
                       type: string
                     type: array

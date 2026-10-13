@@ -23,6 +23,10 @@ type RepositoryInitParameters struct {
 	// Description of the repository. Valid length is [1~1000].
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+	// The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
 	// ID of the TCR instance.
 	// ID of the TCR instance.
 	// +crossplane:generate:reference:type=Instance
@@ -58,6 +62,10 @@ type RepositoryObservation struct {
 	// Description of the repository. Valid length is [1~1000].
 	// Description of the repository. Valid length is [1~1000].
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+	// The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -98,6 +106,11 @@ type RepositoryParameters struct {
 	// Description of the repository. Valid length is [1~1000].
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+	// The default value is true, meaning that the repository will be deleted directly regardless of whether it contains any images; false means that the existence of images will be checked before deleting the repository.
+	// +kubebuilder:validation:Optional
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
 	// ID of the TCR instance.
 	// ID of the TCR instance.
@@ -151,7 +164,7 @@ type RepositoryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Repository is the Schema for the Repositorys API. Use this resource to create tcr repository.
+// Repository is the Schema for the Repositorys API. Use this resource to create TCR repository.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

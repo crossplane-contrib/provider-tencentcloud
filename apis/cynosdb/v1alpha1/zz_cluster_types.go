@@ -39,8 +39,8 @@ type ClusterInitParameters struct {
 	// Name of CynosDB cluster.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// Kernel version, you can enter it when modifying.
-	// Kernel version, you can enter it when modifying.
+	// Kernel minor version, like 3.1.16.002.
+	// Kernel minor version, like `3.1.16.002`.
 	CynosVersion *string `json:"cynosVersion,omitempty" tf:"cynos_version,omitempty"`
 
 	// Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
@@ -63,6 +63,10 @@ type ClusterInitParameters struct {
 	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
 
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
+
 	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
 	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
 	InstanceInitInfos []InstanceInitInfosInitParameters `json:"instanceInitInfos,omitempty" tf:"instance_init_infos,omitempty"`
@@ -83,6 +87,10 @@ type ClusterInitParameters struct {
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
+
+	// Name of instance. Only supported when modifying.
+	// Name of instance. Only supported when modifying.
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
 	// Maximum CPU core count, required while db_mode is SERVERLESS, request DescribeServerlessInstanceSpecs for more reference.
 	// Maximum CPU core count, required while `db_mode` is `SERVERLESS`, request DescribeServerlessInstanceSpecs for more reference.
@@ -128,6 +136,10 @@ type ClusterInitParameters struct {
 	// IDs of security group for `rw_group`.
 	RwGroupSg []*string `json:"rwGroupSg,omitempty" tf:"rw_group_sg,omitempty"`
 
+	// Semi-sync timeout in ms. Value range: [1000, 4294967295], default 10000.
+	// Semi-sync timeout in ms. Value range: `[1000, 4294967295]`, default `10000`.
+	SemiSyncTimeout *float64 `json:"semiSyncTimeout,omitempty" tf:"semi_sync_timeout,omitempty"`
+
 	// Specify whether to pause or resume serverless cluster. values: resume, pause.
 	// Specify whether to pause or resume serverless cluster. values: `resume`, `pause`.
 	ServerlessStatusFlag *string `json:"serverlessStatusFlag,omitempty" tf:"serverless_status_flag,omitempty"`
@@ -156,6 +168,10 @@ type ClusterInitParameters struct {
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// Synchronization way. Valid values: async, semisync, sync.
+	// Synchronization way. Valid values: `async`, `semisync`, `sync`.
+	SyncWay *string `json:"syncWay,omitempty" tf:"sync_way,omitempty"`
 
 	// The tags of the CynosDB cluster.
 	// The tags of the CynosDB cluster.
@@ -214,8 +230,8 @@ type ClusterObservation struct {
 	// Creation time of the CynosDB cluster.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
-	// Kernel version, you can enter it when modifying.
-	// Kernel version, you can enter it when modifying.
+	// Kernel minor version, like 3.1.16.002.
+	// Kernel minor version, like `3.1.16.002`.
 	CynosVersion *string `json:"cynosVersion,omitempty" tf:"cynos_version,omitempty"`
 
 	// Specify DB mode, only available when db_type is MYSQL. Values: NORMAL (Default), SERVERLESS.
@@ -240,6 +256,10 @@ type ClusterObservation struct {
 	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	// The number of CPU cores of read-write type instance in the CynosDB cluster. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
+
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
 
 	// ID of instance.
 	// ID of instance.
@@ -266,8 +286,8 @@ type ClusterObservation struct {
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
 
-	// Name of instance.
-	// Name of instance.
+	// Name of instance. Only supported when modifying.
+	// Name of instance. Only supported when modifying.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
 	// Status of the instance.
@@ -346,6 +366,10 @@ type ClusterObservation struct {
 	// IDs of security group for `rw_group`.
 	RwGroupSg []*string `json:"rwGroupSg,omitempty" tf:"rw_group_sg,omitempty"`
 
+	// Semi-sync timeout in ms. Value range: [1000, 4294967295], default 10000.
+	// Semi-sync timeout in ms. Value range: `[1000, 4294967295]`, default `10000`.
+	SemiSyncTimeout *float64 `json:"semiSyncTimeout,omitempty" tf:"semi_sync_timeout,omitempty"`
+
 	// Serverless cluster status. NOTE: This is a readonly attribute, to modify, please set serverless_status_flag.
 	// Serverless cluster status. NOTE: This is a readonly attribute, to modify, please set `serverless_status_flag`.
 	ServerlessStatus *string `json:"serverlessStatus,omitempty" tf:"serverless_status,omitempty"`
@@ -373,6 +397,10 @@ type ClusterObservation struct {
 	// ID of the subnet within this VPC.
 	// ID of the subnet within this VPC.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Synchronization way. Valid values: async, semisync, sync.
+	// Synchronization way. Valid values: `async`, `semisync`, `sync`.
+	SyncWay *string `json:"syncWay,omitempty" tf:"sync_way,omitempty"`
 
 	// The tags of the CynosDB cluster.
 	// The tags of the CynosDB cluster.
@@ -416,8 +444,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
-	// Kernel version, you can enter it when modifying.
-	// Kernel version, you can enter it when modifying.
+	// Kernel minor version, like 3.1.16.002.
+	// Kernel minor version, like `3.1.16.002`.
 	// +kubebuilder:validation:Optional
 	CynosVersion *string `json:"cynosVersion,omitempty" tf:"cynos_version,omitempty"`
 
@@ -446,6 +474,11 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceCPUCore *float64 `json:"instanceCpuCore,omitempty" tf:"instance_cpu_core,omitempty"`
 
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
+	// +kubebuilder:validation:Optional
+	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
+
 	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
 	// Instance initialization configuration information, mainly used to select instances of different specifications when purchasing a cluster.
 	// +kubebuilder:validation:Optional
@@ -471,6 +504,11 @@ type ClusterParameters struct {
 	// Memory capacity of read-write type instance, unit in GB. Required while creating normal cluster. Note: modification of this field will take effect immediately, if want to upgrade on maintenance window, please upgrade from console.
 	// +kubebuilder:validation:Optional
 	InstanceMemorySize *float64 `json:"instanceMemorySize,omitempty" tf:"instance_memory_size,omitempty"`
+
+	// Name of instance. Only supported when modifying.
+	// Name of instance. Only supported when modifying.
+	// +kubebuilder:validation:Optional
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 
 	// Maximum CPU core count, required while db_mode is SERVERLESS, request DescribeServerlessInstanceSpecs for more reference.
 	// Maximum CPU core count, required while `db_mode` is `SERVERLESS`, request DescribeServerlessInstanceSpecs for more reference.
@@ -532,6 +570,11 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	RwGroupSg []*string `json:"rwGroupSg,omitempty" tf:"rw_group_sg,omitempty"`
 
+	// Semi-sync timeout in ms. Value range: [1000, 4294967295], default 10000.
+	// Semi-sync timeout in ms. Value range: `[1000, 4294967295]`, default `10000`.
+	// +kubebuilder:validation:Optional
+	SemiSyncTimeout *float64 `json:"semiSyncTimeout,omitempty" tf:"semi_sync_timeout,omitempty"`
+
 	// Specify whether to pause or resume serverless cluster. values: resume, pause.
 	// Specify whether to pause or resume serverless cluster. values: `resume`, `pause`.
 	// +kubebuilder:validation:Optional
@@ -566,6 +609,11 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// Synchronization way. Valid values: async, semisync, sync.
+	// Synchronization way. Valid values: `async`, `semisync`, `sync`.
+	// +kubebuilder:validation:Optional
+	SyncWay *string `json:"syncWay,omitempty" tf:"sync_way,omitempty"`
+
 	// The tags of the CynosDB cluster.
 	// The tags of the CynosDB cluster.
 	// +kubebuilder:validation:Optional
@@ -597,7 +645,7 @@ type InstanceInitInfosInitParameters struct {
 	// Instance machine type. Values: `common`, `exclusive`.
 	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
 
-	// Instance count. Range: [1, 15].
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
 	// Instance count. Range: [1, 15].
 	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
 
@@ -636,7 +684,7 @@ type InstanceInitInfosObservation struct {
 	// Instance machine type. Values: `common`, `exclusive`.
 	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
 
-	// Instance count. Range: [1, 15].
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
 	// Instance count. Range: [1, 15].
 	InstanceCount *float64 `json:"instanceCount,omitempty" tf:"instance_count,omitempty"`
 
@@ -677,7 +725,7 @@ type InstanceInitInfosParameters struct {
 	// +kubebuilder:validation:Optional
 	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
 
-	// Instance count. Range: [1, 15].
+	// The number of instances, the range is (0,16], the default value is 2 (i.e. one RW instance + one Ro instance), the passed n means 1 RW instance + n-1 Ro instances (with the same specifications), if you need a more accurate cluster composition, please use InstanceInitInfos.
 	// Instance count. Range: [1, 15].
 	// +kubebuilder:validation:Optional
 	InstanceCount *float64 `json:"instanceCount" tf:"instance_count,omitempty"`
@@ -784,7 +832,7 @@ type RoGroupInstancesObservation struct {
 	// ID of instance.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
-	// Name of instance.
+	// Name of instance. Only supported when modifying.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 }
 
@@ -814,7 +862,7 @@ type RwGroupInstancesObservation struct {
 	// ID of instance.
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
-	// Name of instance.
+	// Name of instance. Only supported when modifying.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
 }
 

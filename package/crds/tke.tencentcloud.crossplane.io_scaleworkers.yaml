@@ -329,6 +329,11 @@ spec:
                             CAM role name authorized to access.
                             CAM role name authorized to access.
                           type: string
+                        cdcId:
+                          description: |-
+                            CDC ID.
+                            CDC ID.
+                          type: string
                         count:
                           description: |-
                             Number of cvm.
@@ -426,8 +431,8 @@ spec:
                           type: string
                         instanceChargeType:
                           description: |-
-                            The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-                            The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+                            The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+                            The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: |-
@@ -807,6 +812,11 @@ spec:
                             CAM role name authorized to access.
                             CAM role name authorized to access.
                           type: string
+                        cdcId:
+                          description: |-
+                            CDC ID.
+                            CDC ID.
+                          type: string
                         count:
                           description: |-
                             Number of cvm.
@@ -904,8 +914,8 @@ spec:
                           type: string
                         instanceChargeType:
                           description: |-
-                            The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-                            The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+                            The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+                            The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: |-
@@ -1359,6 +1369,11 @@ spec:
                             CAM role name authorized to access.
                             CAM role name authorized to access.
                           type: string
+                        cdcId:
+                          description: |-
+                            CDC ID.
+                            CDC ID.
+                          type: string
                         count:
                           description: |-
                             Number of cvm.
@@ -1456,8 +1471,8 @@ spec:
                           type: string
                         instanceChargeType:
                           description: |-
-                            The charge type of instance. Valid values are PREPAID and POSTPAID_BY_HOUR. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
-                            The charge type of instance. Valid values are `PREPAID` and `POSTPAID_BY_HOUR`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
+                            The charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. Note: TencentCloud International only supports POSTPAID_BY_HOUR, PREPAID instance will not terminated after cluster deleted, and may not allow to delete before expired.
+                            The charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. Note: TencentCloud International only supports `POSTPAID_BY_HOUR`, `PREPAID` instance will not terminated after cluster deleted, and may not allow to delete before expired.
                           type: string
                         instanceChargeTypePrepaidPeriod:
                           description: |-

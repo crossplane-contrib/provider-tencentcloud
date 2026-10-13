@@ -11,9 +11,10 @@ spec:
     bandwidthLimitType: INTER_REGION_LIMIT
     chargeType: PREPAID
     description: desc.
+    instanceMeteringType: BANDWIDTH
     name: tf-example
     qos: AG
     routeEcmpFlag: true
     routeOverlapFlag: true
     tags:
-      createBy: terraform
+      createBy: Terraform

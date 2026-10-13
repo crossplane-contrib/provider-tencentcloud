@@ -78,11 +78,29 @@ spec:
                       Logset name, which must be unique.
                       Logset name, which must be unique.
                     type: string
+                  tagList:
+                    description: |-
+                      Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+                      Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+                    items:
+                      properties:
+                        key:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        value:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   tags:
                     additionalProperties:
                       type: string
                     description: |-
-                      Tag description list.
+                      It is recommended to use tag_list because the current tags field is binding resources by calling the tag API. Tag description list.
                       Tag description list.
                     type: object
                     x-kubernetes-map-type: granular
@@ -105,11 +123,29 @@ spec:
                       Logset name, which must be unique.
                       Logset name, which must be unique.
                     type: string
+                  tagList:
+                    description: |-
+                      Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+                      Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+                    items:
+                      properties:
+                        key:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        value:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   tags:
                     additionalProperties:
                       type: string
                     description: |-
-                      Tag description list.
+                      It is recommended to use tag_list because the current tags field is binding resources by calling the tag API. Tag description list.
                       Tag description list.
                     type: object
                     x-kubernetes-map-type: granular
@@ -309,11 +345,29 @@ spec:
                       If assumer_uin is not empty, it indicates the service provider who creates the logset.
                       If assumer_uin is not empty, it indicates the service provider who creates the logset.
                     type: string
+                  tagList:
+                    description: |-
+                      Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+                      Tag description list. The CLS API supports up to 10 tag key-value pairs, and duplicate keys are not allowed.
+                    items:
+                      properties:
+                        key:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        value:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                   tags:
                     additionalProperties:
                       type: string
                     description: |-
-                      Tag description list.
+                      It is recommended to use tag_list because the current tags field is binding resources by calling the tag API. Tag description list.
                       Tag description list.
                     type: object
                     x-kubernetes-map-type: granular

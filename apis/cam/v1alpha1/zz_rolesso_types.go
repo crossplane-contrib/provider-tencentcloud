@@ -15,6 +15,10 @@ import (
 
 type RoleSSOInitParameters struct {
 
+	// OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+	// OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+	AutoRotateKey *float64 `json:"autoRotateKey,omitempty" tf:"auto_rotate_key,omitempty"`
+
 	// Client ids.
 	// Client ids.
 	// +listType=set
@@ -24,8 +28,8 @@ type RoleSSOInitParameters struct {
 	// The description of resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Sign the public key.
-	// Sign the public key.
+	// Sign the public key. Base64 encryption is required.
+	// Sign the public key. Base64 encryption is required.
 	IdentityKey *string `json:"identityKey,omitempty" tf:"identity_key,omitempty"`
 
 	// Identity provider URL.
@@ -39,6 +43,10 @@ type RoleSSOInitParameters struct {
 
 type RoleSSOObservation struct {
 
+	// OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+	// OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+	AutoRotateKey *float64 `json:"autoRotateKey,omitempty" tf:"auto_rotate_key,omitempty"`
+
 	// Client ids.
 	// Client ids.
 	// +listType=set
@@ -51,8 +59,8 @@ type RoleSSOObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Sign the public key.
-	// Sign the public key.
+	// Sign the public key. Base64 encryption is required.
+	// Sign the public key. Base64 encryption is required.
 	IdentityKey *string `json:"identityKey,omitempty" tf:"identity_key,omitempty"`
 
 	// Identity provider URL.
@@ -66,6 +74,11 @@ type RoleSSOObservation struct {
 
 type RoleSSOParameters struct {
 
+	// OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+	// OIDC public key auto-rotation switch. Enum values: 0 (disabled), 1 (enabled). Default value: 0.
+	// +kubebuilder:validation:Optional
+	AutoRotateKey *float64 `json:"autoRotateKey,omitempty" tf:"auto_rotate_key,omitempty"`
+
 	// Client ids.
 	// Client ids.
 	// +kubebuilder:validation:Optional
@@ -77,8 +90,8 @@ type RoleSSOParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Sign the public key.
-	// Sign the public key.
+	// Sign the public key. Base64 encryption is required.
+	// Sign the public key. Base64 encryption is required.
 	// +kubebuilder:validation:Optional
 	IdentityKey *string `json:"identityKey,omitempty" tf:"identity_key,omitempty"`
 
@@ -120,7 +133,7 @@ type RoleSSOStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// RoleSSO is the Schema for the RoleSSOs API. Provides a resource to create a CAM-ROLE-SSO (Only support OIDC).
+// RoleSSO is the Schema for the RoleSSOs API. Provides a resource to create a CAM-ROLE-SSO(Only support OIDC).
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

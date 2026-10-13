@@ -75,14 +75,29 @@ spec:
                 properties:
                   availabilityZone:
                     description: |-
-                      Availability zone. When create multi-az es, this parameter must be omitted or -.
-                      Availability zone. When create multi-az es, this parameter must be omitted or `-`.
+                      Availability zone. When create multi-az es, this parameter must be the primary availability zone.
+                      Availability zone. When create multi-az es, this parameter must be the primary availability zone.
                     type: string
                   basicSecurityType:
                     description: |-
                       Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are 1 and 2. 1 is disabled, 2 is enabled, and default value is 1. Notice: this parameter is only take effect on basic license.
                       Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
                     type: number
+                  cerebroPrivateAccess:
+                    description: |-
+                      Cerebro private network access status. Valid values are OPEN and CLOSE.
+                      Cerebro private network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
+                  cerebroPrivateDomain:
+                    description: |-
+                      Cerebro private network custom domain.
+                      Cerebro private network custom domain.
+                    type: string
+                  cerebroPublicAccess:
+                    description: |-
+                      Cerebro public network access status. Valid values are OPEN and CLOSE.
+                      Cerebro public network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
                   chargePeriod:
                     description: |-
                       The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to PREPAID.
@@ -116,6 +131,16 @@ spec:
                       Cluster deployment mode. Valid values are 0 and 1. 0 is single-AZ deployment, and 1 is multi-AZ deployment. Default value is 0.
                       Cluster deployment mode. Valid values are `0` and `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment. Default value is `0`.
                     type: number
+                  enableCerebro:
+                    description: |-
+                      Whether to enable Cerebro.
+                      Whether to enable Cerebro.
+                    type: boolean
+                  enableDestroyProtection:
+                    description: |-
+                      Cluster destroy protection status. Valid values are OPEN (enable protection) and CLOSE (disable protection).
+                      Cluster destroy protection status. Valid values are `OPEN` (enable protection) and `CLOSE` (disable protection).
+                    type: string
                   esAcl:
                     description: |-
                       Kibana Access Control Configuration.
@@ -156,10 +181,20 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
+                  forceDelete:
+                    description: |-
+                      Whether to force delete the instance. Default is false. Set it to true while deleting the instance.
+                      Whether to force delete the instance. Default is `false`. Set it to `true` while deleting the instance.
+                    type: boolean
                   instanceName:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  kibanaPrivateAccess:
+                    description: |-
+                      Kibana private network access status. Valid values are OPEN and CLOSE.
+                      Kibana private network access status. Valid values are `OPEN` and `CLOSE`.
                     type: string
                   kibanaPublicAccess:
                     description: |-
@@ -179,12 +214,12 @@ spec:
                       properties:
                         availabilityZone:
                           description: |-
-                            Availability zone. When create multi-az es, this parameter must be omitted or -.
+                            Availability zone. When create multi-az es, this parameter must be the primary availability zone.
                             Availability zone.
                           type: string
                         subnetId:
                           description: |-
-                            The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+                            The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
                             The ID of a VPC subnetwork.
                           type: string
                       type: object
@@ -197,13 +232,13 @@ spec:
                       properties:
                         diskSize:
                           description: |-
-                            Node disk size. Unit is GB, and default value is 100.
-                            Node disk size. Unit is GB, and default value is `100`.
+                            Node disk size. Unit is GB, and default value is 100. Big Data and High IO models do not support the specified disk size and have no default values.
+                            Node disk size. Unit is GB, and default value is `100`. Big Data and High IO models do not support the specified disk size and have no default values.
                           type: number
                         diskType:
                           description: |-
-                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
-                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
+                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD. Big Data and High IO models do not support the specified disk type and have no default values.
+                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`. Big Data and High IO models do not support the specified disk type and have no default values.
                           type: string
                         encrypt:
                           description: |-
@@ -222,8 +257,8 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Node type. Valid values are hotData, warmData and dedicatedMaster. The default value is 'hotData`.
-                            Node type. Valid values are `hotData`, `warmData` and `dedicatedMaster`. The default value is 'hotData`.
+                            Node type. Valid values are hotData, warmData, dedicatedMaster, dedicatedCoordinating and dedicatedMl. The default value is hotData.
+                            Node type. Valid values are `hotData`, `warmData`, `dedicatedMaster`, `dedicatedCoordinating` and `dedicatedMl`. The default value is `hotData`.
                           type: string
                       type: object
                     type: array
@@ -246,6 +281,11 @@ spec:
                     - name
                     - namespace
                     type: object
+                  protocol:
+                    description: |-
+                      Create an https cluster, default is http.
+                      Create an https cluster, default is http.
+                    type: string
                   publicAccess:
                     description: |-
                       ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
@@ -256,10 +296,15 @@ spec:
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
                     type: string
+                  sceneType:
+                    description: |-
+                      Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+                      Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+                    type: number
                   subnetId:
                     description: |-
-                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
-                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
+                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -461,14 +506,29 @@ spec:
                 properties:
                   availabilityZone:
                     description: |-
-                      Availability zone. When create multi-az es, this parameter must be omitted or -.
-                      Availability zone. When create multi-az es, this parameter must be omitted or `-`.
+                      Availability zone. When create multi-az es, this parameter must be the primary availability zone.
+                      Availability zone. When create multi-az es, this parameter must be the primary availability zone.
                     type: string
                   basicSecurityType:
                     description: |-
                       Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are 1 and 2. 1 is disabled, 2 is enabled, and default value is 1. Notice: this parameter is only take effect on basic license.
                       Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
                     type: number
+                  cerebroPrivateAccess:
+                    description: |-
+                      Cerebro private network access status. Valid values are OPEN and CLOSE.
+                      Cerebro private network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
+                  cerebroPrivateDomain:
+                    description: |-
+                      Cerebro private network custom domain.
+                      Cerebro private network custom domain.
+                    type: string
+                  cerebroPublicAccess:
+                    description: |-
+                      Cerebro public network access status. Valid values are OPEN and CLOSE.
+                      Cerebro public network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
                   chargePeriod:
                     description: |-
                       The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to PREPAID.
@@ -502,6 +562,16 @@ spec:
                       Cluster deployment mode. Valid values are 0 and 1. 0 is single-AZ deployment, and 1 is multi-AZ deployment. Default value is 0.
                       Cluster deployment mode. Valid values are `0` and `1`. `0` is single-AZ deployment, and `1` is multi-AZ deployment. Default value is `0`.
                     type: number
+                  enableCerebro:
+                    description: |-
+                      Whether to enable Cerebro.
+                      Whether to enable Cerebro.
+                    type: boolean
+                  enableDestroyProtection:
+                    description: |-
+                      Cluster destroy protection status. Valid values are OPEN (enable protection) and CLOSE (disable protection).
+                      Cluster destroy protection status. Valid values are `OPEN` (enable protection) and `CLOSE` (disable protection).
+                    type: string
                   esAcl:
                     description: |-
                       Kibana Access Control Configuration.
@@ -542,10 +612,20 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
+                  forceDelete:
+                    description: |-
+                      Whether to force delete the instance. Default is false. Set it to true while deleting the instance.
+                      Whether to force delete the instance. Default is `false`. Set it to `true` while deleting the instance.
+                    type: boolean
                   instanceName:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  kibanaPrivateAccess:
+                    description: |-
+                      Kibana private network access status. Valid values are OPEN and CLOSE.
+                      Kibana private network access status. Valid values are `OPEN` and `CLOSE`.
                     type: string
                   kibanaPublicAccess:
                     description: |-
@@ -565,12 +645,12 @@ spec:
                       properties:
                         availabilityZone:
                           description: |-
-                            Availability zone. When create multi-az es, this parameter must be omitted or -.
+                            Availability zone. When create multi-az es, this parameter must be the primary availability zone.
                             Availability zone.
                           type: string
                         subnetId:
                           description: |-
-                            The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+                            The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
                             The ID of a VPC subnetwork.
                           type: string
                       type: object
@@ -583,13 +663,13 @@ spec:
                       properties:
                         diskSize:
                           description: |-
-                            Node disk size. Unit is GB, and default value is 100.
-                            Node disk size. Unit is GB, and default value is `100`.
+                            Node disk size. Unit is GB, and default value is 100. Big Data and High IO models do not support the specified disk size and have no default values.
+                            Node disk size. Unit is GB, and default value is `100`. Big Data and High IO models do not support the specified disk size and have no default values.
                           type: number
                         diskType:
                           description: |-
-                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
-                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
+                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD. Big Data and High IO models do not support the specified disk type and have no default values.
+                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`. Big Data and High IO models do not support the specified disk type and have no default values.
                           type: string
                         encrypt:
                           description: |-
@@ -608,11 +688,16 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Node type. Valid values are hotData, warmData and dedicatedMaster. The default value is 'hotData`.
-                            Node type. Valid values are `hotData`, `warmData` and `dedicatedMaster`. The default value is 'hotData`.
+                            Node type. Valid values are hotData, warmData, dedicatedMaster, dedicatedCoordinating and dedicatedMl. The default value is hotData.
+                            Node type. Valid values are `hotData`, `warmData`, `dedicatedMaster`, `dedicatedCoordinating` and `dedicatedMl`. The default value is `hotData`.
                           type: string
                       type: object
                     type: array
+                  protocol:
+                    description: |-
+                      Create an https cluster, default is http.
+                      Create an https cluster, default is http.
+                    type: string
                   publicAccess:
                     description: |-
                       ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
@@ -623,10 +708,15 @@ spec:
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
                     type: string
+                  sceneType:
+                    description: |-
+                      Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+                      Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+                    type: number
                   subnetId:
                     description: |-
-                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
-                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
+                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -981,10 +1071,6 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.nodeInfoList is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.nodeInfoList)
-                || (has(self.initProvider) && has(self.initProvider.nodeInfoList))'
             - message: spec.forProvider.passwordSecretRef is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)'
@@ -999,14 +1085,29 @@ spec:
                 properties:
                   availabilityZone:
                     description: |-
-                      Availability zone. When create multi-az es, this parameter must be omitted or -.
-                      Availability zone. When create multi-az es, this parameter must be omitted or `-`.
+                      Availability zone. When create multi-az es, this parameter must be the primary availability zone.
+                      Availability zone. When create multi-az es, this parameter must be the primary availability zone.
                     type: string
                   basicSecurityType:
                     description: |-
                       Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are 1 and 2. 1 is disabled, 2 is enabled, and default value is 1. Notice: this parameter is only take effect on basic license.
                       Whether to enable X-Pack security authentication in Basic Edition 6.8 and above. Valid values are `1` and `2`. `1` is disabled, `2` is enabled, and default value is `1`. Notice: this parameter is only take effect on `basic` license.
                     type: number
+                  cerebroPrivateAccess:
+                    description: |-
+                      Cerebro private network access status. Valid values are OPEN and CLOSE.
+                      Cerebro private network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
+                  cerebroPrivateDomain:
+                    description: |-
+                      Cerebro private network custom domain.
+                      Cerebro private network custom domain.
+                    type: string
+                  cerebroPublicAccess:
+                    description: |-
+                      Cerebro public network access status. Valid values are OPEN and CLOSE.
+                      Cerebro public network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
                   chargePeriod:
                     description: |-
                       The tenancy of the prepaid instance, and uint is month. NOTE: it only works when charge_type is set to PREPAID.
@@ -1060,6 +1161,16 @@ spec:
                       Elasticsearch VIP.
                       Elasticsearch VIP.
                     type: string
+                  enableCerebro:
+                    description: |-
+                      Whether to enable Cerebro.
+                      Whether to enable Cerebro.
+                    type: boolean
+                  enableDestroyProtection:
+                    description: |-
+                      Cluster destroy protection status. Valid values are OPEN (enable protection) and CLOSE (disable protection).
+                      Cluster destroy protection status. Valid values are `OPEN` (enable protection) and `CLOSE` (disable protection).
+                    type: string
                   esAcl:
                     description: |-
                       Kibana Access Control Configuration.
@@ -1105,6 +1216,11 @@ spec:
                       Es public network address.
                       Es public network address.
                     type: string
+                  forceDelete:
+                    description: |-
+                      Whether to force delete the instance. Default is false. Set it to true while deleting the instance.
+                      Whether to force delete the instance. Default is `false`. Set it to `true` while deleting the instance.
+                    type: boolean
                   id:
                     description: ID of the resource.
                     type: string
@@ -1112,6 +1228,16 @@ spec:
                     description: |-
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
                       Name of the instance, which can contain 1 to 50 English letters, Chinese characters, digits, dashes(-), or underscores(_).
+                    type: string
+                  kibanaPrivateAccess:
+                    description: |-
+                      Kibana private network access status. Valid values are OPEN and CLOSE.
+                      Kibana private network access status. Valid values are `OPEN` and `CLOSE`.
+                    type: string
+                  kibanaPrivateUrl:
+                    description: |-
+                      Kibana private URL.
+                      Kibana private URL.
                     type: string
                   kibanaPublicAccess:
                     description: |-
@@ -1136,12 +1262,12 @@ spec:
                       properties:
                         availabilityZone:
                           description: |-
-                            Availability zone. When create multi-az es, this parameter must be omitted or -.
+                            Availability zone. When create multi-az es, this parameter must be the primary availability zone.
                             Availability zone.
                           type: string
                         subnetId:
                           description: |-
-                            The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
+                            The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
                             The ID of a VPC subnetwork.
                           type: string
                       type: object
@@ -1154,13 +1280,13 @@ spec:
                       properties:
                         diskSize:
                           description: |-
-                            Node disk size. Unit is GB, and default value is 100.
-                            Node disk size. Unit is GB, and default value is `100`.
+                            Node disk size. Unit is GB, and default value is 100. Big Data and High IO models do not support the specified disk size and have no default values.
+                            Node disk size. Unit is GB, and default value is `100`. Big Data and High IO models do not support the specified disk size and have no default values.
                           type: number
                         diskType:
                           description: |-
-                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD.
-                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`.
+                            Node disk type. Valid values are CLOUD_SSD, CLOUD_PREMIUM, CLOUD_HSSD, CLOUD_BSSD, CLOUD_BIGDATA and CLOUD_HIGHIO. The default value is CLOUD_SSD. Big Data and High IO models do not support the specified disk type and have no default values.
+                            Node disk type. Valid values are `CLOUD_SSD`, `CLOUD_PREMIUM`, `CLOUD_HSSD`, `CLOUD_BSSD`, `CLOUD_BIGDATA` and `CLOUD_HIGHIO`. The default value is `CLOUD_SSD`. Big Data and High IO models do not support the specified disk type and have no default values.
                           type: string
                         encrypt:
                           description: |-
@@ -1179,11 +1305,16 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Node type. Valid values are hotData, warmData and dedicatedMaster. The default value is 'hotData`.
-                            Node type. Valid values are `hotData`, `warmData` and `dedicatedMaster`. The default value is 'hotData`.
+                            Node type. Valid values are hotData, warmData, dedicatedMaster, dedicatedCoordinating and dedicatedMl. The default value is hotData.
+                            Node type. Valid values are `hotData`, `warmData`, `dedicatedMaster`, `dedicatedCoordinating` and `dedicatedMl`. The default value is `hotData`.
                           type: string
                       type: object
                     type: array
+                  protocol:
+                    description: |-
+                      Create an https cluster, default is http.
+                      Create an https cluster, default is http.
+                    type: string
                   publicAccess:
                     description: |-
                       ES cluster public network access status. Valid values are OPEN and CLOSE. Cannot be changed at the same time as es_acl.
@@ -1194,10 +1325,15 @@ spec:
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are RENEW_FLAG_AUTO and RENEW_FLAG_MANUAL. NOTE: it only works when charge_type is set to PREPAID.
                       When enabled, the instance will be renew automatically when it reach the end of the prepaid tenancy. Valid values are `RENEW_FLAG_AUTO` and `RENEW_FLAG_MANUAL`. NOTE: it only works when charge_type is set to `PREPAID`.
                     type: string
+                  sceneType:
+                    description: |-
+                      Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+                      Scenario based template type. 0: Not enabled; 1: Universal; 2: Log; 3: Search.
+                    type: number
                   subnetId:
                     description: |-
-                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or -.
-                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be omitted or `-`.
+                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
+                      The ID of a VPC subnetwork. When create multi-az es, this parameter must be the subnet in the primary availability zone.
                     type: string
                   tags:
                     additionalProperties:

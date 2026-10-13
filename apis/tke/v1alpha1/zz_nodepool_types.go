@@ -149,6 +149,10 @@ type AutoScalingConfigInitParameters struct {
 	// Name of cam role.
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Configurations of data disk.
 	// Configurations of data disk.
 	DataDisk []AutoScalingConfigDataDiskInitParameters `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
@@ -169,8 +173,12 @@ type AutoScalingConfigInitParameters struct {
 	// The style of the host name of the cloud server, the value range includes ORIGINAL and UNIQUE, and the default is ORIGINAL. For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
 	HostNameStyle *string `json:"hostNameStyle,omitempty" tf:"host_name_style,omitempty"`
 
-	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+	// Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+	// Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+	IPv4AddressType *string `json:"ipv4AddressType,omitempty" tf:"ipv4_address_type,omitempty"`
+
+	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
 	// The tenancy (in month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
@@ -249,6 +257,10 @@ type AutoScalingConfigObservation struct {
 	// Name of cam role.
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Configurations of data disk.
 	// Configurations of data disk.
 	DataDisk []AutoScalingConfigDataDiskObservation `json:"dataDisk,omitempty" tf:"data_disk,omitempty"`
@@ -269,8 +281,12 @@ type AutoScalingConfigObservation struct {
 	// The style of the host name of the cloud server, the value range includes ORIGINAL and UNIQUE, and the default is ORIGINAL. For usage, refer to `HostNameSettings` in https://www.tencentcloud.com/document/product/377/31001.
 	HostNameStyle *string `json:"hostNameStyle,omitempty" tf:"host_name_style,omitempty"`
 
-	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+	// Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+	// Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+	IPv4AddressType *string `json:"ipv4AddressType,omitempty" tf:"ipv4_address_type,omitempty"`
+
+	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
 	// The tenancy (in month) of the prepaid instance, NOTE: it only works when instance_charge_type is set to PREPAID. Valid values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36.
@@ -352,6 +368,11 @@ type AutoScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	CamRoleName *string `json:"camRoleName,omitempty" tf:"cam_role_name,omitempty"`
 
+	// CDC ID.
+	// CDC ID.
+	// +kubebuilder:validation:Optional
+	CdcID *string `json:"cdcId,omitempty" tf:"cdc_id,omitempty"`
+
 	// Configurations of data disk.
 	// Configurations of data disk.
 	// +kubebuilder:validation:Optional
@@ -377,8 +398,13 @@ type AutoScalingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	HostNameStyle *string `json:"hostNameStyle,omitempty" tf:"host_name_style,omitempty"`
 
-	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
-	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
+	// Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+	// Type of public IP address. WanIP: Ordinary public IP address; HighQualityEIP: High Quality EIP is supported only in Singapore and Hong Kong; AntiDDoSEIP: Anti-DDoS IP is supported only in specific regions. For details, see EIP Product Overview. Specify the type of public IPv4 address to assign a public IPv4 address to the resource. HighQualityEIP and AntiDDoSEIP features are gradually released in select regions. For usage, submit a ticket for consultation.
+	// +kubebuilder:validation:Optional
+	IPv4AddressType *string `json:"ipv4AddressType,omitempty" tf:"ipv4_address_type,omitempty"`
+
+	// Charge type of instance. Valid values are PREPAID, POSTPAID_BY_HOUR, SPOTPAID, CDCPAID. The default is POSTPAID_BY_HOUR. NOTE: SPOTPAID instance must set spot_instance_type and spot_max_price at the same time.
+	// Charge type of instance. Valid values are `PREPAID`, `POSTPAID_BY_HOUR`, `SPOTPAID`, `CDCPAID`. The default is `POSTPAID_BY_HOUR`. NOTE: `SPOTPAID` instance must set `spot_instance_type` and `spot_max_price` at the same time.
 	// +kubebuilder:validation:Optional
 	InstanceChargeType *string `json:"instanceChargeType,omitempty" tf:"instance_charge_type,omitempty"`
 
@@ -651,8 +677,8 @@ type NodeConfigInitParameters struct {
 	// Docker graph path. Default is `/var/lib/docker`.
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// Custom parameter information related to the node. This is a white-list parameter. It can be modified via the ModifyClusterNodePool API.
+	// Custom parameter information related to the node. This is a white-list parameter. It can be modified via the `ModifyClusterNodePool` API.
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
 	// GPU driver parameters.
@@ -690,8 +716,8 @@ type NodeConfigObservation struct {
 	// Docker graph path. Default is `/var/lib/docker`.
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// Custom parameter information related to the node. This is a white-list parameter. It can be modified via the ModifyClusterNodePool API.
+	// Custom parameter information related to the node. This is a white-list parameter. It can be modified via the `ModifyClusterNodePool` API.
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
 	// GPU driver parameters.
@@ -732,8 +758,8 @@ type NodeConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	DockerGraphPath *string `json:"dockerGraphPath,omitempty" tf:"docker_graph_path,omitempty"`
 
-	// Custom parameter information related to the node. This is a white-list parameter.
-	// Custom parameter information related to the node. This is a white-list parameter.
+	// Custom parameter information related to the node. This is a white-list parameter. It can be modified via the ModifyClusterNodePool API.
+	// Custom parameter information related to the node. This is a white-list parameter. It can be modified via the `ModifyClusterNodePool` API.
 	// +kubebuilder:validation:Optional
 	ExtraArgs []*string `json:"extraArgs,omitempty" tf:"extra_args,omitempty"`
 
@@ -826,8 +852,8 @@ type NodePoolInitParameters struct {
 	// Node config.
 	NodeConfig []NodeConfigInitParameters `json:"nodeConfig,omitempty" tf:"node_config,omitempty"`
 
-	// Operating system of the cluster. Please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
-	// Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
 	NodeOs *string `json:"nodeOs,omitempty" tf:"node_os,omitempty"`
 
 	// The image version of the node. Valida values are DOCKER_CUSTOMIZE and GENERAL. Default is GENERAL. This parameter will only affect new nodes, not including the existing nodes.
@@ -983,8 +1009,8 @@ type NodePoolObservation struct {
 	// The total node count.
 	NodeCount *float64 `json:"nodeCount,omitempty" tf:"node_count,omitempty"`
 
-	// Operating system of the cluster. Please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
-	// Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
 	NodeOs *string `json:"nodeOs,omitempty" tf:"node_os,omitempty"`
 
 	// The image version of the node. Valida values are DOCKER_CUSTOMIZE and GENERAL. Default is GENERAL. This parameter will only affect new nodes, not including the existing nodes.
@@ -1127,8 +1153,8 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeConfig []NodeConfigParameters `json:"nodeConfig,omitempty" tf:"node_config,omitempty"`
 
-	// Operating system of the cluster. Please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
-	// Operating system of the cluster. Please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to TencentCloud Documentation for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
+	// Node pool operating system (enter the image ID for a custom image, and enter the OS name for a public image). If custom image, please refer to [TencentCloud Documentation](https://www.tencentcloud.com/document/product/457/46750?lang=en&pg=#list-of-public-images-supported-by-tke) for available values. Default is 'tlinux2.4x86_64'. This parameter will only affect new nodes, not including the existing nodes.
 	// +kubebuilder:validation:Optional
 	NodeOs *string `json:"nodeOs,omitempty" tf:"node_os,omitempty"`
 

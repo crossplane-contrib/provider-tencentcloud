@@ -217,13 +217,105 @@ spec:
                           type: string
                         imageUri:
                           description: |-
-                            The uri of image.
-                            The uri of image.
+                            The uri of image. Supports three formats:
+                            The uri of image. Supports three formats:
+                            - Format A: registry/repo:tag
+                            - Format B: registry/repo@sha256:digest
+                            - Format C: registry/repo:tag@sha256:digest.
                           type: string
                         registryId:
                           description: |-
                             The registry id of TCR. When image type is enterprise, it must be set.
                             The registry id of TCR. When image type is enterprise, it must be set.
+                          type: string
+                      type: object
+                    type: array
+                  instanceConcurrencyConfig:
+                    description: |-
+                      Instance concurrency configuration for the function.
+                      Instance concurrency configuration for the function.
+                    items:
+                      properties:
+                        dynamicEnabled:
+                          description: |-
+                            Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+                            Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+                          type: string
+                        instanceIsolationEnabled:
+                          description: |-
+                            Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+                            Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+                          type: string
+                        maxConcurrency:
+                          description: |-
+                            Maximum single-instance concurrency, range: 1-100.
+                            Maximum single-instance concurrency, range: 1-100.
+                          type: number
+                        mixNodeConfig:
+                          description: |-
+                            Dynamic concurrency configuration parameters.
+                            Dynamic concurrency configuration parameters.
+                          items:
+                            properties:
+                              nodeSpec:
+                                description: |-
+                                  GPU model name.
+                                  GPU model name.
+                                type: string
+                              num:
+                                description: |-
+                                  Number of concurrent instances.
+                                  Number of concurrent instances.
+                                type: number
+                            type: object
+                          type: array
+                        sessionConfig:
+                          description: |-
+                            Session configuration parameters.
+                            Session configuration parameters.
+                          items:
+                            properties:
+                              idleTimeoutStrategy:
+                                description: |-
+                                  Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+                                  Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+                                type: string
+                              maximumConcurrencySessionPerInstance:
+                                description: |-
+                                  Maximum number of concurrent sessions per instance.
+                                  Maximum number of concurrent sessions per instance.
+                                type: number
+                              maximumIdleTimeInSeconds:
+                                description: |-
+                                  Session idle timeout in seconds.
+                                  Session idle timeout in seconds.
+                                type: number
+                              maximumTtlInSeconds:
+                                description: |-
+                                  Session lifecycle in seconds.
+                                  Session lifecycle in seconds.
+                                type: number
+                              sessionName:
+                                description: |-
+                                  Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+                                  Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+                                type: string
+                              sessionPath:
+                                description: |-
+                                  Session path information.
+                                  Session path information.
+                                type: string
+                              sessionSource:
+                                description: |-
+                                  Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+                                  Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: |-
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
                           type: string
                       type: object
                     type: array
@@ -329,7 +421,7 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
                             Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
                           type: string
                       type: object
@@ -502,13 +594,105 @@ spec:
                           type: string
                         imageUri:
                           description: |-
-                            The uri of image.
-                            The uri of image.
+                            The uri of image. Supports three formats:
+                            The uri of image. Supports three formats:
+                            - Format A: registry/repo:tag
+                            - Format B: registry/repo@sha256:digest
+                            - Format C: registry/repo:tag@sha256:digest.
                           type: string
                         registryId:
                           description: |-
                             The registry id of TCR. When image type is enterprise, it must be set.
                             The registry id of TCR. When image type is enterprise, it must be set.
+                          type: string
+                      type: object
+                    type: array
+                  instanceConcurrencyConfig:
+                    description: |-
+                      Instance concurrency configuration for the function.
+                      Instance concurrency configuration for the function.
+                    items:
+                      properties:
+                        dynamicEnabled:
+                          description: |-
+                            Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+                            Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+                          type: string
+                        instanceIsolationEnabled:
+                          description: |-
+                            Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+                            Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+                          type: string
+                        maxConcurrency:
+                          description: |-
+                            Maximum single-instance concurrency, range: 1-100.
+                            Maximum single-instance concurrency, range: 1-100.
+                          type: number
+                        mixNodeConfig:
+                          description: |-
+                            Dynamic concurrency configuration parameters.
+                            Dynamic concurrency configuration parameters.
+                          items:
+                            properties:
+                              nodeSpec:
+                                description: |-
+                                  GPU model name.
+                                  GPU model name.
+                                type: string
+                              num:
+                                description: |-
+                                  Number of concurrent instances.
+                                  Number of concurrent instances.
+                                type: number
+                            type: object
+                          type: array
+                        sessionConfig:
+                          description: |-
+                            Session configuration parameters.
+                            Session configuration parameters.
+                          items:
+                            properties:
+                              idleTimeoutStrategy:
+                                description: |-
+                                  Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+                                  Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+                                type: string
+                              maximumConcurrencySessionPerInstance:
+                                description: |-
+                                  Maximum number of concurrent sessions per instance.
+                                  Maximum number of concurrent sessions per instance.
+                                type: number
+                              maximumIdleTimeInSeconds:
+                                description: |-
+                                  Session idle timeout in seconds.
+                                  Session idle timeout in seconds.
+                                type: number
+                              maximumTtlInSeconds:
+                                description: |-
+                                  Session lifecycle in seconds.
+                                  Session lifecycle in seconds.
+                                type: number
+                              sessionName:
+                                description: |-
+                                  Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+                                  Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+                                type: string
+                              sessionPath:
+                                description: |-
+                                  Session path information.
+                                  Session path information.
+                                type: string
+                              sessionSource:
+                                description: |-
+                                  Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+                                  Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: |-
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
                           type: string
                       type: object
                     type: array
@@ -614,7 +798,7 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
                             Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
                           type: string
                       type: object
@@ -824,7 +1008,9 @@ spec:
                             File system instance ID.
                           type: string
                         ipAddress:
-                          description: (Readonly) File system ip address.
+                          description: |-
+                            (Readonly) File system ip address.
+                            (Readonly) File system ip address.
                           type: string
                         localMountDir:
                           description: |-
@@ -838,12 +1024,12 @@ spec:
                           type: string
                         mountSubnetId:
                           description: |-
-                            Subnet ID of the SCF function.
+                            (Readonly) File system subnet ID.
                             (Readonly) File system subnet ID.
                           type: string
                         mountVpcId:
                           description: |-
-                            VPC ID of the SCF function.
+                            (Readonly) File system virtual private network ID.
                             (Readonly) File system virtual private network ID.
                           type: string
                         remoteMountDir:
@@ -1009,8 +1195,11 @@ spec:
                           type: string
                         imageUri:
                           description: |-
-                            The uri of image.
-                            The uri of image.
+                            The uri of image. Supports three formats:
+                            The uri of image. Supports three formats:
+                            - Format A: registry/repo:tag
+                            - Format B: registry/repo@sha256:digest
+                            - Format C: registry/repo:tag@sha256:digest.
                           type: string
                         registryId:
                           description: |-
@@ -1024,6 +1213,95 @@ spec:
                       Whether to automatically install dependencies.
                       Whether to automatically install dependencies.
                     type: boolean
+                  instanceConcurrencyConfig:
+                    description: |-
+                      Instance concurrency configuration for the function.
+                      Instance concurrency configuration for the function.
+                    items:
+                      properties:
+                        dynamicEnabled:
+                          description: |-
+                            Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+                            Whether to enable intelligent dynamic concurrency. Valid values: 'TRUE', 'FALSE'. 'FALSE' means static concurrency.
+                          type: string
+                        instanceIsolationEnabled:
+                          description: |-
+                            Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+                            Security isolation switch. Valid values: 'TRUE', 'FALSE'.
+                          type: string
+                        maxConcurrency:
+                          description: |-
+                            Maximum single-instance concurrency, range: 1-100.
+                            Maximum single-instance concurrency, range: 1-100.
+                          type: number
+                        mixNodeConfig:
+                          description: |-
+                            Dynamic concurrency configuration parameters.
+                            Dynamic concurrency configuration parameters.
+                          items:
+                            properties:
+                              nodeSpec:
+                                description: |-
+                                  GPU model name.
+                                  GPU model name.
+                                type: string
+                              num:
+                                description: |-
+                                  Number of concurrent instances.
+                                  Number of concurrent instances.
+                                type: number
+                            type: object
+                          type: array
+                        sessionConfig:
+                          description: |-
+                            Session configuration parameters.
+                            Session configuration parameters.
+                          items:
+                            properties:
+                              idleTimeoutStrategy:
+                                description: |-
+                                  Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+                                  Idle timeout strategy. Valid values: 'FATAL' for auto destroy, 'PAUSE' for auto pause. Only available when security isolation is enabled.
+                                type: string
+                              maximumConcurrencySessionPerInstance:
+                                description: |-
+                                  Maximum number of concurrent sessions per instance.
+                                  Maximum number of concurrent sessions per instance.
+                                type: number
+                              maximumIdleTimeInSeconds:
+                                description: |-
+                                  Session idle timeout in seconds.
+                                  Session idle timeout in seconds.
+                                type: number
+                              maximumTtlInSeconds:
+                                description: |-
+                                  Session lifecycle in seconds.
+                                  Session lifecycle in seconds.
+                                type: number
+                              sessionName:
+                                description: |-
+                                  Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+                                  Session name, starts with a letter, length 5-40 characters, can contain letters, digits, underscores, and hyphens.
+                                type: string
+                              sessionPath:
+                                description: |-
+                                  Session path information.
+                                  Session path information.
+                                type: string
+                              sessionSource:
+                                description: |-
+                                  Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+                                  Session source. Valid values: 'HEADER', 'COOKIE', 'QUERY_STRING'.
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: |-
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
+                          type: string
+                      type: object
+                    type: array
                   intranetConfig:
                     description: |-
                       Intranet access configuration.
@@ -1031,8 +1309,9 @@ spec:
                     items:
                       properties:
                         ipAddress:
-                          description: If fixed intranet IP is enabled, this field
-                            returns the IP list used.
+                          description: |-
+                            (Readonly) File system ip address.
+                            If fixed intranet IP is enabled, this field returns the IP list used.
                           items:
                             type: string
                           type: array
@@ -1161,9 +1440,8 @@ spec:
                             parameter format is json string {"api":{"authRequired":"FALSE","requestConfig":{"method":"ANY"},"isIntegratedResponse":"FALSE"},"service":{"serviceId":"service-dqzh68sg"},"release":{"environmentName":"test"}}.
                           type: string
                         type:
-                          description: Type of the SCF function trigger, support timer,
-                            ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb,
-                            mps, vod, cm, eb, http.
+                          description: 'Concurrency mode, valid values: ''Session-Based''
+                            or ''Request-Based''.'
                           type: string
                       type: object
                     type: array
@@ -1190,7 +1468,7 @@ spec:
                           type: string
                         type:
                           description: |-
-                            Type of the SCF function trigger, support timer, ckafka, custom_kafka, apigw, cmq, cos, mqtt, cls, clb, mps, vod, cm, eb, http.
+                            Concurrency mode, valid values: 'Session-Based' or 'Request-Based'.
                             Type of the SCF function trigger, support `timer`, `ckafka`, `custom_kafka`, `apigw`, `cmq`, `cos`, `mqtt`, `cls`, `clb`, `mps`, `vod`, `cm`, `eb`, `http`.
                           type: string
                       type: object

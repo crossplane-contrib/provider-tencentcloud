@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cluster is the Schema for the Clusters API. Use this resource
-          to create TcaplusDB cluster.
+        description: Cluster is the Schema for the Clusters API. Provides a resource
+          to create a TcaplusDB cluster.
         properties:
           apiVersion:
             description: |-
@@ -75,13 +75,18 @@ spec:
                 properties:
                   clusterName:
                     description: |-
-                      Name of the TcaplusDB cluster. Name length should be between 1 and 30.
-                      Name of the TcaplusDB cluster. Name length should be between 1 and 30.
+                      Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
+                      Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
                     type: string
+                  clusterType:
+                    description: |-
+                      Cluster type: 1 shared, 2 dedicated.
+                      Cluster type: `1` shared, `2` dedicated.
+                    type: number
                   idlType:
                     description: |-
-                      IDL type of the TcaplusDB cluster. Valid values: PROTO and TDR.
-                      IDL type of the TcaplusDB cluster. Valid values: `PROTO` and `TDR`.
+                      Cluster data description language type, uniformly filled with MIX, enumeration value: MIX: supports both PROTO and TDR tables.
+                      Cluster data description language type, uniformly filled with `MIX`, enumeration value: `MIX`: supports both `PROTO` and `TDR` tables.
                     type: string
                   oldPasswordExpireLast:
                     description: |-
@@ -90,8 +95,8 @@ spec:
                     type: number
                   passwordSecretRef:
                     description: |-
-                      Password of the TcaplusDB cluster. Password length should be between 12 and 16. The password must be a mix of uppercase letters (A-Z), lowercase letters (a-z) and numbers (0-9).
-                      Password of the TcaplusDB cluster. Password length should be between 12 and 16. The password must be a *mix* of uppercase letters (A-Z), lowercase *letters* (a-z) and *numbers* (0-9).
+                      Cluster access password, must be a-zA-Z0-9 characters, and must contain numbers, uppercase and lowercase letters.
+                      Cluster access password, must be `a-zA-Z0-9` characters, and must contain numbers, uppercase and lowercase letters.
                     properties:
                       key:
                         description: The key to select.
@@ -107,10 +112,64 @@ spec:
                     - name
                     - namespace
                     type: object
+                  proxyList:
+                    description: |-
+                      Dedicated cluster occupied proxy machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+                      Dedicated cluster occupied proxy machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+                    items:
+                      properties:
+                        machineNum:
+                          description: |-
+                            Machine quantity.
+                            Machine quantity.
+                          type: number
+                        machineType:
+                          description: |-
+                            Machine type.
+                            Machine type.
+                          type: string
+                      type: object
+                    type: array
+                  resourceTags:
+                    description: |-
+                      Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+                      Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  serverList:
+                    description: |-
+                      Dedicated cluster occupied svr machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+                      Dedicated cluster occupied svr machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+                    items:
+                      properties:
+                        machineNum:
+                          description: |-
+                            Machine quantity.
+                            Machine quantity.
+                          type: number
+                        machineType:
+                          description: |-
+                            Machine type.
+                            Machine type.
+                          type: string
+                      type: object
+                    type: array
                   subnetId:
                     description: |-
-                      Subnet id of the TcaplusDB cluster.
-                      Subnet id of the TcaplusDB cluster.
+                      The subnet instance ID bound to the cluster, such as: subnet-pxir56ns.
+                      The subnet instance ID bound to the cluster, such as: `subnet-pxir56ns`.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -188,8 +247,8 @@ spec:
                     type: object
                   vpcId:
                     description: |-
-                      VPC id of the TcaplusDB cluster.
-                      VPC id of the TcaplusDB cluster.
+                      The private network instance ID bound to the cluster, such as: vpc-f49l6u0z.
+                      The private network instance ID bound to the cluster, such as: `vpc-f49l6u0z`.
                     type: string
                   vpcIdRef:
                     description: Reference to a VPC in vpc to populate vpcId.
@@ -281,23 +340,82 @@ spec:
                 properties:
                   clusterName:
                     description: |-
-                      Name of the TcaplusDB cluster. Name length should be between 1 and 30.
-                      Name of the TcaplusDB cluster. Name length should be between 1 and 30.
+                      Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
+                      Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
                     type: string
+                  clusterType:
+                    description: |-
+                      Cluster type: 1 shared, 2 dedicated.
+                      Cluster type: `1` shared, `2` dedicated.
+                    type: number
                   idlType:
                     description: |-
-                      IDL type of the TcaplusDB cluster. Valid values: PROTO and TDR.
-                      IDL type of the TcaplusDB cluster. Valid values: `PROTO` and `TDR`.
+                      Cluster data description language type, uniformly filled with MIX, enumeration value: MIX: supports both PROTO and TDR tables.
+                      Cluster data description language type, uniformly filled with `MIX`, enumeration value: `MIX`: supports both `PROTO` and `TDR` tables.
                     type: string
                   oldPasswordExpireLast:
                     description: |-
                       Expiration time of old password after password update, unit: second.
                       Expiration time of old password after password update, unit: second.
                     type: number
+                  proxyList:
+                    description: |-
+                      Dedicated cluster occupied proxy machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+                      Dedicated cluster occupied proxy machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+                    items:
+                      properties:
+                        machineNum:
+                          description: |-
+                            Machine quantity.
+                            Machine quantity.
+                          type: number
+                        machineType:
+                          description: |-
+                            Machine type.
+                            Machine type.
+                          type: string
+                      type: object
+                    type: array
+                  resourceTags:
+                    description: |-
+                      Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+                      Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  serverList:
+                    description: |-
+                      Dedicated cluster occupied svr machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+                      Dedicated cluster occupied svr machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+                    items:
+                      properties:
+                        machineNum:
+                          description: |-
+                            Machine quantity.
+                            Machine quantity.
+                          type: number
+                        machineType:
+                          description: |-
+                            Machine type.
+                            Machine type.
+                          type: string
+                      type: object
+                    type: array
                   subnetId:
                     description: |-
-                      Subnet id of the TcaplusDB cluster.
-                      Subnet id of the TcaplusDB cluster.
+                      The subnet instance ID bound to the cluster, such as: subnet-pxir56ns.
+                      The subnet instance ID bound to the cluster, such as: `subnet-pxir56ns`.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in vpc to populate subnetId.
@@ -375,8 +493,8 @@ spec:
                     type: object
                   vpcId:
                     description: |-
-                      VPC id of the TcaplusDB cluster.
-                      VPC id of the TcaplusDB cluster.
+                      The private network instance ID bound to the cluster, such as: vpc-f49l6u0z.
+                      The private network instance ID bound to the cluster, such as: `vpc-f49l6u0z`.
                     type: string
                   vpcIdRef:
                     description: Reference to a VPC in vpc to populate vpcId.
@@ -639,24 +757,34 @@ spec:
                 properties:
                   apiAccessId:
                     description: |-
-                      Access ID of the TcaplusDB cluster.For TcaplusDB SDK connect.
-                      Access ID of the TcaplusDB cluster.For TcaplusDB SDK connect.
+                      Access ID of the TcaplusDB cluster. For TcaplusDB SDK connect.
+                      Access ID of the TcaplusDB cluster. For TcaplusDB SDK connect.
                     type: string
                   apiAccessIp:
                     description: |-
-                      Access IP of the TcaplusDB cluster.For TcaplusDB SDK connect.
-                      Access IP of the TcaplusDB cluster.For TcaplusDB SDK connect.
+                      Access IP of the TcaplusDB cluster. For TcaplusDB SDK connect.
+                      Access IP of the TcaplusDB cluster. For TcaplusDB SDK connect.
                     type: string
                   apiAccessPort:
                     description: |-
-                      Access port of the TcaplusDB cluster.For TcaplusDB SDK connect.
-                      Access port of the TcaplusDB cluster.For TcaplusDB SDK connect.
+                      Access port of the TcaplusDB cluster. For TcaplusDB SDK connect.
+                      Access port of the TcaplusDB cluster. For TcaplusDB SDK connect.
                     type: number
+                  clusterId:
+                    description: |-
+                      Cluster ID.
+                      Cluster ID.
+                    type: string
                   clusterName:
                     description: |-
-                      Name of the TcaplusDB cluster. Name length should be between 1 and 30.
-                      Name of the TcaplusDB cluster. Name length should be between 1 and 30.
+                      Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
+                      Cluster name, Chinese or English characters can be used, maximum length is 32 characters.
                     type: string
+                  clusterType:
+                    description: |-
+                      Cluster type: 1 shared, 2 dedicated.
+                      Cluster type: `1` shared, `2` dedicated.
+                    type: number
                   createTime:
                     description: |-
                       Create time of the TcaplusDB cluster.
@@ -667,8 +795,8 @@ spec:
                     type: string
                   idlType:
                     description: |-
-                      IDL type of the TcaplusDB cluster. Valid values: PROTO and TDR.
-                      IDL type of the TcaplusDB cluster. Valid values: `PROTO` and `TDR`.
+                      Cluster data description language type, uniformly filled with MIX, enumeration value: MIX: supports both PROTO and TDR tables.
+                      Cluster data description language type, uniformly filled with `MIX`, enumeration value: `MIX`: supports both `PROTO` and `TDR` tables.
                     type: string
                   networkType:
                     description: |-
@@ -690,15 +818,69 @@ spec:
                       Password status of the TcaplusDB cluster. Valid values: unmodifiable, modifiable. unmodifiable. which means the password can not be changed in this moment; modifiable, which means the password can be changed in this moment.
                       Password status of the TcaplusDB cluster. Valid values: `unmodifiable`, `modifiable`. `unmodifiable`. which means the password can not be changed in this moment; `modifiable`, which means the password can be changed in this moment.
                     type: string
+                  proxyList:
+                    description: |-
+                      Dedicated cluster occupied proxy machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+                      Dedicated cluster occupied proxy machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+                    items:
+                      properties:
+                        machineNum:
+                          description: |-
+                            Machine quantity.
+                            Machine quantity.
+                          type: number
+                        machineType:
+                          description: |-
+                            Machine type.
+                            Machine type.
+                          type: string
+                      type: object
+                    type: array
+                  resourceTags:
+                    description: |-
+                      Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+                      Cluster tag set. Note: this field cannot be modified after cluster creation via CreateCluster, but can be modified via ModifyClusterTags. Tags will be refreshed on Read via DescribeClusterTags.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
+                  serverList:
+                    description: |-
+                      Dedicated cluster occupied svr machines. Only valid when cluster_type is 2 (dedicated cluster). For creation, each element exposes machine_type and machine_num.
+                      Dedicated cluster occupied svr machines. Only valid when `cluster_type` is `2` (dedicated cluster). For creation, each element exposes `machine_type` and `machine_num`.
+                    items:
+                      properties:
+                        machineNum:
+                          description: |-
+                            Machine quantity.
+                            Machine quantity.
+                          type: number
+                        machineType:
+                          description: |-
+                            Machine type.
+                            Machine type.
+                          type: string
+                      type: object
+                    type: array
                   subnetId:
                     description: |-
-                      Subnet id of the TcaplusDB cluster.
-                      Subnet id of the TcaplusDB cluster.
+                      The subnet instance ID bound to the cluster, such as: subnet-pxir56ns.
+                      The subnet instance ID bound to the cluster, such as: `subnet-pxir56ns`.
                     type: string
                   vpcId:
                     description: |-
-                      VPC id of the TcaplusDB cluster.
-                      VPC id of the TcaplusDB cluster.
+                      The private network instance ID bound to the cluster, such as: vpc-f49l6u0z.
+                      The private network instance ID bound to the cluster, such as: `vpc-f49l6u0z`.
                     type: string
                 type: object
               conditions:

@@ -31,7 +31,11 @@ type EniInitParameters struct {
 	// Name of the ENI, maximum length 60.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A set of security group IDs.
+	// List of security group IDs.
+	// List of security group IDs.
+	OrderlySecurityGroups []*string `json:"orderlySecurityGroups,omitempty" tf:"orderly_security_groups,omitempty"`
+
+	// It has been deprecated from version 1.82.15. Use orderly_security_groups instead. A set of security group IDs.
 	// A set of security group IDs.
 	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
@@ -105,11 +109,15 @@ type EniObservation struct {
 	// Name of the ENI, maximum length 60.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// List of security group IDs.
+	// List of security group IDs.
+	OrderlySecurityGroups []*string `json:"orderlySecurityGroups,omitempty" tf:"orderly_security_groups,omitempty"`
+
 	// Indicates whether the IP is primary.
 	// Indicates whether the IP is primary.
 	Primary *bool `json:"primary,omitempty" tf:"primary,omitempty"`
 
-	// A set of security group IDs.
+	// It has been deprecated from version 1.82.15. Use orderly_security_groups instead. A set of security group IDs.
 	// A set of security group IDs.
 	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
@@ -154,7 +162,12 @@ type EniParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A set of security group IDs.
+	// List of security group IDs.
+	// List of security group IDs.
+	// +kubebuilder:validation:Optional
+	OrderlySecurityGroups []*string `json:"orderlySecurityGroups,omitempty" tf:"orderly_security_groups,omitempty"`
+
+	// It has been deprecated from version 1.82.15. Use orderly_security_groups instead. A set of security group IDs.
 	// A set of security group IDs.
 	// +kubebuilder:validation:Optional
 	// +listType=set

@@ -1694,6 +1694,11 @@ spec:
                       Site ID.
                       Site ID.
                     type: string
+                  zoneName:
+                    description: |-
+                      Zone name.
+                      Zone name.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

@@ -31,8 +31,8 @@ type RouteTableEntryInitParameters struct {
 	// ID of next-hop gateway. Note: when `next_type` is EIP, `next_hub` should be `0`.
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
+	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT, USER_CCN and GWLB_ENDPOINT.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT`, `USER_CCN` and `GWLB_ENDPOINT`.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
 	// ID of routing table to which this entry belongs.
@@ -70,9 +70,13 @@ type RouteTableEntryObservation struct {
 	// ID of next-hop gateway. Note: when `next_type` is EIP, `next_hub` should be `0`.
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
+	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT, USER_CCN and GWLB_ENDPOINT.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT`, `USER_CCN` and `GWLB_ENDPOINT`.
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
+
+	// ID of route entry.
+	// ID of route entry.
+	RouteEntryID *float64 `json:"routeEntryId,omitempty" tf:"route_entry_id,omitempty"`
 
 	// ID of route table entry.
 	// ID of route table entry.
@@ -105,8 +109,8 @@ type RouteTableEntryParameters struct {
 	// +kubebuilder:validation:Optional
 	NextHub *string `json:"nextHub,omitempty" tf:"next_hub,omitempty"`
 
-	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT and USER_CCN.
-	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT` and `USER_CCN`.
+	// Type of next-hop. Valid values: CVM, VPN, DIRECTCONNECT, PEERCONNECTION, HAVIP, NAT, NORMAL_CVM, EIP, LOCAL_GATEWAY, INTRANAT, USER_CCN and GWLB_ENDPOINT.
+	// Type of next-hop. Valid values: `CVM`, `VPN`, `DIRECTCONNECT`, `PEERCONNECTION`, `HAVIP`, `NAT`, `NORMAL_CVM`, `EIP`, `LOCAL_GATEWAY`, `INTRANAT`, `USER_CCN` and `GWLB_ENDPOINT`.
 	// +kubebuilder:validation:Optional
 	NextType *string `json:"nextType,omitempty" tf:"next_type,omitempty"`
 
@@ -152,7 +156,7 @@ type RouteTableEntryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// RouteTableEntry is the Schema for the RouteTableEntrys API. Provides a resource to create an entry of a routing table.
+// RouteTableEntry is the Schema for the RouteTableEntrys API. Provides a resource to create a Route table entry.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

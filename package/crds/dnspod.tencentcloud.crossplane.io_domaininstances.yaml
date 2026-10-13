@@ -330,6 +330,11 @@ spec:
                       ID of the domain.
                       ID of the domain.
                     type: number
+                  grade:
+                    description: |-
+                      The DNS plan/package grade of the domain (e.g., DP_Free, DP_Plus).
+                      The DNS plan/package grade of the domain (e.g., DP_Free, DP_Plus).
+                    type: string
                   groupId:
                     description: |-
                       The Group Id of Domain.
@@ -343,6 +348,11 @@ spec:
                       Whether to Mark the Domain.
                       Whether to Mark the Domain.
                     type: string
+                  recordCount:
+                    description: |-
+                      Number of DNS records under this domain.
+                      Number of DNS records under this domain.
+                    type: number
                   remark:
                     description: |-
                       The remark of Domain.
@@ -357,6 +367,11 @@ spec:
                     description: |-
                       The status of Domain.
                       The status of Domain.
+                    type: string
+                  updatedOn:
+                    description: |-
+                      Last modification time of the domain.
+                      Last modification time of the domain.
                     type: string
                 type: object
               conditions:

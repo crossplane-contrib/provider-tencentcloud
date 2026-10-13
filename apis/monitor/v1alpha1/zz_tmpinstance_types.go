@@ -15,13 +15,17 @@ import (
 
 type TmpInstanceInitParameters struct {
 
-	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
-	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
 	DataRetentionTime *float64 `json:"dataRetentionTime,omitempty" tf:"data_retention_time,omitempty"`
 
 	// Instance name.
 	// Instance name.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Long-term storage retention time(in days). Value range: 60-730.
+	// Long-term storage retention time(in days). Value range: 60-730.
+	LongTermStorageRetentionTime *float64 `json:"longTermStorageRetentionTime,omitempty" tf:"long_term_storage_retention_time,omitempty"`
 
 	// Subnet Id.
 	// Subnet Id.
@@ -65,8 +69,8 @@ type TmpInstanceObservation struct {
 	// Prometheus HTTP API root address.
 	APIRootPath *string `json:"apiRootPath,omitempty" tf:"api_root_path,omitempty"`
 
-	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
-	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
 	DataRetentionTime *float64 `json:"dataRetentionTime,omitempty" tf:"data_retention_time,omitempty"`
 
 	// ID of the resource.
@@ -79,6 +83,10 @@ type TmpInstanceObservation struct {
 	// Instance name.
 	// Instance name.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Long-term storage retention time(in days). Value range: 60-730.
+	// Long-term storage retention time(in days). Value range: 60-730.
+	LongTermStorageRetentionTime *float64 `json:"longTermStorageRetentionTime,omitempty" tf:"long_term_storage_retention_time,omitempty"`
 
 	// Proxy address.
 	// Proxy address.
@@ -108,8 +116,8 @@ type TmpInstanceObservation struct {
 
 type TmpInstanceParameters struct {
 
-	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
-	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 360, 720.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
+	// Data retention time(in days). Value range: 15, 30, 45, 90, 180, 365, 730.
 	// +kubebuilder:validation:Optional
 	DataRetentionTime *float64 `json:"dataRetentionTime,omitempty" tf:"data_retention_time,omitempty"`
 
@@ -117,6 +125,11 @@ type TmpInstanceParameters struct {
 	// Instance name.
 	// +kubebuilder:validation:Optional
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
+	// Long-term storage retention time(in days). Value range: 60-730.
+	// Long-term storage retention time(in days). Value range: 60-730.
+	// +kubebuilder:validation:Optional
+	LongTermStorageRetentionTime *float64 `json:"longTermStorageRetentionTime,omitempty" tf:"long_term_storage_retention_time,omitempty"`
 
 	// Subnet Id.
 	// Subnet Id.
@@ -185,7 +198,7 @@ type TmpInstanceStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TmpInstance is the Schema for the TmpInstances API. Provides a resource to create a monitor tmpInstance
+// TmpInstance is the Schema for the TmpInstances API. Provides a resource to create a monitor (Cloud Monitor) tmpInstance
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

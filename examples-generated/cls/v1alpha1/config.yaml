@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: cls/v1alpha1/config
   labels:
-    testing.upbound.io/example-name: config
-  name: config
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
     excludePaths:
@@ -14,15 +14,24 @@ spec:
     - type: File
       value: /file
     extractRule:
-    - backtracking: -1
+    - backtracking: 0
       filterKeyRegex:
       - key: key1
         regex: value1
       - key: key2
         regex: value2
-      unMatchLogKey: config
+      - key: ErrorCode
+        regex: "500"
+      isGbk: 0
+      jsonStandard: 1
+      metaTags:
+      - key: myKey
+        value: myValue
+      metadataType: 2
+      unMatchLogKey: LogParseFailure
       unMatchUpLoadSwitch: true
+    inputType: file
     logType: json_log
-    name: config_hello
-    output: 4d07fba0-b93e-4e0b-9a7f-d58542560bbb
-    path: /var/log/kubernetes
+    name: tf-example
+    output: 734f50d1-d621-425c-8768-6f9a5f0412ee
+    path: /data/log/**/error.log

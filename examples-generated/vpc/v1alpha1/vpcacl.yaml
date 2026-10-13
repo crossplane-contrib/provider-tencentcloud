@@ -10,10 +10,10 @@ spec:
   forProvider:
     egress:
     - ACCEPT#192.168.1.0/24#800#TCP
-    - ACCEPT#192.168.1.0/24#800-900#TCP
+    - ACCEPT#192.168.1.0/24#800-900#TCP#DESCRIPTION
     ingress:
     - ACCEPT#192.168.1.0/24#800#TCP
-    - ACCEPT#192.168.1.0/24#800-900#TCP
+    - ACCEPT#192.168.1.0/24#800-900#TCP#DESCRIPTION
     name: tf-example
     vpcIdSelector:
       matchLabels:

@@ -4,31 +4,67 @@ metadata:
   annotations:
     meta.upbound.io/example-id: kafka/v1alpha1/instance
   labels:
-    testing.upbound.io/example-name: kafka_instance_prepaid
-  name: kafka-instance-prepaid
+    testing.upbound.io/example-name: example
+  name: example
 spec:
   forProvider:
-    bandWidth: 20
+    bandWidth: 40
     config:
     - autoCreateTopicEnable: true
       defaultNumPartitions: 3
       defaultReplicationFactor: 3
+    deleteProtectionEnable: 1
     diskSize: 200
     diskType: CLOUD_BASIC
     dynamicRetentionConfig:
     - enable: 1
-    instanceName: ckafka-instance-prepaid
-    instanceType: 2
-    kafkaVersion: 2.4.1
+    instanceName: tf-example
+    instanceType: 1
+    kafkaVersion: 2.8.1
     msgRetentionTime: 1300
     partition: 400
     period: 1
     renewFlag: 0
-    specificationsType: standard
+    specificationsType: profession
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: subnet
     vpcIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: vpc
     zoneId: ${data.tencentcloud_availability_zones_by_product.gz.zones.0.id}
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: ap-guangzhou-6
+    cidrBlock: 10.0.20.0/28
+    isMulticast: false
+    name: subnet
+    vpcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vpc
+
+---
+
+apiVersion: vpc.tencentcloud.crossplane.io/v1alpha1
+kind: VPC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kafka/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: vpc
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    name: vpc

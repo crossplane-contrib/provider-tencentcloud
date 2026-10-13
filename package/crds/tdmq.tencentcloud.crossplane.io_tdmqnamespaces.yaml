@@ -185,6 +185,24 @@ spec:
                           type: number
                       type: object
                     type: array
+                  tags:
+                    description: |-
+                      The tags of the tencentcloud_tdmq_namespace.
+                      The tags of the tencentcloud_tdmq_namespace.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               initProvider:
                 description: |-
@@ -309,6 +327,24 @@ spec:
                             the time of message to retain.
                             the time of message to retain.
                           type: number
+                      type: object
+                    type: array
+                  tags:
+                    description: |-
+                      The tags of the tencentcloud_tdmq_namespace.
+                      The tags of the tencentcloud_tdmq_namespace.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
                       type: object
                     type: array
                 type: object
@@ -532,6 +568,24 @@ spec:
                             the time of message to retain.
                             the time of message to retain.
                           type: number
+                      type: object
+                    type: array
+                  tags:
+                    description: |-
+                      The tags of the tencentcloud_tdmq_namespace.
+                      The tags of the tencentcloud_tdmq_namespace.
+                    items:
+                      properties:
+                        tagKey:
+                          description: |-
+                            Tag key.
+                            Tag key.
+                          type: string
+                        tagValue:
+                          description: |-
+                            Tag value.
+                            Tag value.
+                          type: string
                       type: object
                     type: array
                 type: object

@@ -9,17 +9,13 @@ metadata:
 spec:
   forProvider:
     cleanUpPolicy: delete
-    enableWhiteList: true
     instanceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    ipWhiteList:
-    - 1.1.1.1
-    - 2.2.2.2
     maxMessageBytes: 4096
     note: topic note
-    partitionNum: 2
-    replicaNum: 4
+    partitionNum: 3
+    replicaNum: 2
     retention: 60000
     segment: 86400000
     syncReplicaMinNum: 2

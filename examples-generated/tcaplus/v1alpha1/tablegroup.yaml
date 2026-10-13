@@ -11,6 +11,9 @@ spec:
     clusterIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    resourceTags:
+    - tagKey: CreatedBy
+      tagValue: Terraform
     tablegroupName: tf_example_group_name
 
 ---

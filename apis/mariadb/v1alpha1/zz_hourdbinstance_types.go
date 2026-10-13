@@ -19,6 +19,10 @@ type HourDBInstanceInitParameters struct {
 	// db engine version, default to 10.1.9.
 	DBVersionID *string `json:"dbVersionId,omitempty" tf:"db_version_id,omitempty"`
 
+	// parameter list. This interface's optional values include: character_set_server (character set, required), lower_case_table_names (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), innodb_page_size (innodb data page, default 16K), sync_mode (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+	// parameter list. This interface's optional values include: `character_set_server` (character set, required), `lower_case_table_names` (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), `innodb_page_size` (innodb data page, default 16K), `sync_mode` (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+	InitParams []InitParamsInitParameters `json:"initParams,omitempty" tf:"init_params,omitempty"`
+
 	// name of this instance.
 	// name of this instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
@@ -88,6 +92,10 @@ type HourDBInstanceObservation struct {
 	// ID of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// parameter list. This interface's optional values include: character_set_server (character set, required), lower_case_table_names (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), innodb_page_size (innodb data page, default 16K), sync_mode (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+	// parameter list. This interface's optional values include: `character_set_server` (character set, required), `lower_case_table_names` (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), `innodb_page_size` (innodb data page, default 16K), `sync_mode` (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+	InitParams []InitParamsObservation `json:"initParams,omitempty" tf:"init_params,omitempty"`
+
 	// name of this instance.
 	// name of this instance.
 	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
@@ -136,6 +144,11 @@ type HourDBInstanceParameters struct {
 	// db engine version, default to 10.1.9.
 	// +kubebuilder:validation:Optional
 	DBVersionID *string `json:"dbVersionId,omitempty" tf:"db_version_id,omitempty"`
+
+	// parameter list. This interface's optional values include: character_set_server (character set, required), lower_case_table_names (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), innodb_page_size (innodb data page, default 16K), sync_mode (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+	// parameter list. This interface's optional values include: `character_set_server` (character set, required), `lower_case_table_names` (table name case sensitivity, required, 0 - sensitive; 1 - insensitive), `innodb_page_size` (innodb data page, default 16K), `sync_mode` (sync mode: 0 - async; 1 - strong sync; 2 - strong sync degradable, default is strong sync degradable).
+	// +kubebuilder:validation:Optional
+	InitParams []InitParamsParameters `json:"initParams,omitempty" tf:"init_params,omitempty"`
 
 	// name of this instance.
 	// name of this instance.
@@ -207,6 +220,41 @@ type HourDBInstanceParameters struct {
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 }
 
+type InitParamsInitParameters struct {
+
+	// parameter name.
+	// parameter name.
+	Param *string `json:"param,omitempty" tf:"param,omitempty"`
+
+	// parameter value.
+	// parameter value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type InitParamsObservation struct {
+
+	// parameter name.
+	// parameter name.
+	Param *string `json:"param,omitempty" tf:"param,omitempty"`
+
+	// parameter value.
+	// parameter value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type InitParamsParameters struct {
+
+	// parameter name.
+	// parameter name.
+	// +kubebuilder:validation:Optional
+	Param *string `json:"param" tf:"param,omitempty"`
+
+	// parameter value.
+	// parameter value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 // HourDBInstanceSpec defines the desired state of HourDBInstance
 type HourDBInstanceSpec struct {
 	v1.ResourceSpec `json:",inline"`
@@ -234,7 +282,7 @@ type HourDBInstanceStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// HourDBInstance is the Schema for the HourDBInstances API. Provides a resource to create a mariadb hour_db_instance
+// HourDBInstance is the Schema for the HourDBInstances API. Provides a resource to create a MariaDB hour db instance
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

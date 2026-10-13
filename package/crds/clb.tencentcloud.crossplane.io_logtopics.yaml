@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: LogTopic is the Schema for the LogTopics API. Provides a resource
-          to create a CLB instance topic.
+          to create a CLB log topic.
         properties:
           apiVersion:
             description: |-
@@ -152,6 +152,24 @@ spec:
                             type: string
                         type: object
                     type: object
+                  period:
+                    description: |-
+                      Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+                      Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+                    type: number
+                  status:
+                    description: |-
+                      The status of log topic. true: enable; false: disable. Default is true.
+                      The status of log topic. true: enable; false: disable. Default is true.
+                    type: boolean
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags of clb log topic.
+                      Tags of clb log topic.
+                    type: object
+                    x-kubernetes-map-type: granular
                   topicName:
                     description: |-
                       Log topic of CLB instance.
@@ -250,6 +268,24 @@ spec:
                             type: string
                         type: object
                     type: object
+                  period:
+                    description: |-
+                      Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+                      Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+                    type: number
+                  status:
+                    description: |-
+                      The status of log topic. true: enable; false: disable. Default is true.
+                      The status of log topic. true: enable; false: disable. Default is true.
+                    type: boolean
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags of clb log topic.
+                      Tags of clb log topic.
+                    type: object
+                    x-kubernetes-map-type: granular
                   topicName:
                     description: |-
                       Log topic of CLB instance.
@@ -446,11 +482,24 @@ spec:
                       Log topic of CLB instance.
                       Log topic of CLB instance.
                     type: string
+                  period:
+                    description: |-
+                      Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+                      Log storage lifecycle in days. Standard storage supports 1-3600; 3640 means permanent retention. Defaults to 30 when unset.
+                    type: number
                   status:
                     description: |-
-                      The status of log topic.
-                      The status of log topic.
+                      The status of log topic. true: enable; false: disable. Default is true.
+                      The status of log topic. true: enable; false: disable. Default is true.
                     type: boolean
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Tags of clb log topic.
+                      Tags of clb log topic.
+                    type: object
+                    x-kubernetes-map-type: granular
                   topicName:
                     description: |-
                       Log topic of CLB instance.
